@@ -1,0 +1,1 @@
+QL = new Meteor.Collection('questionList');
