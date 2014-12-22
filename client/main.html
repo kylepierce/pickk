@@ -2,11 +2,13 @@
 	<title>Predite | Make a Guess</title>
 </head>
 <body>
+<div class="ios"> </div>
 <div class="nav">
 		<div class="container">
-			<div class="wrong counter">00</div>
-				<span class="title"><a id="show" href="#"><h3>Predite</h3></a></span>
-			<div class="right counter">00</div>
+			<div id="login"> {{> loginButtons}}</div>
+			<span class="title"><a id="show" href="#"><h3>Predite</h3></a></span>
+			<div class="wrong counter">&#9660; 00</div>
+			<div class="right counter">&#9650; 00</div>
 		</div>
 	</div>
 	<div class="container">		
@@ -15,4 +17,5 @@
 			<a id="yes" class="option" href="#">Yes</a>
 			<div class="no-question"><h1>No More Questions.</h1></div>
 	</div>
+
 </body>

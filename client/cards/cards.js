@@ -1,5 +1,3 @@
 Template.questionCard.helpers({
-	question: function() {
-		return QL.find();
-	}
+	question: "Will the Dolphins Run On The First Play?"
 });
