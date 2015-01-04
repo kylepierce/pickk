@@ -10,5 +10,8 @@ jquery
 autopublish
 accounts-base
 accounts-password
-accounts-ui
 accounts-facebook
+iron:router
+accounts-ui-unstyled
+less
+aldeed:simple-schema
