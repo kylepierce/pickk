@@ -1,0 +1,30 @@
+.intro {
+	text-align: center;
+	margin-top: 100px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.intro form {
+	overflow: auto;
+}
+
+.intro input {
+	width: 90%;
+	font-size: 1.25em;
+	margin-bottom: 10px;
+	border: none;
+	padding: 10px;
+	-webkit-appearance: none;
+}
+
+.intro input[type="submit"]{
+	width: 100%;
+	margin-top: 20px;
+	background-color: #2ecc71;
+	border: none;
+	font-size: 1.2em;
+	color: white;
+	float: right;
+}
