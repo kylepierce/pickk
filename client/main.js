@@ -17,15 +17,17 @@ Template.questionCard.events({
 	'click .yes': function(event){
 		var questionId = this._id;
 		var currentUser = Meteor.userId();
+		var questionPath = Meteor.user(currentUser)
 
-		Session.set('answerQuestion', questionId);
+		// Session.set('answerQuestion', questionId);
 		Session.set('userClick', currentUser);
 
-		var answeredYes = Session.get('answerQuestion');
+		// var answeredYes = Session.get('answerQuestion');
 		var userClick = Session.get('userClick');
 
-		QuestionList.update(answeredYes, {$push: {usersTrue: currentUser}});
-		Meteor.userId().update(userClick, {$push: {questionsAnswered: questionId}});
+		// QuestionList.update(answeredYes, {$push: {usersTrue: currentUser}});
+		questionPath.update(userClick, {$push: {questionAnswered: questionId}});
+		console.log(questionPath);
 
 	},
 	'click .no': function(event){
