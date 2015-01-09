@@ -13,9 +13,10 @@ Question list
      else show question
 
 User clicks on true or false 
-     - questionsAnswered is update with that question id
+     (*) - questionsAnswered is update with that question id
+          Done but it is adding a new questionAnswered document instead of updating the secret one
 
-Navigation Bar
+Navigation Bar (Later)
      - Display user profile name and photo if available 
      - Display users two counters in the top bar.
 
