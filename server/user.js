@@ -1,11 +1,11 @@
 Accounts.onCreateUser(function(options, user){
-  profile = {
+  secret = {
       questionsAnswered: [],
-      rightCount: 0,
-      wrongCount: 0
+      rightCount: 00,
+      wrongCount: 00
   };
 
-  user.profile = profile
+  user.secret = secret;
 
   return user;
 });

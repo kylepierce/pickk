@@ -1,5 +1,6 @@
 <head>
 	<title>Predite | Make a Guess</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 </head>
 <body>
 
@@ -13,8 +14,8 @@
 		<div class="container">
 			<div id="login"> {{> loginButtons}}</div>
 			<span class="title"><h3>Predite</h3></span>
-			<div class="wrong counter">&#9660; {{currentUser.profile.wrongCount}}</div>
-			<div class="correct counter">&#9650; {{currentUser.profile.rightCount}}</div>
+			<div class="wrong counter">&#9660; {{currentUser.secret.wrongCount}}</div>
+			<div class="correct counter">&#9650; {{currentUser.secret.rightCount}}</div>
 		</div>
 	</div>
 </template>
@@ -34,13 +35,13 @@
 
 <template name="questionCard">
 	{{#each questions}}
-	<div id="{{_id}}" class="card">
-		{{ que}}
-	</div>
-	<div>
-		<a class="no option" href="#">No</a>
-		<a class="yes option" href="#">Yes</a>
-	</div>
+			<div id="{{_id}}" class="card">
+				{{ que}}
+			</div>
+			<div>
+				<a class="no option" href="#">No</a>
+				<a class="yes option" href="#">Yes</a>
+			</div>
 	{{/each}}
 </template>
 
