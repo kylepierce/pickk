@@ -42,7 +42,7 @@ Template.oldQuestionList.helpers({
 // Answer questions to make them true or false after they happen
 
 Template.activeQuestionList.events({
-	'click .yes': function() {
+	'click [data-action=questionTrue]': function() {
 
 		// Select the id of the yes button that is clicked
 		var questionId = this._id;
@@ -55,7 +55,7 @@ Template.activeQuestionList.events({
 		Meteor.call('modifyQuestionStatus', answered, true);
 		
 	},
-	'click .no': function() {
+	'click [data-action=questionTrue]': function() {
 		// Select the id of the yes button that is clicked
 		var questionId = this._id;
 		Session.set('answered', questionId);

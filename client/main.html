@@ -39,8 +39,8 @@
 				{{ que}}
 			</div>
 			<div>
-				<button data-action="answerNo" class="button option button-assertive">No</button>
-				<button data-action="answerYes" class="button option button-balanced">Yes</button>
+				<button data-action="answerNo" class="button option button-assertive no">No</button>
+				<button data-action="answerYes" class="button option button-balanced yes">Yes</button>
 			</div>
 	{{/each}}
 </template>
@@ -84,9 +84,9 @@
 		<ul class="active-questions">
 		{{#each questions}}
 			<li style="float:left" class="{{_id}}"> {{que}}</li>
-			<div style="float: left; width:17%;">
-				<a class="yes mini-option" href="#">True</a>
-				<a class="no mini-option" href="#">False</a>
+			<div style="clear:both;">
+				<button data-action="questionTrue" class="yes button button-balanced option" href="#">True</button>
+				<button data-action="questionFalse" class="no button button-assertive option" href="#">False</button>
 			</div>
 		{{/each}}
 		</ul>

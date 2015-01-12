@@ -85,24 +85,16 @@ body {
 	text-align: center;
 	clear: both;
 	margin: 20px 0;
+	line-height: 1.5em;
 	/*box-shadow: 1px 1px 15px #808080;*/
 }
 
 .option {
-	width:49.3%;
+	width:49%;
 	padding: 20px 0;
 	text-align: center;
 	font-size: 24px;
 	margin-bottom: 40px;
-}
-
-.mini-option {
-	width:40%;
-	padding: 10px 5px;
-	text-align: center;
-	font-size: 1.25em;
-	margin-top: 5px;
-	color:white;
 }
 
 a.option {
@@ -111,12 +103,10 @@ a.option {
 
 .no {
 	float: left;
-	background-color: #e74c3c;
 }
 
 .yes {
 	float:right;
-	background-color: #2ecc71;
 }
 
 .no-question {
@@ -138,7 +128,7 @@ a.option {
 	list-style: none;
 	font-size: 1.25em;
 	padding: 10px;
-	width: 80%;
+	width: 100%;
 	color: #2ecc71;
 	border-color: #2ecc71;
 	border-style: solid;
