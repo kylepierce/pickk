@@ -8,19 +8,11 @@ Before login
      - Facebook and twitter authorization
           - Grab photos from Facebook or twitter
 
-Question list
-     - If user has answered dont show question Check if question _id is in the answered category in users profile
-     else show question
-
-User clicks on true or false 
-     (*) - questionsAnswered is update with that question id
-          Done but it is adding a new questionAnswered document instead of updating the secret one
-
 Navigation Bar (Later)
      - Display user profile name and photo if available 
-     - Display users two counters in the top bar.
 
-Navigation Panel (Last)
+Navigation Panel (Last) - Make sliding panel from ionic
+
      - Leaderboard
      - Current games based on tags
      - Settings
