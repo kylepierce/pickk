@@ -1,7 +1,7 @@
 .intro {
 	text-align: center;
 	margin-top: 100px;
-	width: 80%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -11,11 +11,11 @@
 }
 
 .intro input {
-	width: 90%;
 	font-size: 1.25em;
 	margin-bottom: 10px;
 	border: none;
 	padding: 10px;
+	line-height: 1.5em;
 	-webkit-appearance: none;
 }
 

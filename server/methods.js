@@ -1,3 +1,4 @@
+
 Meteor.methods({
 	'insertQuestion' : function(que, teamOne, teamTwo){
 
@@ -16,28 +17,25 @@ Meteor.methods({
 		});
 	},
 	'modifyQuestionStatus' : function(questionId, answer){
-		var questionPath = QuestionList.find({_id: questionId});
-		var answeredTrue = questionPath.usersTrue.count();
-		console.log(answeredTrue);
-		var answeredFalse = questionPath.usersFalse.count();
-		console.log(answeredFalse);
-		if (answer == true) {
-			for (user in questionPath.usersTrue) {
-				console.log(user + " answered true when true. got it right") 
-			}
-			for (user in questionPath.usersFalse) {
-				console.log(user + " answered false when true. got it wrong")
-			}
-		} else {
-			for (user in questionPath.usersFalse) {
-				console.log(user + " answered false when false. got it right")
-			}
-			for (user in questionPath.usersTrue) {
-				console.log(user + " answered true when false. got it wrong")
-			}
-		}
 		QuestionList.update(questionId, {$set: {active: false, answer: answer}});
+		var base = QuestionList.find({_id: questionId}).fetch();
+		if (answer == true) {
+			base.usersTrue.forEach(function (user) {
+				user.update(secret, {$set: {rightCount: 1}} );
+			});
+			base.usersFalse.forEach(function (user) {
+				user.update(secret, {$set: {wrongCount: 1}} );
+			});
+		} else {
+			usersFalse.forEach(function (user) {
+				UserList.update(secret, {$set: {rightCount: 1}} );
+			});
+			usersTrue.forEach(function (user) {
+				UserList.update(secret, {$set: {wrongCount: 1}} );
+			});
+		}
 	},
+
 	'questionAnswered' : function( user, questionId, answer){
 		Meteor.users.update( { _id: user}, {$push: {questionAnswered: questionId}});
 		if (answer === true){

@@ -1,15 +1,43 @@
 <template name="register">
-  <form>
-    <input type="text" id="email">
-    <input type="password" id="password">
-    <input type="submit" value="Register">
-  </form>
+<div class="list">
+<form>
+  <label class="item item-input">
+    <span class="input-label">First Name</span>
+    <input type="text" placeholder="John" id="first-name">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Last Name</span>
+    <input type="text" placeholder="Suhr" id="last-name">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Username</span>
+    <input type="text" placeholder="john123" id="username">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Email</span>
+    <input type="text" placeholder="john@suhr.com" id="email">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Password</span>
+    <input type="text" placeholder="Password" id="password">
+  </label>
+  <input type="submit" value="Register">
+</form>
+</div>
 </template>
 
 <template name="login">
-  <form>
+<div class="list">
+<form>
+  <label class="item item-input">
+    <span class="input-label">Username</span>
     <input type="text" id="login-email">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Password</span>
     <input type="password" id="login-password">
-    <input type="submit" value="Login">
+  </label>
+  <input type="submit" value="Login">
   </form>
+</div>
 </template>

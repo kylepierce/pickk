@@ -13,3 +13,6 @@ iron:router
 accounts-ui-unstyled
 less
 aldeed:simple-schema
+meteoric:autoform-ionic
+meteoric:ionicons-sass
+meteoric:ionic-sass
