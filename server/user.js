@@ -8,3 +8,11 @@ Accounts.onCreateUser(function(options, user){
 
   return user;
 });
+
+  Meteor.startup(function () {
+    AccountsEntry.config({
+      defaultProfile: {
+          someDefault: 'default'
+      }
+    });
+  });

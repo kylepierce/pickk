@@ -3,6 +3,10 @@ Router.route('/', function () {
   this.render('Home');
 });
 
+Router.route('/dashboard', function () {
+  this.render('Home');
+});
+
 Router.route('/admin');
 
 // Display active cards

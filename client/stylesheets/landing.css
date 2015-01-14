@@ -55,3 +55,13 @@
 .twitter {
 	background-color: #55acee;
 }
+
+.entry-social button#entry-facebook {
+	border: 0;
+	width: 240px;
+}
+
+.entry-social button#entry-twitter {
+	border: 0;
+	width: 240px;
+}

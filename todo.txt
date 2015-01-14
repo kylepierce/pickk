@@ -1,12 +1,41 @@
-Front End:
+-------------- Graphics --------------
+- Icon for both iOS and android sizes
+- Splash screen at all sizes
+- Focus on the design of the UI 
+
+
+
+
+
+-------------- Cordova (Building) --------------
+- Figure out how to add the black bar or whatever its called so I can remove the code 
+
+
+
+
+
+
+
+
+
+
+-------------- Front End --------------
 
 Before login
 - Add slide deck to login page
-- Seperate login and register page
+	- Watch the game
+	- Answer Questions
+	- Leaderboard to show you're the best
+
+Login:
+- Make the sign in page better
+	- Add a back button
+	- See if there is a way to make it not automatically choose the input box
+
 - Sign up page with validation that checks username, email, and password
      - Send email to confirm
-     - Facebook and twitter authorization
-          - Grab photos from Facebook or twitter
+
+
 
 Navigation Bar (Later)
      - Display user profile name and photo if available 
@@ -19,8 +48,27 @@ Navigation Panel (Last) - Make sliding panel from ionic
      - User profile
      - Logout
 
-Backend:
 
+
+
+
+
+-------------- Backend --------------
 Method to update counters
      - If user answered true and the question is true than update users right counter += 1
      - If user answered false and the question is false than update users wrong counter += 1
+
+
+
+
+
+
+-------------- Wish list --------------
+- Add registered people to mailchimp or something 
+- Tweet questions and their answer for 500 points
+- Onboarding 
+- Add points instead of counters 
+- Purchase more points
+- Score multipler for more risky bets
+- Add ad's to the bottom of the app
+	- Every 5 answers have a pop up over the cards
