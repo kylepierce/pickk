@@ -24,5 +24,18 @@ if(Meteor.isClient){
 			Meteor.loginWithPassword(loginEmailVar,loginPasswordVar);
 		}
 	});
+
+	Template.twitter.events({
+      'click [data-action=twitterLogin]' : function() {
+        Meteor.loginWithTwitter();
+      }
+    });
+
+    Template.facebook.events({
+      'click [data-action=facebookLogin]' : function() {
+        Meteor.loginWithFacebook();
+      }
+    });
+
 }
 

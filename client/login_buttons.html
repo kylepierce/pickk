@@ -27,7 +27,7 @@
 </template>
 
 <template name="login">
-<div class="list">
+<div class="list login">
 <form>
   <label class="item item-input">
     <span class="input-label">Email</span>
@@ -40,4 +40,13 @@
   <input type="submit" value="Login">
   </form>
 </div>
+</template>
+
+<template name="twitter">
+  <button data-action="twitterLogin" class="twitter social-button"><i class="fa fa-twitter double"></i> Sign In With Twitter</button>
+</template>
+
+<template name="facebook">
+  <button data-action="facebookLogin" class="facebook social-button"><i class="fa fa-facebook-square double"></i> Sign In With Facebook
+  </button>
 </template>
