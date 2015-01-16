@@ -1,10 +1,10 @@
 Accounts.onCreateUser(function(options, user){
   secret = {
-      rightCount: 00,
-      wrongCount: 00
+      coins: 50000,
   };
 
   user.secret = secret;
+
 
   return user;
 });

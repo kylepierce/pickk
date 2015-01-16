@@ -1,0 +1,10 @@
+{
+  "appcache": {
+    "addedFiles": [
+      "/cordova.js"
+    ]
+  },
+  "public": {
+    "appcache": "prompt"
+  }
+}

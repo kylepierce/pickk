@@ -1,6 +1,4 @@
 -------------- Graphics --------------
-- Icon for both iOS and android sizes
-- Splash screen at all sizes
 - Focus on the design of the UI 
 
 

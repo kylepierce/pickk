@@ -21,17 +21,17 @@ Meteor.methods({
 		var base = QuestionList.find({_id: questionId}).fetch();
 		if (answer == true) {
 			base.usersTrue.forEach(function (user) {
-				user.update(secret, {$set: {rightCount: 1}} );
+				user.update(secret, {$set: {coins: 100}} );
 			});
 			base.usersFalse.forEach(function (user) {
-				user.update(secret, {$set: {wrongCount: 1}} );
+				user.update(secret, {$set: {coins: -100}} );
 			});
 		} else {
 			usersFalse.forEach(function (user) {
-				UserList.update(secret, {$set: {rightCount: 1}} );
+				UserList.update(secret, {$set: {coins: 100}} );
 			});
 			usersTrue.forEach(function (user) {
-				UserList.update(secret, {$set: {wrongCount: 1}} );
+				UserList.update(secret, {$set: {coins: -100}} );
 			});
 		}
 	},

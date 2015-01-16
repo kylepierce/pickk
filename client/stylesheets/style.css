@@ -12,14 +12,9 @@ body {
 	font-size: 16px;
 	background-color:#f2f2f2; 
 }
-.ios{
-	background-color: black;
-	width: 100%;
-	height: 20px;
-}
 
 .nav{
-	background-color: white;
+	background-color: #008d97;
 	top:0;
 	width: 100%;
 	padding: 10px 0;
@@ -28,9 +23,36 @@ body {
 }
 
 .counter {
-	width:10%;
+
+	width:30%;
+	color: white;
 	display: inline-block;
-	font-size: 1em;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: right;
+	float: right;
+	margin-top: 3px;
+}
+
+.counter-list {
+	list-style: none;
+	display: table;
+}
+
+.counter-list li {
+	display: table-row;
+}
+
+.counter-list i{
+	color:#f39c12;
+}
+
+.counter-list i,
+.counter-list p{
+	display: table-cell;
+	vertical-align: middle;
+	padding-left: 10px;
+
 }
 
 .title {
@@ -39,8 +61,9 @@ body {
 	display: inline-block;
 }
 
-.title a{
-	color:black;
+.title h3{
+	color:white;
+	font-weight: bolder;
 }
 
 #login {
@@ -48,6 +71,7 @@ body {
 	float: left;
 	display: inline-block;
 	text-align: left;
+	color: white;
 }
 
 .login-link-text{
@@ -56,17 +80,6 @@ body {
 
 #login-buttons a{
 	text-decoration: none!important;
-}
-
-.wrong {
-	float:right;
-	color:#e74c3c;
-}
-
-.correct {
-	float:right;
-	color: #2ecc71;
-	text-align: left;
 }
 
 .container {
