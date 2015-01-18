@@ -1,10 +1,9 @@
 Accounts.onCreateUser(function(options, user){
-  secret = {
-      coins: 50000,
-  };
 
-  user.secret = secret;
-
+	profile = {
+		coins: 50000
+    }
+    user.profile = profile 
 
   return user;
 });

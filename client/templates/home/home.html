@@ -1,0 +1,22 @@
+<template name="home">
+{{#if currentUser}}
+	{{> nav}}
+	<div class="container">
+		{{> questionCard}}
+	</div>
+{{else}}
+	{{> landing}}
+{{/if}}
+</template>
+
+<template name="questionCard">
+	{{#each questions}}
+			<div id="{{_id}}" class="card">
+				{{ que}}
+			</div>
+			<div>
+				<button data-action="answerNo" class="button option button-assertive no">No</button>
+				<button data-action="answerYes" class="button option button-balanced yes">Yes</button>
+			</div>
+	{{/each}}
+</template>

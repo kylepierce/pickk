@@ -9,10 +9,9 @@ Template.createQuestion.events({
 		event.preventDefault();
 
 		var que = event.target.newQuestion.value;
-		var teamOne = event.target.teamOne.value;
-		var teamTwo = event.target.teamTwo.value;
+		var game = event.target.game.value;
 
-		Meteor.call('insertQuestion', que, teamOne, teamTwo);
+		Meteor.call('insertQuestion', que, game);
 
 		// Reset form for single page app
 		$("#question")[0].reset()
@@ -23,18 +22,29 @@ Template.createQuestion.events({
 
 Template.activeQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: true});
+		
+		return QuestionList.find({active: true}, {sort: {dateCreated: 1,}});
 	}
+});
+
+// Show pending questions
+
+Template.pendingQuestionList.helpers({
+	'questions': function(){
+		
+		return QuestionList.find({active: null}, {sort: {dateCreated: 1,}});
+	},
+
 });
 
 // Show all old questions
 
 Template.oldQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: false});
+		return QuestionList.find({active: false}, {sort: {dateCreated: -1,}});
 	}
 });
-
+ 
 
 
 
@@ -42,6 +52,22 @@ Template.oldQuestionList.helpers({
 // Answer questions to make them true or false after they happen
 
 Template.activeQuestionList.events({
+	'click [data-action=deactivate]': function() {
+
+		// Select the id of the yes button that is clicked
+		var questionId = this._id;
+		Session.set('answered', questionId);
+		
+		// Get the session
+		var answered = Session.get('answered');
+
+		// Update the database without losing any data
+		Meteor.call('deactivateStatus', answered);
+		
+	}
+});
+
+Template.pendingQuestionList.events({
 	'click [data-action=questionTrue]': function() {
 
 		// Select the id of the yes button that is clicked
@@ -55,7 +81,7 @@ Template.activeQuestionList.events({
 		Meteor.call('modifyQuestionStatus', answered, true);
 		
 	},
-	'click [data-action=questionTrue]': function() {
+	'click [data-action=questionFalse]': function() {
 		// Select the id of the yes button that is clicked
 		var questionId = this._id;
 		Session.set('answered', questionId);

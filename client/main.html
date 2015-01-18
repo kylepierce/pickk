@@ -6,105 +6,16 @@
 
 </body>
 
-
 <template name="nav">
 <div class="nav">
 		<div class="container">
-			<div id="login"> {{> loginButtons}}</div>
-			<span class="title"><h3>Predite</h3></span>
+			<i style="font-size: 1.8em; color: white;" class="fa fa-bars"></i>
+			<!-- <div id="login"> {{> loginButtons}}</div> -->
 			<div class="counter">
 				<ul class="counter-list">
-					<li><i class="fa fa-circle"></i> <p>{{currentUser.secret.coins}}</p></li>
+					<li><i class="fa fa-circle"></i> <p>{{currentUser.profile.coins}}</p></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </template>
-
-
-<template name="home">
-{{#if currentUser}}
-	{{> nav}}
-	<div class="container">
-		{{> questionCard}}
-	</div>
-{{else}}
-	{{> landing}}
-{{/if}}
-</template>
-
-
-<template name="questionCard">
-	{{#each questions}}
-			<div id="{{_id}}" class="card">
-				{{ que}}
-			</div>
-			<div>
-				<button data-action="answerNo" class="button option button-assertive no">No</button>
-				<button data-action="answerYes" class="button option button-balanced yes">Yes</button>
-			</div>
-	{{/each}}
-</template>
-
-
-
-<template name="admin">
-{{#if currentUser}}
-{{> nav}}
-	<div class="container">		
-		<h1 style="text-align: center; margin-bottom: 50px;">Admin Panel</h1>
-		{{> createQuestion}}
-		{{> activeQuestionList}}
-		{{> oldQuestionList}}
-	</div>
-	{{else}}
-		{{> landing}}
-{{/if}}
-</template>
-
-
-
-
-
-<template name="createQuestion">
-	<div class=" panel">
-		<h2>Create Question</h2>
-		<form id="question">
-			<input type="text" name="newQuestion" style="width: 100%; font-size: 24px; margin: 10px 0;">
-				<span class="half" ><strong>Team One:</strong> <select name="teamOne"> {{> nfl}} </select></span><br>
-				<span class="half" ><strong>Team Two:</strong> <select name="teamTwo">{{> nfl}} </select></span><br>
-  				<input type="submit" value="Submit">
-		</form>
-	</div>
-</template>
-
-
-<template name="activeQuestionList">
-	<div class=" panel">
-		<h2>Active Questions</h2>
-		<ul class="active-questions">
-		{{#each questions}}
-			<li style="float:left" class="{{_id}}"> {{que}}</li>
-			<div style="clear:both;">
-				<button data-action="questionTrue" class="yes button button-balanced option" href="#">True</button>
-				<button data-action="questionFalse" class="no button button-assertive option" href="#">False</button>
-			</div>
-		{{/each}}
-		</ul>
-	</div>	
-</template>
-
-<template name="oldQuestionList">
-	<div class=" panel">
-		<h2>Old Questions</h2>
-		<ul class="old-questions">
-		{{#each questions}}
-			<li class="{{_id}}"> {{que}}</li>
-		{{/each}}
-		</ul>
-	</div>	
-</template>
-
-
-
-

@@ -1,0 +1,83 @@
+<template name="admin">
+{{#if currentUser}}
+{{> nav}}
+	<div class="container">		
+		<h1 style="text-align: center; margin-bottom: 50px;">Admin Panel</h1>
+		{{> createQuestion}}
+		{{> activeQuestionList}}
+		{{> pendingQuestionList}}
+		{{> oldQuestionList}}
+	</div>
+	{{else}}
+		{{> landing}}
+{{/if}}
+</template>
+
+<template name="createQuestion">
+	<div class=" panel">
+		<h2>Create Question</h2>
+		<form id="question">
+			<input type="text" name="newQuestion" style="width: 100%; font-size: 24px; margin: 10px 0;">
+				<span class="half" ><strong>Game:</strong>
+					<select name="game"> {{> game}} </select>
+				</span>
+
+  				<input type="submit" value="Submit">
+		</form>
+	</div>
+</template>
+
+<template name="activeQuestionList">
+	<div class=" panel">
+		<h2>Active Questions</h2>
+		<ul class="active-questions">
+		{{#each questions}}
+			<div class="threefourths">
+			<li style="float:left" class="{{_id}}"> {{que}}</li>
+			<button data-action="deactivate" class="yes full button button-balanced">Deactivate</button>
+			</div>
+			<div style="width:10%; clear: right; float:left;">
+				False: <br> {{usersFalse.length}}
+			</div>
+			<div style="width:10%; clear: right; float:left; margin-left:20px;">
+				True: <br> {{usersTrue.length}} 
+			</div>
+		{{/each}}
+		</ul>
+	</div>	
+</template>
+
+<template name="pendingQuestionList">
+	<div class=" panel">
+		<h2>Pending Questions</h2>
+		<ul class="active-questions">
+		{{#each questions}}
+			<div class="threefourths">
+			<li style="float:left" class="{{_id}}"> {{que}}</li>
+			<div style="clear:both;">
+				<button data-action="questionTrue" class="yes button button-balanced option">True</button>
+				<button data-action="questionFalse" class="no button button-assertive option">False</button>
+			</div>
+			</div>
+			<div style="width:10%; clear: right; float:left;">
+				False: <br> {{usersFalse.length}}
+			</div>
+			<div style="width:10%; clear: right; float:left; margin-left:20px;">
+				True: <br> {{usersTrue.length}} 
+			</div>
+		{{/each}}
+		</ul>
+	</div>	
+</template>
+
+
+<template name="oldQuestionList">
+	<div class=" panel">
+		<h2>Old Questions</h2>
+		<ul class="old-questions">
+		{{#each questions}}
+			<li class="{{_id}}"> {{que}}</li>
+		{{/each}}
+		</ul>
+	</div>	
+</template>

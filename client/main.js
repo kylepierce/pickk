@@ -7,6 +7,10 @@ Router.route('/dashboard', function () {
   this.render('Home');
 });
 
+Router.route('/leaderboard', function () {
+  this.render('leaderboard');
+});
+
 Router.route('/admin');
 
 // Display active cards
@@ -18,7 +22,7 @@ Template.questionCard.helpers({
 	'questions': function(){
 		var currentUser = Meteor.userId();
 		return QuestionList.find({active: true, usersTrue: {$nin: [currentUser]}, 
-		usersFalse: {$nin: [currentUser]}});
+		usersFalse: {$nin: [currentUser]}}, {sort: {dateCreated: 1,}});
 	}
 });
 

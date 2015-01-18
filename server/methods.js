@@ -1,15 +1,17 @@
 
 Meteor.methods({
-	'insertQuestion' : function(que, teamOne, teamTwo){
+	'insertQuestion' : function(que, game){
 
 		// Variables to make the calling easy
 
 		var currentUserId = Meteor.userId();
+		var timeCreated = new Date();
 
 		// Insert the question into the database
 		QuestionList.insert({
 			que: que,
-			teams: [teamOne, teamTwo],
+			dateCreated: timeCreated,
+			game: game,
 			createdBy: currentUserId,
 			active: true,
 	   		usersTrue: [],
@@ -18,22 +20,42 @@ Meteor.methods({
 	},
 	'modifyQuestionStatus' : function(questionId, answer){
 		QuestionList.update(questionId, {$set: {active: false, answer: answer}});
-		var base = QuestionList.find({_id: questionId}).fetch();
-		if (answer == true) {
-			base.usersTrue.forEach(function (user) {
-				user.update(secret, {$set: {coins: 100}} );
+
+		var usersTrue = _.pluck( QuestionList.find({"_id": questionId}).fetch(), 'usersTrue' );
+		var usersFalse = _.pluck( QuestionList.find({"_id": questionId}).fetch(), 'usersFalse' );
+		if (answer === true) {
+			usersTrue.map(function (user) {
+				console.log("These users get 100 coins " + user);
+				for (var i = user.length - 1; i >= 0; i--) {
+					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": 100}} );
+				};
+				
 			});
-			base.usersFalse.forEach(function (user) {
-				user.update(secret, {$set: {coins: -100}} );
+			usersFalse.map(function (user) {
+				console.log("These users lose 100 coins " + user);
+				for (var i = user.length - 1; i >= 0; i--) {
+					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": -100}} );
+				};
 			});
 		} else {
-			usersFalse.forEach(function (user) {
-				UserList.update(secret, {$set: {coins: 100}} );
+			usersFalse.map(function (user) {
+				console.log("These users get 100 coins " + user);
+				for (var i = user.length - 1; i >= 0; i--) {
+					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": 100}} );
+				};
+				
 			});
-			usersTrue.forEach(function (user) {
-				UserList.update(secret, {$set: {coins: -100}} );
+			usersTrue.map(function (user) {
+				console.log("These users lose 100 coins " + user);
+				for (var i = user.length - 1; i >= 0; i--) {
+					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": -100}} );
+				};
 			});
 		}
+	},
+
+	'deactivateStatus' : function(questionId){
+		QuestionList.update(questionId, {$set: {active: null}});
 	},
 
 	'questionAnswered' : function( user, questionId, answer){

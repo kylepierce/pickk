@@ -1,0 +1,10 @@
+<template name="leaderboard">
+{{#if currentUser}}
+	{{> nav}}
+	<ul>
+	{{#each player}}
+		<li>{{username}}: {{profile.coins}}</li>
+	{{/each}}
+	</ul>
+{{/if}}
+</template>
