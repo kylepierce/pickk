@@ -1,10 +1,14 @@
 <template name="leaderboard">
-{{#if currentUser}}
-	{{> nav}}
+  {{#ionView}}
+    {{#ionContent}}
+
 	<ul>
 	{{#each player}}
 		<li>{{username}}: {{profile.coins}}</li>
 	{{/each}}
 	</ul>
-{{/if}}
+
+    {{/ionContent}}
+  {{/ionView}}
+
 </template>

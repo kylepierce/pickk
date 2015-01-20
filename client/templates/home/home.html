@@ -1,18 +1,38 @@
 <template name="home">
-{{#if currentUser}}
-	{{> nav}}
-	<div class="container">
-		{{> questionCard}}
+
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+  	<div class="counter">
+		<ul class="counter-list">
+			<li><i class="fa fa-circle"></i> <p>{{currentUser.profile.coins}}</p></li>
+		</ul>
 	</div>
-{{else}}
-	{{> landing}}
-{{/if}}
+  {{/contentFor}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+		<div class="container">
+		{{> questionCard}}
+		</div>
+    {{/ionContent}}
+  {{/ionView}}
 </template>
 
 <template name="questionCard">
 	{{#each questions}}
 			<div id="{{_id}}" class="card">
 				{{ que}}
+			</div>
+			<div style="margin-bottom:25px; ">
+				<button data-action="value100" class="button one-third button-energized">100</button>
+				<button data-action="value500" class="button one-third button-stable">500</button>
+				<button data-action="value1000" class="button one-third button-stable">1000</button>
 			</div>
 			<div>
 				<button data-action="answerNo" class="button option button-assertive no">No</button>

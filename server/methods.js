@@ -27,7 +27,10 @@ Meteor.methods({
 			usersTrue.map(function (user) {
 				console.log("These users get 100 coins " + user);
 				for (var i = user.length - 1; i >= 0; i--) {
-					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": 100}} );
+					user = user[i]
+					wager =  _.pluck( Meteor.users.find({_id:user}).fetch(), questionId.wager);
+					console.log(wager)
+					Meteor.users.update( {_id: user}, {$inc: { "profile.coins": wager}} );
 				};
 				
 			});
@@ -58,8 +61,9 @@ Meteor.methods({
 		QuestionList.update(questionId, {$set: {active: null}});
 	},
 
-	'questionAnswered' : function( user, questionId, answer){
-		Meteor.users.update( { _id: user}, {$push: {questionAnswered: questionId}});
+	'questionAnswered' : function( user, questionId, answer, wager){
+		Meteor.users.update( { _id: user}, {$push: {questionAnswered: { questionId: questionId, 
+			wager: wager, answered: answer}}});
 		if (answer === true){
 			QuestionList.update(questionId, {$push: {usersTrue: user}});
 		} else {

@@ -13,25 +13,24 @@ body {
 	background-color:#f2f2f2; 
 }
 
-.nav{
-	background-color: #008d97;
-	top:0;
-	width: 100%;
-	padding: 10px 0;
-	margin-bottom: 30px;
-	display: inline-block;
+.has-tabs, .bar-footer.has-tabs {
+	background-color: #f2f2f2!important;
+}
+
+.bar.bar-stable {
+	background-color: #008d97!important;
+	color:white!important;
 }
 
 .counter {
 
-	width:30%;
-	color: white;
+	width:85%;
 	display: inline-block;
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: right;
 	float: right;
-	margin-top: 3px;
+	margin-top: 6px;
 }
 
 .counter-list {
@@ -68,11 +67,23 @@ body {
 }
 
 #login {
-	width:25%;
+	width:35%;
 	float: left;
 	display: inline-block;
 	text-align: left;
 	color: white;
+	font-size: 1.5em;
+}
+
+#login-dropdown-list {
+	font-size: .7em;
+	line-height: 1.3em;
+	margin-top: 15px;
+}
+
+.hidden-account {
+	visibility: hidden;
+	height: 0;
 }
 
 .login-link-text{
@@ -92,13 +103,14 @@ body {
 .card {
 	background-color: white;
 	max-width:100%;
-	padding: 75px 15px;
+	padding: 55px 20px;
 	font-size: 2em;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom:20px;
 	vertical-align: center;
 	text-align: center;
 	clear: both;
-	margin: 20px 0;
 	line-height: 1.5em;
 	/*box-shadow: 1px 1px 15px #808080;*/
 }
@@ -109,6 +121,10 @@ body {
 	text-align: center;
 	font-size: 24px;
 	margin-bottom: 40px;
+}
+
+.one-third {
+	width: 32.33%;
 }
 
 .full {
