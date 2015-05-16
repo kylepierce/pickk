@@ -1,5 +1,5 @@
 App.info({
-  name: 'Predite',
+  name: 'Pickk',
   description: 'Predict sports events in real time',
   author: 'Kyle Pierce',
   email: 'hi@kylepierce.co',

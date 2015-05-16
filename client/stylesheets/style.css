@@ -24,13 +24,13 @@ body {
 
 .counter {
 
-	width:85%;
+	width:90%;
 	display: inline-block;
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: right;
 	float: right;
-	margin-top: 6px;
+	margin-top: 2px;
 }
 
 .counter-list {
@@ -100,19 +100,8 @@ body {
 	margin-right: auto;
 }
 
-.card {
-	background-color: white;
-	max-width:100%;
-	padding: 55px 20px;
-	font-size: 2em;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom:20px;
-	vertical-align: center;
-	text-align: center;
-	clear: both;
-	line-height: 1.5em;
-	/*box-shadow: 1px 1px 15px #808080;*/
+.question {
+	margin-top: 20px;
 }
 
 .option {
@@ -125,6 +114,16 @@ body {
 
 .one-third {
 	width: 32.33%;
+}
+.play-option{ 
+	width: 100%;
+	text-align: left;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 0;
+	border-top: 1px;
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
 }
 
 .full {
@@ -199,4 +198,42 @@ a.option {
 .threefourths {
 	width: 70%;
 	float:left;
+}
+
+@media (max-width: 600px) {
+
+.question {
+	margin: 20px 0 0;
+}
+
+.play-option{ 
+	width: 100%;
+	text-align: left;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 0;
+	border-top: 1px;
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
+}
+
+.one-third {
+	margin: 0;
+}
+
+.center {
+	text-align: center;
+}
+
+.counter {
+
+	width:90%;
+	display: inline-block;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: right;
+	float: right;
+	margin-top: 2px;
+}
+
 }

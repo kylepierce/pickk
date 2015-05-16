@@ -68,7 +68,7 @@ Template.activeQuestionList.events({
 });
 
 Template.pendingQuestionList.events({
-	'click [data-action=questionTrue]': function() {
+	'click [data-action=run]': function() {
 
 		// Select the id of the yes button that is clicked
 		var questionId = this._id;
@@ -78,10 +78,10 @@ Template.pendingQuestionList.events({
 		var answered = Session.get('answered');
 
 		// Update the database without losing any data
-		Meteor.call('modifyQuestionStatus', answered, true);
+		Meteor.call('modifyQuestionStatus', answered, "run");
 		
 	},
-	'click [data-action=questionFalse]': function() {
+	'click [data-action=pass]': function() {
 		// Select the id of the yes button that is clicked
 		var questionId = this._id;
 		Session.set('answered', questionId);
@@ -90,7 +90,29 @@ Template.pendingQuestionList.events({
 		var answered = Session.get('answered');
 
 		// Update the database without losing any data
-		Meteor.call('modifyQuestionStatus', answered, false);
+		Meteor.call('modifyQuestionStatus', answered, "pass");
+	},
+	'click [data-action=interception]': function() {
+		// Select the id of the yes button that is clicked
+		var questionId = this._id;
+		Session.set('answered', questionId);
+
+		// Get the session
+		var answered = Session.get('answered');
+
+		// Update the database without losing any data
+		Meteor.call('modifyQuestionStatus', answered, "interception");
+	},
+	'click [data-action=fumble]': function() {
+		// Select the id of the yes button that is clicked
+		var questionId = this._id;
+		Session.set('answered', questionId);
+
+		// Get the session
+		var answered = Session.get('answered');
+
+		// Update the database without losing any data
+		Meteor.call('modifyQuestionStatus', answered, "fumble");
 	}
 
 });

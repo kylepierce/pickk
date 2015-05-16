@@ -1,10 +1,10 @@
 <template name="home">
 
-  {{#contentFor "headerButtonLeft"}}
+<!--   {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
       {{> ionIcon icon='ios-gear'}}
     </button>
-  {{/contentFor}}
+  {{/contentFor}} -->
 
   {{#contentFor "headerButtonRight"}}
   	<div class="counter">
@@ -26,17 +26,24 @@
 
 <template name="questionCard">
 	{{#each questions}}
-			<div id="{{_id}}" class="card">
+			<div id="{{_id}}" class="question play-option">
 				{{ que}}
 			</div>
-			<div style="margin-bottom:25px; ">
+			<div style="margin-bottom:10px; ">
+				<button data-action="answerRun" class="button play-option ">Run</button>
+				<button data-action="answerPass" class="button play-option">Pass</button>
+				<button data-action="answerFumble" class="button play-option">Fumble</button>
+				<button data-action="answerInterception" class="button play-option">Interception</button>
+			</div>
+			<div >
 				<button data-action="value100" class="button one-third button-energized">100</button>
-				<button data-action="value500" class="button one-third button-stable">500</button>
-				<button data-action="value1000" class="button one-third button-stable">1000</button>
+				<button data-action="value500" class="button one-third button-stable">250</button>
+				<button data-action="value1000" class="button one-third button-stable">500</button>
+				<button data-action="value100" class="button one-third button-stable">1000</button>
+				<button data-action="value500" class="button one-third button-stable">2000</button>
+				<button data-action="value1000" class="button one-third button-stable">Other</button>
 			</div>
-			<div>
-				<button data-action="answerNo" class="button option button-assertive no">No</button>
-				<button data-action="answerYes" class="button option button-balanced yes">Yes</button>
-			</div>
+			<br>
+			<button class="button one-forth button-balanced center" ><strong>Submit</strong> </button>
 	{{/each}}
 </template>

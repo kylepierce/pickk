@@ -1,5 +1,4 @@
 settings = {
-    element: content,
     dragger: null,
     disable: 'right',
     addBodyClasses: true,

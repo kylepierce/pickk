@@ -39,11 +39,11 @@
 			</div>
 			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
 				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">False: </div>
-				<div style="font-size: 1em;">{{usersFalse.length}} </div>
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersFalse.length}} </div>
 			</div>
 			<div style="width:12.5%; clear: right; float:left; ">
 				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">True</div> 
-				<div style="font-size: 1em;">{{usersTrue.length}} </div>
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersTrue.length}} </div>
 			</div>
 		{{/each}}
 		</ul>
@@ -58,17 +58,27 @@
 			<div class="threefourths">
 			<li style="float:left" class="{{_id}}"> {{que}}</li>
 			<div style="clear:both;">
-				<button data-action="questionTrue" class="yes button button-balanced option">True</button>
-				<button data-action="questionFalse" class="no button button-assertive option">False</button>
+				<button data-action="questionRun" class="yes button button-balanced option">Run</button>
+				<button data-action="questionPass" class="no button button-assertive option">Pass</button>
+				<button data-action="questionInterception" class="yes button button-balanced option">Interception</button>
+				<button data-action="questionFumble" class="no button button-assertive option">Fumble</button>
 			</div>
 			</div>
 			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">False: </div>
-				<div style="font-size: 1em;">{{usersFalse.length}} </div>
+				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">Run: </div>
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersRun.length}} </div>
 			</div>
 			<div style="width:12.5%; clear: right; float:left; ">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">True</div> 
-				<div style="font-size: 1em;">{{usersTrue.length}} </div>
+				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">Pass:</div> 
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersPass.length}} </div>
+			</div>
+			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
+				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">Interception: </div>
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersInterception.length}} </div>
+			</div>
+			<div style="width:12.5%; clear: right; float:left; ">
+				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">Fumble</div> 
+				<div style="margin-top: 20px; font-size: 2.5em;">{{usersFumble.length}} </div>
 			</div>
 		{{/each}}
 		</ul>

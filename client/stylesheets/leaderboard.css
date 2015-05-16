@@ -1,0 +1,11 @@
+.leaderboard li {
+	margin: 10px 0;
+	padding: 10px 20px;
+	width: 100%;
+	background-color: white;
+	font-size: 1.3em;
+}
+
+.leaderboard span{
+	float: right;
+}

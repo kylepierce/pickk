@@ -1,11 +1,17 @@
 <template name="profile">
-  {{#if currentUser}}
-    {{#contentFor "headerButtonRight"}}
-      <button class="button button-clear pull-right button-positive" data-ion-modal="settings">
-        {{> ionIcon icon='ios-gear-outline'}}
-      </button>
-    {{/contentFor}}
-  {{/if}}
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <div class="counter">
+    <ul class="counter-list">
+      <li><i class="fa fa-circle"></i> <p>{{currentUser.profile.coins}}</p></li>
+    </ul>
+  </div>
+  {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
     <h1 class="title">Profile</h1>
@@ -29,3 +35,5 @@
     {{/ionContent}}
   {{/ionView}}
 </template>
+
+

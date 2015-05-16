@@ -3,11 +3,22 @@
 Meteor.subscribe('activeQuestions');
 Meteor.subscribe('userAnswer');
 
+Template.home.rendered = function () {
+  if (!Meteor.loggingIn() && !Meteor.user()) {
+   	 Router.go('/landing');
+  }
+};
+
 Template.questionCard.helpers({
 	'questions': function(){
 		var currentUser = Meteor.userId();
-		var questionsToAnswer =  QuestionList.find({active: true, usersTrue: {$nin: [currentUser]}, 
-		usersFalse: {$nin: [currentUser]}}, {sort: {dateCreated: 1,}});
+		var questionsToAnswer =  QuestionList.find(
+				{active: true, 
+				usersRun: {$nin: [currentUser]}, 
+				usersPass: {$nin: [currentUser]}, 
+				usersFumble: {$nin: [currentUser]}, 
+				usersInterception: {$nin: [currentUser]}}, 
+				{sort: {dateCreated: 1,}});
 
 		return questionsToAnswer
 	}
@@ -36,7 +47,7 @@ Template.questionCard.events({
 
 	},
 
-	'click [data-action=answerYes]': function(){
+	'click [data-action=answerRun]': function(){
 		event.preventDefault(); 
 		var questionId = this._id;
 		var currentUser = Meteor.userId();
@@ -45,10 +56,10 @@ Template.questionCard.events({
 		var answered = Session.get('answered');
 		console.log(currentUser + " Answered Yes to question " + questionId);
 
-		Meteor.call('questionAnswered', currentUser, answered, true, 100);
+		Meteor.call('questionAnswered', currentUser, answered, "run", 100);
 
 	},
-	'click [data-action=answerNo]': function(){
+	'click [data-action=answerPass]': function(){
 		event.preventDefault();
 		var questionId = this._id;
 		var currentUser = Meteor.userId();
@@ -56,6 +67,26 @@ Template.questionCard.events({
 		Session.set('answered', questionId);
 		var answered = Session.get('answered');
 
-		Meteor.call('questionAnswered', currentUser, answered, false, 100);
+		Meteor.call('questionAnswered', currentUser, answered, "pass", 100);
+	},
+	'click [data-action=answerFumble]': function(){
+		event.preventDefault();
+		var questionId = this._id;
+		var currentUser = Meteor.userId();
+
+		Session.set('answered', questionId);
+		var answered = Session.get('answered');
+
+		Meteor.call('questionAnswered', currentUser, answered, "fumble", 100);
+	},
+	'click [data-action=answerInterception]': function(){
+		event.preventDefault();
+		var questionId = this._id;
+		var currentUser = Meteor.userId();
+
+		Session.set('answered', questionId);
+		var answered = Session.get('answered');
+
+		Meteor.call('questionAnswered', currentUser, answered, "interception", 100);
 	}
 });
