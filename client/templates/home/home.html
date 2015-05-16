@@ -26,24 +26,67 @@
 
 <template name="questionCard">
 	{{#each questions}}
-			<div id="{{_id}}" class="question play-option">
+			<div id="{{_id}}" class="question">
 				{{ que}}
 			</div>
-			<div style="margin-bottom:10px; ">
-				<button data-action="answerRun" class="button play-option ">Run</button>
-				<button data-action="answerPass" class="button play-option">Pass</button>
-				<button data-action="answerFumble" class="button play-option">Fumble</button>
-				<button data-action="answerInterception" class="button play-option">Interception</button>
-			</div>
-			<div >
-				<button data-action="value100" class="button one-third button-energized">100</button>
-				<button data-action="value500" class="button one-third button-stable">250</button>
-				<button data-action="value1000" class="button one-third button-stable">500</button>
-				<button data-action="value100" class="button one-third button-stable">1000</button>
-				<button data-action="value500" class="button one-third button-stable">2000</button>
-				<button data-action="value1000" class="button one-third button-stable">Other</button>
-			</div>
-			<br>
-			<button class="button one-forth button-balanced center" ><strong>Submit</strong> </button>
+
+			<form>
+				<!-- Options -->
+					{{> normalPlay}}
+
+				<!-- Wagers -->
+				<div style="margin-bottom:40px;">
+					<div>
+						<input type="radio" name="wager" id="100" value="100" checked>
+						<label class="one-third wager-box" for="100">100</label>
+					</div>
+					<div>
+						<input type="radio" name="wager" id="250" value="250">
+						<label class="one-third wager-box" for="250">250</label> 
+					</div>
+					<div>
+						<input type="radio" name="wager" id="500" value="500">
+						<label class="one-third wager-box" for="500">500</label> 
+					</div>
+
+					<div>
+						<input type="radio" name="wager" id="1000" value="1000">
+						<label class="one-third wager-box" for="1000">1000</label> 
+					</div>
+					<div>
+						<input type="radio" name="wager" id="2500" value="2500">
+						<label class="one-third wager-box" for="2500">2500</label> 
+					</div>
+					<div>
+						<input type="radio" name="wager" id="5000" value="5000">
+						<label class="one-third wager-box" for="5000">5000</label> 
+					</div>
+				</div>
+				<input class="button one-forth button-balanced center" type="submit" value="Submit">
+			</form>
+
 	{{/each}}
 </template>
+
+<template name="normalPlay">
+	<div style="margin-bottom:40px">
+		<div>
+			<input type="radio" name="play" id="Run" value="Run">
+			<label for="Run" class="play-option"> Run</label>
+		</div><div>
+			<input type="radio" name="play" id="Pass" value="Pass">
+			<label for="Pass" class="play-option"> Pass</label>
+		</div><div>
+			<input type="radio" name="play" id="Fumble" value="Fumble">
+			<label for="Fumble" class="play-option"> Fumble</label>
+		</div><div>
+			<input type="radio" name="play" id="Interception" value="Interception">
+			<label for="Interception" class="play-option"> Interception 
+			</label>
+		</div>
+	</div>
+</template>
+
+
+
+
