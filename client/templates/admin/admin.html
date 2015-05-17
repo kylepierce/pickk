@@ -51,34 +51,30 @@
 </template>
 
 <template name="pendingQuestionList">
-	<div class=" panel">
+	<div class="panel">
+
 		<h2>Pending Questions</h2>
-		<ul class="active-questions">
+
+		<ul class="pending-questions">
 		{{#each questions}}
 			<div class="threefourths">
-			<li style="float:left" class="{{_id}}"> {{que}}</li>
-			<div style="clear:both;">
-				<button data-action="questionRun" class="yes button button-balanced option">Run</button>
-				<button data-action="questionPass" class="no button button-assertive option">Pass</button>
-				<button data-action="questionInterception" class="yes button button-balanced option">Interception</button>
-				<button data-action="questionFumble" class="no button button-assertive option">Fumble</button>
+			<li style="float:left" class="{{_id}}"> <h4>{{que}}</h4></li>
+				<div style="clear:both;">
+					<button data-action="run" class="one-forth">Run</button>
+					<button data-action="pass" class="one-forth">Pass</button>
+					<button data-action="interception" class="one-forth">Interception</button>
+					<button data-action="fumble" class="one-forth">Fumble</button>
+				</div>
 			</div>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">Run: </div>
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersRun.length}} </div>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; ">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">Pass:</div> 
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersPass.length}} </div>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">Interception: </div>
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersInterception.length}} </div>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; ">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">Fumble</div> 
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersFumble.length}} </div>
+
+			<!-- Replace with chart -->
+			<div style="margin-left:30px; float:left;">
+				<ul> 
+					<li><strong>Run:</strong> {{usersRun.length}} </li>
+					<li><strong>Pass:</strong> {{usersPass.length}}</li> 
+					<li><strong>Interception:</strong> {{usersInterception.length}}</li> 
+					<li><strong>Fumble:</strong> {{usersFumble.length}}</li>
+				</ul>
 			</div>
 		{{/each}}
 		</ul>

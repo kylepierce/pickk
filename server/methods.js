@@ -1,9 +1,7 @@
 
 Meteor.methods({
 	'insertQuestion' : function(que, game){
-
 		// Variables to make the calling easy
-
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -11,11 +9,23 @@ Meteor.methods({
 		QuestionList.insert({
 			que: que,
 			dateCreated: timeCreated,
+			active: true,
 			game: game,
-			createdBy: currentUserId,
-			active: true
+			createdBy: currentUserId
 		});
 	},
+
+	//Once a users has answered take the amount wager from their coins.
+	'takeCoins' : function( userID, questionId, wager) {
+		QuestionList.update(questionId, {$push: {usersAnswered: userID}});
+		Meteor.users.update( {_id: userID}, {$inc: { "profile.coins": -wager}} );
+	},
+
+	//Once the play starts change active status
+	'deactivateStatus' : function(questionId){
+		QuestionList.update(questionId, {$set: {active: null}});
+	},
+
 	'modifyQuestionStatus' : function(questionId, answer){
 		QuestionList.update(questionId, {$set: {active: false, play: answer}});
 
@@ -24,43 +34,49 @@ Meteor.methods({
 		var usersInterception = _.pluck( QuestionList.find({"_id": questionId}).fetch(), 'usersInterception' );
 		var usersFumble = _.pluck( QuestionList.find({"_id": questionId}).fetch(), 'usersFumble' );
 
-		if (answer === "run") {
+		function awardPoints(user) {
+			for (var i = user.length - 1; i >= 0; i--) {
+					var winner = user[i];
+					var amount = parseInt(winner.amount * 2)
+					console.log("This user gets " + amount + " coins " + winner.userID);
+					Meteor.users.update( {_id: winner.userID}, {$inc: { "profile.coins": amount}} );
+			};
+		};
+
+		if (answer == "run") {
 			usersRun.map(function (user) {
-				console.log("These users get 100 coins " + user);
-				for (var i = user.length - 1; i >= 0; i--) {
-					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": 100}} );
-				};
+				awardPoints(user);
 			});
-		} else if (answer === "pass" ) {
+		} else if (answer == "pass" ) {
 			usersPass.map(function (user) {
-				console.log("These users get 100 coins " + user);
-				for (var i = user.length - 1; i >= 0; i--) {
-					Meteor.users.update( {_id: user[i]}, {$inc: { "profile.coins": 100}} );
-				};
-				
+				awardPoints(user);
+			});
+		} else if (answer == "fumble" ) {
+			usersFumble.map(function (user) {
+				awardPoints(user);
+			});
+		} else if (answer == "interception" ) {
+			usersInterception.map(function (user) {
+				awardPoints(user);
 			});
 		}
 	},
 
-	'deactivateStatus' : function(questionId){
-		QuestionList.update(questionId, {$set: {active: null}});
-	},
 
 	'questionAnswered' : function( user, questionId, answer, wager){
+		//Add question, wager and answer to the user's account.
 		Meteor.users.update( { _id: user}, {$push: {questionAnswered: { questionId: questionId, 
 			wager: wager, answered: answer}}});
-		if (answer === "run"){
-			console.log("Selected Run...");
-			QuestionList.update(questionId, {$push: {usersRun: user}});
-		} else if (answer === "pass"){
-			console.log("Selected Pass...");
-			QuestionList.update(questionId, {$push: {usersPass: user}});
-		} else if (answer === "fumble"){
-			console.log("Selected Fumble...");
-			QuestionList.update(questionId, {$push: {usersFumble: user}});
-		} else {
-			console.log("Selected Interception...");
-			QuestionList.update(questionId, {$push: {usersInterception: user}});
+
+		//Update the question with the users answer and wager.
+		if (answer == "Run"){
+			QuestionList.update(questionId, {$push: { usersRun: {userID: user, amount: wager } }});
+		} else if (answer == "Pass"){
+			QuestionList.update(questionId, {$push: {usersPass: {userID: user, amount: wager}}});
+		} else if (answer == "Fumble"){
+			QuestionList.update(questionId, {$push: {usersFumble: {userID: user, amount: wager}}});
+		} else if (answer == "Interception"){
+			QuestionList.update(questionId, {$push: {usersInterception: {userID: user, amount: wager}}});
 		}
 	}
 });

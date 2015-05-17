@@ -123,6 +123,12 @@ body {
 	float: left;
 }
 
+.one-forth {
+	width: 24%;
+	padding: 10px 0;
+	color: #333;
+}
+
 .wager-box {
 	border-color: #B2B2B2;
 	background-color: #fff;
