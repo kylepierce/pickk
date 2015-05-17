@@ -33,17 +33,9 @@
 		<h2>Active Questions</h2>
 		<ul class="active-questions">
 		{{#each questions}}
-			<div class="threefourths">
+			<div>
 			<li style="float:left" class="{{_id}}"> {{que}}</li>
 			<button data-action="deactivate" class="yes full button button-balanced">Deactivate</button>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; margin-left:20px;">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#E74C3C;">False: </div>
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersFalse.length}} </div>
-			</div>
-			<div style="width:12.5%; clear: right; float:left; ">
-				<div style="width: 100%; color: white; font-size: 1.3em; padding: 5px; background-color:#33CD5F;">True</div> 
-				<div style="margin-top: 20px; font-size: 2.5em;">{{usersTrue.length}} </div>
 			</div>
 		{{/each}}
 		</ul>

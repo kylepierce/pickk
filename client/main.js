@@ -36,6 +36,8 @@ Template.questionCard.events({
 		//Reduce players coins by wager
 
 		Meteor.call('takeCoins', currentUser, questionId, wager);
+
+		//Add user data to question
 		Meteor.call('questionAnswered', currentUser, questionId, answer, wager);
 
 		console.log('User: ' + currentUser + ' answered question ' + questionId + ' -- ' + answer + ' ' + wager);

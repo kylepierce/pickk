@@ -190,7 +190,7 @@ a.option {
 	font-size: 1.25em;
 	padding: 10px;
 	width: 100%;
-	color: #2ecc71;
+	color: black;
 	border-color: #2ecc71;
 	border-style: solid;
 	border-width: 1px;
@@ -251,6 +251,12 @@ input[type=radio]:checked ~ label{
 	user-select: none;
 }
 
+input[type=submit] {
+	text-align: center;
+	width: 100%;
+	margin-top: 20px;
+}
+
 @media (max-width: 600px) {
 
 .question {
@@ -272,12 +278,7 @@ input[type=radio]:checked ~ label{
 	margin: 0;
 }
 
-.center {
-	text-align: center;
-}
-
 .counter {
-
 	width:90%;
 	display: inline-block;
 	font-size: 1.5em;

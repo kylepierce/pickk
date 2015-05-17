@@ -35,3 +35,4 @@ App.launchScreens({
 
 App.setPreference('StatusBarOverlaysWebView', 'false');
 App.setPreference('StatusBarBackgroundColor', '#000000');
+App.accessRule('http://174.48.168.66:3000/*')

@@ -5,6 +5,7 @@ Meteor.methods({
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
+		console.log("Created a new question.")
 		// Insert the question into the database
 		QuestionList.insert({
 			que: que,
@@ -19,6 +20,7 @@ Meteor.methods({
 	'takeCoins' : function( userID, questionId, wager) {
 		QuestionList.update(questionId, {$push: {usersAnswered: userID}});
 		Meteor.users.update( {_id: userID}, {$inc: { "profile.coins": -wager}} );
+		console.log("User wagered " + wager + " coins." );
 	},
 
 	//Once the play starts change active status
@@ -67,7 +69,7 @@ Meteor.methods({
 		//Add question, wager and answer to the user's account.
 		Meteor.users.update( { _id: user}, {$push: {questionAnswered: { questionId: questionId, 
 			wager: wager, answered: answer}}});
-
+		console.log(user + " answered " + answer);
 		//Update the question with the users answer and wager.
 		if (answer == "Run"){
 			QuestionList.update(questionId, {$push: { usersRun: {userID: user, amount: wager } }});
