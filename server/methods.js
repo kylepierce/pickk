@@ -39,7 +39,7 @@ Meteor.methods({
 		function awardPoints(user) {
 			for (var i = user.length - 1; i >= 0; i--) {
 					var winner = user[i];
-					var amount = parseInt(winner.amount * 2)
+					var amount = parseInt(winner.amount * 4)
 					console.log("This user gets " + amount + " coins " + winner.userID);
 					Meteor.users.update( {_id: winner.userID}, {$inc: { "profile.coins": amount}} );
 			};

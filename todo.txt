@@ -1,23 +1,13 @@
 -------------- Graphics --------------
-- Focus on the design of the UI 
-
-
-
-
-
--------------- Cordova (Building) --------------
-- Figure out how to add the black bar or whatever its called so I can remove the code 
-
-
-
-
-
-
-
-
+- Update the UI to reflect the look from mockups
 
 
 -------------- Front End --------------
+
+General:
+- Animiations between pages
+- Exploring ionic framework 
+- Issues with typing and scrolling.
 
 Before login
 - Add slide deck to login page
@@ -33,39 +23,26 @@ Login:
 - Sign up page with validation that checks username, email, and password
      - Send email to confirm
 
+Profile page:
+- Display user profile name and photo if available 
 
-
-Navigation Bar (Later)
-     - Display user profile name and photo if available 
-
-Navigation Panel (Last) - Make sliding panel from ionic
-
-     - Leaderboard
-     - Current games based on tags
-     - Settings
-     - User profile
-     - Logout
-
-
-
-
-
+Notifications:
+- Create list of results from guesses
 
 -------------- Backend --------------
-Method to update counters
-     - If user answered true and the question is true than update users right counter += 1
-     - If user answered false and the question is false than update users wrong counter += 1
-
-
-
-
-
+- Security, what should I be focuing on.
+- Creating buttons on the admin panel for different play types. 
+     - Kickoff (touchback, flag, safety, return, touchdown, possiblity of others)
+     - Normal Play (run, pass, interception, fumble, safety)
+     - 4th down (run, pass, punt, interception, fumble, touchdown)
+     - Point after (run, pass, interception, fumble, Point after good, missed kick)
+- Friendship
+- Groups
 
 -------------- Wish list --------------
 - Add registered people to mailchimp or something 
 - Tweet questions and their answer for 500 points
-- Onboarding 
-- Add points instead of counters 
+- Onboarding  
 - Purchase more points
 - Score multipler for more risky bets
 - Add ad's to the bottom of the app

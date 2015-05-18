@@ -16,19 +16,13 @@
 	</div>
   {{/contentFor}}
   <div class="container">
-	<ul class="leaderboard">
+	<ol type="1" style="list-style-type: decimal;" class="leaderboard">
 	{{#each player}}
-		<li><strong>1. {{username}} <span class="score"> {{profile.coins}}</span></strong></li>
+		<li>{{username}} <span class="score"> {{profile.coins}}</span></li>
 	{{/each}}
-    <li>2. Asdr <span class="score">  50000</span></li>
-    <li>3. AAA <span class="score"> 50000</span></li>
-    <li>4. DolphinsRULE <span class="score"> 50000</span></li>
-    <li>5. Meowmix <span class="score">  50000</span></li>
-    <li>6. Player36 <span class="score">  50000</span></li>
-    <li>7. jahaz <span class="score"> 50000</span></li>
-    <li>8. Player 7 <span class="score">  50000</span></li>
 
-	</ul>
+
+	</ol>
   </div>
 
     {{/ionContent}}

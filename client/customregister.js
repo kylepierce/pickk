@@ -10,7 +10,7 @@ Meteor.startup(function () {
       showSignupCode: false,
       showOtherLoginServices: true   ,   // Set to false to hide oauth login buttons on the signin/signup pages. Useful if you are using something like accounts-meld or want to oauth for api access
       extraSignUpFields: [{             // Add extra signup fields on the signup page
-        field: "profile.firstName",                           // The database property you want to store the data in
+        field: "firstName",                           // The database property you want to store the data in
         name: " ",  // An initial value for the field, if you want one
         label: "First Name",                      // The html lable for the field
         placeholder: "John",                 // A placeholder for the field
@@ -18,7 +18,7 @@ Meteor.startup(function () {
         required: true                           // Adds html 5 required property if true
        },
        {           // Add extra signup fields on the signup page
-        field: "profile.lastName",                           // The database property you want to store the data in
+        field: "lastName",                           // The database property you want to store the data in
         name: " ",  // An initial value for the field, if you want one
         label: "Last Name",                      // The html lable for the field
         placeholder: "Doe",                 // A placeholder for the field
@@ -26,7 +26,7 @@ Meteor.startup(function () {
         required: true                           // Adds html 5 required property if true
        },
        {             // Add extra signup fields on the signup page
-        field: "profle.username",                           // The database property you want to store the data in
+        field: "username",                           // The database property you want to store the data in
         name: " ",  // An initial value for the field, if you want one
         label: "Username",                      // The html lable for the field
         placeholder: "JohnDoe123",                 // A placeholder for the field
