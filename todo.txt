@@ -36,6 +36,8 @@ Notifications:
      - Normal Play (run, pass, interception, fumble, safety)
      - 4th down (run, pass, punt, interception, fumble, touchdown)
      - Point after (run, pass, interception, fumble, Point after good, missed kick)
+- Points
+	- Stop users from wagering coins if they do not have enough coins.
 - Friendship
 - Groups
 

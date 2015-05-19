@@ -2,6 +2,7 @@
 	<div class="container">	
 	  {{#ionView}}
    		 {{#ionContent}}	
+   		 
 		<h1 style="text-align: center; margin-bottom: 50px;">Admin Panel</h1>
 		{{> createQuestion}}
 		{{> activeQuestionList}}
@@ -18,12 +19,10 @@
 	<div class=" panel">
 		<h2>Create Question</h2>
 		<form id="question">
-			<input type="text" name="newQuestion" style="width: 100%; font-size: 24px; margin: 10px 0;">
-				<span class="half" ><strong>Game:</strong>
-					<select name="game"> {{> game}} </select>
-				</span>
-
-  				<input type="submit" value="Submit">
+		<button class="one-forth" data-action="normal-play">Normal Play</button>
+		<button class="one-forth" data-action="kickoff-play">Kickoff</button>
+		<button class="one-forth" data-action="4th-down-play">4th Down</button>
+		<button class="one-forth" data-action="point-after">Point After</button>
 		</form>
 	</div>
 </template>
@@ -64,9 +63,9 @@
 				<ul> 
 					<li><strong>Run:</strong> {{usersRun.length}} </li>
 					<li><strong>Pass:</strong> {{usersPass.length}}</li> 
-					<li><strong>Interception:</strong> {{usersInterception.length}}</li> 
+					<li><strong>Interception:</strong> {{usersInterception.length}}</li>
 					<li><strong>Fumble:</strong> {{usersFumble.length}}</li>
-				</ul>
+				</ul> 
 			</div>
 		{{/each}}
 		</ul>

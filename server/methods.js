@@ -1,6 +1,6 @@
 
 Meteor.methods({
-	'insertQuestion' : function(que, game){
+	'insertQuestion' : function(que){
 		// Variables to make the calling easy
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
@@ -11,16 +11,8 @@ Meteor.methods({
 			que: que,
 			dateCreated: timeCreated,
 			active: true,
-			game: game,
 			createdBy: currentUserId
 		});
-	},
-
-	//Once a users has answered take the amount wager from their coins.
-	'takeCoins' : function( userID, questionId, wager) {
-		QuestionList.update(questionId, {$push: {usersAnswered: userID}});
-		Meteor.users.update( {_id: userID}, {$inc: { "profile.coins": -wager}} );
-		console.log("User wagered " + wager + " coins." );
 	},
 
 	//Once the play starts change active status
@@ -66,10 +58,23 @@ Meteor.methods({
 
 
 	'questionAnswered' : function( user, questionId, answer, wager){
+
+		// Update question with the user who have answered.
+		QuestionList.update(questionId, {$push: {usersAnswered: user}});
+
+		// Log with user who have answered and how much they wagered.
+		console.log(user + " answered " + questionId)
+		console.log("User wagered " + wager + " coins." );
+
+		//Once a users has answered take the amount wager from their coins.
+		Meteor.users.update( {_id: user}, {$inc: { "profile.coins": -wager}} );
+
+
 		//Add question, wager and answer to the user's account.
 		Meteor.users.update( { _id: user}, {$push: {questionAnswered: { questionId: questionId, 
 			wager: wager, answered: answer}}});
 		console.log(user + " answered " + answer);
+
 		//Update the question with the users answer and wager.
 		if (answer == "Run"){
 			QuestionList.update(questionId, {$push: { usersRun: {userID: user, amount: wager } }});

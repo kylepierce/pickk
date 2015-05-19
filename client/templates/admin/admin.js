@@ -4,21 +4,31 @@ Meteor.subscribe('activeQuestions');
 // Create question and add to database function
 
 Template.createQuestion.events({
-	'submit form': function(event){
-		// Single page app so turn off reload
+	'click [data-action=normal-play]': function(){
+		// Turn off reload
 		event.preventDefault();
-
-		var que = event.target.newQuestion.value;
-		var game = event.target.game.value;
-
-		Meteor.call('insertQuestion', que, game);
-
-		// Reset form for single page app
-		$("#question")[0].reset()
-	}
+		Meteor.call('insertQuestion', "The next play will be ...");
+	}, 	
+	'click [data-action=kickoff-play]': function(){
+		// Turn off reload
+		event.preventDefault();
+		Meteor.call('insertQuestion', "Kick off! ...");
+	}, 
+	'click [data-action=4th-down-play]': function(){
+		// Turn off reload
+		event.preventDefault();
+		Meteor.call('insertQuestion', "Fourth Down ...");
+	}, 
+	'click [data-action=point-after]': function(){
+		// Turn off reload
+		event.preventDefault();
+		Meteor.call('insertQuestion', "Point after! ...");
+	}, 
 });
 
-//Displaying the different states of questions could be refactored.
+
+
+
 
 // Show all active questions
 Template.activeQuestionList.helpers({
@@ -27,13 +37,11 @@ Template.activeQuestionList.helpers({
 	}
 });
 
-
 // Show pending questions
 Template.pendingQuestionList.helpers({
 	'questions': function(){
 		return QuestionList.find({active: null}, {sort: {dateCreated: 1,}});
-	},
-
+	}
 });
 
 // Show all old questions
