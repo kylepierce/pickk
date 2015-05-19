@@ -10,7 +10,6 @@ accounts-base
 accounts-password
 accounts-facebook
 iron:router
-accounts-ui-unstyled
 less
 aldeed:simple-schema
 meteoric:autoform-ionic
@@ -26,3 +25,6 @@ meteoric:ionic
 fourseven:scss
 service-configuration
 yogiben:user-helpers
+useraccounts:ionic
+useraccounts:core
+meteorhacks:kadira

@@ -33,6 +33,6 @@ App.launchScreens({
   'android_xhdpi_landscape': 'resources/splash/splash-1280x720.png'
 });
 
-App.setPreference('StatusBarOverlaysWebView', 'false');
-App.setPreference('StatusBarBackgroundColor', '#000000');
+App.setPreference('StatusBarOverlaysWebView', 'true');
+App.setPreference('StatusBarStyle', 'lightcontent');
 App.accessRule('http://174.48.168.66:3000/*')

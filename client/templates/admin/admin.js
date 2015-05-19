@@ -33,21 +33,21 @@ Template.createQuestion.events({
 // Show all active questions
 Template.activeQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: true}, {sort: {dateCreated: 1,}});
+		return QuestionList.find({active: true}, {sort: {dateCreated: 1}});
 	}
 });
 
 // Show pending questions
 Template.pendingQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: null}, {sort: {dateCreated: 1,}});
+		return QuestionList.find({active: null}, {sort: {dateCreated: 1}});
 	}
 });
 
 // Show all old questions
 Template.oldQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: false}, {sort: {dateCreated: -1,}});
+		return QuestionList.find({active: false}, {sort: {dateCreated: -1}, limit: 5});
 	}
 });
  

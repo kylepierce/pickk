@@ -18,5 +18,19 @@ Template.appLayout.events({
         return true;
       }
     });
+  },   
+  'click [data-action=logout]': function () {
+    AccountsTemplates.logout();
   }
 });
+
+Meteor.subscribe('leaderboard');
+
+
+Template.appLayout.helpers({
+  'username': function(){
+    var currentUser = this.userId();
+    return "Meow Mix"
+    // return UserList.find({_id: currentUser}).fetch();
+  }
+}); 

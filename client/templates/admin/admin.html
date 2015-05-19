@@ -3,7 +3,11 @@
 	  {{#ionView}}
    		 {{#ionContent}}	
    		 
-		<h1 style="text-align: center; margin-bottom: 50px;">Admin Panel</h1>
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title" style="color:white;">Admin Panel</h1>
+   		 {{/contentFor}}
+
+
 		{{> createQuestion}}
 		{{> activeQuestionList}}
 		{{> pendingQuestionList}}
@@ -14,22 +18,26 @@
     </div>
 </template>
 
-
+ 
 <template name="createQuestion">
 	<div class=" panel">
-		<h2>Create Question</h2>
+		<h3>Create Question</h3>
 		<form id="question">
-		<button class="one-forth" data-action="normal-play">Normal Play</button>
-		<button class="one-forth" data-action="kickoff-play">Kickoff</button>
-		<button class="one-forth" data-action="4th-down-play">4th Down</button>
-		<button class="one-forth" data-action="point-after">Point After</button>
+		<div class="row">
+		<button class="col col-50 wager-box" data-action="normal-play">Normal Play</button>
+		<button class="col col-50 wager-box" data-action="kickoff-play">Kickoff</button>
+		</div>
+		<div class="row">
+		<button class="col col-50 wager-box" data-action="4th-down-play">4th Down</button>
+		<button class="col col-50 wager-box" data-action="point-after">Point After</button>
+		</div>
 		</form>
 	</div>
 </template>
 
 <template name="activeQuestionList">
 	<div class=" panel">
-		<h2>Active Questions</h2>
+		<h3>Active Questions</h3>
 		<ul class="active-questions">
 		{{#each questions}}
 			<div>
@@ -44,17 +52,18 @@
 <template name="pendingQuestionList">
 	<div class="panel">
 
-		<h2>Pending Questions</h2>
+		<h3>Pending Questions</h3>
 
 		<ul class="pending-questions">
 		{{#each questions}}
-			<div class="threefourths">
+			<div style="clear:both;">
 			<li style="float:left" class="{{_id}}"> <h4>{{que}}</h4></li>
-				<div style="clear:both;">
-					<button data-action="run" class="one-forth">Run</button>
-					<button data-action="pass" class="one-forth">Pass</button>
-					<button data-action="interception" class="one-forth">Interception</button>
-					<button data-action="fumble" class="one-forth">Fumble</button>
+				<div style="clear:both;" class="row">
+					<button data-action="run" class="col col-50 wager-box">Run</button>
+					<button data-action="pass" class="col col-50 wager-box">Pass</button>
+				</div><div class="row">
+					<button data-action="interception" class="col col-50 wager-box">Interception</button>
+					<button data-action="fumble" class="col col-50 wager-box">Fumble</button>
 				</div>
 			</div>
 
@@ -75,7 +84,7 @@
 
 <template name="oldQuestionList">
 	<div class=" panel">
-		<h2>Old Questions</h2>
+		<h3>Old Questions</h3>
 		<ul class="old-questions">
 		{{#each questions}}
 			<li class="{{_id}}"> {{que}}</li>

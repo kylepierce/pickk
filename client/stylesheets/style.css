@@ -13,6 +13,11 @@ body {
 	background-color:#f2f2f2; 
 }
 
+input, textarea {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+}
+
 .has-tabs, .bar-footer.has-tabs {
 	background-color: #f2f2f2!important;
 }
@@ -22,41 +27,20 @@ body {
 	color:white!important;
 }
 
-.counter {
+.nav-icon {
+	color: white!important;
+}
 
-	width:90%;
-	display: inline-block;
-	font-size: 1.5em;
+.coin-icon i{
+	color:#F1C40F!important;
+}
+
+.coin-icon {
+	color: white!important;
 	font-weight: bold;
-	text-align: right;
-	float: right;
-	margin-top: 2px;
-}
-
-.counter-list {
-	list-style: none;
-	display: table;
-	float:right;
-}
-
-.counter-list li {
-	display: table-row;
-}
-
-.counter-list i{
-	color:#f39c12;
-}
-
-.counter-list i,
-.counter-list p{
-	display: table-cell;
-	vertical-align: middle;
-	padding-left: 10px;
-
 }
 
 .title {
-	width:45%;
 	text-align: center;
 	display: inline-block;
 }
@@ -104,7 +88,7 @@ body {
 	width: 100%;
 	text-align: center;
 	background-color: white;
-	padding: 15px;
+	padding: 10px;
 	margin-top: 20px;
 	border: 1px solid #CCC;
 	font-weight: bold;
@@ -135,14 +119,14 @@ body {
 	border: 1px solid #CCC;
 	color: #444;
 	text-align: center;
-	padding: 15px 0;
+	padding: 10px 0;
 }
 
 .play-option{ 
 	width: 100%;
 	text-align: left;
 	background-color: white;
-	padding: 15px;
+	padding: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 0;
@@ -211,8 +195,8 @@ a.option {
 }
 
 .panel input[type="submit"]{
-	margin-top: 20px;
-	padding: 20px;
+	margin-top: 10px;
+	padding: 10px;
 	background-color: #2ecc71;
 	border: none;
 	font-size: 1.2em;
@@ -258,10 +242,24 @@ input[type=submit] {
 	margin-top: 20px;
 }
 
+.profile-container {
+	height: 200px;
+	background-color: #008D97;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.circle-image {
+	border-radius: 100%;
+	width: 50%;
+	margin-top: 25px;
+}
+
 @media (max-width: 600px) {
 
 .question {
-	margin: 20px 0 0;
+	margin: 10px 0 0;
 }
 
 .play-option{ 
@@ -282,11 +280,13 @@ input[type=submit] {
 .counter {
 	width:90%;
 	display: inline-block;
+	clear:right;
 	font-size: 1.5em;
 	font-weight: bold;
 	text-align: right;
 	float: right;
-	margin-top: 2px;
+	margin-top: 6px;
 }
+
 
 }

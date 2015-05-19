@@ -6,12 +6,20 @@
     </button>
   {{/contentFor}} -->
 
+    {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
   {{#contentFor "headerButtonRight"}}
-  	<div class="counter">
-		<ul class="counter-list">
-			<li><i class="fa fa-circle"></i> <p>{{currentUser.profile.coins}}</p></li>
-		</ul>
-	</div>
+  	<button class="button button-clear coin-icon pull-right"> 
+		<i class="fa fa-circle"></i> <strong>{{currentUser.profile.coins}}</strong>
+		</button>
   {{/contentFor}}
 
 
@@ -62,7 +70,7 @@
 						<label class="one-third wager-box" for="5000">5000</label> 
 					</div>
 				</div>
-				<input id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
+				<input style="height: 30px; line-height: 27px;" id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
 			</form>
 
 	{{/each}}
@@ -72,16 +80,16 @@
 	<div style="margin-bottom:10px">
 		<div>
 			<input type="radio" name="play" id="Run" required value="Run">
-			<label for="Run" class="play-option"><i class="fa fa-check"></i> Run</label>
+			<label for="Run" class="play-option"><i class="fa fa-star"></i> Run</label>
 		</div><div>
 			<input type="radio" name="play" id="Pass" required value="Pass">
-			<label for="Pass" class="play-option"><i class="fa fa-check"></i> Pass</label>
+			<label for="Pass" class="play-option"><i class="fa fa-star"></i> Pass</label>
 		</div><div>
 			<input type="radio" name="play" id="Fumble" required value="Fumble">
-			<label for="Fumble" class="play-option"><i class="fa fa-check"></i> Fumble</label>
+			<label for="Fumble" class="play-option"><i class="fa fa-star"></i> Fumble</label>
 		</div><div>
 			<input type="radio" name="play" id="Interception" required value="Interception">
-			<label for="Interception" class="play-option"><i class="fa fa-check"></i> Interception 
+			<label for="Interception" class="play-option"><i class="fa fa-star"></i> Interception 
 			</label>
 		</div>
 	</div>
