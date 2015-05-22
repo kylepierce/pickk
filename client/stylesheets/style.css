@@ -245,6 +245,7 @@ input[type=submit] {
 .profile-container {
 	height: 200px;
 	background-color: #008D97;
+	color:white;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
@@ -254,6 +255,18 @@ input[type=submit] {
 	border-radius: 100%;
 	width: 50%;
 	margin-top: 25px;
+	border: 3px solid white;
+}
+
+.username {
+	clear: both;
+}
+
+.snap-drawer {
+	width: 266px;
+/*	overflow-y: scroll;*/ /* has to be scroll, not auto */
+	overflow-x: scroll; 
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 600px) {

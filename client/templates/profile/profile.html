@@ -1,39 +1,37 @@
 <template name="profile">
-  {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
-      {{> ionIcon icon='ios-gear'}}
+  {{#ionView}}
+    {{#ionContent}}
+
+    {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
     </button>
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <div class="counter">
-    <ul class="counter-list">
-      <li><i class="fa fa-circle"></i> <p>{{currentUser.profile.coins}}</p></li>
-    </ul>
+    <button class="button button-clear coin-icon pull-right"> 
+    <i class="fa fa-circle"></i> <strong>{{currentUser.profile.coins}}</strong>
+    </button>
+  {{/contentFor}}
+
+
+  <div class="container">
+  <ol type="1" style="list-style-type: decimal;" class="leaderboard">
+  {{#each player}}
+    <li>{{username}} <span class="score"> {{profile.coins}}</span></li>
+  {{/each}}
+
+
+  </ol>
   </div>
-  {{/contentFor}}
 
-  {{#contentFor "headerTitle"}}
-    <h1 class="title">Profile</h1>
-  {{/contentFor}}
-
-  {{#ionView}}
-    {{#ionContent}}
-      {{#with user}}
-        {{> _profileHeader}}
-        {{#ionList}}
-          {{#each question}}
-            {{> _productItem product=this path="products.show"}}
-          {{/each}}
-        {{/ionList}}
-      {{else}}
-        <div class="empty-view">
-          {{> ionIcon icon="ios-person"}}
-          No profile yet!
-        </div>
-      {{/with}}
     {{/ionContent}}
   {{/ionView}}
+
 </template>
 
 

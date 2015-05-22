@@ -7,18 +7,32 @@
       {{#ionSideMenus}}
 
         {{#ionSideMenu}}
-<!--           <div class="bar bar-header bar-stable">
-           
-          </div>
-          <div class="content has-header"> -->
             <div class="profile-container">
-                <img class="circle-image" src="photo.jpg">
-                <p>MeowMix</p>
+                <img class="circle-image" src="photo.jpg"><br>
+                <strong class="username">{{currentUser.username}}</strong>
             </div>
             <div class="list">
-              <div class="item item-icon-right" data-action="logout">
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="/dashboard">
+              Active
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="/leaderboard">
+              Leaderboard
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="">
+              Notifications
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="/admin">
+              Admin
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="">
+              Profile
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" href="/login">
+              Login
+              </a>
+              <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing">
                 Logout
-              </div>
+              </a>
             </div>
         {{/ionSideMenu}}
 
@@ -30,12 +44,6 @@
 
         {{#ionNavView}}
           {{> yield}}
-        {{/ionNavView}}
-
-      {{/ionSideMenuContent}}
-
-    {{/ionSideMenuContainer}}
-
 
     {{#if isAndroid}}
       {{#ionTabs style="android"}}
@@ -49,9 +57,15 @@
         {{> ionTab title="Active" path="dashboard" iconOff="ios-photos-outline" iconOn="ios-photos" class="tab-item-positive"}}
         {{> ionTab title="Leaderboard" path="leaderboard" iconOff="ios-people-outline" iconOn="ios-people" class="tab-item-positive"}}
         {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
-        {{> ionTab title="Admin" path="admin" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
+        {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
       {{/ionTabs}}
     {{/if}}
+        {{/ionNavView}}
+
+      {{/ionSideMenuContent}}
+
+    {{/ionSideMenuContainer}}
+
 
   {{/ionBody}}
 </template>

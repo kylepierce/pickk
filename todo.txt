@@ -9,18 +9,23 @@ General:
 - Exploring ionic framework 
 - Issues with typing and scrolling.
 
+Splash Screen:
+- Replace images or create an html page
+
 Before login
 - Add slide deck to login page
 	- Watch the game
 	- Answer Questions
 	- Leaderboard to show you're the best
 
+Navigation
+- Stop scrolling on the side and top
+
 Active Question:
 - Submit button should be red until play and wager are selected.
 
 Login:
 - Make the sign in page better
-	- Add a back button
 	- See if there is a way to make it not automatically choose the input box
 
 - Sign up page with validation that checks username, email, and password
