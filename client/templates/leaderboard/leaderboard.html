@@ -1,36 +1,20 @@
 <template name="leaderboard">
+
+<!-- Standard Nav instead of the custom nav design -->
+ {{> standardNav}}
+
   {{#ionView}}
     {{#ionContent}}
 
-    {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
-  {{/contentFor}}
-
-<!--     {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
-      {{> ionIcon icon='ios-gear'}}
-    </button>
-  {{/contentFor}} -->
-
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear coin-icon pull-right"> 
-    <i class="fa fa-circle"></i> <strong>{{currentUser.profile.coins}}</strong>
-    </button>
-  {{/contentFor}}
-
-
   <div class="container">
-	<ol type="1" style="list-style-type: decimal;" class="leaderboard">
-	{{#each player}}
-		<li>{{username}} <span class="score"> {{profile.coins}}</span></li>
-	{{/each}}
+	<ol type="1" class="leaderboard">
 
+  	{{#each player}}
+  		<li>
+        {{username}} 
+        <span class="score"> {{profile.coins}}</span>
+      </li>
+  	{{/each}}
 
 	</ol>
   </div>

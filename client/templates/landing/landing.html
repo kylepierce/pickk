@@ -1,17 +1,42 @@
 <template name="landing">
   {{#ionView}}
     {{#ionContent}}
-	<div class="intro">
-	
-		<h1>Pickk</h1>
-		<p>Predict the outcomes of sports in real time</p>
-		<a href="/login"><button class="button button-outline button-large button-positive">
-  			Login
-		</button></a>
-		<a href="/register"><button class="button button-large button-positive">
-  			Register
-		</button></a>
-	</div>
+    <div class="slider-box">
+    {{#ionSlideBox}}
+        {{#ionSlide class="inner-slide-box landing-bg"}}
+			    <h1>Pickk</h1>
+					<p>Predict the outcomes of sports in real time</p>
+        {{/ionSlide}}
+        {{#ionSlide class="inner-slide-box landing-bg"}}
+          <h1>Watch the game</h1>
+          <p>Play while watching. No need to plan ahead</p>
+        {{/ionSlide}}
+        {{#ionSlide class="inner-slide-box landing-bg"}}
+          <h1>Guess on each play</h1>
+          <p>Every play has options and real time multipliers.</p>
+        {{/ionSlide}}
+        {{#ionSlide class="inner-slide-box landing-bg"}}
+          <h1>Prove your skills</h1>
+          <p>Play against your friends, family, and the entire world.</p>
+        {{/ionSlide}}
+      {{/ionSlideBox}}
+      </div>
+      {{> loginBox}}
   {{/ionContent}}
 {{/ionView}}
 </template> 
+
+<template name="loginBox">
+	<div class="intro">		
+		<a href="/login">
+			<button class="button button-outline button-large button-positive">
+				Login
+			</button>
+		</a>
+		<a href="/register">
+			<button class="button button-large button-positive">
+				Register
+			</button>
+		</a>
+	</div>
+</template>

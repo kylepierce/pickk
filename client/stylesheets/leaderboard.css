@@ -1,5 +1,6 @@
 ol {
     list-style-position: inside;
+    list-style-type: decimal;
 }
 
 .leaderboard li {

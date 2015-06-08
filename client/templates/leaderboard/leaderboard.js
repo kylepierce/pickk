@@ -6,3 +6,4 @@ Template.leaderboard.helpers({
 		return UserList.find({},{sort: {profile: -1,}}).fetch();
 	}
 }); 
+

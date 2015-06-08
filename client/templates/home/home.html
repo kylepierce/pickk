@@ -1,27 +1,7 @@
 <template name="home">
 
-<!--   {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear pull-left button-positive" style="color:white;" data-ion-modal="logout">
-      {{> ionIcon icon='ios-gear'}}
-    </button>
-  {{/contentFor}} -->
-
-    {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
-  {{/contentFor}}
-
-  {{#contentFor "headerButtonRight"}}
-  	<button class="button button-clear coin-icon pull-right"> 
-		<i class="fa fa-circle"></i> <strong>{{currentUser.profile.coins}}</strong>
-		</button>
-  {{/contentFor}}
-
+<!-- Standard Nav instead of the custom nav design -->
+ {{> standardNav}}
 
   {{#ionView}}
     {{#ionContent}}
@@ -34,60 +14,68 @@
 
 <template name="questionCard">
 	{{#each questions}}
-			<div id="{{_id}}" class="question">
-				{{ que}}
-			</div>
+		<div id="{{_id}}" class="question">
+			{{ que}}
+		</div>
 
-			<form>
-				<!-- Options -->
-					{{> normalPlay}}
+		<form>
+			<!-- Options -->
+				{{> normalPlay}}
 
-				<!-- Wagers -->
-				<div style="margin-bottom:10px;">
-					<div>
-						<input type="radio" name="wager" id="100" required value="100">
-						<label class="one-third wager-box" for="100">100</label>
-					</div>
-					<div>
-						<input type="radio" name="wager" id="250" required value="250">
-						<label class="one-third wager-box" for="250">250</label> 
-					</div>
-					<div>
-						<input type="radio" name="wager" id="500" required value="500">
-						<label class="one-third wager-box" for="500">500</label> 
-					</div>
-
-					<div>
-						<input type="radio" name="wager" id="1000" required value="1000">
-						<label class="one-third wager-box" for="1000">1000</label> 
-					</div>
-					<div>
-						<input type="radio" name="wager" id="2500" required value="2500">
-						<label class="one-third wager-box" for="2500">2500</label> 
-					</div>
-					<div>
-						<input type="radio" name="wager" id="5000" required value="5000">
-						<label class="one-third wager-box" for="5000">5000</label> 
-					</div>
+			<!-- Wagers -->
+			<div style="margin-bottom:10px;">
+				<div>
+					<input type="radio" name="wager" id="100" required value="100">
+					<label class="one-third wager-box" for="100">100</label>
 				</div>
-				<input style="height: 30px; line-height: 27px;" id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
-			</form>
+				<div>
+					<input type="radio" name="wager" id="250" required value="250">
+					<label class="one-third wager-box" for="250">250</label> 
+				</div>
+				<div>
+					<input type="radio" name="wager" id="500" required value="500">
+					<label class="one-third wager-box" for="500">500</label> 
+				</div>
+
+				<div>
+					<input type="radio" name="wager" id="1000" required value="1000">
+					<label class="one-third wager-box" for="1000">1000</label> 
+				</div>
+				<div>
+					<input type="radio" name="wager" id="2500" required value="2500">
+					<label class="one-third wager-box" for="2500">2500</label> 
+				</div>
+				<div>
+					<input type="radio" name="wager" id="5000" required value="5000">
+					<label class="one-third wager-box" for="5000">5000</label> 
+				</div>
+			</div>
+			<input style="height: 30px; line-height: 27px;" id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
+		</form>
 
 	{{/each}}
 </template>
+
+<!-- Redo the card setup so the cards are populated by json data instead of hard coded. Same styles but fill the option and multiplier from admin. -->
 
 <template name="normalPlay">
 	<div style="margin-bottom:10px">
 		<div>
 			<input type="radio" name="play" id="Run" required value="Run">
 			<label for="Run" class="play-option"><i class="fa fa-star"></i> Run</label>
-		</div><div>
+		</div>
+
+		<div>
 			<input type="radio" name="play" id="Pass" required value="Pass">
 			<label for="Pass" class="play-option"><i class="fa fa-star"></i> Pass</label>
-		</div><div>
+		</div>
+
+		<div>
 			<input type="radio" name="play" id="Fumble" required value="Fumble">
 			<label for="Fumble" class="play-option"><i class="fa fa-star"></i> Fumble</label>
-		</div><div>
+		</div>
+
+		<div>
 			<input type="radio" name="play" id="Interception" required value="Interception">
 			<label for="Interception" class="play-option"><i class="fa fa-star"></i> Interception 
 			</label>

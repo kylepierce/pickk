@@ -1,14 +1,17 @@
+
+// This should be moved to a better file
+
 settings = {
     dragger: null,
     disable: 'right',
     addBodyClasses: true,
-    hyperextensible: true,
-    resistance: 0.5,
+    hyperextensible: false,
+    resistance: 1,
     flickThreshold: 50,
-    transitionSpeed: 0.3,
+    transitionSpeed: 0.5,
     easing: 'ease',
-    maxPosition: 266,
-    minPosition: -266,
+    maxPosition: 260,
+    minPosition: -260,
     tapToClose: true,
     touchToDrag: true,
     slideIntent: 40,
@@ -20,8 +23,3 @@ var snapper = new Snap({
 });
 
 
-Template.nav.events({
-    'click [data-action=toggleMenu]': function(){
-        $(div.loginArea).toggleClass ("hidden-account", false);
-    }
-});

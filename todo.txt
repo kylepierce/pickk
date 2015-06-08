@@ -1,22 +1,29 @@
 -------------- Graphics --------------
-- Update the UI to reflect the look from mockups
+
 
 
 -------------- Front End --------------
 
 General:
-- Animiations between pages
+- Animiations between pages. 
 - Exploring ionic framework 
 - Issues with typing and scrolling.
 
 Splash Screen:
-- Replace images or create an html page
+- Issue with iPad retina.
 
 Before login
 - Add slide deck to login page
 	- Watch the game
 	- Answer Questions
 	- Leaderboard to show you're the best
+
+Onboard new users:
+- Username
+- Other details
+	- What sports they watch.
+	- Favorite football team (hold this question until the middle of the first game)
+	- 
 
 Navigation
 - Stop scrolling on the side and top
@@ -33,6 +40,8 @@ Login:
 
 Profile page:
 - Display user profile name and photo if available 
+- Badges. Each badge should be clickable for a popover explaination.
+- Throphies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
 
 Notifications:
 - Create list of results from guesses

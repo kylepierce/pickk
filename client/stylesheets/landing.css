@@ -1,6 +1,6 @@
 .intro {
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 60px;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -27,6 +27,28 @@
 	font-size: 1.2em;
 	color: white;
 	float: right;
+}
+
+.landing-bg {
+	background-color: #FFAF22;
+}
+
+.slider-box {
+	height:70%;
+	text-align: center;
+}
+
+.inner-slide-box{
+	padding-top: 10%; 
+	color: #424242;
+}
+
+.inner-slide-box h1{
+	color: #424242;
+}
+
+.slider-pager .slider-pager-page {
+	color: #FFF!important;
 }
 
 .login {

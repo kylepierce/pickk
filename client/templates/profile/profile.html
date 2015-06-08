@@ -1,33 +1,12 @@
-<template name="profile">
+<template name="user-profile">
+
+<!-- Standard Nav instead of the custom nav design -->
+ {{> standardNav}}
+
   {{#ionView}}
     {{#ionContent}}
 
-    {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
-  {{/contentFor}}
-
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear coin-icon pull-right"> 
-    <i class="fa fa-circle"></i> <strong>{{currentUser.profile.coins}}</strong>
-    </button>
-  {{/contentFor}}
-
-
-  <div class="container">
-  <ol type="1" style="list-style-type: decimal;" class="leaderboard">
-  {{#each player}}
-    <li>{{username}} <span class="score"> {{profile.coins}}</span></li>
-  {{/each}}
-
-
-  </ol>
-  </div>
+      <h1> This is a profile</h1>
 
     {{/ionContent}}
   {{/ionView}}
