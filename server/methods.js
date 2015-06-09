@@ -1,5 +1,10 @@
 
 Meteor.methods({
+  "userExists": function(username){
+    return !!Meteor.users.findOne({username: username});
+  },
+
+  
 	'insertQuestion' : function(que){
 		// Variables to make the calling easy
 		var currentUserId = Meteor.userId();

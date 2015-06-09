@@ -8,10 +8,34 @@ Accounts.onCreateUser(function(options, user){
   return user;
 });
 
-  Meteor.startup(function () {
-    AccountsEntry.config({
-      defaultProfile: {
-          someDefault: 'default'
-      }
-    });
+Meteor.startup(function () {
+  AccountsEntry.config({
+    defaultProfile: {
+        someDefault: 'default'
+    }
   });
+
+  // Facebook login 
+  ServiceConfiguration.configurations.update(
+      { "service": "facebook" },
+      {
+        $set: {
+          "appId": "1399965486969249",
+          "secret": "599da8e423c2d677eda352cde88d01f9"
+        }
+      },
+      { upsert: true }
+    );
+
+  ServiceConfiguration.configurations.update(
+      { "service": "twitter" },
+      {
+        $set: {
+          "consumerKey": "D3R4rpdKWbzzBoVaJwyg6dFH2",
+          "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
+        }
+      },
+      { upsert: true }
+    );
+
+});
