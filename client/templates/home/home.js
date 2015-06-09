@@ -1,7 +1,7 @@
 
 // Display active cards
 
-Meteor.subscribe('activeQuestions');
+
 Meteor.subscribe('userAnswer');
 
 
@@ -9,17 +9,12 @@ Meteor.subscribe('userAnswer');
 Template.home.rendered = function () {
   if (!Meteor.loggingIn() && !Meteor.user()) {
    	 Router.go('/landing');
-  }
+  }   
 };
 
 Template.questionCard.helpers({
 	'questions': function(){
-		var currentUser = Meteor.userId();
-		var questionsActive =  QuestionList.find(
-				{active: true, 
-				usersAnswered: {$nin: [currentUser]}}, 
-				{sort: {dateCreated: 1,}});
-		var questionId = this._id;
+		Meteor.subscribe('activeQuestions');		
 	}
 });
 

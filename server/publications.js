@@ -1,13 +1,17 @@
 Meteor.publish('activeQuestions', function(){
 	var currentUserId = this.userId;
-	return QuestionList.find({ });
+	return QuestionList.find({
+			active: true, 
+			usersAnswered: 
+				{$nin: [currentUserId]}
+			}, {sort: {dateCreated: 1,}
+	});
 });
 
-Meteor.publish('userNotAnswered', function(){
-	var currentUserId = this.userId;
-	return QuestionList.find({active: true, usersTrue: {$nin: [currentUser]}, 
-		usersFalse: {$nin: [currentUser]}});
-});
+// Meteor.publish('userNotAnswered', function(){
+// 	var currentUserId = this.userId;
+// 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
+// });
 
 Meteor.publish('userAnswer', function(){
 	var currentUserId = this.userId;

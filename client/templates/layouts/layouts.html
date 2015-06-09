@@ -63,7 +63,7 @@
 
 <template name="sideMenuContent">
 <div class="profile-container">
-  <img class="circle-image" src="photo.jpg"><br>
+  <img class="circle-image" src="{{currentUser.profile.avatar}}"><br>
   <strong class="username">{{currentUser.username}}</strong>
 </div>
 
@@ -83,7 +83,7 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/user-profile">
   Profile
   </a>
-  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/setting">
+  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/settings">
   Settings
   </a>
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/login">

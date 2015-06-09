@@ -1,7 +1,14 @@
-
 Meteor.methods({
-  "userExists": function(username){
+  'userExists': function(username){
     return !!Meteor.users.findOne({username: username});
+  },
+
+  'updateProfile' : function(user, username, firstName, lastName){
+		UserList.update(user, 
+			{$set: 
+				{username: username, firstName: firstName, lastName: lastName}
+		});
+		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },
 
   
@@ -11,6 +18,7 @@ Meteor.methods({
 		var timeCreated = new Date();
 
 		console.log("Created a new question.")
+
 		// Insert the question into the database
 		QuestionList.insert({
 			que: que,
@@ -25,6 +33,7 @@ Meteor.methods({
 		QuestionList.update(questionId, {$set: {active: null}});
 	},
 
+	// Once the play is over update what option it was. Then award points to those who guessed correctly.
 	'modifyQuestionStatus' : function(questionId, answer){
 		QuestionList.update(questionId, {$set: {active: false, play: answer}});
 
@@ -36,12 +45,17 @@ Meteor.methods({
 		function awardPoints(user) {
 			for (var i = user.length - 1; i >= 0; i--) {
 					var winner = user[i];
+
+					// Adjust multiplier based on when selected.
 					var amount = parseInt(winner.amount * 4)
 					console.log("This user gets " + amount + " coins " + winner.userID);
+
+					// Update users coins
 					Meteor.users.update( {_id: winner.userID}, {$inc: { "profile.coins": amount}} );
 			};
 		};
 
+		// Can this be switch? Can it be refactored?
 		if (answer == "run") {
 			usersRun.map(function (user) {
 				awardPoints(user);
