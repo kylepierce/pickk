@@ -6,11 +6,85 @@
 
   {{#ionView}}
     {{#ionContent}}
+		
 
-      <h2>Friend Requests</h2>
-      <h2>Group requests</h2>
-      <h2>Results</h2>
-      <h3>Results for game xxx </h3>
+		<div class="list">
+			<div class="item item-divider">Friend Requests</div>
+			
+			<div class="item">
+				<div class="infomation-section">
+					<img src="photo.jpg" class="circle-image small-avatar">
+			    <h3>{{currentUser.username}}</h3> 
+			    <p>wants to be friend with you!</p>
+				</div>
+
+				<div class="actions-section">
+<!-- 			    <button class="button button-balanced" style="margin-top:15px">
+			      <i class="icon ion-person-add"></i>
+			    </button> -->
+			  </div>
+	    </div>
+
+			<div class="item item-divider">Group Requests</div>
+
+			<div class="item">
+				<div class="infomation-section">
+					<img src="photo.jpg" class="circle-image small-avatar">
+			    <h3>{ USER }</h3> 
+			    <p>wants you to join { GROUP NAME }</p>
+		    </div>
+
+		    <div class="actions-section">
+<!-- 			    <button class="button button-balanced" style="margin-top:15px">
+			      <i class="icon ion-checkmark"></i>
+			    </button>
+			    <button class="button button-positive" style="margin-top:15px">
+			      <i class="icon ion-close"></i>
+			    </button> -->
+		    </div>
+	    </div>
+
+	    <div class="item item-divider">Game Requests</div>
+
+			<div class="item">
+				<div class="infomation-section">
+					<img src="photo.jpg" class="circle-image small-avatar">
+			    <h3>{ USER }</h3> 
+			    <p>wants you to join { Game Name }</p>
+		    </div>
+
+		    <div class="actions-section">
+<!-- 			    <button class="button button-balanced" style="margin-top:15px">
+			      <i class="icon ion-checkmark"></i>
+			    </button>
+			    <button class="button button-positive" style="margin-top:15px">
+			      <i class="icon ion-close"></i>
+			    </button> -->
+		    </div>
+	    </div>
+
+			<div class="item item-divider">Game Notifications</div>
+
+			<div class="item">
+				<div class="infomation-section">
+					You won!
+		    </div>
+
+		    <div class="actions-section">
+					<!-- { XXXX } -->
+		    </div>
+	    </div>
+
+		</div>
+<!-- 		
+		<div class="bar bar-subheader">
+		  <h2 class="title">Results</h2>
+		</div>
+		<div class="bar bar-subheader">
+		  <h2 class="title">Results for game xxx </h2>
+		</div> -->
+
+
 
     {{/ionContent}}
   {{/ionView}}
