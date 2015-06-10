@@ -23,38 +23,45 @@
 				{{> normalPlay}}
 
 			<!-- Wagers -->
-			<div style="margin-bottom:10px;">
-				<div>
-					<input type="radio" name="wager" id="100" required value="100">
-					<label class="one-third wager-box" for="100">100</label>
-				</div>
-				<div>
-					<input type="radio" name="wager" id="250" required value="250">
-					<label class="one-third wager-box" for="250">250</label> 
-				</div>
-				<div>
-					<input type="radio" name="wager" id="500" required value="500">
-					<label class="one-third wager-box" for="500">500</label> 
-				</div>
-
-				<div>
-					<input type="radio" name="wager" id="1000" required value="1000">
-					<label class="one-third wager-box" for="1000">1000</label> 
-				</div>
-				<div>
-					<input type="radio" name="wager" id="2500" required value="2500">
-					<label class="one-third wager-box" for="2500">2500</label> 
-				</div>
-				<div>
-					<input type="radio" name="wager" id="5000" required value="5000">
-					<label class="one-third wager-box" for="5000">5000</label> 
-				</div>
-			</div>
+				{{> wagers}}
+				
 			<input style="height: 30px; line-height: 27px;" id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
 		</form>
 
 	{{/each}}
 </template>
+
+
+<template name="wagers">
+	<div style="margin-bottom:10px;">
+		<div>
+			<input type="radio" name="wager" id="100" required value="100">
+			<label class="one-third wager-box" for="100">100</label>
+		</div>
+		<div>
+			<input type="radio" name="wager" id="250" required value="250">
+			<label class="one-third wager-box" for="250">250</label> 
+		</div>
+		<div>
+			<input type="radio" name="wager" id="500" required value="500">
+			<label class="one-third wager-box" for="500">500</label> 
+		</div>
+
+		<div>
+			<input type="radio" name="wager" id="1000" required value="1000">
+			<label class="one-third wager-box" for="1000">1000</label> 
+		</div>
+		<div>
+			<input type="radio" name="wager" id="2500" required value="2500">
+			<label class="one-third wager-box" for="2500">2500</label> 
+		</div>
+		<div>
+			<input type="radio" name="wager" id="5000" required value="5000">
+			<label class="one-third wager-box" for="5000">5000</label> 
+		</div>
+	</div>
+</template>
+
 
 <!-- Redo the card setup so the cards are populated by json data instead of hard coded. Same styles but fill the option and multiplier from admin. -->
 

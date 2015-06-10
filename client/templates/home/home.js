@@ -1,8 +1,7 @@
 
 // Display active cards
-
-
 Meteor.subscribe('userAnswer');
+Meteor.subscribe('activeQuestions');
 
 
 // this should be changed to startup. There might also be some additions for user types
@@ -14,7 +13,14 @@ Template.home.rendered = function () {
 
 Template.questionCard.helpers({
 	'questions': function(){
-		Meteor.subscribe('activeQuestions');		
+		var currentUser = Meteor.userId();
+		var questionsActive =  QuestionList.find(
+				{active: true, 
+				usersAnswered: {$nin: [currentUser]}}, 
+				{sort: {dateCreated: 1,}});
+		var questionId = this._id;
+
+		return questionsActive
 	}
 });
 

@@ -1,11 +1,6 @@
 Meteor.publish('activeQuestions', function(){
 	var currentUserId = this.userId;
-	return QuestionList.find({
-			active: true, 
-			usersAnswered: 
-				{$nin: [currentUserId]}
-			}, {sort: {dateCreated: 1,}
-	});
+	return QuestionList.find({ });
 });
 
 // Meteor.publish('userNotAnswered', function(){

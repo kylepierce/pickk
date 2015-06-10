@@ -10,11 +10,11 @@ Accounts.onCreateUser(function(options, user){
 Meteor.startup(function () {
 
   // Not sure what this is.
-  // AccountsEntry.config({
-  //   defaultProfile: {
-  //       someDefault: 'default'
-  //   }
-  // });
+  AccountsEntry.config({
+    defaultProfile: {
+        someDefault: 'default'
+    }
+  });
 
   // Facebook login 
   ServiceConfiguration.configurations.update(

@@ -79,6 +79,8 @@ Logout:
 - Friendship
 - Groups
 
+- Geo Location based on IP (https://atmospherejs.com/peter/geoip)
+
 -------------- Wish list --------------
 - Add registered people to mailchimp or something 
 - Tweet questions and their answer for 500 points
