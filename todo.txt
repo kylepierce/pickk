@@ -23,6 +23,10 @@ Before login:
 - Icons and screen designs need to be made.
 	- Animations of how it works would be best.
 
+Icons:
+- Navigation icons
+- Icons next to optionsß
+
 -------------- Front End --------------
 
 General:
@@ -48,6 +52,10 @@ Login:
 		- Email
 		- Password
   - Send email to confirm
+
+Leaderboard: 
+- Highlight the current user if they are on the leaderboard.
+- Tell them what position they are in if they are outside the top 10
 
 Profile page:
 - Display user profile name and photo if available 

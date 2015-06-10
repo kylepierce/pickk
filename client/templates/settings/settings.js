@@ -6,7 +6,7 @@ Template.settings.helpers({
 		if (currentUser.services.twitter){
 			return currentUser.services.twitter.screenName;
 		}
-		return currentUser.profile.username;
+		return currentUser.username;
 		console.log(currentUser.username)
 		},
 
