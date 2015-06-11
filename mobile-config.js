@@ -55,4 +55,3 @@ App.launchScreens({
 
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
-App.accessRule('http://174.48.168.66:3000/*')

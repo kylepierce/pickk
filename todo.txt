@@ -1,16 +1,11 @@
 ---------------- Next ----------------
 
-Navigation:
-- Stop scrolling on the side and top
-- Remove right side menu or add something there
-
 Onboard after login:
 - More info (Step 1)
 	- Username 
 		- Add check mark if they already entered if from email login
 
 - What is the most efficent way to generate these results.
-
 
 
 ################## ALL ####################
@@ -44,6 +39,10 @@ User prompts:
 
 Active Question:
 - Submit button should be red until play and wager are selected.
+
+Navigation:
+- Stop scrolling on the side and top
+- Remove right side menu or add something there
 
 Login:
 - Sign up page 
