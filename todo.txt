@@ -6,6 +6,8 @@ Navigation:
 - Stop scrolling on the side and top
 - Remove right side menu or add something there
 
+- What is the most efficent way to generate these results.
+
 
 ################## ALL ####################
 
@@ -38,6 +40,10 @@ User prompts: (Later)
 
 Active Question: (90 mins)
 - Submit button should be red until play and wager are selected.
+
+Navigation:
+- Stop scrolling on the side and top
+- Remove right side menu or add something there
 
 Login:
 - Sign up page 
