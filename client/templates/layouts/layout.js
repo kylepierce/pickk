@@ -16,6 +16,9 @@ Template.sideMenuContent.helpers({
 	}	
 });
 
+Template.mainView.rendered = function() {
+  IonSideMenu.snapper.settings({disable: 'right'});
+};
 
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
@@ -27,3 +30,7 @@ Template.sideMenuContent.events({
 });
 
 Meteor.subscribe('leaderboard');
+
+$(document).bind('touchmove', function(e) {
+    e.preventDefault();
+});

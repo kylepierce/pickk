@@ -1,16 +1,10 @@
 ---------------- Next ----------------
 
+- What is the most efficent way to generate notifications. Memory should be from the client not on the server.
+
 Navigation:
 - Stop scrolling on the side and top
 - Remove right side menu or add something there
-
-Onboard after login:
-- More info (Step 1)
-	- Username 
-		- Add check mark if they already entered if from email login
-
-- What is the most efficent way to generate these results.
-
 
 
 ################## ALL ####################
@@ -29,20 +23,20 @@ Icons:
 
 -------------- Front End --------------
 
-General:
+General: (45 mins)
 - Animiations between pages. 
 	- I need the items on the side nav to appear from left to right or after load.
 
-User prompts:
-- Connect with... ** When would the best time to ask this?** 
-	- Facebook (optional)
-	- Twitter (optional)
+User prompts: (Later)
+	- Connect with... ** When would the best time to ask this?** 
+		- Facebook (optional)
+		- Twitter (optional)
 
-- Other details ** This can be asked during the first game **
-	- What sports they watch.
-	- Favorite football team (hold this question until the middle of the first game)
+	- Other details ** This can be asked during the first game **
+		- What sports they watch.
+		- Favorite football team (hold this question until the middle of the first game)
 
-Active Question:
+Active Question: (90 mins)
 - Submit button should be red until play and wager are selected.
 
 Login:
@@ -54,19 +48,28 @@ Login:
   - Send email to confirm
 
 Leaderboard: 
-- Highlight the current user if they are on the leaderboard.
+- Highlight the current user if they are on the leaderboard. (30 mins)
 - Tell them what position they are in if they are outside the top 10
 
 Profile page:
 - Display user profile name and photo if available 
+	- Routes :id with the same template
 - Badges. Each badge should be clickable for a popover explaination.
 - Throphies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
 
+Onboard after login:
+- More info (Step 1)
+	- Username 
+		- Add check mark if they already entered if from email login
+
 Notifications:
-- Create list of results from guesses
+- Create list of results from guesses (90 mins)
 
 Logout:
 - Send to thank you page.
+
+Routes:
+- 404 page
 
 -------------- Backend --------------
 - Security, what should I be focuing on.
@@ -81,22 +84,21 @@ Logout:
      - 4th down (run, pass, punt, interception, fumble, touchdown)
      - Point after (run, pass, interception, fumble, Point after good, missed kick)
 
-- Points
+- Points (60 mins)
 	- Stop users from wagering coins if they do not have enough coins.
 
 - Friendship
 - Groups
 
+- Add ad's to the bottom of the app (https://github.com/floatinghotpot/cordova-admob-pro)
+
 - Geo Location based on IP (https://atmospherejs.com/peter/geoip)
 
 -------------- Wish list --------------
 - Add registered people to mailchimp or something 
-- Tweet questions and their answer for 500 points
-- Onboarding  
+- Tweet questions and their answer for 500 points 
 - Purchase more points
 - Score multipler for more risky bets
-- Add ad's to the bottom of the app
-	- Every 5 answers have a pop up over the cards
 
 
 
