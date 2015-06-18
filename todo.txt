@@ -2,11 +2,6 @@
 
 - What is the most efficent way to generate notifications. Memory should be from the client not on the server.
 
-Navigation:
-- Stop scrolling on the side and top
-- Remove right side menu or add something there
-
-- What is the most efficent way to generate these results.
 
 
 ################## ALL ####################
@@ -21,7 +16,7 @@ Before login:
 
 Icons:
 - Navigation icons
-- Icons next to optionsß
+- Icons next to options
 
 -------------- Front End --------------
 
@@ -43,7 +38,6 @@ Active Question: (90 mins)
 
 Navigation:
 - Stop scrolling on the side and top
-- Remove right side menu or add something there
 
 Login:
 - Sign up page 
@@ -98,6 +92,8 @@ Routes:
 
 - Add ad's to the bottom of the app (https://github.com/floatinghotpot/cordova-admob-pro)
 
+- Add photos to users account (https://github.com/meteoric/camera)
+
 - Geo Location based on IP (https://atmospherejs.com/peter/geoip)
 
 -------------- Wish list --------------
@@ -105,6 +101,7 @@ Routes:
 - Tweet questions and their answer for 500 points 
 - Purchase more points
 - Score multipler for more risky bets
+
 
 
 

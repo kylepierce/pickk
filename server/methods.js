@@ -1,4 +1,6 @@
-Meteor.methods({
+
+
+Meteor.methods({	
   'userExists': function(username){
     return !!Meteor.users.findOne({username: username});
   },
@@ -6,7 +8,10 @@ Meteor.methods({
   'updateProfile' : function(user, username, firstName, lastName){
 		UserList.update(user, 
 			{$set: 
-				{username: username, firstName: firstName, lastName: lastName}
+				{username: username, 
+				firstName: firstName, 
+				lastName: lastName
+			}
 		});
 		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },

@@ -2,7 +2,7 @@
 
 {{#ionBody}}
 
-  {{#ionSideMenuContainer side="left"}}
+  {{#ionSideMenuContainer side="left" dragContent=false}}
 
       {{#ionSideMenu}}
 
@@ -14,7 +14,7 @@
 
         {{> ionNavBar}}
 
-        {{#ionNavView}}
+        {{#ionNavView animation="slide-in-up"}}
           {{> yield}}
 
     {{#if isAndroid}}
@@ -62,6 +62,7 @@
 </template>
 
 <template name="sideMenuContent">
+<div class="scrollable">
 <div class="profile-container">
   <img class="circle-image" src="{{currentUser.profile.avatar}}"><br>
   <strong class="username">{{currentUser.username}}</strong>
@@ -92,5 +93,6 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing">
     Logout
   </a>
+</div>
 </div>
 </template>

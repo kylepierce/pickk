@@ -10,12 +10,12 @@ App.info({
 App.icons({
   // iPhone Icons
   'iphone': 'resources/icons/ios/iphone.png',
-  'iphone_2x': 'resources/icons/ios/iphone@2x.png',
-  'iphone_3x': 'resources/icons/ios/iphone6@3x.png',
+  'iphone_2x': 'resources/icons/ios/iphone2x.png',
+  'iphone_3x': 'resources/icons/ios/iphone63x.png',
 
   // iPad Icons
-  'ipad': 'resources/icons/ios/ipad@1x.png',
-  'ipad_2x': 'resources/icons/ios/ipad@2x.png',
+  'ipad': 'resources/icons/ios/ipad1x.png',
+  'ipad_2x': 'resources/icons/ios/ipad2x.png',
 
   // Android Phones
   'android_ldpi': 'resources/icons/android/36.png',
@@ -31,16 +31,16 @@ App.icons({
 App.launchScreens({
   // iPhone
   'iphone': 'resources/splash/Default-portrait~iphone.png',
-  'iphone_2x': 'resources/splash/Default-portrait@2x~iphone4.png',
-  'iphone5': 'resources/splash/Default-portrait@2x~iphone5.jpg',
-  'iphone6': 'resources/splash/Default-portrait@2x~iphone6.png',
-  'iphone6p_portrait': 'resources/splash/Default-portrait@3x~iphone6+.png',
+  'iphone_2x': 'resources/splash/Default-portrait2x~iphone4.png',
+  'iphone5': 'resources/splash/Default-portrait2x~iphone5.jpg',
+  'iphone6': 'resources/splash/Default-portrait2x~iphone6.png',
+  'iphone6p_portrait': 'resources/splash/Default-portrait3x~iphone6+.png',
 
   //iPad
   'ipad_portrait': 'resources/splash/Default-Portrait~ipad.png',
-  'ipad_portrait_2x': 'resources/splash/Default-Portrait@2x~ipad.png',
+  'ipad_portrait_2x': 'resources/splash/Default-Portrait2x~ipad.png',
   'ipad_landscape': 'resources/splash/Default-Landscape~ipad.png',
-  'ipad_landscape_2x': 'resources/splash/Default-Landscape@2x~ipad.png',
+  'ipad_landscape_2x': 'resources/splash/Default-Landscape2x~ipad.png',
 
   // Android
   'android_ldpi_portrait': 'resources/splash/splash-200x320.png',

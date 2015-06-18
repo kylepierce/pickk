@@ -42,6 +42,7 @@ button.at-social-btn i {
 .slider-box {
 	height:70%;
 	text-align: center;
+	overflow-x: hidden;
 }
 
 .inner-slide-box{
