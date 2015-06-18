@@ -4,6 +4,14 @@ Meteor.methods({
     return !!Meteor.users.findOne({username: username});
   },
 
+  'updateProfile' : function(user, username, firstName, lastName){
+		UserList.update(user, 
+			{$set: 
+				{username: username, firstName: firstName, lastName: lastName}
+		});
+		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
+  },
+
   
 	'insertQuestion' : function(que){
 		// Variables to make the calling easy

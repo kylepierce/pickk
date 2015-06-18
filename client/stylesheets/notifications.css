@@ -1,0 +1,22 @@
+.small-avatar {
+	height: 50px;
+	width: 50px!important;
+	float: left;
+	margin-top: 0!important;
+	margin-right: 10px;
+}
+
+.infomation-section {
+	width: 100%;
+	float: left;
+}
+
+.infomation-section p {
+	overflow: auto;
+	white-space: normal;
+	text-overflow: normal;
+}
+
+.actions-section {
+	text-align: right;
+}
