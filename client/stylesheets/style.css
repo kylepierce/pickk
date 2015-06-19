@@ -11,8 +11,9 @@ html, body {
 
 .snap-drawer {
     height: 100%;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow-x:hidden;
+		overflow-y: auto; 
+	  -webkit-overflow-scrolling: touch;
 }
 
 a {
