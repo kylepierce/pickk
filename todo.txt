@@ -2,9 +2,6 @@
 
 - What is the most efficent way to generate notifications. Memory should be from the client not on the server.
 
-- Points (60 mins)
-	- Stop users from wagering coins if they do not have enough coins.
-
 - Features if they play is over turned.
      - Remove coins from winning users
      - Award users who wagered their coins back

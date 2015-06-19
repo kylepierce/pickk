@@ -71,7 +71,6 @@ Meteor.methods({
 
 
 	'questionAnswered' : function( user, questionId, answer, wager){
-
 		// Update question with the user who have answered.
 		QuestionList.update(questionId, {$push: {usersAnswered: user}});
 
