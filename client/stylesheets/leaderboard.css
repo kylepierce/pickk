@@ -2,16 +2,19 @@ ol {
     list-style-position: inside;
     list-style-type: decimal;
 }
-
-.leaderboard li {
-	margin: 10px 0;
-	padding: 10px 20px;
-	width: 100%;
-	background-color: white;
-	font-size: 1.3em;
-	list-style: inherit!important;
+.score {
+	float:right;
+	font-size: inherit;
 }
 
-.leaderboard span{
-	float: right;
+.center-username {
+	padding-top: 10px; 
+}
+
+.list-font {
+	font-size: 16px;
+}
+
+a {
+	color:black;
 }
