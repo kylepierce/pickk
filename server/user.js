@@ -1,7 +1,12 @@
 Accounts.onCreateUser(function(options, user){
 
 	profile = {
-		coins: 50000
+		coins: 50000,
+    avatar: 'twitter_logo.png',
+    followers: [],
+    badges: [],
+    firstName: '',
+    lastName: ''
     }
     user.profile = profile 
 

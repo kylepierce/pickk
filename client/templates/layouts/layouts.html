@@ -64,7 +64,7 @@
 <template name="sideMenuContent">
 <div class="scrollable">
 <div class="profile-container">
-  <img class="circle-image" src="{{currentUser.profile.avatar}}"><br>
+  <img class="circle-image" src="{{avatar}}"><br>
   <strong class="username">{{currentUser.username}}</strong>
 </div>
 
@@ -90,7 +90,7 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/login">
   Login
   </a>
-  <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing">
+  <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
     Logout
   </a>
 </div>

@@ -6,17 +6,7 @@
     {{#ionContent}}
 
   <div class="container">
-
-<!--     {{>quickForm collection="user" doc=this type="update" }}
-    	{{> afQuickField name="username"}}
-    	{{> afQuickField name="firstName"}}
-			{{> afQuickField name="lastName"}}
-			<button type="submit" class="button button-large button-positive">Update profile</button>
-		{{/autoForm}} -->
-
-
 	<form>
-		<img src="{{avatar}}">
 		<label>Username:
 		<input type="text" name="username" value="{{username}}" required></label>
 
@@ -25,6 +15,10 @@
 
 		<label>Last Name:
 		<input type="text" name="lastName" value="{{lastName}}"></label>
+
+		Photo:<br>
+		Want to upload your own photo?<br>
+		<img src="{{avatar}}" style="width:100px; height: 100px;">
 
 		<input type="submit" class="button button-large button-positive" value="Update profile">
 	</form>

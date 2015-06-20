@@ -6,11 +6,32 @@
   {{#ionView}}
     {{#ionContent}}
 
-      <h1> This is a profile</h1>
+		<div class="profile-header">
+	    <!-- {{> avatar user=this size="large" shape="circle"}} -->
+	    <img src="{{avatar}}" class="circle-image" style="width:25%!important;">
+	  	<div style="clear:both;">
+	  		<h3>{{currentUser.username}}</h3>
+    	</div>  
+    </div>
+    <h3>Badges</h3>
+    <div style="overflow-x: scroll;">
+    	<img style="width:24%!important;" src="san-fran.png">
+    	<img style="width:24%!important;" src="san-fran.png">
+    	<img style="width:24%!important;" src="san-fran.png">
+    	<img style="width:24%!important;" src="san-fran.png">
+    </div>
+    
+    <div>
+    	<h3>Trophies</h3>
+    	<img src="fire.png">
+    </div>
+    
+    <div>
+    	<h3>Followers</h3>
+    </div>
+
 
     {{/ionContent}}
   {{/ionView}}
 
 </template>
-
-

@@ -2,34 +2,32 @@ Meteor.subscribe('profileUpdate');
 
 Template.settings.helpers({
 	username: function () {
-		currentUser = Meteor.user();
+		var currentUser = Meteor.user();
 		if (currentUser.services.twitter){
 			return currentUser.services.twitter.screenName;
+		} else {
+			return currentUser.username;
 		}
-		return currentUser.username;
-		console.log(currentUser.username)
 		},
 
 
 	firstName: function () {
-		currentUser = Meteor.user();
+		var currentUser = Meteor.user();
 		if (currentUser.services.facebook){
 			return currentUser.services.facebook.first_name;
-		} if (currentUser.services.twitter){
-			return currentUser.services.twitter.last_name;
+		} else {
+			return currentUser.firstName;
 		}
-		return currentUser.profile.firstName;
 	},
 
 
 	lastName: function () {
-		currentUser = Meteor.user();
+		var currentUser = Meteor.user();
 		if (currentUser.services.facebook){
 			return currentUser.services.facebook.last_name;
-		} if (currentUser.services.twitter){
-			return currentUser.services.twitter.last_name;
+		} else {
+			return currentUser.firstName;
 		}
-		return currentUser.profile.firstName;
 	},
 });
 
@@ -37,7 +35,6 @@ Template.settings.events({
 	'submit form': function (event) {
 		event.preventDefault();
 		var currentUserId = Meteor.userId();
-		console.log(currentUser);
 
 		var username = event.target.username.value;
 		var firstName = event.target.firstName.value;

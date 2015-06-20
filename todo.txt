@@ -8,6 +8,9 @@
      - Notification that the play was overturned and they have being awarded their coins back.
      - Add to log
 
+- When user creates an account then land on the settings page it should update the profile object instead of being on the top level.
+
+
 ################## ALL ####################
 
 
@@ -22,6 +25,8 @@ Icons:
 - Navigation icons
 - Icons next to options
 
+Random user profile photo
+
 -------------- Front End --------------
 
 User prompts: (Later)
@@ -35,6 +40,8 @@ User prompts: (Later)
 		- What sports they watch.
 		- Favorite football team (hold this question until the middle of the first game)
 
+Active: 
+	- If no questions are active have a funny picture in the background or some football facts.
 
 Login:
 - Sign up page 
@@ -81,6 +88,7 @@ Routes:
      - 4th down (run, pass, punt, interception, fumble, touchdown)
      - Point after (run, pass, interception, fumble, Point after good, missed kick)
 
+- Add questions to specific game so all of one games answers are in one array.
 
 - Friendship
 - Groups

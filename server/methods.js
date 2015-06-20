@@ -7,7 +7,7 @@ Meteor.methods({
   'updateProfile' : function(user, username, firstName, lastName){
 		UserList.update(user, 
 			{$set: 
-				{username: username, firstName: firstName, lastName: lastName}
+				{'profile.username': username, 'profile.firstName': firstName, 'profile.lastName': lastName}
 		});
 		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },
