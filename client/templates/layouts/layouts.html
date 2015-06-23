@@ -2,7 +2,7 @@
 
 {{#ionBody}}
 
-  {{#ionSideMenuContainer side="left" dragContent=false}}
+  {{#ionSideMenuContainer side="left"}}
 
       {{#ionSideMenu}}
 
@@ -14,7 +14,11 @@
 
         {{> ionNavBar}}
 
+<<<<<<< HEAD
         {{#ionNavView transition="backward"}}
+=======
+        {{#ionNavView}}
+>>>>>>> parent of f621e3c... trying to fix collection bug
           {{> yield}}
 
     {{#if isAndroid}}
@@ -62,7 +66,6 @@
 </template>
 
 <template name="sideMenuContent">
-<div class="scrollable">
 <div class="profile-container">
   <img class="circle-image" src="{{avatar}}"><br>
   <strong class="username">{{currentUser.profile.username}}</strong>
@@ -93,6 +96,5 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
     Logout
   </a>
-</div>
 </div>
 </template>

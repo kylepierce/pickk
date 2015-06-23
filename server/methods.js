@@ -1,13 +1,22 @@
+<<<<<<< HEAD
 
 Meteor.methods({
   "userExists": function(username){
+=======
+Meteor.methods({
+  'userExists': function(username){
+>>>>>>> parent of f621e3c... trying to fix collection bug
     return !!Meteor.users.findOne({username: username});
   },
 
   'updateProfile' : function(user, username, firstName, lastName, avatar){
 		UserList.update(user, 
 			{$set: 
+<<<<<<< HEAD
 				{'profile.username': username, 'profile.firstName': firstName, 'profile.lastName': lastName, 'profile.avatar': avatar}
+=======
+				{username: username, firstName: firstName, lastName: lastName}
+>>>>>>> parent of f621e3c... trying to fix collection bug
 		});
 		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },
