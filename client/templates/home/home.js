@@ -23,11 +23,7 @@ Template.questionCard.helpers({
 				{sort: {dateCreated: 1,}});
 		var questionId = this._id;
 
-<<<<<<< HEAD
 		return questionsActive;
-=======
-		return questionsActive
->>>>>>> parent of f621e3c... trying to fix collection bug
 	}
 });
 

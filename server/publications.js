@@ -3,18 +3,18 @@ Meteor.publish('activeQuestions', function(){
 	return QuestionList.find({ });
 });
 
-<<<<<<< HEAD
+
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
 	return QuestionList.find({active: true, usersTrue: {$nin: [currentUser]}, 
 		usersFalse: {$nin: [currentUser]}});
 });
-=======
+
 // Meteor.publish('userNotAnswered', function(){
 // 	var currentUserId = this.userId;
 // 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
 // });
->>>>>>> parent of f621e3c... trying to fix collection bug
+
 
 Meteor.publish('userAnswer', function(){
 	var currentUserId = this.userId;
