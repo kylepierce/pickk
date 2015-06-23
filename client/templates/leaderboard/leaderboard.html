@@ -11,17 +11,17 @@
   <ol type="1" class="list">
 
     {{#each player}}
-      <a href="#{{_id}}">
-      <li class="list-font">
-      <div class="item item-avatar">
-      <img src="photo.jpg">
-      <h2 class="center-username">{{username}} <span class="score">{{profile.coins}}</span></h2>
-          
-      </div>
-      </li>
-      </a>
-    {{/each}}
+      {{#linkTo route="profile/:{{username}}" data=getData}}
 
+      <li class="list-font">
+        <div class="item item-avatar">
+        <img src="{{profile.avatar}}">
+        <h2 class="center-username">{{profile.username}} <span class="score">{{profile.coins}}</span></h2>
+        </div>
+      </li>
+
+      {{/linkTo}}
+    {{/each}}
   </ol>
 
   <div class="item item-divider">College Buddies</div>
@@ -30,9 +30,9 @@
       <a href="#{{_id}}">
       <li class="list-font">
       <div class="item item-avatar">
-      <img src="photo.jpg">
+      <img src="joe.jpg">
       <h2 class="center-username">John Smith 
-      <span class="score">3</span></h2>
+      <span class="score">33320</span></h2>
           
       </div>
       </li>
@@ -47,9 +47,9 @@
       <a href="#{{_id}}">
       <li class="list-font">
       <div class="item item-avatar">
-      <img src="photo.jpg">
+      <img src="brad.jpg">
       <h2 class="center-username">John Smith 
-      <span class="score">3</span></h2>
+      <span class="score">30000</span></h2>
           
       </div>
       </li>

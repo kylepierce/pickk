@@ -5,6 +5,8 @@ Accounts.onCreateUser(function(options, user){
     avatar: 'twitter_logo.png',
     followers: [],
     badges: [],
+    trophies: [],
+    groups: [],
     firstName: '',
     lastName: ''
     }
@@ -44,3 +46,4 @@ Meteor.startup(function () {
     );
 
 });
+

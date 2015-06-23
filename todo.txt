@@ -8,8 +8,6 @@
      - Notification that the play was overturned and they have being awarded their coins back.
      - Add to log
 
-- When user creates an account then land on the settings page it should update the profile object instead of being on the top level.
-
 
 ################## ALL ####################
 
@@ -54,12 +52,16 @@ Login:
 Leaderboard: 
 - Highlight the current user if they are on the leaderboard. (30 mins)
 - Tell them what position they are in if they are outside the top 10
+- Display all the groups they are in.
+	- Each group will need a view that shows everyone in their group.
 
 Profile page:
 - Display user profile name and photo if available 
 	- Routes :id with the same template
-- Badges. Each badge should be clickable for a popover explaination.
-- Throphies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
+- Badges. Each badge should be clickable for a popover explaination. 
+	- Create a badge collection
+- Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
+	- Create a trophy collection
 
 Onboard after login:
 - More info (Step 1)

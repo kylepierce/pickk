@@ -16,7 +16,7 @@ Template.settings.helpers({
 		if (currentUser.services.facebook){
 			return currentUser.services.facebook.first_name;
 		} else {
-			return currentUser.firstName;
+			return currentUser.profile.firstName;
 		}
 	},
 
@@ -26,7 +26,7 @@ Template.settings.helpers({
 		if (currentUser.services.facebook){
 			return currentUser.services.facebook.last_name;
 		} else {
-			return currentUser.firstName;
+			return currentUser.profile.lastName;
 		}
 	},
 });
@@ -39,8 +39,9 @@ Template.settings.events({
 		var username = event.target.username.value;
 		var firstName = event.target.firstName.value;
 		var lastName = event.target.lastName.value;
+		var avatar = $('#avatar').prop('src');
 
-		Meteor.call('updateProfile', currentUserId, username, firstName, lastName);
+		Meteor.call('updateProfile', currentUserId, username, firstName, lastName, avatar);
 
 		Router.go('/');
 	}

@@ -8,13 +8,13 @@
     {{#ionContent}}
 		
 
-		{{#ionList class="my-class"}}
-			<div class="item item-divider">Friend Requests</div>
+		{{#ionList class="my-class"}} 
+			<div class="item item-divider">New Followers</div>
 			
 			{{#ionItem buttonRight=true avatar=true}}
-				<img src="photo.jpg">
+				<img src="brad.jpg">
 		    <h2>John Smith</h2>
-		    <p>wants to be friend with you!</p>
+		    <p>is now following you!</p>
 		    <button class="button" data-ion-popover="_notificationPopover">
 		      {{> ionIcon icon="more"}}
 		    </button>
@@ -23,9 +23,9 @@
 
 			<div class="item item-divider">Group Requests</div>
 			{{#ionItem buttonRight=true avatar=true}}
-				<img src="photo.jpg">
+				<img src="joe.jpg">
 	      <h2>John Smith</h2>
-	      <p>wants you to join { GROUP NAME }</p>
+	      <p>wants you to join College Buddies</p>
 	      <button class="button" data-ion-popover="_notificationPopover">
 	        {{> ionIcon icon="more"}}
 	      </button>
@@ -36,20 +36,45 @@
 			{{#ionItem buttonRight=true avatar=true}}
 				<img src="photo.jpg">
 	      <h2>John Smith</h2>
-	      <p>wants you to join { Game Name }</p>
+	      <p>wants you to play <strong>New England vs Seattle</strong> game</p>
+	      <button class="button" data-ion-popover="_notificationPopover">
+	        {{> ionIcon icon="more"}}
+	      </button>
+    	{{/ionItem}}
+
+	    <div class="item item-divider">Badges Earned</div>
+			{{#ionItem buttonRight=true class="item-thumbnail-left"}}
+				<img class="pickk-badge" src="san-fran.png">
+	      <h2>San Fransico Badge</h2>
+	      <p>You watched San Fransico play!</p>
 	      <button class="button" data-ion-popover="_notificationPopover">
 	        {{> ionIcon icon="more"}}
 	      </button>
     	{{/ionItem}}
 
 	    <div class="item item-divider">Trophies Won</div>
+	    			{{#ionItem buttonRight=true class="item-thumbnail-left"}}
+				<img src="fire.png">
+	      <h2>1% Trophy</h2>
+	      <p>You ranked in the top 1% of all players!</p>
+	      <button class="button" data-ion-popover="_notification">
+	        {{> ionIcon icon="more"}}
+	      </button>
+    	{{/ionItem}}
 
-
-	    <div class="item item-divider">Badges Earned</div>
-
-
-			<div class="item item-divider">Game Notifications</div>
+			{{> gameNotifications}}
+			
 		{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="gameNotifications">
+	<div class="item item-divider">Game Notifications</div>
+
+		{{#ionItem}}
+				{{#each question}}
+					<p>You guessed... {{_id}}</p>
+				{{/each}}
+    	{{/ionItem}}
 </template>

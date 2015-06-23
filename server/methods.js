@@ -4,10 +4,10 @@ Meteor.methods({
     return !!Meteor.users.findOne({username: username});
   },
 
-  'updateProfile' : function(user, username, firstName, lastName){
+  'updateProfile' : function(user, username, firstName, lastName, avatar){
 		UserList.update(user, 
 			{$set: 
-				{'profile.username': username, 'profile.firstName': firstName, 'profile.lastName': lastName}
+				{'profile.username': username, 'profile.firstName': firstName, 'profile.lastName': lastName, 'profile.avatar': avatar}
 		});
 		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },

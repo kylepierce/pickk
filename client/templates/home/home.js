@@ -12,6 +12,7 @@ Template.home.rendered = function (template) {
   }
 };
 
+
 Template.questionCard.helpers({
 	'questions': function(){
 		var currentUser = Meteor.userId();
