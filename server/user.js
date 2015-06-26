@@ -1,8 +1,17 @@
 Accounts.onCreateUser(function(options, user){
 
-  profile = {coins: 50000}
-  
-  user.profile = profile 
+	profile = {
+		coins: 50000,
+    avatar: 'twitter_logo.png',
+    followers: [],
+    badges: [],
+    trophies: [],
+    groups: [],
+    firstName: '',
+    lastName: ''
+    }
+    user.profile = profile 
+
 
   return user;
 });
@@ -27,3 +36,4 @@ Meteor.startup(function () {
     );
 
 });
+

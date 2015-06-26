@@ -7,49 +7,71 @@
   {{#ionView}}
     {{#ionContent}}
 		
+		{{#ionList class="my-class"}} 
+			<div class="item item-divider">Group Requests</div>
+			{{#ionItem buttonRight=true avatar=true}}
+				<img src="joe.jpg">
+	      <h2>Miles Houser</h2>
+	      <p>wants you to join <strong>College Buddies</strong></p>
+	      <button class="button" data-ion-popover="_notificationPopover">
+	        {{> ionIcon icon="more"}}
+	      </button>
+    	{{/ionItem}}
 
-		{{#ionList class="my-class"}}
-			<div class="item item-divider">Friend Requests</div>
-			
+    	<div class="item item-divider">Game Requests</div>
+
 			{{#ionItem buttonRight=true avatar=true}}
 				<img src="photo.jpg">
+	      <h2>Chad Sutton</h2>
+	      <p>wants you to play <strong>New England vs Seattle</strong> game</p>
+	      <button class="button" data-ion-popover="_notificationPopover">
+	        {{> ionIcon icon="more"}}
+	      </button>
+    	{{/ionItem}}
+
+    	<br>
+
+			<div class="item item-divider">All notifications</div>
+			
+			{{#ionItem buttonRight=true avatar=true}}
+				<img src="brad.jpg">
 		    <h2>John Smith</h2>
-		    <p>wants to be friend with you!</p>
+		    <p>is now following you!</p>
 		    <button class="button" data-ion-popover="_notificationPopover">
 		      {{> ionIcon icon="more"}}
 		    </button>
     	{{/ionItem}}
 
-
-			<div class="item item-divider">Group Requests</div>
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="photo.jpg">
-	      <h2>John Smith</h2>
-	      <p>wants you to join { GROUP NAME }</p>
+			{{#ionItem buttonRight=true class="item-thumbnail-left"}}
+				<img class="pickk-badge" src="san-fran.png">
+	      <h2>San Fransico Badge</h2>
+	      <p>You watched San Fransico play!</p>
 	      <button class="button" data-ion-popover="_notificationPopover">
 	        {{> ionIcon icon="more"}}
 	      </button>
     	{{/ionItem}}
 
-	    <div class="item item-divider">Game Requests</div>
-
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="photo.jpg">
-	      <h2>John Smith</h2>
-	      <p>wants you to join { Game Name }</p>
-	      <button class="button" data-ion-popover="_notificationPopover">
+	    {{#ionItem buttonRight=true class="item-thumbnail-left"}}
+				<img src="fire.png">
+	      <h2>1% Trophy</h2>
+	      <p>You ranked in the top 1% of all players!</p>
+	      <button class="button" data-ion-popover="_notification">
 	        {{> ionIcon icon="more"}}
 	      </button>
     	{{/ionItem}}
-
-	    <div class="item item-divider">Trophies Won</div>
-
-
-	    <div class="item item-divider">Badges Earned</div>
-
-
-			<div class="item item-divider">Game Notifications</div>
+			
 		{{/ionList}}
+
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="gameNotifications">
+	<div class="item item-divider">Game Notifications</div>
+
+		{{#ionItem}}
+				{{#each question}}
+					<p>You guessed... {{_id}}</p>
+				{{/each}}
+    	{{/ionItem}}
 </template>

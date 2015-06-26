@@ -20,9 +20,3 @@
 .actions-section {
 	text-align: right;
 }
-
-.item p {
-	overflow: auto;
-	white-space: normal;
-	text-overflow: normal;
-}

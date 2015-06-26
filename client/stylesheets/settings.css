@@ -1,0 +1,10 @@
+.left-icon {
+	width:5%;
+	float:left;
+	font-size: 2em;
+}
+
+.settings-input-box {
+	width: 95%;
+	float: right;
+}

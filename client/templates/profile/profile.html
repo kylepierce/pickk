@@ -1,4 +1,4 @@
-<template name="user-profile">
+<template name="userProfile">
 
 <!-- Standard Nav instead of the custom nav design -->
  {{> standardNav}}
@@ -6,11 +6,24 @@
   {{#ionView}}
     {{#ionContent}}
 
-      <h1> This is a profile</h1>
+    {{#with profile}}
+	<div class="profile-background">        
+        <img src="{{this.profile.avatar}}" class="circle-image">
+      	<div style="clear:both;">
+        <h3>{{this.profile.username}}</h3>
+        </div> 
+    </div>
+    <div class="item item-divider">Followers</div>
+    <div class="item item-divider">Badges</div>
+    {{#each this.profile.badges}}
+        {{badge}}
+    {{/each}}
+    <div class="item item-divider">Trophies</div>
+    <div class="item item-divider">Groups</div>
+    
 
+    {{/with}}
     {{/ionContent}}
   {{/ionView}}
 
 </template>
-
-

@@ -6,10 +6,17 @@ Meteor.publish('activeQuestions', function(){
 				{sort: {dateCreated: 1,}});
 });
 
+
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
 });
+
+// Meteor.publish('userNotAnswered', function(){
+// 	var currentUserId = this.userId;
+// 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
+// });
+
 
 Meteor.publish('userAnswer', function(){
 	var currentUserId = this.userId;
@@ -19,3 +26,11 @@ Meteor.publish('userAnswer', function(){
 Meteor.publish('leaderboard', function() {
 	return UserList.find( { });
 })
+
+Meteor.publish('profile', function() {
+  return UserList.find();
+});
+
+Meteor.publish('profile', function(_id) {
+  return UserList.find({_id: _id});
+});

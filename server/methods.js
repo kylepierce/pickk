@@ -1,17 +1,18 @@
-
-
-Meteor.methods({	
+Meteor.methods({
   'userExists': function(username){
     return !!Meteor.users.findOne({username: username});
   },
 
-  'updateProfile' : function(user, username, firstName, lastName){
+
+  'updateProfile' : function(user, username, firstName, lastName, avatar){
 		UserList.update(user, 
 			{$set: 
-				{username: username, 
-				firstName: firstName, 
-				lastName: lastName
-			}
+				{
+				'profile.username': username, 
+				'profile.firstName': firstName, 
+				'profile.lastName': lastName, 
+				'profile.avatar': avatar
+				}
 		});
 		console.log("Updated " + user + " " + username + " " + firstName + " " + lastName);
   },
@@ -82,7 +83,6 @@ Meteor.methods({
 
 
 	'questionAnswered' : function( user, questionId, answer, wager){
-
 		// Update question with the user who have answered.
 		QuestionList.update(questionId, {$push: {usersAnswered: user}});
 

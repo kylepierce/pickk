@@ -29,31 +29,8 @@ Template.sideMenuContent.events({
     }
 });
 
-Meteor.subscribe('leaderboard');
-
-settings = {
-    dragger: false,
-    disable: 'right',
-    addBodyClasses: true,
-    hyperextensible: false,
-    resistance: 1,
-    flickThreshold: 50,
-    transitionSpeed: 0.5,
-    easing: 'ease',
-    maxPosition: 260,
-    minPosition: -260,
-    tapToClose: true,
-    touchToDrag: false,
-    slideIntent: 40,
-    minDragDistance: 5
-}
-
-var snapper = new Snap({
-  element: document.getElementById('fa-bars')
+Template.sideMenuContent.helpers({
+	userId: function () {
+		return Meteor.userId();
+	}
 });
-
-document.body.addEventListener("ontouchstart", function(event) {
-  if(document.getElementByClass("snap-drawer").scrollTop > 0) return;
-  event.preventDefault();
-  event.stopPropagation();
-}, false);
