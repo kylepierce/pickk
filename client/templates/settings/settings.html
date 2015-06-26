@@ -1,14 +1,25 @@
 <template name="settings">
 	<!-- Standard Nav instead of the custom nav design -->
- {{> standardNav}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button style="float:right;" class="button button-clear "> 
+    <strong>Skip</strong>
+    </button>
+  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
 
   <div class="container">
 	<form>
+		<div style="background-color:white;">
 		<label>Username:
-		<input type="text" name="username" value="{{username}}" required></label>
+		<div>
+		<i id="username" class=""></i>
+		<input type="text" class="settings-input-box" name="username" value="{{username}}" required>
+		</div>
+		</label>
+		</div>
 
 		<label>First Name:
 		<input type="text" name="firstName" value="{{firstName}}"></label>

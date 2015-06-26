@@ -1,42 +1,28 @@
-<template name="profile">
+<template name="userProfile">
 
 <!-- Standard Nav instead of the custom nav design -->
  {{> standardNav}}
 
   {{#ionView}}
     {{#ionContent}}
-	<div class="profile-background">
-        <!-- {{> avatar user=this size="large" shape="circle"}} -->
-        <img src="{{avatar}}" class="circle-image">
+
+    {{#with profile}}
+	<div class="profile-background">        
+        <img src="{{this.profile.avatar}}" class="circle-image">
       	<div style="clear:both;">
-        
-      	<h3>{{username}}</h3>
-        {{#with profile}}
-            Edit
-        {{/with}}
-    </div> 
-
+        <h3>{{this.profile.username}}</h3>
+        </div> 
     </div>
-    <h3>Badges</h3>
-    <div style="overflow-x: scroll;">
-    	<img class="pickk-badge" src="san-fran.png">
-    	<img class="pickk-badge" src="san-fran.png">
-    	<img class="pickk-badge" src="san-fran.png">
-    	<img class="pickk-badge" src="san-fran.png">
-    </div>
+    <div class="item item-divider">Followers</div>
+    <div class="item item-divider">Badges</div>
+    {{#each this.profile.badges}}
+        {{badge}}
+    {{/each}}
+    <div class="item item-divider">Trophies</div>
+    <div class="item item-divider">Groups</div>
     
-    <div>
-    	<h3>Trophies</h3>
-    	<img class="pickk-badge" src="fire.png">
-        <img class="pickk-badge" src="fire.png">
-        <img class="pickk-badge" src="fire.png">
-        <img class="pickk-badge" src="fire.png">
-    </div>
-    
-    <div>
-    	<h3>Followers</h3>
-    </div>
 
+    {{/with}}
     {{/ionContent}}
   {{/ionView}}
 

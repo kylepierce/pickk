@@ -4,8 +4,10 @@ Template.settings.helpers({
 	username: function () {
 		var currentUser = Meteor.user();
 		if (currentUser.services.twitter){
+			$('#username').addClass('left-icon fa fa-check-circle')
 			return currentUser.services.twitter.screenName;
 		} else {
+			$('#username').addClass('left-icon fa fa-check-circle')
 			return currentUser.username;
 		}
 		},

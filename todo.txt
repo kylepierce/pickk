@@ -1,20 +1,25 @@
 ---------------- Next ----------------
 
 - What is the most efficent way to generate notifications. Memory should be from the client not on the server.
+	- Create a local collection that keeps data with the user. 
+	- Group and game requests are fixed until they are accept, denied or end.
+	- Followers are fixed they are highlighted when new.
 
-<<<<<<< HEAD
 - Features if they play is over turned.
      - Remove coins from winning users
      - Award users who wagered their coins back
      - Notification that the play was overturned and they have being awarded their coins back.
      - Add to log
-=======
+
 Navigation:
 - Stop scrolling on the side and top
 - Remove right side menu or add something there
 
-- What is the most efficent way to generate these results.
->>>>>>> parent of f621e3c... trying to fix collection bug
+
+
+
+
+
 
 
 ################## ALL ####################
@@ -29,7 +34,7 @@ Before login:
 
 Icons:
 - Navigation icons
-- Icons next to optionsß
+- Icons next to options
 
 Random user profile photo
 
@@ -46,17 +51,10 @@ User prompts: (Later)
 		- What sports they watch.
 		- Favorite football team (hold this question until the middle of the first game)
 
-<<<<<<< HEAD
+
 Active: 
 	- If no questions are active have a funny picture in the background or some football facts.
-=======
-Active Question: (90 mins)
-- Submit button should be red until play and wager are selected.
 
-Navigation:
-- Stop scrolling on the side and top
-- Remove right side menu or add something there
->>>>>>> parent of f621e3c... trying to fix collection bug
 
 Login:
 - Sign up page 
@@ -73,8 +71,6 @@ Leaderboard:
 	- Each group will need a view that shows everyone in their group.
 
 Profile page:
-- Display user profile name and photo if available 
-	- Routes :id with the same template
 - Badges. Each badge should be clickable for a popover explaination. 
 	- Create a badge collection
 - Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
@@ -119,13 +115,6 @@ Routes:
 -------------- Wish list --------------
 - Add registered people to mailchimp or something 
 - Tweet questions and their answer for 500 points 
-<<<<<<< HEAD
-- Purchase more points
-=======
 - Purchase more points
 - Score multipler for more risky bets
 
-
-
-
->>>>>>> parent of f621e3c... trying to fix collection bug

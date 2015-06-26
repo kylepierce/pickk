@@ -2,7 +2,7 @@
 
 {{#ionBody}}
 
-  {{#ionSideMenuContainer side="left"}}
+  {{#ionSideMenuContainer side="left" dragContent=false}}
 
       {{#ionSideMenu}}
 
@@ -22,14 +22,14 @@
         {{> ionTab title="Active" path="dashboard" icon="android-star"}}
         {{> ionTab title="Leaderboard" path="leaderboard" icon="person-stalker"}}
         {{> ionTab title="Notifications" path="notifications" icon="android-notifications"}}
-        {{> ionTab title="Profile" path="user-profile" icon="android-happy"}}
+        {{> ionTab title="Profile" path="user-profile/{{userId}}" icon="android-happy"}}
       {{/ionTabs}}
     {{else}}
       {{#ionTabs style="ios"}}
         {{> ionTab title="Active" path="dashboard" iconOff="ios-photos-outline" iconOn="ios-photos" class="tab-item-positive"}}
         {{> ionTab title="Leaderboard" path="leaderboard" iconOff="ios-people-outline" iconOn="ios-people" class="tab-item-positive"}}
         {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
-        {{> ionTab title="Profile" path="user-profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
+        {{> ionTab title="Profile" path="user-profile/{{userId}}" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
       {{/ionTabs}}
     {{/if}}
         {{/ionNavView}}
@@ -63,8 +63,10 @@
 
 <template name="sideMenuContent">
 <div class="profile-container">
-  <img class="circle-image" src="{{avatar}}"><br>
+<a href="/user-profile/{{userId}}" data-ion-menu-toggle="left">
+  <img class="circle-image" src="{{singleAvatar}}"><br>
   <strong class="username">{{currentUser.profile.username}}</strong>
+</a>
 </div>
 
 <div class="list">
@@ -80,7 +82,7 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/admin">
   Admin
   </a>
-  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/user-profile">
+  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/user-profile/{{userId}}">
   Profile
   </a>
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/settings">

@@ -1,4 +1,4 @@
-Template.registerHelper('avatar', function () {
+Template.registerHelper('singleAvatar', function () {
 	var currentUser = Meteor.user();
 
    if (currentUser.services.twitter){

@@ -15,3 +15,7 @@ ol {
 .leaderboard span{
 	float: right;
 }
+
+.score {
+	float:right;
+}
