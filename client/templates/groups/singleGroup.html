@@ -1,0 +1,33 @@
+<template name="singleGroup">
+
+<!-- Standard Nav instead of the custom nav design -->
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+
+    {{#with group}}
+			<h2>{{this.name}}</h2>
+				{{> memberCheck}}
+			
+			<br>
+			{{this.commissioner}}
+			<br>
+			{{this.members}}
+    {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+	
+</template>
+
+<template name="memberCheck">
+	{{#if alreadyMember }}
+		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave Group</button>
+
+	{{else}}
+		<button data-action="joinGroup" id="join-toggle" class="button button-balanced">Join</button>
+	{{/if}}
+</template>

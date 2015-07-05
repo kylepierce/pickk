@@ -1,0 +1,23 @@
+<template name="newGroup">
+	{{#ionModal}}
+		<div class="content overflow-scroll">
+			<div class="list">
+				<form>
+				<label class="item item-input item-stack-label">
+					<span class="input-label">Group name:</span>
+					<input type='text' name="groupName" placeholder="Accounting4Wins">
+				</label>
+
+					
+				<label class="item checkbox item-stack-label">
+					<span class="input-label">Do you want this group to be private?</span>
+					<input type="checkbox" name="privateCheck">
+						
+				</label>
+				<button type="submit" data-action="createGroup" class="button button-positive button-clear">Create Group</button>
+				</form>				
+
+			</div>
+		</div>
+	{{/ionModal}}
+</template>

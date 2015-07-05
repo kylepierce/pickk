@@ -6,7 +6,6 @@
   {{#ionView}}
     {{#ionContent}}
 
-  <div class="container">
   <div class="item item-divider">World Leaderboard</div>
   <ol type="1" class="list">
     {{#ionList}}
@@ -23,41 +22,28 @@
     {{/ionList}}
   </ol>
 
-  <div class="item item-divider">College Buddies</div>
-  <ol type="1" class="list">
 
-      <a href="#{{_id}}">
-      <li class="list-font">
-      <div class="item item-avatar">
-      <img src="joe.jpg">
-      <h2 class="center-username">John Smith 
-      <span class="score">33320</span></h2>
-          
-      </div>
-      </li>
-      </a>
-
-  </ol>
-
-
-  <div class="item item-divider">Accounting 4 Wins</div>
-  <ol type="1" class="list">
-
-      <a href="#{{_id}}">
-      <li class="list-font">
-      <div class="item item-avatar">
-      <img src="brad.jpg">
-      <h2 class="center-username">John Smith 
-      <span class="score">30000</span></h2>
-          
-      </div>
-      </li>
-      </a>
-
-  </ol>
-  </div>
+{{> groupLeaderboard}}
 
     {{/ionContent}}
   {{/ionView}}
 
+</template>
+
+<template name="groupLeaderboard">
+  <div class="item item-divider">GROUP NAME</div>
+    <ol type="1" class="list">
+      {{#ionList}}
+      {{#each player}}
+        {{#ionItem path="user.show" avatar=true}}
+        <img src="{{profile.avatar}}">
+        <li class="list-font">
+          
+          <h2 class="center-username">{{profile.username}} <span class="score">{{profile.coins}}</span></h2>
+        </li>
+
+        {{/ionItem}}
+      {{/each}}
+      {{/ionList}}
+    </ol>
 </template>

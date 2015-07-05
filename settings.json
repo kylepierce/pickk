@@ -1,10 +1,15 @@
 {
-  "appcache": {
-    "addedFiles": [
-      "/cordova.js"
-    ]
-  },
   "public": {
-    "appcache": "prompt"
-  }
+    "appcache": "prompt",
+    "astronomer": {
+      "appId": "j7XLnHnQjbhkMXexn",
+      "appSecret": "OkA2-oJlNJKzX1NyfgSIODkEcXPSUXdzF0Mu-UUvKjW"
+    }
+  // }, 
+  // "appcache": {
+  //   "addedFiles": [
+  //     "/cordova.js"
+  //   ]
+  // }
 }
+

@@ -1,35 +1,12 @@
 <template name="settings">
 	<!-- Standard Nav instead of the custom nav design -->
-<<<<<<< HEAD
  {{> standardNav}}
-=======
 
-  {{#contentFor "headerButtonRight"}}
-    <button style="float:right;" class="button button-clear "> 
-    <strong>Skip</strong>
-    </button>
-  {{/contentFor}}
->>>>>>> profile
 
   {{#ionView}}
     {{#ionContent}}
 
   <div class="container">
-<<<<<<< HEAD
-
-<!--     {{>quickForm collection="user" doc=this type="update" }}
-    	{{> afQuickField name="username"}}
-    	{{> afQuickField name="firstName"}}
-			{{> afQuickField name="lastName"}}
-			<button type="submit" class="button button-large button-positive">Update profile</button>
-		{{/autoForm}} -->
-
-
-	<form>
-		<img src="{{avatar}}">
-		<label>Username:
-		<input type="text" name="username" value="{{username}}" required></label>
-=======
 	<form>
 		<div style="background-color:white;">
 		<label>Username:
@@ -39,7 +16,6 @@
 		</div>
 		</label>
 		</div>
->>>>>>> profile
 
 		<label>First Name:
 		<input type="text" name="firstName" value="{{firstName}}"></label>
@@ -47,17 +23,12 @@
 		<label>Last Name:
 		<input type="text" name="lastName" value="{{lastName}}"></label>
 
-<<<<<<< HEAD
-		<input type="submit" class="button button-large button-positive" value="Update profile">
-	</form>
-=======
 		Photo:<br>
 		Want to upload your own photo?<br>
 		<img src="{{avatar}}" id="avatar" style="width:100px; height: 100px;">
 
 		<input type="submit" class="button button-large button-positive" value="Update profile">
 	</form> 
->>>>>>> profile
   </div>
 
     {{/ionContent}}

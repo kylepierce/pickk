@@ -6,14 +6,10 @@
 	- Followers are fixed they are highlighted when new.
 
 - Features if they play is over turned.
-     - Remove coins from winning users
-     - Award users who wagered their coins back
      - Notification that the play was overturned and they have being awarded their coins back.
      - Add to log
 
-Navigation:
-- Stop scrolling on the side and top
-- Remove right side menu or add something there
+
 
 
 
@@ -37,6 +33,16 @@ Random user profile photo
 
 -------------- Front End --------------
 
+Onboard after login:
+- More info (Step 1)
+	- Username 
+		- Add check mark and gray boxes if they already entered if from email login
+
+Onboard after login:
+- More info (Step 1)
+	- Username 
+		- Add check mark if they already entered if from email login
+
 User prompts: (Later)
 	- Connect with... ** When would the best time to ask this?** 
 		- Facebook (optional)
@@ -48,10 +54,13 @@ User prompts: (Later)
 		- What sports they watch.
 		- Favorite football team (hold this question until the middle of the first game)
 
+Navigation:
+- Stop scrolling on the side and top
+- Remove right side menu or add something there
 
 Active: 
 	- If no questions are active have a funny picture in the background or some football facts.
-
+	- Think about a large option for people with glasses.
 
 Navigation:
 - Stop scrolling on the side and top
@@ -63,6 +72,11 @@ Login:
 		- Email
 		- Password
   - Send email to confirm
+- Text at the top is black should be white
+
+Settings:
+- Add upload photo option
+- Break up the questions into sections. So settings leads to a page with each section
 
 Leaderboard: 
 - Highlight the current user if they are on the leaderboard. (30 mins)
@@ -74,21 +88,12 @@ Leaderboard:
 Profile page:
 - Badges. Each badge should be clickable for a popover explaination. 
 	- Create a badge collection
-- Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
-	- Create a trophy collection
-
-Onboard after login:
-- More info (Step 1)
-	- Username 
-		- Add check mark and gray boxes if they already entered if from email login
-
-Onboard after login:
-- More info (Step 1)
-	- Username 
-		- Add check mark if they already entered if from email login
 
 Notifications:
-- Create list of results from guesses (90 mins)
+- Someone wants you to join their group
+- Someone join your group
+- Game requests
+- You earned this badge
 
 Logout:
 - Send to thank you page.
@@ -97,17 +102,16 @@ Routes:
 - 404 page
 
 -------------- Backend --------------
-- Security, what should I be focuing on.
+- Security, what should I ßbe focuing on.
  	- Since web version is least safe. How can it be turned off?
 
 - Creating buttons on the admin panel for different play types. 
 
-** Change how the questions are added to make options apart of json document vs being hard coded. This will make the multiplier part easier as well.
-
-     - Kickoff (touchback, flag, safety, return, touchdown, possiblity of others)
-     - Normal Play (run, pass, interception, fumble, safety, touchdown)
-     - 4th down (run, pass, punt, interception, fumble, touchdown)
-     - Point after (run, pass, interception, fumble, Point after good, missed kick)
+Play types and options:
+ - Kickoff (touchback, flag, safety, return, touchdown, possiblity of others)
+ - Normal Play (run, pass, interception, fumble, safety, touchdown)
+ - 4th down (run, pass, punt, interception, fumble, touchdown)
+ - Point after (run, pass, interception, fumble, Point after good, missed kick)
 
 - Add questions to specific game so all of one games answers are in one array.
 
@@ -125,5 +129,12 @@ Routes:
 - Tweet questions and their answer for 500 points 
 - Purchase more points
 - Score multipler for more risky bets
-
-
+- Add real time feed 
+	- Sportsradar api. 
+	- Xml needs to be converted to json 
+	- http://developer.sportradar.us/docs/read/Home
+- User edit panel
+- Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
+	- Create a trophy collection
+Notifications:
+- Create list of results from guesses (90 mins)
