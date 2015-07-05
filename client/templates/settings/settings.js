@@ -41,9 +41,9 @@ Template.settings.events({
 		var username = event.target.username.value;
 		var firstName = event.target.firstName.value;
 		var lastName = event.target.lastName.value;
-		var avatar = $('#avatar').prop('src');
+		// var avatar = $('#avatar').prop('src');
 
-		Meteor.call('updateProfile', currentUserId, username, firstName, lastName, avatar);
+		Meteor.call('updateProfile', currentUserId, username, firstName, lastName);
 
 		Router.go('/');
 	}

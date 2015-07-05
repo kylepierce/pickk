@@ -5,13 +5,11 @@
   {{#ionSideMenuContainer side="left" dragContent=false}}
 
       {{#ionSideMenu}}
-
         {{> sideMenuContent}}
-
       {{/ionSideMenu}}
 
       {{#ionSideMenuContent}}
-
+        
         {{> ionNavBar}}
 
         {{#ionNavView transition="backward"}}
@@ -77,6 +75,9 @@
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/leaderboard">
   Leaderboard
   </a>
+  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/groups">
+  Your Groups
+  </a>
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/notifications">
   Notifications
   </a>
@@ -88,9 +89,6 @@
   </a>
   <a class="item item-icon-right" data-ion-menu-toggle="left" href="/settings">
   Settings
-  </a>
-  <a class="item item-icon-right" data-ion-menu-toggle="left" href="/login">
-  Login
   </a>
   <a class="item item-icon-right" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
     Logout

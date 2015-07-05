@@ -1,0 +1,42 @@
+<template name="groups">
+	  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+		<button class="button button-clear pull-right" data-ion-modal="newGroup">
+			{{> ionIcon icon='ios-plus-empty'}}
+		</button>
+	{{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+
+    <div class="item item-divider">Your Groups</div>
+
+    {{#each userGroups}}
+      {{#ionItem path="group.show" }}
+     
+        <h2 class="center-username">{{name}}</h2>
+
+      {{/ionItem}}
+    {{/each}}
+
+		<div class="item item-divider">All Groups</div>
+
+		{{#each group}}
+      {{#ionItem path="group.show" }}
+     
+        <h2 class="center-username">{{name}}</h2>
+
+      {{/ionItem}}
+    {{/each}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>

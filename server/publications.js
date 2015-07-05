@@ -12,10 +12,9 @@ Meteor.publish('userNotAnswered', function(){
 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
 });
 
-// Meteor.publish('userNotAnswered', function(){
-// 	var currentUserId = this.userId;
-// 	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
-// });
+Meteor.publish('questions', function(){
+	return QuestionList.find({ });
+});
 
 
 Meteor.publish('userAnswer', function(){
@@ -24,11 +23,11 @@ Meteor.publish('userAnswer', function(){
 });
 
 Meteor.publish('leaderboard', function() {
-	return UserList.find( { });
+	return UserList.find({ });
 })
 
-Meteor.publish('profile', function() {
-  return UserList.find();
+Meteor.publish('groups', function() {
+  return Groups.find({ });
 });
 
 Meteor.publish('profile', function(_id) {

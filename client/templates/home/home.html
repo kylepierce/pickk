@@ -94,24 +94,27 @@
 <template name="normalPlay">
 	<div style="margin-bottom:10px">
 		<div>
-			<input type="radio" name="play" id="Run" required value="Run">
-			<label for="Run" class="play-option"><i class="fa fa-star"></i> Run</label>
+			<input type="radio" name="play" id="{{options.option1.title}}" required value="option1">
+			<label for="{{options.option1.title}}" class="play-option"><i class="fa fa-star"></i> 
+			{{options.option1.title}} <span class="multiplier">x {{options.option1.multiplier}}</span></label>
 		</div>
 
 		<div>
-			<input type="radio" name="play" id="Pass" required value="Pass">
-			<label for="Pass" class="play-option"><i class="fa fa-star"></i> Pass</label>
+			<input type="radio" name="play" id="{{options.option2.title}}" required value="option2">
+			<label for="{{options.option2.title}}" class="play-option"><i class="fa fa-star"></i> 
+			{{options.option2.title}} <span class="multiplier">x {{options.option2.multiplier}}</span></label>
 		</div>
 
 		<div>
-			<input type="radio" name="play" id="Fumble" required value="Fumble">
-			<label for="Fumble" class="play-option"><i class="fa fa-star"></i> Fumble</label>
+			<input type="radio" name="play" id="{{options.option3.title}}" required value="option3">
+			<label for="{{options.option3.title}}" class="play-option"><i class="fa fa-star"></i> 
+			{{options.option3.title}} <span class="multiplier">x {{options.option3.multiplier}}</span></label>
 		</div>
 
 		<div>
-			<input type="radio" name="play" id="Interception" required value="Interception">
-			<label for="Interception" class="play-option"><i class="fa fa-star"></i> Interception 
-			</label>
+			<input type="radio" name="play" id="{{options.option4.title}}" required value="option4">
+			<label for="{{options.option4.title}}" class="play-option"><i class="fa fa-star"></i> 
+			{{options.option4.title}} <span class="multiplier">x {{options.option4.multiplier}}</span></label>
 		</div>
 	</div>
 </template>
