@@ -10,12 +10,18 @@
     {{#ionContent}}
 
     {{#with group}}
-			<h2>{{this.name}}</h2>
-				{{> memberCheck}}
-			
+      <div class="profile-background">        
+        <img src="/twitter_logo.png" class="circle-image">
+      	<div style="clear:both;">
+        <h3>{{this.name}}</h3>
+        {{> memberCheck}}
+        </div> 
+      </div>
 			<br>
+			<strong>Commissioner:</strong>
 			{{this.commissioner}}
-			<br>
+			<br><br>
+			<strong>Members:</strong> <br><br>
 			{{this.members}}
     {{/with}}
     {{/ionContent}}

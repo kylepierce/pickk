@@ -45,6 +45,10 @@ input, textarea {
 	color:white!important;
 }
 
+.bar-stable .button.button-clear {
+	color: white!important;
+}
+
 .nav-icon {
 	color: white!important;
 }

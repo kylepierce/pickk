@@ -5,25 +5,33 @@
 
   {{#ionView}}
     {{#ionContent}}
+    {{#ionSlideBox}}
+      {{#ionSlide arrows=true}}
+        <div class="container">
+        <div class="item item-divider">World Leaderboard</div>
+        <ol type="1" class="list">
+          {{#ionList}}
+          {{#each player}}
+            {{#ionItem path="user.show" avatar=true}}
+            <img src="{{profile.avatar}}">
+            <li class="list-font">
+              
+              <h2 class="center-username">{{profile.username}} <span class="score">{{profile.coins}}</span></h2>
+            </li>
 
-  <div class="item item-divider">World Leaderboard</div>
-  <ol type="1" class="list">
-    {{#ionList}}
-    {{#each player}}
-      {{#ionItem path="user.show" avatar=true}}
-      <img src="{{profile.avatar}}">
-      <li class="list-font">
-        
-        <h2 class="center-username">{{profile.username}} <span class="score">{{profile.coins}}</span></h2>
-      </li>
+            {{/ionItem}}
+          {{/each}}
+          {{/ionList}}
+        </ol>
+        </div>
+      {{/ionSlide}}
 
-      {{/ionItem}}
-    {{/each}}
-    {{/ionList}}
-  </ol>
-
-
-{{> groupLeaderboard}}
+      {{#each groups}}
+        {{#ionSlide }}
+          {{> groupLeaderboard groupId=this title=this}}
+        {{/ionSlide}}
+      {{/each}}
+    {{/ionSlideBox}}
 
     {{/ionContent}}
   {{/ionView}}
@@ -31,19 +39,25 @@
 </template>
 
 <template name="groupLeaderboard">
-  <div class="item item-divider">GROUP NAME</div>
+  <div class="container">
+  <div class="item item-divider">
+  {{#with groupName title}}
+    {{name}}
+  {{/with}}
+  </div>
     <ol type="1" class="list">
       {{#ionList}}
-      {{#each player}}
+      {{#each players groupId}}
         {{#ionItem path="user.show" avatar=true}}
         <img src="{{profile.avatar}}">
         <li class="list-font">
           
-          <h2 class="center-username">{{profile.username}} <span class="score">{{profile.coins}}</span></h2>
+          <h2 class="center-username">{{profile.username}}<span class="score">{{profile.coins}}</span></h2>
         </li>
 
         {{/ionItem}}
       {{/each}}
       {{/ionList}}
     </ol>
+  </div>
 </template>

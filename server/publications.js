@@ -30,6 +30,14 @@ Meteor.publish('groups', function() {
   return Groups.find({ });
 });
 
+Meteor.publish('groupUsers', function(groupId) {
+  check(groupId, String);
+  var group = Groups.findOne(groupId);
+  var selector = {_id: {$in: group.members}};
+  // var options = {fields: {"profile.username": 1}, {"prof"}};
+  return UserList.find(selector);
+});
+
 Meteor.publish('profile', function(_id) {
   return UserList.find({_id: _id});
 });

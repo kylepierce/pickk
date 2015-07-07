@@ -16,11 +16,11 @@ Template.groups.created = function () {
 
 Template.groups.helpers({
   group: function () {
-    return Groups.find({}).fetch();
+    return Groups.find({secret: false}).fetch();
   },
   userGroups: function() {
     var currentUser = Meteor.userId();
-    return Groups.find({"member": currentUser}).fetch()
+    return Groups.find({members: currentUser}).fetch()
   }
 });
 
@@ -29,8 +29,6 @@ Template.newGroup.events({
       event.preventDefault();
     var groupName = event.target.groupName.value;
     var privateCheck = event.target.privateCheck.value;
-
-
 
     if(Groups.findOne({'name': groupName})){
       IonLoading.show({

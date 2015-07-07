@@ -23,7 +23,7 @@ Template.singleGroup.helpers({
 Template.memberCheck.helpers({
   alreadyMember: function() {
     var currentUserId = Meteor.userId();
-    var groupMembers = Groups.find({members: currentUserId}, {limit: 1}).count() > 0;
+    var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
     
     // Check to see if user is in the group already. 
     if(groupMembers) {

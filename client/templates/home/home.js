@@ -20,9 +20,6 @@ Template.questionCard.helpers({
 				{active: true, 
 				usersAnswered: {$nin: [currentUser]}}, 
 				{sort: {dateCreated: 1,}});
-		var questionId = this._id;
-
-		return questionsActive;
 	}
 });
 

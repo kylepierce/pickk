@@ -59,10 +59,12 @@ Meteor.methods({
 
 	'joinGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$push: {members: user}});
+		UserList.update({_id: user}, {$push: {'profile.groups': groupId}});
 	},
 
 	'leaveGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$pull: {members: user}});
+		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});
 	},
 
 	//Once the play starts change active status
