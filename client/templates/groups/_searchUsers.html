@@ -1,0 +1,48 @@
+<template name="searchUsers">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Search Users</h1>
+  {{/contentFor}}
+
+
+  {{#ionView }}
+    {{#ionContent}}
+		<div class="container">
+    	{{> searchUsersBox}}
+		</div>
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+
+<template name="searchUsersBox">
+		<div class="search-bar-fix">
+    {{> esInput index="users" placeholder="Search..." }}
+		</div>
+    <ul>
+        {{#esEach index="users"}} 
+	        <li>		
+	          {{#ionItem buttonRight=true avatar=true}}
+	            <img src="{{profile.avatar}}">
+							{{profile.username}} 
+							{{> inviteButton}}
+	          {{/ionItem}}
+          </li>
+        {{/esEach}}
+    </ul>
+
+		{{#ifEsHasNoResults index="users" logic="OR" }}
+			<div class="no-results">No results found!</div>
+			<a href="/newgroup" class="newGroup">
+		    <button class="button full">
+		      <i class="fa fa-comments-o"></i>
+		      Want to Create Group?
+		    </button>
+    	</a>
+		{{/ifEsHasNoResults}}
+
+</template>

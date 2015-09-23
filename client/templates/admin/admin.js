@@ -1,31 +1,25 @@
-Meteor.subscribe('questions');
+Meteor.subscribe('questions')
 
+// map multiple combinations to the same callback
+Mousetrap.bind('d', function() {
+	$('[data-action=deactivate]').click()
+	return false;
+}, 'keyup');
 
 // Create question and add to database function
 
-Template.createQuestion.events({
-	'click [data-action=normal-play]': function(){
-		// Turn off reload
-		event.preventDefault();
-		Meteor.call('insertQuestion', "The next play will be ...", "Run", 1.5, "Pass", 1.6, "Interception", 2.5, "Fumble", 5.6);
-	}, 	
-	'click [data-action=kickoff-play]': function(){
-		// Turn off reload
-		event.preventDefault();
-		Meteor.call('insertQuestion', "Kick off! ...", "Safety", 2.6, "Touchback", 1.3, "Touchdown", 6.2, "30+ Yards", 2.6);
-	}, 
-	'click [data-action=4th-down-play]': function(){
-		// Turn off reload
-		event.preventDefault();
-		Meteor.call('insertQuestion', "Fourth Down ...", "Punt", 1.3, "Blocked Punt", 3.2, "Run", 3.5, "Pass", 4.6);
-	}, 
-	'click [data-action=point-after]': function(){
-		// Turn off reload
-		event.preventDefault();
-		Meteor.call('insertQuestion', "Point after! ...", "Point After Good", 1.3, "Missed Kick", 3.5, "Run", 4.63, "2 Point Conversion", 8.23);
-	}, 
-});
-
+Template.createQuestion.helpers({
+	game: function(){
+		Meteor.subscribe('games');
+		return Games.find({live: true}).fetch();
+	},
+	'commercial': function(){
+		Meteor.subscribe('games');
+		var game = Games.findOne({live: true});
+		var commercialBreak = game.commercial
+		return commercialBreak
+	}
+})
 
 // Deactivate question once the play has started.
 Template.activeQuestionList.events({
@@ -34,7 +28,6 @@ Template.activeQuestionList.events({
 		Meteor.call('deactivateStatus', questionId);
 	}
 });
-
 
 
 // Show all active questions
@@ -52,8 +45,9 @@ Template.pendingQuestionList.helpers({
 });
 
 // Show all old questions
-Template.oldQuestionList.helpers({
+Template.oldQuestionList.helpers ({
 	'questions': function(){
+		Meteor.subscribe('oldQuestions')
 		return QuestionList.find({active: false}, {sort: {dateCreated: -1}, limit: 5});
 	}
 });
@@ -78,13 +72,27 @@ Template.oldQuestionList.events({
 			var play = this.play
 			Meteor.call('unAwardPoints', this._id, play)
 			Meteor.call('modifyQuestionStatus', this._id, "option3");
-	}
+		}
 	},
 	'click [data-action=editOption4]': function() {
 		if(confirm("Are you sure?")) {
 			var play = this.play
 			Meteor.call('unAwardPoints', this._id, play)
 			Meteor.call('modifyQuestionStatus', this._id, "option4");
+		}
+	},
+	'click [data-action=editOption5]': function() {
+		if(confirm("Are you sure?")) {
+			var play = this.play
+			Meteor.call('unAwardPoints', this._id, play)
+			Meteor.call('modifyQuestionStatus', this._id, "option5");
+		}
+	},
+	'click [data-action=editOption6]': function() {
+		if(confirm("Are you sure?")) {
+			var play = this.play
+			Meteor.call('unAwardPoints', this._id, play)
+			Meteor.call('modifyQuestionStatus', this._id, "option6");
 		}
 	},
 });
@@ -126,6 +134,18 @@ Template.pendingQuestionList.events({
 
 		Meteor.call('modifyQuestionStatus', questionId, "option4");
 	},
+	'click [data-action=option5]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option5");
+	},
+	'click [data-action=option6]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option6");
+	},
 	'click [data-action=remove]' : function() {
 		if(confirm("Are you sure?")) {
 			Meteor.call('removeQuestion', this._id)
@@ -133,5 +153,4 @@ Template.pendingQuestionList.events({
 	}
 
 });
-
 

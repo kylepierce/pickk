@@ -1,0 +1,40 @@
+<template name="singleGame">
+	<div class="container">	
+	  {{#ionView}}
+   		{{#ionContent}}	
+
+	  {{#contentFor "headerButtonLeft"}}
+	    {{>ionNavBackButton path="index"}}
+	  {{/contentFor}}
+
+		{{#with game}}   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Single Game</h1>
+   		 {{/contentFor}}
+			
+			{{#ionItem}}
+				<strong>{{this.name}}</strong>
+			{{/ionItem}}
+				<div class="item item-toggle item-text-wrap">
+		    Active?
+		    <label class="toggle">
+		      <input type="checkbox" id="gameActive" {{liveGame}} name="gameActive">
+		      <div class="track">
+		        <div class="handle"></div>
+		      </div>
+		    </label>
+		  </div>
+
+			{{#ionList}}	<textarea>
+			{{#each numberOfQuestions}}
+		
+					{{que}}, {{dateCreated}}, {{usersAnswered.length}}
+			
+			{{/each}}</textarea>
+			{{/ionList}}
+		{{/with}}
+
+			{{/ionContent}}
+		{{/ionView}}
+	</div>
+</template>

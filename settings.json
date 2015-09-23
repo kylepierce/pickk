@@ -1,15 +1,11 @@
-{
+{	
+	"facebook": {
+	  "clientId": "1399965486969249",
+	  "secret": "599da8e423c2d677eda352cde88d01f9"
+	},
   "public": {
-    "appcache": "prompt",
     "astronomer": {
-      "appId": "j7XLnHnQjbhkMXexn",
-      "appSecret": "OkA2-oJlNJKzX1NyfgSIODkEcXPSUXdzF0Mu-UUvKjW"
+      "appId": "j7XLnHnQjbhkMXexn"
     }
-  // }, 
-  // "appcache": {
-  //   "addedFiles": [
-  //     "/cordova.js"
-  //   ]
-  // }
+  }
 }
-

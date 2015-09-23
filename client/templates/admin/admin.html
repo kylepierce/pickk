@@ -14,15 +14,15 @@
 		  {{/contentFor}}
    		 
    		 {{#contentFor "headerTitle"}}
-					<h1 class="title" style="color:white;">Admin Panel</h1>
+					<h1 class="title white-text-header">Admin Panel</h1>
    		 {{/contentFor}}
-
-
+		
 		{{> createQuestion}}
 		{{> activeQuestionList}}
 		{{> pendingQuestionList}}
 		{{> oldQuestionList}}
 	
+
 		  {{/ionContent}}
 	  {{/ionView}}
     </div>
@@ -32,82 +32,56 @@
 <template name="createQuestion">
 	<div class=" panel">
 		<h3>Create Question</h3>
-		<form id="question">
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">Kickoff 1st quater</button>
-		<button class="col col-25 wager-box" data-action="normal-play">Kickoff 2nd quater</button>	
-		<button class="col col-25 wager-box" data-action="normal-play">Kickoff 3rd quater</button>	
-		<button class="col col-25 wager-box" data-action="normal-play">Kickoff 4th quater</button>	
-		</div>
+
+		  <input type="range" class="play-slider" id="down" name="down" value="1" list="a-values" min="1" max="6" step="1" />
+	      <option class="slider-6-options" value="1" label="First Down"></option>
+	      <option class="slider-6-options" value="2" label="Second Down"></option>
+	      <option class="slider-6-options" value="3" label="Third Down"></option>
+	      <option class="slider-6-options" value="4" label="Forth Down"></option>
+	      <option class="slider-6-options" value="5" label="PAT"></option>
+	      <option class="slider-6-options" value="6" label="Kickoff"></option>
+
+		  <input type="range" class="play-slider" id="yards" name="yards" value="1" list="a-values" min="1" max="6" step="1" />
+	      <option class="slider-6-options" value="1" label="Inches"></option>
+	      <option class="slider-6-options" value="2" label="1-2 Yards"></option>
+	      <option class="slider-6-options" value="3" label="3-5 Yards"></option>
+	      <option class="slider-6-options" value="4" label="6-9 Yards"></option>
+	      <option class="slider-6-options" value="5" label="10-15 Yards"></option>
+	      <option class="slider-6-options" value="6" label="15+ Yards"></option>
+
+		  <input type="range" class="play-slider" id="area" name="area" value="1" list="a-values" min="1" max="6" step="1" />
+	      <option class="slider-6-options" value="1" label="Danger Zone 0-10"></option>
+	      <option class="slider-6-options" value="2" label="1st Third 11-30"></option>
+	      <option class="slider-6-options" value="3" label="2nd Third 30-60"></option>
+	      <option class="slider-6-options" value="4" label="Final Third 60-80"></option>
+	      <option class="slider-6-options" value="5" label="Red Zone 80-90"></option>
+	      <option class="slider-6-options" value="6" label="Goal Line 90-100"></option>
+
+		  <input type="range" class="play-slider" id="time" name="time" value="1" list="a-values" min="1" max="5" step="1" />
+	      <option class="slider-5-options" value="1" label="1st Quarter"></option>
+	      <option class="slider-5-options" value="2" label="2nd Quarter"></option>
+	      <option class="slider-5-options" value="3" label="3rd Quarter"></option>
+	      <option class="slider-5-options" value="4" label="4th Quarter"></option>
+	      <option class="slider-5-options" value="5" label="Overtime"></option>
 		<br>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">1st and 10 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">1st and 10 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">1st and 10 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">1st and 10 yards goal line</button>
-		</div>
-		<br>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 10 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 10 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 10 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 10 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 9-5 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 9-5 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 9-5 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 9-5 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 4-1 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 4-1 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">2nd and 4-1 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">2nd and 4-1 yards goal line</button>
-		</div>
-		<br>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 10 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 10 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 10 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 10 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 9-5 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 9-5 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 9-5 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 9-5 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 4-1 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 4-1 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">3rd and 4-1 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">3rd and 4-1 yards goal line</button>
-		</div>
-		<br>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 10 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 10 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 10 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 10 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 9-5 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 9-5 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 9-5 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 9-5 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 4-1 yards back third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 4-1 yards middle third</button>
-		<button class="col col-25 wager-box" data-action="normal-play">4th and 4-1 yards last third</button>
-		<button class="col col-25 wager-box" data-action="kickoff-play">4th and 4-1 yards goal line</button>
-		</div>
-		<div class="row">
-		<button class="col col-50 wager-box" data-action="4th-down-play">4th Down</button>
-		<button class="col col-50 wager-box" data-action="point-after">Point After</button>
-		</div>
-		</form>
+
+Game Info
+
+		<select style="clear:both;" id="gameList">
+			{{#each game}}
+				<option value="{{_id}}">{{name}}</option>
+			{{/each}}
+		</select>
+
+		{{#if commercial}}
+			<button class='col col-50 wager-box button button-assertive' data-action="endCommercialBreak">End Commercial Break </button>
+		{{else}}
+			<button class='col col-50 wager-box button button-balanced' data-action="startCommercialBreak">Start of Commercial Break </button>
+		{{/if}}
+
+<br>
+		<button class='full' data-action="createQuestion">Create Question</button>
+
 	</div>
 </template>
 
@@ -145,6 +119,10 @@
 					<button data-action="option3" class="col col-50 wager-box">{{options.option3.title}}</button>
 					<button data-action="option4" class="col col-50 wager-box">{{options.option4.title}}</button>
 				</div>
+			<div class="row">
+					<button data-action="option5" class="col col-50 wager-box">{{options.option5.title}}</button>
+					<button data-action="option6" class="col col-50 wager-box">{{options.option6.title}}</button>
+				</div>
 			</div>
 
 			<!-- Replace with chart -->
@@ -154,6 +132,8 @@
 					<li><strong>{{options.option2.title}}:</strong> {{options.option2.usersPicked.length}}</li> 
 					<li><strong>{{options.option3.title}}:</strong> {{options.option3.usersPicked.length}}</li>
 					<li><strong>{{options.option4.title}}:</strong> {{options.option4.usersPicked.length}}</li>
+					<li><strong>{{options.option5.title}}:</strong> {{options.option5.usersPicked.length}}</li>
+					<li><strong>{{options.option6.title}}:</strong> {{options.option6.usersPicked.length}}</li>
 				</ul> 
 			</div>
 
@@ -174,10 +154,18 @@
 		        {{> ionIcon icon="more"}}
 		    </button> -->
 		    <div style="margin-bottom: 10px;">
-		    <button class="fourth button " data-action="editOption1">{{options.option1.title}}</button>
-		    <button class="fourth button" data-action="editOption2">{{options.option2.title}}</button>
-		    <button class="fourth button" data-action="editOption3">{{options.option3.title}}</button>
-		    <button class="fourth button" data-action="editOption4">{{options.option4.title}}</button>
+			    <div class="row">
+				    <button class="col col-50 button " data-action="editOption1">{{options.option1.title}}</button>
+				    <button class="col col-50 button" data-action="editOption2">{{options.option2.title}}</button>
+					</div>
+			    <div class="row">
+				    <button class="col col-50 button" data-action="editOption3">{{options.option3.title}}</button>
+				    <button class="col col-50 button" data-action="editOption4">{{options.option4.title}}</button>
+					</div>
+			    <div class="row">
+			    	<button class="col col-50 button" data-action="editOption5">{{options.option5.title}}</button>
+				    <button class="col col-50 button" data-action="editOption6">{{options.option6.title}}</button>
+					</div>
 		    </div>
 		    <button data-action="permenantRemove" class="yes full button button-assertive">Remove question</button>
 	   	</div>
@@ -185,19 +173,3 @@
 		</ul>
 	</div>	
 </template>
-
-<!-- <template name="_adminPopover">
-  {{#ionPopover class="popover-edit"}}
-    <div class="content">
-      <div class="list">
-      {{#each option}}
-        <a class="item item-icon-right" href="#">
-        	Something something
-          {{options.option1.title}}
-          {{> ionIcon icon="ios-arrow-right"}}
-        </a>
-      {{/each}}
-      </div>
-    </div>
-  {{/ionPopover}}
-</template> -->

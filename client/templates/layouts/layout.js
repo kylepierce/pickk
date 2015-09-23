@@ -16,22 +16,35 @@
 // 	}	
 // });
 
+var SHOW_CONNECTION_ISSUE_KEY = 'showConnectionIssue';
+Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
+
 Template.mainView.rendered = function() {
-  IonSideMenu.snapper.settings({disable: 'right'});
-  
+  IonSideMenu.snapper.settings({disable: 'right'});  
 };
 
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
-	},
-    'click [data-action=toggleMenu]': function(){
-        $(div.loginArea).toggleClass ("hidden-account", false);
-    }
+	}
 });
 
 Template.sideMenuContent.helpers({
 	userId: function () {
 		return Meteor.userId();
-	}
+	},
+  connected: function() {
+    if (Session.get(SHOW_CONNECTION_ISSUE_KEY)) {
+      return Meteor.status().connected;
+    } else {
+      return true;
+    }
+  },
+  admin: function() {
+    var currentUser = Meteor.user();
+    var admin = currentUser.profile.role 
+    if (admin){
+      return true
+    }
+  }
 });

@@ -1,19 +1,23 @@
----------------- Next ----------------
+------ Before App Store Submission -------
 
-- What is the most efficent way to generate notifications. Memory should be from the client not on the server.
-	- Create a local collection that keeps data with the user. 
-	- Group and game requests are fixed until they are accept, denied or end.
-	- Followers are fixed they are highlighted when new.
+Settings:
+- Add upload photo option
+- Break up the questions into sections. So settings leads to a page with each section
 
-- Features if they play is over turned.
-     - Notification that the play was overturned and they have being awarded their coins back.
-     - Add to log
+Logout:
+- Send to thank you page.
 
+Routes:
+- 404 page
 
+- Add questions to specific game so all of one games answers are in one array.
 
+- Add ad's to the bottom of the app (https://github.com/floatinghotpot/cordova-admob-pro)
+- Add draftkings or fan duel ads
 
+- Add photos to users account (https://github.com/meteoric/camera)
 
-
+- Add registered people to mailchimp or something 
 
 ################## ALL ####################
 
@@ -36,12 +40,6 @@ Random user profile photo
 Onboard after login:
 - More info (Step 1)
 	- Username 
-		- Add check mark and gray boxes if they already entered if from email login
-
-Onboard after login:
-- More info (Step 1)
-	- Username 
-		- Add check mark if they already entered if from email login
 
 User prompts: (Later)
 	- Connect with... ** When would the best time to ask this?** 
@@ -53,10 +51,6 @@ User prompts: (Later)
 	- Other details ** This can be asked during the first game **
 		- What sports they watch.
 		- Favorite football team (hold this question until the middle of the first game)
-
-Navigation:
-- Stop scrolling on the side and top
-- Remove right side menu or add something there
 
 Active: 
 	- If no questions are active have a funny picture in the background or some football facts.
@@ -72,18 +66,11 @@ Login:
 		- Email
 		- Password
   - Send email to confirm
-- Text at the top is black should be white
 
-Settings:
-- Add upload photo option
-- Break up the questions into sections. So settings leads to a page with each section
 
 Leaderboard: 
 - Highlight the current user if they are on the leaderboard. (30 mins)
 - Tell them what position they are in if they are outside the top 10
-
-- Display all the groups they are in.
-	- Each group will need a view that shows everyone in their group.
 
 Profile page:
 - Badges. Each badge should be clickable for a popover explaination. 
@@ -95,44 +82,26 @@ Notifications:
 - Game requests
 - You earned this badge
 
-Logout:
-- Send to thank you page.
 
-Routes:
-- 404 page
 
 -------------- Backend --------------
-- Security, what should I ßbe focuing on.
+- Security, what should I be focuing on.
  	- Since web version is least safe. How can it be turned off?
 
-- Creating buttons on the admin panel for different play types. 
+- Features if the play is over turned.
+     - Notification that the play was overturned and they have being awarded their coins back.
+     - Add to log
 
-Play types and options:
- - Kickoff (touchback, flag, safety, return, touchdown, possiblity of others)
- - Normal Play (run, pass, interception, fumble, safety, touchdown)
- - 4th down (run, pass, punt, interception, fumble, touchdown)
- - Point after (run, pass, interception, fumble, Point after good, missed kick)
-
-- Add questions to specific game so all of one games answers are in one array.
-
-- Friendship
-- Groups
-
-- Add ad's to the bottom of the app (https://github.com/floatinghotpot/cordova-admob-pro)
-
-- Add photos to users account (https://github.com/meteoric/camera)
+- What is the most efficent way to generate notifications. Memory should be from the client not on the server.
+	- Create a local collection that keeps data with the user. 
+	- Group and game requests are fixed until they are accept, denied or end.
+	- Followers are fixed they are highlighted when new.
 
 - Geo Location based on IP (https://atmospherejs.com/peter/geoip)
 
 -------------- Wish list --------------
-- Add registered people to mailchimp or something 
 - Tweet questions and their answer for 500 points 
 - Purchase more points
-- Score multipler for more risky bets
-- Add real time feed 
-	- Sportsradar api. 
-	- Xml needs to be converted to json 
-	- http://developer.sportradar.us/docs/read/Home
 - User edit panel
 - Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
 	- Create a trophy collection

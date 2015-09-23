@@ -1,0 +1,63 @@
+<template name="userProfile">
+
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+    {{#with profile}} {{this.profile.username}} {{/with}} Profile
+    </h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+    {{#with profile}}
+    	<div class="profile-background">        
+        <img src="{{this.profile.avatar}}" class="circle-image">
+      	<div style="clear:both;">
+        <h3>{{this.profile.username}}</h3>
+        {{{following}}} Following
+        {{{follower}}}Followers<br>
+        {{> followerCheck}}
+        </div> 
+      </div>
+
+<!--       <div class="item item-divider">Badges</div>
+
+      <div class="item item-divider">Trophies</div> -->
+
+      <div class="item item-divider">Groups</div>
+        {{#ionList}}
+          {{#each group}}
+
+            {{> displayGroup groupId=this}}
+          {{/each}}
+        {{/ionList}}
+
+    {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="displayGroup">
+  {{#with groupName groupId}}            
+    {{#ionItem path="group.show" avatar=true}}
+      <img src="{{avatar}}">
+      {{name}}
+    {{/ionItem}}
+  {{/with}}
+</template>
+
+<template name="followerCheck">
+  {{#if alreadyFollower }}
+    <button data-action="unfollowUser" id="join-toggle" class="button button-assertive">Unfollow</button>
+
+  {{else}}
+    <button data-action="followUser" id="join-toggle" class="button button-balanced">Follow</button>
+  {{/if}}
+</template>
+
+

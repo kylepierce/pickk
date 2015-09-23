@@ -3,18 +3,47 @@
 <!-- Standard Nav instead of the custom nav design -->
  {{> standardNav}}
 
+ {{#contentFor "headerTitle"}}
+	<h1 class="title white-text-header">{{gameName.name}}</h1>
+ {{/contentFor}}
+
   {{#ionView }}
     {{#ionContent}}
-		<div class="container">
+    {{> loader}} 
+    {{#if Template.subscriptionsReady}}  
+    <!-- <div class="loading-wrapper"> -->
 			{{> questionCard}}
-
-		</div>
+		<!-- </div> -->
+		{{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="questionCard">
+	{{#if live}}
+		<img class="next-play slideInLeft" src="wait-for-play.png">
+		<h5 class="next-play">No game right now...</h5>
+	{{else}}			
+		{{#if commercial}}
+			<img class="next-play slideInLeft" src="wait-for-play.png">
+			<h5 class="next-play">Commercial Break!</h5>	
+	
+		{{else}}
+			{{#if active}}
+				{{> activeQuestion}}
+			{{else}}
+				<img class="next-play slideInLeft" src="wait-for-play.png">
+				<h5 class="next-play">Waiting for the play to end...</h5>
+			{{/if}}
+		{{/if}}
+	{{/if}}
+</template>
+
+
+<template name="activeQuestion">
 	{{#each questions}}
+	<div class="container">
+		<div class="container-item">
 		<div class="question">
 			{{ que}}
 		</div>
@@ -26,9 +55,10 @@
 			<!-- Wagers -->
 				{{> wagers}}
 
-			<input style="height: 30px; line-height: 27px;" id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 		</form>
-
+	</div>
+	</div>
 	{{/each}}
 </template>
 
@@ -96,6 +126,22 @@
 			<i class="fa fa-star"></i> 
 			{{options.option4.title}} 
 			<span class="multiplier">x {{options.option4.multiplier}}</span></label>
+		</div>
+
+		<div>
+			<input type="radio" name="play" id="{{options.option5.title}}" required value="option5">
+			<label for="{{options.option5.title}}" class="play-option">
+			<i class="fa fa-star"></i> 
+			{{options.option5.title}} 
+			<span class="multiplier">x {{options.option5.multiplier}}</span></label>
+		</div>
+
+		<div>
+			<input type="radio" name="play" id="{{options.option6.title}}" required value="option6">
+			<label for="{{options.option6.title}}" class="play-option">
+			<i class="fa fa-star"></i> 
+			{{options.option6.title}} 
+			<span class="multiplier">x {{options.option6.multiplier}}</span></label>
 		</div>
 	</div>
 </template>

@@ -15,6 +15,9 @@ ol {
 	font-size: 16px;
 }
 
+.slider-pager {
+	
+}
 
 a {
 	color:black;
@@ -26,4 +29,8 @@ a {
 
 .score {
 	float:right;
+}
+
+.ion-slide {
+    overflow: scroll;
 }

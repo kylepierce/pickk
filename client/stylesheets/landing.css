@@ -21,12 +21,23 @@
 
 .intro input[type="submit"]{
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 0px;
 	background-color: #2ecc71;
 	border: none;
 	font-size: 1.2em;
 	color: white;
 	float: right;
+}
+
+.thanks-message {
+	width: 50%;
+  margin: 15px;
+  text-align: center;
+  padding: 37px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid;
+
 }
 
 button.at-social-btn i {
@@ -40,13 +51,13 @@ button.at-social-btn i {
 }
 
 .slider-box {
-	height:70%;
+	height:50%;
 	text-align: center;
 	overflow-x: hidden;
 }
 
 .inner-slide-box{
-	padding-top: 10%; 
+	padding-top: 50px; 
 	color: #424242;
 }
 

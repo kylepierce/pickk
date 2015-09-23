@@ -1,0 +1,36 @@
+<template name="push">
+	<div class="container">	
+	  {{#ionView}}
+   		{{#ionContent}}	
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Push Panel</h1>
+   		 {{/contentFor}}
+
+   			<div class="row">
+   			<div class="col col-50 col-offset-25">
+				<form>
+					<input type="text" name="push">
+					<select style="clear:both;" id="gameList">
+						{{#each game}}
+							<option value="{{_id}}">{{name}}</option>
+						{{/each}}
+					</select>
+					<input type="submit">
+				</form>
+				</div>
+				</div>
+			{{/ionContent}}
+		{{/ionView}}
+	</div>
+</template>

@@ -9,11 +9,51 @@ Meteor.publish('activeQuestions', function(){
 
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
-	return QuestionList.find({active: true, usersAnswered: {$nin: [currentUserId]}});
+		return QuestionList.find({active: true}, {sort: {dateCreated: 1}});
 });
 
 Meteor.publish('questions', function(){
-	return QuestionList.find({ });
+	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+	if(activeQuestions){
+		return activeQuestions
+	}
+	return this.ready();
+});
+
+// Meteor.publish('activeQuestions', function(){
+// 	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+// 	if(activeQuestions){
+// 		return activeQuestions
+// 	}
+// 	return this.ready();
+// });
+
+Meteor.publish('pendingQuestions', function(){
+	var pendingQuestions = QuestionList.find({active: null}, {sort: {dateCreated: 1}});
+	if(pendingQuestions){
+		return pendingQuestions
+	}
+	return this.ready();
+});
+
+Meteor.publish('oldQuestions', function(){
+	var oldQuestions = QuestionList.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
+	if(oldQuestions){
+		return oldQuestions
+	}
+	return this.ready();
+})
+
+Meteor.publish('allQuestions', function(game){
+	var allQuestions = QuestionList.find({gameId: game});
+	if(allQuestions){
+		return allQuestions
+	}
+	return this.ready();
+})
+
+Meteor.publish('invitees', function(){
+	return Invites.find({ });
 });
 
 
@@ -26,8 +66,16 @@ Meteor.publish('leaderboard', function() {
 	return UserList.find({ });
 })
 
+Meteor.publish('worldLeaderboard', function() {
+	return UserList.find({}, {sort: {profile: -1}, limit: 10})
+})
+
 Meteor.publish('groups', function() {
   return Groups.find({ });
+});
+
+Meteor.publish('games', function() {
+  return Games.find({ });
 });
 
 Meteor.publish('groupUsers', function(groupId) {
@@ -39,5 +87,5 @@ Meteor.publish('groupUsers', function(groupId) {
 });
 
 Meteor.publish('profile', function(_id) {
-  return UserList.find({_id: _id});
+  return UserList.findOne({_id: _id});
 });

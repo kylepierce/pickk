@@ -1,10 +1,29 @@
-.left-icon {
-	width:5%;
-	float:left;
-	font-size: 2em;
+.strong-label {
+	font-weight: bold;
 }
 
-.settings-input-box {
-	width: 95%;
-	float: right;
+.username-error {
+	color: red;
+}
+
+.username-success {
+	color: green;
+}
+
+div.hopscotch-bubble .hopscotch-nav-button.next {
+	width: 100%;
+	padding: 0;
+  margin: 0;
+}
+
+.hopscotch-bubble-number{
+	display: none!important;
+}
+
+div.hopscotch-bubble .hopscotch-bubble-content{
+	margin: 0!important;
+}
+
+.hopscotch-bubble-close{
+	padding: 0!important;
 }

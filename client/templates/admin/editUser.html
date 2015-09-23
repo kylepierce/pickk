@@ -1,0 +1,57 @@
+<template name="editUser">
+{{#ionView}}
+  {{#ionContent}}
+
+   {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+	{{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+    {{#with profile}} {{this.profile.username}} {{/with}} Profile
+    </h1>
+  {{/contentFor}}
+
+
+    {{#with profile}}
+    	<div class="profile-background">        
+        <img src="{{this.profile.avatar}}" class="circle-image">
+      	<div style="clear:both;">
+        <div style="border: 1px black solid;" class="col col-50 col-offset-25">
+          <input type="text" name="username" value={{this.profile.username}}>
+        <button data-action="update-name">Update Username</button><br><br>
+        </div>
+
+        {{this.services.twitter.screenName}}<br>
+        {{{following}}} Following
+        {{{follower}}}Followers<br>
+        <div style="border: 1px black solid;" class="col col-50 col-offset-25">
+          <input type="text" name="coins" value={{this.profile.coins}}>
+        <button data-action="update-coins">Update Coins</button><br><br>
+        </div>
+        </div> 
+      </div>
+
+      <div class="item item-divider">Badges</div>
+
+      <div class="item item-divider">Trophies</div>
+
+      <div class="item item-divider">Groups</div>
+        {{#ionList}}
+          {{#each group}}
+
+            {{> displayGroup groupId=this}}
+          {{/each}}
+        {{/ionList}}
+
+    {{/with}}
+
+	{{/ionContent}}
+{{/ionView}}
+</template>
