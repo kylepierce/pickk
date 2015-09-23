@@ -22,19 +22,15 @@ App.icons({
   'android_mdpi': 'resources/icons/android/48.png',
   'android_hdpi': 'resources/icons/android/72.png',
   'android_xhdpi': 'resources/icons/android/96.png',
-  // 'android_xxhdpi': 'resources/icons/android/144.png',
-  // 'android_xxxhdpi': 'resources/icons/android/192.png',
-
-  // Android Tablets
 });
 
 App.launchScreens({
   // iPhone
-  'iphone': 'resources/splash/Default-portrait~iphone.png',
-  'iphone_2x': 'resources/splash/Default-portrait2x~iphone4.png',
-  'iphone5': 'resources/splash/Default-portrait2x~iphone5.jpg',
-  'iphone6': 'resources/splash/Default-portrait2x~iphone6.png',
-  'iphone6p_portrait': 'resources/splash/Default-portrait3x~iphone6+.png',
+  // 'iphone': 'resources/splash/iphone.png',
+  'iphone_2x': 'resources/splash/iphone4.png',
+  'iphone5': 'resources/splash/iphone5.png',
+  'iphone6': 'resources/splash/iphone6.png',
+  'iphone6p_portrait': 'resources/splash/iphone6plus.png',
 
   //iPad
   'ipad_portrait': 'resources/splash/Default-Portrait~ipad.png',
@@ -43,15 +39,16 @@ App.launchScreens({
   'ipad_landscape_2x': 'resources/splash/Default-Landscape2x~ipad.png',
 
   // Android
-  'android_ldpi_portrait': 'resources/splash/splash-200x320.png',
-  'android_ldpi_landscape': 'resources/splash/splash-320x200.png',
-  'android_mdpi_portrait': 'resources/splash/splash-320x480.png',
-  'android_mdpi_landscape': 'resources/splash/splash-480x320.png',
-  'android_hdpi_portrait': 'resources/splash/splash-480x800.png',
-  'android_hdpi_landscape': 'resources/splash/splash-800x480.png',
-  'android_xhdpi_portrait': 'resources/splash/splash-720x1280.png',
-  'android_xhdpi_landscape': 'resources/splash/splash-1280x720.png'
+  'android_ldpi_portrait': 'resources/splash/ldpi-portrait.png',
+  'android_ldpi_landscape': 'resources/splash/ldpi-landscape.png',
+  'android_mdpi_portrait': 'resources/splash/mdpi-portrait.png',
+  'android_mdpi_landscape': 'resources/splash/mdpi-landscape.png',
+  'android_hdpi_portrait': 'resources/splash/hdpi-portrait.png',
+  'android_hdpi_landscape': 'resources/splash/hdpi-landscape.png',
+  'android_xhdpi_portrait': 'resources/splash/xhdpi-portrait.png',
+  'android_xhdpi_landscape': 'resources/splash/xhdpi-landscape.png'
 });
 
+App.accessRule('*');
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');

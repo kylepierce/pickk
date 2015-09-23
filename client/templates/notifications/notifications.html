@@ -1,37 +1,71 @@
 <template name="notifications">
 
-
 	<!-- Standard Nav instead of the custom nav design -->
- {{> standardNav}}
+	{{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Notifications</h1>
+  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-		
 		{{#ionList class="my-class"}} 
-			<div class="item item-divider">Group Requests</div>
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="joe.jpg">
-	      <h2>Miles Houser</h2>
-	      <p>wants you to join <strong>College Buddies</strong></p>
-	      <button class="button" data-ion-popover="_notificationPopover">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}}
+			<div class="item item-divider">Invitations</div>
 
-    	<div class="item item-divider">Game Requests</div>
+			{{#with notification}}
+				{{#each request}}
+				
+				{{#ionItem buttonRight=true avatar=true}}
 
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="photo.jpg">
-	      <h2>Chad Sutton</h2>
-	      <p>wants you to play <strong>New England vs Seattle</strong> game</p>
-	      <button class="button" data-ion-popover="_notificationPopover">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}}
+					<!-- {{#if group type}} -->
 
-    	<br>
+						{{#with user referrer}}
+						<img src="{{profile.avatar}}">
+			      <h2>{{profile.username}}</h2>
+			      {{/with}}
 
-			<div class="item item-divider">All notifications</div>
+			      {{#with groupData notificationId }}
+			      	
+			      <p>wants you to join <strong>{{name}}</strong></p>
+			      <a href="/groups/{{_id}}" class="button"> 
+			        {{> ionIcon icon="more"}}
+			      </a>
+
+			      {{/with}}
+					
+
+<!-- 					{{else}}
+						{{#with user referrer}}
+						<img src="{{profile.avatar}}">
+			      <h2>{{profile.username}}</h2>
+			      {{/with}}
+			      <p>wants you to play <strong>
+			      {{#with groupData notificationId }}
+			      	{{name}}
+						{{/with}}
+			      </strong></p>
+			      <button class="button" data-ion-popover="_notificationPopover">
+			        {{> ionIcon icon="more"}}
+			      </button>
+					{{/if}} -->
+					
+
+	    	{{/ionItem}}
+	    	{{/each}}
+	    {{/with}}
+			
+
+				<br>
+
+			<!-- <div class="item item-divider">All notifications</div>
 			
 			{{#ionItem buttonRight=true avatar=true}}
 				<img src="brad.jpg">
@@ -58,7 +92,7 @@
 	      <button class="button" data-ion-popover="_notification">
 	        {{> ionIcon icon="more"}}
 	      </button>
-    	{{/ionItem}}
+    	{{/ionItem}} -->
 			
 		{{/ionList}}
 

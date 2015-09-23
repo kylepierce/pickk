@@ -11,7 +11,7 @@
 	float: left;
 }
 
-.infomation-section p {
+.item p {
 	overflow: auto;
 	white-space: normal;
 	text-overflow: normal;

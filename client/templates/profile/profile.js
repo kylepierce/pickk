@@ -1,28 +1,45 @@
 Meteor.subscribe('groups')
 
-Template.userProfile.created = function () {
+Template.myProfile.created = function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('profile', Router.current().params._id);
   }.bind(this));
 };
 
-// Template.userProfile.rendered = function () {
-//   this.autorun(function () {
-//     if (!this.subscription.ready()) {
-//       IonLoading.show();
-//     } else {
-//       IonLoading.hide();
-//     }
-//   }.bind(this));
-// };
-
-Template.userProfile.helpers({
+Template.myProfile.helpers({
   profile: function () {
-    return UserList.findOne({_id: Router.current().params._id});
+    var userId = Meteor.userId(); 
+    return UserList.findOne({_id: userId});
   },
   group: function() {
-    var user = UserList.findOne({_id: Router.current().params._id});
-    return user.profile.groups
-    console.log(this.user.profile.groups)
+    var currentUser = Meteor.user();
+    return currentUser.profile.groups
+  },
+  following: function(){
+    var numFollowing = this.profile.following;
+    var numCount = numFollowing.length
+    if(!numCount){
+      return 0
+    } else { 
+      return numCount
+    }
+  },
+  follower: function(){
+    var numFollow = this.profile.followers;
+    var numCount = numFollow.length
+    return numCount
+    // if(numCount > 1){
+    //   return numCount
+    // } else{ 
+    //   return 0
+    // }
   }
 });
+
+Template.profileDisplayGroup.helpers({
+  groupName: function(groupId){
+    // Display the name of the group with the _id as refrence
+    return Groups.findOne({_id: groupId, secret: false});
+  }
+});
+

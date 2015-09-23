@@ -1,0 +1,35 @@
+.play-slider {
+	width:85%!important;
+	clear:both;
+	float: left;
+	margin-left: 7.5%;
+}
+
+.slider-6-options {
+	border: 1px solid black;
+	float: left;
+  width: 16.66%;
+  text-align: center;
+}
+
+.slider-5-options {
+	border: 1px solid black;
+	float: left;
+  width: 20%;
+  text-align: center;
+}
+
+.item-toggle .toggle {
+	position: inherit!important;
+}
+
+#gameInfo {
+	background-color: white;
+}
+
+#gameList {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin: 30px 0;
+}

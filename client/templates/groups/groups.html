@@ -1,5 +1,5 @@
 <template name="groups">
-	  {{#contentFor "headerButtonLeft"}}
+	{{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
       {{#if isAndroid}}
         {{> ionIcon icon='android-more-vertical'}}
@@ -9,34 +9,52 @@
     </button>
   {{/contentFor}}
 
+ {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Groups</h1>
+ {{/contentFor}}
+
   {{#contentFor "headerButtonRight"}}
-		<button class="button button-clear pull-right" data-ion-modal="newGroup">
-			{{> ionIcon icon='ios-plus-empty'}}
-		</button>
+    <a href="/searchGroups" class="button button-clear pull-right newGroup">
+      {{> ionIcon icon='ios-search-strong'}}
+    </a>
 	{{/contentFor}}
 
   {{#ionView }}
     {{#ionContent}}
 
+    <!-- {{> loader}}  -->
+<!--     {{#if Template.subscriptionsReady}}  
+    <div class="loading-wrapper"> -->
+    <a href="/newgroup" class="newGroup">
+    <button class="button full">
+      <i class="fa fa-comments-o"></i>
+      Create Group
+    </button>
+    </a>
+    <br>
+    <br>
     <div class="item item-divider">Your Groups</div>
 
     {{#each userGroups}}
-      {{#ionItem path="group.show" }}
-     
+      {{#ionItem path="group.show" avatar=true}}
+        <img src="{{avatar}}">
         <h2 class="center-username">{{name}}</h2>
 
       {{/ionItem}}
     {{/each}}
-
+    <br>
 		<div class="item item-divider">All Groups</div>
 
 		{{#each group}}
-      {{#ionItem path="group.show" }}
-     
+      {{#ionItem path="group.show" avatar=true}}
+        <img src="{{avatar}}">
         <h2 class="center-username">{{name}}</h2>
 
       {{/ionItem}}
     {{/each}}
+<!--     </div>
+    {{/if}} -->
+    
     {{/ionContent}}
   {{/ionView}}
 </template>

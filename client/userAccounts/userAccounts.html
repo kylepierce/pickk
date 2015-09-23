@@ -3,18 +3,14 @@
     {{>ionNavBackButton path="landing"}}
   {{/contentFor}}
   {{#contentFor "headerTitle"}}
-    <h1 class="title">User Accounts</h1>
+    <h1 class="title white-text-header">Login</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-      {{#if currentUser}}
-        <div class="padding">
-          <button class="button button-positive button-block" data-action="logout">Log Out</button>
-        </div>
-      {{else}}
+
         {{> atForm}}
-      {{/if}}
+
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -24,18 +20,48 @@
     {{>ionNavBackButton path="landing"}}
   {{/contentFor}}
   {{#contentFor "headerTitle"}}
-    <h1 class="title">User Accounts</h1>
+    <h1 class="title white-text-header">Register</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-      {{#if currentUser}}
-        <div class="padding">
-          <button class="button button-positive button-block" data-action="logout">Log Out</button>
-        </div>
-      {{else}}
+
         {{> atForm}}
-      {{/if}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="newPassword">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="landing"}}
+  {{/contentFor}}
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">New Password</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+        {{> atForm}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="forgotPassword">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="landing"}}
+  {{/contentFor}}
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Forgot Password</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+        {{> atForm}}
+
     {{/ionContent}}
   {{/ionView}}
 </template>

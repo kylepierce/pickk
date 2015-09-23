@@ -1,13 +1,47 @@
-Meteor.subscribe('leaderboard');
+// Template.leaderboard.onCreated( function() {
+//   this.subscribe( 'leaderboard', function() {
+//   	$( ".slider-pager" ).css('display', 'none');
+//     $( ".loader" ).delay( 1000 ).fadeOut( 'slow', function() {
+//       $( ".loading-wrapper" ).fadeIn( 'slow' );
+//       $( ".slider-pager" ).css('display', 'block');
+//  	 });
+// 	});
+// });
+
+// Template.leaderboard.onRendered( function() {
+//   $( "svg" ).delay( 750 ).fadeIn(); 
+// });
 
 // Create a list function baed on the number of users. It can be repeated.
 
 Template.leaderboard.helpers({
 	'player': function(){
-		return UserList.find({},{sort: {profile: -1,}}).fetch();
+		return UserList.find({}, {sort: {"profile.coins": -1}, limit: 10}).fetch();
+	},
+	'groups': function(){
+		var currentUser = Meteor.user();
+		return currentUser.profile.groups
 	}
 }); 
 
 
-// Create each group list
+// Display each group that user is in
+
+Template.groupLeaderboard.helpers({
+	players: function(groupId){
+		// Show the top 10 users in the group
+		// Display their usersnames, coins, and link to their profile
+		return UserList.find({"profile.groups": groupId},{sort: {profile: -10}}).fetch();
+	}, 
+	groupName: function(groupId){
+	// Display the name of the group with the _id as refrence
+		return Groups.findOne({_id: groupId});
+	}
+}); 
+
+
+
+
+
+
 

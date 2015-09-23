@@ -1,0 +1,46 @@
+<template name="inviteToGroup">
+
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Invite User to group</h1>
+  {{/contentFor}}
+
+
+  {{#contentFor "headerButtonRight"}}
+    <a href="/searchUsers" class="button button-clear pull-right newGroup">
+       {{> ionIcon icon='ios-search-strong'}}
+    </a>
+  {{/contentFor}}
+
+{{#ionView}}
+  {{#ionContent}}
+		
+<!-- 		<button class="button full" >
+			<i class="fa fa-comments-o"></i>
+			Invite Friends from Contacts
+		</button> -->
+
+		{{#ionList}}
+		<div class="item item-divider">People you follow</div>
+			{{#each following}}
+				{{#with players this}}
+				{{#ionItem buttonRight=true avatar=true }}
+					<img src="{{profile.avatar}}">
+					{{profile.username}} 
+					{{> inviteButton}}
+					
+				{{/ionItem}}
+				{{/with}}
+			{{/each}}
+		{{/ionList}}
+	{{/ionContent}}
+{{/ionView}}
+
+</template>
+
+<template name="inviteButton">
+	<button data-action="invite" id="{{_id}}" class="button">Invite</button>
+</template>

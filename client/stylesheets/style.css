@@ -9,6 +9,24 @@ html, body {
     overflow: hidden;
 }
 
+.loader {
+  display: none;
+}
+
+.loader-holder {
+  margin-left: auto;
+  margin-right: auto;
+  width:40px;
+}
+
+.loading-wrapper {
+  display: none;
+}
+
+.content .overflow-scroll{
+bottom: 0px !important;
+}
+
 .snap-drawer {
     height: 100%;
     overflow-x:hidden;
@@ -40,9 +58,31 @@ input, textarea {
 	background-color: #f2f2f2!important;
 }
 
+.has-tabs-top {
+	background-color: #f2f2f2!important;
+}
+
+.tabs-striped .tabs {
+	background-color: #2cb99c;
+	border-bottom: 0;
+	color: white;
+}
+
+.tabs-striped .tab-item.active {
+	border-color: #00a084;
+}
+
 .bar.bar-stable {
-	background-color: #008d97!important;
+	background-color: #16A085!important;
 	color:white!important;
+}
+
+.bar-stable .button.button-clear {
+	color: white!important;
+}
+
+.white-text-header {
+	color: white!important;
 }
 
 .nav-icon {
@@ -67,6 +107,14 @@ input, textarea {
 	color:white;
 	font-weight: bolder;
 }
+
+.search-bar-fix input[type="text"]{
+	padding-left: 25px;
+	height: 50px;
+  font-size: 1.2em;
+  margin-top: 25px;
+}
+
 
 #login {
 	width:35%;
@@ -250,7 +298,7 @@ input[type=radio]:empty {
 	margin-left: -9999px;
 }
 
-input[type=radio]:checked ~ label{
+input[type=radio]:checked + label{
 	position: relative;
 	border-color: #E6B400;
   	background-color: #E6B400;
@@ -270,8 +318,8 @@ input[type=submit] {
 }
 
 .profile-container {
-	height: 200px;
-	background-color: #008D97;
+	height: 170px;
+	background-color: #16A085;
 	color:white;
 	text-align: center;
 	margin-right: auto;
@@ -288,7 +336,7 @@ input[type=submit] {
 .circle-image {
 	border-radius: 100%;
 	width: 50%;
-	max-width: 150px;
+	max-width: 100px;
 	margin-top: 25px;
 	border: 3px solid white;
 }

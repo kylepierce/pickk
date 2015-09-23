@@ -1,23 +1,37 @@
 <template name="newGroup">
-	{{#ionModal}}
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Create New Group</h1>
+  {{/contentFor}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
 		<div class="content overflow-scroll">
 			<div class="list">
 				<form>
 				<label class="item item-input item-stack-label">
-					<span class="input-label">Group name:</span>
-					<input type='text' name="groupName" placeholder="Accounting4Wins">
+					<span class="input-label">Group id:</span>
+					<input type='text' id="groupId" placeholder="Accounting4Wins">
 				</label>
-
+				<label class="item item-input item-stack-label">
+					<span class="input-label">Group Display Name:</span>
+					<input type='text' id="groupName" placeholder="Company Accounting Department">
+				</label>
 					
-				<label class="item checkbox item-stack-label">
+<!-- 				<label class="item checkbox item-stack-label">
 					<span class="input-label">Do you want this group to be private?</span>
-					<input type="checkbox" name="privateCheck">
+					<input type="checkbox" name="privateCheck"> 
 						
-				</label>
-				<button type="submit" data-action="createGroup" class="button button-positive button-clear">Create Group</button>
+				</label> --> <br>
+				<button type="submit" data-action="createGroup" class="button button-positive full">Create Group</button>
 				</form>				
 
 			</div>
 		</div>
-	{{/ionModal}}
+    {{/ionContent}}
+   {{/ionView}}
 </template>

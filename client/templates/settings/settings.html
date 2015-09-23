@@ -1,36 +1,70 @@
 <template name="settings">
 	<!-- Standard Nav instead of the custom nav design -->
- {{> standardNav}}
-
 
   {{#ionView}}
     {{#ionContent}}
 
   <div class="container">
-	<form>
+	<form id="settings">
 		<div style="background-color:white;">
-		<label>Username:
-		<div>
-		<i id="username" class=""></i>
-		<input type="text" class="settings-input-box" name="username" value="{{username}}" required>
-		</div>
+		<label class="strong-label">Username:
+			<input type="text" class="settings-input-box" name="username" value="{{username}}" required>
 		</label>
+		<div id="usernameReq" style="padding-left: 15px; display: none;">
+			<ul>
+				<li id="short"> Longer than 3 characters</li>
+				<li id="long"> Shorter than 15 characters</li>
+				<li id="space"> No spaces</li>
+			</ul>
 		</div>
 
-		<label>First Name:
-		<input type="text" name="firstName" value="{{firstName}}"></label>
+		<label class="strong-label">First Name:
+			<input type="text" name="firstName" value="{{firstName}}">
+		</label>
+ 
+		<label class="strong-label">Last Name:
+			<input type="text" name="lastName" value="{{lastName}}">
+		</label>
 
-		<label>Last Name:
-		<input type="text" name="lastName" value="{{lastName}}"></label>
+		<!-- Photo:<br>
+		<button data-action="cameraUpload">Want to upload your own photo?</button><br>
 
-		Photo:<br>
-		Want to upload your own photo?<br>
-		<img src="{{avatar}}" id="avatar" style="width:100px; height: 100px;">
-
-		<input type="submit" class="button button-large button-positive" value="Update profile">
+		<img src="{{avatar}}" id="avatar" style="width:100px; height: 100px;"> -->
+			
+			{{> yield 'submitButton'}}
+		
+		</div>
 	</form> 
   </div>
 
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="submitNew"><input name="status" type="submit" class="button button-large button-positive" value="Finish Profile"></template>
+
+<template name="submitOld"><input name="status" type="submit" class="button button-large button-positive" value="Update Profile"></template>
+
+<template name="newUserHeader">
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">
+		{{#with profile}} {{this.profile.username}} {{/with}} Create Profile
+		</h1>
+	{{/contentFor}}
+</template>
+
+<template name="oldUserHeader">
+	{{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+ {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Update Profile</h1>
+ {{/contentFor}}
 </template>

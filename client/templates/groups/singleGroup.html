@@ -5,18 +5,26 @@
     {{>ionNavBackButton path="index"}}
   {{/contentFor}}
 
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Group Details</h1>
+  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
 
     {{#with group}}
-			<h2>{{this.name}}</h2>
-				{{> memberCheck}}
-			
-			<br>
-			{{this.commissioner}}
-			<br>
-			{{this.members}}
+      {{#if private}}
+        {{#if member}}
+          {{> groupData}}
+        {{else}}
+          <h1>This group is private and can only be seen by members</h1>
+        {{/if}}       
+
+      {{else}}
+      {{> groupData}}
+
+
+      {{/if}}
     {{/with}}
     {{/ionContent}}
   {{/ionView}}
@@ -27,7 +35,31 @@
 	{{#if alreadyMember }}
 		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave Group</button>
 
+    <a href="/inviteToGroup" class="invite">
+      <button class="button button-balanced">
+       {{> ionIcon icon='ios-upload-outline'}} Invite
+      </button>
+    </a>
+
 	{{else}}
 		<button data-action="joinGroup" id="join-toggle" class="button button-balanced">Join</button>
 	{{/if}}
+</template>
+
+<template name="groupData">
+  <div class="profile-background">        
+        <img src="{{this.avatar}}" class="circle-image">
+        <div style="clear:both;">
+        <h3>{{this.name}}</h3>
+        ({{this.groupId}})
+
+        <h5>Owner: 
+        {{#with commissioner}}
+          {{this.profile.username}}
+        {{/with}}</h5>
+        <h5>{{memberCount}} Members </h5>
+
+        {{> memberCheck}}    
+        </div> 
+      </div>
 </template>

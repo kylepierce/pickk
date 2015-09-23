@@ -1,32 +1,60 @@
-<template name="userProfile">
+<template name="myProfile">
 
 <!-- Standard Nav instead of the custom nav design -->
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Your Profile</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-
+    {{> loader}} 
+    {{#if Template.subscriptionsReady}}  
+   <!--  <div class="loading-wrapper"> -->
     {{#with profile}}
     	<div class="profile-background">        
-            <img src="{{this.profile.avatar}}" class="circle-image">
-          	<div style="clear:both;">
-            <h3>{{this.profile.username}}</h3>
-            </div> 
-        </div>
+        <img src="{{this.profile.avatar}}" class="circle-image">
+      	<div style="clear:both;">
+        <h3>{{this.profile.username}}</h3>
+        Following: {{{following}}} <br>
+        Followers: {{{follower}}}<br>
+        </div> 
+      </div>
 
-        <div class="item item-divider">Followers</div>
+<!--       <div class="item item-divider">Badges</div>
 
-        <div class="item item-divider">Badges</div>
-
-        <div class="item item-divider">Trophies</div>
-
-        <div class="item item-divider">Groups</div>
-            {{this.profile.groups}}
+      <div class="item item-divider">Trophies</div> -->
+      
+      {{#ionList}}
+        <div class="item item-divider">Groups</div>    
+          {{#each group}}
+            {{> profileDisplayGroup groupId=this}}
+          {{/each}}
+        {{/ionList}}
 
     {{/with}}
-    {{/ionContent}}
+    <!-- </div> -->
+    {{/if}}
+    {{/ionContent}} 
   {{/ionView}}
-
 </template>
+
+<template name="profileDisplayGroup"> 
+  {{#with groupName groupId}}           
+    {{#ionItem path="group.show" avatar=true}}
+       <img src="{{avatar}}">
+      {{name}}
+    {{/ionItem}}
+  {{/with}}
+</template>
+
+
