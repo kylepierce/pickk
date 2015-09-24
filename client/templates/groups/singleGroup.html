@@ -33,7 +33,7 @@
 
 <template name="memberCheck">
 	{{#if alreadyMember }}
-		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave Group</button>
+		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave</button>
 
     <a href="/inviteToGroup" class="invite">
       <button class="button button-balanced">
@@ -47,10 +47,10 @@
 </template>
 
 <template name="groupData">
-  <div class="profile-background">        
-        <img src="{{this.avatar}}" class="circle-image">
-        <div style="clear:both;">
-        <h3>{{this.name}}</h3>
+  <div style="background: white;" class="container">        
+        <img style="float:left; width: 75px;" src="{{this.avatar}}" class="circle-image">
+        <div style="float:left; margin:20px">
+        <h4>{{this.name}}</h4>
         ({{this.groupId}})
 
         <h5>Owner: 

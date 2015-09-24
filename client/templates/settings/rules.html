@@ -1,0 +1,41 @@
+<template name="rules">
+
+<!-- Standard Nav instead of the custom nav design -->
+ {{> standardNav}}
+
+ {{#contentFor "headerTitle"}}
+	<h1 class="title white-text-header">Common Questions</h1>
+ {{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+    <div class="container">
+    	{{#ionList}}
+	    	{{#ionItem}}
+	    	<h2>I predicted the play but I didnt win any coins!</h2>
+				<p>When you predict what will happen you are predict what the end of the play will be. If the play starts as a run but ends up as a fumble the people who guessed fumble will earn coins. </p>
+				{{/ionItem}}
+
+				{{#ionItem}}
+				<h2>Examples</h2>
+				<p>Sacks are considered runs.
+				<br>
+				Touchdowns are for either team unless specified. On kickoffs there is an option to predict the kicking team will get a touchdown.
+				</p>
+				{{/ionItem}}
+
+				{{#ionItem}}
+				<h2>There is pentalty. Do I get my coins back?</h2>
+				<p>If the play is going to be replayed all players get their coins returned to them. If the play is a loss of down or doesnt effect the offense the play outcome stands.</p>
+				{{/ionItem}}
+
+				{{#ionItem}}
+				<h2>Can I win money or prizes</h2>
+				<p>Pickk is a free app and there is no money wagered or won by playing.</p>
+				{{/ionItem}}
+			{{/ionList}}
+		</div>
+		
+    {{/ionContent}}
+  {{/ionView}}
+</template>

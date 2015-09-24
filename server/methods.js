@@ -42,13 +42,16 @@ Meteor.methods({
   	Games.update(game, {$set: {'commercial': toggle}});
   },
 
-  'createGame': function(team1, team2, title, active){
+  'createGame': function(team1, team2, title, active, channel, gameTime){
   	var timeCreated = new Date();
   	Games.insert({
   		teams: [team1, team2],
   		dateCreated: timeCreated,
+  		gameDate: gameTime,
   		name: title,
+  		tv: channel,
   		commercial: false,
+  		complete: false,
   		live: active,
   		nonActive: [],
   		users: []

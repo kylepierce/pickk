@@ -1,4 +1,5 @@
 Meteor.subscribe('userAnswer');
+Meteor.subscribe('leaderboard')
 
 Template.notifications.helpers({
 	notification: function () {
@@ -20,15 +21,13 @@ Template.notifications.helpers({
 		} 
 	},
 	user: function(ref) {
+		Meteor.subscribe('userAnswer', ref);
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
 		return Groups.findOne({_id: groupId})
 	}
 });
-
-
-
 
 // Template.gameNotifications.helpers({
 // 	'question': function () {

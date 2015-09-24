@@ -21,13 +21,13 @@
     {{#if Template.subscriptionsReady}}  
    <!--  <div class="loading-wrapper"> -->
     {{#with profile}}
-    	<div class="profile-background">        
-        <img src="{{this.profile.avatar}}" class="circle-image">
-      	<div style="clear:both;">
+      <div class="container">        
+        <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
+        <div style="float: left; margin:30px">
         <h3>{{this.profile.username}}</h3>
-        Following: {{{following}}} <br>
-        Followers: {{{follower}}}<br>
-        </div> 
+        {{{following}}} Following
+        {{{follower}}}Followers<br>
+        </div>
       </div>
 
 <!--       <div class="item item-divider">Badges</div>
@@ -35,7 +35,7 @@
       <div class="item item-divider">Trophies</div> -->
       
       {{#ionList}}
-        <div class="item item-divider">Groups</div>    
+        <div style="clear:both;" class="item item-divider">Groups</div>    
           {{#each group}}
             {{> profileDisplayGroup groupId=this}}
           {{/each}}

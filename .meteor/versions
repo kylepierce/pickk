@@ -56,6 +56,8 @@ joshowens:accounts-entry@1.0.3
 joshowens:simple-form@0.2.2
 jquery@1.11.3_2
 json@1.0.3
+juliancwirko:s-alert@3.1.0
+juliancwirko:s-alert-stackslide@3.1.0
 lai:collection-extensions@0.1.4
 launch-screen@1.0.2
 less@1.0.14
@@ -106,11 +108,13 @@ reactive-dict@1.1.0
 reactive-var@1.0.5
 reload@1.1.3
 retry@1.0.3
+richsilv:pikaday@1.0.0
 routepolicy@1.0.5
 schnie:uploader@2.0.3
 service-configuration@1.0.4
 session@1.1.0
 sha@1.0.3
+simple:reactive-method@1.0.2
 softwarerero:accounts-t9n@1.0.9
 spacebars@1.0.6
 spacebars-compiler@1.0.6

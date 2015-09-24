@@ -3,6 +3,7 @@ Meteor.subscribe('groups')
 Template.userProfile.created = function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('profile', Router.current().params._id);
+    console.log(Router.current().params._id)
   }.bind(this));
 };
 
@@ -18,7 +19,9 @@ Template.userProfile.created = function () {
 
 Template.userProfile.helpers({
   profile: function () {
-    return UserList.findOne({_id: Router.current().params._id});
+    var user = Router.current().params._id
+    Meteor.subscribe('profile', user);
+    return UserList.findOne({_id: user});
   },
   group: function() {
     return this.profile.groups

@@ -1,3 +1,5 @@
+Meteor.subscribe('leaderboard')
+
 // Template.leaderboard.onCreated( function() {
 //   this.subscribe( 'leaderboard', function() {
 //   	$( ".slider-pager" ).css('display', 'none');
@@ -16,7 +18,10 @@
 
 Template.leaderboard.helpers({
 	'player': function(){
-		return UserList.find({}, {sort: {"profile.coins": -1}, limit: 10}).fetch();
+		return UserList.find({}, 
+			{sort: {'profile.coins': -1}},
+			{fields: {'profile.username': 1, 'profile.coins': 1, 'profile.avatar': 1, '_id': 1}}, 
+			{limit: 25}).fetch();
 	},
 	'groups': function(){
 		var currentUser = Meteor.user();
@@ -31,17 +36,15 @@ Template.groupLeaderboard.helpers({
 	players: function(groupId){
 		// Show the top 10 users in the group
 		// Display their usersnames, coins, and link to their profile
-		return UserList.find({"profile.groups": groupId},{sort: {profile: -10}}).fetch();
+		return UserList.find(
+			{"profile.groups": groupId}, 
+			{sort: {'profile.coins': -1}},
+			{fields: 
+				{'profile.username': 1, 'profile.coins': 1, 'profile.avatar': 1, '_id': 1}}
+			).fetch();
 	}, 
 	groupName: function(groupId){
 	// Display the name of the group with the _id as refrence
 		return Groups.findOne({_id: groupId});
 	}
 }); 
-
-
-
-
-
-
-

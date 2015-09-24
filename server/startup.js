@@ -17,4 +17,3 @@
 //     encodeURIComponent(smtp.password) + "@" + encodeURIComponent(smtp.server) +
 //     ":" + smtp.port;
 // });
-

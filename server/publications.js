@@ -62,13 +62,17 @@ Meteor.publish('userAnswer', function(){
 	return UserList.find({_id: currentUserId});
 });
 
-Meteor.publish('leaderboard', function() {
-	return UserList.find({ });
-})
+// Meteor.publish('leaderboard', function() {
+// 	return UserList.find({ });
+// })
 
 Meteor.publish('worldLeaderboard', function() {
-	return UserList.find({}, {sort: {profile: -1}, limit: 10})
+	return UserList.find({});
 })
+
+// Meteor.publish('groupLeaderboard', function(groupId) {
+// 	return 
+// })
 
 Meteor.publish('groups', function() {
   return Groups.find({ });
@@ -86,6 +90,6 @@ Meteor.publish('groupUsers', function(groupId) {
   return UserList.find(selector);
 });
 
-Meteor.publish('profile', function(_id) {
-  return UserList.findOne({_id: _id});
+Meteor.publish('profile', function(user) {
+  return UserList.find({_id: user});
 });
