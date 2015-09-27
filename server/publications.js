@@ -62,12 +62,12 @@ Meteor.publish('userAnswer', function(){
 	return UserList.find({_id: currentUserId});
 });
 
-// Meteor.publish('leaderboard', function() {
-// 	return UserList.find({ });
-// })
+Meteor.publish('leaderboard', function() {
+	return UserList.find({ });
+})
 
 Meteor.publish('worldLeaderboard', function() {
-	return UserList.find({});
+	return UserList.find({}, {sort: {profile: -1}, limit: 10})
 })
 
 // Meteor.publish('groupLeaderboard', function(groupId) {
@@ -81,6 +81,11 @@ Meteor.publish('groups', function() {
 Meteor.publish('games', function() {
   return Games.find({ });
 });
+
+Meteor.publish('trophy', function(){
+  return Trophies.find({ });
+});
+
 
 Meteor.publish('groupUsers', function(groupId) {
   check(groupId, String);

@@ -10,15 +10,19 @@ Template.notifications.helpers({
 	request: function() {
 		return this.pendingNotifications
 	},
-	group: function(type) {
-		if(type === "group"){
-			return true
-		} 
+	group: function() {
+		var currentUser = Meteor.userId();
+		var userData = UserList.findOne({_id: currentUser})
+		var notifications = userData.pendingNotifications
+		console.log(notifications.notificationId)
+		return notifications
 	},
-	game: function(type) {
-		if(type === "game"){
-			return this.pendingNotifications
-		} 
+	type: function(type) {
+		return this.type === type
+	}, 
+	trophy: function(id) {
+		var trophy = Trophies.findOne({_id: id});
+		return trophy
 	},
 	user: function(ref) {
 		Meteor.subscribe('userAnswer', ref);

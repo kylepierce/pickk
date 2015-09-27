@@ -13,18 +13,19 @@
     {{#ionContent}}
 
     {{#with group}}
-      {{#if private}}
+<!--       {{#if private}}
         {{#if member}}
           {{> groupData}}
         {{else}}
           <h1>This group is private and can only be seen by members</h1>
         {{/if}}       
 
-      {{else}}
+      {{else}} -->
       {{> groupData}}
 
+      {{> singleGroupLeaderboard groupId=this}}
 
-      {{/if}}
+      <!-- {{/if}} -->
     {{/with}}
     {{/ionContent}}
   {{/ionView}}
@@ -59,7 +60,28 @@
         {{/with}}</h5>
         <h5>{{memberCount}} Members </h5>
 
-        {{> memberCheck}}    
+        {{> memberCheck}}     
         </div> 
       </div>
+</template>
+
+<template name="singleGroupLeaderboard">
+  {{#ionList}}
+  <div style="clear:both" class="item item-divider">Group Leaderboard</div>
+    <ol type="1" class="list" style="clear:both">
+      
+      {{#each players groupId}}
+        {{#ionItem path="user.show" avatar=true}}
+        <img src="{{profile.avatar}}">
+        <li class="list-font">
+          
+          <h2 class="center-username">{{profile.username}}<span class="score">{{profile.coins}}</span></h2>
+        </li>
+
+        {{/ionItem}}
+      {{/each}}
+      
+    </ol>
+
+    {{/ionList}}
 </template>

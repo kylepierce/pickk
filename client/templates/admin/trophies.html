@@ -1,0 +1,52 @@
+<template name="trophies">
+	<div class="container">	
+	  {{#ionView}}
+   		{{#ionContent}}	
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Trophies</h1>
+   		 {{/contentFor}}
+
+   			<div class="row">
+   			<div class="col col-50 col-offset-25">
+				<form>
+					<label>Trophy Title
+						<input type="text" name="title">
+					</label>
+					<label>Description
+						<input type="text" name="description">
+					</label>
+					<label>File Name Including Extention
+						<input type="text" name="img">					
+					</label>
+					<input type="submit">
+				</form>
+				</div>
+				</div>
+
+
+	{{#ionList}}
+		{{#each trophy}}
+			{{#ionItem class="item-thumbnail-left"}}
+				<img src="/{{image}}">
+				<h2>{{title}}</h2>
+				{{description}}
+			{{/ionItem}}
+		{{/each}}
+	{{/ionList}}
+
+
+			{{/ionContent}}
+		{{/ionView}}
+	</div>
+</template>

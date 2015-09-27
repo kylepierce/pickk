@@ -40,7 +40,7 @@ Template.singleGroup.helpers({
     }
   }
 });
-
+ 
 Template.groupData.helpers({
   group: function () {
     return Groups.findOne({_id: Router.current().params._id});
@@ -90,3 +90,15 @@ Template.singleGroup.events({
 
   }
 })
+
+Template.singleGroupLeaderboard.helpers({
+  players: function(groupId){
+    var id = groupId._id
+    return UserList.find({"profile.groups": id}, 
+      {sort: {'profile.coins': -1}},
+      {fields: 
+        {'profile.username': 1, 'profile.coins': 1, 'profile.avatar': 1, '_id': 1}}
+      ).fetch();
+    console.log("I tried")
+  }
+});

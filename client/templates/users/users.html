@@ -24,11 +24,13 @@
         </div>
       </div>
 
-<!--       <div class="item item-divider">Badges</div>
+      <div  style="clear:both;" class="item item-divider">Badges</div>
 
-      <div class="item item-divider">Trophies</div> -->
-
-      <div style="clear:both;" class="item item-divider">Groups</div>
+      <div class="item item-divider">Trophies</div>
+          {{#each trophy}}
+            <img src="/{{this}}">
+          {{/each}}
+      <div class="item item-divider">Groups</div>
         {{#ionList}}
           {{#each group}}
 

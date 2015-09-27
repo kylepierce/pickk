@@ -26,6 +26,9 @@ Template.userProfile.helpers({
   group: function() {
     return this.profile.groups
   },
+  trophy: function() {
+    return this.profile.trophies
+  },
   following: function(){
     var numFollowing = this.profile.following;
     return numFollowing.length

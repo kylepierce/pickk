@@ -72,6 +72,16 @@ Meteor.methods({
 		});
   },
 
+ // Update users info from the settings page
+
+  'addTrophy' : function(name, description, img){
+		Trophies.insert({
+			title: name,
+			description: description,
+			image: img
+		});
+  },
+
   // Way for Admin to manually update users coins 
 
   'updateCoins' : function(user, coins){
