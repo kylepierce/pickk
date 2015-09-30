@@ -10,11 +10,10 @@ Template.notifications.helpers({
 	request: function() {
 		return this.pendingNotifications
 	},
-	group: function() {
+	alert: function() {
 		var currentUser = Meteor.userId();
 		var userData = UserList.findOne({_id: currentUser})
 		var notifications = userData.pendingNotifications
-		console.log(notifications.notificationId)
 		return notifications
 	},
 	type: function(type) {
@@ -33,10 +32,17 @@ Template.notifications.helpers({
 	}
 });
 
-// Template.gameNotifications.helpers({
-// 	'question': function () {
-// 		var currentUser = Meteor.userId();
-// 		var userData = UserList.findOne({_id: currentUser});
-// 		return userData.questionsAnswered
+Template.notifications.events({
+	'click [data-action=delete]': function () {
+		var notificationId = this._id
+		console.log('Delete! ' + notificationId)
+		Meteor.call('removeNotification', notificationId);
+	}
+});
+
+// Template._notificationPopover.events({
+// 	'click #accept': function (id) {
+// 		console.log(this)
+// 		Router.go('group.show');
 // 	}
 // });

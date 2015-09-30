@@ -67,7 +67,7 @@ Template.memberCheck.helpers({
   }
 });
 
-Template.singleGroup.events({
+Template.memberCheck.events({
   'click .invite': function(event, template){
     groupId = Router.current().params._id
     console.log(groupId)
@@ -84,11 +84,11 @@ Template.singleGroup.events({
   'click [data-action=leaveGroup]': function() {
     var currentUserId = Meteor.userId();
     var groupId = Router.current().params._id
-
+    console.log("Leaving group")
     // Remove this user from the group
     Meteor.call('leaveGroup', currentUserId, groupId);
 
-  }
+  } 
 })
 
 Template.singleGroupLeaderboard.helpers({

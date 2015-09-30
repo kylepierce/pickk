@@ -23,6 +23,7 @@
       {{else}} -->
       {{> groupData}}
 
+      {{> memberCheck}}  
       {{> singleGroupLeaderboard groupId=this}}
 
       <!-- {{/if}} -->
@@ -33,22 +34,24 @@
 </template>
 
 <template name="memberCheck">
+  <div style="clear:both; margin-bottom:50px;">
 	{{#if alreadyMember }}
-		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave</button>
+		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive col col-50" style="float:left">Leave</button>
 
     <a href="/inviteToGroup" class="invite">
-      <button class="button button-balanced">
+      <button class="button col col-50 button-balanced" style="float:left">
        {{> ionIcon icon='ios-upload-outline'}} Invite
       </button>
     </a>
 
 	{{else}}
-		<button data-action="joinGroup" id="join-toggle" class="button button-balanced">Join</button>
+		<button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-100" style="float:left">Join</button>
 	{{/if}}
+  </div>
 </template>
 
 <template name="groupData">
-  <div style="background: white;" class="container">        
+  <div style="background-color: white; margin-left:20px;">        
         <img style="float:left; width: 75px;" src="{{this.avatar}}" class="circle-image">
         <div style="float:left; margin:20px">
         <h4>{{this.name}}</h4>
@@ -60,7 +63,7 @@
         {{/with}}</h5>
         <h5>{{memberCount}} Members </h5>
 
-        {{> memberCheck}}     
+           
         </div> 
       </div>
 </template>

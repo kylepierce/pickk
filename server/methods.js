@@ -38,6 +38,10 @@ Meteor.methods({
   	Push.send({from: 'Test', title: 'Hello', text: message, badge: 1, query: {}});
   },
 
+  'pushInvite': function(message, userId){
+  	Push.send({from: 'Pickk', title: 'Invite', text: message, badge: 1, query: {_id: userId}});
+  },
+
   'toggleCommercial': function(game, toggle){
   	Games.update(game, {$set: {'commercial': toggle}});
   },
@@ -82,11 +86,46 @@ Meteor.methods({
 		});
   },
 
+  'awardTrophy': function(trophyId, user){
+  	UserList.update({_id: user}, {$push: {"profile.trophies": trophyId}})
+  },
+
+	'notifyTrophyAwarded' : function(trophyId, user){
+		var timeCreated = new Date();
+		var id = Random.id();
+		UserList.update({_id: user}, 
+		{$push:
+			{pendingNotifications: 
+				{
+				_id: id,
+				type: "trophy",
+				notificationId: trophyId,
+				dateCreated: timeCreated 
+				}
+			}
+		});
+	},
+
+	'removeNotification': function(notifyId){
+		var user = Meteor.userId()
+		UserList.update({_id: user}, 
+			{$pull: 
+				{pendingNotifications: 
+					{_id: notifyId}
+				}
+			})
+	},
+
   // Way for Admin to manually update users coins 
 
   'updateCoins' : function(user, coins){
   	var amount = parseInt(coins)
 		Meteor.users.update( {_id: user}, {$set: { "profile.coins": amount}} );  
+	},
+
+  'updateAllCoins' : function(coins){
+  	var amount = parseInt(coins)
+		UserList.update({}, {$set: { "profile.coins": amount}}, { multi: true });  
 	},
 
 // Way for Admin to manually update users name 
@@ -146,16 +185,33 @@ Meteor.methods({
 	// Users can add other users to join their group.
 
 	'inviteToGroup' : function(userId, ref, noteId){
+		var timeCreated = new Date();
+		var id = Random.id();
 		UserList.update({_id: userId}, 
 		{$push:
 			{pendingNotifications: 
-				{referrer: ref,
+				{
+				_id: id,
+				dateCreated: timeCreated,
+				referrer: ref,
 				type: "group",
 				notificationId: noteId  
 				}
 			}
 		});
 	},
+
+	// 'removeNotification': function(){
+	// 	UserList.update({_id: userId}, 
+	// 	{$pull:
+	// 		{pendingNotifications: 
+	// 			{referrer: ref,
+	// 			type: "group",
+	// 			notificationId: noteId  
+	// 			}
+	// 		}
+	// 	});
+	// },
 
 	// Users can join any group
 

@@ -14,24 +14,29 @@
     {{#ionContent}}
 
     {{#with profile}}
-    	<div class="container">        
+    	<div style="margin-left:20px;">        
         <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
         <div style="float: left; margin:30px">
         <h3>{{this.profile.username}}</h3>
         {{{following}}} Following
         {{{follower}}}Followers<br>
-        {{> followerCheck}}
+
         </div>
       </div>
-
+        {{> followerCheck}}
+      {{#ionList}}
       <div  style="clear:both;" class="item item-divider">Badges</div>
 
       <div class="item item-divider">Trophies</div>
+      {{#ionItem}}
           {{#each trophy}}
-            <img src="/{{this}}">
+            {{#with trophyData this}}
+              <img width="75px" src="/{{image}}">
+            {{/with}}
           {{/each}}
+      {{/ionItem}}
+
       <div class="item item-divider">Groups</div>
-        {{#ionList}}
           {{#each group}}
 
             {{> displayGroup groupId=this}}
@@ -55,10 +60,10 @@
 
 <template name="followerCheck">
   {{#if alreadyFollower }}
-    <button data-action="unfollowUser" id="join-toggle" class="button button-assertive">Unfollow</button>
+    <button data-action="unfollowUser" id="join-toggle" class="button button-assertive col col-100">Unfollow</button>
 
   {{else}}
-    <button data-action="followUser" id="join-toggle" class="button button-balanced">Follow</button>
+    <button data-action="followUser" id="join-toggle" class="button button-balanced col col-100">Follow</button>
   {{/if}}
 </template>
 

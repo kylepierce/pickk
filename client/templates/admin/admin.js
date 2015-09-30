@@ -95,6 +95,11 @@ Template.oldQuestionList.events({
 			Meteor.call('modifyQuestionStatus', this._id, "option6");
 		}
 	},
+	'click [data-action=permenantRemove]' : function() {
+		if(confirm("Are you sure?")) {
+			Meteor.call('removeQuestion', this._id)
+		}
+	}
 });
 
 // Template._adminPopover.helpers({

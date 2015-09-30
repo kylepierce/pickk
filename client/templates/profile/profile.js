@@ -1,4 +1,5 @@
 Meteor.subscribe('groups')
+Meteor.subscribe('trophies')
 
 Template.myProfile.created = function () {
   this.autorun(function () {
@@ -14,6 +15,12 @@ Template.myProfile.helpers({
   group: function() {
     var currentUser = Meteor.user();
     return currentUser.profile.groups
+  },
+  trophy: function() {
+    return this.profile.trophies
+  },
+  trophyData: function(id){
+    return Trophies.findOne({_id: id})
   },
   following: function(){
     var numFollowing = this.profile.following;

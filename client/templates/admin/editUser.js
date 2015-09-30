@@ -1,4 +1,5 @@
 Meteor.subscribe('groups')
+Meteor.subscribe('trophies')
 
 Template.editUser.created = function () {
   this.autorun(function () {
@@ -13,6 +14,15 @@ Template.editUser.helpers({
   },
   group: function() {
     return this.profile.groups
+  },
+  trophies: function() {
+    return Trophies.find({}).fetch()
+  },
+  trophy: function() {
+    return this.profile.trophies
+  },
+  trophyData: function(id){
+    return Trophies.findOne({_id: id})
   },
   following: function(){
     var numFollowing = this.profile.following;
@@ -38,5 +48,12 @@ Template.editUser.events({
   'click #makeAdmin': function(){
     var user = Router.current().params._id
     Meteor.call("makeAdmin", user)
+  },
+  'submit form': function(event, template){
+    event.preventDefault();
+    var user = Router.current().params._id
+    var trophyId = template.find('#trophy :selected').value
+    Meteor.call('awardTrophy', trophyId, user);
+    Meteor.call('notifyTrophyAwarded', trophyId, user);
   }
 })
