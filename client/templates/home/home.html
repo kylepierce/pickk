@@ -15,6 +15,7 @@
 			{{> questionCard}}
 		<!-- </div> -->
 		{{/if}}
+		{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -22,18 +23,37 @@
 <template name="questionCard">
 	{{#if live}}
 		<img class="next-play slideInLeft" src="wait-for-play.png">
-		<h5 class="next-play">No game right now...</h5>
-	{{else}}			
+		<h5 class="next-play">No game right now...<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
+		
+	{{else}}
 		{{#if commercial}}
+
+		{{#if commercialQuestions}}
+			{{#if binary}}
+				{{> binaryChoice}}
+			{{else}}
+				{{> commercialQuestion}}
+			{{/if}}
+		
+		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">Commercial Break!</h5>	
-	
+			{{/if}}
+
+	{{else}}
+		{{#if active}}
+			{{> activeQuestion}}
+		
 		{{else}}
-			{{#if active}}
-				{{> activeQuestion}}
-			{{else}}
-				<img class="next-play slideInLeft" src="wait-for-play.png">
-				<h5 class="next-play">Waiting for the play to end...</h5>
+			<img class="next-play slideInLeft" src="wait-for-play.png">
+			<h5 class="next-play">Waiting for the play to end...</h5>
+			{{#with lastPlay}}
+				<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
+			{{/with}}
+
+			{{#if activeCheck}}
+				<h5 class="next-play"><button class="button" id="changeAnswer">Change Answer</button></h5>
+			{{/if}}
 			{{/if}}
 		{{/if}}
 	{{/if}}
@@ -62,9 +82,73 @@
 	{{/each}}
 </template>
 
+<template name="commercialQuestion">
+	{{#each questions}}
+	<div class="container">
+		<div class="container-item">
+		<div class="question">
+			{{ que}}
+		</div>
+
+		<form>
+			<!-- Options -->
+				{{> normalPlay}}
+
+			<!-- Wagers -->
+				{{> wagers}}
+
+			<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+		</form>
+	</div>
+	</div>
+	{{/each}}
+</template>
+
+<template name="binaryChoice">
+	<span style="text-align: center;">
+		<h4>Free Pickk and Win 1000 coins!</h4>
+		<h5>Guess Correctly and Get 2000 coins!</h5>
+	</span>
+	{{#each questions}}
+	<div class="container">
+		<div class="container-item">
+		<div class="question">
+			<h3>{{ que}}</h3>
+		</div>
+
+		<form>
+			<!-- Options -->
+			<div>
+				<div class="binary">
+					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
+					<label for="{{options.option1.title}}" class="binary-option">
+					<i class="fa fa-star"></i> 
+					{{options.option1.title}} 
+					</label>
+				</div>
+
+				<div>
+					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
+					<label for="{{options.option2.title}}" class="binary-option">
+					<i class="fa fa-star"></i> 
+					{{options.option2.title}} 
+					</label>
+				</div>
+			</div>
+
+			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" disabled value="Submit">
+		</form>
+	</div>
+	</div>
+	{{/each}}
+</template>
 
 <template name="wagers">
 	<div style="margin-bottom:10px;">
+			<div>
+			<input type="radio" name="wager" id="50" required value="50">
+			<label class="one-third wager-box" for="50">50</label>
+		</div>
 		<div>
 			<input type="radio" name="wager" id="100" required value="100">
 			<label class="one-third wager-box" for="100">100</label>
@@ -86,10 +170,10 @@
 			<input type="radio" name="wager" id="2500" required value="2500">
 			<label class="one-third wager-box" for="2500">2500</label> 
 		</div>
-		<div>
+<!-- 		<div>
 			<input type="radio" name="wager" id="5000" required value="5000">
 			<label class="one-third wager-box" for="5000">5000</label> 
-		</div>
+		</div> -->
 	</div>
 </template>
 

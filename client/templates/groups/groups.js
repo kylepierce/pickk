@@ -38,11 +38,10 @@ Template.groups.helpers({
 
 Template.groups.events({
   'click .newGroup': function () {
-    console.log('Clicked the button')
     Router.go('/newgroup');
   }
 });
-
+ 
 Template.newGroup.events({
     'click input:checkbox':function(event, template){
       console.log(event.target)

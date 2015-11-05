@@ -3,17 +3,20 @@ Meteor.subscribe('profileUpdate');
 Template.settings.helpers({
 	username: function () {
 		var currentUser = Meteor.user();
-		if (currentUser.services.twitter){
+		var services = currentUser.services
+		if (typeof services !== 'undefined'){
 			return currentUser.services.twitter.screenName;
 		} else {
-			return currentUser.profile.username;
+			console.log(currentUser.profile.username)
+			return currentUser.profile.username
 		}
 	},
 
 
 	firstName: function () {
 		var currentUser = Meteor.user();
-		if (currentUser.services.facebook){
+		var services = currentUser.services
+		if (typeof services !== 'undefined'){
 			return currentUser.services.facebook.first_name;
 		} else {
 			return currentUser.profile.firstName;
@@ -23,7 +26,8 @@ Template.settings.helpers({
 
 	lastName: function () {
 		var currentUser = Meteor.user();
-		if (currentUser.services.facebook){
+		var services = currentUser.services
+		if (typeof services !== 'undefined'){
 			return currentUser.services.facebook.last_name;
 		} else {
 			return currentUser.profile.lastName;
@@ -37,6 +41,7 @@ Template.settings.events({
 	},
 
 	'keyup [name=username]': function(event, template){
+		event.preventDefault();
 		var username = event.target.value;
 		var uniqueUsername = UserList.findOne({"profile.username": username});
 		var currentUser = Meteor.user()

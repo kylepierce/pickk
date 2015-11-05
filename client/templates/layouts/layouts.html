@@ -25,7 +25,7 @@
     {{else}}
       {{#ionTabs style="ios"}}
         {{> ionTab title="Active" path="dashboard" iconOff="ios-photos-outline" iconOn="ios-photos" class="tab-item-positive"}}
-        {{> ionTab title="Leaderboard" path="leaderboard" iconOff="ios-list-outline" iconOn="ios-list" class="tab-item-positive"}}
+        {{> ionTab title="Groups" path="groups" iconOff="ios-people-outline" iconOn="ios-people" class="tab-item-positive"}}
         {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
         {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
       {{/ionTabs}}
@@ -121,6 +121,10 @@
   {{> ionIcon icon='ios-person-outline'}}
   Profile
   </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/friends">
+  {{> ionIcon icon='ios-personadd-outline'}}
+  Find Friends
+  </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/onboarding">
   {{> ionIcon icon='ios-help-outline'}}
   How to play
@@ -134,7 +138,7 @@
   Settings
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
-  {{> ionIcon icon='log-out'}}
+  {{> ionIcon icon='log-out'}} 
     Logout
   </a>
 </div>

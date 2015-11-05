@@ -34,7 +34,7 @@
 
 <template name="newPassword">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="landing"}}
+    {{>ionNavBackButton path="login"}}
   {{/contentFor}}
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">New Password</h1>
@@ -51,10 +51,27 @@
 
 <template name="forgotPassword">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="landing"}}
+    {{>ionNavBackButton path="login"}}
   {{/contentFor}}
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Forgot Password</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+        {{> atForm}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="verifyEmail">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="landing"}}
+  {{/contentFor}}
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Verify Email</h1>
   {{/contentFor}}
 
   {{#ionView}}

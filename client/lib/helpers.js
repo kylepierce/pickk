@@ -1,4 +1,4 @@
-Meteor.subscribe('profile');
+// Meteor.subscribe('profile');
 
 Template.registerHelper('singleAvatar', function () {
 	// var currentUser = Meteor.user();

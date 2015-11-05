@@ -17,3 +17,11 @@
 //     encodeURIComponent(smtp.password) + "@" + encodeURIComponent(smtp.server) +
 //     ":" + smtp.port;
 // });
+
+AccountController = RouteController.extend({
+    verifyEmail: function () {
+        Accounts.verifyEmail(this.params.token, function () {
+            Router.go('/verified');
+        });
+    }
+});

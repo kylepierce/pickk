@@ -1,12 +1,10 @@
-Meteor.subscribe('groups')
-Meteor.subscribe('trophies')
-
-Template.userProfile.created = function () {
-  this.autorun(function () {
-    this.subscription = Meteor.subscribe('profile', Router.current().params._id);
-    console.log(Router.current().params._id)
-  }.bind(this));
-};
+// Template.userProfile.created = function () {
+//   this.autorun(function () {
+//     var userId = Router.current().params._id
+//     console.log(userId)
+//     this.subscription = Meteor.subscribe('findSingle', userId);
+//   }.bind(this));
+// };
 
 // Template.userProfile.rendered = function () {
 //   this.autorun(function () {
@@ -20,9 +18,9 @@ Template.userProfile.created = function () {
 
 Template.userProfile.helpers({
   profile: function () {
-    var user = Router.current().params._id
-    Meteor.subscribe('profile', user);
-    return UserList.findOne({_id: user});
+    var userId = Router.current().params._id
+    var user = UserList.findOne({_id: userId});
+    return user
   },
   group: function() {
     return this.profile.groups
@@ -40,6 +38,13 @@ Template.userProfile.helpers({
   follower: function(){
     var numFollow = this.profile.followers;
     return numFollow.length
+  },
+  ownProfile: function(){
+    var userId = Router.current().params._id
+    var currentUserId = Meteor.userId();
+    if(userId !== currentUserId){
+      return true
+    }
   }
 });
 

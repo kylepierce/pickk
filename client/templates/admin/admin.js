@@ -7,7 +7,7 @@ Mousetrap.bind('d', function() {
 }, 'keyup');
 
 // Create question and add to database function
-
+ 
 Template.createQuestion.helpers({
 	game: function(){
 		Meteor.subscribe('games');
@@ -41,6 +41,11 @@ Template.activeQuestionList.helpers({
 Template.pendingQuestionList.helpers({
 	'questions': function(){
 		return QuestionList.find({active: null}, {sort: {dateCreated: 1}});
+	},
+	'binary': function(){
+		if(this.binaryChoice == true){
+			return true
+		}
 	}
 });
 
@@ -97,7 +102,8 @@ Template.oldQuestionList.events({
 	},
 	'click [data-action=permenantRemove]' : function() {
 		if(confirm("Are you sure?")) {
-			Meteor.call('removeQuestion', this._id)
+			console.log("unAwardPoints")
+			Meteor.call('unAwardPointsForDelete', this._id, this.play)
 		}
 	}
 });
@@ -114,6 +120,21 @@ Template.oldQuestionList.events({
 
 // Select correct answer and award points to those who guessed correctly.
 Template.pendingQuestionList.events({
+	//True False Questions
+	'click [data-action=true]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyBinaryQuestionStatus', questionId, "option1");
+		
+	},
+	'click [data-action=false]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyBinaryQuestionStatus', questionId, "option2");
+	},
+
 	'click [data-action=option1]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;

@@ -1,0 +1,63 @@
+<template name="friends">
+	 {{#contentFor "headerButtonLeft"}}
+  <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+    {{#if isAndroid}}
+      {{> ionIcon icon='android-more-vertical'}}
+    {{else}}
+      {{> ionIcon icon='navicon'}}
+    {{/if}}
+  </button>
+{{/contentFor}}
+
+ {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Find Friends</h1>
+ {{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+
+		<div class="container">
+ 		<div class="search-bar-fix">
+    {{> esInput index="users" placeholder="Friends Username..." }}
+		</div>
+    <ul>
+        {{#esEach index="users"}} 
+	        <li>		
+	          {{#ionItem buttonRight=true}}
+            <a href="{{pathFor route='user.show'}}">
+	            <!-- <img class="item-avatar" src="{{profile.avatar}}"> -->
+              <div width="40%">
+							{{profile.username}} 
+              </div>
+              </a>
+							{{> followButton}}
+	          {{/ionItem}}
+          </li>
+        {{/esEach}}
+    </ul>
+
+		{{#ifEsHasNoResults index="users" logic="OR" }}
+			<div class="no-results">No results found!</div>
+<!-- 			<a href="/inviteFriend" class="newGroup">
+		    <button class="button full">
+		      <i class="fa fa-comments-o"></i>
+		      Want to Invite a Friend?
+		    </button>
+    	</a> -->
+		{{/ifEsHasNoResults}}
+		
+		</div>
+		{{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+
+<template name="followButton">
+  {{#if alreadyFollower }}
+    <button disabled="true" id="join-toggle" class="button button-assertive">Following</button>
+
+  {{else}}
+    <button data-action="follow" id="join-toggle" class="button button-balanced">Follow</button>
+  {{/if}}
+</template>

@@ -1,6 +1,3 @@
-Meteor.subscribe('userAnswer');
-Meteor.subscribe('leaderboard')
-
 Template.notifications.helpers({
 	notification: function () {
 		var currentUser = Meteor.userId();
@@ -18,13 +15,16 @@ Template.notifications.helpers({
 	},
 	type: function(type) {
 		return this.type === type
-	}, 
+	},  
 	trophy: function(id) {
 		var trophy = Trophies.findOne({_id: id});
-		return trophy
+		return trophy 
 	},
+	// score: function() {
+	// 	return score
+	// },
 	user: function(ref) {
-		Meteor.subscribe('userAnswer', ref);
+		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {

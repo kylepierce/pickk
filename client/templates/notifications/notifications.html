@@ -44,6 +44,26 @@
 				{{/if}}
 				{{/each}}
 
+		<div class="item item-divider">Followers</div>
+		{{#each alert}}
+			{{#if type "follower"}}	
+		    {{#ionItem class="double-button" buttonRight=true avatar=true}}
+		    	{{#with user referrer}}
+						<img src="{{profile.avatar}}">
+			      <h2>{{profile.username}}</h2>
+			    	
+			    	Is now following you
+			      <a href="/user-profile/{{_id}}" class="button"> 
+			        {{> ionIcon icon="more"}}
+			      </a>
+					{{/with}}
+			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
+			        {{> ionIcon icon="ios-close"}}
+			      </a>
+	    	{{/ionItem}}
+			{{/if}}
+  	{{/each}}
+
 	<div class="item item-divider">Trophies</div>
 		{{#each alert}}
 			{{#if type "trophy"}}	
@@ -53,12 +73,24 @@
 		      <h2>{{title}}</h2>
 		      <p>{{description}}</p>
 		      {{/with}}
-		      <a style="margin-right: 50px;" data-action="delete" class="button"> 
+		      <a data-action="delete" class="button"> 
 	        {{> ionIcon icon="ios-close"}}
 		      </a>
 	    	{{/ionItem}}
 			{{/if}}
   	{{/each}}
+
+<!--   	<div class="item item-divider">Score</div>
+		{{#each alert}}
+			{{#if type "score"}}	
+		    {{#ionItem buttonRight=true}}
+		      <p>{{message}}</p>
+		      <a data-action="delete" class="button"> 
+	        {{> ionIcon icon="ios-close"}}
+		      </a>
+	    	{{/ionItem}}
+			{{/if}}
+  	{{/each}} -->
 	  {{/with}}
 
 				<br>
@@ -93,7 +125,6 @@
     	{{/ionItem}} -->
 			
 		{{/ionList}}
-
     {{/ionContent}}
   {{/ionView}}
 </template>

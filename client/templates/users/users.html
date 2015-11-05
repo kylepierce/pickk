@@ -23,7 +23,9 @@
 
         </div>
       </div>
-        {{> followerCheck}}
+        {{#if ownProfile}}
+          {{> followerCheck}}
+        {{/if}}
       {{#ionList}}
       <div  style="clear:both;" class="item item-divider">Badges</div>
 

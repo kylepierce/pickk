@@ -17,8 +17,9 @@
   },
   "production": true,
   "badge": true,
-  "sound": true,
   "alert": true,
-  "vibrate": true
+  "vibrate": true,
+  "sendInterval": 250, 
+  "sendBatchSize": 1
 }
 

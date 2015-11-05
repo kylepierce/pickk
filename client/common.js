@@ -1,7 +1,11 @@
 Push.allow({
     send: function(userId, notification) {
-      // Allow all users to send to everybody - For test only!
-      return true;
+        // Make sure user is an admin before sending message.
+        var user = Meteor.user()
+        var admin = user.profile.role
+        if(admin === "admin" ){
+          return true;
+        }
     }
   });
 
@@ -22,13 +26,13 @@ Meteor.startup(function () {
         timeout: 5000,
         html: false,
         onRouteClose: true,
-        stack: true,
+        stack: false,
         // or you can pass an object:
         // stack: {
         //     spacing: 10 // in px
         //     limit: 3 // when fourth alert appears all previous ones are cleared
         // }
-        offset: 50, // in px - will be added to first alert (bottom or top - depends of the position in config)
+        offset: 0, // in px - will be added to first alert (bottom or top - depends of the position in config)
         beep: false
         // examples:
         // beep: '/beep.mp3'  // or you can pass an object:

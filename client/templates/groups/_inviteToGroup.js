@@ -1,4 +1,3 @@
-Meteor.subscribe('leaderboard');
 Meteor.subscribe('groups');
 
 Template.inviteToGroup.helpers({
@@ -35,5 +34,5 @@ Template.inviteButton.events({
 
     $("#" + user).addClass('button-balanced');
     $("#" + user).prop("disabled", true)
-	}
+	} 
 })

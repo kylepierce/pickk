@@ -10,7 +10,9 @@ Template.editUser.created = function () {
 
 Template.editUser.helpers({
   profile: function () {
-    return UserList.findOne({_id: Router.current().params._id});
+    var id = Router.current().params._id
+    Meteor.subscribe('findSingle', id)
+    return UserList.findOne({_id: id});
   },
   group: function() {
     return this.profile.groups

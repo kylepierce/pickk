@@ -3,7 +3,7 @@ Meteor.subscribe('trophies')
 
 Template.myProfile.created = function () {
   this.autorun(function () {
-    this.subscription = Meteor.subscribe('profile', Router.current().params._id);
+    this.subscription = Meteor.subscribe('findSingle', Router.current().params._id);
   }.bind(this));
 };
 
