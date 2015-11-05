@@ -1,7 +1,5 @@
-
+Meteor.subscribe('userData')
 // Display active cards
-Meteor.subscribe('userAnswer');
-Meteor.subscribe('activeQuestions');
 
 
 // Template.home.onCreated( function() {
@@ -87,16 +85,67 @@ Template.home.rendered = function (template) {
   if (!Meteor.loggingIn() && !Meteor.user()) {
    	 Router.go('/landing');
   }   
+  var username = Meteor.user().profile.username
+  if(username === "" || username === null || username === "undefined"){
+    Router.go('/newUserSettings')
+  }
 };
 
 Template.home.helpers({
 	gameName: function () {
 		return Games.findOne({live: true});
-	}
+	},
+  scoreMessage: function () {
+    var userData = Meteor.user()
+    var notifications = userData.pendingNotifications
+
+    notifications.forEach(function (post) {
+      if(post.type === "score" && post.read === false ){
+        var id = post._id
+        var message = post.message  
+        setTimeout(function(){
+          Meteor.call('readNotification', id);
+         }, 250);
+         
+        return sAlert.success(message  , {effect: 'stackslide', html: true});
+
+      }
+    });
+  }
 });
 
 
 Template.activeQuestion.animations({
+  ".container-item": {
+    container: ".container", // container of the ".item" elements
+    insert: {
+      class: "animated fast slideInLeft", // class applied to inserted elements
+      before: function(attrs, element, template) {}, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {}, // callback after an element gets inserted
+      delay: 100 // Delay before inserted items animate
+    },
+    animateInitial: true, // animate the elements already rendered
+    animateInitialStep: 200, // Step between animations for each initial item
+    animateInitialDelay: 500 // Delay before the initial items animate
+  }
+});
+
+Template.commercialQuestion.animations({
+  ".container-item": {
+    container: ".container", // container of the ".item" elements
+    insert: {
+      class: "animated fast slideInLeft", // class applied to inserted elements
+      before: function(attrs, element, template) {}, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {}, // callback after an element gets inserted
+      delay: 100 // Delay before inserted items animate
+    },
+    animateInitial: true, // animate the elements already rendered
+    animateInitialStep: 200, // Step between animations for each initial item
+    animateInitialDelay: 500 // Delay before the initial items animate
+  }
+});
+
+Template.binaryChoice.animations({
   ".container-item": {
     container: ".container", // container of the ".item" elements
     insert: {
@@ -121,19 +170,75 @@ Template.questionCard.helpers({
 			return false
 		}
 	},
+  'lastPlay': function(){
+    // Get the last question id 
+    var questionId = Session.get('lastId')
+
+    // Find the users answer and wager
+    var currentUser = Meteor.user();
+
+    // Find questionId in user answered
+    var userAnsweredArray = currentUser.questionAnswered
+
+    // Search function to find the question in the array
+    function search(nameKey, myArray){
+      for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].questionId === nameKey) {
+            return myArray[i];
+        }
+      }
+    }
+
+    return search(questionId, userAnsweredArray)
+  },
+
+  'activeCheck': function(){
+    questionId = Session.get('lastId');
+    var question = QuestionList.findOne({_id: questionId});
+    if(question.active === true){
+      return true
+    }
+  },
+
 	'active': function(){
+    
 		var currentUser = Meteor.userId();
 		var active = QuestionList.find(
-				{active: true, 
+				{active: true, commercial: false, binaryChoice: false,
 				usersAnswered: {$nin: [currentUser]}}, 
-				{sort: {dateCreated: 1,}}).fetch();
+				{sort: {dateCreated: 1}}).fetch();
 		if(active.length >= 1){
 			return true
 		} else {
 			return false
 		}
-		console.log(active)
 	},
+  'commercialQuestions': function(){
+    
+    var currentUser = Meteor.userId();
+    var active = QuestionList.find(
+        {active: true, commercial: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}}).fetch();
+    if(active.length >= 1){
+      return true
+    } else {
+      return false
+    }
+  },
+  'binary': function(){
+    var currentUser = Meteor.userId();
+    var active = QuestionList.find(
+        {active: true, commercial: true, binaryChoice: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1}).fetch();
+    if(active.length >= 1){
+      return true
+    } else {
+      return false
+    }
+  },
+
 	'commercial': function(game){
 		Meteor.subscribe('games')
 		var game = Games.findOne({live: true});
@@ -151,10 +256,32 @@ Template.activeQuestion.helpers({
 		var currentUser = Meteor.userId();
 
 		return QuestionList.find(
-				{active: true, 
+				{active: true, commercial: false,
 				usersAnswered: {$nin: [currentUser]}}, 
 				{sort: {dateCreated: 1,}});
 	}
+});
+
+Template.commercialQuestion.helpers({
+    'questions': function(){
+    var currentUser = Meteor.userId();
+
+    return QuestionList.find(
+        {active: true, commercial: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1,}});
+  }
+});
+
+Template.binaryChoice.helpers({
+    'questions': function(){
+    var currentUser = Meteor.userId();
+
+    return QuestionList.find(
+        {active: true, commercial: true, binaryChoice: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1,}});
+  }
 });
 
 Template.questionCard.events({
@@ -169,14 +296,42 @@ Template.questionCard.events({
 	// 	play = template.find('input:radio[name=play]:checked').value
 	// },
 
+  'click #changeAnswer': function(){
+    var questionId = Session.get('lastId');
+    var answer = Session.get('lastAnswer');
+    var wager = Session.get('lastWager');
+    var currentUser = Meteor.userId();
+
+    Meteor.call('questionUnanswered', currentUser, questionId, answer, wager);
+
+  },
+
+  'click input:radio[name=binary]':function(event, template) {
+    $("#submit-binary").prop("disabled", false)
+    $("#submit-binary").addClass('button-balanced');
+  },
+
+
+  'click #submit-binary': function(event, template){
+    var answer = template.find('input:radio[name=binary]:checked').value;
+    var currentUser = Meteor.userId();
+    var questionId = this._id; 
+    console.log("Woo! Almost DOne!")
+    Meteor.call('binaryQuestionAnswered', currentUser, questionId, answer)
+  },
+
 	'submit form': function(event, template) {
 		event.preventDefault();
 		var questionId = this._id; 
 		var currentUser = Meteor.userId();
-		var answer = template.find('input:radio[name=play]:checked').value;
+		var que = this.que;
+    var answer = template.find('input:radio[name=play]:checked').value;
 		var wager = template.find('input:radio[name=wager]:checked').value;
-
+    var description = template.find('input:radio[name=play]:checked').id;
 		var userCoins = Meteor.user().profile.coins;
+
+    console.log(que)
+
 		if (userCoins < wager) {
 			IonLoading.show({
       	customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or purchase extra coins in our store</p>',
@@ -187,14 +342,26 @@ Template.questionCard.events({
 		$( ".container-item" ).removeClass( "slideInLeft" )
 		$( ".container-item" ).addClass( "slideOutRight" )
 
-    // var countdown = new ReactiveCountdown(300);
-    // countdown.start(function(){
-    //   console.log("Done")
-    //   Meteor.call('playerInactive', currentUser, questionId);
-    // })
+    Session.set('lastId', questionId);
+    Session.set('lastAnswer', answer);
+    Session.set('lastWager', wager);
+
+    analytics.track("userAnsweredQuestion", {
+      id: currentUser,
+      question: que,
+      questionId: questionId,
+      answer: answer,
+      wager: wager,
+      description: description
+    });
+
+    var countdown = new ReactiveCountdown(300);
+    countdown.start(function(){
+      Meteor.call('playerInactive', currentUser, questionId);
+    })
 
     setTimeout(function(){
-			Meteor.call('questionAnswered', currentUser, questionId, answer, wager);
+			Meteor.call('questionAnswered', currentUser, questionId, answer, wager, description);
     }, 250);
 
     }

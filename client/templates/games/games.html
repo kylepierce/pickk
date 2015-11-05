@@ -1,0 +1,27 @@
+<template name="games">
+	{{#contentFor "headerButtonLeft"}}
+	  <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+	    {{#if isAndroid}}
+	      {{> ionIcon icon='android-more-vertical'}}
+	    {{else}}
+	      {{> ionIcon icon='navicon'}}
+	    {{/if}}
+	  </button>
+	{{/contentFor}}
+	 
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">Game Schedule</h1>
+  {{/contentFor}}
+
+
+	{{#ionView}}
+		{{#ionContent}}
+			{{#ionList}}
+			<div class="item item-divider">Upcoming Games</div>
+				{{#each game}}
+					{{#ionItem}} <h2>{{name}}</h2>{{gameDate}} on {{tv}}{{/ionItem}}
+				{{/each}}
+			{{/ionList}}
+		{{/ionContent}}
+	{{/ionView}}
+</template>

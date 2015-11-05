@@ -7,22 +7,28 @@
   <div class="container">
 	<form id="settings">
 		<div style="background-color:white;">
-		<label class="strong-label">Username:
-			<input type="text" class="settings-input-box" name="username" value="{{username}}" required>
+		<div class="list">
+		<label class="item item-input item-stack-label">
+		<span class="input-label">Username:</span>
+			<input type="text"  name="username" value="{{username}}" required>
 		</label>
-		<div id="usernameReq" style="padding-left: 15px; display: none;">
+		<div id="usernameReq" style="clear: both; float:left; padding-left: 15px; display: none; padding: 10px">
+		<strong>Username Requirements</strong>
 			<ul>
 				<li id="short"> Longer than 3 characters</li>
 				<li id="long"> Shorter than 15 characters</li>
 				<li id="space"> No spaces</li>
-			</ul>
-		</div>
+			</ul>	
+		</div> 
 
-		<label class="strong-label">First Name:
+
+		<label class="item item-input item-stack-label">
+		<span class="input-label">First Name:</span>
 			<input type="text" name="firstName" value="{{firstName}}">
 		</label>
  
-		<label class="strong-label">Last Name:
+		<label class="item item-input item-stack-label">
+		<span class="input-label">Last Name:</span>
 			<input type="text" name="lastName" value="{{lastName}}">
 		</label>
 
@@ -32,12 +38,12 @@
 		<img src="{{avatar}}" id="avatar" style="width:100px; height: 100px;"> -->
 			
 			{{> yield 'submitButton'}}
-		
+		</div>
 		</div>
 	</form> 
   </div>
 
-    {{/ionContent}}
+    {{/ionContent}} 
   {{/ionView}}
 </template>
 

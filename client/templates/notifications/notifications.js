@@ -1,5 +1,3 @@
-Meteor.subscribe('userAnswer');
-
 Template.notifications.helpers({
 	notification: function () {
 		var currentUser = Meteor.userId();
@@ -9,17 +7,24 @@ Template.notifications.helpers({
 	request: function() {
 		return this.pendingNotifications
 	},
-	group: function(type) {
-		if(type === "group"){
-			return true
-		} 
+	alert: function() {
+		var currentUser = Meteor.userId();
+		var userData = UserList.findOne({_id: currentUser})
+		var notifications = userData.pendingNotifications
+		return notifications
 	},
-	game: function(type) {
-		if(type === "game"){
-			return this.pendingNotifications
-		} 
+	type: function(type) {
+		return this.type === type
+	},  
+	trophy: function(id) {
+		var trophy = Trophies.findOne({_id: id});
+		return trophy 
 	},
+	// score: function() {
+	// 	return score
+	// },
 	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
@@ -27,13 +32,17 @@ Template.notifications.helpers({
 	}
 });
 
+Template.notifications.events({
+	'click [data-action=delete]': function () {
+		var notificationId = this._id
+		console.log('Delete! ' + notificationId)
+		Meteor.call('removeNotification', notificationId);
+	}
+});
 
-
-
-// Template.gameNotifications.helpers({
-// 	'question': function () {
-// 		var currentUser = Meteor.userId();
-// 		var userData = UserList.findOne({_id: currentUser});
-// 		return userData.questionsAnswered
+// Template._notificationPopover.events({
+// 	'click #accept': function (id) {
+// 		console.log(this)
+// 		Router.go('group.show');
 // 	}
 // });

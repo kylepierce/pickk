@@ -1,7 +1,7 @@
 <template name="gameInfo">
 	<div class="container">	
 	  {{#ionView}}
-   		{{#ionContent}}	
+   		{{#ionContent}}	 
 
    		 {{#contentFor "headerButtonLeft"}}
 		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
@@ -30,6 +30,14 @@
 				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">Label</span>
 					<input id="title" type="text">
+				</label>
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">TV Channel</span>
+					<input id="tv" type="text">
+				</label>				
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">Game Time Spelled Out</span>
+					<input id="gameTime" type="text">
 				</label>
 				<div class="item item-toggle item-text-wrap">
 				    Active?

@@ -1,4 +1,4 @@
-Meteor.subscribe("leaderboard")
+Meteor.subscribe('allUsers');
 
 Template.adminUsers.helpers({
 	'user': function(){

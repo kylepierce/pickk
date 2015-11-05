@@ -25,7 +25,7 @@
     {{else}}
       {{#ionTabs style="ios"}}
         {{> ionTab title="Active" path="dashboard" iconOff="ios-photos-outline" iconOn="ios-photos" class="tab-item-positive"}}
-        {{> ionTab title="Leaderboard" path="leaderboard" iconOff="ios-list-outline" iconOn="ios-list" class="tab-item-positive"}}
+        {{> ionTab title="Groups" path="groups" iconOff="ios-people-outline" iconOn="ios-people" class="tab-item-positive"}}
         {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
         {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
       {{/ionTabs}}
@@ -81,7 +81,7 @@
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/leaderboard">
   {{> ionIcon icon='ios-list-outline'}}
-  Leaderboards
+  Leaderboard
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/groups">
   {{> ionIcon icon='ios-people-outline'}}
@@ -90,6 +90,10 @@
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/notifications">
   {{> ionIcon icon='ios-bell-outline'}}
   Notifications
+  </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/games">
+  {{> ionIcon icon='ios-calendar-outline'}} 
+  Game Schedule
   </a>
   {{#if admin}}
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin">
@@ -108,21 +112,33 @@
   <!-- {{> ionIcon icon='bowtie'}} -->
   > Game
   </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin/settings">
+  <!-- {{> ionIcon icon='bowtie'}} -->
+  > Settings
+  </a>
   {{/if}}
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/profile">
   {{> ionIcon icon='ios-person-outline'}}
   Profile
   </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/friends">
+  {{> ionIcon icon='ios-personadd-outline'}}
+  Find Friends
+  </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/onboarding">
   {{> ionIcon icon='ios-help-outline'}}
   How to play
+  </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/rules">
+  {{> ionIcon icon='ios-medical-outline'}}
+  Common Questions
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/settings">
   {{> ionIcon icon='ios-cog-outline'}}
   Settings
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
-  {{> ionIcon icon='log-out'}}
+  {{> ionIcon icon='log-out'}} 
     Logout
   </a>
 </div>

@@ -15,6 +15,11 @@
     "apiKey": "AIzaSyAtFAMtW1X9GrLI6nkhb2a5Ys6_vbuFiPo",
     "projectNumber": 259263435947
   },
-  "production": true
+  "production": true,
+  "badge": true,
+  "alert": true,
+  "vibrate": true,
+  "sendInterval": 250, 
+  "sendBatchSize": 1
 }
 

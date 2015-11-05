@@ -41,6 +41,23 @@
       <div class="item item-divider">Badges</div>
 
       <div class="item item-divider">Trophies</div>
+      {{#ionItem}}
+          {{#each trophy}}
+            {{#with trophyData this}}
+              <img width="75px" src="/{{image}}">
+            {{/with}}
+          {{/each}}
+      {{/ionItem}}
+
+    <form>
+      <select style="clear:both;" id="trophy">
+      <option value="{{_id}}">Select Trophy To Add</option>
+      {{#each trophies}}
+        <option value="{{_id}}">{{title}}</option>
+      {{/each}}
+      </select>
+      <input type="submit">
+    </form>
 
       <div class="item item-divider">Groups</div>
         {{#ionList}}

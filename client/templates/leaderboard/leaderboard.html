@@ -11,7 +11,7 @@
 {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Leaderboards</h1>
+    <h1 class="title white-text-header">Leaderboard</h1>
  {{/contentFor}}
 
   {{#ionView}}      
@@ -19,9 +19,8 @@
 
 <!--     {{> loader}} 
    {{#if Template.subscriptionsReady}}    -->
-    {{#ionSlideBox }}      
-      {{#ionSlide}}
-        <div class="container">
+<!--     {{#ionSlideBox }}      
+      {{#ionSlide}} -->
         <!-- Start of List -->
           {{#ionList}}
           <div class="item item-divider">World Leaderboard</div>
@@ -41,17 +40,16 @@
             {{/each}}
 
             </ol>
-          {{/ionList}}
-        </div>     
+          {{/ionList}}    
         
-      {{/ionSlide}}
+<!--       {{/ionSlide}} -->
 
-      {{#each groups}}
+<!--       {{#each groups}}
         {{#ionSlide }}
           {{> groupLeaderboard groupId=this title=this}}
         {{/ionSlide}}    
-      {{/each}}
-    {{/ionSlideBox}}
+      {{/each}} -->
+<!--     {{/ionSlideBox}} -->
 
 <!--     {{/if}} -->
     {{/ionContent}} 
@@ -66,7 +64,7 @@
     {{#with groupName title}}
       {{name}}
     {{/with}}
-    </div>
+    </div> 
     <ol type="1" class="list">
       
       {{#each players groupId}}

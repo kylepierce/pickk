@@ -1,7 +1,7 @@
 Accounts.onCreateUser(function(options, user){
 
 	profile = {
-		coins: 25000,
+		coins: 10000,
     avatar: 'twitter_logo.png',
     followers: [],
     following: [],

@@ -52,22 +52,71 @@ Meteor.publish('allQuestions', function(game){
 	return this.ready();
 })
 
-Meteor.publish('invitees', function(){
-	return Invites.find({ });
+Meteor.publish('singleGame', function(id){
+  var singleGame = QuestionList.find({gameId: id}, {sort: {dateCreated: 1}});
+  if(singleGame){
+    return singleGame
+  }
+  return this.ready();
 });
 
+Meteor.publish('findSingle', function(id) {
+	return UserList.find({_id: id});
+})
 
-Meteor.publish('userAnswer', function(){
-	var currentUserId = this.userId;
-	return UserList.find({_id: currentUserId});
+Meteor.publish('adminFindSingle', function(id) {
+  return UserList.find({_id: id}, {fields: {questionAnswered: 1}});
+})
+
+Meteor.publish('userList', function(id) {
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1}});
+})
+
+Meteor.publish('adminUserList', function(id) {
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.coins": 1, questionAnswered: 1}});
+})
+
+Meteor.publish("userData", function () {
+  if (this.userId) {
+    return UserList.find(
+    	{_id: this.userId},
+			{fields: 
+				{'pendingNotifications': 1, 
+				'questionAnswered': 1
+				}
+			});
+  } else {
+    this.ready();
+  }
 });
 
-Meteor.publish('leaderboard', function() {
-	return UserList.find({ });
+Meteor.publish('findUserGroups', function(id) {
+  return UserList.find(
+  	{"profile.groups": id}, 
+  	{sort: {'profile.coins': -1}},
+  	{fields: 
+    	{'profile.username': 1, 
+    	 'profile.coins': 1, 
+    	 'profile.avatar': 1, 
+       'pendingNotifications': 1,
+    	 '_id': 1}
+    }
+  );
 })
 
 Meteor.publish('worldLeaderboard', function() {
-	return UserList.find({}, {sort: {profile: -1}, limit: 10})
+	var liveGame = Games.findOne({live: true});
+  var selector = {_id: {$in: liveGame.users}}
+	return UserList.find(
+		selector, 
+		{fields: 
+    	{'profile.username': 1, 
+    	 'profile.coins': 1, 
+    	 'profile.avatar': 1,
+    	 'pendingNotifications': 1, 
+    	 '_id': 1}
+    }, {fields: {'emails': 0}},
+    {sort: {"profile.coins": -1}, limit: 25});
 })
 
 Meteor.publish('groups', function() {
@@ -78,14 +127,22 @@ Meteor.publish('games', function() {
   return Games.find({ });
 });
 
+Meteor.publish('trophy', function(){
+  return Trophies.find({ });
+});
+
+
 Meteor.publish('groupUsers', function(groupId) {
   check(groupId, String);
   var group = Groups.findOne(groupId);
-  var selector = {_id: {$in: group.members}};
+  var selector = {_id: {$in: group.members}}
+  var fields = {fields: 
+    {'profile.username': 1, 
+    'profile.coins': 1, 
+    'profile.avatar': 1,
+    'pendingNotifications': 1,
+    '_id': 1}
+  }
   // var options = {fields: {"profile.username": 1}, {"prof"}};
-  return UserList.find(selector);
-});
-
-Meteor.publish('profile', function(_id) {
-  return UserList.findOne({_id: _id});
+  return UserList.find(selector, fields);
 });

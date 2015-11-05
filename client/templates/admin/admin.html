@@ -65,7 +65,7 @@
 	      <option class="slider-5-options" value="5" label="Overtime"></option>
 		<br>
 
-Game Info
+<span style="clear: both; float: left; margin-top: 20px;">Game Info</span>
 
 		<select style="clear:both;" id="gameList">
 			{{#each game}}
@@ -74,13 +74,16 @@ Game Info
 		</select>
 
 		{{#if commercial}}
-			<button class='col col-50 wager-box button button-assertive' data-action="endCommercialBreak">End Commercial Break </button>
+			<button class='col col-33 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">End Commercial Break </button>
 		{{else}}
-			<button class='col col-50 wager-box button button-balanced' data-action="startCommercialBreak">Start of Commercial Break </button>
+			<button class='col col-33 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">Start of Commercial Break </button>
 		{{/if}}
 
+			<button class='col col-33 wager-box button button-royal' style="float: left;" data-action="thisDrive">Create "This Drive" Question </button>
+			
+			<button class='col col-33 wager-box button button-energized' style="float: left;" data-action="situationalQuestion"> Situational Question </button>
 <br>
-		<button class='full' data-action="createQuestion">Create Question</button>
+		<button class='full' style="margin-top: 25px;" data-action="createQuestion">Create Question</button>
 
 	</div>
 </template>
@@ -111,29 +114,47 @@ Game Info
 
 			<button data-action="remove" class="yes full button button-assertive">Remove question</button>
 
+			{{#if binary}}
+			<div style="clear:both;" class="row">
+					<button data-action="true" class="col col-50 wager-box">{{options.option1.title}}</button>
+					<button data-action="false" class="col col-50 wager-box">{{options.option2.title}}</button>
+			</div>
+
+			{{else}}
+
 			<div style="clear:both;" class="row">
 					<button data-action="option1" class="col col-50 wager-box">{{options.option1.title}}</button>
 					<button data-action="option2" class="col col-50 wager-box">{{options.option2.title}}</button>
 			</div>
+
 			<div class="row">
 					<button data-action="option3" class="col col-50 wager-box">{{options.option3.title}}</button>
 					<button data-action="option4" class="col col-50 wager-box">{{options.option4.title}}</button>
-				</div>
+			</div>
+
 			<div class="row">
 					<button data-action="option5" class="col col-50 wager-box">{{options.option5.title}}</button>
 					<button data-action="option6" class="col col-50 wager-box">{{options.option6.title}}</button>
-				</div>
 			</div>
+
+			{{/if}}
+			</div>
+
 
 			<!-- Replace with chart -->
 			<div style="margin-left:30px; float:left;">
 				<ul> 
+				{{#if binary}}
+					<li><strong>{{options.option1.title}}:</strong> {{options.option1.usersPicked.length}} </li>
+					<li><strong>{{options.option2.title}}:</strong> {{options.option2.usersPicked.length}}</li> 
+				{{else}}
 					<li><strong>{{options.option1.title}}:</strong> {{options.option1.usersPicked.length}} </li>
 					<li><strong>{{options.option2.title}}:</strong> {{options.option2.usersPicked.length}}</li> 
 					<li><strong>{{options.option3.title}}:</strong> {{options.option3.usersPicked.length}}</li>
 					<li><strong>{{options.option4.title}}:</strong> {{options.option4.usersPicked.length}}</li>
 					<li><strong>{{options.option5.title}}:</strong> {{options.option5.usersPicked.length}}</li>
 					<li><strong>{{options.option6.title}}:</strong> {{options.option6.usersPicked.length}}</li>
+				{{/if}}
 				</ul> 
 			</div>
 
@@ -141,7 +162,6 @@ Game Info
 		</ul>
 	</div>	
 </template>
-
 
 <template name="oldQuestionList">
 	<div class=" panel">

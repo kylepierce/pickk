@@ -1,6 +1,6 @@
 .intro {
 	text-align: center;
-	margin-top: 60px;
+	margin-top: 25px;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -50,8 +50,24 @@ button.at-social-btn i {
 	background-color: #FFAF22;
 }
 
+.first-screen {
+	background-image: url('/phone_in_hand.png');
+	background-size: cover;
+	background-position: center; 
+	text-align: left;
+	color: white!important;
+}
+
+.second-screen {
+	background-image: url('/friends.jpg');
+	background-size: cover;
+	background-position: center; 
+	text-align: left;
+	color: white!important;
+}
+
 .slider-box {
-	height:50%;
+	height:80%;
 	text-align: center;
 	overflow-x: hidden;
 }
@@ -61,12 +77,12 @@ button.at-social-btn i {
 	color: #424242;
 }
 
-.inner-slide-box h1{
-	color: #424242;
+.inner-slide-box h3{
+	color: white;
 }
 
 #landing .slider-pager .slider-pager-page {
-	color: #FFF!important;
+	color: #FFF;
 }
 
 .login {
@@ -84,7 +100,7 @@ button.at-social-btn i {
 	width: 80%;
 	clear: both;
 	color: #FFF;
-	border: 0;
+	border: 0; 
 	padding: 10px;
 	margin-bottom: 20px;
 }

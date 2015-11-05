@@ -1,8 +1,8 @@
-Meteor.subscribe('leaderboard')
-
 Template.singleGroup.created = function () {
   this.autorun(function () {
-    this.subscription = Meteor.subscribe('groups', Router.current().params._id);
+    var groupId = Router.current().params._id
+    this.subscription = Meteor.subscribe('groups', groupId) && 
+    Meteor.subscribe('findUserGroups', groupId)
   }.bind(this));
 };
 
@@ -22,6 +22,7 @@ Template.singleGroup.helpers({
   }, 
   commissioner: function() {
     var commissionerId = this.commissioner
+    Meteor.subscribe('findSingle', commissionerId)
     var user = UserList.findOne({_id: commissionerId});
     return user
   },
@@ -33,20 +34,21 @@ Template.singleGroup.helpers({
   },
   member: function(){
     var currentUserId = Meteor.userId();
+    // Meteor.subscribe('profile', commissionerId)
     var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
-
     if(groupMembers) {
       return true
     }
   }
 });
-
+ 
 Template.groupData.helpers({
   group: function () {
     return Groups.findOne({_id: Router.current().params._id});
   }, 
   commissioner: function() {
     var commissionerId = this.commissioner
+    Meteor.subscribe('findSingle', commissionerId)
     var user = UserList.findOne({_id: commissionerId});
     return user
   },
@@ -67,7 +69,7 @@ Template.memberCheck.helpers({
   }
 });
 
-Template.singleGroup.events({
+Template.memberCheck.events({
   'click .invite': function(event, template){
     groupId = Router.current().params._id
     console.log(groupId)
@@ -84,9 +86,21 @@ Template.singleGroup.events({
   'click [data-action=leaveGroup]': function() {
     var currentUserId = Meteor.userId();
     var groupId = Router.current().params._id
-
+    console.log("Leaving group")
     // Remove this user from the group
     Meteor.call('leaveGroup', currentUserId, groupId);
 
-  }
+  } 
 })
+
+Template.singleGroupLeaderboard.helpers({
+  players: function(groupId){ 
+    var id = groupId._id
+     
+    return UserList.find({"profile.groups": id}, 
+      {sort: {'profile.coins': -1}},
+      {fields: 
+        {'profile.username': 1, 'profile.coins': 1, 'profile.avatar': 1, '_id': 1}}
+      ).fetch();
+  }
+});

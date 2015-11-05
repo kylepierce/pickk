@@ -13,18 +13,20 @@
     {{#ionContent}}
 
     {{#with group}}
-      {{#if private}}
+<!--       {{#if private}}
         {{#if member}}
           {{> groupData}}
         {{else}}
           <h1>This group is private and can only be seen by members</h1>
         {{/if}}       
 
-      {{else}}
+      {{else}} -->
       {{> groupData}}
 
+      {{> memberCheck}}  
+      {{> singleGroupLeaderboard groupId=this}}
 
-      {{/if}}
+      <!-- {{/if}} -->
     {{/with}}
     {{/ionContent}}
   {{/ionView}}
@@ -32,25 +34,27 @@
 </template>
 
 <template name="memberCheck">
+  <div style="clear:both; margin-bottom:50px;">
 	{{#if alreadyMember }}
-		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive">Leave Group</button>
+		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive col col-50" style="float:left">Leave</button>
 
     <a href="/inviteToGroup" class="invite">
-      <button class="button button-balanced">
+      <button class="button col col-50 button-balanced" style="float:left">
        {{> ionIcon icon='ios-upload-outline'}} Invite
       </button>
     </a>
 
 	{{else}}
-		<button data-action="joinGroup" id="join-toggle" class="button button-balanced">Join</button>
+		<button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-100" style="float:left">Join</button>
 	{{/if}}
+  </div>
 </template>
 
 <template name="groupData">
-  <div class="profile-background">        
-        <img src="{{this.avatar}}" class="circle-image">
-        <div style="clear:both;">
-        <h3>{{this.name}}</h3>
+  <div style="background-color: white; margin-left:20px;">        
+        <img style="float:left; width: 75px;" src="{{this.avatar}}" class="circle-image">
+        <div style="float:left; margin:20px">
+        <h4>{{this.name}}</h4>
         ({{this.groupId}})
 
         <h5>Owner: 
@@ -59,7 +63,28 @@
         {{/with}}</h5>
         <h5>{{memberCount}} Members </h5>
 
-        {{> memberCheck}}    
+           
         </div> 
       </div>
+</template>
+
+<template name="singleGroupLeaderboard">
+  {{#ionList}}
+  <div style="clear:both" class="item item-divider">Group Leaderboard</div>
+    <ol type="1" class="list" style="clear:both">
+      
+      {{#each players groupId}}
+        {{#ionItem path="user.show" avatar=true}}
+        <img src="{{profile.avatar}}">
+        <li class="list-font">
+          
+          <h2 class="center-username">{{profile.username}}<span class="score">{{profile.coins}}</span></h2>
+        </li>
+
+        {{/ionItem}}
+      {{/each}}
+      
+    </ol>
+
+    {{/ionList}}
 </template>
