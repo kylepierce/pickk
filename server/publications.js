@@ -6,6 +6,14 @@ Meteor.publish('activeQuestions', function(){
 				{sort: {dateCreated: 1,}});
 });
 
+Meteor.publish('chatMessages', function(){
+  var chat = Chat.find({}, {sort: {dateCreated: -1}, limit: 10})
+  if(chat){
+    return chat
+  }
+  return this.ready();
+});
+
 
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
@@ -79,6 +87,19 @@ Meteor.publish('singleGame', function(id){
 Meteor.publish('findSingle', function(id) {
 	return UserList.find({_id: id});
 })
+
+Meteor.publish('findSingleUsername', function(id) {
+  return UserList.findOne({_id: id}, 
+    {fields: 
+      {'profile.username': 1, 
+       'profile.coins': 1, 
+       'profile.avatar': 1, 
+       'pendingNotifications': 1,
+       '_id': 1
+     }
+  });
+})
+
 
 Meteor.publish('adminFindSingle', function(id) {
   return UserList.find({_id: id}, {fields: {questionAnswered: 1}});

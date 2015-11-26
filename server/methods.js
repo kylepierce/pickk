@@ -3,6 +3,52 @@ Meteor.methods({
     return !!UserList.findOne({"profile.username": username});
   },
 
+  'addChatMessage': function(author, messagePosted){
+  	var timeCreated = new Date();
+  	var id = Random.id();
+  	Chat.insert({
+  		_id: id,
+  		dateCreated: timeCreated,
+  		user: author,
+  		message: messagePosted
+  	});
+  },
+
+  'awardLeaders': function(){
+  	var liveGame = Games.findOne({live: true});
+  	var selector = {_id: {$in: liveGame.users}}
+		var leaderboard = UserList.find(
+			selector, 
+			{fields: 
+	    	{'profile.username': 1, 
+	    	 'profile.coins': 1, 
+	    	 'profile.avatar': 1,
+	    	 '_id': 1}
+	    }, {sort: {'profile.coins': -1}}).fetch();
+		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
+		fixed.reverse()
+		console.log(fixed[0]._id)
+
+		function awardTrophies(trophyId, user){
+			Meteor.call('awardTrophy', trophyId, user);
+			Meteor.call('notifyTrophyAwarded', trophyId, user);
+		}
+		awardTrophies('kZ4dnwGx9XzPC2csT', fixed[0]._id)
+		Meteor.call('awardDiamonds', fixed[0]._id, 50)
+		awardTrophies('QvAzsWxLe4JWnc5B9', fixed[1]._id)
+		Meteor.call('awardDiamonds', fixed[1]._id, 40)
+		awardTrophies('X3nZ3mmfMrwBBSg5t', fixed[2]._id)
+		Meteor.call('awardDiamonds', fixed[2]._id, 30)
+		Meteor.call('awardDiamonds', fixed[3]._id, 25)
+		Meteor.call('awardDiamonds', fixed[4]._id, 22)
+		Meteor.call('awardDiamonds', fixed[5]._id, 20)
+		Meteor.call('awardDiamonds', fixed[6]._id, 17)
+		Meteor.call('awardDiamonds', fixed[7]._id, 15)
+		Meteor.call('awardDiamonds', fixed[8]._id, 12)
+		Meteor.call('awardDiamonds', fixed[9]._id, 10)
+  },
+
+
   'sendShareEmail': function(){
   	// data = {name: "Kyle"}
   	// console.log(Template)

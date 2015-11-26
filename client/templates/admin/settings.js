@@ -48,7 +48,7 @@ Template.adminSettings.events({
 			Meteor.call("updateAllCoins", coins)
 		}
 	},
-    'click [data-action=resendVerifyEmail]': function(){
-        Meteor.call('sendShareEmail')
+    'click [data-action=awardLeaders]': function(){
+        Meteor.call('awardLeaders')
     }
 });
