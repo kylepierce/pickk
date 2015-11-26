@@ -3,6 +3,26 @@ Meteor.subscribe('trophies')
 
 Template.myProfile.created = function () {
   this.autorun(function () {
+    var userId = Router.current().params._id
+    console.log(userId)
+    this.subscription = Meteor.subscribe('findSingle', userId);
+  }.bind(this));
+};
+
+Template.myProfile.onRendered( function() {
+  $( "svg" ).delay( 0 ).fadeIn();
+});
+
+Template.myProfile.onCreated( function() {
+  this.subscribe( 'findSingle', function() {
+    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
+      $( ".loading-wrapper" ).fadeIn( 'fast' );
+    });
+  });
+});
+
+Template.myProfile.created = function () {
+  this.autorun(function () {
     this.subscription = Meteor.subscribe('findSingle', Router.current().params._id);
   }.bind(this));
 };

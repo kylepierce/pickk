@@ -19,6 +19,7 @@ if (Meteor.isServer) {
   });
 }
 
+
 Meteor.startup(function () {
     sAlert.config({
         effect: 'stackslide',

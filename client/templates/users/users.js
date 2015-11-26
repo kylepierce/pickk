@@ -20,7 +20,7 @@ Template.userProfile.helpers({
   profile: function () {
     var userId = Router.current().params._id
     var user = UserList.findOne({_id: userId});
-    return user
+    return user 
   },
   group: function() {
     return this.profile.groups
@@ -52,7 +52,7 @@ Template.userProfile.helpers({
 Template.displayGroup.helpers({
   groupName: function(groupId){
     // Display the name of the group with the _id as refrence
-    return Groups.findOne({_id: groupId});
+    return Groups.findOne({_id: groupId, secret: false});
   }
 });
 

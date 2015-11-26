@@ -24,15 +24,14 @@ Template.inviteButton.events({
 		Meteor.call("inviteToGroup", user, currentUser, groupId)
     var userData = UserList.findOne({_id: user})
     var username = userData.profile.username
-    console.log(username)
     var groupData = Groups.findOne({_id: groupId})
     var groupName = groupData.name
-    console.log(groupName)
     var message = username + " has invited you to join " + groupName
-    console.log(message)
     Meteor.call('pushInvite', message, user);
 
     $("#" + user).addClass('button-balanced');
     $("#" + user).prop("disabled", true)
+    $("#" + user).append(document.createTextNode("d"));
+    sAlert.success("Invited " + username + " to " + groupName , {effect: 'slide', position: 'bottom', html: true});
 	} 
 })

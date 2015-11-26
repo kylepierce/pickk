@@ -1,3 +1,4 @@
+255kb:meteor-status@1.4.2
 accounts-base@1.2.0
 accounts-facebook@1.0.4
 accounts-oauth@1.1.5
@@ -38,6 +39,7 @@ fortawesome:fontawesome@4.4.0
 fourseven:scss@1.2.3
 geojson-utils@1.0.3
 gwendall:jquery-animation-callback@0.1.2
+gwendall:meteoric-connection-status@0.1.1
 gwendall:session-json@0.1.7
 gwendall:template-animations@0.2.2
 gwendall:ui-hooks@0.1.7
@@ -59,6 +61,7 @@ joshowens:simple-form@0.2.2
 jquery@1.11.3_2
 json@1.0.3
 juliancwirko:s-alert@3.1.0
+juliancwirko:s-alert-slide@3.1.0
 juliancwirko:s-alert-stackslide@3.1.0
 kadira:debug@2.2.4
 lai:collection-extensions@0.1.4
@@ -92,6 +95,7 @@ mongo-livedata@1.0.8
 mousetrap:mousetrap@1.4.6_1
 mrt:moment@2.8.1
 mrt:underscore-string-latest@2.3.3
+msavin:fetcher@1.1.0
 msavin:jetsetter@1.0.20
 msavin:mongol@1.1.5
 natestrauser:animate-css@3.2.6

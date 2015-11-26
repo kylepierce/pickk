@@ -13,6 +13,11 @@ html, body {
   display: none;
 }
 
+.meteor-status {
+    height: 100%;
+
+}
+
 .loader-holder {
   margin-left: auto;
   margin-right: auto;
@@ -71,10 +76,18 @@ input, textarea {
 .tabs-striped .tab-item.active {
 	border-color: #00a084;
 }
+.bar .title {
+  text-align: left;
+  padding-left: 15px;
+}
 
 .bar.bar-stable {
 	background-color: #16A085!important;
 	color:white!important;
+}
+
+.bar.bar-stable .title {
+	color: white!important;
 }
 
 .bar-stable .button.button-clear {
@@ -154,22 +167,8 @@ input, textarea {
 	margin-right: auto;
 }
 
-.question {
-	width: 100%;
-	text-align: center;
-	background-color: white;
-	padding: 10px;
-	margin-top: 20px;
-	border: 1px solid #CCC;
-	font-weight: bold;
-}
-
-.option {
-	width:49%;
-	padding: 10px 0;
-	text-align: center;
-	font-size: 24px;
-	margin-bottom: 40px;
+.edit-radio {
+	color: black;
 }
 
 .one-third {
@@ -358,6 +357,10 @@ input[type=submit] {
 	border-radius: 0;
 	border-top: 1px;
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
+}
+
+.score-option{ 
+	text-align: center!important;
 }
 
 .one-third {

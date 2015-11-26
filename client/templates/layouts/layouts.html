@@ -44,6 +44,7 @@
 
 
   {{/ionBody}}
+
 </template>
 
 <template name="standardNav">
@@ -58,8 +59,10 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear coin-icon"> 
-    <i class="fa fa-circle"></i> 
+    <button class="button button-clear"> 
+    <i class="fa fa-diamond"></i>
+    <strong>{{currentUser.profile.diamonds}}</strong>
+    <span class="coin-icon"><i class="fa fa-circle "></i></span> 
     <strong>{{currentUser.profile.coins}}</strong>
     </button>
   {{/contentFor}}
@@ -137,7 +140,7 @@
   {{> ionIcon icon='ios-cog-outline'}}
   Settings
   </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="landing"> 
+  <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="/landing"> 
   {{> ionIcon icon='log-out'}} 
     Logout
   </a>

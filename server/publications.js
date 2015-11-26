@@ -36,6 +36,22 @@ Meteor.publish('pendingQuestions', function(){
 	return this.ready();
 });
 
+Meteor.publish('gameQuestions', function(){
+  var allQuestions = QuestionList.find({gameId: 'prediction'});
+  if(allQuestions){
+    return allQuestions
+  }
+  return this.ready();
+})
+
+Meteor.publish('pendingGameQuestions', function(){
+  var pendingQuestions = QuestionList.find({active: "pending"}, {sort: {dateCreated: 1}});
+  if(pendingQuestions){
+    return pendingQuestions
+  }
+  return this.ready();
+});
+
 Meteor.publish('oldQuestions', function(){
 	var oldQuestions = QuestionList.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
 	if(oldQuestions){
@@ -104,20 +120,12 @@ Meteor.publish('findUserGroups', function(id) {
   );
 })
 
-Meteor.publish('worldLeaderboard', function() {
-	var liveGame = Games.findOne({live: true});
-  var selector = {_id: {$in: liveGame.users}}
-	return UserList.find(
-		selector, 
-		{fields: 
-    	{'profile.username': 1, 
-    	 'profile.coins': 1, 
-    	 'profile.avatar': 1,
-    	 'pendingNotifications': 1, 
-    	 '_id': 1}
-    }, {fields: {'emails': 0}},
-    {sort: {"profile.coins": -1}, limit: 25});
-})
+// Meteor.publish('worldLeaderboard', function() {
+//   Fetcher.retrieve("leaderboard", "loadLeaderboard")
+//   var leaderboard = Fetcher.get("leaderboard")
+//   var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
+//   return fixed.reverse()
+// })
 
 Meteor.publish('groups', function() {
   return Groups.find({ });

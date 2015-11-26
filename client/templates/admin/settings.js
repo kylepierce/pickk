@@ -49,6 +49,6 @@ Template.adminSettings.events({
 		}
 	},
     'click [data-action=resendVerifyEmail]': function(){
-        Meteor.call('resendVerifyEmail')
+        Meteor.call('sendShareEmail')
     }
 });

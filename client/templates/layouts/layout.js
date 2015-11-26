@@ -29,6 +29,12 @@ Template.sideMenuContent.events({
 	}
 });
 
+Template.mainView.events({
+  'click [data-action=refresh]': function () {
+    Fetcher.refresh('leaderboard')
+  }
+});
+
 Template.sideMenuContent.helpers({
 	userId: function () {
 		return Meteor.userId();

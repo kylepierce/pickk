@@ -25,7 +25,7 @@
     <!-- {{> loader}}  -->
 <!--     {{#if Template.subscriptionsReady}}  
     <div class="loading-wrapper"> -->
-    <div style="width: 100%; height: 35%; background-image:url('/friends.jpg'); background-size: cover; margin-top:-10px;">
+    <div style="width: 100%; height: 200px; background-image:url('/friends.jpg'); background-size: cover; margin-top:-10px;">
         
     </div>
 
@@ -40,20 +40,18 @@
         Create Group
       </button>
       </a>
+
+      <a style="float: right;" href="/allGroups" class="newGroup">
+      <button class="button button-stable ">
+          {{> ionIcon icon='ios-people'}}
+        All Groups
+      </button>
+      </a>
     </div>
 
     <div class="item item-divider">Your Groups</div>
 
     {{#each userGroups}}
-      {{#ionItem path="group.show" avatar=true}}
-        <img src="{{avatar}}">
-        <h2 class="center-username">{{name}}</h2>
-
-      {{/ionItem}}
-    {{/each}}
-		<div class="item item-divider">All Groups</div>
-
-		{{#each group}}
       {{#ionItem path="group.show" avatar=true}}
         <img src="{{avatar}}">
         <h2 class="center-username">{{name}}</h2>
