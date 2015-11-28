@@ -50,5 +50,8 @@ Template.adminSettings.events({
 	},
     'click [data-action=awardLeaders]': function(){
         Meteor.call('awardLeaders')
+    },
+    'click [data-action=resetGameCounter]': function(){
+        Meteor.call('updateAllCounters');
     }
 });

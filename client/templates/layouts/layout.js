@@ -35,11 +35,14 @@ Template.sideMenuContent.events({
 Template.mainView.events({
   'click [data-action=refresh]': function () {
     Fetcher.refresh('leaderboard')
+  },
+  'click [data-action=refresh-week]': function () {
+    Fetcher.refresh('weekLeaderboard')
   }
 });
 
 Template.sideMenuRight.events({
-  'submit form': function (event, template) {
+  'submit form': function (event) {
     event.preventDefault();
     var currentUser = Meteor.userId()
     var message = event.target.messageBox.value;
@@ -70,8 +73,10 @@ Template.sideMenuRight.helpers({
     return chat 
   },
   user: function(id){
-    Meteor.subscribe('findSingleUsername', id)
+    Meteor.subscribe('findSingle', id)
+    console.log(id)
     var user = UserList.findOne({_id: id});
+    console.log(user)
     return user
   }
 });

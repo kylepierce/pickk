@@ -13,6 +13,11 @@ Meteor.methods({
   		message: messagePosted
   	});
   },
+  
+  'updateAllCounters' : function(coins){
+  	var amount = parseInt(coins)
+		UserList.update({}, {$set: { "profile.queCounter": 0}}, { multi: true });  
+	},
 
   'awardLeaders': function(){
   	var liveGame = Games.findOne({live: true});
@@ -33,11 +38,11 @@ Meteor.methods({
 			Meteor.call('awardTrophy', trophyId, user);
 			Meteor.call('notifyTrophyAwarded', trophyId, user);
 		}
-		awardTrophies('kZ4dnwGx9XzPC2csT', fixed[0]._id)
+		awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
 		Meteor.call('awardDiamonds', fixed[0]._id, 50)
-		awardTrophies('QvAzsWxLe4JWnc5B9', fixed[1]._id)
+		awardTrophies('aDJHkmcQKwgnpbnEk', fixed[1]._id)
 		Meteor.call('awardDiamonds', fixed[1]._id, 40)
-		awardTrophies('X3nZ3mmfMrwBBSg5t', fixed[2]._id)
+		awardTrophies('YxG4SKtrfT9j8Abdk', fixed[2]._id)
 		Meteor.call('awardDiamonds', fixed[2]._id, 30)
 		Meteor.call('awardDiamonds', fixed[3]._id, 25)
 		Meteor.call('awardDiamonds', fixed[4]._id, 22)
@@ -243,7 +248,6 @@ Meteor.methods({
   'updateAllCoins' : function(coins){
   	var amount = parseInt(coins)
 		UserList.update({}, {$set: { "profile.coins": amount}}, { multi: true });  
-		UserList.update({}, {$set: { "profile.coins": amount}}, { multi: true });  
 	},
 
 // Way for Admin to manually update users name 
@@ -447,6 +451,18 @@ Meteor.methods({
 		{fields: 
     	{'profile.username': 1, 
     	 'profile.coins': 1, 
+    	 'profile.avatar': 1,
+    	 '_id': 1}
+    }).fetch();
+
+	},
+
+	'loadWeekLeaderboard': function(){
+	return UserList.find(
+		{"profile.diamonds": {$gt: 0}}, 
+		{fields: 
+    	{'profile.username': 1, 
+    	 'profile.diamonds': 1, 
     	 'profile.avatar': 1,
     	 '_id': 1}
     }).fetch();

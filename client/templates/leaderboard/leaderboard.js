@@ -23,6 +23,8 @@ Template.leaderboard.helpers({
 		var leaderboard = Fetcher.get("leaderboard")
 		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
 		console.log(fixed)
-		return fixed.reverse()
+		var list = fixed.reverse()
+		return _.first(list, 25)
 	}
 }); 
+

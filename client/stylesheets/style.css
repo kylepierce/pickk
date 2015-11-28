@@ -13,11 +13,6 @@ html, body {
   display: none;
 }
 
-.meteor-status {
-    height: 100%;
-
-}
-
 .loader-holder {
   margin-left: auto;
   margin-right: auto;
@@ -76,7 +71,7 @@ input, textarea {
 .tabs-striped .tab-item.active {
 	border-color: #00a084;
 }
-.bar .title {
+.bar .left {
   text-align: left;
   padding-left: 15px;
 }
@@ -327,7 +322,7 @@ input[type=submit] {
 	border-radius: 100%;
 	width: 50%;
 	max-width: 100px;
-	margin-top: 25px;
+	margin-top: 15px;
 	border: 3px solid white;
 }
 

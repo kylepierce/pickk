@@ -67,8 +67,6 @@
 
   {{#contentFor "headerButtonRight"}}
     <button class="button button-clear" data-ion-menu-toggle="right"> 
-    <i class="fa fa-diamond"></i>
-    <strong>{{currentUser.profile.diamonds}}</strong>
     <span class="coin-icon"><i class="fa fa-circle "></i></span> 
     <strong>{{currentUser.profile.coins}}</strong>
     </button>
@@ -80,7 +78,9 @@
 <div class="profile-container">
 <a href="/profile" data-ion-menu-toggle="left">
   <img class="circle-image" src="{{singleAvatar}}"><br>
-  <strong class="username">{{currentUser.profile.username}}</strong>
+  <strong class="username">{{currentUser.profile.username}}</strong><br>
+  <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong><span class="coin-icon"> <i class="fa fa-circle "></i> </span> 
+    <strong>{{currentUser.profile.coins}}</strong>
 </a>
 </div>
 
@@ -92,6 +92,10 @@
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/leaderboard">
   {{> ionIcon icon='ios-list-outline'}}
   Leaderboard
+  </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/week-leaderboard">
+  {{> ionIcon icon='ios-list-outline'}}
+  Diamond Leaderboard
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/groups">
   {{> ionIcon icon='ios-people-outline'}}
@@ -178,19 +182,19 @@
   <button class="button pull-right" data-ion-menu-close>
     {{> ionIcon icon="ios-close" }}
   </button>
-    <h1 class="title" >Chat</h1>
+    <h1 class="title">Chat</h1>
   </div>
   <div class="content has-header">
 
-  <form>
-    <textarea type="text" rows="3" maxlength="150" id="messageBox"></textarea>
-    <button class="col col-100" type="submit">Send</button>
-  </form>
+  <form id="">
+    <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
+    <button class="col button col-100" type="submit">Send</button>
+  </form> 
 
     {{#ionList}}
       {{#each message}}
         {{#ionItem class="chat"}}
-          {{#with user this.user}} {{this.profile.username}} {{/with}}<br>
+          {{#with user this.user}} {{profile.username}} {{/with}}<br>
           <p class="common-question">{{this.message}}</p>
         {{/ionItem}}
       {{/each}}
