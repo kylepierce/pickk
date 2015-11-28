@@ -22,15 +22,29 @@
 
 <template name="questionCard">
 	{{#if live}}
-		<img class="next-play slideInLeft" src="wait-for-play.png">
-		<h5 class="next-play">No game right now...<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
-		
+		{{#if gameQuestion}}
+			  {{> predictionQuestions}}
+		{{else}}
+			<img class="next-play slideInLeft" src="wait-for-play.png">
+			<h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
+		{{/if}}
 	{{else}}
 		{{#if commercial}}
 
 		{{#if commercialQuestions}}
 			{{#if binary}}
-				{{> binaryChoice}}
+
+				<span style="text-align: center;">
+					<h4>Free Pickk!</h4>
+					
+				</span>
+				{{#each questions}}
+					{{> binaryChoice}}
+				{{/each}}
+				<span style="text-align: center;">
+					<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
+				</span>
+				 
 			{{else}}
 				{{> commercialQuestion}}
 			{{/if}}
@@ -38,6 +52,7 @@
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">Commercial Break!</h5>	
+			<p>Swipe Left to Chat!</p>
 			{{/if}}
 
 	{{else}}
@@ -62,7 +77,7 @@
 
 <template name="activeQuestion">
 	{{#each questions}}
-	<div class="container">
+	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
 		<div class="question">
 			{{ que}}
@@ -84,7 +99,7 @@
 
 <template name="commercialQuestion">
 	{{#each questions}}
-	<div class="container">
+	<div class="container" id="commercialCard" style="display: none;">
 		<div class="container-item">
 		<div class="question">
 			{{ que}}
@@ -96,7 +111,7 @@
 
 			<!-- Wagers -->
 				{{> wagers}}
-
+ 
 			<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 		</form>
 	</div>
@@ -105,15 +120,11 @@
 </template>
 
 <template name="binaryChoice">
-	<span style="text-align: center;">
-		<h4>Free Pickk and Win 1000 coins!</h4>
-		<h5>Guess Correctly and Get 2000 coins!</h5>
-	</span>
-	{{#each questions}}
-	<div class="container">
-		<div class="container-item">
-		<div class="question">
-			<h3>{{ que}}</h3>
+	<div class="container" id="binaryCard" style="display: none;">
+		<ul>
+		<li class="container-item">
+		<div class="question larger-card">
+			<h4>{{ que}}</h4>
 		</div>
 
 		<form>
@@ -121,25 +132,85 @@
 			<div>
 				<div class="binary">
 					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
-					<label for="{{options.option1.title}}" class="binary-option">
-					<i class="fa fa-star"></i> 
+					<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
+					
 					{{options.option1.title}} 
 					</label>
 				</div>
 
 				<div>
 					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
-					<label for="{{options.option2.title}}" class="binary-option">
-					<i class="fa fa-star"></i> 
+					<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
+					
 					{{options.option2.title}} 
 					</label>
 				</div>
 			</div>
 
-			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" disabled value="Submit">
+			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 		</form>
+	</li>
+	</ul>
 	</div>
-	</div>
+</template>
+
+<template name="predictionQuestions">
+	{{#each questions}}
+		<div class="container" id="">
+			<ul>
+				<li class="container-item">
+					<div class="question">
+						{{ que}}
+					</div>
+
+					<form>
+						<!-- Options -->
+							<div>
+								<input type="radio" name="score" id="{{options.option1.title}}" required value="option1">
+								<label for="{{options.option1.title}}" class="play-option score-option">
+								
+								{{options.option1.title}} 
+								</label>
+							</div>
+
+							<div>
+								<input type="radio" name="score" id="{{options.option2.title}}" required value="option2">
+								<label for="{{options.option2.title}}" class="play-option score-option">
+								
+								{{options.option2.title}} 
+								</label>
+							</div>
+
+
+							<div>
+								<input type="radio" name="score" id="{{options.option3.title}}" required value="option3">
+								<label for="{{options.option3.title}}" class="play-option score-option">
+								
+								{{options.option3.title}} 
+								</label>
+							</div>
+
+							<div>
+								<input type="radio" name="score" id="{{options.option4.title}}" required value="option4">
+								<label for="{{options.option4.title}}" class="play-option score-option">
+								
+								{{options.option4.title}} 
+								</label>
+							</div>
+
+							<div>
+								<input type="radio" name="score" id="{{options.option5.title}}" required value="option5">
+								<label for="{{options.option5.title}}" class="play-option score-option">
+								
+								{{options.option5.title}} 
+								</label>
+							</div>
+
+						<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+					</form>
+				</li>
+			</ul>
+		</div>
 	{{/each}}
 </template>
 

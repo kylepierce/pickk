@@ -47,10 +47,6 @@ Template.editUser.events({
     var name = template.find('input[name=username]').value
     Meteor.call("updateName", user, name)
   },
-  'click #makeAdmin': function(){
-    var user = Router.current().params._id
-    Meteor.call("makeAdmin", user)
-  },
   'submit form': function(event, template){
     event.preventDefault();
     var user = Router.current().params._id

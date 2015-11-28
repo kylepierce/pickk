@@ -1,0 +1,13 @@
+<template name="_groupRequests">
+	{{#ionModal class="white-text-header" title="Accept Requests"}}
+		{{#ionList}}
+			{{#each user}}
+				{{#ionItem buttonRight=true avatar=true}}
+					{{#with userDetails this}}
+						{{profile.username}}
+					{{/with}}
+				{{/ionItem}}
+			{{/each}}
+		{{/ionList}}
+  {{/ionModal}}
+</template>

@@ -1,0 +1,58 @@
+<template name="gamePrediction">
+	 {{#contentFor "headerButtonLeft"}}
+  	<button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+	    {{#if isAndroid}}
+	      {{> ionIcon icon='android-more-vertical'}}
+	    {{else}}
+	      {{> ionIcon icon='navicon'}}
+	    {{/if}}
+  	</button>
+	{{/contentFor}}
+   		 
+ {{#contentFor "headerTitle"}}
+	<h1 class="title white-text-header">Game Prediction </h1>
+ {{/contentFor}}
+
+{{#ionView}}
+	{{#ionContent}}	
+
+	<form id="gameInfo">
+		<label type="stacked" class="item item-input item-stacked-label">
+			<span class="input-label">Team 1</span>
+			<select id="team1"> {{> nfl}} </select>
+		</label>
+		<label type="stacked" class="item item-input item-stacked-label">
+			<span class="input-label">Team 2</span>
+			<select id="team2"> {{> nfl}} </select>
+		</label>
+		<input class='full' type="submit">
+	</form>
+
+<div class="item item-divider">Active Questions</div>
+	{{#ionList}}
+		{{#each gameQuestion}}			
+			{{#ionItem buttonRight=true}}
+				{{que}} -- {{active}}
+			  <button class="button" data-action="pending" > 
+			    {{> ionIcon icon="ios-close"}}
+			  </button>
+			{{/ionItem}}
+		{{/each}}
+	{{/ionList}}
+
+<div class="item item-divider">Pending Questions</div>
+	{{#ionList}}
+		{{#each pendingGameQuestions}}			
+			{{#ionItem buttonRight=true}}
+				{{que}} -- {{active}}
+				<button class="button" data-ion-popover="_gamePopover"> 
+					{{> ionIcon icon="more" }}
+			  </button>
+			{{/ionItem}}
+		{{/each}}
+	{{/ionList}}
+
+	{{/ionContent}}
+{{/ionView}}
+
+</template>

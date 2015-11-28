@@ -11,9 +11,6 @@ Template.push.events({
 		// Get the value of the input box
 		event.preventDefault();
 		var message = template.find('input[name=push]').value
-		var game = template.find('#gameList :selected').value
-		console.log(message)
-		console.log(game)
-		Meteor.call("push", game, message)
+		Meteor.call("push", message)
 	}
 });

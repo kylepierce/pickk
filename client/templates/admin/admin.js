@@ -40,7 +40,12 @@ Template.activeQuestionList.helpers({
 // Show pending questions
 Template.pendingQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: null}, {sort: {dateCreated: 1}});
+		var game = Games.findOne({live: true});
+		var gameId = game._id
+		console.log(gameId)
+		var questions = QuestionList.find({active: null}, {sort: {dateCreated: 1}}).fetch();
+		console.log(questions)
+		return questions
 	},
 	'binary': function(){
 		if(this.binaryChoice == true){
@@ -102,8 +107,8 @@ Template.oldQuestionList.events({
 	},
 	'click [data-action=permenantRemove]' : function() {
 		if(confirm("Are you sure?")) {
-			console.log("unAwardPoints")
 			Meteor.call('unAwardPointsForDelete', this._id, this.play)
+			Meteor.call('awardInitalCoins', this._id)
 		}
 	}
 });
@@ -175,6 +180,11 @@ Template.pendingQuestionList.events({
 	'click [data-action=remove]' : function() {
 		if(confirm("Are you sure?")) {
 			Meteor.call('removeQuestion', this._id)
+		}
+	},
+	'click [data-action=reactivate]' : function() {
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this._id)
 		}
 	}
 

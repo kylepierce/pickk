@@ -17,7 +17,7 @@
     	<div style="margin-left:20px;">        
         <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
         <div style="float: left; margin:30px">
-        <h3>{{this.profile.username}}</h3>
+        <h4>{{this.profile.username}}</h4>
         {{{following}}} Following
         {{{follower}}}Followers<br>
 
@@ -34,13 +34,12 @@
           {{#each trophy}}
             {{#with trophyData this}}
               <img width="75px" src="/{{image}}">
-            {{/with}}
+            {{/with}} 
           {{/each}}
       {{/ionItem}}
 
       <div class="item item-divider">Groups</div>
           {{#each group}}
-
             {{> displayGroup groupId=this}}
           {{/each}}
         {{/ionList}}

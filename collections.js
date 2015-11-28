@@ -5,6 +5,7 @@ Trophies = new Meteor.Collection('trophies');
 Groups = new Meteor.Collection('groups');
 Invites = new Meteor.Collection('invites');
 Games = new Meteor.Collection('games')
+Chat = new Meteor.Collection('chat')
 // Tasks = new Mongo.Collection("tasks");
 
 Groups.initEasySearch('groupId');

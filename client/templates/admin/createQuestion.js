@@ -414,7 +414,7 @@ Template.createQuestion.events({
 // Second Down with sack option
 		else if(down == 2 && time == 2){
 			question = "Second Down ..."
-			questionList("Tackle for loss", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown")
+			questionList("Negative Yardage", "Positive Yardage", "Pick Six", "Interception", "Fumble", "Touchdown")
 
 			// Inches
 			if(yards == 1){
@@ -1412,7 +1412,7 @@ Template.createQuestion.events({
 					5.2, 9.81, 
 					8.9, 11.61, 
 					2.2, 4.81, 
-					9.9, 12.61)
+					29.9, 42.61)
 			} else if (time == 5) {
 				question = "Onside Kick..."
 				questionList("Touchback", "0-5 Return",  "10+ Return", "Penalty", "Fumble Recovered by Reciving Team", "Kicking Team Recovers")

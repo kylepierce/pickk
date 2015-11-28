@@ -103,11 +103,17 @@ Template.home.helpers({
       if(post.type === "score" && post.read === false ){
         var id = post._id
         var message = post.message  
-        setTimeout(function(){
-          Meteor.call('readNotification', id);
-         }, 250);
+        Meteor.call('readNotification', id);
          
-        return sAlert.success(message  , {effect: 'stackslide', html: true});
+        sAlert.info(message  , {effect: 'stackslide', html: true});
+
+      } else if(post.type === "diamonds" && post.read === false ){
+        var id = post._id
+        var message = post.message  
+        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'
+        Meteor.call('readNotification', id);
+         
+        sAlert.warning(message, {effect: 'stackslide', html: true});
 
       }
     });
@@ -120,9 +126,11 @@ Template.activeQuestion.animations({
     container: ".container", // container of the ".item" elements
     insert: {
       class: "animated fast slideInLeft", // class applied to inserted elements
-      before: function(attrs, element, template) {}, // callback before the insert animation is triggered
+      before: function(attrs, element, template) {
+        $( "#normalCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 100 // Delay before inserted items animate
+      delay: 300 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -135,9 +143,11 @@ Template.commercialQuestion.animations({
     container: ".container", // container of the ".item" elements
     insert: {
       class: "animated fast slideInLeft", // class applied to inserted elements
-      before: function(attrs, element, template) {}, // callback before the insert animation is triggered
+      before: function(attrs, element, template) {
+        $( "#commercialCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 100 // Delay before inserted items animate
+      delay: 500 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -145,14 +155,23 @@ Template.commercialQuestion.animations({
   }
 });
 
+Template.binaryChoice.onRendered( function() {
+    
+});
+
+
 Template.binaryChoice.animations({
   ".container-item": {
     container: ".container", // container of the ".item" elements
     insert: {
       class: "animated fast slideInLeft", // class applied to inserted elements
-      before: function(attrs, element, template) {}, // callback before the insert animation is triggered
-      after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 100 // Delay before inserted items animate
+      before: function(attrs, element, template) {
+        $( "#binaryCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {
+        
+      }, // callback after an element gets inserted
+      delay: 500 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -170,6 +189,23 @@ Template.questionCard.helpers({
 			return false
 		}
 	},
+  gameQuestion: function(){
+    var currentUser = Meteor.userId();
+    var active = QuestionList.find(
+        {active: true, commercial: null,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}}).fetch();
+    if(active.length >= 1){
+      return true
+    } else {
+      return false
+    }
+  },
+
+  gameQuestions: function(){
+    return QuestionList.findOne({commercial: null})
+  },
+
   'lastPlay': function(){
     // Get the last question id 
     var questionId = Session.get('lastId')
@@ -177,7 +213,7 @@ Template.questionCard.helpers({
     // Find the users answer and wager
     var currentUser = Meteor.user();
 
-    // Find questionId in user answered
+    // Find questionId in user answered 
     var userAnsweredArray = currentUser.questionAnswered
 
     // Search function to find the question in the array
@@ -201,12 +237,12 @@ Template.questionCard.helpers({
   },
 
 	'active': function(){
-    
 		var currentUser = Meteor.userId();
 		var active = QuestionList.find(
-				{active: true, commercial: false, binaryChoice: false,
+				{active: true, commercial: false,
 				usersAnswered: {$nin: [currentUser]}}, 
 				{sort: {dateCreated: 1}}).fetch();
+    console.log(active)
 		if(active.length >= 1){
 			return true
 		} else {
@@ -231,12 +267,23 @@ Template.questionCard.helpers({
     var active = QuestionList.find(
         {active: true, commercial: true, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}}, 
-        {sort: {dateCreated: 1}, limit: 1}).fetch();
+        {sort: {dateCreated: 1}}).fetch();
+    console.log(active)
     if(active.length >= 1){
-      return true
+      var first = active[0]
+      return first
     } else {
       return false
     }
+  },
+
+  'questions': function(){
+    var currentUser = Meteor.userId();
+
+    return QuestionList.find(
+        {active: true, commercial: true, binaryChoice: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1});
   },
 
 	'commercial': function(game){
@@ -254,7 +301,6 @@ Template.questionCard.helpers({
 Template.activeQuestion.helpers({
 		'questions': function(){
 		var currentUser = Meteor.userId();
-
 		return QuestionList.find(
 				{active: true, commercial: false,
 				usersAnswered: {$nin: [currentUser]}}, 
@@ -273,16 +319,59 @@ Template.commercialQuestion.helpers({
   }
 });
 
-Template.binaryChoice.helpers({
+Template.predictionQuestions.helpers({
     'questions': function(){
     var currentUser = Meteor.userId();
 
     return QuestionList.find(
-        {active: true, commercial: true, binaryChoice: true,
+        {active: true, commercial: null, 
         usersAnswered: {$nin: [currentUser]}}, 
-        {sort: {dateCreated: 1,}});
+        {sort: {dateCreated: 1}, limit: 1});
   }
 });
+
+Template.predictionQuestions.events({
+  'click input:radio[name=score]':function(event, template) {
+    $("#submit-binary").prop("disabled", false)
+    $("#submit-binary").addClass('button-balanced');
+  },
+
+  'submit form': function(event, template) {
+    event.preventDefault();
+    var questionId = this._id; 
+    var currentUser = Meteor.userId();
+    var que = this.que;
+    var answer = template.find('input:radio[name=score]:checked').value;
+
+    Meteor.call('gameQuestionAnswered', currentUser, questionId, answer);
+
+  }
+});
+
+Template.binaryChoice.events({
+  'click input:radio[name=binary]':function(event, template) {
+    $("#submit-binary").prop("disabled", false)
+    $("#submit-binary").addClass('button-balanced');
+  },
+
+
+  'click #submit-binary': function(event, template){
+    var answer = template.find('input:radio[name=binary]:checked').value;
+    var currentUser = Meteor.userId();
+    var questionId = this._id;
+    var que = this.que 
+
+    // Move the card off screen
+    $( ".container-item" ).removeClass( "slideInLeft" )
+    $( ".container-item" ).addClass( "slideOutRight" )
+
+    // Wait until the question card has disapeared
+    Meteor.setTimeout(function(){
+      Meteor.call('binaryQuestionAnswered', currentUser, questionId, answer, que)
+    }, 250);
+  },
+});
+
 
 Template.questionCard.events({
 	'click input:radio[name=wager]':function(event, template) {
@@ -306,20 +395,6 @@ Template.questionCard.events({
 
   },
 
-  'click input:radio[name=binary]':function(event, template) {
-    $("#submit-binary").prop("disabled", false)
-    $("#submit-binary").addClass('button-balanced');
-  },
-
-
-  'click #submit-binary': function(event, template){
-    var answer = template.find('input:radio[name=binary]:checked').value;
-    var currentUser = Meteor.userId();
-    var questionId = this._id; 
-    console.log("Woo! Almost DOne!")
-    Meteor.call('binaryQuestionAnswered', currentUser, questionId, answer)
-  },
-
 	'submit form': function(event, template) {
 		event.preventDefault();
 		var questionId = this._id; 
@@ -334,7 +409,7 @@ Template.questionCard.events({
 
 		if (userCoins < wager) {
 			IonLoading.show({
-      	customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or purchase extra coins in our store</p>',
+      	customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
       	duration: 1500,
       	backdrop: true
     	});
@@ -355,8 +430,8 @@ Template.questionCard.events({
       description: description
     });
 
-    var countdown = new ReactiveCountdown(300);
-    countdown.start(function(){
+    var countdown = new ReactiveCountdown(360);
+    countdown.start(function(){ 
       Meteor.call('playerInactive', currentUser, questionId);
     })
 

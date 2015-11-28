@@ -111,9 +111,11 @@
 		{{#each questions}}
 			<div style="clear:both;">
 			<li style="float:left" class="{{_id}}"> <h4>{{que}}</h4></li>
+			<div style="clear:both;">
+				<button data-action="remove" class="yes col col-50 button button-assertive">Remove question</button>
 
-			<button data-action="remove" class="yes full button button-assertive">Remove question</button>
-
+				<button data-action="reactivate" class="yes col col-50 button button-balanced">Reactivate question</button>
+			</div>
 			{{#if binary}}
 			<div style="clear:both;" class="row">
 					<button data-action="true" class="col col-50 wager-box">{{options.option1.title}}</button>

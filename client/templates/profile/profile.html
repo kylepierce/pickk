@@ -19,12 +19,12 @@
     {{#ionContent}}
     {{> loader}} 
     {{#if Template.subscriptionsReady}}  
-   <!--  <div class="loading-wrapper"> -->
+    <div class="loading-wrapper">
     {{#with profile}}
      <div style="margin-left:20px;">         
         <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
         <div style="float: left; margin:30px">
-        <h3>{{this.profile.username}}</h3>
+        <h4>{{this.profile.username}}</h4>
         {{{following}}} Following
         {{{follower}}}Followers<br>
         </div>
@@ -32,13 +32,13 @@
       {{#ionList}}
       <div  style="clear:both;" class="item item-divider">Badges</div>
 
-      <div class="item item-divider">Trophies</div>
+      <div class="item item-divider">Trophies</div>   
       {{#ionItem}}
-          {{#each trophy}}
+        {{#each trophy}}
             {{#with trophyData this}}
               <img width="75px" src="/{{image}}">
             {{/with}}
-          {{/each}}
+        {{/each}}
       {{/ionItem}}
 
       <div style="clear:both;" class="item item-divider">Groups</div>    
@@ -48,7 +48,7 @@
         {{/ionList}}
 
     {{/with}}
-    <!-- </div> -->
+    </div>
     {{/if}}
     {{/ionContent}} 
   {{/ionView}}

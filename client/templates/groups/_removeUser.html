@@ -1,0 +1,18 @@
+<template name="_removeUser">
+  {{#ionModal class="white-text-header" title="Remove User"}}
+		{{#ionList}}
+			{{#each user}}
+				{{#ionItem buttonRight=true avatar=true}}
+					{{#with userDetails this}}
+						{{profile.username}}
+						{{#if admin _id}}
+			      <button value="{{_id}}" data-action="delete" class="button">
+			        {{> ionIcon icon="ios-close"}}
+			      </button>
+			      {{/if}}
+					{{/with}}
+				{{/ionItem}}
+			{{/each}}
+		{{/ionList}}
+  {{/ionModal}}
+</template>

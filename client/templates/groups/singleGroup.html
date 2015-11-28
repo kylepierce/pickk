@@ -5,67 +5,115 @@
     {{>ionNavBackButton path="index"}}
   {{/contentFor}}
 
+  {{#contentFor "headerButtonRight"}}
+
+  {{/contentFor}}
+
   {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Group Details</h1>
+    <h1 class="title white-text-header">
+    {{#with group}}
+      {{this.groupId}}
+    {{/with}}
+    </h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-
+<!--     <div class="wrapper"> -->
     {{#with group}}
-<!--       {{#if private}}
+      {{#if private}}
         {{#if member}}
+          <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+          {{> memberCheck}} 
           {{> groupData}}
+          {{> singleGroupLeaderboard groupId=this}}
         {{else}}
-          <h1>This group is private and can only be seen by members</h1>
+          {{#if invite}}
+            <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+            {{> memberCheck}} 
+            {{> groupData}}
+          {{else}}
+            <h4 style="text-align:center;">This group is private and can only be seen by members</h4>
+          {{/if}}
         {{/if}}       
 
-      {{else}} -->
-      {{> groupData}}
-
-      {{> memberCheck}}  
+      {{else}}
+      <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+      
+      {{> memberCheck}} 
+      {{> groupData}} 
       {{> singleGroupLeaderboard groupId=this}}
 
-      <!-- {{/if}} -->
+      {{/if}}
     {{/with}}
+<!--     </div> -->
     {{/ionContent}}
   {{/ionView}}
 	
 </template>
 
 <template name="memberCheck">
-  <div style="clear:both; margin-bottom:50px;">
-	{{#if alreadyMember }}
-		<button data-action="leaveGroup" id="join-toggle" class="button button-assertive col col-50" style="float:left">Leave</button>
+  <div style="padding-top: 36px;float: right; width: 60%; margin-right: 25px;">
 
+  {{#if commissionerAdmin}}
+    <button id="settings" data-ion-popover="_adminOptions" class="button col col-10 button-stable" style="float:right; margin-left: 10px;">
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{/if}}
+
+	{{#if alreadyMember }}
+    {{#if commissionerAdmin}}
+    
+    {{else}}
+		  <button id="join-toggle" data-action="showActionSheet" class="button button-assertive col col-33" style="float:right">Leave</button>
+      
+    {{/if}}
     <a href="/inviteToGroup" class="invite">
-      <button class="button col col-50 button-balanced" style="float:left">
+      <button class="button col col-50 button-balanced" style="float:right; margin-right: 10px;">
        {{> ionIcon icon='ios-upload-outline'}} Invite
       </button>
     </a>
 
 	{{else}}
-		<button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-100" style="float:left">Join</button>
-	{{/if}}
+    {{#if invite}}
+      {{> inviteOnly}}
+    {{else}}
+		  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
+	  {{/if}}
+  {{/if}}
   </div>
 </template>
 
+<template name="requestInvite">
+  {{#if alreadyRequested}}
+    <button data-action="requestPending" id="join-toggle" class="button button-stable col col-75" style="float:right">Request Pending</button>
+  {{else}}
+    <button data-action="requestInvite" id="join-toggle" class="button button-balanced col col-75" style="float:right">Request Invite</button>
+  {{/if}}
+</template>
+
+<template name="inviteOnly">
+  {{#if invite}}
+    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
+  {{else}}
+    {{> requestInvite}}
+  {{/if}}
+</template>
+
 <template name="groupData">
-  <div style="background-color: white; margin-left:20px;">        
-        <img style="float:left; width: 75px;" src="{{this.avatar}}" class="circle-image">
-        <div style="float:left; margin:20px">
-        <h4>{{this.name}}</h4>
-        ({{this.groupId}})
+  <div style="clear:both" class="item item-divider">Group Info</div>   
+  <div style="clear: both; float:left; padding:15px; background-color: white; width: 100%;">
+    <span style="font-size: 1.7em; padding-left: 8px; padding-right: 10px;">{{> ionIcon icon='information'}}</span><span style="padding-left: 10px; line-height: 8px; vertical-align: text-top; font-size: 1.2em;">{{this.name}}</span>
+      <br>
+      {{#with commissioner}}
+    <span style="font-size: 1.7em;">{{> ionIcon icon='star'}}</span>
+    <span style="padding-left: 10px; line-height: 8px; vertical-align: text-top; font-size: 1.2em;">Commissioner: {{this.profile.username}}</span>
+    {{/with}}<br>
 
-        <h5>Owner: 
-        {{#with commissioner}}
-          {{this.profile.username}}
-        {{/with}}</h5>
-        <h5>{{memberCount}} Members </h5>
-
-           
-        </div> 
-      </div>
+    <span style="font-size: 1.9em;">{{> ionIcon icon='ios-people'}}</span><span style="padding-left: 10px; line-height: 8px; vertical-align: text-top; font-size: 1.2em;">{{memberCount}} Members</span>
+    <br>
+    {{description}}
+  </div>
 </template>
 
 <template name="singleGroupLeaderboard">
@@ -85,6 +133,5 @@
       {{/each}}
       
     </ol>
-
     {{/ionList}}
 </template>

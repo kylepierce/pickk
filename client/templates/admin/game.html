@@ -53,11 +53,9 @@
 				</form>
 
 				{{#ionList}}
-					{{#each game}}
-						{{#ionItem}}
-							{{#ionItem path="game.show"}}
-								{{name}} {{{live}}}
-							{{/ionItem}}
+					{{#each gameQuestion}}
+						{{#ionItem path="game.show"}}
+							{{que}} {{{live}}}
 						{{/ionItem}}
 					{{/each}}
 				{{/ionList}}
