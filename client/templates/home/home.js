@@ -155,10 +155,6 @@ Template.commercialQuestion.animations({
   }
 });
 
-Template.binaryChoice.onRendered( function() {
-    
-});
-
 
 Template.binaryChoice.animations({
   ".container-item": {
@@ -235,6 +231,16 @@ Template.questionCard.helpers({
       return true
     }
   },
+  'connection': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
+  },
 
 	'active': function(){
 		var currentUser = Meteor.userId();
@@ -242,7 +248,6 @@ Template.questionCard.helpers({
 				{active: true, commercial: false,
 				usersAnswered: {$nin: [currentUser]}}, 
 				{sort: {dateCreated: 1}}).fetch();
-    console.log(active)
 		if(active.length >= 1){
 			return true
 		} else {
@@ -299,13 +304,23 @@ Template.questionCard.helpers({
 });
 
 Template.activeQuestion.helpers({
-		'questions': function(){
+	'questions': function(){
 		var currentUser = Meteor.userId();
 		return QuestionList.find(
 				{active: true, commercial: false,
 				usersAnswered: {$nin: [currentUser]}}, 
 				{sort: {dateCreated: 1,}});
-	}
+	},
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
+  }
 });
 
 Template.commercialQuestion.helpers({
@@ -316,6 +331,16 @@ Template.commercialQuestion.helpers({
         {active: true, commercial: true,
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1,}});
+  },
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
   }
 });
 
@@ -327,13 +352,23 @@ Template.predictionQuestions.helpers({
         {active: true, commercial: null, 
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1}, limit: 1});
+  },
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
   }
 });
 
 Template.predictionQuestions.events({
   'click input:radio[name=score]':function(event, template) {
-    $("#submit-binary").prop("disabled", false)
-    $("#submit-binary").addClass('button-balanced');
+    $("#submit-response").prop("disabled", false)
+    $("#submit-response").addClass('button-balanced');
   },
 
   'submit form': function(event, template) {
@@ -354,7 +389,6 @@ Template.binaryChoice.events({
     $("#submit-binary").addClass('button-balanced');
   },
 
-
   'click #submit-binary': function(event, template){
     var answer = template.find('input:radio[name=binary]:checked').value;
     var currentUser = Meteor.userId();
@@ -370,6 +404,19 @@ Template.binaryChoice.events({
       Meteor.call('binaryQuestionAnswered', currentUser, questionId, answer, que)
     }, 250);
   },
+});
+
+Template.binaryChoice.helpers({
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
+  }
 });
 
 
@@ -404,8 +451,6 @@ Template.questionCard.events({
 		var wager = template.find('input:radio[name=wager]:checked').value;
     var description = template.find('input:radio[name=play]:checked').id;
 		var userCoins = Meteor.user().profile.coins;
-
-    console.log(que)
 
 		if (userCoins < wager) {
 			IonLoading.show({

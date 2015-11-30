@@ -85,7 +85,14 @@ Meteor.publish('singleGame', function(id){
 });
 
 Meteor.publish('findSingle', function(id) {
-	return UserList.find({_id: id});
+  var singleGame = UserList.find({_id: id}, {fields: 
+      {'profile.username': 1, 
+       '_id': 1
+    }});
+  if(singleGame){
+    return singleGame
+  }
+  return this.ready();
 })
 
 Meteor.publish('findSingleUsername', function(id) {

@@ -66,14 +66,16 @@
 				<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
 			{{/with}}
 
-			{{#if activeCheck}}
-				<h5 class="next-play"><button class="button" id="changeAnswer">Change Answer</button></h5>
-			{{/if}}
+				{{#if connection}}	
+					{{#if activeCheck}}
+						<!-- <h5 class="next-play"><button class="button" id="changeAnswer">Change Answer
+						</button></h5> -->
+					{{/if}}
+				{{/if }}
 			{{/if}}
 		{{/if}}
 	{{/if}}
 </template>
-
 
 <template name="activeQuestion">
 	{{#each questions}}
@@ -90,7 +92,12 @@
 			<!-- Wagers -->
 				{{> wagers}}
 
-			<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			{{#if live}}
+				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			{{else}}
+				<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+			{{/if }}
+
 		</form>
 	</div>
 	</div>
@@ -111,8 +118,12 @@
 
 			<!-- Wagers -->
 				{{> wagers}}
- 
-			<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+
+			{{#if live}}
+				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			{{else}}
+				<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+			{{/if }}
 		</form>
 	</div>
 	</div>
@@ -147,7 +158,11 @@
 				</div>
 			</div>
 
+			{{#if live}}
 			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			{{else}}
+			<button class="button play-option button-assertive center" disabled >Waiting to</button>
+			{{/if }}
 		</form>
 	</li>
 	</ul>
@@ -206,7 +221,11 @@
 								</label>
 							</div>
 
-						<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+						{{#if live}}
+							<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+						{{else}}
+							<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+						{{/if }}
 					</form>
 				</li>
 			</ul>
