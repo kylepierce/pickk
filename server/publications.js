@@ -33,7 +33,7 @@ Meteor.publish('questions', function(){
 // 	if(activeQuestions){
 // 		return activeQuestions
 // 	}
-// 	return this.ready();
+// 	return this.ready(); 
 // });
 
 Meteor.publish('pendingQuestions', function(){
@@ -85,6 +85,15 @@ Meteor.publish('singleGame', function(id){
 });
 
 Meteor.publish('findSingle', function(id) {
+  return UserList.find({_id: id},
+  {fields: 
+      {'profile': 1, 
+       '_id': 1
+     }
+  });
+})
+
+Meteor.publish('chatUser', function(id) {
   var singleGame = UserList.find({_id: id}, {fields: 
       {'profile.username': 1, 
        '_id': 1
@@ -96,7 +105,7 @@ Meteor.publish('findSingle', function(id) {
 })
 
 Meteor.publish('findSingleUsername', function(id) {
-  return UserList.findOne({_id: id}, 
+  return UserList.find({_id: id}, 
     {fields: 
       {'profile.username': 1, 
        'profile.coins': 1, 

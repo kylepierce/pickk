@@ -414,7 +414,7 @@ Template.createQuestion.events({
 // Second Down with sack option
 		else if(down == 2 && time == 2){
 			question = "Second Down ..."
-			questionList("Negative Yardage", "Positive Yardage", "Pick Six", "Interception", "Fumble", "Touchdown")
+			questionList("Negative Yardage", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass", "6-20 Yard Pass", "21+ Gain (Run or Pass)")
 
 			// Inches
 			if(yards == 1){
@@ -423,16 +423,16 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.4, 4.0,
 						2.9, 3.61, 
 						2.2, 4.81, 
-						12.9, 23.61)
+						3.9, 7.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						2.3, 3.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.0, 3.5,
 						2.2, 4.81, 
 						2.2, 4.81, 
 						6.9, 8.61)
@@ -441,7 +441,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.0, 3.4,
 						2.2, 4.81, 
 						2.2, 4.81, 
 						5.9, 8.61)
@@ -450,7 +450,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.2, 3.6,
 						2.9, 4.61, 
 						2.2, 4.81, 
 						3.9, 4.61)
@@ -459,7 +459,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.3, 2.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.2, 3.5,
 						3.9, 5.61, 
 						2.2, 4.81, 
 						2.9, 3.61)
@@ -473,16 +473,16 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.5, 4.2,
 						2.9, 3.61, 
 						2.2, 4.81, 
-						12.9, 18.61)
+						3.9, 7.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						2.3, 3.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,
 						2.2, 4.81, 
 						2.2, 4.81, 
 						6.9, 8.61)
@@ -491,7 +491,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,
 						2.2, 4.81, 
 						2.2, 4.81, 
 						5.9, 8.61)
@@ -500,7 +500,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.5, 4.2,
 						2.9, 4.61, 
 						2.2, 4.81, 
 						3.9, 5.61)
@@ -509,7 +509,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.3, 3.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.5, 4.2,
 						3.9, 5.61, 
 						2.2, 4.81, 
 						2.9, 3.61)
@@ -523,16 +523,16 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.5, 4.2,
 						2.9, 3.61, 
 						2.2, 4.81, 
-						12.9, 19.61)
+						3.9, 7.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						2.3, 3.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,	
 						2.2, 4.81, 
 						2.2, 4.81, 
 						6.9, 8.61)
@@ -541,7 +541,7 @@ Template.createQuestion.events({
 					multiplier(
 						1.7, 2.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,			
 						2.2, 4.81, 
 						2.2, 4.81, 
 						4.9, 7.61)
@@ -550,16 +550,16 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.5, 4.2,		
 						2.9, 4.61, 
 						2.2, 4.81, 
-						3.9, 5.61)
+						3.9, 7.61)
 				} else if (area == 6)	{
 					// Goal Line
 					multiplier(
 						1.3, 1.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.5, 4.2,		
 						3.9, 5.61, 
 						2.2, 4.81, 
 						2.9, 3.61)
@@ -573,16 +573,16 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.5, 4.2,		
 						2.9, 3.61, 
 						2.2, 4.81, 
-						14.9, 23.61)
+						3.9, 7.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						1.3, 1.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,			
 						2.2, 4.81, 
 						2.2, 4.81, 
 						6.9, 8.61)
@@ -591,7 +591,7 @@ Template.createQuestion.events({
 					multiplier(
 						2.1, 3.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,	
 						2.2, 4.81, 
 						2.2, 4.81, 
 						4.9, 7.61)
@@ -600,19 +600,19 @@ Template.createQuestion.events({
 					multiplier(
 						1.8, 2.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.5, 4.2,			
 						2.9, 4.61, 
 						2.2, 4.81, 
-						2.9, 3.61)
+						3.9, 7.61)
 				} else if (area == 6)	{
 					// Goal Line
 					multiplier(
 						2.3, 3.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.5, 4.2,		 
 						3.9, 5.61, 
 						2.2, 4.81, 
-						1.9, 2.61)
+						3.9, 7.61)
 				}
 			} 
 
@@ -621,27 +621,27 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						3.1, 5.3, 
+						2.1, 3.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.5, 4.2,	
 						2.9, 3.61, 
 						2.2, 4.81, 
-						12.9, 33.61)
+						3.9, 7.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						1.3, 1.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,			
 						2.2, 4.81, 
 						2.2, 4.81, 
-						8.9, 11.61)
+						3.9, 7.61)
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
 						2.1, 2.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,			
 						2.2, 4.81, 
 						2.2, 4.81, 
 						5.9, 8.61)
@@ -650,19 +650,19 @@ Template.createQuestion.events({
 					multiplier(
 						1.8, 2.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.5, 4.2,				
 						2.9, 4.61, 
 						2.2, 4.81, 
-						4.9, 6.61)
+						3.9, 7.61)
 				} else if (area == 6)	{
 					// Goal Line
 					multiplier(
 						2.3, 2.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.5, 4.2,			
 						3.9, 5.61, 
 						2.2, 4.81, 
-						2.9, 3.61)
+						3.9, 7.61)
 				}
 			} 
 
@@ -671,36 +671,36 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						5.1, 8.3, 
+						2.1, 4.3, 
 						1.4, 2.42, 
-						(2.9 * 2), (3.61 * 2), 
+						2.5, 4.2,			
 						2.9, 3.61, 
 						2.2, 4.81, 
-						15.9, 31.61)
+						3.9, 5.61)
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
 						1.3, 1.9, 
 						1.6, 2.02, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,		
 						2.2, 4.81, 
 						2.2, 4.81, 
-						8.9, 11.61)
+						3.9, 5.61)
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
 						1.1, 1.7, 
 						1.4, 1.92, 
-						(2.2 * 2), (4.81 * 2), 
+						2.5, 4.2,			
 						2.2, 4.81, 
 						2.2, 4.81, 
-						4.9, 7.61)
+						3.9, 5.61)
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
 						1.1, 1.7, 
 						1.4, 1.92, 
-						(2.9 * 2), (4.61 * 2), 
+						2.5, 4.2,			
 						2.9, 4.61, 
 						2.2, 4.81, 
 						3.9, 5.61)
@@ -709,7 +709,7 @@ Template.createQuestion.events({
 					multiplier(
 						1.3, 1.9, 
 						1.4, 2.42, 
-						(3.9 * 2), (5.61 * 2), 
+						2.5, 4.2,				
 						3.9, 5.61, 
 						2.2, 4.81, 
 						2.9, 3.61)

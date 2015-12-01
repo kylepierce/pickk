@@ -4,13 +4,11 @@
 
   {{#ionSideMenuContainer}}
 
-    {{#ionSideMenus}}
+    {{#ionSideMenus draggable=false}}
 
       {{#ionSideMenu}}
         {{> sideMenuContent}}
       {{/ionSideMenu}}
-
-    {{> sideMenuRight}}
 
     {{/ionSideMenus}}
 
@@ -178,7 +176,7 @@
 
 <template name="sideMenuRight">
 {{#ionSideMenu side="right"}}
-  <div class="bar bar-header bar-dark">
+  <div id="chat-top" class="bar bar-header bar-dark">
   <button class="button pull-right" data-ion-menu-close>
     {{> ionIcon icon="ios-close" }}
   </button>

@@ -25,7 +25,6 @@ Template._removeUser.events({
 		var id = this._id
 		var user = UserList.findOne({_id: id});
 		var username = user.profile.username
-		console.log(username)
 		var groupId = Session.get('groupId');
 		IonActionSheet.show({
       titleText: 'Are You Sure You Remove User?',
@@ -35,7 +34,7 @@ Template._removeUser.events({
       destructiveText: '',
       cancelText: 'Cancel', 
       cancel: function() {
-        console.log('Cancelled!');
+
       },
       buttonClicked: function(index) {
         if (index === 0) {

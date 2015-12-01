@@ -146,7 +146,6 @@ Template.settings.events({
 			
 			var newAccount = event.target.status.value;
 			Meteor.call('updateProfile', currentUserId, username, firstName, lastName);
-			console.log(newAccount)
 			if (newAccount == "Finish Profile"){
 				Router.go('/onboarding');
 			} else {

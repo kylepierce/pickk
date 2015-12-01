@@ -1008,13 +1008,19 @@ Meteor.methods({
 		if(counter === 1){
 			console.log("Increased diamonds by 1")
 			Meteor.call('awardDiamonds', user, 1)
-		} else if(counter === 25){
+		} else if(counter === 5){
 			Meteor.call('awardDiamonds', user, 2)
+		} else if(counter === 25){
+			Meteor.call('awardDiamonds', user, 3)
 		} else if(counter === 50){
 			Meteor.call('awardDiamonds', user, 4)
+		} else if(counter === 75){
+			Meteor.call('awardDiamonds', user, 5)
 		} else if(counter === 100){
-			Meteor.call('awardDiamonds', user, 8)
-		}
+			Meteor.call('awardDiamonds', user, 7)
+		} else if(counter === 140){
+			Meteor.call('awardDiamonds', user, 13)
+		} 
 
 		var question = QuestionList.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked

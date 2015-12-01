@@ -4,7 +4,6 @@ Meteor.subscribe('trophies')
 Template.myProfile.created = function () {
   this.autorun(function () {
     var userId = Router.current().params._id
-    console.log(userId)
     this.subscription = Meteor.subscribe('findSingle', userId);
   }.bind(this));
 };
@@ -21,11 +20,6 @@ Template.myProfile.onCreated( function() {
   });
 });
 
-Template.myProfile.created = function () {
-  this.autorun(function () {
-    this.subscription = Meteor.subscribe('findSingle', Router.current().params._id);
-  }.bind(this));
-};
 
 Template.myProfile.helpers({
   profile: function () {
@@ -47,7 +41,7 @@ Template.myProfile.helpers({
     var numCount = numFollowing.length
     if(!numCount){
       return 0
-    } else { 
+    } else {  
       return numCount
     }
   },
