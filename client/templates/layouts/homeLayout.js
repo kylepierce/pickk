@@ -47,6 +47,17 @@ Template.sideMenuRight.helpers({
     Meteor.subscribe('chatUser', id)
     var user = UserList.findOne({_id: id});
     return user
+  },
+  group: function(){
+    var user = Meteor.user()
+    console.log(user.profile.groups)
+    return user.profile.groups
+  },
+  groupName: function(id){
+    console.log()
+    var group = Groups.findOne({_id: id}, {fields: {groupId: 1}})
+    console.log(group)
+    return group 
   }
 });
 

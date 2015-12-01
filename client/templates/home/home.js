@@ -155,6 +155,23 @@ Template.commercialQuestion.animations({
   }
 });
 
+Template.predictionQuestions.animations({
+  ".container-item": {
+    container: ".container", // container of the ".item" elements
+    insert: {
+      class: "animated fast slideInLeft", // class applied to inserted elements
+      before: function(attrs, element, template) {
+        $( "#gameCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {}, // callback after an element gets inserted
+      delay: 500 // Delay before inserted items animate
+    },
+    animateInitial: true, // animate the elements already rendered
+    animateInitialStep: 200, // Step between animations for each initial item
+    animateInitialDelay: 500 // Delay before the initial items animate
+  }
+});
+
 
 Template.binaryChoice.animations({
   ".container-item": {
@@ -378,8 +395,15 @@ Template.predictionQuestions.events({
     var que = this.que;
     var answer = template.find('input:radio[name=score]:checked').value;
 
-    Meteor.call('gameQuestionAnswered', currentUser, questionId, answer);
+    // Move the card off screen
+    $( ".container-item" ).removeClass( "slideInLeft" )
+    $( ".container-item" ).addClass( "slideOutRight" )
 
+    // Wait until the question card has disapeared
+    Meteor.setTimeout(function(){
+       Meteor.call('gameQuestionAnswered', currentUser, questionId, answer);
+
+    }, 500);
   }
 });
 

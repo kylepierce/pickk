@@ -59,19 +59,29 @@
   </div>
   <div class="content has-header">
 
-  <form id="">
+<!--   <form id="">
     <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
     <button class="col button col-100" type="submit">Send</button>
-  </form> 
-
+  </form>  -->
     {{#ionList}}
+        {{#ionItem}}Global{{/ionItem}}
+      {{#each group}}
+        {{#ionItem}}
+          {{#with groupName this}}
+            {{groupId}}
+          {{/with}}
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+
+<!--     {{#ionList}}
       {{#each message}}
         {{#ionItem class="chat"}}
           {{#with user this.user}} {{profile.username}} {{/with}}<br>
           <p class="common-question">{{this.message}}</p>
         {{/ionItem}}
       {{/each}}
-    {{/ionList}}
+    {{/ionList}} -->
   </div>
 {{/ionSideMenu}}
 </template>
