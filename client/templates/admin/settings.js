@@ -49,9 +49,22 @@ Template.adminSettings.events({
 		}
 	},
     'click [data-action=awardLeaders]': function(){
-        Meteor.call('awardLeaders')
+        var user = Meteor.userId()
+        if(confirm("Are you sure?")) {
+            Meteor.call('awardLeaders', user)
+        }
+        
     },
     'click [data-action=resetGameCounter]': function(){
-        Meteor.call('updateAllCounters');
+        var user = Meteor.userId()
+        if(confirm("Are you sure?")) {
+            Meteor.call('updateAllCounters', user)
+        }
+    },
+    'click [data-action=resetDiamonds]': function(){
+        var user = Meteor.userId()
+        if(confirm("Are you sure?")) {
+            Meteor.call('updateAllDiamonds', user)
+        }
     }
 });

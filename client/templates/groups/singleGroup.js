@@ -21,7 +21,6 @@ Template.singleGroup.helpers({
   }, 
   private: function(){
     var currentUser = Meteor.userId()
-    console.log(currentUser)
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId})
     if (group.secret == "private") {
@@ -98,7 +97,6 @@ Template.memberCheck.helpers({
 Template.memberCheck.events({
   'click .invite': function(event, template){
     groupId = Router.current().params._id
-    console.log(groupId)
     Session.set('groupInvite', groupId);
   },
   'click [data-action=joinGroup]': function() {
@@ -118,9 +116,7 @@ Template.memberCheck.events({
       ],
       destructiveText: '',
       cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Cancelled!');
-      },
+      cancel: function() {},
       buttonClicked: function(index) {
         if (index === 0) {
           var currentUserId = Meteor.userId();
@@ -164,7 +160,6 @@ Template.requestInvite.events({
   'click [data-action=requestInvite]': function(template, event){
     var user = Meteor.userId();
     var group = Router.current().params._id
-    console.log(user + " " + group)
     Meteor.call('requestInvite', user, group)
   },
   'click [data-action=requestPending]': function(template, event){
@@ -175,9 +170,7 @@ Template.requestInvite.events({
       ],
       destructiveText: '',
       cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Cancelled!');
-      },
+      cancel: function() {},
       buttonClicked: function(index) {
         if (index === 0) {
           var user = Meteor.userId();
@@ -196,9 +189,7 @@ Template.requestInvite.events({
       ],
       destructiveText: '',
       cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Cancelled!');
-      },
+      cancel: function() {},
       buttonClicked: function(index) {
         if (index === 0) {
           var currentUserId = Meteor.userId();
@@ -222,7 +213,6 @@ Template._adminOptions.helpers({
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId});
-    console.log(group.secret)
     if (group.secret == "invite") {
       return true
     }
@@ -233,20 +223,17 @@ Template._adminOptions.events({
   // Add group id to update group info.
   'click [data-ion-modal=_editGroup]': function(event, template){
     var groupId = Router.current().params._id
-    console.log(groupId)
     Session.set('groupId', groupId);
   },
 
   // Add group id to update group info.
   'click [data-ion-modal=_removeUser]': function(event, template){
     var groupId = Router.current().params._id
-    console.log(groupId)
     Session.set('groupId', groupId);
   },
 
   'click [data-ion-modal=_groupRequests]': function(event, template){
     var groupId = Router.current().params._id
-    console.log(groupId)
     Session.set('groupId', groupId);
   },
   
@@ -259,9 +246,7 @@ Template._adminOptions.events({
       ],
       destructiveText: '',
       cancelText: 'Cancel',
-      cancel: function() {
-        console.log('Cancelled!');
-      },
+      cancel: function() {},
       buttonClicked: function(index) {
         if (index === 0) {
         var groupId = Router.current().params._id

@@ -1,20 +1,21 @@
-// Template.userProfile.created = function () {
-//   this.autorun(function () {
-//     var userId = Router.current().params._id
-//     console.log(userId)
-//     this.subscription = Meteor.subscribe('findSingle', userId);
-//   }.bind(this));
-// };
+Template.userProfile.created = function () {
+  this.autorun(function () {
+    var userId = Router.current().params._id
+    this.subscription = Meteor.subscribe('findSingle', userId);
+  }.bind(this));
+};
 
-// Template.userProfile.rendered = function () {
-//   this.autorun(function () {
-//     if (!this.subscription.ready()) {
-//       IonLoading.show();
-//     } else {
-//       IonLoading.hide();
-//     }
-//   }.bind(this));
-// };
+Template.userProfile.onRendered( function() {
+  $( "svg" ).delay( 0 ).fadeIn();
+});
+
+Template.userProfile.onCreated( function() {
+  this.subscribe( 'findSingle', function() {
+    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
+      $( ".loading-wrapper" ).fadeIn( 'fast' );
+    });
+  });
+});
 
 Template.userProfile.helpers({
   profile: function () {
@@ -43,7 +44,7 @@ Template.userProfile.helpers({
     var userId = Router.current().params._id
     var currentUserId = Meteor.userId();
     if(userId !== currentUserId){
-      return true
+      return true 
     }
   }
 });

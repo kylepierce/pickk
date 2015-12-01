@@ -14,12 +14,25 @@ Meteor.methods({
   	});
   },
   
-  'updateAllCounters' : function(coins){
-  	var amount = parseInt(coins)
-		UserList.update({}, {$set: { "profile.queCounter": 0}}, { multi: true });  
+  'updateAllCounters' : function(user){
+		var user = UserList.findOne({_id: user})
+		var role = user.profile.role
+		if(role === "admin"){
+			console.log("reseting all the counters!!")
+			UserList.update({}, {$set: { "profile.queCounter": 0}}, { multi: true })
+		}  
+	},
+	  
+	'updateAllDiamonds' : function(user){
+		var user = UserList.findOne({_id: user})
+		var role = user.profile.role
+		if(role === "admin"){
+			console.log("reseting all the diamonds!!")
+			UserList.update({}, {$set: { "profile.diamonds": 0}}, { multi: true })
+		}  
 	},
 
-  'awardLeaders': function(){
+  'awardLeaders': function(user){
   	var liveGame = Games.findOne({live: true});
   	var selector = {_id: {$in: liveGame.users}}
 		var leaderboard = UserList.find(
@@ -38,19 +51,25 @@ Meteor.methods({
 			Meteor.call('awardTrophy', trophyId, user);
 			Meteor.call('notifyTrophyAwarded', trophyId, user);
 		}
-		awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
-		Meteor.call('awardDiamonds', fixed[0]._id, 50)
-		awardTrophies('aDJHkmcQKwgnpbnEk', fixed[1]._id)
-		Meteor.call('awardDiamonds', fixed[1]._id, 40)
-		awardTrophies('YxG4SKtrfT9j8Abdk', fixed[2]._id)
-		Meteor.call('awardDiamonds', fixed[2]._id, 30)
-		Meteor.call('awardDiamonds', fixed[3]._id, 25)
-		Meteor.call('awardDiamonds', fixed[4]._id, 22)
-		Meteor.call('awardDiamonds', fixed[5]._id, 20)
-		Meteor.call('awardDiamonds', fixed[6]._id, 17)
-		Meteor.call('awardDiamonds', fixed[7]._id, 15)
-		Meteor.call('awardDiamonds', fixed[8]._id, 12)
-		Meteor.call('awardDiamonds', fixed[9]._id, 10)
+
+		var user = UserList.findOne({_id: user})
+		var role = user.profile.role
+		if(role === "admin"){
+			console.log('awarding coins')
+			awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
+			Meteor.call('awardDiamonds', fixed[0]._id, 50)
+			awardTrophies('aDJHkmcQKwgnpbnEk', fixed[1]._id)
+			Meteor.call('awardDiamonds', fixed[1]._id, 40)
+			awardTrophies('YxG4SKtrfT9j8Abdk', fixed[2]._id)
+			Meteor.call('awardDiamonds', fixed[2]._id, 30)
+			Meteor.call('awardDiamonds', fixed[3]._id, 25)
+			Meteor.call('awardDiamonds', fixed[4]._id, 22)
+			Meteor.call('awardDiamonds', fixed[5]._id, 20)
+			Meteor.call('awardDiamonds', fixed[6]._id, 17)
+			Meteor.call('awardDiamonds', fixed[7]._id, 15)
+			Meteor.call('awardDiamonds', fixed[8]._id, 12)
+			Meteor.call('awardDiamonds', fixed[9]._id, 10)
+		}  
   },
 
 
@@ -1008,13 +1027,19 @@ Meteor.methods({
 		if(counter === 1){
 			console.log("Increased diamonds by 1")
 			Meteor.call('awardDiamonds', user, 1)
-		} else if(counter === 25){
+		} else if(counter === 5){
 			Meteor.call('awardDiamonds', user, 2)
+		} else if(counter === 25){
+			Meteor.call('awardDiamonds', user, 3)
 		} else if(counter === 50){
 			Meteor.call('awardDiamonds', user, 4)
+		} else if(counter === 75){
+			Meteor.call('awardDiamonds', user, 5)
 		} else if(counter === 100){
-			Meteor.call('awardDiamonds', user, 8)
-		}
+			Meteor.call('awardDiamonds', user, 7)
+		} else if(counter === 140){
+			Meteor.call('awardDiamonds', user, 13)
+		} 
 
 		var question = QuestionList.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
@@ -1102,13 +1127,15 @@ Meteor.methods({
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array 
+		console.log(question)
 		var userExists = _.indexOf(question, user)
 		console.log(userExists)
 
 		// If the user is already in the array exit this process
 		if(userExists !== -1){
+			console.log('cant do that 2 times')
 			return
-		}
+		} else {
 
 		// Update question with the user who have answered.
 		QuestionList.update(questionId, {$push: {usersAnswered: user}});
@@ -1131,6 +1158,7 @@ Meteor.methods({
 		} else if (answer == "option5"){
 			QuestionList.update(questionId, {$push: {'options.option5.usersPicked': {userID: user}}});
 		} 
+	}
 	},
 
 	'questionUnanswered' : function( user, questionId, answer, wager){		

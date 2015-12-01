@@ -22,14 +22,12 @@ Template._editGroup.helpers({
 
 Template._editGroup.events({
   'click input:checkbox':function(event, template){
-    console.log(event.target)
    if($(event.target).is(':checked')){
         $(this).attr(true);
    }else{
         $(this).attr(false);
    }
     var privateCheck = event.target.value;
-    console.log(privateCheck)
   },
 
   'click input:radio[name=privacy]':function(event, template) {
@@ -51,8 +49,6 @@ Template._editGroup.events({
     if(privacySetting === "false"){
       privacySetting = false
     }
-
-		console.log(privacySetting)
 
     function hasWhiteSpace(s) {
       return /\s/g.test(s);

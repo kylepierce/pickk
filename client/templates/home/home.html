@@ -1,10 +1,14 @@
 <template name="home">
 
 <!-- Standard Nav instead of the custom nav design -->
- {{> standardNav}}
+ {{> homeLayoutHeader}}
 
  {{#contentFor "headerTitle"}}
-	<h1 class="title white-text-header">{{gameName.name}}</h1>
+	<h1 class="title white-text-header"><i class="fa fa-diamond"></i>
+    	<strong>{{currentUser.profile.diamonds}}</strong> 
+			
+    	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
+    	<strong>{{currentUser.profile.coins}}</strong></h1>
  {{/contentFor}}
 
   {{#ionView }}
@@ -12,7 +16,14 @@
     {{> loader}} 
     {{#if Template.subscriptionsReady}}  
     <!-- <div class="loading-wrapper"> -->
+    <div class="bar bar-dark"> 
+    	<div class="container" style="text-align: center; padding-top: 6px;">
+    	<h1 class="title white-text-header">{{gameName.name}}</h1>
+    	</div>
+    	</div>
+    	<div style="margin-top: 55px"> 
 			{{> questionCard}}
+			</div>
 		<!-- </div> -->
 		{{/if}}
 		{{scoreMessage}}
@@ -171,7 +182,7 @@
 
 <template name="predictionQuestions">
 	{{#each questions}}
-		<div class="container" id="">
+		<div class="container" id="gameCard" style="display: none;">
 			<ul>
 				<li class="container-item">
 					<div class="question">

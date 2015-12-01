@@ -13,6 +13,9 @@
   {{#ionView}}
     {{#ionContent}}
 
+    {{> loader}} 
+    {{#if Template.subscriptionsReady}}  
+    <div class="loading-wrapper">
     {{#with profile}}
     	<div style="margin-left:20px;">        
         <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
@@ -45,6 +48,8 @@
         {{/ionList}}
 
     {{/with}}
+    </div>
+    {{/if}}
     {{/ionContent}}
   {{/ionView}}
 

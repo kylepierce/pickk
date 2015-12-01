@@ -1,0 +1,87 @@
+<template name="homeLayout">
+
+{{#ionBody}}
+
+  {{#ionSideMenuContainer}}
+
+    {{#ionSideMenus}}
+
+      {{#ionSideMenu}}
+        {{> sideMenuContent}}
+      {{/ionSideMenu}}
+
+    {{> sideMenuRight}}
+
+    {{/ionSideMenus}}
+
+      {{#ionSideMenuContent}}
+        
+        {{> ionNavBar }}
+
+        {{#ionNavView transition="backward"}}
+          {{> homeLayoutHeader}}
+
+        {{/ionNavView}}
+
+        {{> yield}}
+
+      {{/ionSideMenuContent}}
+
+    {{/ionSideMenuContainer}}
+
+  {{/ionBody}}
+
+</template>
+
+<template name="homeLayoutHeader">
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+      {{> ionIcon icon="ios-chatboxes"}}
+    </button>
+  {{/contentFor}}
+</template>
+
+
+<template name="sideMenuRight">
+{{#ionSideMenu side="right"}}
+  <div id="chat-top" class="bar bar-header bar-dark">
+    <h1 class="title">Chat</h1>
+  </div>
+  <div class="content has-header">
+
+<!--   <form id="">
+    <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
+    <button class="col button col-100" type="submit">Send</button>
+  </form>  -->
+    {{#ionList}}
+        {{#ionItem}}Global{{/ionItem}}
+      {{#each group}}
+        {{#ionItem}}
+          {{#with groupName this}}
+            {{groupId}}
+          {{/with}}
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+
+<!--     {{#ionList}}
+      {{#each message}}
+        {{#ionItem class="chat"}}
+          {{#with user this.user}} {{profile.username}} {{/with}}<br>
+          <p class="common-question">{{this.message}}</p>
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}} -->
+  </div>
+{{/ionSideMenu}}
+</template>
