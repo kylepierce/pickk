@@ -4,27 +4,33 @@
  {{> homeLayoutHeader}}
 
  {{#contentFor "headerTitle"}}
-	<h1 class="title white-text-header"><i class="fa fa-diamond"></i>
-    	<strong>{{currentUser.profile.diamonds}}</strong> 
+	<h1 class="title white-text-header" style="font-size: 1.2em;">
+		<i class="fa fa-diamond"></i>
+    <strong>{{currentUser.profile.diamonds}}</strong> 
 			
-    	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
-    	<strong>{{currentUser.profile.coins}}</strong></h1>
+   	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
+    <strong>{{currentUser.profile.coins}}</strong>
+  </h1>
  {{/contentFor}}
 
   {{#ionView }}
     {{#ionContent}}
     {{> loader}} 
+
     {{#if Template.subscriptionsReady}}  
     <!-- <div class="loading-wrapper"> -->
+    {{#if game}}
     <div class="bar bar-dark"> 
     	<div class="container" style="text-align: center; padding-top: 6px;">
-    	<h1 class="title white-text-header">{{gameName.name}}</h1>
+    		<h1 class="title white-text-header">{{game.name}}</h1>
     	</div>
-    	</div>
-    	<div style="margin-top: 55px"> 
+    </div>
+    {{/if}}
+
+    <div style="{{#if game}}margin-top: 55px{{/if}}"> 
 			{{> questionCard}}
-			</div>
-		<!-- </div> -->
+		</div>
+
 		{{/if}}
 		{{scoreMessage}}
     {{/ionContent}}
@@ -34,7 +40,9 @@
 <template name="questionCard">
 	{{#if live}}
 		{{#if gameQuestion}}
+			{{#each gameQuestions}}
 			  {{> predictionQuestions}}
+			{{/each}}
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
@@ -181,7 +189,6 @@
 </template>
 
 <template name="predictionQuestions">
-	{{#each questions}}
 		<div class="container" id="gameCard" style="display: none;">
 			<ul>
 				<li class="container-item">
@@ -241,7 +248,6 @@
 				</li>
 			</ul>
 		</div>
-	{{/each}}
 </template>
 
 <template name="wagers">

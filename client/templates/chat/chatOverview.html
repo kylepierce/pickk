@@ -1,0 +1,71 @@
+<template name="chatOverview">
+<!--   {{#ionView }}
+    {{#ionContent}} -->
+<div class="bar bar-header bar-dark">
+  {{#if group}}
+   <h1 class="title white-text-header">{{group}} Chat</h1>
+  
+   <button id="all-chats" class="button button-clear"> 
+      {{> ionIcon icon="ios-arrow-back" }}
+    </button>
+  {{else}}
+    <h1 class="title white-text-header">Global Chat</h1>
+  {{/if}}
+
+    <button class="button button-clear pull-right" data-ion-popover="_groupChats"> 
+      {{> ionIcon icon="ios-people" }}
+    </button>
+
+
+  </div>
+
+{{> chatRoom}}
+<!--     {{/ionContent}}
+  {{/ionView}} -->
+</template>
+
+<template name="chatRoom">
+<!--   {{#if group}}
+    {{#contentFor "headerTitle"}}
+   <h1 class="title white-text-header">{{group}} Chat</h1>
+  {{/contentFor}}
+
+  {{> chatHeader}}
+
+  {{/if}} -->
+  {{#ionView }}
+    {{#ionContent}}
+    <form id="">
+      <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
+      <button class="col button col-100" type="submit">Send</button>
+    </form>  
+    {{#ionList}}
+      {{#each message}}
+        {{#ionItem class="chat"}}
+          {{#with user this.user}} {{profile.username}} {{/with}}<br>
+          <p class="common-question">{{this.message}}</p>
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}} 
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="_groupChats">
+
+  {{#ionPopover}}
+    {{#ionList}}
+      {{#each group}}
+        {{#with groupName this}}
+          {{#ionItem class="group-selector" id=this._id}}
+            {{groupId}}
+          {{/ionItem}}
+        {{/with}}
+      {{/each}}
+    {{/ionList}}
+  {{/ionPopover}}
+
+</template>
+
+
+

@@ -10,19 +10,20 @@
         {{> sideMenuContent}}
       {{/ionSideMenu}}
 
+      {{> sideMenuRight}}
+
     {{/ionSideMenus}}
 
       {{#ionSideMenuContent}}
         
-        {{> ionNavBar }}
+        {{> ionNavBar}}
 
         {{#ionNavView transition="backward"}}
           {{> yield "header"}}
 
-    {{#if isAndroid}}
+<!--     {{#if isAndroid}}
       {{#ionTabs style="android"}}
         {{> ionTab title="Active" path="dashboard" icon="ios-photos"}}
-<!--         {{> ionTab title="Leaderboard" path="leaderboard" icon="ios-list"}} -->
         {{> ionTab title="Notifications" path="notifications" icon="android-notifications"}}
         {{> ionTab title="Profile" path="profile" icon="ios-person"}}
       {{/ionTabs}}
@@ -33,15 +34,10 @@
         {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
         {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
       {{/ionTabs}}
-    {{/if}}
+    {{/if}} -->
 
         {{/ionNavView}}
 
-    {{#unless connected}}
-
-        <div class="title-notification">Trying to connect</div>
-        <div class="description">There seems to be a connection issue</div>
-    {{/unless}}
         {{> yield}}
 
       {{/ionSideMenuContent}}
@@ -174,7 +170,7 @@
   </div>
 </template>
 
-<template name="sideMenuRight">
+<!-- <template name="sideMenuRight">
 {{#ionSideMenu side="right"}}
   <div id="chat-top" class="bar bar-header bar-dark">
   <button class="button pull-right" data-ion-menu-close>
@@ -199,4 +195,4 @@
     {{/ionList}}
   </div>
 {{/ionSideMenu}}
-</template>
+</template> -->

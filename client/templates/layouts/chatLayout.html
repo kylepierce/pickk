@@ -1,0 +1,54 @@
+<!-- <template name="chatLayout">
+	{{#ionBody}}
+		{{> ionNavBar }}
+   	{{#ionNavView transition="backward"}}
+			{{> chatHeader}}
+		{{/ionNavView}}
+
+		{{> yield}}
+	{{/ionBody}}
+</template> -->
+
+<template name="chatLayout">
+{{#ionBody}}
+
+  {{#ionSideMenuContainer}}
+
+      {{#ionSideMenuContent}}
+        
+        {{> ionNavBar }}
+
+        {{#ionNavView transition="backward"}}
+          {{> chatHeader}}
+        {{/ionNavView}}
+
+        {{> yield}}
+
+      {{/ionSideMenuContent}}
+
+    {{/ionSideMenuContainer}}
+
+  {{/ionBody}}
+</template>
+
+
+
+<template name="chatHeader">
+	  {{#contentFor "headerTitle"}}
+   <h1 class="title white-text-header">{{group}} Chat</h1>
+  {{/contentFor}}
+  
+  {{#contentFor "headerButtonLeft"}}
+  <a href="/chatOverview">
+   <button class="button button-clear"> 
+      {{> ionIcon icon="ios-arrow-back" }}
+    </button>
+  </a>
+  {{/contentFor}}
+
+   {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear" data-ion-popover="_groupChats"> 
+      {{> ionIcon icon="ios-people" }}
+    </button>
+  {{/contentFor}}
+</template>

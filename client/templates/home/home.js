@@ -92,7 +92,7 @@ Template.home.rendered = function (template) {
 };
 
 Template.home.helpers({
-	gameName: function () {
+	game: function () {
 		return Games.findOne({live: true});
 	},
   scoreMessage: function () {
@@ -215,8 +215,13 @@ Template.questionCard.helpers({
     }
   },
 
-  gameQuestions: function(){
-    return QuestionList.findOne({commercial: null})
+  'gameQuestions': function(){
+    var currentUser = Meteor.userId();
+
+    return QuestionList.find(
+        {active: true, gameId: "prediction",
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1});
   },
 
   'lastPlay': function(){
@@ -347,7 +352,7 @@ Template.commercialQuestion.helpers({
     return QuestionList.find(
         {active: true, commercial: true,
         usersAnswered: {$nin: [currentUser]}}, 
-        {sort: {dateCreated: 1,}});
+        {sort: {dateCreated: 1}, limit: 1});
   },
   'live': function(){
     var connection = Meteor.status()

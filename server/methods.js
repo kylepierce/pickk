@@ -3,12 +3,13 @@ Meteor.methods({
     return !!UserList.findOne({"profile.username": username});
   },
 
-  'addChatMessage': function(author, messagePosted){
+  'addChatMessage': function(author, messagePosted, groupId){
   	var timeCreated = new Date();
   	var id = Random.id();
   	Chat.insert({
   		_id: id,
   		dateCreated: timeCreated,
+  		group: groupId,
   		user: author,
   		message: messagePosted
   	});
