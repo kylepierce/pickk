@@ -96,6 +96,7 @@ Meteor.publish('findSingle', function(id) {
 Meteor.publish('chatUser', function(id) {
   var singleGame = UserList.find({_id: id}, {fields: 
       {'profile.username': 1, 
+       'profile.avatar': 1,
        '_id': 1
     }});
   if(singleGame){
@@ -111,6 +112,7 @@ Meteor.publish('findSingleUsername', function(id) {
        'profile.coins': 1, 
        'profile.avatar': 1, 
        'pendingNotifications': 1,
+       'services': 1,
        '_id': 1
      }
   });

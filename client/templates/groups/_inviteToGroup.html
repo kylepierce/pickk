@@ -28,7 +28,7 @@
 			{{#each following}}
 				{{#with players this}}
 				{{#ionItem buttonRight=true avatar=true }}
-					<img src="{{profile.avatar}}">
+					<img src="{{userAvatar this._id}}">
 					{{profile.username}} 
 					{{> inviteButton}}
 					

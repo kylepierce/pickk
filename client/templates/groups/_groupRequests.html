@@ -2,11 +2,19 @@
 	{{#ionModal class="white-text-header" title="Accept Requests"}}
 		{{#ionList}}
 			{{#each user}}
-				{{#ionItem buttonRight=true avatar=true}}
-					{{#with userDetails this}}
+				{{#with userDetails this}}
+					{{#ionItem buttonRight=true avatar=true}}
+						<img src="{{profile.avatar}}">
 						{{profile.username}}
-					{{/with}}
-				{{/ionItem}}
+						<a class="button" data-action="accept"> 
+			        {{> ionIcon icon="plus"}}
+			      </a>
+			      
+			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
+			        {{> ionIcon icon="ios-close"}}
+			      </a>
+					{{/ionItem}}
+				{{/with}}
 			{{/each}}
 		{{/ionList}}
   {{/ionModal}}

@@ -16,9 +16,7 @@ Template.chatOverview.events({
 Template.chatOverview.helpers({
   group: function(){
     var groupId = Session.get('chatGroup')
-    console.log(groupId)
     var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
-    console.log(group)
     return group.groupId
   }
 });
@@ -28,7 +26,6 @@ Template.chatRoom.events({
     event.preventDefault();
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
-    console.log(groupId)
     var message = event.target.messageBox.value;
     
     if (message.length <= 2) {
@@ -51,11 +48,9 @@ Template.chatRoom.events({
 });
 
 Template.chatRoom.helpers({
-  message: function () {
-    // var groupId = Router.current().params._id
+  messages: function () {
     var groupId = Session.get('chatGroup')
     Meteor.subscribe("chatMessages", groupId)
-    console.log(groupId)
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
     return chat 
   },
@@ -80,7 +75,6 @@ Template._groupChats.helpers({
 Template._groupChats.events({
   'click .group-selector': function () {
     var id = this.id
-    console.log(id)
     Session.set('chatGroup', id)
     IonPopover.hide();
   },

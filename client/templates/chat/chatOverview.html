@@ -1,6 +1,4 @@
 <template name="chatOverview">
-<!--   {{#ionView }}
-    {{#ionContent}} -->
 <div class="bar bar-header bar-dark">
   {{#if group}}
    <h1 class="title white-text-header">{{group}} Chat</h1>
@@ -15,24 +13,12 @@
     <button class="button button-clear pull-right" data-ion-popover="_groupChats"> 
       {{> ionIcon icon="ios-people" }}
     </button>
-
-
   </div>
 
-{{> chatRoom}}
-<!--     {{/ionContent}}
-  {{/ionView}} -->
+  {{> chatRoom}}
 </template>
 
 <template name="chatRoom">
-<!--   {{#if group}}
-    {{#contentFor "headerTitle"}}
-   <h1 class="title white-text-header">{{group}} Chat</h1>
-  {{/contentFor}}
-
-  {{> chatHeader}}
-
-  {{/if}} -->
   {{#ionView }}
     {{#ionContent}}
     <form id="">
@@ -40,10 +26,11 @@
       <button class="col button col-100" type="submit">Send</button>
     </form>  
     {{#ionList}}
-      {{#each message}}
-        {{#ionItem class="chat"}}
-          {{#with user this.user}} {{profile.username}} {{/with}}<br>
-          <p class="common-question">{{this.message}}</p>
+      {{#each messages}}
+        {{#ionItem avatar=true}}
+          <img src="{{userAvatar this.user}}">
+          {{#with user this.user}} <h2>{{profile.username}}</h2> {{/with}}
+          <p>{{this.message}}</p>
         {{/ionItem}}
       {{/each}}
     {{/ionList}} 

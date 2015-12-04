@@ -333,6 +333,22 @@ Meteor.methods({
 		})
 	},
 
+	'createPendingNotification': function(id, type, message){
+		var timeCreated = new Date();
+		var id = Random.id();
+		UserList.update({_id: accountToFollow}, 
+		{$push:
+			{pendingNotifications: 
+				{
+				_id: id,
+				dateCreated: timeCreated,
+				type: type,
+				message: message,
+				}
+			}
+		});
+	},
+
 	// Users can create a group
 
 	'createGroup': function(groupId, groupName, secretStatus) {
@@ -400,6 +416,19 @@ Meteor.methods({
 				}
 			}
 		});
+	},
+
+	'acceptRequest': function(groupId, id){
+		Meteor.call('removeRequest', id, groupId)
+		Meteor.call('joinGroup', id, groupId)
+		// var group = Groups.findOne({_id: groupId});
+
+		// var message = "You have been added to " + group.groupId
+		// Meteor.call('createPendingNotification', );
+	},
+
+	'denyRequest': function(groupId, id){
+		Meteor.call('removeRequest', id, groupId)
 	},
 
 	'deleteGroup': function(groupId){

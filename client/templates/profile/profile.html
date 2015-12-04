@@ -22,7 +22,7 @@
     <div class="loading-wrapper">
     {{#with profile}}
      <div style="margin-left:20px;">         
-        <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{this.profile.avatar}}" class="circle-image">
+        <img style="float: left; margin-bottom: 25px; width: 75px;" src="{{userAvatar this._id}}" class="circle-image">
         <div style="float: left; margin:30px">
         <h4>{{this.profile.username}}</h4>
         {{{following}}} Following

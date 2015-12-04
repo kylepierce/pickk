@@ -1,22 +1,20 @@
-// Meteor.subscribe('profile');
+Template.registerHelper('userAvatar', function (userId) {
+  console.log(userId)
+  Meteor.subscribe('findSingleUsername', userId)
 
-Template.registerHelper('singleAvatar', function () {
-	// var currentUser = Meteor.user();
- //  var twitter = currentUser.services.twitter
- //  var facebook = currentUser.services.facebook
+  var user = UserList.findOne({_id: userId})
+  console.log(user.services.twitter)
 
-  return '/twitter_logo.png'
 
-  //  if (twitter !== "undefined"){
-  //     var photo = currentUser.services.twitter.profile_image_url
-  //     var cleanPhoto = photo.replace('_normal', '')
-  //     return cleanPhoto;
-
-  // } else if (facebook) {
-  //     avatar = "http://graph.facebook.com/" + currentUser.services.facebook.id + "/picture/?type=square&height=500&width=500";
-  //     console.log(avatar);
-  //     return avatar;
-
-  //  } else {return 'twitter_logo.png'}
-    
+  if (user.services.twitter !== undefined){
+    var photo = user.services.twitter.profile_image_url
+    var cleanPhoto = photo.replace('_normal', '')
+    return cleanPhoto;
+  } else if (user.services.facebook !== undefined) {
+    avatar = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=square&height=500&width=500";
+      console.log(avatar);
+    return avatar;
+  } else {
+    return "/anon.png"
+  }
 });

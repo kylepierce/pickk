@@ -20,21 +20,22 @@
  		<div class="search-bar-fix">
     {{> esInput index="users" placeholder="Friends Username..." }}
 		</div>
-    <ul>
-        {{#esEach index="users"}} 
-	        <li>		
-	          {{#ionItem buttonRight=true}}
-            <a href="{{pathFor route='user.show'}}">
-	            <!-- <img class="item-avatar" src="{{profile.avatar}}"> -->
-              <div width="40%">
-							{{profile.username}} 
-              </div>
-              </a>
-							{{> followButton}}
-	          {{/ionItem}}
-          </li>
+
+      {{#ionList}}
+        {{#esEach index="users"}}   
+            {{#ionItem buttonRight=true avatar=true}}
+            <a class="item-avatar" href="{{pathFor route='user.show'}}">
+              <img  src="{{userAvatar this._id}}">
+              {{profile.username}} 
+            </a>
+              {{> followButton}}
+            {{/ionItem}}
         {{/esEach}}
-    </ul>
+      {{/ionList}}
+
+            
+
+
 
 		{{#ifEsHasNoResults index="users" logic="OR" }}
 			<div class="no-results">No results found!</div>
