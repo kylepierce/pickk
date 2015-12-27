@@ -10,5 +10,13 @@ Template.weekLeaderboard.helpers({
 		if(diamonds == undefined){
 			return 0
 		}
+	},
+	'username': function(){
+		var twitter = this.services.twitter
+  	if(twitter){
+   	 return twitter.screenName
+  	} else {
+   	 return this.profile.username
+  	}
 	}
 }); 

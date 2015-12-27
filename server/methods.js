@@ -33,6 +33,37 @@ Meteor.methods({
 		}  
 	},
 
+
+	'coinMachine': function(){
+    var userIds = _.pluck(Meteor.users.find({}, {fields: {_id: 1, "profile.coins": 1, "profile.diamonds": 1}}).fetch(), '_id');
+
+		userIds.forEach(function(item){
+			var user = UserList.findOne({_id: item});
+			var coins = user.profile.coins
+			console.log(coins)
+			if (coins === 10000){
+				console.log("this user didnt play")
+			} 
+			if (coins < 10000){
+				var diamondExchange = coins / 2500
+				diamondExchange = Math.floor(diamondExchange)
+				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
+				Meteor.call('awardDiamondsCustom', item, diamondExchange,message)
+				Meteor.users.update( {_id: item}, {$set: { "profile.coins": 0}});
+				console.log(diamondExchange)
+			} 
+			if (coins > 10001){
+				var diamondExchange = coins / 7500
+				diamondExchange = Math.floor(diamondExchange)
+				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
+				Meteor.call('awardDiamondsCustom', item, diamondExchange,message)
+				Meteor.users.update( {_id: item}, {$set: { "profile.coins": 0}});
+				console.log(diamondExchange)
+
+			}
+		});
+	},
+
   'awardLeaders': function(user){
   	var liveGame = Games.findOne({live: true});
   	var selector = {_id: {$in: liveGame.users}}
@@ -71,19 +102,6 @@ Meteor.methods({
 			Meteor.call('awardDiamonds', fixed[8]._id, 12)
 			Meteor.call('awardDiamonds', fixed[9]._id, 10)
 		}  
-  },
-
-
-  'sendShareEmail': function(){
-  	// data = {name: "Kyle"}
-  	// console.log(Template)
-   // 	var html = Blaze.toHTML(Blaze.With( data, function() { return Template.my_template; }));
-   	Email.send({
-      from: "Pickk <welcome@pickk.co>",
-      to: "hi@kylepierce.co",
-      subject: "Introducing Diamonds",
-      html: "Jello!"
-    });
   },
 
   sendEmail: function (to, from, subject, text) {
@@ -140,7 +158,6 @@ Meteor.methods({
   		title: 'Update', 
   		text: message, 
   		badge: 1, 
-  		sound: 'default',
   		query: {}
   	});
   },
@@ -177,8 +194,7 @@ Meteor.methods({
 				{
 				'profile.username': username, 
 				'profile.firstName': firstName, 
-				'profile.lastName': lastName, 
-				'profile.avatar': '/twitter_logo.png'
+				'profile.lastName': lastName
 				} 
 		});
   },
@@ -239,6 +255,30 @@ Meteor.methods({
 		var id = Random.id();
 		var number = parseInt(number)
 		var message = "You Earned " + number + " Diamonds!"
+
+		Meteor.users.update( {_id: user}, {$inc: { "profile.diamonds": +number}});
+
+		Meteor.users.update( {_id: user}, 
+			{$push:
+				{pendingNotifications: 
+					{
+					_id: id,
+					type: "diamonds",
+					read: false,
+					notificationId: id,
+					dateCreated: timeCreated,
+					message: message 
+					}
+				}
+			}
+		)
+	},
+
+	'awardDiamondsCustom': function(user, number, message){
+		var timeCreated = new Date();
+		var id = Random.id();
+		var number = parseInt(number)
+		var message = message
 
 		Meteor.users.update( {_id: user}, {$inc: { "profile.diamonds": +number}});
 
@@ -501,6 +541,7 @@ Meteor.methods({
     	{'profile.username': 1, 
     	 'profile.coins': 1, 
     	 'profile.avatar': 1,
+    	 'services.twitter.screenName': 1,    
     	 '_id': 1}
     }).fetch();
 
@@ -513,6 +554,7 @@ Meteor.methods({
     	{'profile.username': 1, 
     	 'profile.diamonds': 1, 
     	 'profile.avatar': 1,
+    	 'services.twitter.screenName': 1, 
     	 '_id': 1}
     }).fetch();
 
@@ -764,7 +806,7 @@ Meteor.methods({
 
 		function awardPoints(user) {
 			// Adjust multiplier based on when selected.
-			var amount = 3
+			var amount = 10
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Nice Pickk on " + game.que + "! You Earned " + amount + " Diamonds!"
@@ -1171,7 +1213,7 @@ Meteor.methods({
 		QuestionList.update(questionId, {$push: {usersAnswered: user}});
 
 		//Give user a diamond for answering
-		Meteor.call('awardDiamonds', user, 1)
+		Meteor.call('awardDiamonds', user, 5)
 
 		//Add question and answer to the user's account.
 		Meteor.users.update( { _id: user}, {$push: {questionAnswered: { questionId: questionId, answered: answer}}});

@@ -24,6 +24,14 @@ Template.leaderboard.helpers({
 		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
 		var list = fixed.reverse()
 		return _.first(list, 25)
+	},
+	'username': function(){
+		var twitter = this.services.twitter
+  	if(twitter){
+   	 return twitter.screenName
+  	} else {
+   	 return this.profile.username
+  	}
 	}
 }); 
 

@@ -128,7 +128,7 @@ Meteor.publish('userList', function(id) {
 })
 
 Meteor.publish('adminUserList', function(id) {
-  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.coins": 1, questionAnswered: 1}});
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.coins": 1, "profile.diamonds": 1, questionAnswered: 1}});
 })
 
 Meteor.publish("userData", function () {

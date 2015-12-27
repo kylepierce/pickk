@@ -41,7 +41,6 @@ themeteorchef:bert
 themeteorchef:jquery-validation
 meteorhacks:ssr
 underscore
-npm-container
 viloma:user-feedback
 raix:push
 astronomerio:core
@@ -53,7 +52,6 @@ gwendall:template-animations
 natestrauser:animate-css
 dsyko:hopscotch
 d3js:d3
-meteorhacks:npm
 flyandi:reactive-countdown
 juliancwirko:s-alert
 juliancwirko:s-alert-stackslide
@@ -72,3 +70,4 @@ gwendall:meteoric-connection-status
 blaze
 msavin:fetcher
 jquery-waypoints
+gfk:mailgun-api

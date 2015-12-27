@@ -1,10 +1,7 @@
 Template.registerHelper('userAvatar', function (userId) {
-  console.log(userId)
   Meteor.subscribe('findSingleUsername', userId)
 
   var user = UserList.findOne({_id: userId})
-  console.log(user.services.twitter)
-
 
   if (user.services.twitter !== undefined){
     var photo = user.services.twitter.profile_image_url
@@ -16,5 +13,14 @@ Template.registerHelper('userAvatar', function (userId) {
     return avatar;
   } else {
     return "/anon.png"
+  }
+});
+
+Template.registerHelper('username', function (user) {
+  var twitter = this.services.twitter
+  if(twitter){
+    return twitter.screenName
+  } else {
+    return this.profile.username
   }
 });

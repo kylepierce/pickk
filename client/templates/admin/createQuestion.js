@@ -1405,7 +1405,7 @@ Template.createQuestion.events({
 		else if (down == 6){
 			if(time < 5){
 				question = "Kick off..."
-				questionList("Touchback", "0-15 Return",  "15-30 Return", "30+", "Fumble", "Touchdown")
+				questionList("Touchback", "0-20 Return",  "20-40 Return", "41+", "Fumble", "Touchdown")
 				multiplier(
 					1.1, 1.5, 
 					2.4, 3.42, 

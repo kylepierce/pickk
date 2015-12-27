@@ -39,7 +39,7 @@ var tour = {
           placement: "top",
           multipage: true,
           onNext: function() {
-            window.location = "dashboard"
+            window.location = "/"
           },
           showNextButton: false,
         },

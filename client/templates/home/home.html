@@ -55,14 +55,15 @@
 
 				<span style="text-align: center;">
 					<h4>Free Pickk!</h4>
+					<span style="text-align: center;">
+						<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
+					</span>
 					
 				</span>
 				{{#each questions}}
 					{{> binaryChoice}}
 				{{/each}}
-				<span style="text-align: center;">
-					<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
-				</span>
+
 				 
 			{{else}}
 				{{> commercialQuestion}}
@@ -71,7 +72,7 @@
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">Commercial Break!</h5>	
-			<p>Swipe Left to Chat!</p>
+			<p class="next-play">Join the Conversation by Tapping <br> the {{> ionIcon icon="ios-chatboxes"}} Button</p>
 			{{/if}}
 
 	{{else}}
@@ -82,6 +83,7 @@
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">Waiting for the play to end...</h5>
 			{{#with lastPlay}}
+			<p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
 				<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
 			{{/with}}
 
@@ -114,7 +116,7 @@
 			{{#if live}}
 				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 			{{else}}
-				<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 			{{/if }}
 
 		</form>
@@ -141,12 +143,13 @@
 			{{#if live}}
 				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 			{{else}}
-				<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 			{{/if }}
 		</form>
 	</div>
 	</div>
 	{{/each}}
+	{{showAds}}
 </template>
 
 <template name="binaryChoice">
@@ -180,7 +183,7 @@
 			{{#if live}}
 			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 			{{else}}
-			<button class="button play-option button-assertive center" disabled >Waiting to</button>
+			<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 			{{/if }}
 		</form>
 	</li>
@@ -242,7 +245,7 @@
 						{{#if live}}
 							<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 						{{else}}
-							<button class="button play-option button-assertive center" disabled >Waiting to reconnect</button>
+							<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 						{{/if }}
 					</form>
 				</li>

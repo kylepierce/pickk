@@ -11,6 +11,25 @@ Meteor.subscribe('userData')
 //   });
 // });
 
+Meteor.startup(function () {
+  if (Meteor.isCordova) {
+    if (AdMob) {
+      AdMob.createBanner( {
+        adId: 'ca-app-pub-4862520546869067/2500441433',
+        position: AdMob.AD_POSITION.BOTTOM_CENTER,
+        isTesting: false,
+        autoShow: true,
+        success: function() {
+          console.log("Received ad");
+        },
+        error: function() {
+          console.log("No ad received");
+        }
+      });
+    } 
+  }
+});
+
 Template.home.onRendered( function() {
 //   $( "svg" ).delay( 750 ).fadeIn();	
 
@@ -353,6 +372,23 @@ Template.commercialQuestion.helpers({
         {active: true, commercial: true,
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1}, limit: 1});
+  },
+  'showAds': function(event, template){
+
+    Meteor.defer(function () {
+    AdMob.prepareInterstitial({
+      adId:'ca-app-pub-4862520546869067/3340412630', 
+      autoShow:true,
+      success: function() {
+        console.log("Received ad");
+      },
+      error: function() {
+        console.log("No ad received");
+      }
+    });
+    return AdMob.showInterstitial()
+  });
+    return "";
   },
   'live': function(){
     var connection = Meteor.status()

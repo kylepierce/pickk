@@ -4,7 +4,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'kyle@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.1'
+  version: '0.0.5'
 });
 
 App.icons({

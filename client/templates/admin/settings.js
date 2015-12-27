@@ -66,5 +66,10 @@ Template.adminSettings.events({
         if(confirm("Are you sure?")) {
             Meteor.call('updateAllDiamonds', user)
         }
+    },
+    'click [data-action=diamondMachine]': function(){
+        if(confirm("Are you sure?")) {
+           Meteor.call('coinMachine')
+        }
     }
 });

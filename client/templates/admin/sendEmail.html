@@ -1,0 +1,41 @@
+<template name="sendEmail">
+	<div class="container">	
+	  {{#ionView}}
+   		 {{#ionContent}}	
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">End Email</h1>
+   		 {{/contentFor}}
+		
+
+			<form>
+				<label>Subject:
+				<input type="text" name="subject">
+				</label>
+				<label>Text:
+				<textarea type="text" name="messageBox" rows="3" placeholder="Text only" id="messageBox"></textarea>
+				</label>
+				<label>HTML:
+				<textarea type="text" name="htmlMessageBox" rows="3" placeholder="HTML" id="htmlMessageBox"></textarea>
+				</label>
+				<input type="submit">
+			</form>
+
+<button data-action="addToList" class="button button-large button-positive">Add All to List</button>
+
+<button data-action="listAll" class="button button-large button-positive">List All Members</button>
+
+		  {{/ionContent}}
+	  {{/ionView}}
+    </div>
+</template>

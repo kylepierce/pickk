@@ -1,3 +1,4 @@
 {
-	"mailgun": "0.5.0"
+	"mailgun": "0.5.0",
+	"cordova-plugin-admobpro": "2.9.9"
 }

@@ -29,7 +29,7 @@
       {{#each messages}}
         {{#ionItem avatar=true}}
           <img src="{{userAvatar this.user}}">
-          {{#with user this.user}} <h2>{{profile.username}}</h2> {{/with}}
+          {{#with user this.user}} <h2>{{username this}}</h2> {{/with}}
           <p>{{this.message}}</p>
         {{/ionItem}}
       {{/each}}

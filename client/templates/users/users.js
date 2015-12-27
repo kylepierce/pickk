@@ -23,6 +23,14 @@ Template.userProfile.helpers({
     var user = UserList.findOne({_id: userId});
     return user 
   },
+  username: function(){
+    var twitter = this.services.twitter
+    if(twitter){
+      return twitter.screenName
+    } else {
+      return this.profile.username
+    }
+  },
   group: function() {
     return this.profile.groups
   }, 
