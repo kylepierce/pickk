@@ -12,6 +12,11 @@
   text-align: center;
 }
 
+.did-you {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
 .animated.fast {
   -webkit-animation-duration: .4s;
   animation-duration: .4s;
@@ -92,6 +97,10 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.popup-body {
+	text-align: center;
 }
 
 .s-alert-info{

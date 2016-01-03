@@ -414,7 +414,7 @@ Template.createQuestion.events({
 // Second Down with sack option
 		else if(down == 2 && time == 2){
 			question = "Second Down ..."
-			questionList("Negative Yardage", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass", "6-20 Yard Pass", "21+ Gain (Run or Pass)")
+			questionList("Negative Yards", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass/Incomplete", "6-20 Yard Pass", "21+ Gain (Run or Pass)")
 
 			// Inches
 			if(yards == 1){
@@ -1405,17 +1405,17 @@ Template.createQuestion.events({
 		else if (down == 6){
 			if(time < 5){
 				question = "Kick off..."
-				questionList("Touchback", "0-20 Return",  "20-40 Return", "41+", "Fumble", "Touchdown")
+				questionList("Touchback", "0-25 Return",  "26-45 Return", "46+", "Fumble", "Touchdown")
 				multiplier(
 					1.1, 1.5, 
 					2.4, 3.42, 
 					5.2, 9.81, 
-					8.9, 11.61, 
-					2.2, 4.81, 
+					8.9, 15.61, 
+					12.2, 24.81, 
 					29.9, 42.61)
 			} else if (time == 5) {
 				question = "Onside Kick..."
-				questionList("Touchback", "0-5 Return",  "10+ Return", "Penalty", "Fumble Recovered by Reciving Team", "Kicking Team Recovers")
+				questionList("Touchback", "5-10 Return",  "11+ Return", "Penalty", "Fumble Recovered by Reciving Team", "Kicking Team Recovers")
 				multiplier(
 					1.1, 1.5, 
 					2.4, 3.42, 

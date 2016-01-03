@@ -40,6 +40,7 @@ Meteor.methods({
 		userIds.forEach(function(item){
 			var user = UserList.findOne({_id: item});
 			var coins = user.profile.coins
+			var exchange = "exchange"
 			console.log(coins)
 			if (coins === 10000){
 				console.log("this user didnt play")
@@ -48,18 +49,15 @@ Meteor.methods({
 				var diamondExchange = coins / 2500
 				diamondExchange = Math.floor(diamondExchange)
 				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
-				Meteor.call('awardDiamondsCustom', item, diamondExchange,message)
+				Meteor.call('awardDiamondsCustom', item, diamondExchange, message, exchange)
 				Meteor.users.update( {_id: item}, {$set: { "profile.coins": 0}});
-				console.log(diamondExchange)
 			} 
 			if (coins > 10001){
 				var diamondExchange = coins / 7500
 				diamondExchange = Math.floor(diamondExchange)
 				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
-				Meteor.call('awardDiamondsCustom', item, diamondExchange,message)
+				Meteor.call('awardDiamondsCustom', item, diamondExchange, message, exchange)
 				Meteor.users.update( {_id: item}, {$set: { "profile.coins": 0}});
-				console.log(diamondExchange)
-
 			}
 		});
 	},
@@ -89,11 +87,15 @@ Meteor.methods({
 		if(role === "admin"){
 			console.log('awarding coins')
 			awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
-			Meteor.call('awardDiamonds', fixed[0]._id, 50)
+
+			Meteor.call('awardDiamondsCustom', fixed[0]._id, 50, '<img style="max-width:100%;" src="/1st.png"> <br>Congrats On Winning First Place Here is 50 Diamonds!', "leader")
+
 			awardTrophies('aDJHkmcQKwgnpbnEk', fixed[1]._id)
-			Meteor.call('awardDiamonds', fixed[1]._id, 40)
+			Meteor.call('awardDiamondsCustom', fixed[1]._id, 40, '<img style="max-width:100%;" src="/2nd.png"> <br>Congrats On Winning Second Place Here is 20 Diamonds!', "leader")
+
 			awardTrophies('YxG4SKtrfT9j8Abdk', fixed[2]._id)
-			Meteor.call('awardDiamonds', fixed[2]._id, 30)
+			Meteor.call('awardDiamondsCustom', fixed[2]._id, 30, '<img style="max-width:100%;" src="/3rd.png"> <br>Congrats On Winning Third Place Here is 30 Diamonds!', "leader")
+
 			Meteor.call('awardDiamonds', fixed[3]._id, 25)
 			Meteor.call('awardDiamonds', fixed[4]._id, 22)
 			Meteor.call('awardDiamonds', fixed[5]._id, 20)
@@ -274,7 +276,7 @@ Meteor.methods({
 		)
 	},
 
-	'awardDiamondsCustom': function(user, number, message){
+	'awardDiamondsCustom': function(user, number, message, tag){
 		var timeCreated = new Date();
 		var id = Random.id();
 		var number = parseInt(number)
@@ -288,6 +290,7 @@ Meteor.methods({
 					{
 					_id: id,
 					type: "diamonds",
+					tag: tag,
 					read: false,
 					notificationId: id,
 					dateCreated: timeCreated,

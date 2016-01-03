@@ -119,21 +119,50 @@ Template.home.helpers({
     var notifications = userData.pendingNotifications
 
     notifications.forEach(function (post) {
+      var id = post._id
+      var message = post.message  
       if(post.type === "score" && post.read === false ){
-        var id = post._id
-        var message = post.message  
         Meteor.call('readNotification', id);
          
         sAlert.info(message  , {effect: 'stackslide', html: true});
 
-      } else if(post.type === "diamonds" && post.read === false ){
-        var id = post._id
-        var message = post.message  
-        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'
+      } else if(post.type === "diamonds" && post.tag == null && post.read === false ){
+        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'        
         Meteor.call('readNotification', id);
          
         sAlert.warning(message, {effect: 'stackslide', html: true});
 
+      } else if(post.tag == "leader"){
+        IonPopup.show({
+          title: 'Leaderboard Winnings!',
+          template: message,
+          buttons: [{
+            text: 'Got It!',
+            type: 'button-positive',
+            onTap: function() {
+              Meteor.call('readNotification', id);
+              $('body').removeClass('popup-open');
+              $('.backdrop').remove();
+              Blaze.remove(this.view);
+            }
+          }]
+        });
+      } else if(post.tag == "exchange"){
+        message = '<img style="max-width:100%;" src="/storeowner.png">' + message 
+        IonPopup.show({
+          title: 'Diamond Exchange',
+          template: message,
+          buttons: [{
+            text: 'Got It!',
+            type: 'button-positive',
+            onTap: function() {
+              Meteor.call('readNotification', id);
+              $('body').removeClass('popup-open');
+              $('.backdrop').remove();
+              Blaze.remove(this.view);
+            }
+          }]
+        });
       }
     });
   }
@@ -341,7 +370,24 @@ Template.questionCard.helpers({
 		} else {
 			return false
 		}
-	}
+	},
+  'commercialRandom': function(){
+    var random = Math.floor((Math.random() * 6) + 1)
+    if (random == 1){
+      return '<p class="did-you next-play">Join the Conversation by Tapping <br> the <i class="ion-ios-chatboxes"></i> Button</p>'
+    } else if (random == 2) {
+      return '<p class="did-you next-play">Playing With Friends? Create a Group!</p>'
+    } else if (random == 3) {
+      return '<p class="did-you next-play">Follow @GetPickk on Twitter, Instagram and Facebook</p>'
+    } else if (random == 4) {
+      return '<p class="did-you next-play"><b>Have a question?</b><br> Check out our common questions in our side menu</p>'
+    } else if (random == 5) {
+      return '<p class="did-you next-play"><b>What do diamonds do?</b><br> Diamonds are how we track who performed the best in a week. Once the week is over the diamond leaders are given prizes.</p>'
+    } else if (random == 6) {
+      return '<p class="did-you next-play"><b>What do Coins do?</b><br> Coins are how we track who performed the best in a game. Once the game is over the coins are exchanged into diamonds.</p>'
+    } 
+
+  }
 });
 
 Template.activeQuestion.helpers({
@@ -388,6 +434,25 @@ Template.commercialQuestion.helpers({
     });
     return AdMob.showInterstitial()
   });
+    return "";
+  },
+  'showAdsRandom': function(event, template){
+    var random = Math.floor((Math.random() * 2) + 1)
+    if (random == 1){
+      Meteor.defer(function () {
+      AdMob.prepareInterstitial({
+        adId:'ca-app-pub-4862520546869067/3340412630', 
+        autoShow:true,
+        success: function() {
+          console.log("Received ad");
+        },
+        error: function() {
+          console.log("No ad received");
+        }
+      });
+      return AdMob.showInterstitial()
+    });
+  }
     return "";
   },
   'live': function(){

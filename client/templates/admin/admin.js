@@ -40,9 +40,6 @@ Template.activeQuestionList.helpers({
 // Show pending questions
 Template.pendingQuestionList.helpers({
 	'questions': function(){
-		var game = Games.findOne({live: true});
-		var gameId = game._id
-		console.log(gameId)
 		var questions = QuestionList.find({active: null}, {sort: {dateCreated: 1}}).fetch();
 		console.log(questions)
 		return questions

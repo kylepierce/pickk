@@ -15,21 +15,22 @@
     </button>
   </div>
 
-  {{> chatRoom}}
+  {{> chatRoom}} 
 </template>
 
 <template name="chatRoom">
   {{#ionView }}
     {{#ionContent}}
     <form id="">
-      <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
+      <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="{{randomMessage}}" id="messageBox"></textarea>
       <button class="col button col-100" type="submit">Send</button>
-    </form>  
+    </form>   
     {{#ionList}}
       {{#each messages}}
         {{#ionItem avatar=true}}
-          <img src="{{userAvatar this.user}}">
-          {{#with user this.user}} <h2>{{username this}}</h2> {{/with}}
+          {{#with user this.user}}
+          <img src="{{chatAvatar this}}">
+          <h2>{{chatUser this._id}}</h2> {{/with}}
           <p>{{this.message}}</p>
         {{/ionItem}}
       {{/each}}

@@ -42,6 +42,7 @@
 		{{#if gameQuestion}}
 			{{#each gameQuestions}}
 			  {{> predictionQuestions}}
+			  {{showAdsRandom}}
 			{{/each}}
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
@@ -72,7 +73,7 @@
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">Commercial Break!</h5>	
-			<p class="next-play">Join the Conversation by Tapping <br> the {{> ionIcon icon="ios-chatboxes"}} Button</p>
+			{{{commercialRandom}}}
 			{{/if}}
 
 	{{else}}

@@ -149,7 +149,7 @@ Template.settings.events({
 			if (newAccount == "Finish Profile"){
 				Router.go('/onboarding');
 			} else {
-				Router.go('/dashboard');
+				Router.go('/');
 			}
 			
 		}

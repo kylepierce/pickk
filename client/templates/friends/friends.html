@@ -24,7 +24,7 @@
       {{#ionList}}
         {{#esEach index="users"}}   
             {{#ionItem buttonRight=true avatar=true}}
-            <a class="item-avatar" href="{{pathFor route='user.show'}}">
+            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
               <img  src="{{userAvatar this._id}}">
               {{profile.username}} 
             </a>

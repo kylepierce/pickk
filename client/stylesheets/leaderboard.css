@@ -34,3 +34,7 @@ a {
 .ion-slide {
     overflow: scroll;
 }
+
+.avatar-fix {
+	padding-left: 0;
+}

@@ -18,7 +18,7 @@ Template.chatOverview.helpers({
     var groupId = Session.get('chatGroup')
     var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
     return group.groupId
-  }
+  } 
 });
 
 Template.chatRoom.events({
@@ -55,10 +55,47 @@ Template.chatRoom.helpers({
     return chat 
   },
   user: function(id){
-    Meteor.subscribe('chatUser', id)
+    Meteor.subscribe('findSingleUsername', id)
     var user = UserList.findOne({_id: id});
     return user
   },
+  chatUser: function(){ 
+    var twitter = this.services.twitter
+    if(twitter){
+      return twitter.screenName
+    } else {
+      return this.profile.username
+    }
+  },
+  chatAvatar: function(user){
+  if (user.services.twitter !== undefined){
+    var photo = user.services.twitter.profile_image_url
+    var cleanPhoto = photo.replace('_normal', '')
+    return cleanPhoto;
+  } else if (user.services.facebook !== undefined) {
+    avatar = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=square&height=500&width=500";
+    return avatar;
+  } else {
+    return "/anon.png"
+  }
+  },
+  userCoins: function(){
+    return this.profile.coins
+  },
+  'randomMessage': function(){
+    var random = Math.floor((Math.random() * 5) + 1)
+    if (random == 1){
+      return 'Share your score'
+    } else if (random == 2) {
+      return 'Share your prediction'
+    } else if (random == 3) {
+      return 'Say Hello :D'
+    } else if (random == 4) {
+      return 'Who is your favorite team?'
+    } else if (random == 5) {
+      return 'Who will win?'
+    }
+  }
 });
 
 Template._groupChats.helpers({
