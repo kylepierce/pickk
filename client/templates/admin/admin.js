@@ -1,5 +1,3 @@
-Meteor.subscribe('questions')
-
 // map multiple combinations to the same callback
 Mousetrap.bind('d', function() {
 	$('[data-action=deactivate]').click()

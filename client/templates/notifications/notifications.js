@@ -28,6 +28,7 @@ Template.notifications.helpers({
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
+		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
 	}
 });

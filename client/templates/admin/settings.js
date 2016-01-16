@@ -1,6 +1,3 @@
-Meteor.subscribe("leaderboard")
-Meteor.subscribe("questions")
-
 var chartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
 

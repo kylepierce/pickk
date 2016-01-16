@@ -1,6 +1,3 @@
-Meteor.subscribe('groups')
-Meteor.subscribe('trophies')
-
 Template.editUser.created = function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('profile', Router.current().params._id);

@@ -1,4 +1,4 @@
-Meteor.subscribe('userData')
+
 // Display active cards
 
 

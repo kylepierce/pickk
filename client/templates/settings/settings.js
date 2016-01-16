@@ -1,5 +1,3 @@
-Meteor.subscribe('profileUpdate');
-
 Template.settings.helpers({
 	username: function () {
 		var currentUser = Meteor.user();

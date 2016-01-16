@@ -1,5 +1,3 @@
-Meteor.subscribe('trophy')
-
 Template.trophies.events({
 	'submit form': function (event, template) {
 		// Get the value of the input box

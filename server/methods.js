@@ -243,8 +243,8 @@ Meteor.methods({
 	},
 
 	'readNotification': function(notifyId){
-		var user = Meteor.userId()
-		UserList.update({_id: user}, 
+		var userId = Meteor.userId()
+		UserList.update({_id: userId}, 
 			{$pull: 
 				{pendingNotifications: 
 					{_id: notifyId}
@@ -841,7 +841,7 @@ Meteor.methods({
 				}
 			)
 
-			// Update users coins
+			// Update users diamonds
 			Meteor.users.update( {_id: user.userID}, 
 				{$inc: { "profile.diamonds": amount},
 			})

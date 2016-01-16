@@ -76,6 +76,19 @@ Meteor.publish('allQuestions', function(game){
 	return this.ready();
 })
 
+Meteor.publish('everyQuestions', function(){
+  var allQuestions = QuestionList.find({});
+  if(allQuestions){
+    return allQuestions
+  }
+  return this.ready();
+})
+
+Meteor.publish('questionsUserAnswered', function(user){
+  var selector = {usersAnswered: {$in: [user]}}
+  return QuestionList.find(selector);
+})
+
 Meteor.publish('singleGame', function(id){
   var singleGame = QuestionList.find({gameId: id}, {sort: {dateCreated: 1}});
   if(singleGame){
@@ -168,6 +181,10 @@ Meteor.publish('findUserGroups', function(id) {
 
 Meteor.publish('groups', function() {
   return Groups.find({ });
+});
+
+Meteor.publish('singleGroup', function(groupId) {
+  return Groups.find({_id: groupId});
 });
 
 Meteor.publish('games', function() {

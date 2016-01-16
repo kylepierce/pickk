@@ -1,5 +1,3 @@
-Meteor.subscribe('invitees');
-
 Template.invites.helpers({
 	invite: function () {
 	return Invites.find({ invited: false }, {sort: {"requested": 1}}, {fields: {"_id": 1, "inviteNumber": 1, "requested": 1, "email": 1, "invited": 1}}).fetch()

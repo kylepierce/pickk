@@ -1,5 +1,3 @@
-Meteor.subscribe('games')
-
 Template.singleGame.created = function () {
   this.autorun(function () {
     this.subscription = Meteor.subscribe('games', Router.current().params._id);

@@ -1,5 +1,3 @@
-Meteor.subscribe('groups');
-
 Template.inviteToGroup.helpers({
   following: function () {
     var user = Meteor.user();

@@ -1,6 +1,3 @@
-Meteor.subscribe('groups')
-Meteor.subscribe('trophies')
-
 Template.myProfile.created = function () {
   this.autorun(function () {
     var userId = Router.current().params._id
