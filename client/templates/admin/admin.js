@@ -46,6 +46,11 @@ Template.pendingQuestionList.helpers({
 		if(this.binaryChoice == true){
 			return true
 		}
+	},
+	'commercial': function(){
+		if(this.commercial == true){
+			return true
+		}
 	}
 });
 
@@ -133,6 +138,20 @@ Template.pendingQuestionList.events({
 		var questionId = this._id;
 
 		Meteor.call('modifyBinaryQuestionStatus', questionId, "option2");
+	},
+
+	'click [data-action=twoOption1]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyTwoOptionQuestionStatus', questionId, "option1");
+	},
+
+	'click [data-action=twoOption2]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyTwoOptionQuestionStatus', questionId, "option2");
 	},
 
 	'click [data-action=option1]': function() {

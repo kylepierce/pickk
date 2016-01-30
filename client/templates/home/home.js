@@ -178,7 +178,24 @@ Template.activeQuestion.animations({
         $( "#normalCard" ).css("display", "")
       }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 300 // Delay before inserted items animate
+      delay: 200 // Delay before inserted items animate
+    },
+    animateInitial: true, // animate the elements already rendered
+    animateInitialStep: 200, // Step between animations for each initial item
+    animateInitialDelay: 500 // Delay before the initial items animate
+  }
+});
+
+Template.twoOptionQuestions.animations({
+  ".container-item": {
+    container: ".container", // container of the ".item" elements
+    insert: {
+      class: "animated fast slideInLeft", // class applied to inserted elements
+      before: function(attrs, element, template) {
+        $( "#normalCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {}, // callback after an element gets inserted
+      delay: 200 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -195,7 +212,7 @@ Template.commercialQuestion.animations({
         $( "#commercialCard" ).css("display", "")
       }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 500 // Delay before inserted items animate
+      delay: 200 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -212,7 +229,7 @@ Template.predictionQuestions.animations({
         $( "#gameCard" ).css("display", "")
       }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
-      delay: 500 // Delay before inserted items animate
+      delay: 200 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -232,7 +249,7 @@ Template.binaryChoice.animations({
       after: function(attrs, element, template) {
         
       }, // callback after an element gets inserted
-      delay: 500 // Delay before inserted items animate
+      delay: 200 // Delay before inserted items animate
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
@@ -241,15 +258,19 @@ Template.binaryChoice.animations({
 });
 
 Template.questionCard.helpers({
-	'live': function(){
-		Meteor.subscribe('games')
+	'notLive': function(){
 		var game = Games.findOne({live: true});
 		if(game == undefined){
 			return true
-		} else {
-			return false
-		}
+		} 
 	},
+
+  'live': function(){
+    var game = Games.findOne({live: true});
+    if(game.live == true){
+      return true
+    } 
+  },
   gameQuestion: function(){
     var currentUser = Meteor.userId();
     var active = QuestionList.find(
@@ -312,18 +333,43 @@ Template.questionCard.helpers({
     }
   },
 
-	'active': function(){
-		var currentUser = Meteor.userId();
-		var active = QuestionList.find(
-				{active: true, commercial: false,
-				usersAnswered: {$nin: [currentUser]}}, 
-				{sort: {dateCreated: 1}}).fetch();
-		if(active.length >= 1){
-			return true
-		} else {
-			return false
-		}
-	},
+  'active': function(game){
+    var game = Games.findOne({live: true});
+    if(game.commercial == false){
+        console.log("I work!")
+        return true
+    } else {
+      return false
+    }
+  },
+
+  'multiOptions': function(){
+    var currentUser = Meteor.userId();
+    var active = QuestionList.find(
+        {active: true, commercial: false,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}}).fetch();
+    if(active.length >= 1){
+      console.log("There are some questions")
+      return true
+    } 
+  },
+
+  'ingameBinary': function(){
+    var currentUser = Meteor.userId();
+    var active = QuestionList.find(
+        {active: true, commercial: false, binaryChoice: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}}).fetch();
+    console.log(active)
+    if(active.length >= 1){
+      var first = active[0]
+      return first
+    } else {
+      return false
+    }
+  },
+
   'commercialQuestions': function(){
     
     var currentUser = Meteor.userId();
@@ -361,14 +407,37 @@ Template.questionCard.helpers({
         {sort: {dateCreated: 1}, limit: 1});
   },
 
+  'activeQuestions': function(){
+    var currentUser = Meteor.userId();
+    return QuestionList.find(
+        {active: true, commercial: false,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1});
+  },
+
+  'twoOption': function(){
+    var currentUser = Meteor.userId();
+    return QuestionList.find(
+        {active: true, commercial: false, binaryChoice: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1});
+  },
+
+  'multiAnswerCommQuestions': function(){
+    var currentUser = Meteor.userId();
+
+    return QuestionList.find(
+        {active: true, commercial: true,
+        usersAnswered: {$nin: [currentUser]}}, 
+        {sort: {dateCreated: 1}, limit: 1});
+  },
+
 	'commercial': function(game){
 		Meteor.subscribe('games')
 		var game = Games.findOne({live: true});
 
 		if(game.commercial == true){
 				return true
-		} else {
-			return false
 		}
 	},
   'commercialRandom': function(){
@@ -391,13 +460,6 @@ Template.questionCard.helpers({
 });
 
 Template.activeQuestion.helpers({
-	'questions': function(){
-		var currentUser = Meteor.userId();
-		return QuestionList.find(
-				{active: true, commercial: false,
-				usersAnswered: {$nin: [currentUser]}}, 
-				{sort: {dateCreated: 1,}});
-	},
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
@@ -411,14 +473,6 @@ Template.activeQuestion.helpers({
 });
 
 Template.commercialQuestion.helpers({
-    'questions': function(){
-    var currentUser = Meteor.userId();
-
-    return QuestionList.find(
-        {active: true, commercial: true,
-        usersAnswered: {$nin: [currentUser]}}, 
-        {sort: {dateCreated: 1}, limit: 1});
-  },
   'showAds': function(event, template){
 
     Meteor.defer(function () {
@@ -537,6 +591,45 @@ Template.binaryChoice.events({
 });
 
 Template.binaryChoice.helpers({
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+    console.log(status)
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
+  }
+});
+
+Template.twoOptionQuestions.events({
+  'click input:radio[name=binary]':function(event, template) {
+    $("#submit-binary").prop("disabled", false)
+    $("#submit-binary").addClass('button-balanced');
+    $("input:radio[name=binary]").addClass('border');
+  },
+
+  'click #submit-response': function(event, template){
+    var answer = template.find('input:radio[name=binary]:checked').value;
+    var currentUser = Meteor.userId();
+    var questionId = this._id;
+    var que = this.que 
+    var wager = template.find('input:radio[name=wager]:checked').value;
+
+    // Move the card off screen
+    $( ".container-item" ).removeClass( "slideInLeft" )
+    $( ".container-item" ).addClass( "slideOutRight" )
+
+    console.log(que + " " + answer + " " + wager)
+    // Wait until the question card has disapeared
+    Meteor.setTimeout(function(){
+      Meteor.call('twoOptionQuestionAnswered', currentUser, questionId, answer, wager, que)
+    }, 250);
+  },
+});
+
+Template.twoOptionQuestions.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status

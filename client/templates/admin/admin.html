@@ -65,24 +65,26 @@
 	      <option class="slider-5-options" value="5" label="Overtime"></option>
 		<br>
 
-<span style="clear: both; float: left; margin-top: 20px;">Game Info</span>
+	<span style="clear: both; float: left; margin-top: 20px;">Game Info</span>
 
-		<select style="clear:both;" id="gameList">
-			{{#each game}}
-				<option value="{{_id}}">{{name}}</option>
-			{{/each}}
-		</select>
+			<select style="clear:both;" id="gameList">
+				{{#each game}}
+					<option value="{{_id}}">{{name}}</option>
+				{{/each}}
+			</select>
 
-		{{#if commercial}}
-			<button class='col col-33 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">End Commercial Break </button>
-		{{else}}
-			<button class='col col-33 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">Start of Commercial Break </button>
-		{{/if}}
+			{{#if commercial}}
+				<button class='col col-33 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">End Commercial Break </button>
+			{{else}}
+				<button class='col col-33 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">Start of Commercial Break </button>
+			{{/if}}
 
-			<button class='col col-33 wager-box button button-royal' style="float: left;" data-action="thisDrive">Create "This Drive" Question </button>
-			
-			<button class='col col-33 wager-box button button-energized' style="float: left;" data-action="situationalQuestion"> Situational Question </button>
-<br>
+				<button class='col col-33 wager-box button button-royal' style="float: left;" data-action="thisDrive">Create "This Drive" Question </button>
+				
+				<button class='col col-33 wager-box button button-energized' style="float: left;" data-action="situationalQuestion"> Situational Question </button>
+				<button class='col col-33 wager-box button button-calm' style="float: left;"  data-ion-modal="_situational">Custom Question!</button>
+				<button class='col col-33 wager-box button button-calm' style="float: left;"  data-ion-modal="_twoOption">Two Options</button>
+			<br>
 		<button class='full' style="margin-top: 25px;" data-action="createQuestion">Create Question</button>
 
 	</div>
@@ -117,11 +119,17 @@
 				<button data-action="reactivate" class="yes col col-50 button button-balanced">Reactivate question</button>
 			</div>
 			{{#if binary}}
+				{{#if commerical}}
 			<div style="clear:both;" class="row">
 					<button data-action="true" class="col col-50 wager-box">{{options.option1.title}}</button>
 					<button data-action="false" class="col col-50 wager-box">{{options.option2.title}}</button>
 			</div>
-
+				{{else}}
+					<div style="clear:both;" class="row">
+					<button data-action="twoOption1" class="col col-50 wager-box">{{options.option1.title}}</button>
+					<button data-action="twoOption2" class="col col-50 wager-box">{{options.option2.title}}</button>
+			</div>
+				{{/if}}
 			{{else}}
 
 			<div style="clear:both;" class="row">
@@ -172,9 +180,7 @@
 		{{#each questions}}
 			<div class="item">
 				<li class="{{_id}}"> {{que}} <br>{{dateCreated}} <br> {{play}}</li> 
-<!-- 				<button style="clear: both;" class="button right-button" data-ion-popover="_adminPopover">
-		        {{> ionIcon icon="more"}}
-		    </button> -->
+
 		    <div style="margin-bottom: 10px;">
 			    <div class="row">
 				    <button class="col col-50 button " data-action="editOption1">{{options.option1.title}}</button>

@@ -1,11 +1,11 @@
-// Template.chatRoom.created = function () {
-//   this.autorun(function () {
-//     var groupId = Router.current().params._id
-//     console.log(groupId)
-//     this.subscription = Meteor.subscribe('groups', groupId) && 
-//     Meteor.subscribe('findUserGroups', groupId)
-//   }.bind(this));
-// };
+Template.chatRoom.created = function () {
+  this.autorun(function () {
+    var groupId = Router.current().params._id
+    console.log(groupId)
+    this.subscription = Meteor.subscribe('groups', groupId) && 
+    Meteor.subscribe('findUserGroups', groupId)
+  }.bind(this));
+};
 
 Template.chatOverview.events({
   'click #all-chats': function(){
@@ -52,6 +52,7 @@ Template.chatRoom.helpers({
     var groupId = Session.get('chatGroup')
     Meteor.subscribe("chatMessages", groupId)
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
+    console.log(chat)
     return chat 
   },
   user: function(id){

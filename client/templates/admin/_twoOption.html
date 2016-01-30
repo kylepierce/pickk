@@ -1,0 +1,47 @@
+<template name='_twoOption'>
+	{{#ionModal class="white-text-header" title="Two Option"}}
+		<label type="stacked" class="item item-input item-stacked-label">
+			<span class="input-label">Team 1</span>
+			<select id="play-picker"> 
+				<optgroup label="Offense">
+						<option></option>
+						<option>Who Scores First?</option>
+						<option>This Drive</option>
+				</optgroup>
+
+				<optgroup label="Defense">
+						<option>Sacks</option>
+				</optgroup>
+
+				<optgroup label="General">
+						<option>Penalties</option>
+						<option>First Play</option>
+				</optgroup>
+
+			</select>
+		</label>
+		<button data-action="twoOptionPicker">Submit</button>
+
+		<label style="color: black;">
+			Question
+			<input id="question" type="text" placeholder="Question">
+		</label>
+		<ul>
+			<li class="option-boxes">
+				<label style="color: black;">
+					<p>Option 1</p>
+					<input type="text" name="option1" class="float-left col-50" placeholder="Option One">
+					<input type="text" name="m1a" class="float-left col-10 option-range" placeholder="Min">
+				</label>
+			</li>
+			<li class="option-boxes">
+				<label style="color: black;">
+					<p>Option 2</p>
+					<input type="text" name="option2" class="float-left col-50" placeholder="Option Two">
+					<input type="text" name="m2a" class="float-left col-10 option-range" placeholder="Min">
+				</label>
+			</li>
+		</ul>
+		<button class='full' data-action="twoOptionCreation">Create Situational Question</button>
+	{{/ionModal}}
+</template>

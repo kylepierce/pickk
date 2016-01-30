@@ -134,3 +134,10 @@
     margin-right: 10px!important;
     padding: 0!important;
 }
+
+
+.border {
+	border-width: 10px;
+	-moz-border-image:url(http://i.imgur.com/GziKo.gif)   8 0 stretch!important;
+  -webkit-border-image:url(http://i.imgur.com/GziKo.gif)   8 0 stretch!important;
+}

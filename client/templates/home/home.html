@@ -38,69 +38,86 @@
 </template>
 
 <template name="questionCard">
-	{{#if live}}
+	{{#if notLive}}
+		<!-- Pre Game Predictions for Daily Diamonds -->
 		{{#if gameQuestion}}
+		
 			{{#each gameQuestions}}
 			  {{> predictionQuestions}}
 			  {{showAdsRandom}}
 			{{/each}}
+
+		<!-- No Game and No Questions -->
 		{{else}}
 			<img class="next-play slideInLeft" src="wait-for-play.png">
 			<h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
 		{{/if}}
-	{{else}}
+	{{/if}}
+
+	{{#if live}}
+			<!-- Commerical Break Has Been Activated -->
 		{{#if commercial}}
 
-		{{#if commercialQuestions}}
-			{{#if binary}}
+			{{#if commercialQuestions}}
 
-				<span style="text-align: center;">
-					<h4>Free Pickk!</h4>
+				<!-- Show Commerical Quesitons that have Binary Options (No Multipler) -->
+				{{#if binary}}
 					<span style="text-align: center;">
-						<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
+						<h4>Free Pickk!</h4>
+						<span style="text-align: center;">
+							<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
+						</span>	
 					</span>
-					
-				</span>
-				{{#each questions}}
-					{{> binaryChoice}}
-				{{/each}}
 
-				 
+					{{#each questions}}
+						{{> binaryChoice}}
+					{{/each}}
+				
+				<!-- Show Multiple Answer Questions -->
+				{{else}}
+					{{#each multiAnswerCommQuestions}}
+						{{> commercialQuestion}}
+						{{showAds}}
+					{{/each}}
+				{{/if}}
+			
+			<!-- No Questions Available  -->
 			{{else}}
-				{{> commercialQuestion}}
+				<img class="next-play slideInLeft" src="wait-for-play.png">
+				<h5 class="next-play">Commercial Break!</h5>	
+				{{{commercialRandom}}}
 			{{/if}}
 		
 		{{else}}
-			<img class="next-play slideInLeft" src="wait-for-play.png">
-			<h5 class="next-play">Commercial Break!</h5>	
-			{{{commercialRandom}}}
-			{{/if}}
+			{{#if active}}
+				{{#if multiOptions}}
+					<!-- Show In Game Quesitons that have Binary Options (With Multipler) -->
+					{{#if ingameBinary}}
 
-	{{else}}
-		{{#if active}}
-			{{> activeQuestion}}
-		
-		{{else}}
-			<img class="next-play slideInLeft" src="wait-for-play.png">
-			<h5 class="next-play">Waiting for the play to end...</h5>
-			{{#with lastPlay}}
-			<p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
-				<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
-			{{/with}}
-
-				{{#if connection}}	
-					{{#if activeCheck}}
-						<!-- <h5 class="next-play"><button class="button" id="changeAnswer">Change Answer
-						</button></h5> -->
+							{{#each twoOption}}
+								{{> twoOptionQuestions}}
+							{{/each}}
+						 
+					{{else}}
+							{{#each activeQuestions}}
+								{{> activeQuestion}}
+							{{/each}}
 					{{/if}}
-				{{/if }}
+				
+			{{else}}
+					<img class="next-play slideInLeft" src="wait-for-play.png">
+					<h5 class="next-play">Next question coming up soon!</h5>
+					{{#with lastPlay}}
+					<p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
+						<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
+					{{/with}}
+			{{/if}}
 			{{/if}}
 		{{/if}}
 	{{/if}}
 </template>
 
 <template name="activeQuestion">
-	{{#each questions}}
 	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
 		<div class="question">
@@ -123,11 +140,51 @@
 		</form>
 	</div>
 	</div>
-	{{/each}}
+</template>
+
+<template name="twoOptionQuestions">
+	<div class="container" id="normalCard" style="display: none;">
+		<div class="container-item">
+		<div class="question larger-card">
+			<h4>{{ que}}</h4>
+		</div>
+
+			<!-- Options -->
+			<div>
+				<div class="binary">
+					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
+					<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
+					
+					{{options.option1.title}} (x{{options.option1.multiplier}})
+					</label>
+				</div>
+
+				<div>
+					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
+					<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
+					
+					{{options.option2.title}} (x{{options.option2.multiplier}}) 
+					</label>
+				</div>
+			</div>
+
+			<!-- Wagers -->
+			<div style="margin-top: 75px">
+				{{> wagers}}
+			</div>
+
+			{{#if live}}
+				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+			{{else}}
+				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+			{{/if}}
+
+		
+	</div>
+	</div>
 </template>
 
 <template name="commercialQuestion">
-	{{#each questions}}
 	<div class="container" id="commercialCard" style="display: none;">
 		<div class="container-item">
 		<div class="question">
@@ -149,8 +206,7 @@
 		</form>
 	</div>
 	</div>
-	{{/each}}
-	{{showAds}}
+
 </template>
 
 <template name="binaryChoice">

@@ -33,3 +33,38 @@
   width: 100%;
   margin: 30px 0;
 }
+
+.float-left {
+	float: left;
+}
+
+.option-boxes {
+    display: block;
+    padding: 0 0 10px 0;
+    overflow: scroll;
+}
+
+.option-boxes label{
+	background-color: rgba(0, 0, 0, 0);
+	padding: 7px 15px;
+}
+
+.option-boxes input {
+	padding: 10px!important;
+	border-radius: 10px;
+	border: 1px #888 solid!important;
+}
+
+li.option-boxes:nth-child(even) {
+	background: #fff;
+}
+
+.option-boxes:nth-child(odd) {
+	background: #E8E8E8;
+}
+
+.option-range {
+	margin-left: 5px;
+}
+
+
