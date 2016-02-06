@@ -1,0 +1,45 @@
+<template name="singleGameHistory">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">Game History</h1>
+	{{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+      {{#with game}}
+	    <div class="bar bar-dark" > 
+	    	<div class="container" style="text-align: center; padding-top: 6px;">
+	    		<h1 class="title white-text-header">{{name}}</h1>
+	    	</div>
+	    </div>
+  		{{/with}}
+    	{{#ionList}}
+	    	{{#each question}}
+	    		{{#ionItem}}
+	    			<p>{{date}}</p>
+		    		{{#if active}}
+								<p class="active">{{que}}</p>
+						{{else}}
+								<p>{{que}}</p>
+								<p>Answer: {{{answerIs play}}}</p>
+						{{/if}}
+
+					{{#with userAnswer _id play this}}
+						<!-- If correct Show Winnings-->
+						<!-- If Binary Show 2000 -->
+						Wagered: {{wager}}
+						Muliplier: {{multiplier}}
+						Winnings: {{winnings}}
+						User Answered: {{description}}
+					{{/with}}
+					
+					
+	    		{{/ionItem}}
+	    	{{/each}}
+    	{{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template> 

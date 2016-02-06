@@ -22,7 +22,7 @@ Meteor.methods({
 			console.log("reseting all the counters!!")
 			UserList.update({}, {$set: { "profile.queCounter": 0}}, { multi: true })
 		}  
-	},
+	}, 
 	  
 	'updateAllDiamonds' : function(user){
 		var user = UserList.findOne({_id: user})
@@ -826,10 +826,11 @@ Meteor.methods({
 		function awardPoints(user) {
 			// Adjust multiplier based on when selected.
 			var que = question.que
-			var amount = 2000
+			var amount = parseInt(2000)
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = 'Nice Pickk! "' + que + '" 2000 Coins!'
+			console.log(scoreMessage)
 
 			// See if user is on list already
 			var check = _.indexOf(list, user.userID)

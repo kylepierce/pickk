@@ -53,10 +53,22 @@ Template.chatRoom.helpers({
     Meteor.subscribe("chatMessages", groupId)
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
     console.log(chat)
+    var chatArray = []
+    
+
+    for (var i = 0; i < 9; i++) {
+      var user = chat[i].user
+      var userExists = chatArray.indexOf(user)
+      if(userExists == -1){
+        chatArray.push(user)
+        console.log(chatArray)
+      }
+    };
+    Session.set('chatArray', chatArray);
+    Meteor.subscribe('chatUsers', chatArray)
     return chat 
   },
   user: function(id){
-    Meteor.subscribe('findSingleUsername', id)
     var user = UserList.findOne({_id: id});
     return user
   },

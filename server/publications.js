@@ -89,6 +89,12 @@ Meteor.publish('questionsUserAnswered', function(user){
   return QuestionList.find(selector);
 })
 
+Meteor.publish('questionsUserAnsweredSpecificGame', function(user, gameId){
+  var selector = { $and: [{ gameId: { $eq: gameId}}, { usersAnswered: { $in: [user] }}]}
+  return QuestionList.find(selector, {sort: {dateCreated: 1}});
+})
+
+
 Meteor.publish('singleGame', function(id){
   var singleGame = QuestionList.find({gameId: id}, {sort: {dateCreated: 1}});
   if(singleGame){
@@ -106,20 +112,34 @@ Meteor.publish('findSingle', function(id) {
   });
 })
 
-Meteor.publish('chatUser', function(id) {
-  var singleGame = UserList.find({_id: id}, {fields: 
-      {'profile.username': 1, 
-       'profile.avatar': 1,
-       '_id': 1
-    }});
-  if(singleGame){
-    return singleGame
-  }
-  return this.ready();
-})
+// Meteor.publish('chatUser', function(id) {
+//   var singleGame = UserList.find({_id: id}, {fields: 
+//       {'profile.username': 1, 
+//        'profile.avatar': 1,
+//        '_id': 1
+//     }});
+//   if(singleGame){
+//     return singleGame
+//   }
+//   return this.ready();
+// })
 
 Meteor.publish('findSingleUsername', function(id) {
   return UserList.find({_id: id}, 
+    {fields: 
+      {'profile.username': 1, 
+       'profile.coins': 1, 
+       'profile.avatar': 1, 
+       'pendingNotifications': 1,
+       'services': 1,
+       '_id': 1
+     }
+  });
+})
+
+Meteor.publish('chatUsers', function(id) {
+
+  return UserList.find({_id: {$in: id}}, 
     {fields: 
       {'profile.username': 1, 
        'profile.coins': 1, 
@@ -190,6 +210,12 @@ Meteor.publish('singleGroup', function(groupId) {
 Meteor.publish('games', function() {
   return Games.find({ });
 });
+
+Meteor.publish('gamesUserPlayedIn', function(user){
+  var selector = {users: {$in: [user]}}
+  return Games.find(selector);
+});
+
 
 Meteor.publish('trophy', function(){
   return Trophies.find({ });

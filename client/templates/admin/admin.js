@@ -39,7 +39,6 @@ Template.activeQuestionList.helpers({
 Template.pendingQuestionList.helpers({
 	'questions': function(){
 		var questions = QuestionList.find({active: null}, {sort: {dateCreated: 1}}).fetch();
-		console.log(questions)
 		return questions
 	},
 	'binary': function(){
@@ -47,7 +46,7 @@ Template.pendingQuestionList.helpers({
 			return true
 		}
 	},
-	'commercial': function(){
+	'binaryCommerical': function(question){
 		if(this.commercial == true){
 			return true
 		}

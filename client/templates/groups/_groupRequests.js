@@ -10,7 +10,7 @@ Template._groupRequests.helpers({
 		return group.requests
 	},
 	userDetails: function(userId){
-		Meteor.subscribe('chatUser', userId)
+		Meteor.subscribe('findSingleUsername', userId)
 		return UserList.findOne({_id: userId})
 	},
 

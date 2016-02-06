@@ -15,17 +15,13 @@
 
   {{#ionView }}
     {{#ionContent}}
-    	{{#ionList}}
-	    	{{#each question}}
-	    		{{#ionItem}}
-					{{que}}
-					{{game gameId}}
-
-					{{userAnswer _id this}}
-						<!-- {{correct answered this}} -->
-	    		{{/ionItem}}
-	    	{{/each}}
-    	{{/ionList}}
+			{{#ionList}}
+				{{#each gamePlayed }}
+					{{#ionItem path="gameHistory.show"}}
+						{{name}}
+					{{/ionItem}}
+				{{/each}}
+			{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
-</template>
+</template> 

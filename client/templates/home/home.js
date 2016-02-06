@@ -433,9 +433,7 @@ Template.questionCard.helpers({
   },
 
 	'commercial': function(game){
-		Meteor.subscribe('games')
 		var game = Games.findOne({live: true});
-
 		if(game.commercial == true){
 				return true
 		}

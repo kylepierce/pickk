@@ -1,57 +1,295 @@
-Template.history.created = function () {
+Template.history.helpers({
+	gamePlayed: function(){
+		var userId = Meteor.userId();
+		var selector = {users: {$in: [userId]}}
+  	return Games.find(selector);
+	}
+});
+
+Template.singleGameHistory.created = function () {
+	var userId = Meteor.userId();
   this.autorun(function () {
-		var user = Meteor.userId();
-		Meteor.subscribe("questionsUserAnswered", user)
+    this.subscription = Meteor.subscribe('questionsUserAnsweredSpecificGame', userId, Router.current().params._id);
   }.bind(this));
 };
 
-Template.history.helpers({
+
+
+
+Template.singleGameHistory.helpers({
+	game: function(){
+		return Games.find({_id: this.params._id})
+	},
+	active: function(){
+		var active = this.active
+		if(active == true || active == null){
+			return true
+		}
+	},
+	date: function(){
+		var monthArray = ["January","February","March","April","May","June","July","August","September","October","November","December",
+		]
+		function twelveHours(i) {
+	    if (i < 10) {
+	        i = "0" + i;
+	    } else if (i > 12) {
+	    	i -= 12
+	    	i = "0" + i
+	    }
+	    return i;
+		}
+
+		function addZero(i){
+			if (i < 10) {
+	      i = "0" + i;
+	    }
+	    return i
+		}
+
+		function addOne(i){
+			i += 1
+			return i
+		}
+
+		var date = this.dateCreated
+		// var hour = date.getHours();
+  //   var min = date.getMinutes();
+  	var month = monthArray[date.getMonth()];
+  	var day = addOne(date.getDay());
+		var hour = twelveHours(date.getHours());
+    var min = addZero(date.getMinutes());
+    // return date.toDateString();
+		return month + " " + day + " at " + hour + ":" + min;
+	},
+	answerIs:function(play){
+		switch (play){
+			case "option1":
+				return this.options.option1.title;
+				break;
+			case "option2":
+				return this.options.option2.title;
+				break;
+			case "option3":
+				return this.options.option3.title;
+				break;
+			case "option4":
+				return this.options.option4.title;
+				break;
+			case "option5":
+				return this.options.option5.title;
+				break;
+			case "option6":
+				return this.options.option6.title;
+				break;
+			case "deleted":
+				return "deleted";
+				break;
+		} 
+	},
 	question: function () {
-		// var user = Meteor.userId();
-		// Meteor.subscribe("questionsUserAnswered", user)
-		var answered = QuestionList.find({}, {sort: {dateCreated: -1}}).fetch()
-		return answered
+		var questionsAnswered = QuestionList.find({}, {sort: {dateCreated: -1}}).fetch()
+		return questionsAnswered
 	},
-	userAnswer: function(id, questionObj){
-		var user = Meteor.user();
-		var questions = user.questionAnswered
-		var questionId = _.pluck(questions, "questionId")
-		var spot = _.indexOf(questionId, id)
+	userAnswer: function(id, play, q){
+		var questions = Meteor.user().questionAnswered
+		var questionIds = _.pluck(questions, "questionId")
+		var spot = _.indexOf(questionIds, id)
+		var questionId = questionIds[spot]
 		var question = questions[spot]
-		console.log(question)
-		console.log(questionObj)
-		var userAnswer = question.answered
-		// userAnswer = JSON.stringify(userAnswer)
-		console.log(userAnswer)
-		// userAnswer = "option1"
-		// console.log(userAnswer)
-		var options = questionObj.options
-		console.log(options)
-		var number = userAnswer.slice(-1)
-		console.log(number)
-		var play = _.values(options)
-		console.log(play.userAnswer)
-		// console.log("correct answer " + correct)
-		// console.log("You answered " + question.answered)
-		// console.log("multiplier is " + multiplier)
-		
-		// if(correct === userAnswer){
-		// 	console.log("Looks like we made it!")
-		// 	return "YAY YOU DID IT"
-		// } else {
-		// 	return "Incorrect"
-		// }
-	},
-	game: function(id){
-		var game = Games.findOne({_id: id}, {fields: {name: 1}});
-		game = game.name
-		return game
-	},
-	correct: function(answered, correct){
-		console.log(answered)
-		console.log(correct)
-		if(answered === correct){
-			return "Correct!"
+		var userAnswered = question.answered
+		var wager = question.wager
+		var questionObj = q
+		var commercial = q.commercial
+		if(question.wager === undefined){
+			var wager = 500
+			console.log("Free Pickk!")
+		} else {
+			var binaryChoice = question.wager
+		}
+		if(q.binaryChoice === undefined){
+			var binaryChoice = true
+		} else {
+			var binaryChoice = false
+		}
+		var active = q.active
+		var playName = this.options.option1.title
+		var play = play
+		var winningObj = {
+				"active": active,
+				"wager": wager,
+				"winnings": 0,
+				"answered": userAnswered,
+				"commercial": commercial,
+				"binaryChoice": binaryChoice,
+				"correctAnswer": play
+			}
+
+		switch (userAnswered){
+			case "option1":
+				if(play === "option1"){
+					console.log("Got It Right!")
+
+					if(q.options.option1.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option1.multiplier)
+					}
+
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option1.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				}  else {
+					console.log("Got It WRONG!")
+					winningObj.description = this.options.option1.title
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+
+				break;
+
+			case "option2":
+				if(play === "option2"){
+					console.log("Got It Right!")
+					if(q.options.option2.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option2.multiplier)
+					}
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option2.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				} else {
+					console.log("Got It WRONG!")
+					winningObj.description = this.options.option2.title
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+				break;
+			case "option3":
+				if(play === "option3"){
+					console.log("Got It Right!")
+					if(q.options.option3.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option3.multiplier)
+					}
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option3.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				} else {
+					console.log("Got It WRONG!")
+					winningObj.description = this.options.option3.title
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+				break;
+			case "option4":
+				if(play === "option4"){
+					console.log("Got It Right!")
+					if(q.options.option4.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option4.multiplier)
+					}
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option4.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				} else {
+					console.log("Got It WRONG!")
+					winningObj.description = this.options.option4.title
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+				break;
+			case "option5":
+				if(play === "option5"){
+					console.log("Got It Right!")
+					if(q.options.option5.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option5.multiplier)
+					}
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option5.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				} else {
+					console.log("Got It WRONG!")
+					winningObj.description = this.options.option5.title
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+				break;
+			case "option6":
+				if(play === "option6"){
+					console.log("Got It Right!")
+					if(q.options.option6.multiplier === undefined){
+						winningObj.multiplier = 4
+					} else {
+						winningObj.multiplier = parseFloat(q.options.option6.multiplier)
+					}
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					winningObj.description = this.options.option6.title
+					winningObj.correct = true
+					console.log(winningObj)
+					return winningObj;
+				} else if (play === "deleted") {
+					winningObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager)
+					return winningObj;
+				} else {
+					console.log("Got It WRONG!")
+					winningtrue.titleObj.multiplier = 0
+					winningObj.correct = false
+					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
+					return winningObj;
+				}
+				break;
 		}
 	}
 });
