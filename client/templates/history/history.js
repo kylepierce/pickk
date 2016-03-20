@@ -2,7 +2,7 @@ Template.history.helpers({
 	gamePlayed: function(){
 		var userId = Meteor.userId();
 		var selector = {users: {$in: [userId]}}
-  	return Games.find(selector);
+  	return Games.find(selector, {sort: {dateCreated: -1}});
 	}
 });
 
@@ -102,7 +102,6 @@ Template.singleGameHistory.helpers({
 		var commercial = q.commercial
 		if(question.wager === undefined){
 			var wager = 500
-			console.log("Free Pickk!")
 		} else {
 			var binaryChoice = question.wager
 		}
@@ -127,7 +126,6 @@ Template.singleGameHistory.helpers({
 		switch (userAnswered){
 			case "option1":
 				if(play === "option1"){
-					console.log("Got It Right!")
 
 					if(q.options.option1.multiplier === undefined){
 						winningObj.multiplier = 4
@@ -138,7 +136,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option1.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -146,7 +143,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				}  else {
-					console.log("Got It WRONG!")
 					winningObj.description = this.options.option1.title
 					winningObj.multiplier = 0
 					winningObj.correct = false
@@ -158,7 +154,7 @@ Template.singleGameHistory.helpers({
 
 			case "option2":
 				if(play === "option2"){
-					console.log("Got It Right!")
+					
 					if(q.options.option2.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
@@ -167,7 +163,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option2.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -175,7 +170,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					console.log("Got It WRONG!")
 					winningObj.description = this.options.option2.title
 					winningObj.multiplier = 0
 					winningObj.correct = false
@@ -185,7 +179,7 @@ Template.singleGameHistory.helpers({
 				break;
 			case "option3":
 				if(play === "option3"){
-					console.log("Got It Right!")
+					
 					if(q.options.option3.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
@@ -194,7 +188,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option3.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -202,7 +195,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					console.log("Got It WRONG!")
 					winningObj.description = this.options.option3.title
 					winningObj.multiplier = 0
 					winningObj.correct = false
@@ -212,7 +204,7 @@ Template.singleGameHistory.helpers({
 				break;
 			case "option4":
 				if(play === "option4"){
-					console.log("Got It Right!")
+					
 					if(q.options.option4.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
@@ -221,7 +213,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option4.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -229,7 +220,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					console.log("Got It WRONG!")
 					winningObj.description = this.options.option4.title
 					winningObj.multiplier = 0
 					winningObj.correct = false
@@ -239,7 +229,7 @@ Template.singleGameHistory.helpers({
 				break;
 			case "option5":
 				if(play === "option5"){
-					console.log("Got It Right!")
+					
 					if(q.options.option5.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
@@ -248,7 +238,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option5.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -256,7 +245,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					console.log("Got It WRONG!")
 					winningObj.description = this.options.option5.title
 					winningObj.multiplier = 0
 					winningObj.correct = false
@@ -266,7 +254,7 @@ Template.singleGameHistory.helpers({
 				break;
 			case "option6":
 				if(play === "option6"){
-					console.log("Got It Right!")
+					
 					if(q.options.option6.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
@@ -275,7 +263,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option6.title
 					winningObj.correct = true
-					console.log(winningObj)
 					return winningObj;
 				} else if (play === "deleted") {
 					winningObj.multiplier = 0
@@ -283,7 +270,6 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					console.log("Got It WRONG!")
 					winningtrue.titleObj.multiplier = 0
 					winningObj.correct = false
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )

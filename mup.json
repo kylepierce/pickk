@@ -2,7 +2,7 @@
   // Server authentication info
   "servers": [
     {
-      "host": "45.55.49.217",
+      "host": "104.131.37.55",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
       // or pem file (ssh based authentication)
@@ -43,7 +43,7 @@
   "env": {
     "PORT": 80,
     "METEOR_SETTINGS": "cat settings.json",
-    "ROOT_URL": "http://45.55.49.217",
+    "ROOT_URL": "http://104.131.37.55",
     "MONGO_URL": "mongodb://getpickk:Imonaboat118@candidate.43.mongolayer.com:11034,candidate.11.mongolayer.com:11179/pickk-production?replicaSet=set-55dbc8150df18460e00000cf",
     "MONGO_OPLOG_URL": "mongodb://oplog:Imonaboat118@candidate.43.mongolayer.com:11034,candidate.11.mongolayer.com:11179/local?authSource=pickk-production",
     "MAIL_URL": "smtp://postmaster%40mg.pickk.co:2e53ee0dce2deade7b63443c39322243@smtp.mailgun.org:587"

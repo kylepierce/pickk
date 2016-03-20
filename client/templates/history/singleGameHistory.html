@@ -19,21 +19,25 @@
     	{{#ionList}}
 	    	{{#each question}}
 	    		{{#ionItem}}
-	    			<p>{{date}}</p>
+	    			
 		    		{{#if active}}
-								<p class="active">{{que}}</p>
+								<p class="active"><b>{{que}}</b></p>
+								<p>{{date}}</p>
 						{{else}}
-								<p>{{que}}</p>
+								<p><b>{{que}}</b></p>
+								<p>{{date}}</p>
 								<p>Answer: {{{answerIs play}}}</p>
 						{{/if}}
-
+					
 					{{#with userAnswer _id play this}}
+						<p>
+						You Answered: {{description}}<br>
 						<!-- If correct Show Winnings-->
 						<!-- If Binary Show 2000 -->
-						Wagered: {{wager}}
+						Amount Wagered: {{wager}}
 						Muliplier: {{multiplier}}
 						Winnings: {{winnings}}
-						User Answered: {{description}}
+						</p>
 					{{/with}}
 					
 					

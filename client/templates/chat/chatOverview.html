@@ -26,14 +26,16 @@
       <button class="col button col-100" type="submit">Send</button>
     </form>   
     {{#ionList}}
-      {{#each messages}}
-        {{#ionItem avatar=true}}
-          {{#with user this.user}}
-          <img src="{{chatAvatar this}}">
-          <h2>{{chatUser this._id}}</h2> {{/with}}
-          <p>{{this.message}}</p>
-        {{/ionItem}}
-      {{/each}}
+      {{#with groupMessages}}
+        {{#each messages this}}
+          {{#ionItem avatar=true}}
+            {{#with user this.user}}
+            <img src="{{chatAvatar this}}">
+            <h2>{{chatUser this._id}}</h2> {{/with}}
+            <p>{{this.message}}</p>
+          {{/ionItem}}
+        {{/each}}
+      {{/with}}
     {{/ionList}} 
     {{/ionContent}}
   {{/ionView}}

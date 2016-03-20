@@ -6,13 +6,13 @@ Meteor.publish('activeQuestions', function(){
 				{sort: {dateCreated: 1,}});
 });
 
-Meteor.publish('chatMessages', function(groupId){
-  var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10})
-  if(chat){
-    return chat
-  }
-  return this.ready();
-});
+// Meteor.publish('chatMessages', function(groupId){
+//   var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10})
+//   if(chat){
+//     return chat
+//   }
+//   return this.ready();
+// });
 
 
 Meteor.publish('userNotAnswered', function(){
@@ -21,7 +21,7 @@ Meteor.publish('userNotAnswered', function(){
 });
 
 Meteor.publish('questions', function(){
-	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
 	if(activeQuestions){
 		return activeQuestions
 	}
@@ -137,19 +137,19 @@ Meteor.publish('findSingleUsername', function(id) {
   });
 })
 
-Meteor.publish('chatUsers', function(id) {
+// Meteor.publish('chatUsers', function(id) {
 
-  return UserList.find({_id: {$in: id}}, 
-    {fields: 
-      {'profile.username': 1, 
-       'profile.coins': 1, 
-       'profile.avatar': 1, 
-       'pendingNotifications': 1,
-       'services': 1,
-       '_id': 1
-     }
-  });
-})
+//   return UserList.find({_id: {$in: id}}, 
+//     {fields: 
+//       {'profile.username': 1, 
+//        'profile.coins': 1, 
+//        'profile.avatar': 1, 
+//        'pendingNotifications': 1,
+//        'services': 1,
+//        '_id': 1
+//      }
+//   });
+// })
 
 
 Meteor.publish('adminFindSingle', function(id) {

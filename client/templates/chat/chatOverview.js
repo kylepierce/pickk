@@ -1,7 +1,6 @@
 Template.chatRoom.created = function () {
   this.autorun(function () {
     var groupId = Router.current().params._id
-    console.log(groupId)
     this.subscription = Meteor.subscribe('groups', groupId) && 
     Meteor.subscribe('findUserGroups', groupId)
   }.bind(this));
@@ -10,6 +9,7 @@ Template.chatRoom.created = function () {
 Template.chatOverview.events({
   'click #all-chats': function(){
     Session.set('chatGroup', null)
+
   }
 });
 
@@ -48,25 +48,26 @@ Template.chatRoom.events({
 });
 
 Template.chatRoom.helpers({
-  messages: function () {
+  groupMessages: function(){
     var groupId = Session.get('chatGroup')
     Meteor.subscribe("chatMessages", groupId)
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
-    console.log(chat)
     var chatArray = []
-    
 
-    for (var i = 0; i < 9; i++) {
-      var user = chat[i].user
-      var userExists = chatArray.indexOf(user)
+    for (var i = 0; i < chat.length; i++) {
+      
+      var user = chat[i]
+      var userId = user.user
+      var userExists = chatArray.indexOf(userId)
       if(userExists == -1){
-        chatArray.push(user)
-        console.log(chatArray)
+        chatArray.push(userId)
       }
     };
-    Session.set('chatArray', chatArray);
-    Meteor.subscribe('chatUsers', chatArray)
-    return chat 
+    Meteor.subscribe('chatUsers', chatArray)    
+    return chat
+  },
+  messages: function (messageList) {
+    return messageList
   },
   user: function(id){
     var user = UserList.findOne({_id: id});
@@ -127,6 +128,7 @@ Template._groupChats.events({
     var id = this.id
     Session.set('chatGroup', id)
     IonPopover.hide();
+    
   },
 });
 

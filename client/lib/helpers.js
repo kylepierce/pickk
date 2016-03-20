@@ -1,6 +1,7 @@
+
+
 Template.registerHelper('userAvatar', function (userId) {
   Meteor.subscribe('findSingleUsername', userId)
-
   var user = UserList.findOne({_id: userId})
 
   if (user.services.twitter !== undefined){
