@@ -2,7 +2,7 @@ Template.chatRoom.created = function () {
   this.autorun(function () {
     var groupId = Router.current().params._id
     this.subscription = Meteor.subscribe('groups', groupId) && 
-    Meteor.subscribe('findUserGroups', groupId)
+    Meteor.subscribe('findUserGroups', groupId) && Meteor.subscribe( 'chatUsersList' );
   }.bind(this));
 };
 
@@ -115,7 +115,11 @@ Template.chatRoom.helpers({
 Template._groupChats.helpers({
   group: function(){
     var user = Meteor.user()
-    return user.profile.groups
+    if(user.profile.groups){
+      return user.profile.groups
+    } else {
+      return false
+    }
   },
   groupName: function(id){
     var group = Groups.findOne({_id: id}, {fields: {groupId: 1}})

@@ -103,7 +103,10 @@
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/notifications">
   {{> ionIcon icon='ios-bell-outline'}}
-  Notifications
+  Notifications 
+  {{#if pendingNotifications }}
+    <span id="pendingNotifications">{{notificationNumber}}</span>
+  {{/if}}
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/games">
   {{> ionIcon icon='ios-calendar-outline'}} 

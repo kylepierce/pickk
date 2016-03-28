@@ -8,23 +8,39 @@ var list = mg.api.lists( listAddress );
 Meteor.methods({
   'addToMailingList': function( emailAddress ) {
     check( emailAddress, String );
-    var user = UserList.find({"emails.address": emailAddress}).fetch()
-    var userExist = list.members(emailAddress)
-    if(!userExist){
-      if ( user ) {
-        console.log('Found User')
+    var user = Meteor.users.findOne({"emails.address": emailAddress}, {fields: {"emails.address": 1}});
+    console.log(user)
+    if ( user ) {
+      console.log('Found User')
+      list.members().create({
+        subscribed: true,
+        address: emailAddress
+      }, function( error, response ) {
+        if ( error ) {
+          throw new Meteor.Error( 'mailgun-error', error );
+        } else {
+          console.log( response );
+        }
+      });
+    } else {
+      throw new Meteor.Error( 'bad-email', 'Sorry, you\'re not a registered user.' );
+    }
+  },
+  'syncExistingUsersToMailgun': function() {
+    var users = Meteor.users.find().fetch();
+    for( var i = 0; i < users.length; i++ ) {
+      if ( users[ i ].emails ) {
+        var email = users[ i ].emails[ 0 ].address;
         list.members().create({
           subscribed: true,
-          address: emailAddress
+          address: email
         }, function( error, response ) {
           if ( error ) {
-            throw new Meteor.Error( 'mailgun-error', error );
+            console.log( 'mailgun-error', error );
           } else {
             console.log( response );
           }
         });
-      } else {
-        throw new Meteor.Error( 'bad-email', 'Sorry, you\'re not a registered user.' );
       }
     }
   },

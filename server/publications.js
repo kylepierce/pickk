@@ -112,17 +112,19 @@ Meteor.publish('findSingle', function(id) {
   });
 })
 
-// Meteor.publish('chatUser', function(id) {
-//   var singleGame = UserList.find({_id: id}, {fields: 
-//       {'profile.username': 1, 
-//        'profile.avatar': 1,
-//        '_id': 1
-//     }});
-//   if(singleGame){
-//     return singleGame
-//   }
-//   return this.ready();
-// })
+Meteor.publish( 'chatUsersList', function( chatId ) {
+  check( chatId, String );
+
+  var singleGame = UserList.find({}, {fields: 
+      {'profile.username': 1, 
+       'profile.avatar': 1,
+       '_id': 1
+    }, limit: 10 });
+  if(singleGame){
+    return singleGame
+  }
+  return this.ready();
+})
 
 Meteor.publish('findSingleUsername', function(id) {
   return UserList.find({_id: id}, 

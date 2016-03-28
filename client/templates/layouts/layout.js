@@ -22,6 +22,14 @@ Template.mainView.events({
 });
 
 Template.sideMenuContent.helpers({
+  pendingNotifications: function(){
+    var notifications = Meteor.user().pendingNotifications.length > 0
+    return notifications
+  },
+  notificationNumber: function() {
+    var notifications = Meteor.user().pendingNotifications.length;
+    return notifications
+  },
   sidebarAvatar: function (userId) {
     console.log(this.user)
     var user = UserList.findOne({_id: userId})

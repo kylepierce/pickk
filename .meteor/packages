@@ -43,7 +43,6 @@ meteorhacks:ssr
 underscore
 viloma:user-feedback
 raix:push
-astronomerio:core
 useraccounts:iron-routing
 flowkey:hotkeys
 mousetrap:mousetrap
@@ -62,7 +61,7 @@ chart:chart
 kadira:debug
 meteorhacks:subs-manager
 nvd3:nvd3@1.7.1
-yogiben:pretty-email
+#yogiben:pretty-email
 juliancwirko:s-alert-slide
 gwendall:meteoric-connection-status
 255kb:meteor-status
