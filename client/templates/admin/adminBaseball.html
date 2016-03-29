@@ -1,0 +1,24 @@
+<template name='adminBaseball'>
+	<div class="container">	
+	  {{#ionView}}
+   		 {{#ionContent}}	
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Admin Panel</h1>
+   		 {{/contentFor}}
+
+	<h1>Baseball!</h1>
+		{{/ionContent}}
+	  {{/ionView}}
+ </div>
+</template>
