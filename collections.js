@@ -5,6 +5,8 @@ Trophies = new Meteor.Collection('trophies');
 Groups = new Meteor.Collection('groups');
 Games = new Meteor.Collection('games')
 Chat = new Meteor.Collection('chat')
+AtBat = new Meteor.Collection('atBat')
+
 // Notifications = new Meteor.Collection('notifications')
 // Tasks = new Mongo.Collection("tasks");
 

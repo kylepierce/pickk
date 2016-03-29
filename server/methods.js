@@ -333,9 +333,14 @@ Meteor.methods({
 	// Create a question. Each play has question text and six options. 
 
 	'insertQuestion' : function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6){ 
-		// Variables to make the calling easy
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
+
+		// If there less than 6 options we will set the other options to nothing.
+		op5 = op5 || '';
+		m5 = m5 || '';
+		op6 = op6 || '';
+		m6 = m6 || '';
 
 		// Insert the question into the database
 		QuestionList.insert({
