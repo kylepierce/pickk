@@ -30,7 +30,7 @@ Meteor.methods({
     'createAtBat': function ( playerId, gameId) {
         var currentUserId = Meteor.userId();
         var timeCreated = new Date();
-        atBat.insert({
+        AtBat.insert({
             createdBy: currentUserId,
             dateCreated: timeCreated,
             active: true,
@@ -39,9 +39,12 @@ Meteor.methods({
             ballCount: 0,
             strikeCount: 0
         });
+        var active = AtBat.find({active: true}).fetch()
+        console.log(active)
+        console.log("created at bat")
     },
 
-    'createBaseballQuestion': function (atBatId, strikes, balls, commercial, que){
+    'createBaseballQuestion': function (atBatId, strikes, balls, commercial){
         // These are the traditional options for single swing.
         var op1 = "Strike";
         var op2 = "Ball";
@@ -54,17 +57,16 @@ Meteor.methods({
         }
 
         // If the ball count is at 3 we want to change the "ball" option to "walk"
-        // if ( ball = 3 ){
-        //     o2 = "Walk";
-        //     o3 = "Foul Ball";
-        //     o4 = "Hit";
-        //     o5 = "Out"  
-        // }
+        if ( ball = 3 ){
+            var op2 = "Walk";
+            var op3 = "Foul Ball";
+            var op4 = "Hit";
+            var op5 = "Out"  
+        }
 
-         // Generate what is likely to happen by calling the multiplier generator
+        // Generate what is likely to happen by calling the multiplier generator
 
         // Finally we are going to create an option object to give to the database.
-
         var options = {
             option1: {title: op1, usersPicked: [], multiplier: 2.1 },
             option2: {title: op2, usersPicked: [], multiplier: 2.2 },
@@ -72,21 +74,19 @@ Meteor.methods({
             option4: {title: op4, usersPicked: [], multiplier: 2.4 },
         }
 
-        // If option5 exists apend the option to the end of the options object.
-
-        // {
-        //     option5: {title: op5, usersPicked: [], multiplier: 2.5 },
-        //     option6: {title: op6, usersPicked: [], multiplier: 2.6 },
-        // }
+        // If "op5" exists add the option to the end of the options object.
+        if( op5 ){
+            options.option5 = {title: op5, usersPicked: [], multiplier: 2.5 }
+        }
 
         // The Question will be the count
-        var question = strikes + " " + balls;
+        var question = strikes + " - " + balls;
 
         var timeCreated = new Date();
         var currentUserId = Meteor.userId();
-        var currentGame = atBatId.gameId;
+        var currentGame = "A6PiQFJR7PLgZNjGv";
 
-        Questions.insert({
+        QuestionList.insert({
             dateCreated: timeCreated,
             createdBy: currentUserId,
             gameId: currentGame,
@@ -95,8 +95,6 @@ Meteor.methods({
             que: question,
             options: options
         });
-
-
     },
 
 

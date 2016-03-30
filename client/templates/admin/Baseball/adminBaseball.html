@@ -18,6 +18,13 @@
    		 {{/contentFor}}
 
 	<h1>Baseball!</h1>
+		<button data-action="createBaseballQuestion">Create Question</button>
+		<button data-action="createAtBat">Create At Bat</button>
+
+		{{#each atBat}}
+			{{dateCreated}}
+		{{/each}}
+
 		{{/ionContent}}
 	  {{/ionView}}
  </div>

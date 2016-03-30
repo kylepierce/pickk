@@ -238,3 +238,9 @@ Meteor.publish('groupUsers', function(groupId) {
   // var options = {fields: {"profile.username": 1}, {"prof"}};
   return UserList.find(selector, fields);
 });
+
+
+
+Meteor.publish('activeAtBatve', function(){
+  return AtBat.find({ });
+})
