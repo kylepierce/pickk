@@ -1,8 +1,3 @@
-// AwardPlayers(Term)
-//      Award all the players who correctly guessed the question
-
-// increasePitch ()
-//      Increase the number of pitches by pitcher by 1
 Meteor.methods({
     'createBaseballGame': function ( team1, team2, dateOfGame, timeOfGame) {
         Games.insert({
@@ -98,6 +93,17 @@ Meteor.methods({
     },
 
 
+// AwardPlayers(Term)
+//      Award all the players who correctly guessed the question
+
+
+'increasePitch': function ( ) {    
+    // Find out of its the top or bottom of the inning
+
+    // Find the pitcher on visiting (top) or home (bottom) with active equal true
+
+    // Increase the number of pitches by pitcher by 1
+},
 
 
 // ' multiplierGenerator ': function ( ) {
