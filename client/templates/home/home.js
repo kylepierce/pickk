@@ -710,6 +710,14 @@ Template.questionCard.events({
 });
 
 Template.gameBar.helpers({
+  strikes: function() {
+    var currentAtBat = AtBat.findOne({active: true});
+    return currentAtBat.strikeCount
+  },
+  balls: function() {
+    var currentAtBat = AtBat.findOne({active: true});
+    return currentAtBat.ballCount
+  },
   outs: function ( ) {
     var currentGame = Games.findOne({live: true});
     return currentGame.outs
