@@ -1,7 +1,7 @@
 Template.adminBaseball.events({
 	'click [data-action=createBaseballQuestion]': function (event, template) {
 		event.preventDefault();
-		Meteor.call('createBaseballQuestion', "atBatId", 2, 3, false);
+		Meteor.call('createBaseballQuestion');
 	}, 
 	'click [data-action=createAtBat]': function (event, template) {
 		event.preventDefault();
@@ -16,7 +16,6 @@ Template.adminBaseball.events({
 Template.adminBaseball.helpers ({
 	atBat: function(){
 		var atBat = AtBat.find({ }).fetch()
-		console.log(atBat)
 		return atBat
 	}
 

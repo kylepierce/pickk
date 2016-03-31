@@ -242,5 +242,10 @@ Meteor.publish('groupUsers', function(groupId) {
 
 
 Meteor.publish('activeAtBat', function(){
-  return AtBat.find({ });
+  return AtBat.find({active: true });
+})
+
+Meteor.publish('atBatForThisGame', function(){
+  var currentGame = Games.findOne({live: true});
+  return AtBat.find({gameId:  currentGame});
 })

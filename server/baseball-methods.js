@@ -55,7 +55,16 @@ Meteor.methods({
         console.log("created at bat")
     },
 
-    'createBaseballQuestion': function (atBatId, strikes, balls, commercial){
+    'createBaseballQuestion': function (){
+        var timeCreated = new Date();
+        var currentUserId = Meteor.userId();
+        var currentGame = Games.findOne({live: true});
+        
+        // Find the Player "At Bat" 
+        var currentAtBat = AtBat.findOne({active: true});
+        var strikes = currentAtBat.strikeCount
+        var balls = currentAtBat.ballCount
+
         // These are the traditional options for single swing.
         var op1 = "Strike";
         var op2 = "Ball";
@@ -93,16 +102,12 @@ Meteor.methods({
         // The Question will be the count
         var question = strikes + " - " + balls;
 
-        var timeCreated = new Date();
-        var currentUserId = Meteor.userId();
-        var currentGame = "A6PiQFJR7PLgZNjGv";
-
         QuestionList.insert({
             dateCreated: timeCreated,
             createdBy: currentUserId,
             gameId: currentGame,
             active: true,
-            commercial: commercial,
+            commercial: false,
             que: question,
             options: options
         });
@@ -186,6 +191,15 @@ Meteor.methods({
 //      Find player from batting order
 //      Set the on deck player by finding the batter number plus 1
 
+'addStrike': function(){
+    var currentAtBat = AtBat.findOne({active: true});
+    AtBat.update(currentAtBat, {$inc: {"strikeCount": 1}});
+ },
+'addBall': function(){
+    var currentAtBat = AtBat.findOne({active: true});
+    AtBat.update(currentAtBat, {$inc: {"ballCount": 1}});
+
+ },
 
 // If “Strike” is selected as answer
 //      Award players (“Strike”)
