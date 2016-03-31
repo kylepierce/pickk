@@ -708,3 +708,41 @@ Template.questionCard.events({
     }
 	}
 });
+
+Template.gameBar.helpers({
+  outs: function ( ) {
+    var currentGame = Games.findOne({live: true});
+    return currentGame.outs
+  },
+  first: function () {
+    var currentGame = Games.findOne({live: true});
+    //  
+    var first = currentGame.playersOnBase.first
+    if(first){
+      return "true"
+    } else {
+      return "false"
+    }
+  },
+  second: function () {
+    var currentGame = Games.findOne({live: true});
+    // 
+    var second = currentGame.playersOnBase.second
+    if(second){
+      return "true"
+    } else {
+      return "false"
+    }
+  },
+  third: function () {
+    var currentGame = Games.findOne({live: true});
+    // 
+    var third = currentGame.playersOnBase.third
+    if(third){
+      return "true"
+    } else {
+      return "false"
+    }
+  },
+
+});
