@@ -1,23 +1,39 @@
 Meteor.methods({
-    'createBaseballGame': function ( team1, team2, dateOfGame, timeOfGame) {
+    'createBaseballGame': function ( team1, team2, dateOfGame, timeOfGame, tvStation ) {
+        var currentUserId = Meteor.userId();
+        var timeCreated = new Date();
         Games.insert({
+            dateCreated: timeCreated,
+            createdBy: currentUserId,
+            date: dateOfGame,
+            time: timeOfGame,
+            tv: tvStation,
+            live: false,
+            commercial: false,
+            completed: false,
             teams: [
               {
                 teamId: team1,
                 batterNum: 0,
-                pitcherId: null
+                pitcher: []
               }, {
                 teamId: team2,
                 batterNum: 0,
-                pitcherId: null
+                pitcher: []
               }
             ],
-            date: dateOfGame,
-            time: timeOfGame,
+
             outs: 0,
             inning: 1,
-            // Innings are broken into two parts call top and bottom. Top equals 0, bottom equals 1
-            inningPosition: 0
+            topOfInning: true,
+            playersOnBase: {
+                first: false,
+                second: false,
+                third: false
+            },
+            users: [],
+            nonActive: [],
+
         });
     },
 
@@ -103,6 +119,11 @@ Meteor.methods({
     // Find the pitcher on visiting (top) or home (bottom) with active equal true
 
     // Increase the number of pitches by pitcher by 1
+},
+
+// Add Active Pitcher to Team
+'addActivePitcher': function(gameId, pitcherId){
+
 },
 
 

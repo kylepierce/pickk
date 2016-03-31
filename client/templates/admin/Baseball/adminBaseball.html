@@ -20,10 +20,15 @@
 	<h1>Baseball!</h1>
 		<button data-action="createBaseballQuestion">Create Question</button>
 		<button data-action="createAtBat">Create At Bat</button>
-
-		{{#each atBat}}
-			{{dateCreated}}
-		{{/each}}
+		<button data-action="createBaseballGame">Create Baseball Game</button>
+	
+		{{#ionList}}
+			{{#each atBat}}
+				{{#ionItem}}					
+						{{playerId}} - {{dateCreated}}
+				{{/ionItem}}
+			{{/each}}
+		{{/ionList}}
 
 		{{/ionContent}}
 	  {{/ionView}}

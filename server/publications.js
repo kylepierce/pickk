@@ -241,6 +241,6 @@ Meteor.publish('groupUsers', function(groupId) {
 
 
 
-Meteor.publish('activeAtBatve', function(){
+Meteor.publish('activeAtBat', function(){
   return AtBat.find({ });
 })

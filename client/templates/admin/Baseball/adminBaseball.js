@@ -7,11 +7,17 @@ Template.adminBaseball.events({
 		event.preventDefault();
 		Meteor.call('createAtBat', "playerId", "A6PiQFJR7PLgZNjGv");
 	},
+	'click [data-action=createBaseballGame]': function (event, template) {
+		event.preventDefault();
+		Meteor.call('createBaseballGame', "team1", "team2", "dateOfGame", "timeOfGame", "tvStation");
+	},
 });
 
 Template.adminBaseball.helpers ({
 	atBat: function(){
-		return AtBat.find({}).fetch()
+		var atBat = AtBat.find({ }).fetch()
+		console.log(atBat)
+		return atBat
 	}
 
 })
