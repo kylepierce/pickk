@@ -336,7 +336,6 @@ Template.questionCard.helpers({
   'active': function(game){
     var game = Games.findOne({live: true});
     if(game.commercial == false){
-        console.log("I work!")
         return true
     } else {
       return false
@@ -753,4 +752,19 @@ Template.gameBar.helpers({
     }
   },
 
+});
+
+Template.normalPlay.helpers({
+  option6Exists: function () {
+    var option6 = this.options.option6
+    if (option6){
+      return true
+    }
+  },
+  option5Exists: function () {
+    var option5 = this.options.option5
+    if (option5){
+      return true
+    }
+  },
 });

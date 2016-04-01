@@ -371,7 +371,7 @@
 			{{options.option4.title}} 
 			<span class="multiplier">x {{options.option4.multiplier}}</span></label>
 		</div>
-
+		{{#if option5Exists}}
 		<div>
 			<input type="radio" name="play" id="{{options.option5.title}}" required value="option5">
 			<label for="{{options.option5.title}}" class="play-option">
@@ -379,7 +379,8 @@
 			{{options.option5.title}} 
 			<span class="multiplier">x {{options.option5.multiplier}}</span></label>
 		</div>
-
+		{{/if}}
+		{{#if option6Exists}}
 		<div>
 			<input type="radio" name="play" id="{{options.option6.title}}" required value="option6">
 			<label for="{{options.option6.title}}" class="play-option">
@@ -387,6 +388,7 @@
 			{{options.option6.title}} 
 			<span class="multiplier">x {{options.option6.multiplier}}</span></label>
 		</div>
+		{{/if}}
 	</div>
 </template>
 
