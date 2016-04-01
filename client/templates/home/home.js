@@ -9,7 +9,7 @@
 //       $( ".loading-wrapper" ).fadeIn( 'slow' );
 //     });
 //   });
-// });
+// }); 
 
 Meteor.startup(function () {
   if (Meteor.isCordova) {
@@ -687,14 +687,14 @@ Template.questionCard.events({
     Session.set('lastAnswer', answer);
     Session.set('lastWager', wager);
 
-    analytics.track("userAnsweredQuestion", {
-      id: currentUser,
-      question: que,
-      questionId: questionId,
-      answer: answer,
-      wager: wager,
-      description: description
-    });
+    // analytics.track("userAnsweredQuestion", {
+    //   id: currentUser,
+    //   question: que,
+    //   questionId: questionId,
+    //   answer: answer,
+    //   wager: wager,
+    //   description: description
+    // });
 
     var countdown = new ReactiveCountdown(360);
     countdown.start(function(){ 

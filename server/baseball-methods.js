@@ -35,7 +35,7 @@ Meteor.methods({
             nonActive: [],
 
         });
-    },
+    }, 
 
     // A player has an opportunity to bat. This consists of multiple swings.
     'createAtBat': function ( playerId, gameId) {
@@ -105,7 +105,7 @@ Meteor.methods({
         QuestionList.insert({
             dateCreated: timeCreated,
             createdBy: currentUserId,
-            gameId: currentGame,
+            gameId: currentGame._id,
             active: true,
             commercial: false,
             que: question,

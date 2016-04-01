@@ -33,7 +33,7 @@ Meteor.methods({
 		}  
 	},
 
-
+ 
 	'coinMachine': function(){
     var userIds = _.pluck(Meteor.users.find({}, {fields: {_id: 1, "profile.coins": 1, "profile.diamonds": 1}}).fetch(), '_id');
 
@@ -671,8 +671,15 @@ Meteor.methods({
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
 		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
+
+    // If "op5" exists add the option to the end of the options object.
+		if( question.options.option5 ){
+			var option5 = question.options.option5.usersPicked
+		}
+
+		if ( question.options.option6 ) {
+			var option6 = question.options.option6.usersPicked
+		}
 
 		var list = []
 
@@ -1189,10 +1196,8 @@ Meteor.methods({
 
 		var currentUser = Meteor.users.findOne({_id: user})
 		var counter = currentUser.profile.queCounter 
-		console.log(counter)
 
 		if(counter === 1){
-			console.log("Increased diamonds by 1")
 			Meteor.call('awardDiamonds', user, 1)
 		} else if(counter === 5){
 			Meteor.call('awardDiamonds', user, 2)
@@ -1208,13 +1213,13 @@ Meteor.methods({
 			Meteor.call('awardDiamonds', user, 13)
 		} 
 
-		var question = QuestionList.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
+		// var question = QuestionList.findOne({"_id": questionId});
+		// var option1 = question.options.option1.usersPicked
+		// var option2 = question.options.option2.usersPicked
+		// var option3 = question.options.option3.usersPicked
+		// var option4 = question.options.option4.usersPicked
+		// var option5 = question.options.option5.usersPicked
+		// var option6 = question.options.option6.usersPicked
 
 		//Update the question with the users answer and wager.
 		if (answer == "option1"){
@@ -1227,9 +1232,9 @@ Meteor.methods({
 			QuestionList.update(questionId, {$push: {'options.option4.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option5"){
 			QuestionList.update(questionId, {$push: {'options.option5.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option6"){
-			QuestionList.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
-		} 
+		} // else if (answer == "option6"){
+		// 	QuestionList.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
+		// } 
 	},
 
 		'twoOptionQuestionAnswered' : function( user, questionId, answer, wager, que){
