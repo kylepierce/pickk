@@ -5,7 +5,10 @@ Template.adminBaseball.events({
 	}, 
 	'click [data-action=createAtBat]': function (event, template) {
 		event.preventDefault();
-		Meteor.call('createAtBat', "playerId", "A6PiQFJR7PLgZNjGv");
+		var currentGame = Games.findOne({live: true});
+	  var currentGameId = currentGame._id
+	  console.log(currentGameId)
+		Meteor.call('createAtBat', "playerId", currentGameId);
 	},
 	'click [data-action=createBaseballGame]': function (event, template) {
 		event.preventDefault();

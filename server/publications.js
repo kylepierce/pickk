@@ -243,9 +243,20 @@ Meteor.publish('groupUsers', function(groupId) {
 
 Meteor.publish('activeAtBat', function(){
   return AtBat.find({active: true });
-})
+});
 
 Meteor.publish('atBatForThisGame', function(){
   var currentGame = Games.findOne({live: true});
-  return AtBat.find({gameId:  currentGame});
-})
+  var currentGameId = currentGame._id
+  console.log(currentGameId)
+  // return AtBat.find({});
+  return AtBat.find({gameId: currentGameId});
+});
+
+Meteor.publish('oneGamePlayers', function(){
+  return Players.find({})
+});
+
+// Meteor.publish('teams', function(){
+//   return Teams.find({ })
+// });

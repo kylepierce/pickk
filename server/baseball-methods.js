@@ -22,7 +22,6 @@ Meteor.methods({
                 pitcher: []
               }
             ],
-
             outs: 0,
             inning: 1,
             topOfInning: true,
@@ -32,8 +31,7 @@ Meteor.methods({
                 third: false
             },
             users: [],
-            nonActive: [],
-
+            nonActive: []
         });
     }, 
 
@@ -50,9 +48,6 @@ Meteor.methods({
             ballCount: 0,
             strikeCount: 0
         });
-        var active = AtBat.find({active: true}).fetch()
-        console.log(active)
-        console.log("created at bat")
     },
 
     'createBaseballQuestion': function (){
@@ -77,7 +72,7 @@ Meteor.methods({
         }
 
         // If the ball count is at 3 we want to change the "ball" option to "walk"
-        if ( ball = 3 ){
+        if ( balls = 3 ){
             var op2 = "Walk";
             var op3 = "Foul Ball";
             var op4 = "Hit";
@@ -148,8 +143,46 @@ Meteor.methods({
 //   // Find the pitch count  
 // }
 
+// "firstName", "lastName", "position", "walks", "strikeout", "secondBase", "thirdBase", "bats", "throws", "avgBat", "homeRun", "rbi", obp, "photo", "injured"
 
 
+// Add player
+'addPlayer': function( firstName, lastName, position, walks, strikeout, secondBase, thirdBase, bats, throws, avgBat, homeRun, rbi, obp, photo, injured ) {
+    var timeCreated = new Date();
+    var currentUserId = Meteor.userId();
+    Players.insert({
+        createdBy: currentUserId,
+        dateCreated: timeCreated,
+        firstName: firstName,
+        lastName: lastName, 
+        position: position, 
+        stats: {
+            secondBase: secondBase,
+            thirdBase: thirdBase, 
+            walks: walks,
+            bats: bats,
+            throws: throws,
+            avgBat: avgBat,
+            homeRun: homeRun,
+            rbi: rbi,
+            obp: obp,
+         },
+        photo: photo ,  
+        injured: injured ,
+    });
+},
+
+// Create A Team to Group Players
+// 'addTeam' : function (fullName, city, state, nickname, players, pitchers, battingOrder){
+//     Teams.insert({
+//         fullName : fullName,
+//         city : city,
+//         state : state,
+//         nickname : nickname,
+//         battingOrder : battingOrder
+//     });
+    
+// },
 
 // // moveToNextBase (number)
 
@@ -195,6 +228,7 @@ Meteor.methods({
     var currentAtBat = AtBat.findOne({active: true});
     AtBat.update(currentAtBat, {$inc: {"strikeCount": 1}});
  },
+
 'addBall': function(){
     var currentAtBat = AtBat.findOne({active: true});
     AtBat.update(currentAtBat, {$inc: {"ballCount": 1}});
