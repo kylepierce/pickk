@@ -619,8 +619,11 @@ Meteor.methods({
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
 		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
+
+		if(question.options.option5) {
+			var option5 = question.options.option5.usersPicked
+		}
+		// var option6 = question.options.option6.usersPicked
 
 		function awardPointsBack(user) {
 			// Update users coins
@@ -656,8 +659,14 @@ Meteor.methods({
 		option2.map(function (user) {awardPointsBack(user)});
 		option3.map(function (user) {awardPointsBack(user)});
 		option4.map(function (user) {awardPointsBack(user)});
-		option5.map(function (user) {awardPointsBack(user)});
-		option6.map(function (user) {awardPointsBack(user)});
+
+		if(question.options.option5) {
+			option5.map(function (user) {awardPointsBack(user)});
+		}
+
+		if(question.options.option5) {
+			option6.map(function (user) {awardPointsBack(user)});
+		}
 
 	},
 

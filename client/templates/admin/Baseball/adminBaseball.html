@@ -22,6 +22,11 @@
 		<button data-action="createAtBat">Create At Bat</button>
 		<button data-action="createBaseballGame">Create Baseball Game</button>
 	
+		{{> battingLineUp}}
+		{{> activeQuestionList}}
+		{{> pendingQuestionList}}
+<!-- 		{{> oldQuestionList}} -->
+
 		{{#ionList}}
 			{{#each atBat}}
 				{{#ionItem}}					
@@ -33,4 +38,18 @@
 		{{/ionContent}}
 	  {{/ionView}}
  </div>
+</template>
+
+<template name="battingLineUp">
+	
+	{{#ionList}}
+		 <div class="item item-divider">Batting Lineup</div>
+		{{#each batter}}
+			{{#ionItem}} 
+				{{#with playersInfo playerId}} 
+					{{firstName}} {{lastName}} 
+				{{/with}}
+				{{/ionItem}}
+		{{/each}}
+	{{/ionList}}
 </template>

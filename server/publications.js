@@ -257,6 +257,6 @@ Meteor.publish('oneGamePlayers', function(){
   return Players.find({})
 });
 
-// Meteor.publish('teams', function(){
-//   return Teams.find({ })
-// });
+Meteor.publish('teams', function(){
+  return Teams.find({ })
+});
