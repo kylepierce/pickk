@@ -238,7 +238,7 @@ Meteor.methods({
     var playersSpot = battingLineUp[orderNumber] 
 
     // console.log(playersSpot)
-    Team.update({_id: team}) playersSpot.playerId = playerId
+    // Team.update({_id: team}) playersSpot.playerId = playerId
     // console.log(playersSpot.playerId)
 
     return 
