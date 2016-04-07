@@ -57,6 +57,7 @@ Meteor.methods({
         
         // Find the Player "At Bat" 
         var currentAtBat = AtBat.findOne({active: true});
+        console.log(currentAtBat)
         var strikes = currentAtBat.strikeCount
         console.log(strikes)
         var balls = currentAtBat.ballCount
@@ -110,12 +111,6 @@ Meteor.methods({
         });
     },
 
-
-//Award all the players who correctly guessed the question
-'awardPlayers': function ( ) {
-
-},
-
 'increasePitch': function ( ) {    
     // Find out of its the top or bottom of the inning
 
@@ -135,8 +130,50 @@ Meteor.methods({
 
  },
 
+ 'addWalk': function() {
+
+ },
+
+ 'threeOuts': function() {
+    var currentGame = Games.findOne({live: true})
+    console.log(currentGame.topOfInning)
+    var topOfInning = currentGame.topOfInning
+    var outs = currentGame.outs
+    if(outs == 3) {
+        // Toggle the topOfInning
+        Games.update({_id: currentGame._id}, 
+            {$set: {'topOfInning': !topOfInning }})
+    } else {
+        console.log("Same team batting")
+    }
+ },
+
+ 'increaseBatterCount': function(){
+    var currentGame = Games.findOne({live: true})
+    var team = Meteor.call('topOfInningPostion')
+    var teamId = currentGame.teams[team].teamId
+    var batterNum = currentGame.teams[team].batterNum
+
+    if( batterNum === 9 ) {
+        Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
+        console.log(currentGame.teams[team])
+    } else {
+        Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
+        console.log(currentGame.teams[team])
+    }
+
+    
+ },
+
 // Add Active Pitcher to Team
-'addActivePitcher': function(gameId, pitcherId){
+'addActivePitcher': function(pitcherId){
+    var currentGame = Games.findOne({live: true})
+    var team = Meteor.call('topOfInningPostion')
+    var teamId = currentGame.teams[team].teamId
+    var batterNum = currentGame.teams[team].batterNum
+
+    Games.update({live: true, 'teams.teamId': teamId}, {$push: {'teams.$.pitcher': {playerId: pitcherId, pitchCounter: 0}}});
+    console.log(currentGame.teams[team])
 
 },
 
@@ -219,6 +256,23 @@ Meteor.methods({
     return team
 },
 
+'topOfInningPostion': function( ) {
+    // Find the current game and the team that is at bat.
+    var currentGame = Games.findOne({live: true})
+    // console.log(currentGame)
+    var topOfInning = currentGame.topOfInning
+    // console.log(topOfInning)
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+        console.log("topOfInning is true")
+        var team = 0
+    } else {
+        console.log("topOfInning is false")
+        var team = 1
+    }
+    return team
+},
 
 'findBattingLineUp' : function ( team ) { 
     console.log(teamPlayers)
@@ -242,6 +296,55 @@ Meteor.methods({
     // console.log(playersSpot.playerId)
 
     return 
+},
+
+// What should the system do next?
+'nextPlay' : function( value ) {
+    switch(value) {
+        case "Strike":
+            // Increase Strike Counter
+            Meteor.call('addStrike');
+
+            // Add Pitch increasePitch
+            
+            // Create next question
+            Meteor.call('createBaseballQuestion');
+            break;
+        case "Ball": 
+            // Increase Ball Counter +1
+            Meteor.call('addBall');
+
+            // Add Pitch increasePitch
+
+            // Create next question
+            Meteor.call('createBaseballQuestion');
+        case "Strike Out":
+            // Add Pitch increasePitch
+
+            // Change players 
+            Meteor.call('batterRotation')
+
+            // Increase Out Counter +1
+            Meteor.call('addOut');
+
+            // Check to see the number of outs
+
+            // Create next question
+            Meteor.call('createBaseballQuestion');
+            break;
+        case "Walk":
+
+            break;
+        case "Hit":
+
+            break;
+        case "Foul Ball":
+
+            break;
+        case "Out":
+
+            break;
+    }
 },
 
 // // moveToNextBase (number)
@@ -284,19 +387,6 @@ Meteor.methods({
 //      Find player from batting order
 //      Set the on deck player by finding the batter number plus 1
 
-
-
-// If “Strike” is selected as answer
-//      Award players (“Strike”)
-//      Increase Strike Counter +1
-//      call increasePitch
-//      call createQuesitonMethod(strikes, balls)
-
-// If “Ball” is selected as answer
-//      Award players (“Strike”)
-//      Increase Ball Counter +1
-//      call increasePitch
-//      call createQuesitonMethod(strikes, balls)
 
 // If “Hit”
 //      awardPlayers(“hit”)

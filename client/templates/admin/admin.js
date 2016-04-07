@@ -124,6 +124,15 @@ Template.oldQuestionList.events({
 
 // Select correct answer and award points to those who guessed correctly.
 Template.pendingQuestionList.events({
+	// Find all buttons
+
+	// Get their "value"
+	'click .pending': function(event, template ) {
+		var value = event.currentTarget.value 
+		Meteor.call('nextPlay', value)
+	},
+	// It should match one of these options 
+
 	//True False Questions
 	'click [data-action=true]': function() {
 		// Select the id of the button that is clicked

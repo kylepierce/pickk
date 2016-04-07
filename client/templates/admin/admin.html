@@ -14,11 +14,11 @@
 		  {{/contentFor}}
    		 
    		 {{#contentFor "headerTitle"}}
-					<h1 class="title white-text-header">Admin Panel</h1>
+					<h1 class="title white-text-header">FootballAdmin Panel</h1>
    		 {{/contentFor}}
 		
-		{{> createQuestion}}
-		{{> activeQuestionList}}
+		<!-- {{> createQuestion}} -->
+		{{> activeQuestionList}} 
 		{{> pendingQuestionList}}
 		{{> oldQuestionList}}
 	
@@ -114,37 +114,61 @@
 			<div style="clear:both;">
 			<li style="float:left" class="{{_id}}"> <h4>{{que}}</h4></li>
 			<div style="clear:both;">
-				<button data-action="remove" class="yes col col-50 button button-assertive">Remove question</button>
+				<button  class="yes col col-50 pending button button-assertive">Do Nothing</button>
 
-				<button data-action="reactivate" class="yes col col-50 button button-balanced">Reactivate question</button>
+			</div>
+			<div style="clear:both;">
+				<button data-action="remove" class="yes col col-50 pending button button-assertive">Remove question</button>
+
+				<button data-action="reactivate" class="yes col col-50 pending button button-balanced">Reactivate question</button>
 			</div>
 			{{#if binary}}
 				{{#if binaryCommerical this}}
 					<div style="clear:both;" class="row">
-						<button data-action="true" class="col col-50 wager-box button-balanced">{{options.option1.title}}</button>
-						<button data-action="false" class="col col-50 wager-box button-balanced">{{options.option2.title}}</button>
+						<button data-action="true" class="col col-50 pending wager-box button-balanced" value="{{options.option1.title}}">
+							{{options.option1.title}}
+						</button>
+						<button data-action="false" class="col col-50 pending wager-box button-balanced" value="{{options.option2.title}}">
+							{{options.option2.title}}
+						</button>
 					</div>
 				{{else}}
 					<div style="clear:both;" class="row">
-						<button data-action="twoOption1" class="col col-50 wager-box">{{options.option1.title}}</button>
-						<button data-action="twoOption2" class="col col-50 wager-box">{{options.option2.title}}</button>
+						<button data-action="twoOption1" class="col col-50 pending wager-box" value="{{options.option1.title}}">
+							{{options.option1.title}}
+						</button>
+						<button data-action="twoOption2" class="col col-50 pending wager-box" value="{{options.option2.title}}">
+							{{options.option2.title}}
+						</button>
 					</div>
 				{{/if}}
 			{{else}}
 
 			<div style="clear:both;" class="row">
-					<button data-action="option1" class="col col-50 wager-box">{{options.option1.title}}</button>
-					<button data-action="option2" class="col col-50 wager-box">{{options.option2.title}}</button>
+					<button data-action="option1" class="col col-50 pending wager-box" value="{{options.option1.title}}">
+						{{options.option1.title}}
+					</button>
+					<button data-action="option2" class="col col-50 pending wager-box" value="{{options.option2.title}}">
+						{{options.option2.title}}
+					</button>
 			</div>
 
 			<div class="row">
-					<button data-action="option3" class="col col-50 wager-box">{{options.option3.title}}</button>
-					<button data-action="option4" class="col col-50 wager-box">{{options.option4.title}}</button>
+					<button data-action="option3" class="col col-50 pending wager-box" value="{{options.option3.title}}">
+						{{options.option3.title}}
+					</button>
+					<button data-action="option4" class="col col-50 pending wager-box" value="{{options.option4.title}}">
+						{{options.option4.title}}
+					</button>
 			</div>
 
 			<div class="row">
-					<button data-action="option5" class="col col-50 wager-box">{{options.option5.title}}</button>
-					<button data-action="option6" class="col col-50 wager-box">{{options.option6.title}}</button>
+					<button data-action="option5" class="col col-50 pending wager-box" value="{{options.option5.title}}">
+						{{options.option5.title}}
+					</button>
+					<button data-action="option6" class="col col-50 pending wager-box" value="{{options.option6.title}}">
+						{{options.option6.title}}
+					</button>
 			</div>
 
 			{{/if}}
