@@ -248,13 +248,12 @@ Meteor.methods({
 },
 
 // Create A Team to Group Players
-'addTeam' : function (fullName, city, state, nickname, players, pitchers, battingOrder){
+'addTeam' : function (fullName, city, state, nickname){
     Teams.insert({
         fullName : fullName,
         city : city,
         state : state,
         nickname : nickname,
-        battingNumber : battingOrder,
         battingOrderLineUp: []
     });
     
@@ -295,6 +294,18 @@ Meteor.methods({
     }
     console.log(team)
     return team
+},
+
+'addBattingLineup': function (teamId, n0, p0, n1, p1, n2, p2, n3, p3, n4, p4, n5, p5, n6, p6, n7, p7, n8, p8, n9, p10 ) {
+  var battingOrderLineUp = []
+  var args = arguments
+  for (var i = 1; i < args.length-1 ; i+=2) {
+    var name = args[i]
+    var position = args[i+1]
+    var batter = { "name": name, "position": position }
+    battingOrderLineUp.push(batter) 
+  }
+  Teams.update({_id: teamId}, {$set: {"battingOrderLineUp": battingOrderLineUp}});
 },
 
 'findBattingLineUp' : function ( team ) { 
