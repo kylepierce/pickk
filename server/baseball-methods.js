@@ -36,7 +36,16 @@ Meteor.methods({
     }, 
 
     // A player has an opportunity to bat. This consists of multiple swings.
-    'createAtBat': function ( playerId, gameId) {
+    'createAtBat': function () {
+        var currentGame = Games.findOne({live: true})
+        var team = Meteor.call('topOfInningPostion')
+        console.log(team.batterNum)
+        console.log(team.teamId)
+        var atBatNumber = team.batterNum
+        var teamId = team.teamId 
+        var teamObj = Teams.findOne({_id: teamId})
+        var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
+        // var currentAtBat = Players.find({_id: });
         var currentUserId = Meteor.userId();
         var timeCreated = new Date();
         AtBat.insert({
@@ -134,6 +143,12 @@ Meteor.methods({
 
  },
 
+ 'addOut': function(){
+    var currentGame = Games.findOne({live: true})    
+    Games.update({_id: currentGame._id}, 
+            {$inc: {'outs': +1 }})
+ },
+
  'threeOuts': function() {
     var currentGame = Games.findOne({live: true})
     console.log(currentGame.topOfInning)
@@ -172,7 +187,12 @@ Meteor.methods({
     var teamId = currentGame.teams[team].teamId
     var batterNum = currentGame.teams[team].batterNum
 
-    Games.update({live: true, 'teams.teamId': teamId}, {$push: {'teams.$.pitcher': {playerId: pitcherId, pitchCounter: 0}}});
+    Games.update({live: true, 'teams.teamId': teamId}, 
+        {$push: 
+            {'teams.$.pitcher': 
+                {playerId: pitcherId, pitchCounter: 0}
+            }
+        });
     console.log(currentGame.teams[team])
 
 },
@@ -322,12 +342,15 @@ Meteor.methods({
             // Add Pitch increasePitch
 
             // Change players 
-            Meteor.call('batterRotation')
+            Meteor.call('increaseBatterCount')
 
             // Increase Out Counter +1
             Meteor.call('addOut');
 
             // Check to see the number of outs
+            Meteor.call('threeOuts');
+
+            Meteor.call('createAtBat')
 
             // Create next question
             Meteor.call('createBaseballQuestion');
@@ -346,6 +369,93 @@ Meteor.methods({
             break;
     }
 },
+
+'addBatterLineUp': function () {
+ // Find the current game and the team that is at bat.
+ var currentGame = Games.findOne({live: true})
+ console.log(currentGame.topOfInning)
+ var topOfInning = currentGame.topOfInning
+
+
+ // Depending on inning postion pick the visitor (0) or home team (1).
+ if( topOfInning === true ){
+     var team = currentGame.teams[0]
+ } else {
+     var team = currentGame.teams[1]
+ }
+
+ // Find the Team
+ var teamId = team.teamId
+
+ var team = Teams.findOne({_id: teamId})
+
+ // Then Find the batting line up
+ var battingLineUp = team.battingOrderLineUp
+
+ // Store all of the players on a list 
+ var playerList = []
+
+ //For every name on the batter line up. Find the player id.
+ for (var i = battingLineUp.length - 1; i >= 0; i--) {
+     // Get the player
+     var thisPlayer = battingLineUp[i]
+
+     // Name and position
+     var name = thisPlayer.name
+     var position = thisPlayer.position
+
+     var playerId = Meteor.call('findPlayersId', name, position, teamId);
+     console.log(playerId)
+    
+    selector = {};
+    operator = {};
+    selector['battingOrderLineUp.' + i + '.playerId'] = playerId; 
+    // {'comments.0.num_likes' : 1}
+    operator['$set'] = selector;  
+    console.log(operator)
+    // {'$inc' : {'comments.0.num_likes' : 1} }
+
+    // var batterPosition = 'battingOrderLineUp.' + i + '.playerId'
+     // Add player to the player list
+    Teams.update({'_id': teamId}, operator);
+     console.log(thisPlayer)
+     console.log(name)
+     console.log(teamId)
+ }
+},
+
+//Find a players id
+'findPlayersId': function(name, position, teamId){
+    // We are going to use player's name, position, and teamId
+    
+    // Get correct player info
+    var firstInitial = name.substring(0,1)
+    var lastName = name.substring(3)
+
+    var player = Players.findOne({teamId: teamId, position: position, lastName: lastName})
+    
+    if(player){
+        // Check to make sure there is only 1 player
+        if ( player.length >= 2 ) {
+            console.log("There are multiple players returned")
+            var playerId = "Fake PlayerId"
+        } else {
+            var playerId = player._id
+        }
+    } else {
+        console.log( name + " isnt in the player directory");
+        var playerId = "Fake PlayerId";
+    }
+    return playerId
+},
+
+
+
+
+
+
+
+
 
 // // moveToNextBase (number)
 
