@@ -436,7 +436,43 @@ Meteor.methods({
 
 
 
-// moveToNextBase (number)
+'checkIfPlayerIsOn': function ( number ){
+  // Check to see if a player if on that base
+  var currentGame = Games.findOne({live: true})
+  var playersOnBase = currentGame.playersOnBase
+  var number = parseInt(number)
+  switch ( number ) {
+    case 3: 
+      console.log("third");
+      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.third": true, "playersOnBase.second": false, "playersOnBase.first": false}});
+      console.log(playersOnBase.third)
+      return currentGame.playersOnBase
+      break;
+    case 2:
+      console.log("second");
+      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
+      console.log(playersOnBase.second)
+      return currentGame.playersOnBase
+      break;
+    case 1:
+      console.log("first");
+      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
+      console.log(playersOnBase.first)
+      return currentGame.playersOnBase
+      break;
+  }
+},
+
+'moveToNextBase': function( number ) {
+  var isThereAPlayer = Meteor.call('checkIfPlayerIsOn', number)
+  if( isThereAPlayer ){
+    console.log("Whoa! There is someone already here!")
+    console.log(isThereAPlayer)
+  } else {
+    console.log('Congrats you are now the owner of ' + number + " base")
+
+  }
+}
 
 // ' playerToBase ': function ( number ){
 //   var g = Games.findOne({live: true});
