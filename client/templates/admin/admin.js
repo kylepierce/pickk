@@ -38,7 +38,7 @@ Template.activeQuestionList.helpers({
 // Show pending questions
 Template.pendingQuestionList.helpers({
 	'questions': function(){
-		var questions = QuestionList.find({active: null}, {sort: {dateCreated: 1}}).fetch();
+		var questions = QuestionList.find({ $and: [{active: null}, { atBatQuestion: { $ne: true }}]}, {sort: {dateCreated: -1}}).fetch();
 		return questions
 	},
 	'binary': function(){
@@ -50,6 +50,13 @@ Template.pendingQuestionList.helpers({
 		if(this.commercial == true){
 			return true
 		}
+	}
+});
+
+Template.atBatQuestion.helpers({
+	'questions': function(){
+		var questions = QuestionList.find({active: null, atBatQuestion: true}, {sort: {dateCreated: -1}}).fetch();
+		return questions
 	}
 });
 
@@ -129,7 +136,10 @@ Template.pendingQuestionList.events({
 	// Get their "value"
 	'click .pending': function(event, template ) {
 		var value = event.currentTarget.value 
-		Meteor.call('nextPlay', value)
+		if(value == "Hit"){
+			var baseNumber = prompt('What Base?')
+		}
+		Meteor.call('nextPlay', value, baseNumber)
 	},
 	// It should match one of these options 
 
@@ -161,6 +171,62 @@ Template.pendingQuestionList.events({
 
 		Meteor.call('modifyTwoOptionQuestionStatus', questionId, "option2");
 	},
+
+	'click [data-action=option1]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option1");
+		
+	},
+	'click [data-action=option2]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option2");
+	},
+	'click [data-action=option3]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option3");
+	},
+	'click [data-action=option4]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option4");
+	},
+	'click [data-action=option5]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option5");
+	},
+	'click [data-action=option6]': function() {
+		// Select the id of the button that is clicked
+		var questionId = this._id;
+
+		Meteor.call('modifyQuestionStatus', questionId, "option6");
+	},
+	'click [data-action=remove]' : function() {
+		if(confirm("Are you sure?")) {
+			Meteor.call('removeQuestion', this._id)
+		}
+	},
+	'click [data-action=reactivate]' : function() {
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this._id)
+		}
+	}
+
+});
+
+// Select correct answer and award points to those who guessed correctly.
+Template.atBatQuestion.events({
+	// Find all buttons
+
+	// Get their "value"
 
 	'click [data-action=option1]': function() {
 		// Select the id of the button that is clicked

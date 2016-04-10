@@ -43,24 +43,68 @@ Meteor.methods({
   var currentGame = Games.findOne({live: true})
   var gameId = currentGame._id
 
-  var team = Meteor.call('topOfInning')
-  var teamId = team.teamId 
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
+  var atBatNumber = currentGame.teams[team].batterNum
   var teamObj = Teams.findOne({_id: teamId})
-  var atBatNumber = team.batterNum
 
   var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
-  var pitcher = Meteor.call('findActivePitcher');
-  pitcherId = pitcher.playerId
+  // var pitcher = Meteor.call('findActivePitcher');
+  // pitcherId = pitcher.playerId
 
   AtBat.insert({
-      createdBy: currentUserId,
-      dateCreated: timeCreated,
-      active: true,
-      playerId: playerId,
-      pitcherId: pitcherId,
-      gameId: gameId,
-      ballCount: 0,
-      strikeCount: 0
+    createdBy: currentUserId,
+    dateCreated: timeCreated,
+    active: true,
+    playerId: playerId,
+    // pitcherId: pitcherId,
+    gameId: gameId,
+    ballCount: 0,
+    strikeCount: 0
+  });
+
+  Meteor.call('createAnAtBatQuestion')
+  Meteor.call('createBaseballQuestion')
+
+},
+
+'createAnAtBatQuestion': function() {
+  var timeCreated = new Date();
+  var currentUserId = Meteor.userId();
+  var currentGame = Games.findOne({live: true});
+  
+  // Find the Player "At Bat" 
+  var currentAtBat = AtBat.findOne({active: true});
+  var playerId = currentAtBat.playerId
+  var pitcherId = currentAtBat.pitcherId
+
+  var op1 = "Out";
+  var op2 = "Walk";
+  var op3 = "Single";
+  var op4 = "Double";
+  var op5 = "Triple";
+  var op6 = "Home Run";
+
+  var options = {
+    option1: {title: op1, usersPicked: [], multiplier: 2.1 },
+    option2: {title: op2, usersPicked: [], multiplier: 2.2 },
+    option3: {title: op3, usersPicked: [], multiplier: 2.3 },
+    option4: {title: op4, usersPicked: [], multiplier: 2.4 },
+    option5: {title: op5, usersPicked: [], multiplier: 2.3 },
+    option6: {title: op6, usersPicked: [], multiplier: 2.4 },
+  }
+
+  var question = "End of " + currentAtBat.playerId + " at bat." ;
+
+  QuestionList.insert({
+    dateCreated: timeCreated,
+    createdBy: currentUserId,
+    atBatQuestion: true,
+    // gameId: currentGame._id,
+    active: true,
+    commercial: false,
+    que: question,
+    options: options
   });
 },
 
@@ -96,7 +140,7 @@ Meteor.methods({
   }
 
   // Generate what is likely to happen by calling the multiplier generator
-  Meteor.call('', playerId, pitcherId, strikes, balls)
+  // Meteor.call('', playerId, pitcherId, strikes, balls)
 
 
   // Finally we are going to create an option object to give to the database.
@@ -118,7 +162,7 @@ Meteor.methods({
   QuestionList.insert({
       dateCreated: timeCreated,
       createdBy: currentUserId,
-      gameId: currentGame._id,
+      // gameId: currentGame._id,
       active: true,
       commercial: false,
       que: question,
@@ -157,8 +201,7 @@ Meteor.methods({
         Games.update({_id: currentGame._id}, {$inc: {'inning': +1}})
       }
       // Toggle the topOfInning
-      Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning }})
-
+      Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning, "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}})
   } else {
       console.log("Same team batting")
   }
@@ -167,10 +210,12 @@ Meteor.methods({
 'increaseBatterCount': function(){
   var currentGame = Games.findOne({live: true})
   var team = Meteor.call('topOfInningPostion')
-  var teamId = currentGame.teams[team].teamId
   var batterNum = currentGame.teams[team].batterNum
+  var teamId = currentGame.teams[team].teamId
+  var team = Teams.findOne({_id: teamId})
+  var numberOfBatters = team.battingOrderLineUp.length
 
-  if( batterNum === 9 ) {
+  if( batterNum > 8 ) {
       Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
   } else {
       Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
@@ -332,7 +377,7 @@ Meteor.methods({
 },
 
 // What should the system do next?
-'nextPlay' : function( value ) {
+'nextPlay' : function( value , baseNumber ) {
   switch( value ) {
     case "Strike":
       // Increase Strike Counter
@@ -354,6 +399,13 @@ Meteor.methods({
       Meteor.call('createBaseballQuestion');
       break;
 
+    case "Foul Ball":
+      // Add Pitch increasePitch
+
+      // Create next question
+      Meteor.call('createBaseballQuestion');
+      break;
+
     case "Strike Out":
       // Add Pitch increasePitch
 
@@ -369,24 +421,54 @@ Meteor.methods({
       Meteor.call('endBattersAtBat', "Strike Out")
 
       Meteor.call('createAtBat')
-
-      // Create next question
-      Meteor.call('createBaseballQuestion');
       break;
 
     case "Walk":
+      // Add Pitch increasePitch
 
+      // Change players 
+      Meteor.call('increaseBatterCount')
+
+      // Move this player to first base
+      Meteor.call('sendToABase', 1)
+
+      Meteor.call('endBattersAtBat', "Walk")
+
+      Meteor.call('createAtBat')
       break;
 
     case "Hit":
+      // Add Pitch increasePitch
 
-      break;
+      // Change players 
+      Meteor.call('increaseBatterCount')
 
-    case "Foul Ball":
+      // Find what base they got to
+      Meteor.call('sendToABase', baseNumber)
+
+      var message = "Base " + baseNumber
+
+      Meteor.call('endBattersAtBat', message)
+
+      Meteor.call('createAtBat')
 
       break;
 
     case "Out":
+      // Add Pitch increasePitch
+
+      // Change players 
+      Meteor.call('increaseBatterCount')
+
+      // Increase Out Counter +1
+      Meteor.call('addOut');
+
+      // Check to see the number of outs
+      Meteor.call('threeOuts');
+
+      Meteor.call('endBattersAtBat', "Out")
+
+      Meteor.call('createAtBat')
 
       break;
   }
@@ -476,35 +558,91 @@ Meteor.methods({
   switch ( number ) {
     case 3: 
       console.log("third");
-      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.third": true, "playersOnBase.second": false, "playersOnBase.first": false}});
       console.log(playersOnBase.third)
-      return currentGame.playersOnBase
+      return playersOnBase.third
       break;
     case 2:
       console.log("second");
-      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
       console.log(playersOnBase.second)
-      return currentGame.playersOnBase
+      return playersOnBase.second
       break;
     case 1:
       console.log("first");
-      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
       console.log(playersOnBase.first)
-      return currentGame.playersOnBase
+      return playersOnBase.first
       break;
   }
 },
 
 'moveToNextBase': function( number ) {
+  if (number > 3 || number < 1) {
+    console.log('there are only 3 bases to move to');
+    return 
+  }
   var isThereAPlayer = Meteor.call('checkIfPlayerIsOn', number)
+  var number = parseInt(number)
+  var currentGame = Games.findOne({live: true})
+  var playersOnBase = currentGame.playersOnBase
   if( isThereAPlayer ){
     console.log("Whoa! There is someone already here!")
-    console.log(isThereAPlayer)
+    if(number < 2){
+      Meteor.call('checkIfPlayerIsOn', number+1)
+    } else if (number == 3){
+      // increase this teams score by one
+      console.log('Someones gonna score!')
+    }
+    
   } else {
     console.log('Congrats you are now the owner of ' + number + " base")
-
+    switch ( number ) {
+      case 3: 
+        console.log("third");
+        Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});
+        console.log(playersOnBase)
+        break;
+      case 2:
+        console.log("second");
+        console.log(playersOnBase.second)
+        Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
+        break;
+      case 1:
+        console.log("first");
+        console.log(playersOnBase.first)
+        Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
+        break;
+    }
   }
-}
+},
+
+'sendToABase': function( number ){
+  if (number > 3 || number < 1) {
+    console.log('there are only 3 bases to move to');
+    return 
+  }
+  // var isThereAPlayer = Meteor.call('checkIfPlayerIsOn', number)
+  var number = parseInt(number)
+  var currentGame = Games.findOne({live: true})
+  var playersOnBase = currentGame.playersOnBase
+  switch ( number ) {
+    case 3: 
+      console.log("third");
+      Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});
+      console.log(playersOnBase)
+      break;
+    case 2:
+      console.log("second");
+      console.log(playersOnBase.second)
+      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
+      break;
+    case 1:
+      console.log("first");
+      console.log(playersOnBase.first)
+      Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
+      break;
+  }
+},
+
+
 
 // ' playerToBase ': function ( number ){
 //   var g = Games.findOne({live: true});

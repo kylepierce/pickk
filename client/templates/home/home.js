@@ -726,9 +726,9 @@ Template.gameBar.helpers({
     //  
     var first = currentGame.playersOnBase.first
     if(first){
-      return "true"
+      return true
     } else {
-      return "false"
+      return false
     }
   },
   second: function () {
@@ -736,9 +736,9 @@ Template.gameBar.helpers({
     // 
     var second = currentGame.playersOnBase.second
     if(second){
-      return "true"
+      return true
     } else {
-      return "false"
+      return false
     }
   },
   third: function () {
@@ -746,9 +746,9 @@ Template.gameBar.helpers({
     // 
     var third = currentGame.playersOnBase.third
     if(third){
-      return "true"
+      return true
     } else {
-      return "false"
+      return false
     }
   },
   inning: function ( ) {
@@ -774,11 +774,11 @@ Template.normalPlay.helpers({
   },
 });
 
-Template.playerInfo.helpers({
-  playerInfo: function () {
-    var playerAtBat = AtBat.findOne({active: true})
-    console.log(playerAtBat)
-    var playerId = playerAtBat.playerId
-    console.log(playerId)
-  }
-});
+// Template.playerInfo.helpers({
+//   playerInfo: function () {
+//     var playerAtBat = AtBat.findOne({active: true})
+//     console.log(playerAtBat)
+//     var playerId = playerAtBat.playerId
+//     console.log(playerId)
+//   }
+// });

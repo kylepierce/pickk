@@ -23,7 +23,7 @@ Meteor.publish('userNotAnswered', function(){
 Meteor.publish('questions', function(){
 	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
 	if(activeQuestions){
-		return activeQuestions
+		return activeQuestions 
 	}
 	return this.ready();
 });
@@ -37,7 +37,7 @@ Meteor.publish('questions', function(){
 // });
 
 Meteor.publish('pendingQuestions', function(){
-	var pendingQuestions = QuestionList.find({active: null}, {sort: {dateCreated: 1}});
+	var pendingQuestions = QuestionList.find({active: null}, {sort: {dateCreated: -1}});
 	if(pendingQuestions){
 		return pendingQuestions
 	}
