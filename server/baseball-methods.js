@@ -49,12 +49,15 @@ Meteor.methods({
   var atBatNumber = team.batterNum
 
   var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
+  var pitcher = Meteor.call('findActivePitcher');
+  pitcherId = pitcher.playerId
 
   AtBat.insert({
       createdBy: currentUserId,
       dateCreated: timeCreated,
       active: true,
       playerId: playerId,
+      pitcherId: pitcherId,
       gameId: gameId,
       ballCount: 0,
       strikeCount: 0
@@ -70,6 +73,8 @@ Meteor.methods({
   var currentAtBat = AtBat.findOne({active: true});
   var strikes = currentAtBat.strikeCount
   var balls = currentAtBat.ballCount
+  var playerId = currentAtBat.playerId
+  var pitcherId = currentAtBat.pitcherId
 
   // These are the traditional options for single swing.
   var op1 = "Strike";
@@ -91,6 +96,8 @@ Meteor.methods({
   }
 
   // Generate what is likely to happen by calling the multiplier generator
+  Meteor.call('', playerId, pitcherId, strikes, balls)
+
 
   // Finally we are going to create an option object to give to the database.
   var options = {
@@ -119,14 +126,6 @@ Meteor.methods({
   });
 },
 
-'increasePitch': function ( ) {    
-    // Find out of its the top or bottom of the inning
-
-    // Find the pitcher on visiting (top) or home (bottom) with active equal true
-
-    // Increase the number of pitches by pitcher by 1
-},
-
 'addStrike': function(){
     var currentAtBat = AtBat.findOne({active: true});
     AtBat.update(currentAtBat, {$inc: {"strikeCount": 1}});
@@ -138,15 +137,14 @@ Meteor.methods({
 
  },
 
- 'addWalk': function() {
+'addWalk': function() {
 
- },
+},
 
- 'addOut': function(){
-    var currentGame = Games.findOne({live: true})    
-    Games.update({_id: currentGame._id}, 
-            {$inc: {'outs': +1 }})
- },
+'addOut': function(){
+  var currentGame = Games.findOne({live: true})    
+  Games.update({_id: currentGame._id}, {$inc: {'outs': +1 }})
+},
 
 'threeOuts': function() {
   var currentGame = Games.findOne({live: true})
@@ -164,61 +162,93 @@ Meteor.methods({
   } else {
       console.log("Same team batting")
   }
- },
+},
 
- 'increaseBatterCount': function(){
-    var currentGame = Games.findOne({live: true})
-    var team = Meteor.call('topOfInningPostion')
-    var teamId = currentGame.teams[team].teamId
-    var batterNum = currentGame.teams[team].batterNum
+'increaseBatterCount': function(){
+  var currentGame = Games.findOne({live: true})
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
+  var batterNum = currentGame.teams[team].batterNum
 
-    if( batterNum === 9 ) {
-        Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
-        console.log(currentGame.teams[team])
-    } else {
-        Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
-        console.log(currentGame.teams[team])
-    }
+  if( batterNum === 9 ) {
+      Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
+  } else {
+      Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
+  }
 
-    
- },
+  
+},
 
 // Add Active Pitcher to Team
 'addActivePitcher': function(pitcherId){
-    var currentGame = Games.findOne({live: true})
-    var team = Meteor.call('topOfInningPostion')
-    var teamId = currentGame.teams[team].teamId
-    var batterNum = currentGame.teams[team].batterNum
+  var currentGame = Games.findOne({live: true})
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
 
-    Games.update({live: true, 'teams.teamId': teamId}, 
-        {$push: 
-            {'teams.$.pitcher': 
-                {playerId: pitcherId, pitchCounter: 0}
-            }
-        });
-    console.log(currentGame.teams[team])
+  Games.update({live: true, 'teams.teamId': teamId}, 
+      {$push: 
+          {'teams.$.pitcher': 
+              {playerId: pitcherId, pitchCounter: 0, active: true}
+          }
+      });
+},
+
+'findActivePitcher': function( ) {
+  var currentGame = Games.findOne({live: true})
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
+
+  var pitcher = currentGame.teams[team].pitcher.filter(function( obj ){
+    return obj.active == true;
+  })
+
+  console.log(pitcher[0])
+  return pitcher[0]
 
 },
 
+'increasePitch': function ( ) {   
+  var currentGame = Games.findOne({live: true})
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
 
-// ' multiplierGenerator ': function ( ) {
-//   // Find the Game info
-//   var currentGame = Games.findOne({live: true});
+  var pitcher = Meteor.call('findActivePitcher')
 
-//   // Team at bat
-//   var topOrBottomOfInning = currentGame.inningPosition
-//   var teamAtBat = currentGame[topOrBottomOfInning]
+  var pitcherId = pitcher[0].playerId
+  console.log(pitcherId)
 
-//   // Find the batter's info
-//   var whoIsAtBat = currentGame.
+  // Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.pitcher.pitchCounter': +1}});
 
-//   // Find the pitcher info
+  // ,  'teams.team.pitcher.active': true
 
-//   // Find the pitch count  
-// }
+  var pitcherObj = Games.findOne({'live': true, 'teams.team.pitcher.playerId': pitcherId})
+  // Games.update({live: true, 'teams.team.pitcher.playerId': pitcherId, 'teams.team.pitcher.active': true}, 
+  //   {$set: 
+  //       {'teams.team.pitcher.$.pitchCounter':  +1 }
+  //   });
+
+  console.log(pitcherObj)
+
+    // Increase the number of pitches by pitcher by 1
+},
+
+' multiplierGenerator ': function ( batter, pitcher, strikes, balls ) {
+  // Find the batter's info
+  var playerAtBat = Players.findOne({_id: batter})
+  var pitcher = Players.findOne({_id: pitcher})
+
+  var currentGame = Games.findOne({live: true})
+  console.log(playerAtBat.rbi)
+
+
+
+  // Find the pitcher info
+
+  // Find the pitch count  
+},
 
 // Add player
-'addPlayer': function( teamId,firstName,lastName,position,battingOrderNum,walks,strikeout,secondBase,thirdBase,bats,throws,avgBat,homeRun,rbi,obp,photo,injured ){
+'addPlayer': function( teamId, firstName, lastName, position, walks, strikeout, secondBase, thirdBase, bats, throws, avgBat, homeRun, rbi, obp, photo, injured ){
   var timeCreated = new Date();
   var currentUserId = Meteor.userId();
   Players.insert({
@@ -228,7 +258,6 @@ Meteor.methods({
     firstName: firstName,
     lastName: lastName, 
     position: position, 
-    battingOrderNum: battingOrderNum, 
     stats: {
         secondBase: secondBase,
         thirdBase: thirdBase, 
@@ -432,6 +461,9 @@ Meteor.methods({
 
 'endBattersAtBat': function( finalResult ){
     AtBat.update({active: true}, {$set:{active: false, result: finalResult}})
+
+    // Award people who correctly guessed the at bat
+
 },
 
 

@@ -751,6 +751,11 @@ Template.gameBar.helpers({
       return "false"
     }
   },
+  inning: function ( ) {
+    var currentGame = Games.findOne({live: true});
+    // 
+    return currentGame.inning
+  }
 
 });
 
@@ -767,4 +772,13 @@ Template.normalPlay.helpers({
       return true
     }
   },
+});
+
+Template.playerInfo.helpers({
+  playerInfo: function () {
+    var playerAtBat = AtBat.findOne({active: true})
+    console.log(playerAtBat)
+    var playerId = playerAtBat.playerId
+    console.log(playerId)
+  }
 });

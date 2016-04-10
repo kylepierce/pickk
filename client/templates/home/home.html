@@ -24,6 +24,7 @@
     {{/if}}
 
     <div style="{{#if game}}margin-top: 55px{{/if}}"> 
+    	{{> playerCard}}
 			{{> questionCard}}
 		</div>
 
@@ -396,8 +397,17 @@
 <template name="gameBar">
   <div class="bar bar-dark"> 
 		<div class="container" style="text-align: center; padding-top: 6px;">
-			<h1 class="title white-text-header">{{strikes}} - {{balls}} Outs: {{outs}} On Base: 1st:{{first}} 2nd:{{second}} 3rd:{{third}}</h1>
+			<h1 class="title white-text-header">{{strikes}} - {{balls}} Outs: {{outs}} On Base: 1st:{{first}} 2nd:{{second}} 3rd:{{third}} Inning: {{inning}}</h1>
 		</div>
+	</div>
+</template>
+
+<template name="playerCard">
+
+	<div>
+		{{#with playerInfo}}
+			{{firstName}} {lastName}}
+		{{/with}}
 	</div>
 </template>
 
