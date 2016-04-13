@@ -333,7 +333,9 @@ Meteor.methods({
 'topOfInning': function( ) {
   // Find the current game and the team that is at bat.
   var currentGame = Games.findOne({live: true})
+  console.log("game info " + currentGame)
   var topOfInning = currentGame.topOfInning
+  console.log("Team Info " + topOfInning)
 
   // Depending on inning postion pick the visitor (0) or home team (1).
   if( topOfInning === true ){
@@ -341,7 +343,8 @@ Meteor.methods({
   } else {
       var team = currentGame.teams[1]
   }
-  return team
+  console.log("team Id " + team.teamId)
+  return team.teamId
 },
 
 'topOfInningPostion': function( ) {
@@ -372,9 +375,23 @@ Meteor.methods({
   Teams.update({_id: teamId}, {$set: {"battingOrderLineUp": battingOrderLineUp}});
 },
 
-'findBattingLineUp' : function ( team ) { 
-  return Players.find({teamId: team}).fetch()
+'findTeamAtBatLineup': function(){
+  var teamId = Meteor.call('topOfInning');
+  console.log(teamId)
+  var findBattingLineUp = Meteor.call('findBattingLineUp', teamId);
+  return findBattingLineUp
 },
+
+'findBattingLineUp' : function ( team ) { 
+  console.log(team)
+  var team = Teams.findOne({_id: team})
+  console.log( team )
+  var battingOrderLineUp = team.battingOrderLineUp
+  console.log( battingOrderLineUp )
+  return battingOrderLineUp
+},
+
+
 
 // What should the system do next?
 'nextPlay' : function( value , baseNumber ) {
