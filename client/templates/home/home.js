@@ -469,6 +469,18 @@ Template.activeQuestion.helpers({
   }
 });
 
+Template.activeQuestion.events({
+  'click input': function () {
+    var checked = $( "input:checked" )
+    if (checked.length === 2) {
+      $("#submit-response").prop("disabled", false)
+      $("#submit-response").addClass('button-balanced');
+      return true 
+    }
+  }
+});
+
+
 Template.commercialQuestion.helpers({
   'showAds': function(event, template){
 
@@ -541,8 +553,8 @@ Template.predictionQuestions.helpers({
 
 Template.predictionQuestions.events({
   'click input:radio[name=score]':function(event, template) {
-    $("#submit-response").prop("disabled", false)
-    $("#submit-response").addClass('button-balanced');
+    // $("#submit-response").prop("disabled", false)
+    // $("#submit-response").addClass('button-balanced');
   },
 
   'submit form': function(event, template) {
@@ -644,8 +656,8 @@ Template.questionCard.events({
 	'click input:radio[name=wager]':function(event, template) {
 		var wager = template.find('input:radio[name=wager]:checked').value
 
-		$("#submit-response").prop("disabled", false)
-		$("#submit-response").addClass('button-balanced');
+		// $("#submit-response").prop("disabled", false)
+		// $("#submit-response").addClass('button-balanced');
 	},
 
 	// 'click input:radio[name=play]':function(event, template) {
@@ -707,6 +719,15 @@ Template.questionCard.events({
     }
 	}
 });
+
+Template.wagers.rendered = function() {
+    if(!this._rendered) {
+      this._rendered = true;
+      var previousWager = Session.get("lastWager");
+      console.log(previousWager)
+      document.getElementById(previousWager).click()
+    }
+}
 
 Template.gameBar.helpers({
   strikes: function() {

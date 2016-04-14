@@ -117,25 +117,29 @@
 <template name="activeQuestion">
 	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
-		<div class="question">
-			{{ que}}
-		</div>
+			<div class="question">
+				{{ que}}
+			</div>
 
-		<form>
-			<!-- Options -->
+			<form>
+				<!-- Options -->
 				{{> normalPlay}}
 
-			<!-- Wagers -->
+				<!-- Wagers -->
 				{{> wagers}}
 
-			{{#if live}}
-				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
-			{{else}}
-				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
-			{{/if }}
+				{{#if live}}
+					{{#if bothSelected}}
+					<input id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
+					{{else}}
+					<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+					{{/if}}
+				{{else}}
+					<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+				{{/if}}
 
-		</form>
-	</div>
+			</form>
+		</div>
 	</div>
 </template>
 
@@ -306,7 +310,8 @@
 
 <template name="wagers">
 	<div style="margin-bottom:10px;">
-			<div>
+		{{previousWager}}
+		<div>
 			<input type="radio" name="wager" id="50" required value="50">
 			<label class="one-third wager-box" for="50">50</label>
 		</div>
