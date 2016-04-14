@@ -755,6 +755,27 @@ Template.gameBar.helpers({
     var currentGame = Games.findOne({live: true});
     // 
     return currentGame.inning
+  },
+  outs: function() {
+    var currentGame = Games.findOne({live: true});
+    // 
+    var outs = currentGame.outs
+    switch(outs){
+      case "0" :
+        console.log("There are zero outs!")
+        return "<img src='/out.png><img src='/out.png><img src='/out.png>"
+      break;
+      case "1" :
+        console.log("There are one outs!")
+
+      break;
+      case "2" :
+        console.log("There are two outs!")
+      break;
+      case "3" :
+        console.log("There are three outs!")
+      break;
+    }
   }
 
 });
@@ -771,7 +792,7 @@ Template.normalPlay.helpers({
     if (option5){
       return true
     }
-  },
+  }
 });
 
 // Template.playerInfo.helpers({
@@ -780,5 +801,6 @@ Template.normalPlay.helpers({
 //     console.log(playerAtBat)
 //     var playerId = playerAtBat.playerId
 //     console.log(playerId)
+//     return Players.findOne({_id: playerId})
 //   }
 // });
