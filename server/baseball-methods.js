@@ -157,7 +157,7 @@ Meteor.methods({
   }
 
   // The Question will be the count
-  var question = strikes + " - " + balls;
+  var question =  balls + " - " + strikes ;
 
   QuestionList.insert({
       dateCreated: timeCreated,
