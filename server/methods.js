@@ -617,7 +617,9 @@ Meteor.methods({
 		if(question.options.option5) {
 			var option5 = question.options.option5.usersPicked
 		}
-		// var option6 = question.options.option6.usersPicked
+		if(question.options.option6) {
+			var option6 = question.options.option6.usersPicked
+		}
 
 		function awardPointsBack(user) {
 			// Update users coins

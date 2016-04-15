@@ -181,10 +181,6 @@ Meteor.methods({
 
  },
 
-'addWalk': function() {
-
-},
-
 'addOut': function(){
   var currentGame = Games.findOne({live: true})    
   Games.update({_id: currentGame._id}, {$inc: {'outs': +1 }})
@@ -212,8 +208,9 @@ Meteor.methods({
   var teamId = currentGame.teams[team].teamId
   var team = Teams.findOne({_id: teamId})
   var numberOfBatters = team.battingOrderLineUp.length
+  var numberOfBatters = numberOfBatters - 1
 
-  if( batterNum > 8 ) {
+  if( batterNum === numberOfBatters ) {
       Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
   } else {
       Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
