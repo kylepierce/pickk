@@ -325,7 +325,6 @@ Template.questionCard.helpers({
   'connection': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
     if(status == "connected"){
       return true
     } else {
@@ -349,7 +348,6 @@ Template.questionCard.helpers({
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1}}).fetch();
     if(active.length >= 1){
-      console.log("There are some questions")
       return true
     } 
   },
@@ -360,7 +358,6 @@ Template.questionCard.helpers({
         {active: true, commercial: false, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1}}).fetch();
-    console.log(active)
     if(active.length >= 1){
       var first = active[0]
       return first
@@ -388,7 +385,7 @@ Template.questionCard.helpers({
         {active: true, commercial: true, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}}, 
         {sort: {dateCreated: 1}}).fetch();
-    console.log(active)
+
     if(active.length >= 1){
       var first = active[0]
       return first
@@ -460,7 +457,7 @@ Template.activeQuestion.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
+
     if(status == "connected"){
       return true
     } else {
@@ -724,7 +721,6 @@ Template.wagers.rendered = function() {
     if(!this._rendered) {
       this._rendered = true;
       var previousWager = Session.get("lastWager");
-      console.log(previousWager)
       document.getElementById(previousWager).click()
     }
 }

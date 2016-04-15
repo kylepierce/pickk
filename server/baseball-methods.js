@@ -202,8 +202,6 @@ Meteor.methods({
       }
       // Toggle the topOfInning
       Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning, "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}})
-  } else {
-      console.log("Same team batting")
   }
 },
 
@@ -247,7 +245,6 @@ Meteor.methods({
     return obj.active == true;
   })
 
-  console.log(pitcher[0])
   return pitcher[0]
 
 },
@@ -260,7 +257,6 @@ Meteor.methods({
   var pitcher = Meteor.call('findActivePitcher')
 
   var pitcherId = pitcher[0].playerId
-  console.log(pitcherId)
 
   // Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.pitcher.pitchCounter': +1}});
 
@@ -272,7 +268,6 @@ Meteor.methods({
   //       {'teams.team.pitcher.$.pitchCounter':  +1 }
   //   });
 
-  console.log(pitcherObj)
 
     // Increase the number of pitches by pitcher by 1
 },
@@ -283,7 +278,6 @@ Meteor.methods({
   var pitcher = Players.findOne({_id: pitcher})
 
   var currentGame = Games.findOne({live: true})
-  console.log(playerAtBat.rbi)
 
 
 
@@ -350,9 +344,8 @@ Meteor.methods({
 'topOfInningPostion': function( ) {
   // Find the current game and the team that is at bat.
   var currentGame = Games.findOne({live: true})
-  // console.log(currentGame)
+
   var topOfInning = currentGame.topOfInning
-  // console.log(topOfInning)
 
   // Depending on inning postion pick the visitor (0) or home team (1).
   if( topOfInning === true ){
@@ -468,8 +461,8 @@ Meteor.methods({
       var message = "Base " + baseNumber
       var updatedOptionNumber = parseInt( baseNumber) + 2
       var option = "option" + updatedOptionNumber
-      if(baseNumber = 4){
-        option = "option6"
+      if(baseNumber === 4){
+        var option = "option6"
       }
       Meteor.call('endBattersAtBat', message)
       Meteor.call('updateAtBat', option)
@@ -577,8 +570,7 @@ Meteor.methods({
 'updateAtBat': function( optionNumber ){
   var currentAtBatQuestion = QuestionList.findOne({atBatQuestion: true, active: null})
   var questionId = currentAtBatQuestion._id
-  console.log(questionId)
-  console.log(optionNumber)
+
   Meteor.call('modifyQuestionStatus', questionId, optionNumber)
 },
 
@@ -590,23 +582,19 @@ Meteor.methods({
   var number = parseInt(number)
   switch ( number ) {
     case 4: 
-      console.log("third");
-      console.log(playersOnBase.third)
+      
       return false
       break;
     case 3: 
-      console.log("third");
-      console.log(playersOnBase.third)
+
       return playersOnBase.third
       break;
     case 2:
-      console.log("second");
-      console.log(playersOnBase.second)
+
       return playersOnBase.second
       break;
     case 1:
-      console.log("first");
-      console.log(playersOnBase.first)
+
       return playersOnBase.first
       break;
   }
@@ -634,23 +622,15 @@ Meteor.methods({
     console.log('Congrats you are now the owner of ' + number + " base")
     switch ( number ) {
       case 4: 
-        console.log("forth");
         Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}});
-        console.log(playersOnBase)
         break;
       case 3: 
-        console.log("third");
         Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});
-        console.log(playersOnBase)
         break;
       case 2:
-        console.log("second");
-        console.log(playersOnBase.second)
         Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
         break;
       case 1:
-        console.log("first");
-        console.log(playersOnBase.first)
         Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
         break;
     }
@@ -668,23 +648,20 @@ Meteor.methods({
   var playersOnBase = currentGame.playersOnBase
   switch ( number ) {
     case 4: 
-      console.log("forth");
       Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}});
-      console.log(playersOnBase)
+      
       break;    
     case 3: 
-      console.log("third");
+      
       Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});
-      console.log(playersOnBase)
+      
       break;
     case 2:
-      console.log("second");
-      console.log(playersOnBase.second)
+      
       Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.second": true, "playersOnBase.first": false}})
       break;
     case 1:
-      console.log("first");
-      console.log(playersOnBase.first)
+      
       Games.update({"_id": currentGame._id}, {$set: {"playersOnBase.first": true}})
       break;
   }

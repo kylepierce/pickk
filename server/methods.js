@@ -19,7 +19,6 @@ Meteor.methods({
 		var user = UserList.findOne({_id: user})
 		var role = user.profile.role
 		if(role === "admin"){
-			console.log("reseting all the counters!!")
 			UserList.update({}, {$set: { "profile.queCounter": 0}}, { multi: true })
 		}  
 	}, 
@@ -28,7 +27,6 @@ Meteor.methods({
 		var user = UserList.findOne({_id: user})
 		var role = user.profile.role
 		if(role === "admin"){
-			console.log("reseting all the diamonds!!")
 			UserList.update({}, {$set: { "profile.diamonds": 0}}, { multi: true })
 		}  
 	},
@@ -41,9 +39,8 @@ Meteor.methods({
 			var user = UserList.findOne({_id: item});
 			var coins = user.profile.coins
 			var exchange = "exchange"
-			console.log(coins)
 			if (coins === 10000){
-				console.log("this user didnt play")
+				
 			} 
 			if (coins < 10000){
 				var diamondExchange = coins / 2500
@@ -75,7 +72,6 @@ Meteor.methods({
 	    }, {sort: {'profile.coins': -1}}).fetch();
 		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
 		fixed.reverse()
-		console.log(fixed[0]._id)
 
 		function awardTrophies(trophyId, user){
 			Meteor.call('awardTrophy', trophyId, user);
@@ -85,7 +81,6 @@ Meteor.methods({
 		var user = UserList.findOne({_id: user})
 		var role = user.profile.role
 		if(role === "admin"){
-			console.log('awarding coins')
 			awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
 
 			Meteor.call('awardDiamondsCustom', fixed[0]._id, 50, '<img style="max-width:100%;" src="/1st.png"> <br>Congrats On Winning First Place Here is 50 Diamonds!', "leader")
@@ -124,7 +119,6 @@ Meteor.methods({
   'questionPush': function(game, message){
   	var game = Games.findOne({_id: game})
   	var users = game.nonActive
-  	console.log("sent push to " + users)
   	message = "Guess What Happens on " + message 
   	Push.send({
   		from: 'Pickk', 
@@ -735,8 +729,6 @@ Meteor.methods({
 			
 		}
 
-		console.log("this is the option number " + answer)
-
 		// Can this be switch? Can it be refactored?
 		if (answer == "option1") {
 			option1.map(function (user) {
@@ -853,7 +845,6 @@ Meteor.methods({
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = 'Nice Pickk! "' + que + '" 2000 Coins!'
-			console.log(scoreMessage)
 
 			// See if user is on list already
 			var check = _.indexOf(list, user.userID)
@@ -1054,7 +1045,6 @@ Meteor.methods({
 			// Adjust multiplier based on when selected.
 			var userAmount = user.amount
 			var amount = parseInt(userAmount * multiplier)
-			console.log(amount)
 			var scoreMessage = "Play overturned bummer :( " + amount + " Coins!"
 			var timeCreated = new Date();
 			var id = Random.id();
@@ -1167,7 +1157,6 @@ Meteor.methods({
 
 		// Check if userId is in the usersAnswered array 
 		var userExists = _.indexOf(question, user)
-		console.log(userExists)
 
 		// If the user is already in the array exit this process
 		if(userExists !== -1){
@@ -1255,7 +1244,6 @@ Meteor.methods({
 
 		// Check if userId is in the usersAnswered array 
 		var userExists = _.indexOf(question, user)
-		console.log(userExists)
 
 		// If the user is already in the array exit this process
 		if(userExists !== -1){
@@ -1295,10 +1283,8 @@ Meteor.methods({
 
 		var currentUser = Meteor.users.findOne({_id: user})
 		var counter = currentUser.profile.queCounter 
-		console.log(counter)
 
 		if(counter === 1){
-			console.log("Increased diamonds by 1")
 			Meteor.call('awardDiamonds', user, 1)
 		} else if(counter === 5){
 			Meteor.call('awardDiamonds', user, 2)
@@ -1388,13 +1374,10 @@ Meteor.methods({
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array 
-		console.log(question)
 		var userExists = _.indexOf(question, user)
-		console.log(userExists)
 
 		// If the user is already in the array exit this process
 		if(userExists !== -1){
-			console.log('cant do that 2 times')
 			return
 		} else {
 
