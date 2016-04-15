@@ -136,10 +136,12 @@ Template.pendingQuestionList.events({
 	// Get their "value"
 	'click .pending': function(event, template ) {
 		var value = event.currentTarget.value 
+		var optionNumber = event.currentTarget.getAttribute('data-action')
+		console.log(optionNumber)
 		if(value == "Hit"){
 			var baseNumber = prompt('What Base?')
 		}
-		Meteor.call('nextPlay', value, baseNumber)
+		Meteor.call('nextPlay', value, baseNumber, optionNumber)
 	},
 	// It should match one of these options 
 

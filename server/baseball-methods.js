@@ -394,7 +394,7 @@ Meteor.methods({
 
 
 // What should the system do next?
-'nextPlay' : function( value , baseNumber ) {
+'nextPlay' : function( value , baseNumber, optionNumber ) {
   switch( value ) {
     case "Strike":
       // Increase Strike Counter
@@ -436,6 +436,7 @@ Meteor.methods({
       Meteor.call('threeOuts');
 
       Meteor.call('endBattersAtBat', "Strike Out")
+      Meteor.call('updateAtBat', "option1")
 
       Meteor.call('createAtBat')
       break;
@@ -450,6 +451,7 @@ Meteor.methods({
       Meteor.call('sendToABase', 1)
 
       Meteor.call('endBattersAtBat', "Walk")
+      Meteor.call('updateAtBat', "option2")
 
       Meteor.call('createAtBat')
       break;
@@ -464,8 +466,13 @@ Meteor.methods({
       Meteor.call('sendToABase', baseNumber)
 
       var message = "Base " + baseNumber
-
+      var updatedOptionNumber = parseInt( baseNumber) + 2
+      var option = "option" + updatedOptionNumber
+      if(baseNumber = 4){
+        option = "option6"
+      }
       Meteor.call('endBattersAtBat', message)
+      Meteor.call('updateAtBat', option)
 
       Meteor.call('createAtBat')
 
@@ -484,6 +491,7 @@ Meteor.methods({
       Meteor.call('threeOuts');
 
       Meteor.call('endBattersAtBat', "Out")
+      Meteor.call('updateAtBat', "option1")
 
       Meteor.call('createAtBat')
 
@@ -566,6 +574,14 @@ Meteor.methods({
 },
 
 
+'updateAtBat': function( optionNumber ){
+  var currentAtBatQuestion = QuestionList.findOne({atBatQuestion: true, active: null})
+  var questionId = currentAtBatQuestion._id
+  console.log(questionId)
+  console.log(optionNumber)
+  Meteor.call('modifyQuestionStatus', questionId, optionNumber)
+},
+
 
 'checkIfPlayerIsOn': function ( number ){
   // Check to see if a player if on that base
@@ -573,6 +589,11 @@ Meteor.methods({
   var playersOnBase = currentGame.playersOnBase
   var number = parseInt(number)
   switch ( number ) {
+    case 4: 
+      console.log("third");
+      console.log(playersOnBase.third)
+      return false
+      break;
     case 3: 
       console.log("third");
       console.log(playersOnBase.third)
@@ -592,8 +613,8 @@ Meteor.methods({
 },
 
 'moveToNextBase': function( number ) {
-  if (number > 3 || number < 1) {
-    console.log('there are only 3 bases to move to');
+  if (number > 4 || number < 1) {
+    console.log('there are only 4 bases to move to');
     return 
   }
   var isThereAPlayer = Meteor.call('checkIfPlayerIsOn', number)
@@ -612,6 +633,11 @@ Meteor.methods({
   } else {
     console.log('Congrats you are now the owner of ' + number + " base")
     switch ( number ) {
+      case 4: 
+        console.log("forth");
+        Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}});
+        console.log(playersOnBase)
+        break;
       case 3: 
         console.log("third");
         Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});
@@ -632,8 +658,8 @@ Meteor.methods({
 },
 
 'sendToABase': function( number ){
-  if (number > 3 || number < 1) {
-    console.log('there are only 3 bases to move to');
+  if (number > 4 || number < 1) {
+    console.log('there are only 4 bases to move to');
     return 
   }
   // var isThereAPlayer = Meteor.call('checkIfPlayerIsOn', number)
@@ -641,6 +667,11 @@ Meteor.methods({
   var currentGame = Games.findOne({live: true})
   var playersOnBase = currentGame.playersOnBase
   switch ( number ) {
+    case 4: 
+      console.log("forth");
+      Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}});
+      console.log(playersOnBase)
+      break;    
     case 3: 
       console.log("third");
       Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": true}});

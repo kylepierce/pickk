@@ -668,7 +668,7 @@ Meteor.methods({
 			option6.map(function (user) {awardPointsBack(user)});
 		}
 
-	},
+	}, 
 
 	// Once the play is over update what option it was. Then award points to those who guessed correctly.
 
@@ -734,6 +734,8 @@ Meteor.methods({
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
 			
 		}
+
+		console.log("this is the option number " + answer)
 
 		// Can this be switch? Can it be refactored?
 		if (answer == "option1") {
@@ -1241,9 +1243,9 @@ Meteor.methods({
 			QuestionList.update(questionId, {$push: {'options.option4.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option5"){
 			QuestionList.update(questionId, {$push: {'options.option5.usersPicked': {userID: user, amount: wager}}});
-		} // else if (answer == "option6"){
-		// 	QuestionList.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
-		// } 
+		}  else if (answer == "option6"){
+			QuestionList.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
+		} 
 	},
 
 		'twoOptionQuestionAnswered' : function( user, questionId, answer, wager, que){
