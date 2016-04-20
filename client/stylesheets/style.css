@@ -13,6 +13,10 @@ body, .ionic-body {
 	height: 100%;
 }
 
+.clear-fix{
+	clear: both;
+}
+
 .view {
 	background-color: #f2f2f2;
 }

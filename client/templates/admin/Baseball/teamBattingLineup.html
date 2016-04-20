@@ -1,0 +1,16 @@
+<template name="teamBattingLineup">
+	<div class="col-md-50">
+		<div class="col-md-50">Team 1</div>
+		<div class="col-md-50">Team 2</div>
+		
+		<div class="clear-fix">
+			{{#ionList}}
+				{{#each player}}
+					{{#ionItem}}
+						{{name}} - {{position}}
+					{{/ionItem}}
+				{{/each}}
+			{{/ionList}}
+		</div>
+	</div>
+</template>

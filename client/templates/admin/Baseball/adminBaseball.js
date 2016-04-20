@@ -23,14 +23,14 @@ Template.adminBaseball.helpers ({
 	}
 })
 
-Template.battingLineUp.helpers({
-	batter: function () {
-		// Find the current game and the team that is at bat.
-		return Meteor.call("findBattingLineUp")
-	},
-	playersInfo: function ( playerId ) {
-		var player = Players.findOne({_id: playerId})
-		console.log(player)
-		return player
-	} 
-});
+// Template.battingLineUp.helpers({
+// 	batter: function () {
+// 		// Find the current game and the team that is at bat.
+// 		return Meteor.call("findBattingLineUp")
+// 	},
+// 	playersInfo: function ( playerId ) {
+// 		var player = Players.findOne({_id: playerId})
+// 		console.log(player)
+// 		return player
+// 	} 
+// });

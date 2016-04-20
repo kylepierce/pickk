@@ -67,4 +67,11 @@ li.option-boxes:nth-child(even) {
 	margin-left: 5px;
 }
 
+@media (min-width: 600px) {
+	.col-md-50 {
+		width: 48%;
+		padding: 1%;
+		float: left;
+	}
+}
 

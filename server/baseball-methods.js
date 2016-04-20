@@ -324,9 +324,7 @@ Meteor.methods({
 'topOfInning': function( ) {
   // Find the current game and the team that is at bat.
   var currentGame = Games.findOne({live: true})
-  console.log("game info " + currentGame)
   var topOfInning = currentGame.topOfInning
-  console.log("Team Info " + topOfInning)
 
   // Depending on inning postion pick the visitor (0) or home team (1).
   if( topOfInning === true ){
@@ -334,8 +332,8 @@ Meteor.methods({
   } else {
       var team = currentGame.teams[1]
   }
-  console.log("team Id " + team.teamId)
-  return team.teamId
+
+  return team
 },
 
 'topOfInningPostion': function( ) {
