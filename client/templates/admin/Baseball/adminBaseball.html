@@ -18,17 +18,36 @@
    		 {{/contentFor}}
 
 		<div class="col-md-50">
-			<button class="button button-calm col col-50" data-action="createBaseballQuestion">
+			<button class="button button-calm col-md-50" data-action="createBaseballQuestion">
 				Create Question
 			</button>
-			<button class="button button-energized col col-50" data-action="createAtBat">
+			<button class="button button-energized col-md-50" data-action="createAtBat">
 				Create At Bat
 			</button>
+		
+		Outs:
+			<div class="admin-bases">
+				{{#if third}} 
+					<div data-action="third" class="base-diamond admin-base-size admin-base-fix third-base-admin "></div> 
+				{{else}} 
+					<div data-action="third" class="admin-base-empty admin-base-size base-diamond admin-base-fix third-base-admin "></div> 
+				{{/if}}
+				{{#if second}} 
+					<div data-action="second" class="base-diamond admin-base-size"></div> 
+				{{else}} 
+					<div data-action="second" class="admin-base-empty admin-base-size base-diamond"></div>
+				{{/if}} 
+				{{#if first}} 
+					<div data-action="first" class="base-diamond admin-base-size admin-base-fix first-base-admin"></div> 
+				{{else}} 
+					<div data-action="first" class="admin-base-empty admin-base-size base-diamond admin-base-fix first-base-admin"></div>
+				{{/if}}
+			</div>
 		</div>
 
+		{{> teamBattingLineup}}
 		<div class="clear-fix"></div>
 
-		{{> teamBattingLineup}}
 		<div class="col-md-50">
 			{{> activeQuestionList}}
 		</div>
@@ -42,15 +61,6 @@
 <!-- 		<button data-action="createBaseballGame">
 		Create Baseball Game</button> -->
 
-<!-- 		<div class="clear-fix">
-			{{#ionList}}
-				{{#each atBat}}
-					{{#ionItem}}					
-							{{playerId}} - {{dateCreated}} - {{gameId}} - {{active}}
-					{{/ionItem}}
-				{{/each}}
-			{{/ionList}}
-		</div> -->
 		{{/ionContent}}
 	  {{/ionView}}
  </div>

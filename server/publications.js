@@ -255,9 +255,7 @@ Meteor.publish('atBatForThisGame', function(){
 
 Meteor.publish('oneGamePlayers', function(){
   var currentGame = Games.find({live: true}).fetch();
-  console.log("this is the game " + currentGame)
   var teams = currentGame = teams
-  console.log("these are the teams " + teams)
   return Players.find({teamId: teams})
 });
 

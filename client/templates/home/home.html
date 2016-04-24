@@ -348,8 +348,8 @@
 		<div>
 			<input type="radio" name="play" id="{{options.option1.title}}" required value="option1">
 			<label for="{{options.option1.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option1.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option1.title}}.svg"> 
+			<span class="play-text">{{options.option1.title}}</span> 
 			<span class="multiplier">x {{options.option1.multiplier}}</span>
 			</label>
 		</div>
@@ -357,32 +357,32 @@
 		<div>
 			<input type="radio" name="play" id="{{options.option2.title}}" required value="option2">
 			<label for="{{options.option2.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option2.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option2.title}}.svg"> 
+			<span class="play-text">{{options.option2.title}}</span> 
 			<span class="multiplier">x {{options.option2.multiplier}}</span></label>
 		</div>
 
 		<div>
 			<input type="radio" name="play" id="{{options.option3.title}}" required value="option3">
 			<label for="{{options.option3.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option3.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option3.title}}.svg"> 
+			<span class="play-text">{{options.option3.title}}</span> 
 			<span class="multiplier">x {{options.option3.multiplier}}</span></label>
 		</div>
 
 		<div>
 			<input type="radio" name="play" id="{{options.option4.title}}" required value="option4">
 			<label for="{{options.option4.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option4.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option4.title}}.svg"> 
+			<span class="play-text">{{options.option4.title}}</span> 
 			<span class="multiplier">x {{options.option4.multiplier}}</span></label>
 		</div>
 		{{#if option5Exists}}
 		<div>
 			<input type="radio" name="play" id="{{options.option5.title}}" required value="option5">
 			<label for="{{options.option5.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option5.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option5.title}}.svg"> 
+			<span class="play-text">{{options.option5.title}}</span> 
 			<span class="multiplier">x {{options.option5.multiplier}}</span></label>
 		</div>
 		{{/if}}
@@ -390,8 +390,8 @@
 		<div>
 			<input type="radio" name="play" id="{{options.option6.title}}" required value="option6">
 			<label for="{{options.option6.title}}" class="play-option">
-			<i class="fa fa-star"></i> 
-			{{options.option6.title}} 
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option6.title}}.svg"> 
+			<span class="play-text">{{options.option6.title}}</span> 
 			<span class="multiplier">x {{options.option6.multiplier}}</span></label>
 		</div>
 		{{/if}}
@@ -402,18 +402,45 @@
 <template name="gameBar">
   <div class="bar bar-dark"> 
 		<div class="container" style="text-align: center; padding-top: 6px;"> 
-			<div class="col-50">
-			<h1 class="title white-text-header">Inning: {{inning}} {{balls}} - {{strikes}} 
-			</h1>
-			{{outs}}
-	<!-- 		{{#if oneOut}} <img src="/out.png"> {{else}} <img src="/no-out.png">{{/if}}
-				{{#if twoOuts}} <img src="/out.png"> {{else}} <img src="/no-out.png"> {{/if}} 
-				{{#if threeOuts}} <img src="/out.png"> {{else}} <img src="/no-out.png">{{/if}} -->
+			<div class="col-md-33 float-left">
+				Count: {{balls}} - {{strikes}} 
 			</div>
-			<div class="col-25">
-				{{#if third}} <img src="/base-full.png"> {{else}} <img src="/base-empty.png">{{/if}}
-				{{#if second}} <img src="/base-full.png"> {{else}} <img src="/base-empty.png"> {{/if}} 
-				{{#if first}} <img src="/base-full.png"> {{else}} <img src="/base-empty.png">{{/if}}
+			<div class="col-md-33 float-left">
+				{{#if oneOut}} 
+					<div class="out"></div>
+				{{else}} 
+					<div class="no-out"></div>
+				{{/if}}
+				{{#if twoOuts}} 
+					<div class="out"></div>
+				{{else}} 
+					<div class="no-out"></div> 
+				{{/if}} 
+				{{#if threeOuts}} 
+					<div class="out"></div>
+				{{else}} 
+					<div class="no-out"></div>
+				{{/if}}
+			</div>
+			
+
+
+			<div class="col-md-25 float-left">
+				{{#if third}} 
+					<div class="base-diamond base-fix third-base "></div> 
+				{{else}} 
+					<div class="base-empty base-diamond base-fix third-base "></div> 
+				{{/if}}
+				{{#if second}} 
+					<div class="base-diamond"></div> 
+				{{else}} 
+					<div class="base-empty base-diamond"></div>
+				{{/if}} 
+				{{#if first}} 
+					<div class="base-diamond base-fix first-base"></div> 
+				{{else}} 
+					<div class="base-empty base-diamond base-fix first-base"></div>
+				{{/if}}
 			</div>
 		</div>
 	</div>
@@ -426,5 +453,9 @@
 			{{firstName}} {lastName}}
 		{{/with}}
 	</div>
+</template>
+
+<template name="outs">
+	
 </template>
 

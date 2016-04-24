@@ -1,0 +1,75 @@
+.base-diamond {
+	height: 13px;
+	width: 13px;
+	margin: 0px; 
+	background-color: white;
+	border: 1px solid black;
+	margin: 1px;
+	-ms-transform: rotate(7deg); /* IE 9 */
+  -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  float: left;
+  clear: none;
+}
+
+.base-empty { 
+	background-color: black!important;
+	border: 1px solid white;
+}
+
+.admin-base-empty {
+	background-color: transparent!important;
+	border: 1px solid black!important;
+}
+
+.admin-base-size {
+	background-color: black;
+	width: 100px!important;
+	height: 100px!important;
+	margin:15px!important;
+}
+
+.admin-base-fix {
+	margin-top: 100px!important;
+}
+
+.first-base-admin {
+	margin-left: -33px!important;
+}
+
+.third-base-admin {
+  margin-right: -33px!important;
+}
+
+.base-fix {
+	margin-top: 10px;
+}
+
+.first-base {
+	margin-left: -5px;
+}
+
+.third-base {
+  margin-right: -5px;
+}
+
+.out {
+	width: 13px;
+	height: 13px;
+	border-radius: 100%;
+	background-color: black;
+	border: 1px white solid;
+  float: left;
+  margin: 3px;
+}
+
+.no-out {
+	width: 13px;
+	height: 13px;
+	border-radius: 100%;
+	background-color: transparent;
+	border: 1px white solid;	
+  float: left;
+  margin: 3px;
+}
+

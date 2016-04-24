@@ -365,17 +365,13 @@ Meteor.methods({
 
 'findTeamAtBatLineup': function(){
   var teamId = Meteor.call('topOfInning');
-  console.log(teamId)
   var findBattingLineUp = Meteor.call('findBattingLineUp', teamId);
   return findBattingLineUp
 },
 
 'findBattingLineUp' : function ( team ) { 
-  console.log(team)
   var team = Teams.findOne({_id: team})
-  console.log( team )
   var battingOrderLineUp = team.battingOrderLineUp
-  console.log( battingOrderLineUp )
   return battingOrderLineUp
 },
 
@@ -630,6 +626,25 @@ Meteor.methods({
         break;
     }
   }
+},
+
+'toggleBase': function ( number ) {
+  var currentGame = Games.findOne({live: true})
+  var playersOnBase = currentGame.playersOnBase
+  switch ( number ) {  
+    case "third":
+      var baseValue = currentGame.playersOnBase.third 
+      Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.third": !baseValue}});
+      break;
+    case "second":
+      var baseValue = currentGame.playersOnBase.second
+      Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.second": !baseValue}});
+      break;
+    case "first":
+      var baseValue = currentGame.playersOnBase.first
+      Games.update({"_id": currentGame._id}, {$set: { "playersOnBase.first": !baseValue}});
+      break;
+    }
 },
 
 'sendToABase': function( number ){

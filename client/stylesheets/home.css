@@ -2,6 +2,7 @@
 	float: right;
 	width: 20%;
 	text-align: right;
+	font-size: 1.25rem;
 }
 
 .next-play{
@@ -62,6 +63,27 @@
 	border: 1px solid #CCC;
 	border-top-width: 0;
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
+}
+
+.play-text {
+	font-size: 1.25rem;
+	padding-left: 15px;
+}
+
+.baseball-call-icon {
+	height: 20px;
+	width: 20px;
+	margin-left: 15px;
+}
+
+.wager-box {
+	border-color: #B2B2B2;
+	background-color: #fff;
+	border: 1px solid #CCC;
+	color: #444;
+	text-align: center;
+	padding: 10px 0;
+	font-size: 1.25rem;
 }
 
 .score-option{

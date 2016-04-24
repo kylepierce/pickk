@@ -734,10 +734,10 @@ Template.gameBar.helpers({
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.ballCount
   },
-  outs: function ( ) {
-    var currentGame = Games.findOne({live: true});
-    return currentGame.outs
-  },
+  // outs: function ( ) {
+  //   var currentGame = Games.findOne({live: true});
+  //   return currentGame.outs
+  // },
   first: function () {
     var currentGame = Games.findOne({live: true});
     //  
@@ -770,31 +770,33 @@ Template.gameBar.helpers({
   },
   inning: function ( ) {
     var currentGame = Games.findOne({live: true});
-    // 
     return currentGame.inning
+  },
+  oneOut: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 1 ) {
+      return true
+    }
+  },
+  twoOuts: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 2 ) {
+      return true
+    }
+  },
+  threeOuts: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 3 ) {
+      return true
+    }
   },
   outs: function() {
     var currentGame = Games.findOne({live: true});
-    // 
-    var outs = currentGame.outs
-    switch(outs){
-      case "0" :
-        console.log("There are zero outs!")
-        return "<img src='/out.png><img src='/out.png><img src='/out.png>"
-      break;
-      case "1" :
-        console.log("There are one outs!")
-
-      break;
-      case "2" :
-        console.log("There are two outs!")
-      break;
-      case "3" :
-        console.log("There are three outs!")
-      break;
-    }
+    return currentGame.outs
   }
-
 });
 
 Template.normalPlay.helpers({
