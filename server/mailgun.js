@@ -9,7 +9,6 @@ Meteor.methods({
   'addToMailingList': function( emailAddress ) {
     check( emailAddress, String );
     var user = Meteor.users.findOne({"emails.address": emailAddress}, {fields: {"emails.address": 1}});
-    console.log(user)
     if ( user ) {
       console.log('Found User')
       list.members().create({
@@ -17,13 +16,13 @@ Meteor.methods({
         address: emailAddress
       }, function( error, response ) {
         if ( error ) {
-          throw new Meteor.Error( 'mailgun-error', error );
+          console.log( 'mailgun-error', error );
         } else {
           console.log( response );
         }
       });
     } else {
-      throw new Meteor.Error( 'bad-email', 'Sorry, you\'re not a registered user.' );
+      console.log( 'bad-email', 'Sorry, you\'re not a registered user.' );
     }
   },
   'syncExistingUsersToMailgun': function() {
