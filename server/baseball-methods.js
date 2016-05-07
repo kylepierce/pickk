@@ -682,6 +682,10 @@ Meteor.methods({
 
 'addPlayerToLineup': function ( gameId, teamId, playerId ) {
   Games.update({_id: gameId, 'teams.teamId': teamId}, {$push: {"teams.$.battingLineUp": playerId}})
+},
+
+'removePlayerFromLineup': function ( gameId, teamId, playerId ) {
+  Games.update({_id: gameId, 'teams.teamId': teamId}, {$pull: {"teams.$.battingLineUp": playerId}})
 }
 
 

@@ -39,7 +39,6 @@ Template.teamBattingLineup.helpers({
     }
 
     var playerExists = team.battingLineUp.indexOf(id)
-    console.log(playerExists)
     if(playerExists !== -1){
       return false
     } else {
@@ -62,7 +61,6 @@ Template.teamBattingLineup.helpers({
   },
   onePlayer: function ( id ) {
     var player = Players.findOne({_id: id});
-    console.log(player)
     return player
   }
 });
@@ -74,5 +72,12 @@ Template.teamBattingLineup.events({
     var playerId = this._id
     var teamId = this.team
     Meteor.call('addPlayerToLineup', gameId, teamId, playerId)
-  }
+  },
+  'click [data-action=removeFromBattingOrder]' : function (event, template) {
+    var currentGame = Games.findOne({live: true})
+    var gameId = currentGame._id
+    var playerId = this._id
+    var teamId = this.team
+    Meteor.call('removePlayerFromLineup', gameId, teamId, playerId)
+  },
 })

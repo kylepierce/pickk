@@ -6,12 +6,13 @@
 				<div class="item item-divider">Batting</div> 
 				<ol type="1" class="list">
 					{{#each battingLineUp}}
-						{{#ionItem}}
-							<li>
-								{{#with onePlayer this}}
+						{{#ionItem buttonRight=true}}
+							{{#with onePlayer this}}
+								<li>
 									{{name}}
-								{{/with}}
-							</li>
+								</li>
+								<a class="button" data-action="removeFromBattingOrder">{{> ionIcon icon="more"}}</a> 
+							{{/with}}
 						{{/ionItem}}
 					{{/each}}
 				</ol>
@@ -24,9 +25,9 @@
 
 				{{#each player}}
 					{{#if alreadyInLineUp _id}}
-						{{#ionItem}}
+						{{#ionItem buttonRight=true}}
 							{{name}} - {{position}} 
-							<button data-action="addToBattingOrder">Add</button> 
+							<a class="button" data-action="addToBattingOrder">{{> ionIcon icon="more"}}</a> 
 						{{/ionItem}}
 					{{/if}}
 				{{/each}}
