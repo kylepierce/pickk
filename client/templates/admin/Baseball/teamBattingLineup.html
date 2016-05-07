@@ -8,10 +8,13 @@
 					{{#each battingLineUp}}
 						{{#ionItem buttonRight=true}}
 							{{#with onePlayer this}}
+								<a data-action="move-up"><i class="fa fa-caret-up"></i></a>
 								<li>
 									{{name}}
 								</li>
-								<a class="button" data-action="removeFromBattingOrder">{{> ionIcon icon="more"}}</a> 
+								<a class="button" data-action="removeFromBattingOrder">{{> ionIcon icon="close"}}</a> 
+								<a class="button stacked-button" data-action="pick-position">{{> ionIcon icon="more"}}</a> 
+								<a data-action="move-down"><i class="fa fa-caret-down"></i></a>
 							{{/with}}
 						{{/ionItem}}
 					{{/each}}

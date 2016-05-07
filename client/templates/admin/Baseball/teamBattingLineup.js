@@ -80,4 +80,58 @@ Template.teamBattingLineup.events({
     var teamId = this.team
     Meteor.call('removePlayerFromLineup', gameId, teamId, playerId)
   },
+  'click [data-action=move-up]' : function (event, template) {
+    var currentGame = Games.findOne({live: true})
+    var topOfInning = currentGame.topOfInning
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+        var team = currentGame.teams[0]
+    } else {
+        var team = currentGame.teams[1]
+    }
+    var playerId = this._id
+    var playerExists = team.battingLineUp.indexOf(playerId)
+    var gameId = currentGame._id
+    var teamId = this.team
+    Meteor.call('changeBattingPostion', gameId, teamId, playerId, playerExists, -1)
+  },
+  'click [data-action=move-down]' : function (event, template) {
+    var currentGame = Games.findOne({live: true})
+    var topOfInning = currentGame.topOfInning
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+        var team = currentGame.teams[0]
+    } else {
+        var team = currentGame.teams[1]
+    }
+    var playerId = this._id
+    var playerExists = team.battingLineUp.indexOf(playerId)
+    var gameId = currentGame._id
+    var teamId = this.team
+    Meteor.call('changeBattingPostion', gameId, teamId, playerId, playerExists, +1)
+  },
+  'click [data-action=pick-position]' : function (event, template) {
+    var currentGame = Games.findOne({live: true})
+    var topOfInning = currentGame.topOfInning
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+        var team = currentGame.teams[0]
+    } else {
+        var team = currentGame.teams[1]
+    }
+    var playerId = this._id
+    var playerExists = team.battingLineUp.indexOf(playerId)
+    var gameId = currentGame._id
+    var teamId = this.team
+    var numberOfBatters = team.battingLineUp.length
+    var position = prompt("Position", 1);
+    // Add data validation make sure the number is crazy large or negative
+    if (position ) {
+        console.log(position)
+        Meteor.call('changeBattingPostion', gameId, teamId, playerId, playerExists, position)
+    }  
+  },
 })

@@ -286,33 +286,6 @@ Meteor.methods({
   // Find the pitch count  
 },
 
-// Add player
-// 'addPlayer': function( teamId, firstName, lastName, position, walks, strikeout, secondBase, thirdBase, bats, throws, avgBat, homeRun, rbi, obp, photo, injured ){
-//   var timeCreated = new Date();
-//   var currentUserId = Meteor.userId();
-//   Players.insert({
-//     createdBy: currentUserId,
-//     dateCreated: timeCreated,
-//     teamId: teamId,
-//     firstName: firstName,
-//     lastName: lastName, 
-//     position: position, 
-//     stats: {
-//         secondBase: secondBase,
-//         thirdBase: thirdBase, 
-//         walks: walks,
-//         bats: bats,
-//         throws: throws,
-//         avgBat: avgBat,
-//         homeRun: homeRun,
-//         rbi: rbi,
-//         obp: obp,
-//      },
-//     photo: photo ,  
-//     injured: injured 
-//   });
-// },
-
 // Create A Team to Group Players
 'addTeam' : function (fullName, city, state, nickname){
   Teams.insert({
@@ -686,6 +659,13 @@ Meteor.methods({
 
 'removePlayerFromLineup': function ( gameId, teamId, playerId ) {
   Games.update({_id: gameId, 'teams.teamId': teamId}, {$pull: {"teams.$.battingLineUp": playerId}})
+},
+
+'changeBattingPostion': function( gameId, teamId, playerId, indexPosition, upOrDown ) {
+  var game = Games.find({_id: gameId, 'teams.teamId': teamId}, {fields: {"teams.$.battingLineUp": 1}}).fetch()
+  var newPosition = indexPosition + parseInt(upOrDown)
+  Games.update({_id: gameId, 'teams.teamId': teamId}, {$pull: {"teams.$.battingLineUp": playerId}})
+  Games.update({_id: gameId, 'teams.teamId': teamId}, {$push: {"teams.$.battingLineUp": { $each: [playerId], $position: newPosition}}})
 }
 
 
