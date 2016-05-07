@@ -4,34 +4,27 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 jquery
 accounts-base
 accounts-password
 accounts-facebook
+accounts-twitter
+useraccounts:ionic
+useraccounts:core
 iron:router
-less
 aldeed:simple-schema
 meteoric:autoform-ionic
-meteoric:ionicons-sass
-meteoric:ionic-sass
-joshowens:accounts-entry
-accounts-twitter
 fortawesome:fontawesome
 email
 bdunnette:snapjs
 meteoric:ionic
-fourseven:scss
 service-configuration
-yogiben:user-helpers
-useraccounts:ionic
-useraccounts:core
 meteorhacks:kadira
 msavin:mongol
 fastclick
 alanning:roles
 msavin:jetsetter
-matteodem:easy-search
+# matteodem:easy-search
 aldeed:autoform
 aldeed:collection2
 random
@@ -51,7 +44,6 @@ percolate:momentum
 gwendall:template-animations
 natestrauser:animate-css
 dsyko:hopscotch
-d3js:d3
 flyandi:reactive-countdown
 juliancwirko:s-alert
 juliancwirko:s-alert-stackslide
@@ -62,12 +54,31 @@ chart:chart
 kadira:debug
 meteorhacks:subs-manager
 nvd3:nvd3@1.7.1
-#yogiben:pretty-email
 juliancwirko:s-alert-slide
 gwendall:meteoric-connection-status
 255kb:meteor-status
 blaze
 msavin:fetcher
-jquery-waypoints
 gfk:mailgun-api
 udondan:googlefonts
+# meteoric:camera
+patrickml:admob
+yogiben:pretty-email
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+tracker
+logging
+reload
+ejson
+spacebars
+check
+standard-minifier-css
+standard-minifier-js
+fourseven:scss@3.2.0
+selaias:accounts-entry
+hashwin:ionic-sass
+hashwin:ionicons-sass
+rclai89:cheerio

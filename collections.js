@@ -12,5 +12,5 @@ Players = new Meteor.Collection('players')
 // Notifications = new Meteor.Collection('notifications')
 // Tasks = new Mongo.Collection("tasks");
 
-Groups.initEasySearch('groupId');
-UserList.initEasySearch('profile.username');
+// Groups.initEasySearch('groupId');
+// UserList.initEasySearch('profile.username');

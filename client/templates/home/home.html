@@ -46,7 +46,7 @@
 
 		<!-- No Game and No Questions -->
 		{{else}}
-			<img class="next-play slideInLeft" src="wait-for-play.png">
+			<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
 			<h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
 		{{/if}}
 	{{/if}}
@@ -80,7 +80,7 @@
 			
 			<!-- No Questions Available  -->
 			{{else}}
-				<img class="next-play slideInLeft" src="wait-for-play.png">
+				<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
 				<h5 class="next-play">Commercial Break!</h5>	
 				{{{commercialRandom}}}
 			{{/if}}
@@ -102,7 +102,7 @@
 					{{/if}}
 				
 			{{else}}
-					<img class="next-play slideInLeft" src="wait-for-play.png">
+					<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
 					<h5 class="next-play">Next question coming up soon!</h5>
 					{{#with lastPlay}}
 					<p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
@@ -117,9 +117,9 @@
 <template name="activeQuestion">
 	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
-			<div class="question">
+<!-- 			<div class="question">
 				{{ que}}
-			</div>
+			</div> -->
 
 			<form>
 				<!-- Options -->
@@ -344,7 +344,7 @@
 </template>
 
 <template name="normalPlay">
-	<div style="margin-bottom:10px">
+	<div class="question-options">
 		<div>
 			<input type="radio" name="play" id="{{options.option1.title}}" required value="option1">
 			<label for="{{options.option1.title}}" class="play-option">
@@ -400,7 +400,7 @@
 
 
 <template name="gameBar">
-  <div class="bar bar-dark"> 
+  <div class="bar bar-game"> 
 		<div class="container" style="text-align: center; padding-top: 6px;"> 
 			<div class="col-md-33 float-left">
 				Count: {{balls}} - {{strikes}} 
@@ -447,12 +447,31 @@
 </template>
 
 <template name="playerCard">
-
-	<div>
-		{{#with playerInfo}}
-			{{firstName}} {lastName}}
-		{{/with}}
-	</div>
+  <div class="">
+    {{#ionSlideBox}}
+      {{#ionSlide class=""}}
+        {{#with playerInfo}}
+        	<div class="player-slider">
+					<span class="player-name">{{name}} {{number}}</span>
+					<table>
+						<thead>
+							<td>AVG</td>
+							<td>HR</td>
+							<td>RBI</td>
+							<td>OBP</td>
+						</thead>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+					</table>
+					</div>
+				{{/with}}
+      {{/ionSlide}}
+    {{/ionSlideBox}}
+  </div>
 </template>
 
 <template name="outs">

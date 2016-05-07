@@ -10,7 +10,25 @@ Meteor.methods({
     check( emailAddress, String );
     var user = Meteor.users.findOne({"emails.address": emailAddress}, {fields: {"emails.address": 1}});
     if ( user ) {
-      console.log('Found User')
+      list.members().create({
+        subscribed: true,
+        address: emailAddress
+      }, function( error, response ) {
+        if ( error ) {
+          console.log( 'mailgun-error', error );
+        } else {
+          console.log( response );
+        }
+      });
+    } else {
+      console.log( 'bad-email', 'Sorry, you\'re not a registered user.' );
+    }
+  },
+  'facebookAddToMailingList': function( emailAddress ) {
+    check( emailAddress, String );
+    var user = Meteor.users.findOne({"services.facebook.email": emailAddress}, {fields: {"services.facebook.email": 1}});
+    console.log(user)
+    if ( user ) {
       list.members().create({
         subscribed: true,
         address: emailAddress
@@ -28,19 +46,13 @@ Meteor.methods({
   'syncExistingUsersToMailgun': function() {
     var users = Meteor.users.find().fetch();
     for( var i = 0; i < users.length; i++ ) {
-      if ( users[ i ].emails ) {
-        var email = users[ i ].emails[ 0 ].address;
-        list.members().create({
-          subscribed: true,
-          address: email
-        }, function( error, response ) {
-          if ( error ) {
-            console.log( 'mailgun-error', error );
-          } else {
-            console.log( response );
-          }
-        });
-      }
+      if ( typeof users[ i ].services.facebook != "undefined" ) {
+        if ( users[ i ].services.facebook.email ) {
+          var email = users[ i ].services.facebook.email;
+          console.log(email)
+          Meteor.call('facebookAddToMailingList', email)
+        };
+      };
     }
   },
   'sendToMailingList': function(subject, text, html) {

@@ -15,11 +15,13 @@ Meteor.methods({
           {
             teamId: team1,
             batterNum: 0,
-            pitcher: []
+            pitcher: [],
+            battingLineUp: []
           }, {
             teamId: team2,
             batterNum: 0,
-            pitcher: []
+            pitcher: [],
+            battingLineUp: []
           }
         ],
         outs: 0,
@@ -46,9 +48,10 @@ Meteor.methods({
   var team = Meteor.call('topOfInningPostion')
   var teamId = currentGame.teams[team].teamId
   var atBatNumber = currentGame.teams[team].batterNum
-  var teamObj = Teams.findOne({_id: teamId})
+  var playerId = currentGame.teams[team].battingLineUp[atBatNumber]
+  // var teamObj = Teams.findOne({_id: teamId})
 
-  var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
+  // var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
   // var pitcher = Meteor.call('findActivePitcher');
   // pitcherId = pitcher.playerId
 
@@ -284,31 +287,31 @@ Meteor.methods({
 },
 
 // Add player
-'addPlayer': function( teamId, firstName, lastName, position, walks, strikeout, secondBase, thirdBase, bats, throws, avgBat, homeRun, rbi, obp, photo, injured ){
-  var timeCreated = new Date();
-  var currentUserId = Meteor.userId();
-  Players.insert({
-    createdBy: currentUserId,
-    dateCreated: timeCreated,
-    teamId: teamId,
-    firstName: firstName,
-    lastName: lastName, 
-    position: position, 
-    stats: {
-        secondBase: secondBase,
-        thirdBase: thirdBase, 
-        walks: walks,
-        bats: bats,
-        throws: throws,
-        avgBat: avgBat,
-        homeRun: homeRun,
-        rbi: rbi,
-        obp: obp,
-     },
-    photo: photo ,  
-    injured: injured 
-  });
-},
+// 'addPlayer': function( teamId, firstName, lastName, position, walks, strikeout, secondBase, thirdBase, bats, throws, avgBat, homeRun, rbi, obp, photo, injured ){
+//   var timeCreated = new Date();
+//   var currentUserId = Meteor.userId();
+//   Players.insert({
+//     createdBy: currentUserId,
+//     dateCreated: timeCreated,
+//     teamId: teamId,
+//     firstName: firstName,
+//     lastName: lastName, 
+//     position: position, 
+//     stats: {
+//         secondBase: secondBase,
+//         thirdBase: thirdBase, 
+//         walks: walks,
+//         bats: bats,
+//         throws: throws,
+//         avgBat: avgBat,
+//         homeRun: homeRun,
+//         rbi: rbi,
+//         obp: obp,
+//      },
+//     photo: photo ,  
+//     injured: injured 
+//   });
+// },
 
 // Create A Team to Group Players
 'addTeam' : function (fullName, city, state, nickname){
@@ -677,34 +680,9 @@ Meteor.methods({
   }
 },
 
+'addPlayerToLineup': function ( gameId, teamId, playerId ) {
+  Games.update({_id: gameId, 'teams.teamId': teamId}, {$push: {"teams.$.battingLineUp": playerId}})
+}
 
 
-// ' playerToBase ': function ( number ){
-//   var g = Games.findOne({live: true});
-
-//  // check that the number is equal to or less than 4
-
-//   if (number = 4) {
-  
-//     Games.update({ "_id": g._id }, { $set: g.base[0]: false, g.base[1]: false, g.base[2]: false } )
-  
-//   } else if (number = 3) {
-  
-//     Games.update({ "_id": g._id }, { $set: g.base[0]: false, g.base[1]: false, g.base[2]: true } )
-  
-//   } else if (number = 2) {
-    
-//   } else if (number = 1){
-//     var playerOnFirst = g.base[0]
-//     console.log(playerOnSecond)
-//     if ( playerOnSecond === true) {
-//           Games.update({ "_id": g._id }, { $set: g.base[0]: true, g.base[1]: true, g.base[2]: true } )
-//       } else {
-//           Games.update({ "_id": g._id }, { $set: g.base[0]: false, g.base[1]: true, g.base[2]: false } )
-//       }
-//   }
-//  else {
-//      set playerOnFirst to true
-//  }
-// }
 });

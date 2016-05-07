@@ -1,16 +1,29 @@
 <template name="teamBattingLineup">
 	<div class="col-md-50">
-		<div class="col-md-50">Team 1</div>
-		<div class="col-md-50">Team 2</div>
-		
 		<div class="clear-fix">
+
+			{{#ionList}}
+				<div class="item item-divider">{{teamName}}</div> 
+
+				{{#each player}}
+					{{#if alreadyInLineUp _id}}
+						{{#ionItem}}
+							{{name}} - {{position}} 
+								<button data-action="addToBattingOrder">Add</button> 
+						{{/ionItem}}
+					{{/if}}
+				{{/each}}
+			{{/ionList}}
+
 			{{#ionList}}
 				{{#each player}}
 					{{#ionItem}}
-						{{name}} - {{position}}
+						{{name}} - {{position}} 
+						<button data-action="addToBattingOrder">Remove</button> 			
 					{{/ionItem}}
 				{{/each}}
 			{{/ionList}}
+
 		</div>
 	</div>
 </template>

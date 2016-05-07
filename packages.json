@@ -1,4 +1,5 @@
 {
 	"mailgun": "0.5.0",
-	"cordova-plugin-admobpro": "2.9.9"
+	"cordova-plugin-admobpro": "2.9.9",
+	"cheerio": "0.15.0"
 }

@@ -11,7 +11,7 @@
 //   });
 // }); 
 
-Meteor.startup(function () {
+Meteor.startup(function () {  
   if (Meteor.isCordova) {
     if (AdMob) {
       AdMob.createBanner( {
@@ -814,12 +814,14 @@ Template.normalPlay.helpers({
   }
 });
 
-// Template.playerInfo.helpers({
-//   playerInfo: function () {
-//     var playerAtBat = AtBat.findOne({active: true})
-//     console.log(playerAtBat)
-//     var playerId = playerAtBat.playerId
-//     console.log(playerId)
-//     return Players.findOne({_id: playerId})
-//   }
-// });
+Template.playerCard.helpers({
+  playerInfo: function () {
+    var playerAtBat = AtBat.findOne({active: true})
+    console.log("Player At Bat " + playerAtBat)
+    var playerId = playerAtBat.playerId
+    console.log(playerId)
+    var player = Players.findOne({_id: playerId})
+    console.log(player)
+    return player
+  }
+});

@@ -113,7 +113,7 @@ Meteor.publish('findSingle', function(id) {
 })
 
 Meteor.publish( 'chatUsersList', function( chatId ) {
-  check( chatId, String );
+  // check( chatId, String );
 
   var singleGame = UserList.find({}, {fields: 
       {'profile.username': 1, 

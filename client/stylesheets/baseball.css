@@ -73,3 +73,27 @@
   margin: 3px;
 }
 
+.player-slider {
+	text-align: center;
+	overflow-x: hidden;
+  padding: 15px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #00695C;
+  color: #fff;
+}
+
+.player-slider table {
+	width: 100%;
+}
+
+.player-slider thead td {
+
+}
+
+.player-name {
+	font-family: 'lato';
+  font-weight: 700;
+  font-size: 1.4rem;
+}

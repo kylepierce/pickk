@@ -4,43 +4,51 @@ App.info({
   author: 'Pickk Corporation',
   email: 'kyle@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.5'
+  version: '0.0.6'
 });
 
 App.icons({
   // iPhone Icons
-  'iphone': 'resources/icons/ios/iphone.png',
-  'iphone_2x': 'resources/icons/ios/iphone2x.png',
-  'iphone_3x': 'resources/icons/ios/iphone63x.png',
+  // 'iphone': 'resources/icons/ios/new_iphone.png',
+  'iphone_2x': 'resources/icons/ios/Icon-602x.png',
+  'iphone_3x': 'resources/icons/ios/Icon-603x.png',
+  'ipad_pro': 'resources/icons/ios/Icon-iPadPro2x.png', 
+  'ios_settings': 'resources/icons/ios/Icon-Small.png', 
+  'ios_settings_2x': 'resources/icons/ios/Icon-Small2x.png', 
+  'ios_settings_3x': 'resources/icons/ios/Icon-Small3x.png', 
+  'ios_spotlight': 'resources/icons/ios/Icon-Spotlight-40.png', 
+  'ios_spotlight_2x': 'resources/icons/ios/Icon-Spotlight-402x.png', 
+
 
   // iPad Icons
-  'ipad': 'resources/icons/ios/ipad1x.png',
-  'ipad_2x': 'resources/icons/ios/ipad2x.png',
+  'ipad': 'resources/icons/ios/new_ipad1x.png',
+  'ipad_2x': 'resources/icons/ios/new_ipad2x.png',
 
   // Android Phones
-  'android_ldpi': 'resources/icons/android/36.png',
+  // 'android_ldpi': 'resources/icons/android/36.png',
   'android_mdpi': 'resources/icons/android/48.png',
   'android_hdpi': 'resources/icons/android/72.png',
   'android_xhdpi': 'resources/icons/android/96.png',
+  // 'android_xxhdpi': (144x144)
+  // 'android_xxxhdpi': (192x192)
 });
 
 App.launchScreens({
   // iPhone
-  // 'iphone': 'resources/splash/iphone.png',
-  'iphone_2x': 'resources/splash/iphone4.png',
-  'iphone5': 'resources/splash/iphone5.png',
-  'iphone6': 'resources/splash/iphone6.png',
-  'iphone6p_portrait': 'resources/splash/iphone6plus.png',
+  'iphone_2x': 'resources/splash/iphone_portrait_4_1x.png',
+  'iphone5': 'resources/splash/iphone_portrait_5_1x.png',
+  'iphone6': 'resources/splash/iphone_portrait_6_1x.png',
+  'iphone6p_portrait': 'resources/splash/iphone_portrait_6p_1x.png',
 
   //iPad
-  'ipad_portrait': 'resources/splash/Default-Portrait~ipad.png',
-  'ipad_portrait_2x': 'resources/splash/Default-Portrait2x~ipad.png',
-  'ipad_landscape': 'resources/splash/Default-Landscape~ipad.png',
-  'ipad_landscape_2x': 'resources/splash/Default-Landscape2x~ipad.png',
+  'ipad_portrait': 'resources/splash/ipad_portrait_7-8_1x.png',
+  'ipad_portrait_2x': 'resources/splash/ipad_portrait_7-8_2x.png',
+  'ipad_landscape': 'resources/splash/ipad_landscape_7-8_1x.png',
+  'ipad_landscape_2x': 'resources/splash/ipad_landscape_7-8_2x.png',
 
   // Android
-  'android_ldpi_portrait': 'resources/splash/ldpi-portrait.png',
-  'android_ldpi_landscape': 'resources/splash/ldpi-landscape.png',
+  // 'android_ldpi_portrait': 'resources/splash/ldpi-portrait.png',
+  // 'android_ldpi_landscape': 'resources/splash/ldpi-landscape.png',
   'android_mdpi_portrait': 'resources/splash/mdpi-portrait.png',
   'android_mdpi_landscape': 'resources/splash/mdpi-landscape.png',
   'android_hdpi_portrait': 'resources/splash/hdpi-portrait.png',
@@ -52,3 +60,7 @@ App.launchScreens({
 App.accessRule('*');
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
+App.accessRule('*://fonts.gstatic.com/*');
+App.configurePlugin('phonegap-plugin-push', {
+    SENDER_ID: '259263435947',
+});
