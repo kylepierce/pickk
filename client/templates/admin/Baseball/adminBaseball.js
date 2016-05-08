@@ -22,7 +22,19 @@ Template.adminBaseball.events({
 	},
 	'click [data-action=third]': function(){
 		Meteor.call('toggleBase', 'third')
-	}
+	},
+  'click [data-action=firstOut]': function(event, template){
+    var currentValue = $(event.currentTarget).attr("class");
+    Meteor.call('toggleOut', currentValue)
+  },
+  'click [data-action=secondOut]': function(event, template){
+    var currentValue = $(event.currentTarget).attr("class");
+    Meteor.call('toggleOut', currentValue)
+  },
+  'click [data-action=thirdOut]': function(event, template){
+    var currentValue = $(event.currentTarget).attr("class");
+    Meteor.call('toggleOut', currentValue)
+  }
 });
 
 Template.adminBaseball.helpers ({
@@ -38,8 +50,9 @@ Template.adminBaseball.helpers ({
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.ballCount
   },
-  outs: function ( ) {
+  numberOfOuts: function ( ) {
     var currentGame = Games.findOne({live: true});
+    console.log(currentGame.outs)
     return currentGame.outs
   },
   first: function () {
@@ -101,14 +114,72 @@ Template.adminBaseball.helpers ({
 
 });
 
-// Template.battingLineUp.helpers({
-// 	batter: function () {
-// 		// Find the current game and the team that is at bat.
-// 		return Meteor.call("findBattingLineUp")
-// 	},
-// 	playersInfo: function ( playerId ) {
-// 		var player = Players.findOne({_id: playerId})
-// 		console.log(player)
-// 		return player
-// 	} 
-// });
+Template.gameInfo.helpers({
+  strikes: function() {
+    var currentAtBat = AtBat.findOne({active: true});
+    return currentAtBat.strikeCount
+  },
+  balls: function() {
+    var currentAtBat = AtBat.findOne({active: true});
+    return currentAtBat.ballCount
+  },
+  // outs: function ( ) {
+  //   var currentGame = Games.findOne({live: true});
+  //   return currentGame.outs
+  // },
+  first: function () {
+    var currentGame = Games.findOne({live: true});
+    //  
+    var first = currentGame.playersOnBase.first
+    if(first){
+      return true
+    } else {
+      return false
+    }
+  },
+  second: function () {
+    var currentGame = Games.findOne({live: true});
+    // 
+    var second = currentGame.playersOnBase.second
+    if(second){
+      return true
+    } else {
+      return false
+    }
+  },
+  third: function () {
+    var currentGame = Games.findOne({live: true});
+    // 
+    var third = currentGame.playersOnBase.third
+    if(third){
+      return true
+    } else {
+      return false
+    }
+  },
+  inning: function ( ) {
+    var currentGame = Games.findOne({live: true});
+    return currentGame.inning
+  },
+  oneOut: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 1 ) {
+      return true
+    }
+  },
+  twoOuts: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 2 ) {
+      return true
+    }
+  },
+  threeOuts: function(){
+    var currentGame = Games.findOne({live: true});
+    var outs = currentGame.outs
+    if ( outs >= 3 ) {
+      return true
+    }
+  },
+})

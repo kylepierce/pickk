@@ -859,6 +859,26 @@ Meteor.methods({
     }
 },
 
+'toggleOut': function (active ) {
+  var currentGame = Games.findOne({live: true})
+  console.log(active)
+  if (active == "admin-out") {
+    var outs = currentGame.outs
+    if(outs == 0){
+      return 
+    } else {
+      Games.update({_id: currentGame._id}, {$inc: { "outs": -1}});
+    }
+  } else {
+    var outs = currentGame.outs
+    if(outs == 2){
+       console.log("inning is over!")
+    } else {
+      Games.update({_id: currentGame._id}, {$inc: { "outs": 1}});
+    }
+  }
+},
+
 'sendToABase': function( number ){
   if (number > 4 || number < 1) {
     console.log('there are only 4 bases to move to');

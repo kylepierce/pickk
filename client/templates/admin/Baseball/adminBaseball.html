@@ -24,8 +24,9 @@
 			<button class="button button-energized col-md-50" data-action="createAtBat">
 				Create At Bat
 			</button>
-		
-		Outs:
+			{{> gameInfo}}
+		</div>
+		<div class="col-md-50">
 			<div class="admin-bases">
 				{{#if third}} 
 					<div data-action="third" class="base-diamond admin-base-size admin-base-fix third-base-admin "></div> 
@@ -45,23 +46,48 @@
 			</div>
 		</div>
 
-		{{> teamBattingLineup}}
+		
 		<div class="clear-fix"></div>
 
 		<div class="col-md-50">
 			{{> activeQuestionList}}
 		</div>
-		<div class="col-md-50">
-			{{> atBatQuestion}}
-		</div>
+
 		<div class="col-md-50">
 			{{> pendingQuestionList}}
 		</div>
-		
-<!-- 		<button data-action="createBaseballGame">
-		Create Baseball Game</button> -->
 
+		{{> teamBattingLineup}}
+
+		<div class="col-md-50">
+			{{> atBatQuestion}}
+		</div>
 		{{/ionContent}}
 	  {{/ionView}}
  </div>
+</template>
+
+<template name="gameInfo">
+	<div class="col-md-50 float-left">
+		<h1>Count:</h1>
+		<h1> {{balls}} - {{strikes}}</h1> 
+	</div>
+	<div class="col-md-50 float-left">
+		<h1>Outs</h1>
+		{{#if oneOut}} 
+			<div class="admin-out" data-action="firstOut"></div>
+		{{else}} 
+			<div class="admin-no-out" data-action="firstOut"></div>
+		{{/if}}
+		{{#if twoOuts}} 
+			<div class="admin-out" data-action="secondOut"></div>
+		{{else}} 
+			<div class="admin-no-out" data-action="secondOut"></div> 
+		{{/if}} 
+		{{#if threeOuts}} 
+			<div class="admin-out" data-action="thirdOut"></div>
+		{{else}} 
+			<div class="admin-no-out" data-action="thirdOut"></div>
+		{{/if}}
+	</div>
 </template>
