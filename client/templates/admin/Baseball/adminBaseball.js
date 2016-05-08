@@ -114,7 +114,7 @@ Template.adminBaseball.helpers ({
 
 });
 
-Template.gameInfo.helpers({
+Template.adminGameInfo.helpers({
   strikes: function() {
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.strikeCount

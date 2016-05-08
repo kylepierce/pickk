@@ -24,7 +24,7 @@
 			<button class="button button-energized col-md-50" data-action="createAtBat">
 				Create At Bat
 			</button>
-			{{> gameInfo}}
+			{{> adminGameInfo}}
 		</div>
 		<div class="col-md-50">
 			<div class="admin-bases">
@@ -67,7 +67,7 @@
  </div>
 </template>
 
-<template name="gameInfo">
+<template name="adminGameInfo">
 	<div class="col-md-50 float-left">
 		<h1>Count:</h1>
 		<h1> {{balls}} - {{strikes}}</h1> 

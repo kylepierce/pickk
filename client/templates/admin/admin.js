@@ -137,7 +137,6 @@ Template.pendingQuestionList.events({
 	'click .pending': function(event, template ) {
 		var value = event.currentTarget.value 
 		var optionNumber = event.currentTarget.getAttribute('data-action')
-		console.log(optionNumber)
 		if(value == "Hit"){
 			var baseNumber = prompt('What Base?')
 		}
