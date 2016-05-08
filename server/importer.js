@@ -1,27 +1,31 @@
 Meteor.methods({
   getPlayerInfo: function (playerId, team) {
+    // Request the page
     result = Meteor.http.get("http://espn.go.com/mlb/player/stats/_/id/"+playerId);
+    
+    // Create object to store player info
     playerInfo = {"playerId": playerId, "team": team};
+    
+    // Use cheerio to parse it
     $ = cheerio.load(result.content);
     var team = team
 
     function oneLine (text, career){
+      // Setup some temp objects
       playerInfo.stats = {}
       playerInfo.stats.y2016 = {}
       playerInfo.stats.career = {}
 
-      var year2016 = text.indexOf('2016')
-      var seasons = text.indexOf('Season Averages')
-      var totals = text.indexOf('Total')
-
-      var text2016 = text.slice((year2016+6), (totals))
-     
-      var seasons = text.slice((totals+6), (seasons))
-      
-      var text2016 = text2016.split('\n');
-      var seasons = seasons.split('\n');
+      // From the text we are going to find where to start and end
+      var year2016 = text.indexOf('2016') // Find 2016 in the stats
+      var totals = text.indexOf('Total') // Find career total in the stats
+      var seasons = text.indexOf('Season Averages') // Where to end after career stats 
+      var firstDigit = text.search(/\d/) // Index of first digit
+      var text2016 = text.slice((firstDigit), (totals)) // 2016 Stats
+      var seasons = text.slice((totals+6), (seasons)) // Career Stats
+      var text2016 = text2016.split('\n'); // Remove the line break
+      var seasons = seasons.split('\n'); // Remove the line break
       var statsArray = ["AB", "R", "H", "Double", "Triple", "HR", "RBI", "BB", "SO", "SB", "CS", "AVG", "OBP", "SLG", "OPS", "WAR"]
-
 
       for (var i = 0; i <= 15; i++) {
         var statName = statsArray[i]
@@ -46,27 +50,19 @@ Meteor.methods({
       }
     }
 
-    function parsePlayerStats (text){
-      var year2016 = text.indexOf('2016')
-      var seasons = text.indexOf('Season Averages')
-      var totals = text.indexOf('Total')
-
-      var text2016 = text.slice((year2016+6), (seasons))
-      oneLine(text2016, true)
-    }
-
+    // Get the player's name
     $('h1', '.mod-content').each(function(){
       var name = $(this).text()
       playerInfo.name = name
     });
 
+    // Get players general info like number, side they bat, what side they throw, and their position.
     $('.general-info ', '.mod-content').each(function(){
       var general = $(this).text()
       var number = general.slice(0,3)
       var bats = general.indexOf('Bats:')
       var throws = general.indexOf('Throws:')
       var batOrThrow = Math.min(throws, bats)
-      console.log(batOrThrow)
 
       var bats = general.slice((bats + 6), (bats + 7))
       var throws = general.slice((throws+8), (throws+9))
@@ -78,45 +74,90 @@ Meteor.methods({
       playerInfo.position = position
     });
 
+    // Find the stats table in string format and put it into a variable
     var general = $('.tablehead', '.mod-container')
     var text = general.text()
-    parsePlayerStats(text)
 
-    var player = Players.findOne({"playerId": playerId });
-    var y2016Stats = playerInfo.stats.y2016
-    var careerStats = playerInfo.stats.career
+    // Parse the players text to add to temp objects
+    var year2016 = text.indexOf('2016')
+    var seasons = text.indexOf('Season Averages')
+    var text2016 = text.slice((year2016+4), (seasons))
+    
+    oneLine(text2016, true)
+
+    // Create easy to refrence variables
+    var stats = playerInfo.stats
     var position = playerInfo.position
 
-     if(player){
-        console.log("Player Already Exists")
+    // Check to see if the player already exists
+    var player = Players.findOne({"playerId": playerId });
+    if(player){
+      console.log("Player Already Exists")
 
-        Players.update({"_id": player._id}, {
-          $set: {
-            'stats.y2016': y2016Stats,
-            'stats.career': careerStats,
-            'position': position,
-            'team': team,
-            // 'stats.y2016.R': y2016Stats.R,
-            // 'stats.y2016.H': y2016Stats.H,
-            // 'stats.y2016.Double': y2016Stats.Double,
-            // 'stats.y2016.Triple': y2016Stats.Triple,
-            // 'stats.y2016.HR': y2016Stats.HR,
-            // 'stats.y2016.RBI': y2016Stats.RBI,
-            // 'stats.y2016.BB': y2016Stats.BB,
-            // 'stats.y2016.SO': y2016Stats.SO,
-            // 'stats.y2016.SB': y2016Stats.SB,
-            // 'stats.y2016.CS': y2016Stats.CS,
-            // 'stats.y2016.AVG': y2016Stats.AVG,
-            // 'stats.y2016.OBP': y2016Stats.OBP,
-            // 'stats.y2016.SLG': y2016Stats.SLG,
-            // 'stats.y2016.OPS': y2016Stats.OPS,
-            // 'stats.y2016.WAR': y2016Stats.WAR
-          }
-        });
+      Players.update({"_id": player._id}, {
+        $set: {
+          'stats': stats,
+          'position': position,
+          'team': team,
+        }
+      });
      } else {
         Players.insert(playerInfo);  
      }
-    
+  },
+
+  'getExtendPlayerInfo': function ( playerId ) {
+    result = Meteor.http.get("http://espn.go.com/mlb/player/splits/_/id/" + playerId + "/type/batting3/");
+    $ = cheerio.load(result.content); 
+    // Players.findOne({playerId: playerId})
+    var countStats = {}
+    var statsArray = ["AB", "R", "H", "Double", "Triple", "HR", "RBI", "BB", "HBP", "SO", "SB", "CS", "AVG", "OBP", "SLG", "OPS"]
+  
+    // Find the stats table in string format and put it into a variable
+    var general = $('.tablehead .oddrow')
+    var text = general.map(function() {
+
+      var $row = $(this);
+     
+      var row = {};
+      for (var i = 0; i < statsArray.length - 1; i++) {
+        var statName = statsArray[i]
+        var numberFix = i+2
+        row[statName] = $row.find(':nth-child(' + numberFix +')').text()
+      }
+      var name = $row.find(':nth-child(1)').text()
+      var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      countStats[name] = row
+    }).get();
+
+    var general = $('.tablehead .evenrow')
+    var text = general.map(function() {
+
+      var $row = $(this);
+     
+      var row = {};
+      for (var i = 0; i < statsArray.length - 1; i++) {
+        var statName = statsArray[i]
+        var numberFix = i+2
+        row[statName] = $row.find(':nth-child(' + numberFix +')').text()
+      }
+      var name = $row.find(':nth-child(1)').text()
+      var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      countStats[name] = row
+    }).get();    
+
+    var player = Players.findOne({"playerId": playerId });
+    if(player){
+      console.log("Player Already Exists")
+
+      Players.update({"_id": player._id}, {
+        $set: {
+          'stats.three_year': countStats,
+        }
+      });
+     } else {
+        console.log("Player doesnt exist yet")
+     }
   },
 
   createATeam: function ( fullName, nickname, computerName, city, state) {
@@ -129,9 +170,12 @@ Meteor.methods({
     });
   },
 
+
+  // Find all the players on the time and create/update the players 
   findPlayersOnTeam: function (computerName) {
     var team = Teams.findOne({"computerName": computerName});
 
+    // Get the player unique id
     function parsePlayer(url) {
       var removeEspn = url.replace('http://espn.go.com/mlb/player/_/id/', '')
       var lastDash = removeEspn.indexOf('/')
@@ -139,13 +183,14 @@ Meteor.methods({
       return playerId
     }
 
-    console.log(team)
+    // Find the team url based on the two or three letter code
     var teamUrl = 'http://espn.go.com/mlb/team/stats/batting/_/name/' + team.computerName
-    console.log(teamUrl)
     var teamId = team._id
     result = Meteor.http.get(teamUrl)
     var teamInfo = [];
     $ = cheerio.load(result.content);
+
+    // Grab every player
     $('.oddrow a', '#my-players-table').each(function(){
       var url = $(this).attr('href')
       var playerId = parsePlayer(url)
@@ -157,20 +202,20 @@ Meteor.methods({
       teamInfo.push({"playerId": playerId, "url": url})
     })
 
+    // Create / Update them
     for (var i = teamInfo.length - 1; i >= 0; i--) {
-      console.log(teamInfo[i].playerId)
       Meteor.call('getPlayerInfo', teamInfo[i].playerId, teamId)
+      Meteor.call('getExtendPlayerInfo', teamInfo[i].playerId)
     }
     console.log("All Done! :D")
   },
 
-  findAllPlayers: function (id) {
-    var team = Teams.findOne({"_id": id});
-    console.log(team)
-    for (var i = team.players.length - 1; i >= 0; i--) {
-      console.log(team.players[i].playerId)
-      Meteor.call('getPlayerInfo', team.players[i].playerId, id)
-    }
-    console.log("All Done! :D")
-  }
+//   findAllPlayers: function (id) {
+//     var team = Teams.findOne({"_id": id});
+//     for (var i = team.players.length - 1; i >= 0; i--) {
+//       Meteor.call('getPlayerInfo', team.players[i].playerId, id)
+      
+//     }
+//     console.log("All Done! :D")
+//   }
 })

@@ -142,22 +142,21 @@ Meteor.methods({
       var op5 = "Out"  
   }
 
-  // Generate what is likely to happen by calling the multiplier generator
-  // Meteor.call('', playerId, pitcherId, strikes, balls)
-
-
   // Finally we are going to create an option object to give to the database.
   var options = {
-      option1: {title: op1, usersPicked: [], multiplier: 2.1 },
-      option2: {title: op2, usersPicked: [], multiplier: 2.2 },
-      option3: {title: op3, usersPicked: [], multiplier: 2.3 },
-      option4: {title: op4, usersPicked: [], multiplier: 2.4 },
+      option1: { title: op1, usersPicked: [], multiplier: 1.45 },
+      option2: { title: op2, usersPicked: [], multiplier: 1.65 },
+      option3: { title: op3, usersPicked: [], multiplier: 7.35 },
+      option4: { title: op4, usersPicked: [], multiplier: 3.23 },
   }
 
   // If "op5" exists add the option to the end of the options object.
   if( op5 ){
-      options.option5 = {title: op5, usersPicked: [], multiplier: 2.5 }
+      options.option5 = { title: op5, usersPicked: [], multiplier: 1 }
   }
+
+  // Generate what is likely to happen by calling the multiplier generator
+  Meteor.call('multiplierGenerator', playerId, strikes, balls, options)
 
   // The Question will be the count
   var question =  balls + " - " + strikes ;
@@ -272,18 +271,18 @@ Meteor.methods({
     // Increase the number of pitches by pitcher by 1
 },
 
-' multiplierGenerator ': function ( batter, pitcher, strikes, balls ) {
+'multiplierGenerator': function ( batter, strikes, balls, options ) {
   // Find the batter's info
   var playerAtBat = Players.findOne({_id: batter})
-  var pitcher = Players.findOne({_id: pitcher})
-
   var currentGame = Games.findOne({live: true})
-
-
-
-  // Find the pitcher info
+  console.log(playerAtBat)
 
   // Find the pitch count  
+  console.log("Balls: " + balls + " Strikes: " + strikes)
+  // What options are available? 
+  console.log(options)
+
+
 },
 
 // Create A Team to Group Players
