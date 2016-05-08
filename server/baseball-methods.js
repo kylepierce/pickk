@@ -130,13 +130,16 @@ Meteor.methods({
   var op4 = "Out";
 
   // If the strike count is at 2 we want to change the "strike" option to "strike out"
-  if ( strikes === 2 ) {
-      var op1 = "Strike Out";
-  }
 
   // If the ball count is at 3 we want to change the "ball" option to "walk"
   if ( balls === 3 ){
       var op2 = "Walk";
+      var op3 = "Hit";
+      var op4 = "Out"  
+  }
+
+  if ( strikes === 2 ) {
+      var op1 = "Strike Out";
       var op3 = "Foul Ball";
       var op4 = "Hit";
       var op5 = "Out"  
@@ -156,7 +159,7 @@ Meteor.methods({
   }
 
   // Generate what is likely to happen by calling the multiplier generator
-  Meteor.call('multiplierGenerator', playerId, strikes, balls, options)
+  var options = Meteor.call('multiplierGenerator', playerId, strikes, balls, options)
 
   // The Question will be the count
   var question =  balls + " - " + strikes ;
@@ -208,9 +211,10 @@ Meteor.methods({
   var team = Meteor.call('topOfInningPostion')
   var batterNum = currentGame.teams[team].batterNum
   var teamId = currentGame.teams[team].teamId
-  var team = Teams.findOne({_id: teamId})
-  var numberOfBatters = team.battingOrderLineUp.length
+  var numberOfBatters = currentGame.teams[team].battingLineUp.length
   var numberOfBatters = numberOfBatters - 1
+  var team = Teams.findOne({_id: teamId})
+  
 
   if( batterNum === numberOfBatters ) {
       Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': 0}});
@@ -275,14 +279,121 @@ Meteor.methods({
   // Find the batter's info
   var playerAtBat = Players.findOne({_id: batter})
   var currentGame = Games.findOne({live: true})
-  console.log(playerAtBat)
 
-  // Find the pitch count  
-  console.log("Balls: " + balls + " Strikes: " + strikes)
+  // Total at bat
+  var totalAtBat = playerAtBat.stats.three_year.total.ab
+
   // What options are available? 
+  var count = "count_"+balls+"_"+strikes
+  var thisPlay = playerAtBat.stats.three_year[count]
+  var thisPlayEoP = thisPlay.ab
+
+  // End of Play probability 
+  var EoP = parseInt(thisPlayEoP) / parseInt(totalAtBat)
+  var remainingPercent = 1 - EoP
+  var hitPercent = thisPlay.avg * EoP
+  var outPercent = ( 1 - hitPercent ) * EoP
+
+  // Option 1 add strike
+  if( strikes == 2 ){
+    var option1EoP = thisPlay.so
+  } else {
+    var strike = strikes + 1 
+    var count = "count_"+balls+"_"+strike
+    var thisPlay = playerAtBat.stats.three_year[count]
+    var option1EoP = thisPlay.ab
+  }
+
+  // Option 2 add ball
+  if ( balls == 3 ){
+    var option2EoP = thisPlay.bb
+  } else {
+    var ball = balls + 1 
+    var count = "count_"+ball+"_"+strikes
+    var thisPlay = playerAtBat.stats.three_year[count]
+    var option2EoP = thisPlay.ab
+  }
+  var option1EoP = parseInt(option1EoP);
+  var option2EoP = parseInt(option2EoP);
+  var combinedEoP = option1EoP + option2EoP
+  var option1EoPPercentage = (( option1EoP / combinedEoP ) * remainingPercent).toFixed(4)
+  var option2EoPPercentage = (( option2EoP / combinedEoP ) * remainingPercent).toFixed(4)
+
+  console.log("Possible " + combinedEoP)
+  var strikePercent = (100- (option1EoPPercentage *100).toFixed(2))
+  console.log(option2EoPPercentage)
+  var ballPercent = (100- (option2EoPPercentage *100).toFixed(2))
+  console.log(ballPercent)
+  var outPercent = (100- (outPercent*100).toFixed(2))
+  var hitPercent = (100- (hitPercent*100).toFixed(2))
+
+  function toMultiplier ( number ) {
+    var number = parseInt(number)
+    console.log(number)
+    switch (true){
+      case (number >= 0 && number < 20):
+        console.log(number)
+        var number = 1
+        return number
+        break;
+      case (number >= 20 && number < 40):
+        console.log(number)
+        var number = 1.5
+        return number
+        break;
+      case (number >= 40 && number < 75):
+        console.log(number)
+        var number = 2
+        return number
+        break;
+      case (number >= 75 && number < 90):
+        console.log(number)
+        var number = 3
+        return number
+        break;
+      case (number >= 90 && number < 95):
+        console.log(number)
+        var number = 3
+        return number
+        break;
+      case (number >= 95 && number < 99):
+        console.log(number)
+        var number = 4
+        return number
+        break;
+      default:
+        console.log(number + " doesnt work?")
+        break;
+    }
+    
+  }
+
   console.log(options)
-
-
+  if(strikes < 2 && balls < 3) {
+    options.option1.multiplier = toMultiplier(strikePercent) 
+    options.option2.multiplier = toMultiplier(ballPercent) 
+    options.option3.multiplier = toMultiplier(outPercent) 
+    options.option4.multiplier = toMultiplier(hitPercent) 
+  } else if ( strikes === 2 && balls === 3 ) {
+    options.option1.multiplier = toMultiplier(strikePercent) 
+    options.option2.multiplier = toMultiplier(ballPercent) 
+    options.option3.multiplier = 1.5 
+    options.option4.multiplier = toMultiplier(hitPercent) 
+    options.option5.multiplier = toMultiplier(outPercent) 
+  } else if (strikes === 2 ) {
+    options.option1.multiplier = toMultiplier(strikePercent) 
+    options.option2.multiplier = toMultiplier(ballPercent) 
+    options.option3.multiplier = 1.5
+    options.option4.multiplier = toMultiplier(hitPercent) 
+    options.option5.multiplier = toMultiplier(outPercent) 
+  } else if (balls === 3) {
+    options.option1.multiplier = toMultiplier(strikePercent) 
+    options.option2.multiplier = toMultiplier(ballPercent) 
+    options.option3.multiplier = toMultiplier(hitPercent) 
+    options.option4.multiplier = toMultiplier(outPercent) 
+  }
+  console.log(options)
+  return options 
 },
 
 // Create A Team to Group Players

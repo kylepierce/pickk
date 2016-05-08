@@ -25,7 +25,7 @@ Meteor.methods({
       var seasons = text.slice((totals+6), (seasons)) // Career Stats
       var text2016 = text2016.split('\n'); // Remove the line break
       var seasons = seasons.split('\n'); // Remove the line break
-      var statsArray = ["AB", "R", "H", "Double", "Triple", "HR", "RBI", "BB", "SO", "SB", "CS", "AVG", "OBP", "SLG", "OPS", "WAR"]
+      var statsArray = ["ab", "r", "h", "double", "triple", "hr", "rbi", "bb", "so", "sb", "cs", "avg", "obp", "slg", "ops", "war"]
 
       for (var i = 0; i <= 15; i++) {
         var statName = statsArray[i]
@@ -111,7 +111,7 @@ Meteor.methods({
     $ = cheerio.load(result.content); 
     // Players.findOne({playerId: playerId})
     var countStats = {}
-    var statsArray = ["AB", "R", "H", "Double", "Triple", "HR", "RBI", "BB", "HBP", "SO", "SB", "CS", "AVG", "OBP", "SLG", "OPS"]
+    var statsArray = ["ab", "r", "h", "double", "triple", "hr", "rbi", "bb", "hbp", "so", "sb", "cs", "avg", "obp", "slg", "ops"]
   
     // Find the stats table in string format and put it into a variable
     var general = $('.tablehead .oddrow')
@@ -127,6 +127,7 @@ Meteor.methods({
       }
       var name = $row.find(':nth-child(1)').text()
       var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      var name = name.toLowerCase();
       countStats[name] = row
     }).get();
 
@@ -139,10 +140,12 @@ Meteor.methods({
       for (var i = 0; i < statsArray.length - 1; i++) {
         var statName = statsArray[i]
         var numberFix = i+2
-        row[statName] = $row.find(':nth-child(' + numberFix +')').text()
+        var statValue = $row.find(':nth-child(' + numberFix +')').text()
+        row[statName] = statValue
       }
       var name = $row.find(':nth-child(1)').text()
       var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      var name = name.toLowerCase();
       countStats[name] = row
     }).get();    
 
