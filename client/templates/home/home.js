@@ -257,6 +257,24 @@ Template.binaryChoice.animations({
   }
 });
 
+Template.playerCard.animations({
+  ".container-item": {
+    container: ".container", // container of the ".item" elements
+    insert: {
+      class: "animated fast slideInLeft", // class applied to inserted elements
+      before: function(attrs, element, template) {
+        $( "#normalCard" ).css("display", "")
+      }, // callback before the insert animation is triggered
+      after: function(attrs, element, template) {}, // callback after an element gets inserted
+      delay: 200 // Delay before inserted items animate
+    },
+    animateInitial: true, // animate the elements already rendered
+    animateInitialStep: 200, // Step between animations for each initial item
+    animateInitialDelay: 500 // Delay before the initial items animate
+  }
+});
+
+
 Template.questionCard.helpers({
 	'notLive': function(){
 		var game = Games.findOne({live: true});
@@ -518,7 +536,6 @@ Template.commercialQuestion.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
     if(status == "connected"){
       return true
     } else {
@@ -539,7 +556,6 @@ Template.predictionQuestions.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
     if(status == "connected"){
       return true
     } else {
@@ -600,7 +616,6 @@ Template.binaryChoice.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
     if(status == "connected"){
       return true
     } else {
@@ -627,7 +642,6 @@ Template.twoOptionQuestions.events({
     $( ".container-item" ).removeClass( "slideInLeft" )
     $( ".container-item" ).addClass( "slideOutRight" )
 
-    console.log(que + " " + answer + " " + wager)
     // Wait until the question card has disapeared
     Meteor.setTimeout(function(){
       Meteor.call('twoOptionQuestionAnswered', currentUser, questionId, answer, wager, que)
@@ -639,7 +653,7 @@ Template.twoOptionQuestions.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
-    console.log(status)
+
     if(status == "connected"){
       return true
     } else {
@@ -817,11 +831,8 @@ Template.normalPlay.helpers({
 Template.playerCard.helpers({
   playerInfo: function () {
     var playerAtBat = AtBat.findOne({active: true})
-    console.log("Player At Bat " + playerAtBat)
     var playerId = playerAtBat.playerId
-    console.log(playerId)
     var player = Players.findOne({_id: playerId})
-    console.log(player)
     return player
   }
 });

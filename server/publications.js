@@ -248,20 +248,18 @@ Meteor.publish('activeAtBat', function(){
 Meteor.publish('atBatForThisGame', function(){
   var currentGame = Games.findOne({live: true});
   var currentGameId = currentGame._id
-  console.log(currentGameId)
   // return AtBat.find({});
   return AtBat.find({gameId: currentGameId});
 });
 
 Meteor.publish('oneGamePlayers', function(){
   var currentGame = Games.find({live: true});
-  var teams = currentGame = teams
-  return Players.find({teamId: teams})
+  return Players.find({})
 });
 
 Meteor.publish('atBatPlayer', function(){
   var atBat = AtBat.findOne({active: true });
-  return Players.find({_id: atBat.playerId});
+  return Players.find({});
 });
 
 Meteor.publish('teams', function(){
