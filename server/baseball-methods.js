@@ -97,6 +97,8 @@ Meteor.methods({
     option6: {title: op6, usersPicked: [], multiplier: 2.4 },
   }
 
+  var options = Meteor.call('playMultiplierGenerator', playerId, options)
+
   var question = "End of " + currentAtBat.playerId + " at bat." ;
 
   QuestionList.insert({
@@ -319,56 +321,52 @@ Meteor.methods({
   var option1EoPPercentage = (( option1EoP / combinedEoP ) * remainingPercent).toFixed(4)
   var option2EoPPercentage = (( option2EoP / combinedEoP ) * remainingPercent).toFixed(4)
 
-  console.log("Possible " + combinedEoP)
   var strikePercent = (100- (option1EoPPercentage *100).toFixed(2))
-  console.log(option2EoPPercentage)
   var ballPercent = (100- (option2EoPPercentage *100).toFixed(2))
-  console.log(ballPercent)
   var outPercent = (100- (outPercent*100).toFixed(2))
   var hitPercent = (100- (hitPercent*100).toFixed(2))
 
+  function getRandomArbitrary(min, max) {
+    return (Math.random() * (max - min) + min).toFixed(2);
+  }
+
   function toMultiplier ( number ) {
     var number = parseInt(number)
-    console.log(number)
     switch (true){
-      case (number >= 0 && number < 20):
-        console.log(number)
-        var number = 1
+      case (number < 25):
+        var number = getRandomArbitrary(1,1.25)
         return number
         break;
-      case (number >= 20 && number < 40):
-        console.log(number)
-        var number = 1.5
+      case (number < 50):
+        var number = getRandomArbitrary(1.25, 1.5)
         return number
         break;
-      case (number >= 40 && number < 75):
-        console.log(number)
-        var number = 2
+      case (number < 60):
+        var number = getRandomArbitrary(1.5,1.75)
         return number
         break;
-      case (number >= 75 && number < 90):
-        console.log(number)
-        var number = 3
+      case (number < 75):
+        var number = getRandomArbitrary(1.75, 2.25)
         return number
         break;
-      case (number >= 90 && number < 95):
-        console.log(number)
-        var number = 3
+      case (number < 85):
+        var number = getRandomArbitrary(2.25, 2.75)
         return number
         break;
-      case (number >= 95 && number < 99):
-        console.log(number)
-        var number = 4
+      case (number < 90):
+        var number = getRandomArbitrary(2.75, 3.5)
+        return number
+        break;
+      case (number < 1000):
+        var number = getRandomArbitrary(3.5, 4.5)
         return number
         break;
       default:
         console.log(number + " doesnt work?")
         break;
-    }
-    
+    } 
   }
 
-  console.log(options)
   if(strikes < 2 && balls < 3) {
     options.option1.multiplier = toMultiplier(strikePercent) 
     options.option2.multiplier = toMultiplier(ballPercent) 
@@ -377,13 +375,13 @@ Meteor.methods({
   } else if ( strikes === 2 && balls === 3 ) {
     options.option1.multiplier = toMultiplier(strikePercent) 
     options.option2.multiplier = toMultiplier(ballPercent) 
-    options.option3.multiplier = 1.5 
+    options.option3.multiplier = getRandomArbitrary(1.5, 2) 
     options.option4.multiplier = toMultiplier(hitPercent) 
     options.option5.multiplier = toMultiplier(outPercent) 
   } else if (strikes === 2 ) {
     options.option1.multiplier = toMultiplier(strikePercent) 
     options.option2.multiplier = toMultiplier(ballPercent) 
-    options.option3.multiplier = 1.5
+    options.option3.multiplier = getRandomArbitrary(1.5, 2) 
     options.option4.multiplier = toMultiplier(hitPercent) 
     options.option5.multiplier = toMultiplier(outPercent) 
   } else if (balls === 3) {
@@ -392,8 +390,136 @@ Meteor.methods({
     options.option3.multiplier = toMultiplier(hitPercent) 
     options.option4.multiplier = toMultiplier(outPercent) 
   }
-  console.log(options)
   return options 
+},
+
+'playMultiplierGenerator': function (batter, options) {
+  // Find the batter's info
+  var playerAtBat = Players.findOne({_id: batter})
+  var currentGame = Games.findOne({live: true})
+
+  // Total at bat
+  var totalAtBat = playerAtBat.stats.three_year.total.ab
+
+  // Are there players on base?
+  var playersOnBase = currentGame.playersOnBase
+
+  if(playersOnBase.first == true && playersOnBase.second == true && playersOnBase.third == true) {
+    var situationStats = playerAtBat.stats.three_year.bases_loaded
+  } else if (playersOnBase.first == true ){
+    var situationStats = playerAtBat.stats.three_year.runners_on
+  } else if (playersOnBase.second == true || playersOnBase.third == true) {
+    var situationStats = playerAtBat.stats.three_year.scoring_position
+  } else {
+    var situationStats = playerAtBat.stats.three_year.total
+  }
+
+  function getRandomArbitrary(min, max) {
+    return (Math.random() * (max - min) + min).toFixed(2);
+  }
+
+  function atleastOne (number) {
+    if(number < 1) {
+      return 1
+    }
+  }
+
+  function toMultiplier ( number ) {
+    var number = parseInt(number)
+    switch (true){
+      case (number < 25):
+        var number = getRandomArbitrary(1,1.75)
+        return number
+        break;
+      case (number < 50):
+        var number = getRandomArbitrary(1.5, 2)
+        return number
+        break;
+      case (number < 60):
+        var number = getRandomArbitrary(2,2.5)
+        return number
+        break;
+      case (number < 75):
+        var number = getRandomArbitrary(2.25, 2.75)
+        return number
+        break;
+      case (number < 85):
+        var number = getRandomArbitrary(2.5, 3)
+        return number
+        break;
+      case (number < 90):
+        var number = getRandomArbitrary(3, 3.5)
+        return number
+        break;
+      case (number < 95):
+        var number = getRandomArbitrary(3.5, 3.75)
+        return number
+        break;
+      case (number < 99):
+        var number = getRandomArbitrary(3.75, 4.5)
+        return number
+        break;
+      case (number < 1000):
+        var number = getRandomArbitrary(4.5, 5)
+        return number
+        break;
+      default:
+        console.log(number + " doesnt work?")
+        break;
+    } 
+  }
+
+  if(situationStats){
+    var atBats = situationStats.ab
+    var avg = situationStats.avg
+    var hit = situationStats.h
+    var walk = parseInt(situationStats.bb)
+    var hitByBall = parseInt(situationStats.hbp)
+    var walkPercent = (walk + hitByBall ) / atBats
+    var homeRun = parseInt(situationStats.hr)
+    var homeRunPercent = homeRun / atBats
+    var triple = parseInt(situationStats.triple)
+    var triplePercent = triple / atBats
+    var double = parseInt(situationStats.double)
+    var doublePercent = double / atBats
+    var single = parseInt(hit - homeRun - double - triple)
+    var singlePercent = single / atBats
+    var outs = (atBats - hitByBall - walk - homeRun - triple - double - single)
+    var outPercent = outs / atBats
+  } else {
+    var atBats = situationStats.ab
+    var avg = situationStats.avg
+    var hit = situationStats.h
+    var walk = parseInt(situationStats.bb)
+    var hitByBall = parseInt(situationStats.hbp)
+    var walkPercent = (walk + hitByBall ) / atBats
+    var homeRun = parseInt(situationStats.hr)
+    var homeRunPercent = homeRun / atBats
+    var triple = parseInt(situationStats.triple)
+    var triplePercent = triple / atBats
+    var double = parseInt(situationStats.double)
+    var doublePercent = double / atBats
+    var single = parseInt(hit - homeRun - double - triple)
+    var singlePercent = single / atBats
+    var outs = (atBats - hitByBall - walk - homeRun - triple - double - single)
+    var outPercent = outs / atBats
+  }
+
+  var outPercent = (100 - (outPercent*100).toFixed(2))
+  var walkPercent = (100 - (walkPercent*100).toFixed(2))
+  var singlePercent = (100 - (singlePercent*100).toFixed(2))
+  var doublePercent = (100 - (doublePercent*100).toFixed(2))
+  var triplePercent = (100 - (triplePercent*100).toFixed(2))
+  var homeRunPercent = (100 - (homeRunPercent*100).toFixed(2))
+
+  options.option1.multiplier = toMultiplier(outPercent) 
+  options.option2.multiplier = toMultiplier(walkPercent) 
+  options.option3.multiplier = toMultiplier(singlePercent) 
+  options.option4.multiplier = toMultiplier(doublePercent) 
+  options.option5.multiplier = toMultiplier(triplePercent)
+  options.option6.multiplier = toMultiplier(homeRunPercent)
+  
+  return options
 },
 
 // Create A Team to Group Players
