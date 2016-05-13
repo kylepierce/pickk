@@ -1182,7 +1182,8 @@ Meteor.methods({
 
 		// Add user to the users who have played in the game.
 		var gameInfo = QuestionList.findOne({_id: questionId})
-		var gameId = gameInfo.gameId
+		var game = Games.findOne({live: true});
+		var gameId = game._id
 		var game = Games.find(
 				{_id: gameId, 
 				users: {$nin: [user]}}, {fields: {'users': 1}}).fetch();

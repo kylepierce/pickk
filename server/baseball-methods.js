@@ -1,11 +1,12 @@
 Meteor.methods({
-'createBaseballGame': function ( team1, team2, dateOfGame, timeOfGame, tvStation ) {
+'createBaseballGame': function ( team1, team2, title, dateOfGame, timeOfGame, tvStation ) {
     var currentUserId = Meteor.userId();
     var timeCreated = new Date();
     Games.insert({
         dateCreated: timeCreated,
         createdBy: currentUserId,
-        date: dateOfGame,
+        name: title,
+        gameDate: dateOfGame,
         time: timeOfGame,
         tv: tvStation,
         live: false,
@@ -315,6 +316,7 @@ Meteor.methods({
     var thisPlay = playerAtBat.stats.three_year[count]
     var option2EoP = thisPlay.ab
   }
+
   var option1EoP = parseInt(option1EoP);
   var option2EoP = parseInt(option2EoP);
   var combinedEoP = option1EoP + option2EoP
@@ -410,8 +412,10 @@ Meteor.methods({
     var situationStats = playerAtBat.stats.three_year.runners_on
   } else if (playersOnBase.second == true || playersOnBase.third == true) {
     var situationStats = playerAtBat.stats.three_year.scoring_position
-  } else {
+  } else if (playerAtBat.stats.three_year.total) {
     var situationStats = playerAtBat.stats.three_year.total
+  } else {
+    var situationStats = playerAtBat.stats.career
   }
 
   function getRandomArbitrary(min, max) {
@@ -474,6 +478,7 @@ Meteor.methods({
     var avg = situationStats.avg
     var hit = situationStats.h
     var walk = parseInt(situationStats.bb)
+    // Going to break here for players without three year stats.
     var hitByBall = parseInt(situationStats.hbp)
     var walkPercent = (walk + hitByBall ) / atBats
     var homeRun = parseInt(situationStats.hr)
