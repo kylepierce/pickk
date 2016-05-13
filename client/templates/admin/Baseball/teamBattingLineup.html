@@ -7,15 +7,21 @@
 				{{#each battingLineUp}}
 					{{#ionItem buttonRight=true }}
 						{{#with onePlayer this}}
-							<a data-action="move-up"><i class="fa fa-caret-up"></i></a>
-							<li class="{{#if atBat this._id}} player-active {{/if}}" data-value="{{@index}}">
-								
+							<a data-action="move-up">
+								<i class="fa fa-caret-up"></i>
+							</a>
+							<li class="{{#if atBat this._id}} player-active {{/if}}" data-value="{{@index}}">	
 								{{name}}
-
 							</li>
-							<a class="button" data-action="removeFromBattingOrder">{{> ionIcon icon="close"}}</a> 
-							<a class="button stacked-button" data-action="pick-position">{{> ionIcon icon="more"}}</a> 
-							<a data-action="move-down"><i class="fa fa-caret-down"></i></a>
+							<a class="button" data-action="removeFromBattingOrder">
+								{{> ionIcon icon="close"}}
+							</a> 
+							<a class="button stacked-button" data-action="pick-position">
+								{{> ionIcon icon="more"}}
+							</a> 
+							<a data-action="move-down">
+								<i class="fa fa-caret-down"></i>
+							</a>
 						{{/with}}
 					{{/ionItem}}
 				{{/each}}
