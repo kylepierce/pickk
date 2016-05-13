@@ -121,3 +121,7 @@
   float: left;
   margin: 3px;
 }
+
+.player-active {
+	font-weight: bold;
+}

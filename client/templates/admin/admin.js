@@ -232,42 +232,42 @@ Template.atBatQuestion.events({
 	'click [data-action=option1]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option1");
-		
+		Meteor.call('nextPlay', "Out")
 	},
 	'click [data-action=option2]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option2");
+		Meteor.call('nextPlay', "Walk")
 	},
 	'click [data-action=option3]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option3");
+		Meteor.call('nextPlay', "Hit", 1)
 	},
 	'click [data-action=option4]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option4");
+		Meteor.call('nextPlay', "Hit", 2)
 	},
 	'click [data-action=option5]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option5");
+		Meteor.call('nextPlay', "Hit", 3)
 	},
 	'click [data-action=option6]': function() {
 		// Select the id of the button that is clicked
 		var questionId = this._id;
-
-		Meteor.call('modifyQuestionStatus', questionId, "option6");
+		Meteor.call('nextPlay', "Hit", 4)
 	},
 	'click [data-action=remove]' : function() {
 		if(confirm("Are you sure?")) {
+			var moveOn = confirm('Do you want to move on to next player?')
+      if( moveOn == true ) {
+      	Meteor.call('increaseBatterCount')
+      	Meteor.call('createAtBat') 
+      }
+      Meteor.call('updateAtBat', "Deleted")
+			Meteor.call('endBattersAtBat', "Deleted")
 			Meteor.call('removeQuestion', this._id)
 		}
 	},

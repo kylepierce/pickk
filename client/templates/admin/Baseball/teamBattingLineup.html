@@ -5,11 +5,13 @@
 			<div class="item item-divider">Batting</div> 
 			<ol type="1" class="list">
 				{{#each battingLineUp}}
-					{{#ionItem buttonRight=true}}
+					{{#ionItem buttonRight=true }}
 						{{#with onePlayer this}}
 							<a data-action="move-up"><i class="fa fa-caret-up"></i></a>
-							<li>
+							<li class="{{#if atBat this._id}} player-active {{/if}}" data-value="{{@index}}">
+								
 								{{name}}
+
 							</li>
 							<a class="button" data-action="removeFromBattingOrder">{{> ionIcon icon="close"}}</a> 
 							<a class="button stacked-button" data-action="pick-position">{{> ionIcon icon="more"}}</a> 

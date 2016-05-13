@@ -2,7 +2,6 @@ Meteor.methods({
 'createBaseballGame': function ( team1, team2, title, dateOfGame, timeOfGame, tvStation ) {
     function findTeamId (teamAbv) {
       var team = Teams.findOne({computerName: teamAbv})
-      console.log(team)
       return team._id
     };
 
@@ -294,10 +293,16 @@ Meteor.methods({
 
   // Total at bat
   var totalAtBat = playerAtBat.stats.three_year.total.ab
+  if (totalAtBat == "undefined" ) {
+    var thisPlay = playerAtBat.stats.career.ab
+  }
 
   // What options are available? 
   var count = "count_"+balls+"_"+strikes
   var thisPlay = playerAtBat.stats.three_year[count]
+  if (thisPlay == "undefined" ) {
+    var thisPlay = playerAtBat.stats.career
+  }
   var thisPlayEoP = thisPlay.ab
 
   // End of Play probability 
@@ -577,18 +582,6 @@ Meteor.methods({
   return team
 },
 
-'addBattingLineup': function ( teamId, n0, p0, n1, p1, n2, p2, n3, p3, n4, p4, n5, p5, n6, p6, n7, p7, n8, p8, n9, p10 ) {
-  var battingOrderLineUp = []
-  var args = arguments
-  for ( var i = 1; i < args.length-1 ; i+=2 ) {
-    var name = args[i]
-    var position = args[i+1] 
-    var batter = { "name": name, "position": position }
-    battingOrderLineUp.push(batter) 
-  }
-  Teams.update({_id: teamId}, {$set: {"battingOrderLineUp": battingOrderLineUp}});
-},
-
 'findTeamAtBatLineup': function(){
   var teamId = Meteor.call('topOfInning');
   var findBattingLineUp = Meteor.call('findBattingLineUp', teamId);
@@ -600,8 +593,6 @@ Meteor.methods({
   var battingOrderLineUp = team.battingOrderLineUp
   return battingOrderLineUp
 },
-
-
 
 // What should the system do next?
 'nextPlay' : function( value , baseNumber, optionNumber ) {

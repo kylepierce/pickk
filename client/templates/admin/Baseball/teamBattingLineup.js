@@ -33,9 +33,9 @@ Template.teamBattingLineup.helpers({
 
     // Depending on inning postion pick the visitor (0) or home team (1).
     if( topOfInning === true ){
-        var team = currentGame.teams[0]
+      var team = currentGame.teams[0]
     } else {
-        var team = currentGame.teams[1]
+      var team = currentGame.teams[1]
     }
 
     var playerExists = team.battingLineUp.indexOf(id)
@@ -51,9 +51,9 @@ Template.teamBattingLineup.helpers({
 
     // Depending on inning postion pick the visitor (0) or home team (1).
     if( topOfInning === true ){
-        var team = currentGame.teams[0]
+      var team = currentGame.teams[0]
     } else {
-        var team = currentGame.teams[1]
+      var team = currentGame.teams[1]
     }
 
     var battingLineUp = team.battingLineUp
@@ -62,6 +62,9 @@ Template.teamBattingLineup.helpers({
   onePlayer: function ( id ) {
     var player = Players.findOne({_id: id});
     return player
+  },
+  atBat: function ( id ) {
+    return AtBat.findOne({playerId: id, active: true})
   }
 });
 
