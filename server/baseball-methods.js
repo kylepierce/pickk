@@ -1,5 +1,14 @@
 Meteor.methods({
 'createBaseballGame': function ( team1, team2, title, dateOfGame, timeOfGame, tvStation ) {
+    function findTeamId (teamAbv) {
+      var team = Teams.findOne({computerName: teamAbv})
+      console.log(team)
+      return team._id
+    };
+
+    var team1 = findTeamId(team1)
+    var team2 = findTeamId(team2)
+
     var currentUserId = Meteor.userId();
     var timeCreated = new Date();
     Games.insert({
