@@ -90,6 +90,9 @@ Meteor.methods({
   var playerId = currentAtBat.playerId
   var pitcherId = currentAtBat.pitcherId
 
+  // Find players name
+  var playerName = Players.findOne({_id: playerId}).name
+
   var op1 = "Out";
   var op2 = "Walk";
   var op3 = "Single";
@@ -108,13 +111,14 @@ Meteor.methods({
 
   var options = Meteor.call('playMultiplierGenerator', playerId, options)
 
-  var question = "End of " + currentAtBat.playerId + " at bat." ;
+  var question = "End of " + playerName + "'s at bat." ;
 
   QuestionList.insert({
     dateCreated: timeCreated,
     createdBy: currentUserId,
+    playerId: playerId,
     atBatQuestion: true,
-    // gameId: currentGame._id,
+    gameId: currentGame._id,
     active: true,
     commercial: false,
     que: question,
@@ -133,6 +137,9 @@ Meteor.methods({
   var balls = currentAtBat.ballCount
   var playerId = currentAtBat.playerId
   var pitcherId = currentAtBat.pitcherId
+
+  // Find players name
+  var playerName = Players.findOne({_id: playerId}).name
 
   // These are the traditional options for single swing.
   var op1 = "Strike";
@@ -173,12 +180,13 @@ Meteor.methods({
   var options = Meteor.call('multiplierGenerator', playerId, strikes, balls, options)
 
   // The Question will be the count
-  var question =  balls + " - " + strikes ;
+  var question =  playerName + ": " + balls + " - " + strikes ;
 
   QuestionList.insert({
       dateCreated: timeCreated,
       createdBy: currentUserId,
-      // gameId: currentGame._id,
+      gameId: currentGame._id,
+      playerId: playerId,
       active: true,
       commercial: false,
       que: question,

@@ -11,24 +11,24 @@
 //   });
 // }); 
 
-Meteor.startup(function () {  
-  if (Meteor.isCordova) {
-    if (AdMob) {
-      AdMob.createBanner( {
-        adId: 'ca-app-pub-4862520546869067/2500441433',
-        position: AdMob.AD_POSITION.BOTTOM_CENTER,
-        isTesting: false,
-        autoShow: true,
-        success: function() {
-          console.log("Received ad");
-        },
-        error: function() {
-          console.log("No ad received");
-        }
-      });
-    } 
-  }
-});
+// Meteor.startup(function () {  
+//   if (Meteor.isCordova) {
+//     if (AdMob) {
+//       AdMob.createBanner( {
+//         adId: 'ca-app-pub-4862520546869067/2500441433',
+//         position: AdMob.AD_POSITION.BOTTOM_CENTER,
+//         isTesting: false,
+//         autoShow: true,
+//         success: function() {
+//           console.log("Received ad");
+//         },
+//         error: function() {
+//           console.log("No ad received");
+//         }
+//       });
+//     } 
+//   }
+// });
 
 Template.home.onRendered( function() {
 //   $( "svg" ).delay( 750 ).fadeIn();	
@@ -182,7 +182,7 @@ Template.activeQuestion.animations({
     },
     animateInitial: true, // animate the elements already rendered
     animateInitialStep: 200, // Step between animations for each initial item
-    animateInitialDelay: 500 // Delay before the initial items animate
+    animateInitialDelay: 200 // Delay before the initial items animate
   }
 });
 

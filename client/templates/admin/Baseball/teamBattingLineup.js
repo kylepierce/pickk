@@ -9,9 +9,6 @@ Template.teamBattingLineup.helpers({
     } else {
         var team = currentGame.teams[1]
     }
-    var teamId = team.teamId
-    var team = Teams.findOne({"_id": teamId})
-    return team.nickname
   },
   player: function () {
     var currentGame = Games.findOne({live: true})
