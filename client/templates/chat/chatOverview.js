@@ -49,11 +49,18 @@ Template.chatRoom.events({
 
 Template.chatRoom.helpers({
   groupMessages: function(){
+    // Check to see if we are in the group chat
+    // Session is set to a group id or null for global chat
     var groupId = Session.get('chatGroup')
     Meteor.subscribe("chatMessages", groupId)
+
+    // Find the chat messages from this group. 
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
+
     var chatArray = []
 
+    // Loop over all the messages and grab the user id. 
+    // This is so we can limit the number of users we need to return. 
     for (var i = 0; i < chat.length; i++) {
       
       var user = chat[i]
@@ -63,7 +70,9 @@ Template.chatRoom.helpers({
         chatArray.push(userId)
       }
     };
+
     Meteor.subscribe('chatUsers', chatArray)    
+    
     return chat
   },
   messages: function (messageList) {
