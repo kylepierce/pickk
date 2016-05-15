@@ -106,6 +106,63 @@ Meteor.methods({
      }
   },
 
+  'getExtend2016Info': function ( playerId ) {
+    result = Meteor.http.get("http://espn.go.com/mlb/player/splits/_/id/" + playerId + "/year/2016/");
+    $ = cheerio.load(result.content); 
+    // Players.findOne({playerId: playerId})
+    var countStats = {}
+    var statsArray = ["ab", "r", "h", "double", "triple", "hr", "rbi", "bb", "hbp", "so", "sb", "cs", "avg", "obp", "slg", "ops"]
+  
+    // Find the stats table in string format and put it into a variable
+    var general = $('.tablehead .oddrow')
+    var text = general.map(function() {
+
+      var $row = $(this);
+     
+      var row = {};
+      for (var i = 0; i < statsArray.length - 1; i++) {
+        var statName = statsArray[i]
+        var numberFix = i+2
+        row[statName] = $row.find(':nth-child(' + numberFix +')').text()
+      }
+      var name = $row.find(':nth-child(1)').text()
+      var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      var name = name.toLowerCase();
+      countStats[name] = row
+    }).get();
+
+    var general = $('.tablehead .evenrow')
+    var text = general.map(function() {
+
+      var $row = $(this);
+     
+      var row = {};
+      for (var i = 0; i < statsArray.length - 1; i++) {
+        var statName = statsArray[i]
+        var numberFix = i+2
+        var statValue = $row.find(':nth-child(' + numberFix +')').text()
+        row[statName] = statValue
+      }
+      var name = $row.find(':nth-child(1)').text()
+      var name = name.replace(/[^A-Z0-9]+/ig, "_");
+      var name = name.toLowerCase();
+      countStats[name] = row
+    }).get();    
+
+    var player = Players.findOne({"playerId": playerId });
+    if(player){
+      console.log("Player Already Exists")
+
+      Players.update({"_id": player._id}, {
+        $set: {
+          'stats.y2016extended': countStats,
+        }
+      });
+     } else {
+        console.log("Player doesnt exist yet")
+     }
+  },
+
   'getExtendPlayerInfo': function ( playerId ) {
     result = Meteor.http.get("http://espn.go.com/mlb/player/splits/_/id/" + playerId + "/type/batting3/");
     $ = cheerio.load(result.content); 
@@ -208,6 +265,7 @@ Meteor.methods({
     // Create / Update them
     for (var i = teamInfo.length - 1; i >= 0; i--) {
       Meteor.call('getPlayerInfo', teamInfo[i].playerId, teamId)
+      Meteor.call('getExtend2016Info', teamInfo[i].playerId)
       Meteor.call('getExtendPlayerInfo', teamInfo[i].playerId)
     }
     console.log("All Done! :D")

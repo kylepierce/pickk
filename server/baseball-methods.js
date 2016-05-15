@@ -53,11 +53,14 @@ Meteor.methods({
 
   var currentGame = Games.findOne({live: true})
   var gameId = currentGame._id
-
   var team = Meteor.call('topOfInningPostion')
   var teamId = currentGame.teams[team].teamId
   var atBatNumber = currentGame.teams[team].batterNum
-  var playerId = currentGame.teams[team].battingLineUp[atBatNumber]
+  console.log(atBatNumber)
+  var battingLineUp = currentGame.teams[team].battingLineUp
+  console.log(battingLineUp)
+  var playerId = battingLineUp[atBatNumber]
+  console.log(playerId)
   // var teamObj = Teams.findOne({_id: teamId})
 
   // var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
@@ -300,18 +303,24 @@ Meteor.methods({
   var currentGame = Games.findOne({live: true})
 
   // Total at bat
-  var totalAtBat = playerAtBat.stats.three_year.total.ab
-  if (totalAtBat == "undefined" ) {
-    var thisPlay = playerAtBat.stats.career.ab
+  
+  if (!playerAtBat.stats.three_year.no_statistics_available_){
+    var totalAtBat = playerAtBat.stats.three_year.total.ab
+  } else {
+    var totalAtBat = playerAtBat.stats.y2016extended.total.ab
   }
+
+  console.log(totalAtBat)
 
   // What options are available? 
   var count = "count_"+balls+"_"+strikes
-  var thisPlay = playerAtBat.stats.three_year[count]
-  if (thisPlay == "undefined" ) {
-    var thisPlay = playerAtBat.stats.career
+  if (!playerAtBat.stats.three_year.no_statistics_available_){
+    var thisPlay = playerAtBat.stats.three_year[count]
+  } else {
+    var thisPlay = playerAtBat.stats.y2016extended[count]
   }
   var thisPlayEoP = thisPlay.ab
+  console.log(thisPlayEoP)
 
   // End of Play probability 
   var EoP = parseInt(thisPlayEoP) / parseInt(totalAtBat)
@@ -325,9 +334,16 @@ Meteor.methods({
   } else {
     var strike = strikes + 1 
     var count = "count_"+balls+"_"+strike
-    var thisPlay = playerAtBat.stats.three_year[count]
+    if (!playerAtBat.stats.three_year.no_statistics_available_){
+      var thisPlay = playerAtBat.stats.three_year[count]
+    }
+    else {
+      var thisPlay = playerAtBat.stats.y2016extended[count]
+    }
     var option1EoP = thisPlay.ab
   }
+
+  console.log(option1EoP)
 
   // Option 2 add ball
   if ( balls == 3 ){
@@ -335,9 +351,16 @@ Meteor.methods({
   } else {
     var ball = balls + 1 
     var count = "count_"+ball+"_"+strikes
-    var thisPlay = playerAtBat.stats.three_year[count]
+    if (!playerAtBat.stats.three_year.no_statistics_available_){
+      var thisPlay = playerAtBat.stats.three_year[count]
+    }
+    else {
+      var thisPlay = playerAtBat.stats.y2016extended[count]
+    }
     var option2EoP = thisPlay.ab
+    
   }
+  console.log(option2EoP)
 
   var option1EoP = parseInt(option1EoP);
   var option2EoP = parseInt(option2EoP);
@@ -423,21 +446,34 @@ Meteor.methods({
   var currentGame = Games.findOne({live: true})
 
   // Total at bat
-  var totalAtBat = playerAtBat.stats.three_year.total.ab
+  if (!playerAtBat.stats.three_year.no_statistics_available_){
+    var totalAtBat = playerAtBat.stats.three_year.total.ab
+  } else {
+    var thisPlay = playerAtBat.stats.y2016extended.total.ab
+  }
 
   // Are there players on base?
   var playersOnBase = currentGame.playersOnBase
 
+  if (!playerAtBat.stats.three_year.no_statistics_available_){
+    var stat = playerAtBat.stats.three_year
+  }
+  else {
+    var stat = playerAtBat.stats.y2016extended
+  }
+
   if(playersOnBase.first == true && playersOnBase.second == true && playersOnBase.third == true) {
-    var situationStats = playerAtBat.stats.three_year.bases_loaded
+    var situationStats = stat.bases_loaded
   } else if (playersOnBase.first == true ){
-    var situationStats = playerAtBat.stats.three_year.runners_on
+    var situationStats = stat.runners_on
   } else if (playersOnBase.second == true || playersOnBase.third == true) {
-    var situationStats = playerAtBat.stats.three_year.scoring_position
-  } else if (playerAtBat.stats.three_year.total) {
-    var situationStats = playerAtBat.stats.three_year.total
+    var situationStats = stat.scoring_position
+  } else if (stat.total) {
+    var situationStats = stat.total
+    console.log("Thsi does exist")
   } else {
-    var situationStats = playerAtBat.stats.career
+    var situationStats = playerAtBat.stats.y2016extended
+    console.log("Maybe career")
   }
 
   function getRandomArbitrary(min, max) {
