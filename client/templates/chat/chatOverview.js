@@ -44,7 +44,28 @@ Template.chatRoom.events({
       Meteor.call('addChatMessage', currentUser, message, groupId);
       $("#messageBox").val('');
     }
-  }
+  },
+  'click [data-action=reply]': function (event, template) {
+    console.log(this)
+    console.log('reply')
+  },
+  'click [data-action=react]': function (event, template) {
+    console.log(this)
+    console.log('react')
+  },
+  'click [data-action=user]': function (event, template) {
+    Router.go('/user-profile/'+ this.user);
+    console.log('user')
+  },
+  'click [data-action=close]': function (event, template) {
+    var entire = $(event.currentTarget).parent().css({'display': 'none', 'opacity': '0'})
+    console.log(entire)
+    console.log('close')
+  },  
+  'click #single-message ': function (event, template) {
+    var entire = $(event.currentTarget).siblings().css({'display': 'block', 'opacity': '1'})
+    console.log(entire)
+  },
 });
 
 Template.chatRoom.helpers({

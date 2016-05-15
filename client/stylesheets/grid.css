@@ -3,7 +3,9 @@
 }
 .col-md-25 {
 	width: 25%;
+	float: left;
 }
 .col-md-33 {
 	width: 33%;
+	float: left;
 }
