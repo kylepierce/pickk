@@ -6,6 +6,29 @@ Meteor.methods({
   'addChatMessage': function(author, messagePosted, groupId){
   	var timeCreated = new Date();
   	var id = Random.id();
+  	var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "");
+  	if(messagePosted[0] == "["){
+  		switch (messagePosted){
+	    	case "[dead]":
+	    		var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>"
+	    		break;
+	    	case "[omg]":
+	    		var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>"
+	    	break;
+	    	case "[fire]":
+	    		var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>"
+	    	break;
+	    	case "[dying]":
+	    		var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>"
+	    	break;
+	    	// case "":
+	    	// 	var messagePosted = "<img src='/emoji/Full-Color/'>"
+	    	// break;
+    	}
+  	} else if (messagePosted == "" || messagePosted == null) {
+  		var messagePosted = "<i>Removed</i>"
+  	}
+
   	Chat.insert({
   		_id: id,
   		dateCreated: timeCreated,

@@ -27,6 +27,9 @@
   padding: 10px 0;
   text-align:center;
   opacity:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   -webkit-transition: all 1s ease-in-out;;
   transition: all 1s ease-in-out;;
 	color: white;
@@ -42,4 +45,8 @@
 
 .reply-icon {
 	font-size: 2.2rem;
+}
+
+#single-message p img {
+	width: 50%;
 }
