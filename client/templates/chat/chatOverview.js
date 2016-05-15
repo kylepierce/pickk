@@ -166,3 +166,17 @@ Template._groupChats.events({
   },
 });
 
+Template._reaction.events({
+  'click button': function (event, template) {
+    var selected = $(event.currentTarget)
+    var message = selected.attr("value")
+    var currentUser = Meteor.userId()
+    var groupId = Session.get('chatGroup')
+    console.log(selected)
+    console.log(message)  
+    Meteor.call('addChatMessage', currentUser, message, groupId);
+      $("#messageBox").val('');
+    IonPopover.hide();  
+  },
+});
+

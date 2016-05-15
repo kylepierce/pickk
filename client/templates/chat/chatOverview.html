@@ -23,7 +23,9 @@
     {{#ionContent}}
     <form id="">
       <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="{{randomMessage}}" id="messageBox"></textarea>
-      <button class="col button col-100" type="submit">Send</button>
+      <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
+      <div class="col-md-33 chat-buttons" data-ion-popover="_reaction">React</div>
+      <button class="button" style="width: 33.33%; border: none;" type="submit">Send</button>
     </form>   
     {{#ionList}}
       {{#with groupMessages}}
@@ -81,5 +83,44 @@
 
 </template>
 
+<template name="_reaction">
+
+  {{#ionPopover}}
+    <button value="[dead]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
+    </button>
+    <button value="[fire]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
+    </button>
+    <button value="[dying]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
+    </button>
+    <button style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
+    </button>
+    <button value="[hell-yeah]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
+    </button>
+    <button value="[what]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
+    </button>
+    <button value="[pirate]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
+    </button>
+    <button value="[love]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
+    </button>
+    <button value="[tounge]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
+    </button>
+    <button value="[oh-no]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
+    </button>
+    <button value="[what-the-hell]" style="width: 40%">
+      <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
+    </button>
+  {{/ionPopover}}
+
+</template>
 
 
