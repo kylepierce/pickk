@@ -367,9 +367,13 @@ Meteor.methods({
   
 	// Create a question. Each play has question text and six options. 
 
-	'insertQuestion' : function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6){ 
+	'insertQuestion' : function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6, active){ 
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
+
+		if(!active) {
+			var active = true
+		}
 
 		// If there less than 6 options we will set the other options to nothing.
 		op5 = op5 || '';
@@ -383,7 +387,7 @@ Meteor.methods({
 			gameId: game,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
-			active: true,
+			active: active,
 			commercial: commercial,
 			options: {
 				option1: {title: op1, usersPicked: [], multiplier: m1 },
@@ -642,6 +646,10 @@ Meteor.methods({
 
 	'deactivateGame' : function(questionId){
 		QuestionList.update(questionId, {$set: {'active': "pending"}});
+	},
+
+	'activateGame' : function(questionId){
+		QuestionList.update(questionId, {$set: {'active': true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.

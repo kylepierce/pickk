@@ -41,7 +41,6 @@
 		
 			{{#each gameQuestions}}
 			  {{> predictionQuestions}}
-			  {{showAdsRandom}}
 			{{/each}}
 
 		<!-- No Game and No Questions -->
@@ -297,6 +296,14 @@
 								</label>
 							</div>
 
+							<div>
+								<input type="radio" name="score" id="{{options.option6.title}}" required value="option6">
+								<label for="{{options.option6.title}}" class="play-option score-option">
+								
+								{{options.option5.title}} 
+								</label>
+							</div>
+
 						{{#if live}}
 							<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 						{{else}}
@@ -422,8 +429,6 @@
 					<div class="no-out"></div>
 				{{/if}}
 			</div>
-			
-
 
 			<div class="col-md-33 float-left" style="display:flex;justify-content:center;">
 				{{#if third}} 

@@ -19,14 +19,26 @@
 	<form id="gameInfo">
 		<label type="stacked" class="item item-input item-stacked-label">
 			<span class="input-label">Team 1</span>
-			<select id="team1"> {{> nfl}} </select>
+			<select id="team1"> {{> mlb}} </select>
 		</label>
 		<label type="stacked" class="item item-input item-stacked-label">
 			<span class="input-label">Team 2</span>
-			<select id="team2"> {{> nfl}} </select>
+			<select id="team2"> {{> mlb}} </select>
 		</label>
 		<input class='full' type="submit">
 	</form>
+
+<div class="item item-divider">Future Questions</div>
+	{{#ionList}}
+		{{#each futureQuestion}}			
+			{{#ionItem buttonRight=true}}
+				{{que}} -- {{active}}
+			  <button class="button" data-action="active" > 
+			    {{> ionIcon icon="ios-close"}}
+			  </button>
+			{{/ionItem}}
+		{{/each}}
+	{{/ionList}}
 
 <div class="item item-divider">Active Questions</div>
 	{{#ionList}}

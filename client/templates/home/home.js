@@ -566,8 +566,8 @@ Template.predictionQuestions.helpers({
 
 Template.predictionQuestions.events({
   'click input:radio[name=score]':function(event, template) {
-    // $("#submit-response").prop("disabled", false)
-    // $("#submit-response").addClass('button-balanced');
+    $("#submit-response").prop("disabled", false)
+    $("#submit-response").addClass('button-balanced');
   },
 
   'submit form': function(event, template) {
