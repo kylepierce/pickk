@@ -24,6 +24,14 @@ Template.gamePrediction.events({
 		Meteor.call('deactivateGame', gameId);
 	},
 
+	'click [data-action=schedule]': function() {
+		var timeUntilActivation = Meteor.call('setActivationTime')
+		console.log(timeUntilActivation)
+		Meteor.setTimeout(function(){
+			Meteor.call('activateDailyPickks')
+		}, timeUntilActivation);
+	},
+
 	'click [data-ion-popover=_gamePopover]': function(){
 		console.log("Wow much popover very game")
 		console.log(this._id)
