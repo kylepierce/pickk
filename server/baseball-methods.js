@@ -1,7 +1,7 @@
 Meteor.methods({
-'createBaseballGame': function ( team1, team2, title, dateOfGame, timeOfGame, tvStation ) {
-    function findTeamId (teamAbv) {
-      var team = Teams.findOne({computerName: teamAbv})
+'createBaseballGame': function ( team1, team2, title, active, tvStation, dateOfGame, timeOfGame ) {
+    function findTeamId (teamName) {
+      var team = Teams.findOne({fullName: teamName})
       return team._id
     };
 

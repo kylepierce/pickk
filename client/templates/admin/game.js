@@ -18,10 +18,11 @@ Template.gameInfo.events({
 		var team1 = template.find('#team1 :selected').text
 		var team2 = template.find('#team2 :selected').text
 		var active = template.find('#gameActive').checked
-		var title = template.find('#title').value
+		var title = team1 + " vs " + team2
 		var tv = template.find('#tv').value
 		var gameTime = template.find('#gameTime').value
-		Meteor.call('createGame', team1, team2, title, active, tv, gameTime);
+		var timeOfGame = "now"
+		Meteor.call('createBaseballGame', team1, team2, title, active, tv, gameTime, timeOfGame);
 	}
 }); 
 
