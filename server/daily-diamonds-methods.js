@@ -13,6 +13,7 @@ Meteor.methods({
 		return timeUntilActivation
 	},
 	'activateDailyPickks': function(){
+		console.log("Task complete")
 		// Find all questions with "future" set them to "active"
 		var futureQuestions = QuestionList.update({active: 'future'}, {$set: {active: true}}, {multi: true})
 	},
@@ -25,6 +26,7 @@ Meteor.methods({
 		}, 60);
 	},
 	'addTask': function(id, details) {
+		console.log(details)
 		SyncedCron.add({
 			name: id,
 			schedule: function(parser) {
@@ -46,6 +48,7 @@ Meteor.methods({
 		}
 		// var scheduledTime = Meteor.call('setActivationTime')
 		var date = new Date() 
+		console.log(date)
 		var scheduledTime = addMinutes(date, 1)
 		var details = { date: scheduledTime }
 		console.log(details)
@@ -55,9 +58,7 @@ Meteor.methods({
 		} else {
 			console.log("Setting it for the future")
 			var thisId = FutureTasks.insert(details)
-			console.log(thisId)
 			var future = FutureTasks.find(thisId).fetch();
-			console.log(future)
 			Meteor.call('addTask', thisId, details);
 		}
 	},

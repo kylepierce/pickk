@@ -265,3 +265,7 @@ Meteor.publish('atBatPlayer', function(){
 Meteor.publish('teams', function(){
   return Teams.find({ })
 });
+
+Meteor.publish('futureTasks', function(){
+  return FutureTasks.find({ })
+})

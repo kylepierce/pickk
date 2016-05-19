@@ -30,6 +30,19 @@
 //   }
 // });
 
+Meteor.startup(function() {
+
+  FutureTasks.find().forEach(function(details) {
+    console.log(details)
+    if (details.date < new Date()) {
+      Meteor.call('activateDailyPickks')
+    } else {
+      Meteor.call('addTask', details._id, details);
+    }
+  });
+  SyncedCron.start();
+});
+
 Template.home.onRendered( function() {
 //   $( "svg" ).delay( 750 ).fadeIn();	
 
