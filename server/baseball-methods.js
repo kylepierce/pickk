@@ -381,7 +381,7 @@ Meteor.methods({
     var number = parseInt(number)
     switch (true){
       case (number < 25):
-        var number = getRandomArbitrary(1,1.25)
+        var number = getRandomArbitrary(1.15,1.25)
         return number
         break;
       case (number < 50):

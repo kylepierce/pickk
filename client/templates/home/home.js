@@ -374,9 +374,16 @@ Template.activeQuestion.helpers({
 });
 
 Template.activeQuestion.events({
-  'click input': function () {
+  'click input': function (event, template) {
+    // Checkout this sexy daisy chain ;)
+    var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
+    answer = parseFloat(answer)
+    var wager = template.find('input:radio[name=wager]:checked').value;
+    var combined = parseInt(answer*wager)
     var checked = $( "input:checked" )
     if (checked.length === 2) {
+      $('#wager').checked
+      $("#submit-response").prop('value', 'Submit ( ' + combined + " )");
       $("#submit-response").prop("disabled", false)
       $("#submit-response").addClass('button-balanced');
       return true 
@@ -386,42 +393,42 @@ Template.activeQuestion.events({
 
 
 Template.commercialQuestion.helpers({
-  'showAds': function(event, template){
+  // 'showAds': function(event, template){
 
-    Meteor.defer(function () {
-    AdMob.prepareInterstitial({
-      adId:'ca-app-pub-4862520546869067/3340412630', 
-      autoShow:true,
-      success: function() {
-        console.log("Received ad");
-      },
-      error: function() {
-        console.log("No ad received");
-      }
-    });
-    return AdMob.showInterstitial()
-  });
-    return "";
-  },
-  'showAdsRandom': function(event, template){
-    var random = Math.floor((Math.random() * 2) + 1)
-    if (random == 1){
-      Meteor.defer(function () {
-      AdMob.prepareInterstitial({
-        adId:'ca-app-pub-4862520546869067/3340412630', 
-        autoShow:true,
-        success: function() {
-          console.log("Received ad");
-        },
-        error: function() {
-          console.log("No ad received");
-        }
-      });
-      return AdMob.showInterstitial()
-    });
-  }
-    return "";
-  },
+  //   Meteor.defer(function () {
+  //   AdMob.prepareInterstitial({
+  //     adId:'ca-app-pub-4862520546869067/3340412630', 
+  //     autoShow:true,
+  //     success: function() {
+  //       console.log("Received ad");
+  //     },
+  //     error: function() {
+  //       console.log("No ad received");
+  //     }
+  //   });
+  //   return AdMob.showInterstitial()
+  // });
+  //   return "";
+  // },
+  // 'showAdsRandom': function(event, template){
+  //   var random = Math.floor((Math.random() * 2) + 1)
+  //   if (random == 1){
+  //     Meteor.defer(function () {
+  //     AdMob.prepareInterstitial({
+  //       adId:'ca-app-pub-4862520546869067/3340412630', 
+  //       autoShow:true,
+  //       success: function() {
+  //         console.log("Received ad");
+  //       },
+  //       error: function() {
+  //         console.log("No ad received");
+  //       }
+  //     });
+  //     return AdMob.showInterstitial()
+  //   });
+  // }
+  //   return "";
+  // },
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
