@@ -360,6 +360,26 @@ Template.questionCard.helpers({
   }
 });
 
+Template.submitButton.rendered = function() {
+  if(!this._rendered) {
+    this._rendered = true;
+    var checked = $( "input:checked" )
+    if (checked.length === 2) {
+      // Checkout this sexy daisy chain ;)
+      var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
+      answer = parseFloat(answer)
+      var wager = $('input:radio[name=wager]:checked').val();
+      var combined = parseInt(answer*wager)
+      $('#wager').checked
+      $("#submit-response").prop('value', 'Submit ( ' + combined + " )");
+      $("#submit-response").prop("disabled", false)
+      $("#submit-response").addClass('button-balanced');
+      return true 
+    }
+
+  }
+}
+
 Template.submitButton.helpers({
   'live': function(){
     var connection = Meteor.status()
@@ -389,12 +409,10 @@ Template.activeQuestion.events({
     Blaze.render(Template.submitAndWagers, selectedPlay)
   },
   'click input': function (event, template) {
-    
     var checked = $( "input:checked" )
     if (checked.length === 2) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
-      answer = parseFloat(answer)
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked
@@ -456,7 +474,7 @@ Template.commercialQuestion.helpers({
 });
 
 Template.predictionQuestions.helpers({
-    'questions': function(){
+  'questions': function(){
     var currentUser = Meteor.userId();
 
     return QuestionList.find(
