@@ -53,7 +53,6 @@
 	{{#if live}}
 			<!-- Commerical Break Has Been Activated -->
 		{{#if commercial}}
-
 			{{#if commercialQuestions}}
 
 				<!-- Show Commerical Quesitons that have Binary Options (No Multipler) -->
@@ -89,11 +88,9 @@
 				{{#if multiOptions}}
 					<!-- Show In Game Quesitons that have Binary Options (With Multipler) -->
 					{{#if ingameBinary}}
-
 							{{#each twoOption}}
 								{{> twoOptionQuestions}}
 							{{/each}}
-						 
 					{{else}}
 							{{#each activeQuestions}}
 								{{> activeQuestion}}
@@ -116,10 +113,6 @@
 <template name="activeQuestion">
 	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
-<!-- 			<div class="question">
-				{{ que}}
-			</div> -->
-
 			<form>
 				<!-- Options -->
 				{{> normalPlay}}
@@ -129,7 +122,7 @@
 
 				{{#if live}}
 					{{#if bothSelected}}
-					<input id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
+					<input id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit ()">
 					{{else}}
 					<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
 					{{/if}}
@@ -178,8 +171,6 @@
 			{{else}}
 				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 			{{/if}}
-
-		
 	</div>
 	</div>
 </template>
@@ -206,7 +197,6 @@
 		</form>
 	</div>
 	</div>
-
 </template>
 
 <template name="binaryChoice">
@@ -217,107 +207,106 @@
 			<h4>{{ que}}</h4>
 		</div>
 			<!-- Options -->
-			<div>
-				<div class="binary">
-					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
-					<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
-					
-					{{options.option1.title}} 
-					</label>
-				</div>
-
-				<div>
-					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
-					<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
-					
-					{{options.option2.title}} 
-					</label>
-				</div>
+		<div>
+			<div class="binary">
+				<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
+				<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
+				
+				{{options.option1.title}} 
+				</label>
 			</div>
 
-			{{#if live}}
-			<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
-			{{else}}
-			<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
-			{{/if }}
+			<div>
+				<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
+				<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
+				
+				{{options.option2.title}} 
+				</label>
+			</div>
+		</div>
+
+		{{#if live}}
+		<input style="margin-top:10px" id="submit-binary" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+		{{else}}
+		<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+		{{/if }}
 	</li>
 	</ul>
 	</div>
 </template>
 
 <template name="predictionQuestions">
-		<div class="container" id="gameCard" style="display: none;">
-			<ul>
-				<li class="container-item">
-					<div class="question">
-						{{ que}}
+	<div class="container" id="gameCard" style="display: none;">
+		<ul>
+			<li class="container-item">
+				<div class="question">
+					{{ que}}
+				</div>
+
+				<form>
+					<!-- Options -->
+					<div>
+						<input type="radio" name="score" id="{{options.option1.title}}" required value="option1">
+						<label for="{{options.option1.title}}" class="play-option score-option">
+						
+						{{options.option1.title}} 
+						</label>
 					</div>
 
-					<form>
-						<!-- Options -->
-							<div>
-								<input type="radio" name="score" id="{{options.option1.title}}" required value="option1">
-								<label for="{{options.option1.title}}" class="play-option score-option">
-								
-								{{options.option1.title}} 
-								</label>
-							</div>
-
-							<div>
-								<input type="radio" name="score" id="{{options.option2.title}}" required value="option2">
-								<label for="{{options.option2.title}}" class="play-option score-option">
-								
-								{{options.option2.title}} 
-								</label>
-							</div>
+					<div>
+						<input type="radio" name="score" id="{{options.option2.title}}" required value="option2">
+						<label for="{{options.option2.title}}" class="play-option score-option">
+						
+						{{options.option2.title}} 
+						</label>
+					</div>
 
 
-							<div>
-								<input type="radio" name="score" id="{{options.option3.title}}" required value="option3">
-								<label for="{{options.option3.title}}" class="play-option score-option">
-								
-								{{options.option3.title}} 
-								</label>
-							</div>
+					<div>
+						<input type="radio" name="score" id="{{options.option3.title}}" required value="option3">
+						<label for="{{options.option3.title}}" class="play-option score-option">
+						
+						{{options.option3.title}} 
+						</label>
+					</div>
 
-							<div>
-								<input type="radio" name="score" id="{{options.option4.title}}" required value="option4">
-								<label for="{{options.option4.title}}" class="play-option score-option">
-								
-								{{options.option4.title}} 
-								</label>
-							</div>
+					<div>
+						<input type="radio" name="score" id="{{options.option4.title}}" required value="option4">
+						<label for="{{options.option4.title}}" class="play-option score-option">
+						
+						{{options.option4.title}} 
+						</label>
+					</div>
 
-							<div>
-								<input type="radio" name="score" id="{{options.option5.title}}" required value="option5">
-								<label for="{{options.option5.title}}" class="play-option score-option">
-								
-								{{options.option5.title}} 
-								</label>
-							</div>
+					<div>
+						<input type="radio" name="score" id="{{options.option5.title}}" required value="option5">
+						<label for="{{options.option5.title}}" class="play-option score-option">
+						
+						{{options.option5.title}} 
+						</label>
+					</div>
 
-							<div>
-								<input type="radio" name="score" id="{{options.option6.title}}" required value="option6">
-								<label for="{{options.option6.title}}" class="play-option score-option">
-								
-								{{options.option5.title}} 
-								</label>
-							</div>
+					<div>
+						<input type="radio" name="score" id="{{options.option6.title}}" required value="option6">
+						<label for="{{options.option6.title}}" class="play-option score-option">
+						
+						{{options.option5.title}} 
+						</label>
+					</div>
 
-						{{#if live}}
-							<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
-						{{else}}
-							<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
-						{{/if }}
-					</form>
-				</li>
-			</ul>
-		</div>
+					{{#if live}}
+						<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+					{{else}}
+						<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+					{{/if }}
+				</form>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <template name="wagers">
 	<div style="margin-bottom:10px;">
-		{{previousWager}}
 		<div>
 			<input type="radio" name="wager" id="50" required value="50">
 			<label class="one-third wager-box" for="50">50</label>
@@ -343,10 +332,6 @@
 			<input type="radio" name="wager" id="2500" required value="2500">
 			<label class="one-third wager-box" for="2500">2500</label> 
 		</div>
-<!-- 		<div>
-			<input type="radio" name="wager" id="5000" required value="5000">
-			<label class="one-third wager-box" for="5000">5000</label> 
-		</div> -->
 	</div>
 </template>
 
