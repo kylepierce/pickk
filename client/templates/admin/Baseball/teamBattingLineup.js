@@ -65,6 +65,18 @@ Template.teamBattingLineup.helpers({
   },
   atBat: function ( id ) {
     return AtBat.findOne({playerId: id, active: true})
+  },
+  'atBatNumber': function (  ){
+    var currentGame = Games.findOne({live: true})
+    var topOfInning = currentGame.topOfInning
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+      var team = currentGame.teams[0]
+    } else {
+      var team = currentGame.teams[1]
+    }
+    return team
   }
 });
 
@@ -137,4 +149,26 @@ Template.teamBattingLineup.events({
         Meteor.call('changeBattingPostion', gameId, teamId, playerId, playerExists, position)
     }  
   },
+  'submit #atBat': function (event, template) {
+    event.preventDefault()
+    var batterNumber = template.find('.at-bat-number').value
+    var currentGame = Games.findOne({live: true})
+    var topOfInning = currentGame.topOfInning
+
+    // Depending on inning postion pick the visitor (0) or home team (1).
+    if( topOfInning === true ){
+      var team = 0
+    } else {
+      var team = 1
+    }
+    var teamId = currentGame.teams[team].teamId
+    var numberOfBatters = currentGame.teams[team].battingLineUp.length
+    var numberOfBatters = numberOfBatters - 1    
+
+    if( batterNumber > numberOfBatters) {
+      alert("No players at that at bat");
+    } else {
+      Meteor.call('changeBatterNumber', teamId, batterNumber)
+    }
+  }
 })

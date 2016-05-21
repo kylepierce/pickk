@@ -56,11 +56,8 @@ Meteor.methods({
   var team = Meteor.call('topOfInningPostion')
   var teamId = currentGame.teams[team].teamId
   var atBatNumber = currentGame.teams[team].batterNum
-  console.log(atBatNumber)
   var battingLineUp = currentGame.teams[team].battingLineUp
-  console.log(battingLineUp)
   var playerId = battingLineUp[atBatNumber]
-  console.log(playerId)
   // var teamObj = Teams.findOne({_id: teamId})
 
   // var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
@@ -243,8 +240,11 @@ Meteor.methods({
   } else {
       Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.batterNum': +1}});
   }
+},
 
-  
+'changeBatterNumber': function (teamId, batterNumber){
+  var batterNumber = parseInt(batterNumber)
+  Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': batterNumber}});
 },
 
 // Add Active Pitcher to Team
