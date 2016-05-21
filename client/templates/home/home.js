@@ -360,7 +360,7 @@ Template.questionCard.helpers({
   }
 });
 
-Template.activeQuestion.helpers({
+Template.submitButton.helpers({
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
@@ -374,14 +374,29 @@ Template.activeQuestion.helpers({
 });
 
 Template.activeQuestion.events({
+  'click [name=play]': function( event, template ){
+    var otherSelected = $('.wager') 
+    // If a play has been selected before than remove that 
+    console.log(otherSelected)
+    if (otherSelected) {
+      // Remove old
+      $('.wager').remove();
+    } 
+    // Otherwise add the wager and submit button after
+    var answer = $('input:radio[name=play]:checked').parent()
+    answer.after($("<div class='wager'></div>")) 
+    var selectedPlay = $('.wager')[0]
+    Blaze.render(Template.submitAndWagers, selectedPlay)
+  },
   'click input': function (event, template) {
-    // Checkout this sexy daisy chain ;)
-    var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
-    answer = parseFloat(answer)
-    var wager = template.find('input:radio[name=wager]:checked').value;
-    var combined = parseInt(answer*wager)
+    
     var checked = $( "input:checked" )
     if (checked.length === 2) {
+      // Checkout this sexy daisy chain ;)
+      var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
+      answer = parseFloat(answer)
+      var wager = template.find('input:radio[name=wager]:checked').value;
+      var combined = parseInt(answer*wager)
       $('#wager').checked
       $("#submit-response").prop('value', 'Submit ( ' + combined + " )");
       $("#submit-response").prop("disabled", false)
