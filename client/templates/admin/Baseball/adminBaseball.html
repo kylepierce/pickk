@@ -62,9 +62,28 @@
 		<div class="col-md-50">
 			{{> atBatQuestion}}
 		</div>
+		<div class="col-md-50">
+			{{> atBats}}
+		</div>
 		{{/ionContent}}
 	  {{/ionView}}
  </div>
+</template>
+
+<template name="atBats">
+	{{#ionList}}
+		<div class="item item-divider">At Bats</div> 
+		{{#each atBat}}
+			{{#with onePlayer playerId}}
+				{{#ionItem buttonRight=true }}
+					{{name}}
+					<a class="button" data-action="endAtBat">
+								{{> ionIcon icon="close"}}
+							</a> 
+				{{/ionItem}}
+			{{/with}}
+		{{/each}}
+	{{/ionList}}
 </template>
 
 <template name="adminGameInfo">

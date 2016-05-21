@@ -10,10 +10,6 @@ Template.adminBaseball.events({
 	  console.log(currentGameId)
 		Meteor.call('createAtBat', "playerId", currentGameId);
 	},
-	'click [data-action=createBaseballGame]': function (event, template) {
-		event.preventDefault();
-		Meteor.call('createBaseballGame', "team1", "team2", "dateOfGame", "timeOfGame", "tvStation");
-	},
 	'click [data-action=first]': function(){
 		Meteor.call('toggleBase', 'first')
 	},
@@ -182,4 +178,29 @@ Template.adminGameInfo.helpers({
       return true
     }
   },
+})
+
+Template.atBats.helpers({
+  atBat: function () {
+    return AtBat.find({active: true}).fetch();
+  },
+  onePlayer: function ( id ) {
+    var player = Players.findOne({_id: id});
+    return player
+  },
+});
+
+Template.atBats.events({
+  'click [data-action=endAtBat]': function(){
+    console.log("Ending it now!")
+    if(confirm("Are you sure?")) {
+      var moveOn = confirm('Do you want to move on to next player?')
+      if( moveOn == true ) {
+        Meteor.call('increaseBatterCount')
+        Meteor.call('createAtBat') 
+      }
+      Meteor.call('updateAtBat', "Deleted")
+      Meteor.call('endBattersAtBat', "Deleted")
+    }
+  }
 })
