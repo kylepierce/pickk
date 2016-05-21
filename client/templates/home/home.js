@@ -371,7 +371,7 @@ Template.submitButton.rendered = function() {
       var wager = $('input:radio[name=wager]:checked').val();
       var combined = parseInt(answer*wager)
       $('#wager').checked
-      $("#submit-response").prop('value', 'Submit ( ' + combined + " )");
+      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-response").prop("disabled", false)
       $("#submit-response").addClass('button-balanced');
       return true 
@@ -416,7 +416,7 @@ Template.activeQuestion.events({
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked
-      $("#submit-response").prop('value', 'Submit ( ' + combined + " )");
+      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-response").prop("disabled", false)
       $("#submit-response").addClass('button-balanced');
       return true 

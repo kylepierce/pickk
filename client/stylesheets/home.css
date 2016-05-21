@@ -46,10 +46,10 @@
 }
 
 .question-options {
-	margin:10px 0;
+	margin:3px 0;
 }
 
-.question-options div:first-of-type {
+.question-options > div:first-of-type {
 	border-top: 1px solid #ccc;
 }
 

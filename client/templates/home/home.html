@@ -322,11 +322,7 @@
 
 <template name="submitButton">
 	{{#if live}}
-		{{#if bothSelected}}
-		<input id="submit-response" class="button play-option button-balanced center" type="submit" value="Submit">
-		{{else}}
-		<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
-		{{/if}}
+		<input id="submit-response" class="button button-assertive center" type="submit" disabled value="Submit">
 	{{else}}
 		<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
 	{{/if}}
