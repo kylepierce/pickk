@@ -971,6 +971,22 @@ Meteor.methods({
   var newPosition = indexPosition + parseInt(upOrDown)
   Games.update({_id: gameId, 'teams.teamId': teamId}, {$pull: {"teams.$.battingLineUp": playerId}})
   Games.update({_id: gameId, 'teams.teamId': teamId}, {$push: {"teams.$.battingLineUp": { $each: [playerId], $position: newPosition}}})
+},
+
+'playersPlaying': function (){
+  var currentGame =Games.findOne({live: true})
+  var team1 = currentGame.teams[0].battingLineUp
+  var team2 = currentGame.teams[1].battingLineUp
+  var teams = team1.concat(team2)
+  return teams
+},
+
+'teamPlaying': function (){
+  var currentGame =Games.findOne({live: true})
+  var team1 = currentGame.teams[0].teamId
+  var team2 = currentGame.teams[1].teamId
+  var teams = [team1, team2]
+  return teams
 }
 
 

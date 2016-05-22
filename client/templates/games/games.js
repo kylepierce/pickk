@@ -1,5 +1,5 @@
 Template.games.helpers({
 	game: function () {
-		return Games.find({'complete': false}, {sort: {"dateCreated": 1}}).fetch();
+		return Games.find({'completed': false}, {sort: {"dateCreated": 1}}).fetch();
 	}
 });
