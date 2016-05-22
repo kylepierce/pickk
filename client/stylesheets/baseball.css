@@ -3,7 +3,7 @@
 	width: 13px;
 	margin: 0px; 
 	background-color: white;
-	border: 1px solid black;
+	border: 1px solid #a2a2a2;
 	margin: 1px;
 	-ms-transform: rotate(7deg); /* IE 9 */
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
@@ -14,7 +14,7 @@
 
 .base-empty { 
 	background-color: #E6B400!important;
-	border: 1px solid white;
+	border: 1px solid #E6B400;
 }
 
 .admin-base-empty {
@@ -57,8 +57,7 @@
 	width: 13px;
 	height: 13px;
 	border-radius: 100%;
-	background-color: black;
-	border: 1px white solid;
+	background-color: #383838;
   float: left;
   margin: 3px;
 }
@@ -67,8 +66,8 @@
 	width: 13px;
 	height: 13px;
 	border-radius: 100%;
-	background-color: transparent;
-	border: 1px white solid;	
+	background-color: white;
+	border: 1px #fcfcfc solid;
   float: left;
   margin: 3px;
 }
