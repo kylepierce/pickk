@@ -11,9 +11,10 @@ Accounts.onCreateUser(function(options, user){
     firstName: '',
     lastName: ''
     }
-    user.profile = profile 
+    user.profile = profile
 
 
+  mailChimpLists.subscribeUser(user);
   return user;
 });
 

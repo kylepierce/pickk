@@ -13,6 +13,10 @@
       "username": "postmaster%40mg.pickk.co",
       "password": "2e53ee0dce2deade7b63443c39322243",
       "port": 25
+    },
+    "mailchimp": {
+      "apiKey": "5ea078d6cbe0270878d915be0b33599e-us9",
+      "listId": "051a9cc1a8"
     }
   },
   "public": {
