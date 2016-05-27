@@ -248,7 +248,7 @@ Meteor.methods({
 				}
 			});
     var user = UserList.findOne(userId);
-    mailChimpLists.subscribeUser(user);
+    mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
 	// Update users info from the settings page
@@ -1559,7 +1559,7 @@ Meteor.methods({
 		var options = {sort: {_id: 1}, limit: limit};
 		UserList.find(selector, options).forEach(function(user) {
 			console.info("[exportToMailChimp] Subscribing " + user.emails[0].address + " (" + user._id + ")");
-			mailChimpLists.subscribeUser(user, function(error, result) {
+			mailChimpLists.subscribeUser(user, {double_optin: false}, function(error, result) {
 				if (error) {
 					console.error("[exportToMailChimp] Error for " + user.emails[0].address + ": " + JSON.stringify(error));
 				} else {

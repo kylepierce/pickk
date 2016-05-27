@@ -1,10 +1,10 @@
 mailChimpLists = new MailChimpLists(Meteor.settings.private.mailchimp.apiKey);
 
-mailChimpLists.subscribeUser = function(user, callback) {
+mailChimpLists.subscribeUser = function(user, defaults, callback) {
   if (!(user.emails && user.emails.length)) {
     return; // Twitter login
   }
-  return this.subscribe({
+  return this.subscribe(_.defaults({
     id: Meteor.settings.private.mailchimp.listId,
     email: {
       email: user.emails[0].address
@@ -15,5 +15,5 @@ mailChimpLists.subscribeUser = function(user, callback) {
       UNAME: user.profile.username
     },
     update_existing: true
-  }, callback);
-}
+  }, defaults), callback);
+};
