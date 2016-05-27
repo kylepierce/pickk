@@ -21,10 +21,10 @@
 
 <template name="searchUsersBox">
 		<div class="search-bar-fix">
-    {{> esInput index="users" placeholder="Search..." }}
+    {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
 		</div>
       {{#ionList}}
-        {{#esEach index="users"}}   
+        {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
             <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
               <img  src="{{userAvatar this._id}}">
@@ -32,10 +32,10 @@
             </a>
               {{> inviteButton}}
             {{/ionItem}}
-        {{/esEach}}
+        {{/EasySearch.Each}}
       {{/ionList}}
 
-		{{#ifEsHasNoResults index="users" logic="OR" }}
+		{{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
 			<div class="no-results">No results found!</div>
 <!-- 			<a href="/newgroup" class="newGroup">
 		    <button class="button full">
@@ -43,6 +43,6 @@
 		      Want to Create Group?
 		    </button>
     	</a> -->
-		{{/ifEsHasNoResults}}
+		{{/EasySearch.IfNoResults}}
 
 </template>

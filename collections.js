@@ -14,3 +14,15 @@ Players = new Meteor.Collection('players')
 
 // Groups.initEasySearch('groupId');
 // UserList.initEasySearch('profile.username');
+
+UserListIndex = new EasySearch.Index({
+  collection: UserList,
+  fields: ['profile.username'],
+  engine: new EasySearch.Minimongo()
+});
+
+GroupsIndex = new EasySearch.Index({
+  collection: Groups,
+  fields: ['name'],
+  engine: new EasySearch.Minimongo()
+});

@@ -18,11 +18,12 @@
 
 		<div class="container">
  		<div class="search-bar-fix">
-    {{> esInput index="users" placeholder="Friends Username..." }}
+      arst
+    {{> EasySearch.Input index=UserListIndex placeholder="Friends Username..." }}
 		</div>
 
       {{#ionList}}
-        {{#esEach index="users"}}   
+        {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
             <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
               <img  src="{{userAvatar this._id}}">
@@ -30,14 +31,14 @@
             </a>
               {{> followButton}}
             {{/ionItem}}
-        {{/esEach}}
+        {{/EasySearch.Each}}
       {{/ionList}}
 
             
 
 
 
-		{{#ifEsHasNoResults index="users" logic="OR" }}
+		{{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
 			<div class="no-results">No results found!</div>
 <!-- 			<a href="/inviteFriend" class="newGroup">
 		    <button class="button full">
@@ -45,7 +46,7 @@
 		      Want to Invite a Friend?
 		    </button>
     	</a> -->
-		{{/ifEsHasNoResults}}
+		{{/EasySearch.IfNoResults}}
 		
 		</div>
 		{{/ionContent}}
