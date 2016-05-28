@@ -159,7 +159,7 @@ Meteor.publish('adminFindSingle', function(id) {
 })
 
 Meteor.publish('userList', function(id) {
-  return UserList.find({}, {fields: {_id: 1, "profile.username": 1}});
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1}, limit: 10});
 })
 
 Meteor.publish('adminUserList', function(id) {

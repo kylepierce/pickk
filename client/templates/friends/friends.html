@@ -6,7 +6,7 @@
     {{else}}
       {{> ionIcon icon='navicon'}}
     {{/if}}
-  </button>
+  </button> 
 {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
@@ -18,29 +18,24 @@
 
 		<div class="container">
  		<div class="search-bar-fix">
-      arst
     {{> EasySearch.Input index=UserListIndex placeholder="Friends Username..." }}
 		</div>
 
       {{#ionList}}
         {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
-            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
-              <img  src="{{userAvatar this._id}}">
-              {{profile.username}} 
-            </a>
+              <a href="{{pathFor route='user.show'}}" class="item-avatar avatar-fix">
+                <img src="{{userAvatar this._id}}">
+                {{profile.username}} 
+              </a>
               {{> followButton}}
             {{/ionItem}}
         {{/EasySearch.Each}}
       {{/ionList}}
 
-            
-
-
-
 		{{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
 			<div class="no-results">No results found!</div>
-<!-- 			<a href="/inviteFriend" class="newGroup">
+		<!-- 	<a href="/inviteFriend" class="newGroup">
 		    <button class="button full">
 		      <i class="fa fa-comments-o"></i>
 		      Want to Invite a Friend?

@@ -23,13 +23,13 @@
     {{> EasySearch.Input index=GroupsIndex placeholder="Search..." }}
     </div>
 
-    <ul>
+      {{#ionList}}
         {{#EasySearch.Each index=GroupsIndex}}
-          {{#ionItem path="group.show" }}
-            <li>{{name}} - ( {{groupId}} )</li>
-          {{/ionItem}}
+            {{#ionItem path="group.show"}}
+              {{name}} - ( {{groupId}} )
+            {{/ionItem}}
         {{/EasySearch.Each}}
-    </ul>
+      {{/ionList}}
 
 		{{#EasySearch.IfNoResults index=GroupsIndex logic="OR" }}
 			<div class="no-results">No results found!</div>
