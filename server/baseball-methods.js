@@ -91,7 +91,8 @@ Meteor.methods({
   var pitcherId = currentAtBat.pitcherId
 
   // Find players name
-  var playerName = Players.findOne({_id: playerId}).name
+  var player = Players.findOne({_id: playerId})
+  var playerName = player.name
 
   var op1 = "Out";
   var op2 = "Walk";
@@ -303,24 +304,44 @@ Meteor.methods({
   var currentGame = Games.findOne({live: true})
 
   // Total at bat
-  
   if (!playerAtBat.stats.three_year.no_statistics_available_){
     var totalAtBat = playerAtBat.stats.three_year.total.ab
   } else {
     var totalAtBat = playerAtBat.stats.y2016extended.total.ab
   }
 
-  console.log(totalAtBat)
-
   // What options are available? 
-  var count = "count_"+balls+"_"+strikes
+  var count = "count_" + balls + "_" + strikes
   if (!playerAtBat.stats.three_year.no_statistics_available_){
     var thisPlay = playerAtBat.stats.three_year[count]
+    if (!thisPlay) {
+      console.log("There is no data available")
+      var thisPlay = playerAtBat.stats.career
+    }
   } else {
     var thisPlay = playerAtBat.stats.y2016extended[count]
+    if (!thisPlay) {
+      var thisPlay = {
+        "ab": "8",
+        "r": "2",
+        "h": "3",
+        "double": "0",
+        "triple": "0",
+        "hr": "1",
+        "rbi": "2",
+        "bb": "0",
+        "hbp": "0",
+        "so": "0",
+        "sb": "0",
+        "cs": "0",
+        "avg": ".375",
+        "obp": ".375",
+        "slg": ".750"
+      }
+      console.log("There is no data available")
+    }
   }
   var thisPlayEoP = thisPlay.ab
-  console.log(thisPlayEoP)
 
   // End of Play probability 
   var EoP = parseInt(thisPlayEoP) / parseInt(totalAtBat)
@@ -333,34 +354,40 @@ Meteor.methods({
     var option1EoP = thisPlay.so
   } else {
     var strike = strikes + 1 
-    var count = "count_"+balls+"_"+strike
+    var count = "count_" + balls + "_" + strike
     if (!playerAtBat.stats.three_year.no_statistics_available_){
-      var thisPlay = playerAtBat.stats.three_year[count]
+      var nextPlay = playerAtBat.stats.three_year[count]
     }
     else {
-      var thisPlay = playerAtBat.stats.y2016extended[count]
+      var nextPlay = playerAtBat.stats.y2016extended[count]
     }
-    var option1EoP = thisPlay.ab
+    if(nextPlay){
+      var option1EoP = nextPlay.ab
+    } else {
+      var option1EoP = 1
+      console.log("These if statements are getting out of hand.")
+    }
   }
-
-  console.log(option1EoP)
 
   // Option 2 add ball
   if ( balls == 3 ){
     var option2EoP = thisPlay.bb
   } else {
     var ball = balls + 1 
-    var count = "count_"+ball+"_"+strikes
+    var count = "count_" + ball + "_" + strikes
     if (!playerAtBat.stats.three_year.no_statistics_available_){
-      var thisPlay = playerAtBat.stats.three_year[count]
+      var nextPlay = playerAtBat.stats.three_year[count]
     }
     else {
-      var thisPlay = playerAtBat.stats.y2016extended[count]
+      var nextPlay = playerAtBat.stats.y2016extended[count]
     }
-    var option2EoP = thisPlay.ab
-    
+    if(nextPlay){
+      var option2EoP = nextPlay.ab
+    } else {
+      var option2EoP = 1
+      console.log("These if statements are getting out of hand.")
+    }
   }
-  console.log(option2EoP)
 
   var option1EoP = parseInt(option1EoP);
   var option2EoP = parseInt(option2EoP);
@@ -410,6 +437,8 @@ Meteor.methods({
         break;
       default:
         console.log(number + " doesnt work?")
+        var number = getRandomArbitrary(1.25, 1.5)
+        return number
         break;
     } 
   }
