@@ -40,7 +40,6 @@ Meteor.startup(function() {
       Meteor.call('addTask', details._id, details);
     }
   });
-  SyncedCron.start();
 });
 
 Template.home.onRendered( function() {
