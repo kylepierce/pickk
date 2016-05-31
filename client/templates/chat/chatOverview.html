@@ -33,8 +33,9 @@
           <div data-action="message" class="message">
             {{#ionItem avatar=true id="single-message"}}
               {{#with user this.user}}
-              <img src="{{chatAvatar this}}">
-              <h2>{{chatUser this._id}}</h2> {{/with}}
+                <img src="{{chatAvatar this}}">
+                <h2>{{chatUser this._id}}</h2>
+              {{/with}}
               <p>{{{this.message}}}</p>
             {{/ionItem}}
               <div class="chat-options" style="display: none">
