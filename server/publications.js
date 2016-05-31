@@ -6,12 +6,9 @@ Meteor.publish('activeQuestions', function(){
 				{sort: {dateCreated: 1,}});
 });
 
-Meteor.publish('chatMessages', function(groupId){
-  var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10})
-  if(chat){
-    return chat
-  }
-  return this.ready();
+Meteor.publish('chatMessages', function(groupId, limit) {
+  limit = limit || 10;
+  return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
 });
 
 

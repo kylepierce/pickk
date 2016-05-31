@@ -2,20 +2,20 @@
 <div class="bar bar-header bar-dark">
   {{#if group}}
    <h1 class="title white-text-header">{{group}} Chat</h1>
-  
-   <button id="all-chats" class="button button-clear"> 
+
+   <button id="all-chats" class="button button-clear">
       {{> ionIcon icon="ios-arrow-back" }}
     </button>
   {{else}}
     <h1 class="title white-text-header">Global Chat</h1>
   {{/if}}
 
-    <button class="button button-clear pull-right" data-ion-popover="_groupChats"> 
+    <button class="button button-clear pull-right" data-ion-popover="_groupChats">
       {{> ionIcon icon="ios-people" }}
     </button>
   </div>
 
-  {{> chatRoom}} 
+  {{> chatRoom}}
 </template>
 
 <template name="chatRoom">
@@ -26,7 +26,7 @@
       <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
       <div class="col-md-33 chat-buttons" data-ion-popover="_reaction">React</div>
       <button class="button" style="width: 33.33%; border: none;" type="submit">Send</button>
-    </form>   
+    </form>
     {{#ionList}}
       {{#with groupMessages}}
         {{#each messages this}}
@@ -44,7 +44,7 @@
                 Reply
               </div>
               <div class="col-md-25" data-action="react">
-                <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br> 
+                <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
                 React
               </div>
               <div class="col-md-25" data-action="user">
@@ -61,7 +61,12 @@
           </div>
         {{/each}}
       {{/with}}
-    {{/ionList}} 
+      {{#if showLoadMore}}
+        <div class="load-more-wrapper text-center">
+          <button class="button load-more" type="button">Load more</button>
+        </div>
+      {{/if}}
+    {{/ionList}}
     {{/ionContent}}
   {{/ionView}}
 </template>

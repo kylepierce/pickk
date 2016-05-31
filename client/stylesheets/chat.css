@@ -81,3 +81,11 @@
 div.content.overflow-scroll.has-header {
 	bottom: 0px!important;
 }
+
+.load-more-wrapper {
+    padding: 10px;
+}
+
+.load-more-wrapper button {
+    width: 100%;
+}

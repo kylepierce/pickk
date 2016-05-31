@@ -1,6 +1,7 @@
 Template.chatRoom.created = function() {
   this.autorun(function() {
-    var groupId = Router.current().params._id;
+    var groupId = Router.current().params._id || Session.get('chatGroup') || null;
+    Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'))
     Meteor.subscribe('groups', groupId);
     Meteor.subscribe('findUserGroups', groupId);
     Meteor.subscribe('chatUsersList', groupId);
@@ -11,6 +12,9 @@ Template.chatOverview.events({
   'click #all-chats': function() {
     Session.set('chatGroup', null)
 
+  },
+  'click .load-more': function() {
+    Session.set('chatLimit', Session.get('chatLimit') + 10)
   }
 });
 
@@ -71,13 +75,10 @@ Template.chatRoom.events({
 
 Template.chatRoom.helpers({
   groupMessages: function() {
-    // Check to see if we are in the group chat
-    // Session is set to a group id or null for global chat
-    var groupId = Session.get('chatGroup')
-    Meteor.subscribe("chatMessages", groupId)
+    var groupId = Session.get('chatGroup');
 
-    // Find the chat messages from this group. 
-    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: 10}).fetch()
+    // Find the chat messages from this group.
+    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch()
 
     var chatArray = []
 
@@ -96,6 +97,10 @@ Template.chatRoom.helpers({
     Meteor.subscribe('chatUsers', chatArray);
 
     return chat
+  },
+  showLoadMore: function() {
+    var groupId = Session.get('chatGroup');
+    return Chat.find({group: groupId}).fetch().length >= 10; // temporary, until https://trello.com/c/TTd0SQJJ/9-show-load-more-only-if-currently-displayed-chat-message-count-is-lower-than-total-chat-message-count
   },
   messages: function(messageList) {
     return messageList
