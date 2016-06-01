@@ -1548,7 +1548,6 @@ Meteor.methods({
 		Meteor.users.update({_id: user}, {$inc: {"profile.coins": +wager}});
 	},
 
-<<<<<<< HEAD
 	'exportToMailChimp': function(limit) {
 		limit = limit || 10; // safety net; pass a very high limit to export all users
 		var user = UserList.findOne({_id: this.userId});
@@ -1569,6 +1568,4 @@ Meteor.methods({
 			});
 		});
 	}
-=======
->>>>>>> 0205b599b4dcc9765b8949a5ed180ae895154aa5
 });

@@ -26,23 +26,7 @@
 //   }
 // });
 
-<<<<<<< HEAD
 // Template.home.onRendered( function() {
-=======
-Meteor.startup(function() {
-
-  FutureTasks.find().forEach(function(details) {
-    console.log(details)
-    if (details.date < new Date()) {
-      Meteor.call('activateDailyPickks')
-    } else {
-      Meteor.call('addTask', details._id, details);
-    }
-  });
-});
-
-Template.home.onRendered( function() {
->>>>>>> 0205b599b4dcc9765b8949a5ed180ae895154aa5
 //   $( "svg" ).delay( 750 ).fadeIn();	
 
 // var tour = { 
