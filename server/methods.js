@@ -740,7 +740,7 @@ Meteor.methods({
 			});
 		}
 
-		if (question.options.option5) {
+		if (question.options.option6) {
 			option6.map(function(user) {
 				awardPointsBack(user)
 			});

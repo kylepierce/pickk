@@ -248,6 +248,10 @@ Meteor.methods({
   Games.update({live: true, 'teams.teamId': teamId}, {$set: {'teams.$.batterNum': batterNumber}});
 },
 
+'updateCount': function ( atBat, ball, strike ) {
+  AtBat.update(atBat, {$set: {ballCount: ball, strikeCount: strike}});
+},
+
 // Add Active Pitcher to Team
 'addActivePitcher': function(pitcherId){
   var currentGame = Games.findOne({live: true})
