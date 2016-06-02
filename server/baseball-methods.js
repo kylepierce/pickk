@@ -1004,6 +1004,9 @@ Meteor.methods({
 
 'playersPlaying': function (){
   var currentGame =Games.findOne({live: true})
+  if (!currentGame) {
+    return [];
+  }
   var team1 = currentGame.teams[0].battingLineUp
   var team2 = currentGame.teams[1].battingLineUp
   var teams = team1.concat(team2)

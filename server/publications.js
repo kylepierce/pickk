@@ -11,6 +11,9 @@ Meteor.publish('chatMessages', function(groupId, limit) {
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
 });
 
+Meteor.publish("chatMessagesCount", function(groupId) {
+  Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
+});
 
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
@@ -265,8 +268,12 @@ Meteor.publish('oneGamePlayers', function(){
 
 Meteor.publish('atBatPlayer', function(){
   var atBat = AtBat.findOne({active: true });
-  var playerId = atBat.playerId
-  return Players.find({_id: playerId});
+  if (atBat) {
+    var playerId = atBat.playerId
+    return Players.find({_id: playerId});
+  } else {
+    return this.ready();
+  }
 });
 
 Meteor.publish('teams', function(){

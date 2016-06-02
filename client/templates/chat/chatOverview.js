@@ -1,7 +1,8 @@
 Template.chatRoom.created = function() {
   this.autorun(function() {
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
-    Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'))
+    Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
+    Meteor.subscribe("chatMessagesCount", groupId);
     Meteor.subscribe('groups', groupId);
     Meteor.subscribe('findUserGroups', groupId);
     Meteor.subscribe('chatUsersList', groupId);
@@ -100,7 +101,7 @@ Template.chatRoom.helpers({
   },
   showLoadMore: function() {
     var groupId = Session.get('chatGroup');
-    return Chat.find({group: groupId}).fetch().length >= 10; // temporary, until https://trello.com/c/TTd0SQJJ/9-show-load-more-only-if-currently-displayed-chat-message-count-is-lower-than-total-chat-message-count
+    return Chat.find({group: groupId}).fetch().length < Counts.get("chatMessagesCount");
   },
   messages: function(messageList) {
     return messageList
