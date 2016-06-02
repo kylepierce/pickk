@@ -92,6 +92,11 @@
 <template name="adminGameInfo">
 	<div class="col-md-50 float-left">
 		<h1>Count:</h1>
+			<form id="count">
+				<input class="at-bat-number ball-number" value="{{balls}}">
+				<input class="at-bat-number strike-number" value="{{strikes}}">
+				<input type="submit">
+			</form>
 		<h1> {{balls}} - {{strikes}}</h1> 
 	</div>
 	<div class="col-md-50 float-left">

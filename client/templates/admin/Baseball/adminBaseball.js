@@ -110,6 +110,20 @@ Template.adminBaseball.helpers ({
 
 });
 
+Template.adminGameInfo.events({
+  'submit #count': function (event, template) {
+    event.preventDefault()
+    var ballNumber = template.find('.ball-number').value
+    var strikeNumber = template.find('.strike-number').value
+    var playerAtBat = AtBat.findOne({active: true})
+
+    var ballNumber = parseInt(ballNumber)
+    var strikeNumber = parseInt(strikeNumber)
+
+    Meteor.call('updateCount', playerAtBat, ballNumber, strikeNumber)
+  }
+});
+
 Template.adminGameInfo.helpers({
   strikes: function() {
     var currentAtBat = AtBat.findOne({active: true});
@@ -119,10 +133,6 @@ Template.adminGameInfo.helpers({
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.ballCount
   },
-  // outs: function ( ) {
-  //   var currentGame = Games.findOne({live: true});
-  //   return currentGame.outs
-  // },
   first: function () {
     var currentGame = Games.findOne({live: true});
     //  
