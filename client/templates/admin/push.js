@@ -11,6 +11,7 @@ Template.push.events({
 		// Get the value of the input box
 		event.preventDefault();
 		var message = template.find('input[name=push]').value
-		Meteor.call("push", message)
+		var currentUser = Meteor.userId();
+		Meteor.call("push", message, currentUser)
 	}
 });
