@@ -31,6 +31,9 @@
     "analyticsSettings": {},
     "cloudinary": {
       "cloud_name": "pickk"
+    },
+    "share": {
+      "message": "Have you heard about the Pickk app? Try it now!"
     }
   }
 }

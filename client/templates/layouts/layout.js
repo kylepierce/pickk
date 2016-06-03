@@ -9,7 +9,15 @@ Template.mainView.rendered = function() {
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
-	}
+	},
+  'click .js-share-link': function(event) {
+    event.preventDefault();
+    if (Meteor.isCordova) {
+      window.plugins.socialsharing.shareWithOptions({
+        message: Meteor.settings.public.share.message
+      });
+    }
+  }
 });
 
 Template.mainView.events({

@@ -156,8 +156,14 @@
   {{> ionIcon icon='ios-cog-outline'}}
   Settings
   </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="/landing"> 
-  {{> ionIcon icon='log-out'}} 
+{{#if isMobile}}
+  <a class="item item-icon-left js-share-link" data-ion-menu-toggle="left" href="#">
+  {{> ionIcon icon='share'}}
+  Share
+  </a>
+{{/if}}
+  <a class="item item-icon-left" data-ion-menu-toggle="left" data-action="logout" href="/landing">
+  {{> ionIcon icon='log-out'}}
     Logout
   </a>
 </div>
@@ -194,7 +200,7 @@
   <form id="">
     <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="Silence is not golden..." id="messageBox"></textarea>
     <button class="col button col-100" type="submit">Send</button>
-  </form> 
+  </form>
 
     {{#ionList}}
       {{#each message}}
