@@ -203,7 +203,7 @@ Meteor.methods({
 	},
 
 	'push': function(message, admin) {
-		var user = UsersList.findOne({_id: admin})
+		var user = UserList.findOne({_id: admin})
 		var isAdmin = user.profile.role
 		if (isAdmin == "admin"){
 			Push.send({

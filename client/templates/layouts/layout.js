@@ -23,12 +23,14 @@ Template.mainView.events({
 
 Template.sideMenuContent.helpers({
   pendingNotifications: function(){
-    var notifications = Meteor.user().pendingNotifications.length > 0
-    return notifications
+    var user = Meteor.user();
+    var notifications = user && user.pendingNotifications.length > 0;
+    return notifications;
   },
   notificationNumber: function() {
-    var notifications = Meteor.user().pendingNotifications.length;
-    return notifications
+    var user = Meteor.user();
+    var notifications = user && user.pendingNotifications.length || 0;
+    return notifications;
   },
   sidebarAvatar: function (userId) {
     console.log(this.user)

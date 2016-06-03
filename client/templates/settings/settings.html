@@ -32,11 +32,12 @@
 			<input type="text" name="lastName" value="{{lastName}}">
 		</label>
 
-		<!-- Photo:<br>
-		<button data-action="cameraUpload">Want to upload your own photo?</button><br>
+    <label class="item item-input item-stack-label">
+      <span class="input-label">Avatar:</span>
+      <input type="file" name="avatar">
+      <img src="{{avatar}}" id="avatar">
+    </label>
 
-		<img src="{{avatar}}" id="avatar" style="width:100px; height: 100px;"> -->
-			
 			{{> yield 'submitButton'}}
 		</div>
 		</div>

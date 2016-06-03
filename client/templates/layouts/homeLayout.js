@@ -31,9 +31,6 @@ Template.sideMenuContent.helpers({
   },
   admin: function() {
     var currentUser = Meteor.user();
-    var admin = currentUser.profile.role 
-    if (admin === "admin"){
-      return true
-    }
+    return currentUser && currentUser.profile.role === "admin";
   }
 });

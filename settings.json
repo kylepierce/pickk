@@ -17,12 +17,20 @@
     "mailchimp": {
       "apiKey": "5ea078d6cbe0270878d915be0b33599e-us9",
       "listId": "051a9cc1a8"
+    },
+    "cloudinary": {
+      "cloud_name": "pickk",
+      "api_key": "645847953239515",
+      "api_secret": "rWKh2JKeTYnnWIkHqNU1Azm5PyA"
     }
   },
   "public": {
     "astronomer": {
       "appId": "j7XLnHnQjbhkMXexn"
     },
-    "analyticsSettings": {}
+    "analyticsSettings": {},
+    "cloudinary": {
+      "cloud_name": "pickk"
+    }
   }
 }

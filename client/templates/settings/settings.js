@@ -1,12 +1,12 @@
 Template.settings.helpers({
 	username: function () {
 		var currentUser = Meteor.user();
-		var services = currentUser.services
-		if (typeof services !== 'undefined'){
+		if (currentUser.profile.username) {
+			return currentUser.profile.username;
+		} else if (currentUser.services && currentUser.twitter && currentUser.services.twitter.screenName) {
 			return currentUser.services.twitter.screenName;
 		} else {
-			console.log(currentUser.profile.username)
-			return currentUser.profile.username
+			return "";
 		}
 	},
 
@@ -153,5 +153,17 @@ Template.settings.events({
 		}
 
 		
+	},
+
+	"change input[name='avatar']": function(e) {
+		var files = e.currentTarget.files;
+		return Cloudinary.upload(files, {
+			folder: "avatars",
+			type: "private"
+		}, function(err, res) {
+			console.log("Upload Error: ", err);
+			console.log("Upload Result: ", res);
+		});
 	}
+
 });

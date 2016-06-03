@@ -69,16 +69,18 @@
 
 <template name="sideMenuContent">
 <div class="scrollable">
-<div class="profile-container">
-<a href="/profile" data-ion-menu-toggle="left">
-  <img class="circle-image" src="{{userAvatar currentUser._id}}">
-  <br>
+  {{#if currentUser}}
+    <div class="profile-container">
+    <a href="/profile" data-ion-menu-toggle="left">
+      <img class="circle-image" src="{{userAvatar currentUser._id}}">
+      <br>
 
-  <strong class="username">{{currentUser.profile.username}}</strong><br>
-  <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong><span class="coin-icon"> <i class="fa fa-circle "></i> </span> 
-    <strong>{{currentUser.profile.coins}}</strong>
-</a>
-</div>
+      <strong class="username">{{currentUser.profile.username}}</strong><br>
+      <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong><span class="coin-icon"> <i class="fa fa-circle "></i> </span>
+        <strong>{{currentUser.profile.coins}}</strong>
+    </a>
+    </div>
+  {{/if}}
 
 <div class="list">
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/">
