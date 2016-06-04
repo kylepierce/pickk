@@ -1,8 +1,7 @@
 Accounts.onCreateUser(function(options, user) {
-
-  profile = {
+  user.profile = {
     coins: 10000,
-    avatar: 'twitter_logo.png',
+    avatar: null,
     followers: [],
     following: [],
     badges: [],
@@ -11,10 +10,7 @@ Accounts.onCreateUser(function(options, user) {
     firstName: '',
     lastName: ''
   };
-  user.profile = profile;
   user.pendingNotifications = [];
-
-
   mailChimpLists.subscribeUser(user);
   return user;
 });
