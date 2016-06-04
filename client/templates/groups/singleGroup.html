@@ -19,17 +19,17 @@
 
   {{#ionView}}
     {{#ionContent}}
-<!--     <div class="wrapper"> -->
+     <div class="group-wrapper">
     {{#with group}}
       {{#if private}}
         {{#if member}}
-          <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+          {{> groupAvatar}}
           {{> memberCheck}} 
           {{> groupData}}
           {{> singleGroupLeaderboard groupId=this}}
         {{else}}
           {{#if invite}}
-            <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+            {{> groupAvatar}}
             {{> memberCheck}} 
             {{> groupData}}
           {{else}}
@@ -38,7 +38,7 @@
         {{/if}}       
 
       {{else}}
-      <img style="float:left; width: 75px; margin-left: 15px; margin-bottom: 20px;" src="{{this.avatar}}" class="circle-image">
+        {{> groupAvatar}}
       
       {{> memberCheck}} 
       {{> groupData}} 
@@ -46,7 +46,7 @@
 
       {{/if}}
     {{/with}}
-<!--     </div> -->
+     </div>
     {{/ionContent}}
   {{/ionView}}
 	

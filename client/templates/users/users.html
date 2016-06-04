@@ -56,7 +56,7 @@
 <template name="displayGroup">
   {{#with groupName groupId}}
     {{#ionItem path="group.show" avatar=true}}
-      <img src="{{avatar}}">
+      {{> groupAvatar}}
       {{name}}
     {{/ionItem}}
   {{/with}}

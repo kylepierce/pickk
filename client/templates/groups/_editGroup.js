@@ -3,6 +3,10 @@ Template._editGroup.created = function() {
 };
 
 Template._editGroup.helpers({
+  group: function() {
+    var groupId = Session.get('groupId');
+    return Groups.findOne({_id: groupId})
+  },
   'groupId': function(){
     var groupId = Session.get('groupId');
     var group = Groups.findOne({_id: groupId});
@@ -91,5 +95,26 @@ Template._editGroup.events({
       sAlert.success("Group Updated" , {effect: 'slide', position: 'bottom', html: true});
 
     }
+  },
+
+  "change input[name='avatar']": function(event, template) {
+    var files = event.currentTarget.files;
+    template.$(".loading").show();
+    template.$(".avatar").hide();
+    Cloudinary.upload(files, {
+      folder: "avatars",
+      transformation: [
+        {width: 200, height: 200, gravity: "face", crop: "lfill"},
+      ],
+      fields: {}
+    }, function(error, result) {
+      template.$(".loading").hide();
+      template.$(".avatar").show();
+      if (error) {
+        throw error;
+      }
+      Meteor.call('setGroupAvatar', Session.get('groupId'), result);
+    });
   }
+
 });

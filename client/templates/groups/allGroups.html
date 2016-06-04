@@ -23,7 +23,7 @@
 
 		{{#each group}}
       {{#ionItem path="group.show" avatar=true}}
-        <img src="{{avatar}}">
+        {{> groupAvatar}}
         <h2 class="center-username">{{name}}</h2>
 
       {{/ionItem}}

@@ -513,6 +513,15 @@ Meteor.methods({
 			});
 	},
 
+	'setGroupAvatar': function(id, avatar) {
+		Groups.update({_id: id},
+			{
+				$set: {
+					avatar: avatar
+				}
+			});
+	},
+
 	'requestInvite': function(userId, groupId) {
 		Groups.update({_id: groupId},
 			{$push: {requests: userId}}
