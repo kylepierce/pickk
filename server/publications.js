@@ -160,12 +160,20 @@ Meteor.publish('adminFindSingle', function(id) {
   return UserList.find({_id: id}, {fields: {questionAnswered: 1}});
 })
 
+Meteor.publish('followingUserList', function() {
+  if (!this.userId) {
+    return this.ready()
+  }
+  var currentUser = UserList.findOne(this.userId);
+  return UserList.find({_id: {$in: currentUser.profile.following}}, {fields: {_id: 1, "profile.username": 1, "profile.avatar": 1}, limit: 10});
+})
+
 Meteor.publish('userList', function(id) {
-  return UserList.find({}, {fields: {_id: 1, "profile.username": 1}, limit: 10});
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.avatar": 1}, limit: 10});
 })
 
 Meteor.publish('adminUserList', function(id) {
-  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.coins": 1, "profile.diamonds": 1, questionAnswered: 1}});
+  return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.avatar": 1, "profile.coins": 1, "profile.diamonds": 1, questionAnswered: 1}});
 })
 
 Meteor.publish("userData", function () {

@@ -13,22 +13,24 @@ Template.settings.helpers({
 
 	firstName: function () {
 		var currentUser = Meteor.user();
-		var services = currentUser.services
-		if (typeof services !== 'undefined'){
+		if (currentUser.profile.firstName) {
+			return currentUser.profile.firstName;
+		} else if (currentUser.services && currentUser.services.facebook && currentUser.services.facebook.first_name) {
 			return currentUser.services.facebook.first_name;
 		} else {
-			return currentUser.profile.firstName;
+			return "";
 		}
 	},
 
 
 	lastName: function () {
 		var currentUser = Meteor.user();
-		var services = currentUser.services
-		if (typeof services !== 'undefined'){
+		if (currentUser.profile.lastName) {
+			return currentUser.profile.lastName;
+		} else if (currentUser.services && currentUser.services.facebook && currentUser.services.facebook.last_name) {
 			return currentUser.services.facebook.last_name;
 		} else {
-			return currentUser.profile.lastName;
+			return "";
 		}
 	},
 });
@@ -155,14 +157,25 @@ Template.settings.events({
 		
 	},
 
-	"change input[name='avatar']": function(e) {
-		var files = e.currentTarget.files;
-		return Cloudinary.upload(files, {
+	"change input[name='avatar']": function(event, template) {
+		var files = event.currentTarget.files;
+		template.$(".loading").show();
+		template.$(".avatar").hide();
+		Cloudinary.upload(files, {
 			folder: "avatars",
-			type: "private"
-		}, function(err, res) {
-			console.log("Upload Error: ", err);
-			console.log("Upload Result: ", res);
+			transformation: [
+				{width: 200, height: 200, gravity: "face", crop: "lfill"},
+			],
+			fields: {}
+		}, function(error, result) {
+			template.$(".loading").hide();
+			template.$(".avatar").show();
+			if (error) {
+				throw error;
+			}
+			Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
+			//console.log("Upload Error: ", error);
+			//console.log("Upload Result: ", result);
 		});
 	}
 

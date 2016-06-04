@@ -25,7 +25,7 @@
         {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
               <a href="{{pathFor route='user.show'}}" class="item-avatar avatar-fix">
-                <img src="{{userAvatar this._id}}">
+                {{> avatar userId=_id}}
                 {{profile.username}} 
               </a>
               {{> followButton}}

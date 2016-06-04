@@ -8,3 +8,11 @@
 	color: white;
 	padding: 2.5px 0;
 }
+
+.profile-container .avatar {
+	margin: 0 auto;
+}
+
+.profile-container {
+	padding-top: 15px;
+}

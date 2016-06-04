@@ -4,7 +4,7 @@
 			{{#each user}}
 				{{#ionItem buttonRight=true avatar=true}}
 					{{#with userDetails this}}
-						<img src="{{userAvatar this._id}}">
+            {{> avatar userId=_id}}
 						{{profile.username}}
 						{{#if admin _id}}
 			      <button value="{{_id}}" data-action="delete" class="button">

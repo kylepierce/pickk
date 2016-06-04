@@ -123,7 +123,7 @@
       
       {{#each players groupId}}
         {{#ionItem path="user.show" avatar=true}}
-        <img src="{{userAvatar this._id}}">
+        {{> avatar userId=_id}}
         <li class="list-font">
           
           <h2 class="center-username">{{profile.username}}<span class="score">{{profile.coins}}</span></h2>

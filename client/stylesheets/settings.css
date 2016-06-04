@@ -27,3 +27,8 @@ div.hopscotch-bubble .hopscotch-bubble-content{
 .hopscotch-bubble-close{
 	padding: 0!important;
 }
+
+#settings .avatar, #settings .loading {
+	margin-right: 10px;
+}
+

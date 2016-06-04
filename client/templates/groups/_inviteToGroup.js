@@ -14,6 +14,10 @@ Template.inviteToGroup.helpers({
   // }
 });
 
+Template.inviteToGroup.onCreated(function() {
+  this.subscribe("followingUserList");
+})
+
 Template.inviteButton.events({
 	'click [data-action=invite]': function(event, template){
 		var user = this._id;

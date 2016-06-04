@@ -58,6 +58,7 @@ App.launchScreens({
 });
 
 App.accessRule('*');
+App.accessRule("blob:*");
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.accessRule('*://fonts.gstatic.com/*');
