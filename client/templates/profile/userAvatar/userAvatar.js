@@ -1,8 +1,8 @@
-Template.avatar.helpers({
+Template.userAvatar.helpers({
   url: function() {
     var user = UserList.findOne({_id: this.userId});
 
-    if (user.profile.avatar) {
+    if (user.profile.avatar && user.profile.avatar != 'twitter_logo.png' /* backwards compatibility */) {
       return UI._globalHelpers.c().url(user.profile.avatar.public_id, {hash: {}});
     } else if (user.services && user.services.twitter) {
       var photo = user.services.twitter.profile_image_url;
@@ -15,7 +15,7 @@ Template.avatar.helpers({
   }
 });
 
-Template.avatar.onCreated(function() {
+Template.userAvatar.onCreated(function() {
   if (!this.data.alreadySubscribed) {
     this.subscribe('findSingleUsername', this.data.userId);
   }

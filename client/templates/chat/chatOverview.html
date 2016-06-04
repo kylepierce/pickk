@@ -33,7 +33,7 @@
           <div data-action="message" class="message">
             {{#ionItem avatar=true id="single-message"}}
               {{#with user this.user}}
-                {{> avatar userId=_id alreadySubscribed=true}}
+                {{> userAvatar userId=_id alreadySubscribed=true}}
                 <h2>{{chatUser this._id}}</h2>
               {{/with}}
               <p>{{{this.message}}}</p>
