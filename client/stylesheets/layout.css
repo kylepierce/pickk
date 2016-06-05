@@ -11,6 +11,8 @@
 
 .profile-container .avatar {
 	margin: 0 auto;
+	height: 100px;
+	width: 100px;
 }
 
 .profile-container {

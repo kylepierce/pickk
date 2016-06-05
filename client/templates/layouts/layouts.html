@@ -21,21 +21,6 @@
         {{#ionNavView transition="backward"}}
           {{> yield "header"}}
 
-<!--     {{#if isAndroid}}
-      {{#ionTabs style="android"}}
-        {{> ionTab title="Active" path="dashboard" icon="ios-photos"}}
-        {{> ionTab title="Notifications" path="notifications" icon="android-notifications"}}
-        {{> ionTab title="Profile" path="profile" icon="ios-person"}}
-      {{/ionTabs}}
-    {{else}}
-      {{#ionTabs style="ios"}}
-        {{> ionTab title="Active" path="dashboard" iconOff="ios-photos-outline" iconOn="ios-photos" class="tab-item-positive"}}
-        {{> ionTab title="Groups" path="groups" iconOff="ios-people-outline" iconOn="ios-people" class="tab-item-positive"}}
-        {{> ionTab title="Notifications" path="notifications" iconOff="ios-bell-outline" iconOn="ios-bell" class="tab-item-positive"}}
-        {{> ionTab title="Profile" path="profile" iconOff="ios-person-outline" iconOn="ios-person" class="tab-item-positive"}}
-      {{/ionTabs}}
-    {{/if}} -->
-
         {{/ionNavView}}
 
         {{> yield}}
@@ -73,7 +58,6 @@
     <div class="profile-container">
     <a href="/profile" data-ion-menu-toggle="left">
       {{> userAvatar userId=currentUser._id}}
-      <br>
 
       <strong class="username">{{currentUser.profile.username}}</strong><br>
       <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong><span class="coin-icon"> <i class="fa fa-circle "></i> </span>
