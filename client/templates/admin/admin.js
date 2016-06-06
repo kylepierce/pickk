@@ -10,14 +10,87 @@ Template.createQuestion.helpers({
 	game: function(){
 		Meteor.subscribe('games');
 		return Games.find({live: true}).fetch();
-	},
+	}
+})
+
+Template.otherQuestions.helpers({
 	'commercial': function(){
 		Meteor.subscribe('games');
 		var game = Games.findOne({live: true});
 		var commercialBreak = game.commercial
 		return commercialBreak
 	}
-})
+});
+
+Template.otherQuestions.events({
+		'click [data-action="startCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var game = Games.findOne({live: true});
+		Meteor.call('toggleCommercial', game, true);
+	},
+
+	'click [data-action="endCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var game = Games.findOne({live: true});
+		Meteor.call('toggleCommercial', game, false);
+	},
+
+	'click [data-action="situationalQuestion"]': function(event, template){
+		var que = prompt('Question you would like to ask')
+		var game = Games.findOne({live: true});
+		Meteor.call('createTrueFalse', que, game)
+	},
+	'click [data-action="thisDrive"]': function(event, template){
+		event.preventDefault();
+		var down = template.find('input[name=down]').value
+		var yards = template.find('input[name=yards]').value
+		var area = template.find('input[name=area]').value
+		var time = template.find('input[name=time]').value
+		var game = template.find('#gameList :selected').value
+
+		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
+
+		function questionList(o1, o2, o3, o4, o5, o6){
+			option1 = o1
+			option2 = o2
+			option3 = o3
+			option4 = o4
+			option5 = o5
+			option6 = o6
+		}
+
+		function randomizer(min, max){
+			return (Math.random() * (max-min) + min).toFixed(2)
+		}
+
+		function multiplier(m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
+			multi1 = randomizer(m1a, m1b)
+			multi2 = randomizer(m2a, m2b)
+			multi3 = randomizer(m3a, m3b)
+			multi4 = randomizer(m4a, m4b)
+			multi5 = randomizer(m5a, m5b)
+			multi6 = randomizer(m6a, m6b)
+		}
+
+		question = "How Will This Drive End?"
+		questionList("Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other")
+
+		multiplier(
+						1.1, 1.3, 
+						3.4, 5.42, 
+						3.2, 4.81, 
+						2.2, 4.81, 
+						2.2, 4.81, 
+						2.9, 4.61)
+
+		Meteor.call("questionPush", game, question)
+		Meteor.call("emptyInactive", game, question)
+		Meteor.call('insertQuestion', game, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+ 
+	},
+});
 
 // Deactivate question once the play has started.
 Template.activeQuestionList.events({
@@ -50,13 +123,6 @@ Template.pendingQuestionList.helpers({
 		if(this.commercial == true){
 			return true
 		}
-	}
-});
-
-Template.atBatQuestion.helpers({
-	'questions': function(){
-		var questions = QuestionList.find({active: null, atBatQuestion: true}, {sort: {dateCreated: -1}}).fetch();
-		return questions
 	}
 });
 

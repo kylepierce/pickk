@@ -214,3 +214,10 @@ Template.atBats.events({
     }
   }
 })
+
+Template.atBatQuestion.helpers({
+  'questions': function(){
+    var questions = QuestionList.find({active: null, atBatQuestion: true}, {sort: {dateCreated: -1}}).fetch();
+    return questions
+  }
+});

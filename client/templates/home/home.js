@@ -424,44 +424,38 @@ Template.activeQuestion.events({
   }
 });
 
+Template.commercialQuestion.events({
+  'click [name=play]': function( event, template ){
+    var otherSelected = $('.wager') 
+    // If a play has been selected before than remove that 
+    console.log(otherSelected)
+    if (otherSelected) {
+      // Remove old
+      $('.wager').remove();
+    } 
+    // Otherwise add the wager and submit button after
+    var answer = $('input:radio[name=play]:checked').parent()
+    answer.after($("<div class='wager'></div>")) 
+    var selectedPlay = $('.wager')[0]
+    Blaze.render(Template.submitAndWagers, selectedPlay)
+  },
+  'click input': function (event, template) {
+    var checked = $( "input:checked" )
+    if (checked.length === 2) {
+      // Checkout this sexy daisy chain ;)
+      var answer = $('input:radio[name=play]:checked').siblings().children()[1].id
+      var wager = template.find('input:radio[name=wager]:checked').value;
+      var combined = parseInt(answer*wager)
+      $('#wager').checked
+      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
+      $("#submit-response").prop("disabled", false)
+      $("#submit-response").addClass('button-balanced');
+      return true 
+    }
+  }
+});
 
 Template.commercialQuestion.helpers({
-  // 'showAds': function(event, template){
-
-  //   Meteor.defer(function () {
-  //   AdMob.prepareInterstitial({
-  //     adId:'ca-app-pub-4862520546869067/3340412630', 
-  //     autoShow:true,
-  //     success: function() {
-  //       console.log("Received ad");
-  //     },
-  //     error: function() {
-  //       console.log("No ad received");
-  //     }
-  //   });
-  //   return AdMob.showInterstitial()
-  // });
-  //   return "";
-  // },
-  // 'showAdsRandom': function(event, template){
-  //   var random = Math.floor((Math.random() * 2) + 1)
-  //   if (random == 1){
-  //     Meteor.defer(function () {
-  //     AdMob.prepareInterstitial({
-  //       adId:'ca-app-pub-4862520546869067/3340412630', 
-  //       autoShow:true,
-  //       success: function() {
-  //         console.log("Received ad");
-  //       },
-  //       error: function() {
-  //         console.log("No ad received");
-  //       }
-  //     });
-  //     return AdMob.showInterstitial()
-  //   });
-  // }
-  //   return "";
-  // },
   'live': function(){
     var connection = Meteor.status()
     var status = connection.status
@@ -554,10 +548,19 @@ Template.binaryChoice.helpers({
 });
 
 Template.twoOptionQuestions.events({
-  'click input:radio[name=binary]':function(event, template) {
-    $("#submit-binary").prop("disabled", false)
-    $("#submit-binary").addClass('button-balanced');
-    $("input:radio[name=binary]").addClass('border');
+  'click input': function (event, template) {
+    var checked = $( "input:checked" )
+    if (checked.length === 2) {
+      // Checkout this sexy daisy chain ;)
+      var answer = $('input:radio[name=binary]:checked').siblings().children()[0].id
+      var wager = template.find('input:radio[name=wager]:checked').value;
+      var combined = parseInt(answer*wager)
+      $('#wager').checked
+      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
+      $("#submit-response").prop("disabled", false)
+      $("#submit-response").addClass('button-balanced');
+      return true 
+    }
   },
 
   'click #submit-response': function(event, template){
@@ -743,6 +746,21 @@ Template.gameBar.helpers({
 });
 
 Template.normalPlay.helpers({
+  option6Exists: function () {
+    var option6 = this.options.option6
+    if (option6){
+      return true
+    }
+  },
+  option5Exists: function () {
+    var option5 = this.options.option5
+    if (option5){
+      return true
+    }
+  }
+});
+
+Template.withoutIcons.helpers({
   option6Exists: function () {
     var option6 = this.options.option6
     if (option6){

@@ -1,24 +1,4 @@
 Template.createQuestion.events({
-	'click [data-action="startCommercialBreak"]': function(event, template){
-		// Turn off reload
-		event.preventDefault();
-		var game = template.find('#gameList :selected').value
-		Meteor.call('toggleCommercial', game, true);
-	},
-
-	'click [data-action="endCommercialBreak"]': function(event, template){
-		// Turn off reload
-		event.preventDefault();
-		var game = template.find('#gameList :selected').value
-		Meteor.call('toggleCommercial', game, false);
-	},
-
-	'click [data-action="situationalQuestion"]': function(event, template){
-		var que = prompt('Question you would like to ask')
-		var game = template.find('#gameList :selected').value
-		Meteor.call('createTrueFalse', que, game)
-	},
-
 	'click [data-action="thisDrive"]': function(event, template){
 				event.preventDefault();
 		var down = template.find('input[name=down]').value

@@ -523,39 +523,39 @@ Meteor.methods({
     var number = parseInt(number)
     switch (true){
       case (number < 25):
-        var number = getRandomArbitrary(1,1.75)
+        var number = getRandomArbitrary(1.5,1.95)
         return number
         break;
       case (number < 50):
-        var number = getRandomArbitrary(1.5, 2)
+        var number = getRandomArbitrary(1.7, 2.3)
         return number
         break;
       case (number < 60):
-        var number = getRandomArbitrary(2,2.5)
+        var number = getRandomArbitrary(2.2,2.7)
         return number
         break;
       case (number < 75):
-        var number = getRandomArbitrary(2.25, 2.75)
+        var number = getRandomArbitrary(2.65, 3.15)
         return number
         break;
       case (number < 85):
-        var number = getRandomArbitrary(2.5, 3)
+        var number = getRandomArbitrary(2.75, 3.35)
         return number
         break;
       case (number < 90):
-        var number = getRandomArbitrary(3, 3.5)
+        var number = getRandomArbitrary(3.25, 3.75)
         return number
         break;
       case (number < 95):
-        var number = getRandomArbitrary(3.5, 3.75)
+        var number = getRandomArbitrary(3.65, 3.95)
         return number
         break;
       case (number < 99):
-        var number = getRandomArbitrary(3.75, 4.5)
+        var number = getRandomArbitrary(3.95, 4.5)
         return number
         break;
       case (number < 1000):
-        var number = getRandomArbitrary(4.5, 5)
+        var number = getRandomArbitrary(5.5, 7)
         return number
         break;
       default:
