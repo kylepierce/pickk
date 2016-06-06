@@ -19,7 +19,11 @@ FutureTasks = new Meteor.Collection('future_tasks');
 UserListIndex = new EasySearch.Index({
   collection: UserList,
   fields: ['profile.username'],
-  engine: new EasySearch.Minimongo()
+  engine: new EasySearch.MongoDB({
+    fields: function() {
+      return {'profile.username': 1, 'profile.avatar': 1};
+    }
+  })
 });
 
 GroupsIndex = new EasySearch.Index({
