@@ -1,6 +1,6 @@
 Template.userAvatar.helpers({
   url: function() {
-    var user = UserList.findOne({_id: this.userId});
+    var user = this.user || UserList.findOne({_id: this.userId});
 
     if (user.profile.avatar && user.profile.avatar != 'twitter_logo.png' /* backwards compatibility */) {
       return UI._globalHelpers.c().url(user.profile.avatar.public_id, {hash: {}});
@@ -16,7 +16,7 @@ Template.userAvatar.helpers({
 });
 
 Template.userAvatar.onCreated(function() {
-  if (!this.data.alreadySubscribed) {
+  if (!this.data.alreadySubscribed && !this.data.user) {
     this.subscribe('findSingleUsername', this.data.userId);
   }
 });

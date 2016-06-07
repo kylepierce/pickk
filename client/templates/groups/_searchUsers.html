@@ -27,7 +27,7 @@
         {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
             <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
-              {{> userAvatar userId=_id}}
+              {{> userAvatar user=. alreadySubscribed=true}}
               {{profile.username}} 
             </a>
               {{> inviteButton}}
