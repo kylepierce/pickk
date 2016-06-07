@@ -29,7 +29,6 @@ easy:search
 aldeed:autoform
 aldeed:collection2
 random
-okgrow:analytics
 cmather:handlebars-server
 mrt:moment
 themeteorchef:bert
@@ -86,3 +85,4 @@ percolate:synced-cron
 tmeasday:publish-counts
 lepozepo:cloudinary
 meteorhacks:fast-render
+astronomerio:core
