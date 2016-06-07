@@ -1,3 +1,11 @@
+App.info({
+  name: 'Pickk',
+  description: 'Predict sports events in real time',
+  author: 'Pickk Corporation',
+  email: 'kyle@pickk.co',
+  website: 'http://pickk.co',
+  version: '0.0.7'
+});
 App.icons({
   "iphone_2x": "resources/icons/iphone_2x.png", // 120x120
   "iphone_3x": "resources/icons/iphone_3x.png", // 180x180
@@ -41,6 +49,7 @@ App.accessRule('*');
 App.accessRule("blob:*");
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
+App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
 App.configurePlugin('phonegap-plugin-push', {
     SENDER_ID: '259263435947',

@@ -1003,6 +1003,7 @@ Meteor.methods({
 		var option3 = question.options.option3.usersPicked
 		var option4 = question.options.option4.usersPicked
 		var option5 = question.options.option5.usersPicked
+		var option6 = question.options.option6.usersPicked
 
 		var list = []
 
@@ -1070,6 +1071,10 @@ Meteor.methods({
 				awardPoints(user);
 			});
 		} else if (answer == "option5") {
+			option5.map(function(user) {
+				awardPoints(user);
+			});
+		} else if (answer == "option6") {
 			option5.map(function(user) {
 				awardPoints(user);
 			});

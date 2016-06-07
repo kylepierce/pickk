@@ -31,4 +31,9 @@ Template._gamePopover.events({
 		Meteor.call('modifyGameQuestionStatus', gameId, "option5")
 		IonPopover.hide();
 	},
+	'click [data-action=option6]': function() {
+		var gameId = Session.get('gamePrediction');
+		Meteor.call('modifyGameQuestionStatus', gameId, "option6")
+		IonPopover.hide();
+	}, 
 })

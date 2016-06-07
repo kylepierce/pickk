@@ -14,7 +14,8 @@ Template.sideMenuContent.events({
     event.preventDefault();
     if (Meteor.isCordova) {
       window.plugins.socialsharing.shareWithOptions({
-        message: Meteor.settings.public.share.message
+        message: Meteor.settings.public.share.message,
+        url: 'http://bit.ly/download-pickk-app',
       });
     }
   }
