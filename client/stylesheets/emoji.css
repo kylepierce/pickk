@@ -1,0 +1,9 @@
+.emoji-layer .popover {
+    width: 230px;
+}
+
+.emoji-layer button {
+    width: 50px;
+    margin: 2px;
+    padding-top: 3px;
+}
