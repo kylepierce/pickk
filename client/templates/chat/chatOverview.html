@@ -23,9 +23,9 @@
     {{#ionContent}}
     <form id="">
       <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="{{randomMessage}}" id="messageBox"></textarea>
-      <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
-      <div class="col-md-33 chat-buttons" data-ion-popover="_reaction">React</div>
-      <button class="button" style="width: 33.33%; border: none;" type="submit">Send</button>
+      <!-- <div class="col-md-5 chat-buttons" data-action="mention">Mention</div> -->
+      <div class="col-md-50 chat-buttons" data-ion-popover="_reaction">React</div>
+      <button class="button" style="width: 50%; border: none;" type="submit">Send</button>
     </form>
     {{#ionList}}
       {{#with groupMessages}}
