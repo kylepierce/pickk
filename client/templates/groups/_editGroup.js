@@ -64,6 +64,12 @@ Template._editGroup.events({
         duration: 1500,
         backdrop: true
       });
+    } else if(groupId.length > 25){
+      IonLoading.show({
+        customTemplate: '<h3>That name is too long :(</h3>',
+        duration: 1500,
+        backdrop: true
+      });
     } else if(hasWhiteSpace(groupId)){
       IonLoading.show({
         customTemplate: '<h3>Group name can not have spaces :(</h3>',
@@ -73,6 +79,12 @@ Template._editGroup.events({
     } else if(groupName.length < 5){
       IonLoading.show({
         customTemplate: '<h3>Group display name not long enough :(</h3>',
+        duration: 1500,
+        backdrop: true
+      });
+    } else if(groupName.length > 25){
+      IonLoading.show({
+        customTemplate: '<h3>Group display name too long :(</h3>',
         duration: 1500,
         backdrop: true
       });

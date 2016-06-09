@@ -34,9 +34,15 @@ Template.newGroup.events({
       return /\s/g.test(s);
     }
 
-    if(groupId.length < 5){
+    if(groupId.length < 5) {
+        IonLoading.show({
+            customTemplate: '<h3>That name is not long enough :(</h3>',
+            duration: 1500,
+            backdrop: true
+        });
+    } else if(groupId.length > 25){
       IonLoading.show({
-      customTemplate: '<h3>That name is not long enough :(</h3>',
+      customTemplate: '<h3>That name is too long :(</h3>',
       duration: 1500,
       backdrop: true
     });
@@ -49,6 +55,12 @@ Template.newGroup.events({
    } else if(groupName.length < 5){
       IonLoading.show({
         customTemplate: '<h3>Group display name not long enough :(</h3>',
+        duration: 1500,
+        backdrop: true
+      });
+   } else if(groupName.length > 25){
+      IonLoading.show({
+        customTemplate: '<h3>Group display name too long :(</h3>',
         duration: 1500,
         backdrop: true
       });
