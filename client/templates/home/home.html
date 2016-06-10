@@ -19,12 +19,11 @@
 
     {{#if Template.subscriptionsReady}}  
     <!-- <div class="loading-wrapper"> -->
-    {{#if game}}
+<!--     {{#if game}}
 			{{> gameBar}}
-    {{/if}}
+    {{/if}} -->
 
     <div style="{{#if game}}margin-top: 45px{{/if}}"> 
-    	
 			{{> questionCard}}
 		</div>
 
@@ -78,7 +77,8 @@
 			<!-- No Questions Available  -->
 			{{else}}
 				<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
-				<h5 class="next-play">Commercial Break!</h5>	
+				<!-- <h5 class="next-play">Commercial Break!</h5>	 -->
+				<br><br>
 				{{{commercialRandom}}}
 			{{/if}}
 		
@@ -135,16 +135,16 @@
 					<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
 					
 					{{options.option1.title}} 
-					<span id="{{options.option1.multiplier}}" class="multiplier">x {{options.option1.multiplier}}</span>
+					<span style="float:none;" id="{{options.option1.multiplier}}" class="multiplier">x {{options.option1.multiplier}}</span>
 					</label>
 				</div>
 
 				<div>
 					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
-					<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
+					<label  style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
 					
 					{{options.option2.title}}
-					<span id="{{options.option2.multiplier}}" class="multiplier">x {{options.option2.multiplier}}</span>
+					<span style="float:none;" id="{{options.option2.multiplier}}" class="multiplier">x {{options.option2.multiplier}}</span>
 					</label>
 				</div>
 			</div>

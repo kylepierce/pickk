@@ -419,6 +419,31 @@ Meteor.methods({
 		});
 	},
 
+		'insertFourQuestion': function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
+		var currentUserId = Meteor.userId();
+		var timeCreated = new Date();
+
+		if (!active) {
+			var active = true
+		}
+
+		// Insert the question into the database
+		QuestionList.insert({
+			que: que,
+			gameId: game,
+			createdBy: currentUserId,
+			dateCreated: timeCreated,
+			active: active,
+			commercial: commercial,
+			options: {
+				option1: {title: op1, usersPicked: [], multiplier: m1},
+				option2: {title: op2, usersPicked: [], multiplier: m2},
+				option3: {title: op3, usersPicked: [], multiplier: m3},
+				option4: {title: op4, usersPicked: [], multiplier: m4},
+			}
+		});
+	},
+
 	'createTrueFalse': function(que, game) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();

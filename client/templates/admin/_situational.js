@@ -37,59 +37,157 @@ Template._situational.events({
 		}
 
 		switch (play){
-			case "Sacks":
+			case "Q1Cavs":
 				fillerUp(
-					"How Many Sacks Will the Patriots Have in the First Half?",
-					"0 Sacks", 2, 3,
-					"1 Sacks", 1, 2.5,
-					"2 Sacks", 2.5, 4,
-					"3 Sacks", 3, 5,
-					"4 Sacks", 7, 10,
-					"5 Sacks", 11, 15
+					"How many points will Cleveland Cavaliers Have in the 1st Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
 					);
 				break;
-			case "Who Scores First?":
+			case "Q2Cavs":
 				fillerUp(
-					"Who Scores First?",
-					"Patriots Field Goal", 2, 4, 
-					"Patriots Touchdown", 3, 5,
-					"Patriots Safety", 23, 54,
-					"Broncos Field Goal", 2, 4,
-					"Broncos Touchdown", 3, 5,
-					"Broncos Safety", 23, 54
+					"How many points will Cleveland Cavaliers Have in the 2nd Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
 					);
 				break;
-			case "This Drive":
+			case "Q3Cavs":
 				fillerUp(
-					"How Will This Drive End?",
-					"Punt", 1, 2,
-					"Interception", 3, 5.5,
-					"Fumble", 3, 5,
-					"Touchdown", 2, 5,
-					"Field Goal", 2, 4,
-					"Other", 3, 6
+					"How many points will Cleveland Cavaliers Have in the 3rd Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
 					);
 				break;
-			case "Penalties":
+			case "Q4Cavs":
 				fillerUp(
-					"How Many Penalties in the 1st Quarter?",
-					"0 Penalties", 4, 7,
-					"1 Penalties", 3, 4,
-					"2 Penalties", 2, 3,
-					"3-4 Penalties", 1, 2,
-					"5-6 Penalties", 3, 4,
-					"7+ Penalties", 8, 12
+					"How many points will Cleveland Cavaliers Have in the 4th Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
 					);
 				break;
-			case "First Play":
+			case "Q1GW":
 				fillerUp(
-					"What Will The First Play Be? (After Kickoff)",
-					"Run", 2, 3,
-					"Pass", 2, 3,
-					"Fumble", 7, 10,
-					"Interception", 7, 10,
-					"Touchdown", 10, 12,
-					"Safety", 20, 54 
+					"How many points will Golden State Warriors Have in the 1st Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
+					);
+				break;
+			case "Q2GW":
+				fillerUp(
+					"How many points will Golden State Warriors Have in the 2nd Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
+					);
+				break;
+			case "Q3GW":
+				fillerUp(
+					"How many points will Golden State Warriors Have in the 3rd Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
+					);
+				break;
+			case "Q4GW":
+				fillerUp(
+					"How many points will Golden State Warriors Have in the 4th Quarter?",
+					"0-10", 15, 23,
+					"11-19", 8, 12.5,
+					"20-29", 4.5, 5,
+					"30+", 2, 3.8
+					);
+				break;
+			case "FQ1Cavs":
+				fillerUp(
+					"Who Will Commit The First Foul For The Cleveland Cavaliers?",
+					"Channing Frye", 3, 3.5,
+					"Tristan Thompson", 3, 3.5,
+					"LeBron James", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ1Cavs":
+				fillerUp(
+					"Who Will Commit The First Foul For The Cleveland Cavaliers in the First Quarter?",
+					"Channing Frye", 3, 3.5,
+					"Tristan Thompson", 3, 3.5,
+					"LeBron James", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ2Cavs":
+				fillerUp(
+					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Second Quarter?",
+					"Channing Frye", 3, 3.5,
+					"Tristan Thompson", 3, 3.5,
+					"LeBron James", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ3Cavs":
+				fillerUp(
+					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Third Quarter?",
+					"Channing Frye", 3, 3.5,
+					"Tristan Thompson", 3, 3.5,
+					"LeBron James", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ4Cavs":
+				fillerUp(
+					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Fourth Quarter?",
+					"Channing Frye", 3, 3.5,
+					"Tristan Thompson", 3, 3.5,
+					"LeBron James", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ1GW":
+				fillerUp(
+					"Who Will Commit The First Foul For The Golden State Warriors in the First Quarter?",
+					"Stephen Curry", 3, 3.5,
+					"Klay Thompson", 3, 3.5,
+					"Draymond Green", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ2GW":
+				fillerUp(
+					"Who Will Commit The First Foul For The Golden State Warriors in the Second Quarter?",
+					"Stephen Curry", 3, 3.5,
+					"Klay Thompson", 3, 3.5,
+					"Draymond Green", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ3GW":
+				fillerUp(
+					"Who Will Commit The First Foul For The Golden State Warriors in the Third Quarter?",
+					"Stephen Curry", 3, 3.5,
+					"Klay Thompson", 3, 3.5,
+					"Draymond Green", 3, 3.5,
+					"Other Player", 2, 2.5
+					);
+				break;
+			case "FQ4GW":
+				fillerUp(
+					"Who Will Commit The First Foul For The Golden State Warriors in the Fourth Quarter?",
+					"Stephen Curry", 3, 3.5,
+					"Klay Thompson", 3, 3.5,
+					"Draymond Green", 3, 3.5,
+					"Other Player", 2, 2.5
 					);
 				break;
 		}
@@ -102,7 +200,7 @@ Template._situational.events({
 		var question = $('#question').val()
 		var options = '';
 		var odds = [];
-		var option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
+		var option1, option2, option3, option4, multi1, multi2, multi3, multi4
 
 		// This code is terrible!!! I know but, I am trying to get it out as fast as possible and I dont have a much time to work on it. Feel free to buy 1 cases of beer if this code ever gets found by another developer.
 		
@@ -122,14 +220,14 @@ Template._situational.events({
 		m4a = parseInt($('.option-boxes input')[10].value)
 		m4b = parseInt($('.option-boxes input')[11].value) 
 		multi4 = multi4 = randomizer(m4a, m4b)
-		option5 = $('.option-boxes input')[12].value
-		m5a = parseInt($('.option-boxes input')[13].value)
-		m5b = parseInt($('.option-boxes input')[14].value) 
-		multi5 = randomizer(m5a, m5b)
-		option6 = $('.option-boxes input')[15].value
-		m6a = parseInt($('.option-boxes input')[16].value)
-		m6b = parseInt($('.option-boxes input')[17].value) 
-		multi6 = randomizer(m6a, m6b)
+		// option5 = $('.option-boxes input')[12].value
+		// m5a = parseInt($('.option-boxes input')[13].value)
+		// m5b = parseInt($('.option-boxes input')[14].value) 
+		// multi5 = randomizer(m5a, m5b)
+		// option6 = $('.option-boxes input')[15].value
+		// m6a = parseInt($('.option-boxes input')[16].value)
+		// m6b = parseInt($('.option-boxes input')[17].value) 
+		// multi6 = randomizer(m6a, m6b)
 
 
 		function randomizer(min, max){
@@ -138,8 +236,10 @@ Template._situational.events({
 			return dec
 		}
 
+		// option5, multi5, option6, multi6
+
 		Meteor.call("questionPush", currentGameId, question)
 		Meteor.call("emptyInactive", currentGameId, question)
-		Meteor.call('insertQuestion', currentGameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+		Meteor.call('insertFourQuestion', currentGameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4);
 		}
 });
