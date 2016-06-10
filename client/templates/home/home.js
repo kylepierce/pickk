@@ -111,8 +111,8 @@ Template.home.helpers({
 		return Games.findOne({live: true});
 	},
   scoreMessage: function () {
-    var userData = Meteor.user()
-    var notifications = userData.pendingNotifications
+    var userData = Meteor.user();
+    var notifications = userData.pendingNotifications || [];
 
     notifications.forEach(function (post) {
       var id = post._id
@@ -174,7 +174,7 @@ Template.questionCard.helpers({
 
   'live': function(){
     var game = Games.findOne({live: true});
-    if(game.live == true){
+    if(game && game.live == true){
       return true
     } 
   },

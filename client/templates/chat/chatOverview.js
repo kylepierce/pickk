@@ -22,8 +22,10 @@ Template.chatOverview.events({
 Template.chatOverview.helpers({
   group: function() {
     var groupId = Session.get('chatGroup')
-    var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
-    return group.groupId
+    if (groupId) {
+      var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
+      return group.groupId
+    }
   }
 });
 

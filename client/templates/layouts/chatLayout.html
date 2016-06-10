@@ -1,6 +1,6 @@
 <!-- <template name="chatLayout">
 	{{#ionBody}}
-		{{> ionNavBar }}
+        {{> ionNavBar name="stub"}}
    	{{#ionNavView transition="backward"}}
 			{{> chatHeader}}
 		{{/ionNavView}}
@@ -15,8 +15,9 @@
   {{#ionSideMenuContainer}}
 
       {{#ionSideMenuContent}}
-        
-        {{> ionNavBar }}
+
+        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+        {{> ionNavBar name="stub"}}
 
         {{#ionNavView transition="backward"}}
           {{> chatHeader}}
