@@ -23,14 +23,16 @@
 
       {{#ionList}}
         {{#EasySearch.Each index=UserListIndex}}
-            {{#ionItem buttonRight=true avatar=true}}
-              <a href="{{pathFor route='user.show'}}" class="item-avatar avatar-fix">
-              <!-- see http://matteodem.github.io/meteor-easy-search/docs/recipes/ why you should use __originalId here -->
-                {{> userAvatar userId=__originalId}}
-                {{profile.username}} 
-              </a>
-              {{> followButton}}
-            {{/ionItem}}
+            {{#if isNotMe __originalId}}
+                {{#ionItem buttonRight=true avatar=true}}
+                  <a href="{{pathFor route='user.show'}}" class="item-avatar avatar-fix">
+                  <!-- see http://matteodem.github.io/meteor-easy-search/docs/recipes/ why you should use __originalId here -->
+                    {{> userAvatar userId=__originalId}}
+                    {{profile.username}}
+                  </a>
+                  {{> followButton}}
+                {{/ionItem}}
+            {{/if}}
         {{/EasySearch.Each}}
       {{/ionList}}
 

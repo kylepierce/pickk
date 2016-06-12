@@ -99,10 +99,13 @@
 Template.home.rendered = function (template) {
   if (!Meteor.loggingIn() && !Meteor.user()) {
    	 Router.go('/landing');
-  }   
-  var username = Meteor.user().profile.username
-  if(username === "" || username === null || username === "undefined"){
-    Router.go('/newUserSettings')
+  }
+
+  if (Meteor.user()) {
+    var username = Meteor.user().profile.username;
+    if (username === "" || username === null || username === "undefined") {
+      Router.go('/newUserSettings')
+    }
   }
 };
 
@@ -111,8 +114,8 @@ Template.home.helpers({
 		return Games.findOne({live: true});
 	},
   scoreMessage: function () {
-    var userData = Meteor.user()
-    var notifications = userData.pendingNotifications
+    var userData = Meteor.user();
+    var notifications = userData.pendingNotifications || [];
 
     notifications.forEach(function (post) {
       var id = post._id
@@ -174,7 +177,7 @@ Template.questionCard.helpers({
 
   'live': function(){
     var game = Games.findOne({live: true});
-    if(game.live == true){
+    if(game && game.live == true){
       return true
     } 
   },

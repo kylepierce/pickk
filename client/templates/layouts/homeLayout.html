@@ -19,10 +19,12 @@
     {{/ionSideMenus}}
 
       {{#ionSideMenuContent}}
-        
-        {{> ionNavBar }}
 
-        {{#ionNavView transition="backward"}}
+        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+        {{> ionNavBar name="stub"}}
+
+
+          {{#ionNavView transition="backward"}}
           {{> homeLayoutHeader}}
         {{/ionNavView}}
 

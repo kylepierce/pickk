@@ -21,24 +21,15 @@ Template._editGroup.helpers({
     var groupId = Session.get('groupId');
     var group = Groups.findOne({_id: groupId});
     return group.desc
+  },
+  'checkPrivacy': function(value){
+    var groupId = Session.get('groupId');
+    var group = Groups.findOne({_id: groupId});
+    return group.secret == value;
   }
-})
+});
 
 Template._editGroup.events({
-  'click input:checkbox':function(event, template){
-   if($(event.target).is(':checked')){
-        $(this).attr(true);
-   }else{
-        $(this).attr(false);
-   }
-    var privateCheck = event.target.value;
-  },
-
-  'click input:radio[name=privacy]':function(event, template) {
-    $("#submitGroup").prop("disabled", false)
-    $("#submitGroup").addClass('button-balanced');
-  },
-
   'submit form': function (event, template) {
     event.preventDefault();
     var id = Session.get('groupId');

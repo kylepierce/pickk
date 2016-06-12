@@ -33,12 +33,10 @@ Template.mainView.events({
 Template.sideMenuContent.helpers({
   pendingNotifications: function(){
     var user = Meteor.user();
-    var notifications = user && user.pendingNotifications.length > 0;
-    return notifications;
+    return !! user && user.pendingNotifications && user.pendingNotifications.length;
   },
   notificationNumber: function() {
     var user = Meteor.user();
-    var notifications = user && user.pendingNotifications.length || 0;
-    return notifications;
+    return user && user.pendingNotifications && user.pendingNotifications.length;
   }
 });

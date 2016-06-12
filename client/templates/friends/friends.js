@@ -1,6 +1,9 @@
 Template.friends.helpers({
   UserListIndex: function() {
     return UserListIndex;
+  },
+  isNotMe: function (userId) {
+    return Meteor.userId() != userId;
   }
 });
 

@@ -631,19 +631,22 @@ Meteor.methods({
 
 	'loadLeaderboard': function() {
 		var liveGame = Games.findOne({live: true});
-		var selector = {_id: {$in: liveGame.users}}
-		return UserList.find(
-			selector,
-			{
-				fields: {
-					'profile.username': 1,
-					'profile.coins': 1,
-					'profile.avatar': 1,
-					'services.twitter.screenName': 1,
-					'_id': 1
-				}
-			}).fetch();
-
+		if (liveGame) {
+			var selector = {_id: {$in: liveGame.users}}
+			return UserList.find(
+				selector,
+				{
+					fields: {
+						'profile.username': 1,
+						'profile.coins': 1,
+						'profile.avatar': 1,
+						'services.twitter.screenName': 1,
+						'_id': 1
+					}
+				}).fetch();
+		} else {
+			return [];
+		}
 	},
 
 	'loadWeekLeaderboard': function() {
