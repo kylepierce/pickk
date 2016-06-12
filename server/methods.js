@@ -202,18 +202,18 @@ Meteor.methods({
 		}
 	},
 
-	'push': function(message, admin) {
-		var user = UserList.findOne({_id: admin})
-		var isAdmin = user.profile.role
-		if (isAdmin == "admin"){
-			Push.send({
-				from: 'Pickk',
-				title: 'Update',
-				text: message,
-				badge: 1,
-				query: {}
-			});
-		}
+	'push': function(message) {
+		// var user = UserList.findOne({_id: admin})
+		// var isAdmin = user.profile.role
+		// if (isAdmin == "admin"){
+		Push.send({
+			from: 'Pickk',
+			title: 'Update',
+			text: message,
+			badge: 1,
+			query: {}
+		});
+		// }
 	},
 
 	'pushInvite': function(message, userId) {

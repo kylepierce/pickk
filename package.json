@@ -4,7 +4,7 @@
   "description": "Script to make sure process are done correctly.",
   "scripts": {
     "start": "meteor --settings settings.json",
-    "staging": "modulus env set METEOR_SETTINGS \"$(cat settings-staging.json)\" -p 'App - Staging' && modulus deploy -f -p 'App - Staging'",
-    "production": "modulus env set METEOR_SETTINGS \"$(cat settings-production.json)\" -p 'App - Production' && modulus deploy -f -p 'App - Production'"
+    "staging": "",
+    "production": ""
   }
 }
