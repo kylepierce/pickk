@@ -25,8 +25,9 @@
 
       {{#ionList}}
         {{#EasySearch.Each index=GroupsIndex}}
-            {{#ionItem path="group.show"}}
-              {{name}} - ( {{groupId}} )
+            {{#ionItem href=href avatar=true}}
+              {{> groupAvatar}}
+              <h2 class="center-username">{{name}} - ( {{groupId}} )</h2>
             {{/ionItem}}
         {{/EasySearch.Each}}
       {{/ionList}}
