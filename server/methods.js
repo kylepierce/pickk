@@ -539,7 +539,7 @@ Meteor.methods({
 	'inviteToGroup': function(userId, ref, noteId) {
 		var timeCreated = new Date();
 		var id = Random.id();
-		Groups.update({_id: noteId}, {$push: {invites: userId}})
+		Groups.update({_id: noteId}, {$addToSet: {invites: userId}})
 		UserList.update({_id: userId},
 			{
 				$push: {

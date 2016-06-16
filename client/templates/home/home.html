@@ -84,6 +84,7 @@
 		
 		{{else}}
 			{{#if active}}
+				{{> playerCard}}
 				{{#if multiOptions}}
 					<!-- Show In Game Quesitons that have Binary Options (With Multipler) -->
 					{{#if ingameBinary}}
@@ -91,7 +92,7 @@
 								{{> twoOptionQuestions}}
 							{{/each}}
 					{{else}}
-							{{> playerCard}}
+							
 							{{#each activeQuestions}}
 								{{> activeQuestion}}
 							{{/each}}

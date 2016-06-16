@@ -1,8 +1,7 @@
 Template.singleGroup.created = function () {
   this.autorun(function () {
     var groupId = Router.current().params._id
-    this.subscription = Meteor.subscribe('groups', groupId) && 
-    Meteor.subscribe('findUserGroups', groupId)
+    this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
   }.bind(this));
 };
 
@@ -95,10 +94,6 @@ Template.memberCheck.helpers({
 });
 
 Template.memberCheck.events({
-  'click .invite': function(event, template){
-    groupId = Router.current().params._id
-    Session.set('groupInvite', groupId);
-  },
   'click [data-action=joinGroup]': function() {
     var currentUserId = Meteor.userId();
     var groupId = Router.current().params._id

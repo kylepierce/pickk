@@ -15,25 +15,30 @@ Template.inviteToGroup.helpers({
 });
 
 Template.inviteToGroup.onCreated(function() {
-  this.subscribe("followingUserList");
+  this.subscribe('groups', this.data._id)
 })
 
 Template.inviteButton.events({
 	'click [data-action=invite]': function(event, template){
-		var user = this._id;
-		var currentUser = Meteor.userId();
-		var groupId = Session.get('groupInvite');
-		Meteor.call("inviteToGroup", user, currentUser, groupId)
-    var userData = UserList.findOne({_id: user})
-    var username = userData.profile.username
-    var groupData = Groups.findOne({_id: groupId})
+		Meteor.call("inviteToGroup", this.__originalId, Meteor.userId(), Router.current().params._id)
+    var groupData = Groups.findOne(Router.current().params._id)
     var groupName = groupData.name
-    var message = username + " has invited you to join " + groupName
-    Meteor.call('pushInvite', message, user);
+    var message = this.profile.username + " has invited you to join " + groupName
+    Meteor.call('pushInvite', message, this.__originalId);
 
-    $("#" + user).addClass('button-balanced');
-    $("#" + user).prop("disabled", true)
-    $("#" + user).append(document.createTextNode("d"));
-    sAlert.success("Invited " + username + " to " + groupName , {effect: 'slide', position: 'bottom', html: true});
+    $("#" + this.__originalId).addClass('button-balanced');
+    $("#" + this.__originalId).prop("disabled", true)
+    $("#" + this.__originalId).append(document.createTextNode("d"));
+    sAlert.success("Invited " + this.profile.username + " to " + groupName , {effect: 'slide', position: 'bottom', html: true});
 	} 
 })
+
+Template.inviteToGroupBox.helpers({
+  UserListIndex: function() {
+    return UserListIndex;
+  },
+  isInvited: function() {
+    var group = Groups.findOne(Router.current().params._id);
+    return ~group.invites.indexOf(this.__originalId);
+  }
+});

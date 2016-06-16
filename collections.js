@@ -29,5 +29,9 @@ UserListIndex = new EasySearch.Index({
 GroupsIndex = new EasySearch.Index({
   collection: Groups,
   fields: ['name'],
-  engine: new EasySearch.Minimongo()
+  engine: new EasySearch.MongoDB({
+    fields: function() {
+      return {'name': 1, 'groupId': 1, 'avatar': 1};
+    }
+  })
 });
