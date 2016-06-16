@@ -479,11 +479,12 @@
 </template>
 
 <template name="playerCard">
-  <div class="">
+	<div class="player-card" id="player">
+  <div class="player-header">
     {{#ionSlideBox}}
       {{#ionSlide class=""}}
         {{#with playerInfo}}
-        	<div class="player-slider">
+        	<div  class="player-slider">
 					<span class="player-name">{{name}} {{number}}</span>
 					<table>
 						<thead>
@@ -503,5 +504,6 @@
 				{{/with}}
       {{/ionSlide}}
     {{/ionSlideBox}}
+  </div>
   </div>
 </template>
