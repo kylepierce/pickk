@@ -1,0 +1,10 @@
+{
+  "name": "pickk",
+  "version": "1.0.0",
+  "description": "Script to make sure process are done correctly.",
+  "scripts": {
+    "start": "meteor --settings settings.json",
+    "ios-test": "meteor run ios-device --settings settings.json",
+    "production": ""
+  }
+}

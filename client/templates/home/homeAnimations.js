@@ -88,12 +88,12 @@ Template.binaryChoice.animations({
 });
 
 Template.playerCard.animations({
-  ".container-item": {
-    container: ".container", // container of the ".item" elements
+  ".player-header": {
+    container: ".player-card", // container of the ".item" elements
     insert: {
       class: "animated fast slideInLeft", // class applied to inserted elements
       before: function(attrs, element, template) {
-        $( "#normalCard" ).css("display", "")
+        $( "#player" ).css("display", "")
       }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {}, // callback after an element gets inserted
       delay: 200 // Delay before inserted items animate

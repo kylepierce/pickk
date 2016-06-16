@@ -17,22 +17,27 @@
 					<span class="input-label">Group Description:</span>
 					<textarea rows="4" type='text' maxlength="200" label-type="stacked" id="groupDesc" value="{{desc}}"></textarea>
 				</label>
-          <label type="stacked" style="background-color: white;" class="item item-input item-stacked-label">
-          <span class="input-label">Group Avatar:</span>
-          {{#with group}}
-            {{> groupAvatar}}
-          {{/with}}
-          <div class="loading" style="display: none;">
-            <i class="fa fa-spinner fa-spin"></i>
-          </div>
-          <input type="file" name="avatar">
-        </label>
+                    <label type="stacked" style="background-clabe: white;" class="item item-input item-stacked-label">
+                        <span class="input-label">Group Avatar:</span>
+                        <div>
+                            {{#with group}}
+                                {{> groupAvatar}}
+                            {{/with}}
+                            <div class="loading" style="display: none;">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                            <label style="display: inline-block; vertical-align: top">
+                                <span>Click to change avatar</span>
+                                <input type="file" name="avatar" style="display: none">
+                            </label>
+                        </div>
+                    </label>
 
-          <br>
+                    <br>
 				<div class="item item-divider">Display Settings</div>
 				
 				<div class="edit-radio" >
-					<input type="radio" name="privacy" id="private" required value="private">
+					<input type="radio" name="privacy" id="private" required value="private" checked={{checkPrivacy "private"}}>
 					<label for="private" class="play-option">
 					<i class="fa fa-star"></i> 
 						Private
@@ -40,7 +45,7 @@
 				</div>
 
 				<div class="edit-radio">
-					<input type="radio" name="privacy" id="invite" required value="invite">
+					<input type="radio" name="privacy" id="invite" required value="invite" checked={{checkPrivacy "invite"}}>
 					<label for="invite" class="play-option">
 					<i class="fa fa-star"></i> 
 						Invite Only
@@ -48,7 +53,7 @@
 				</div>
 
 				<div class="edit-radio">
-					<input type="radio" name="privacy" id="public" required value=false>
+					<input type="radio" name="privacy" id="public" required value=false checked={{checkPrivacy false}}>
 					<label for="public" class="play-option">
 					<i class="fa fa-star"></i> 
 						Public
@@ -56,7 +61,7 @@
 				</div>
 				
 				<br>
-				<button type="submit" id="submitGroup" style="float: right; width: 100%;" data-action="createGroup" class="button button-assertive " disabled> Update Group Info
+				<button type="submit" id="submitGroup" style="float: right; width: 100%;" data-action="createGroup" class="button button-assertive button-balanced"> Update Group Info
 				</button>
 				</form>				
 				</div>

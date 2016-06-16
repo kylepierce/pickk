@@ -1,5 +1,4 @@
 <template name="inviteToGroup">
-
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton path="index"}}
   {{/contentFor}}
@@ -11,36 +10,44 @@
 
   {{#contentFor "headerButtonRight"}}
     <a href="/searchUsers" class="button button-clear pull-right newGroup">
-       {{> ionIcon icon='ios-search-strong'}}
+      {{> ionIcon icon='ios-search-strong'}}
     </a>
   {{/contentFor}}
 
-{{#ionView}}
-  {{#ionContent}}
-		
-<!-- 		<button class="button full" >
-			<i class="fa fa-comments-o"></i>
-			Invite Friends from Contacts
-		</button> -->
+  {{#ionView }}
+    {{#ionContent}}
+      <div class="container">
+        {{> inviteToGroupBox}}
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>
 
-		{{#ionList}}
-		<div class="item item-divider">People you follow</div>
-			{{#each following}}
-				{{#with players this}}
-				{{#ionItem buttonRight=true avatar=true }}
-          {{> userAvatar userId=_id}}
-					{{profile.username}} 
-					{{> inviteButton}}
-					
-				{{/ionItem}}
-				{{/with}}
-			{{/each}}
-		{{/ionList}}
-	{{/ionContent}}
-{{/ionView}}
+<template name="inviteToGroupBox">
+  <div class="search-bar-fix">
+    {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
+  </div>
+  {{#ionList}}
+    {{#EasySearch.Each index=UserListIndex}}
+      {{#ionItem buttonRight=true avatar=true}}
+        <a class="item-avatar avatar-fix" href="{{pathFor route='user.show'}}">
+          {{> userAvatar user=. alreadySubscribed=true}}
+          {{profile.username}}
+        </a>
+        {{#if isInvited}}
+          <button class="button" disabled="disabled">Invited</button>
+        {{else}}
+          {{> inviteButton}}
+        {{/if}}
+      {{/ionItem}}
+    {{/EasySearch.Each}}
+  {{/ionList}}
 
+  {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
+    <div class="no-results">No results found!</div>
+  {{/EasySearch.IfNoResults}}
 </template>
 
 <template name="inviteButton">
-	<button data-action="invite" id="{{_id}}" class="button">Invite</button>
+  <button data-action="invite" id="{{_id}}" class="button">Invite</button>
 </template>

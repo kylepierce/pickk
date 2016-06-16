@@ -37,7 +37,10 @@
       {{> userAvatar userId=currentUser._id}}
       <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>
       <br>
-      <input type="file" name="avatar">
+      <label style="display: inline-block; vertical-align: top">
+          <span>Click to change avatar</span>
+          <input type="file" name="avatar" style="display: none">
+      </label>
     </label>
 
 			{{> yield 'submitButton'}}

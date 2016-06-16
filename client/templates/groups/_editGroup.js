@@ -21,24 +21,15 @@ Template._editGroup.helpers({
     var groupId = Session.get('groupId');
     var group = Groups.findOne({_id: groupId});
     return group.desc
+  },
+  'checkPrivacy': function(value){
+    var groupId = Session.get('groupId');
+    var group = Groups.findOne({_id: groupId});
+    return group.secret == value;
   }
-})
+});
 
 Template._editGroup.events({
-  'click input:checkbox':function(event, template){
-   if($(event.target).is(':checked')){
-        $(this).attr(true);
-   }else{
-        $(this).attr(false);
-   }
-    var privateCheck = event.target.value;
-  },
-
-  'click input:radio[name=privacy]':function(event, template) {
-    $("#submitGroup").prop("disabled", false)
-    $("#submitGroup").addClass('button-balanced');
-  },
-
   'submit form': function (event, template) {
     event.preventDefault();
     var id = Session.get('groupId');
@@ -64,6 +55,12 @@ Template._editGroup.events({
         duration: 1500,
         backdrop: true
       });
+    } else if(groupId.length > 25){
+      IonLoading.show({
+        customTemplate: '<h3>That name is too long :(</h3>',
+        duration: 1500,
+        backdrop: true
+      });
     } else if(hasWhiteSpace(groupId)){
       IonLoading.show({
         customTemplate: '<h3>Group name can not have spaces :(</h3>',
@@ -73,6 +70,12 @@ Template._editGroup.events({
     } else if(groupName.length < 5){
       IonLoading.show({
         customTemplate: '<h3>Group display name not long enough :(</h3>',
+        duration: 1500,
+        backdrop: true
+      });
+    } else if(groupName.length > 25){
+      IonLoading.show({
+        customTemplate: '<h3>Group display name too long :(</h3>',
         duration: 1500,
         backdrop: true
       });

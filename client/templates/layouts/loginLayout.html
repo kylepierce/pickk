@@ -1,9 +1,11 @@
 <template name="loginLayout">
 {{#ionBody}}
 
-  {{> ionNavBar}}
+  <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+  {{> ionNavBar name="stub"}}
 
-  {{#ionNavView}}
+
+    {{#ionNavView}}
     {{> yield 'header'}}
   {{/ionNavView}}
   
