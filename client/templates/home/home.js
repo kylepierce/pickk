@@ -396,6 +396,39 @@ Template.submitButton.helpers({
   }
 });
 
+Template.binarySubmitButton.rendered = function() {
+  if(!this._rendered) {
+    this._rendered = true;
+    var checked = $( "input:checked" )
+    if (checked.length === 2) {
+      // Checkout this sexy daisy chain ;)
+      var answer = $('input:radio[name=binary]:checked').siblings().children()[2].id
+      answer = parseFloat(answer)
+      var wager = $('input:radio[name=wager]:checked').val();
+      var combined = parseInt(answer*wager)
+      $('#wager').checked
+      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
+      $("#submit-response").prop("disabled", false)
+      $("#submit-response").addClass('button-balanced');
+      return true 
+    }
+
+  }
+}
+
+Template.binarySubmitButton.helpers({
+  'live': function(){
+    var connection = Meteor.status()
+    var status = connection.status
+
+    if(status == "connected"){
+      return true
+    } else {
+      return false
+    }
+  }
+});
+
 Template.activeQuestion.events({
   'click [name=play]': function( event, template ){
     var otherSelected = $('.wager') 
@@ -551,26 +584,45 @@ Template.binaryChoice.helpers({
 });
 
 Template.twoOptionQuestions.events({
+  'click [name=binary]': function( event, template ){
+    var otherSelected = $('.wager') 
+    // If a play has been selected before than remove that 
+    console.log(otherSelected)
+    if (otherSelected) {
+      // Remove old
+      $('.wager').remove();
+    } 
+    // Otherwise add the wager and submit button after
+    var answer = $('#two-choice')
+    answer.after($("<div class='wager'></div>")) 
+    var selectedPlay = $('.wager')[0]
+    Blaze.render(Template.binarySubmitAndWagers, selectedPlay)
+  },
+
   'click input': function (event, template) {
     var checked = $( "input:checked" )
     if (checked.length === 2) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=binary]:checked').siblings().children()[0].id
+      console.log(answer)
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked
-      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
-      $("#submit-response").prop("disabled", false)
-      $("#submit-response").addClass('button-balanced');
+      $("#submit-binary").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
+      $("#submit-binary").prop("disabled", false)
+      $("#submit-binary").addClass('button-balanced');
       return true 
     }
   },
 
-  'click #submit-response': function(event, template){
+
+  'click #submit-binary': function(event, template){
     var answer = template.find('input:radio[name=binary]:checked').value;
     var currentUser = Meteor.userId();
-    var questionId = this._id;
-    var que = this.que 
+    var questionId = template.data._id;
+    var que = template.data.que 
+    console.log(template)
+    console.log(questionId + " " + que)
     var wager = template.find('input:radio[name=wager]:checked').value;
 
     // Move the card off screen

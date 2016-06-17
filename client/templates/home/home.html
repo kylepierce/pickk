@@ -130,7 +130,7 @@
 		</div>
 
 			<!-- Options -->
-			<div>
+			<div id="two-choice">
 				<div class="binary">
 					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
 					<label style="text-align: center;" for="{{options.option1.title}}" class="binary-option">
@@ -142,24 +142,13 @@
 
 				<div>
 					<input type="radio" name="binary" id="{{options.option2.title}}" required value="option2">
-					<label  style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
+					<label style="text-align: center;" for="{{options.option2.title}}" class="binary-option">
 					
 					{{options.option2.title}}
 					<span style="float:none;" id="{{options.option2.multiplier}}" class="multiplier">x {{options.option2.multiplier}}</span>
 					</label>
 				</div>
 			</div>
-
-			<!-- Wagers -->
-			<div style="margin-top: 75px">
-				{{> wagers}}
-			</div>
-
-			{{#if live}}
-				<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
-			{{else}}
-				<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
-			{{/if}}
 	</div>
 	</div>
 </template>
@@ -323,9 +312,22 @@
 	{{/if}}
 </template>
 
+<template name="binarySubmitButton">
+	{{#if live}}
+		<input id="submit-binary" class="button button-assertive center" type="submit" disabled value="Submit">
+	{{else}}
+		<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+	{{/if}}
+</template>
+
 <template name="submitAndWagers">
 	{{> wagers}}
 	{{> submitButton}}
+</template>
+
+<template name="binarySubmitAndWagers">
+	{{> wagers}}
+	{{> binarySubmitButton}}
 </template>
 
 <template name="normalPlay">

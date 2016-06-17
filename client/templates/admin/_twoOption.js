@@ -369,7 +369,7 @@ Template._twoOption.events({
 		var odds = [];
 		var option1, option2
 
-		// This code is terrible!!! I know but, I am trying to get it out as fast as possible and I dont have a much time to work on it. Feel free to buy 1 cases of beer if this code ever gets found by another developer.
+		// This code is terrible!!! I know but, I am trying to get it out as fast as possible and I dont have a much time to work on it. Feel free to buy 1 case of beer or other vice on me if this code ever gets found by another developer.
 		
 		option1 = $('.option-boxes input')[0].value
 		multi1 = parseFloat($('.option-boxes input')[1].value) 

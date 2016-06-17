@@ -168,12 +168,14 @@ Meteor.methods({
 	},
 
 	'questionPush': function(game, message) {
+		console.log("pushing")
 		var game = Games.findOne({_id: game})
 		var users = game.nonActive
 		message = "Guess What Happens on " + message
 		Push.send({
 			from: 'Pickk',
 			title: 'Update',
+			vibrate: true,
 			text: message,
 			sound: 'default',
 			badge: 1,
@@ -211,6 +213,7 @@ Meteor.methods({
 			title: 'Update',
 			text: message,
 			badge: 1,
+			vibrate: true,
 			query: {}
 		});
 		// }
@@ -722,9 +725,12 @@ Meteor.methods({
 		var question = QuestionList.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-
+		if (question.options.option3) {
+			var option4 = question.options.option3.usersPicked
+		}
+		if (question.options.option4) {
+			var option4 = question.options.option4.usersPicked
+		}
 		if (question.options.option5) {
 			var option5 = question.options.option5.usersPicked
 		}
@@ -768,12 +774,17 @@ Meteor.methods({
 		option2.map(function(user) {
 			awardPointsBack(user)
 		});
-		option3.map(function(user) {
-			awardPointsBack(user)
-		});
-		option4.map(function(user) {
-			awardPointsBack(user)
-		});
+		if (question.options.option3) {
+			option3.map(function(user) {
+				awardPointsBack(user)
+			});
+		}
+
+		if (question.options.option4) {
+			option4.map(function(user) {
+				awardPointsBack(user)
+			});
+		}
 
 		if (question.options.option5) {
 			option5.map(function(user) {
@@ -1419,7 +1430,9 @@ Meteor.methods({
 		QuestionList.update(questionId, {$push: {usersAnswered: user}});
 
 		// Add user to the users who have played in the game.
+		console.log(questionId)
 		var gameInfo = QuestionList.findOne({_id: questionId})
+		console.log(gameInfo)
 		var gameId = gameInfo.gameId
 		var game = Games.find(
 			{

@@ -74,7 +74,9 @@ Meteor.methods({
     ballCount: 0,
     strikeCount: 0
   });
-
+  
+  Meteor.call("questionPush", gameId, question)
+  Meteor.call("emptyInactive", currentGameId, question)
   Meteor.call('createAnAtBatQuestion')
   Meteor.call('createBaseballQuestion')
 
