@@ -51,6 +51,3 @@ App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
-App.configurePlugin('phonegap-plugin-push', {
-    SENDER_ID: '259263435947',
-});

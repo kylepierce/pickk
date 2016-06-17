@@ -167,17 +167,19 @@ Meteor.methods({
 		});
 	},
 
-	'questionPush': function(game, message) {
-		var game = Games.findOne({_id: game})
-		var users = game.nonActive
-		message = "Guess What Happens on " + message
-		Push.send({
-			from: 'Pickk',
-			title: 'Update',
-			text: message,
-			sound: 'default',
-			badge: 1,
-			query: {userId: {$in: users}}
+	'questionPush': function(gameId, message) {
+		const game = Games.findOne({_id: gameId});
+		const userIds = game.nonActive;
+		const text = "Guess What Happens on " + message;
+		const users = Meteor.users.find({_id: {$in: userIds}}, {"oneSignalToken": 1}).fetch();
+		const tokens = _.without(_.uniq(_.pluck(users, "oneSignalToken")), undefined);
+		OneSignal.Notifications.create(tokens, {
+			contents: {
+				en: text
+			},
+			headings: {
+				en: "Pickk question"
+			}
 		});
 	},
 
@@ -206,18 +208,40 @@ Meteor.methods({
 		// var user = UserList.findOne({_id: admin})
 		// var isAdmin = user.profile.role
 		// if (isAdmin == "admin"){
-		Push.send({
-			from: 'Pickk',
-			title: 'Update',
-			text: message,
-			badge: 1,
-			query: {}
+		OneSignal.Notifications.create(undefined, {
+			included_segments: ["All"],
+			contents: {
+				en: message
+			},
+			headings: {
+				en: "Pickk notification"
+			}
 		});
 		// }
 	},
 
+	'updateOneSignalToken': function (token) {
+		// target device will be able to receive broadcast notifications but we can't send a message to it personally
+		if (Meteor.user()) {
+			Meteor.users.update(Meteor.userId(), {$set: {oneSignalToken: token}});
+		}
+	},
+
 	'pushInvite': function(message, userId) {
-		Push.send({from: 'Pickk', title: 'Invite', text: message, badge: 1, query: {id: userId}});
+		var user = Meteor.users.findOne({_id: userId}, {"oneSignalToken": 1});
+		if (user) {
+			const token = user.oneSignalToken;
+			if (token) {
+				OneSignal.Notifications.create([token], {
+					contents: {
+						en: message
+					},
+					headings: {
+						en: "Pick invite"
+					}
+				});
+			}
+		}
 	},
 
 	'toggleCommercial': function(game, toggle) {

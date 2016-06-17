@@ -34,6 +34,17 @@
     },
     "share": {
       "message": "Have you heard about the Pickk app? Try it now!"
+    },
+    "oneSignal": {
+      "appId": "1e9ad396-f00d-414c-9f56-d2d03799a0b9",
+      "android": {
+        "googleProjectNumber": "640686624086"
+      }
     }
+  },
+  "oneSignal": {
+    "appId": "1e9ad396-f00d-414c-9f56-d2d03799a0b9",
+    "apiKey": "MzY2MDQ1N2YtZWQzMS00YjVkLTkzMWItYjVkNjE4Y2JiYTgx"
   }
+
 }
