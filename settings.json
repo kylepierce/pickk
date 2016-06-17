@@ -36,15 +36,15 @@
       "message": "Have you heard about the Pickk app? Try it now!"
     },
     "oneSignal": {
-      "appId": "1e9ad396-f00d-414c-9f56-d2d03799a0b9",
+      "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
       "android": {
-        "googleProjectNumber": "640686624086"
+        "googleProjectNumber": "259263435947"
       }
     }
   },
   "oneSignal": {
-    "appId": "1e9ad396-f00d-414c-9f56-d2d03799a0b9",
-    "apiKey": "MzY2MDQ1N2YtZWQzMS00YjVkLTkzMWItYjVkNjE4Y2JiYTgx"
+    "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
+    "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
   }
 
 }
