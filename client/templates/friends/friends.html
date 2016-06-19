@@ -25,7 +25,7 @@
         {{#EasySearch.Each index=UserListIndex}}
             {{#if isNotMe __originalId}}
                 {{#ionItem buttonRight=true avatar=true}}
-                  <a href="{{pathFor route='user.show'}}" class="item-avatar avatar-fix">
+                  <a href="{{pathFor route='user.show' _id=__originalId}}" class="item-avatar avatar-fix">
                   <!-- see http://matteodem.github.io/meteor-easy-search/docs/recipes/ why you should use __originalId here -->
                     {{> userAvatar userId=__originalId}}
                     {{profile.username}}
