@@ -8,15 +8,21 @@ Template.chatLayout.rendered = function() {
   IonSideMenu.snapper.settings({touchToDrag: false});
 };
 
-Template.sideMenuRight.onRendered = function () {
-  var waypoint = new Waypoint({
-  element: document.getElementById('chat-top'),
-  handler: function(direction) {
-    console.log('Scrolled to waypoint!')
+// Template.sideMenuRight.onRendered = function () {
+//   var waypoint = new Waypoint({
+//   element: document.getElementById('chat-top'),
+//   handler: function(direction) {
+//     console.log('Scrolled to waypoint!')
+//   }
+// })
+// };
+
+Template.chatHeader.events({
+  'click': function(event, template){
+    event.preventDefault();
+    console.log("Loading up something awesome")
   }
 })
-};
-
 
 Template.sideMenuContent.helpers({
 	userId: function () {

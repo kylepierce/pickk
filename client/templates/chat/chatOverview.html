@@ -21,6 +21,9 @@
 <template name="chatRoom">
   {{#ionView }}
     {{#ionContent}}
+    {{> loader}}
+    {{#if Template.subscriptionsReady}}
+    <div class="loading-wrapper">
     <form id="" style="margin-bottom: 50px">
       <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="{{randomMessage}}" id="messageBox"></textarea>
       <!-- <div class="col-md-5 chat-buttons" data-action="mention">Mention</div> -->
@@ -39,20 +42,20 @@
               <p>{{{this.message}}}</p>
             {{/ionItem}}
               <div class="chat-options" style="display: none">
-              <div class="col-md-25" data-action="reply">
+<!--               <div class="col-md-25" data-action="reply">
                 {{> ionIcon class="reply-icon" icon='forward'}}<br>
                 Reply
-              </div>
-              <div class="col-md-25" data-action="react">
+              </div> -->
+<!--               <div class="col-md-25" data-action="react">
                 <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
                 React
-              </div>
-              <div class="col-md-25" data-action="user">
+              </div> -->
+              <div class="col-md-50" data-action="user">
                 {{> ionIcon class="reply-icon" icon='ios-person'}}
                 <br>
                 User
               </div>
-              <div class="col-md-25" data-action="close">
+              <div class="col-md-50" data-action="close">
                 {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
                 <br>
                 Cancel
@@ -67,6 +70,8 @@
         </div>
       {{/if}}
     {{/ionList}}
+      </div>  
+    {{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>

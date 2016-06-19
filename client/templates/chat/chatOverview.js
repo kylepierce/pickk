@@ -9,8 +9,20 @@ Template.chatRoom.created = function() {
   }.bind(this));
 };
 
+Template.chatRoom.onRendered( function() {
+  $( "svg" ).delay( 0 ).fadeIn();
+});
+
+Template.chatRoom.onCreated( function() {
+  this.subscribe( 'chatUsersList', function() {
+    $( ".loader" ).delay( 3000 ).fadeOut( 'fast', function() {
+      $( ".loading-wrapper" ).fadeIn( 'fast' );
+    });
+  });
+});
+
 Template.chatOverview.events({
-  'click #all-chats': function() {
+  'click #all-chats': function() { 
     Session.set('chatGroup', null)
 
   },

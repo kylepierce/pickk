@@ -23,9 +23,19 @@ Template.sideMenuContent.events({
 
 Template.mainView.events({
   'click [data-action=refresh]': function () {
+    IonLoading.show({
+      customTemplate: '<h3>Loading...</h3>',
+      duration: 1500,
+      backdrop: true
+    })
     Fetcher.refresh('leaderboard')
   },
   'click [data-action=refresh-week]': function () {
+    IonLoading.show({
+      customTemplate: '<h3>Loading...</h3>',
+      duration: 1500,
+      backdrop: true
+    })
     Fetcher.refresh('weekLeaderboard')
   }
 });
