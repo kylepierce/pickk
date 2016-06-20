@@ -7,93 +7,8 @@
 //   });
 // }); 
 
-// Meteor.startup(function () {  
-//   if (Meteor.isCordova) {
-//     if (AdMob) {
-//       AdMob.createBanner( {
-//         adId: 'ca-app-pub-4862520546869067/2500441433',
-//         position: AdMob.AD_POSITION.BOTTOM_CENTER,
-//         isTesting: false,
-//         autoShow: true,
-//         success: function() {
-//           console.log("Received ad");
-//         },
-//         error: function() {
-//           console.log("No ad received");
-//         }
-//       });
-//     } 
-//   }
-// });
-
 // Template.home.onRendered( function() {
 //   $( "svg" ).delay( 750 ).fadeIn();	
-
-// var tour = { 
-//       id: "onboarding",
-//       steps: [
-//         {
-//           title: "Play",
-//           content: "While watching you can guess what will happen next.",
-//           target: document.querySelector(".question"),
-//           placement: "bottom",
-//           arrowOffset: "center"
-//         },
-//         {
-//           title: "Select A Play",
-//           content: "Depending on what happens in the game you get different options. <br><br><strong>Tap Interception</strong>",
-//           target: document.querySelector(".play"),
-//           placement: "bottom",
-//           showNextButton: false
-//         },
-//         {
-//           title: "Multiplier",
-//           content: "Each option has a multiplier. If its 3rd and short it will have different multipliers than 3rd and long.",
-//           target: document.querySelector("#multiplier"),
-//           placement: "left",
-//           xOffset: "30",
-//           yOffset: "-20"
-//         },
-//         {
-//           title: "Wager",
-//           content: "Know Jay Cutler is going to throw an interception? <br><br><strong>Wager big and select 1000!</strong>",
-//           target: document.querySelector("#bigBet"),
-//           placement: "top",
-//           showNextButton: false
-//         },
-//         {
-//           title: "Submit!",
-//           content: "Once you have picked the play and the wager click submit. You must be quick! Options will disappear once the ball is snapped. <br><br><strong>Click Submit!</strong>",
-//           target: document.querySelector("#submit-response"),
-//           placement: "top",
-//           multipage: true,
-//           onNext: function() {
-//             window.location = "dashboard"
-//           },
-//           showNextButton: false,
-//         },
-//         {
-//           title: "Coins!",
-//           content: "You predicted that interception! You won 3710 coins. (3.71 x 1000) ",
-//           target: document.querySelector(".coin-icon"),
-//           placement: "bottom",
-//           xOffset: "-250",
-//           arrowOffset: "230"
-//         },
-//         {
-//           title: "Menu",
-//           content: "Menu to see groups, settings, or leave app feedback.",
-//           target: document.querySelector(".nav-icon"),
-//           placement: "bottom"
-//         }
-//       ]
-// };
-
-
-  // if (hopscotch.getState() === "onboarding:5") {
-  //    hopscotch.startTour(tour);
-  // }
-// });
 
 // this should be changed to startup. There might also be some additions for user types
 Template.home.rendered = function (template) {
@@ -120,10 +35,19 @@ Template.home.helpers({
     notifications.forEach(function (post) {
       var id = post._id
       var message = post.message  
+      var shareMessage = "+!Meow " + post.shareMessage
+      var sharable = post.sharable
+      Session.set("shareMessage", shareMessage);
       if(post.type === "score" && post.read === false ){
         Meteor.call('readNotification', id);
-         
-        sAlert.info(message  , {effect: 'stackslide', html: true});
+        if(sharable == true){
+          var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'  
+
+          sAlert.info(message , {effect: 'stackslide', html: true});
+        } else {
+          sAlert.info(message , {effect: 'stackslide', html: true});
+        }
+        
 
       } else if(post.type === "diamonds" && post.tag == null && post.read === false ){
         message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'        
@@ -164,6 +88,21 @@ Template.home.helpers({
         });
       }
     });
+  }
+});
+
+Template.sAlert.events({
+  'click [data-action="shareResult"]': function () {
+    var message = Session.get("shareMessage");
+    var groupId = Session.get('chatGroup')
+    var currentUser = Meteor.userId();
+    sAlert.closeAll();
+    IonLoading.show({
+      customTemplate: '<h3>Shared in Chat!</h3>',
+      duration: 1500,
+      backdrop: true
+    })
+    Meteor.call('addChatMessage', currentUser, message, groupId);
   }
 });
 
@@ -448,7 +387,7 @@ Template.activeQuestion.events({
     var checked = $( "input:checked" )
     if (checked.length === 2) {
       // Checkout this sexy daisy chain ;)
-      var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
+      var answer = $('input:radio[name=play]:checked').siblings().children()[1].id
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked

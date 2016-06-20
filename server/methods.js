@@ -7,7 +7,13 @@ Meteor.methods({
 		var timeCreated = new Date();
 		var id = Random.id();
 		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "");
-		if (messagePosted[0] == "[") {
+		console.log(messagePosted)
+		var code = messagePosted.slice(0,6)
+		console.log(code)
+		if (code == "+!Meow") {
+				var message = messagePosted.slice(7, -1)
+				var messagePosted = "<b>" + message + "</b>"
+		} else if (messagePosted[0] == "[") {
 			switch (messagePosted) {
 				case "[dead]":
 					var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>"
@@ -42,7 +48,7 @@ Meteor.methods({
 				case "[what-the-hell]":
 					var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>"
 					break;
-			}
+			} 
 		} else if (messagePosted == "" || messagePosted == null) {
 			var messagePosted = "<i>Removed</i>"
 		}
@@ -807,28 +813,39 @@ Meteor.methods({
 
 		var question = QuestionList.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
+		var option1Title = question.options.option1.title
 		var option2 = question.options.option2.usersPicked
+		var option2Title = question.options.option2.title
 		var option3 = question.options.option3.usersPicked
+		var option3Title = question.options.option3.title
 		var option4 = question.options.option4.usersPicked
+		var option4Title = question.options.option4.title
 
 		// If "op5" exists add the option to the end of the options object.
 		if (question.options.option5) {
 			var option5 = question.options.option5.usersPicked
+			var option5Title = question.options.option5.title
 		}
 
 		if (question.options.option6) {
 			var option6 = question.options.option6.usersPicked
+			var option6Title = question.options.option6.title
 		}
 
 		var list = []
 
-		function awardPoints(user, multiplier) {
+		function awardPoints(user, multiplier, title) {
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(user.amount * multiplier)
 			var timeCreated = new Date();
 			var id = Random.id();
+			var que = question.que
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
-
+			var sharable = false
+			if(amount > 10000){
+				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + title + "' for '" + que + "'!"
+				var sharable = true
+			}
 			// See if user is on list already
 			var check = _.indexOf(list, user.userID)
 
@@ -837,7 +854,9 @@ Meteor.methods({
 				console.log("Cant get double points for entering!")
 				return
 			}
-
+			if (!shareMessage){
+				var shareMessage = ""
+			}
 			// if they are not we are going to add them to the list.
 			list.push(user.userID)
 
@@ -850,7 +869,9 @@ Meteor.methods({
 							read: false,
 							notificationId: id,
 							dateCreated: timeCreated,
-							message: scoreMessage
+							message: scoreMessage,
+							sharable: sharable,
+							shareMessage: shareMessage
 						}
 					}
 				}
@@ -870,32 +891,38 @@ Meteor.methods({
 		if (answer == "option1") {
 			option1.map(function(user) {
 				var multiplier = parseFloat(question.options.option1.multiplier);
-				awardPoints(user, multiplier)
+				var title = option1Title 
+				awardPoints(user, multiplier, title)
 			});
 		} else if (answer == "option2") {
 			option2.map(function(user) {
 				var multiplier = parseFloat(question.options.option2.multiplier);
-				awardPoints(user, multiplier)
+				var title = option2Title 
+				awardPoints(user, multiplier, title)
 			});
 		} else if (answer == "option3") {
 			option3.map(function(user) {
 				var multiplier = parseFloat(question.options.option3.multiplier);
-				awardPoints(user, multiplier);
+				var title = option3Title 
+				awardPoints(user, multiplier, title);
 			});
 		} else if (answer == "option4") {
 			option4.map(function(user) {
 				var multiplier = parseFloat(question.options.option4.multiplier);
-				awardPoints(user, multiplier);
+				var title = option4Title 
+				awardPoints(user, multiplier, title);
 			});
 		} else if (answer == "option5") {
 			option5.map(function(user) {
 				var multiplier = parseFloat(question.options.option5.multiplier);
-				awardPoints(user, multiplier);
+				var title = option5Title 
+				awardPoints(user, multiplier, title);
 			});
 		} else if (answer == "option6") {
 			option6.map(function(user) {
 				var multiplier = parseFloat(question.options.option6.multiplier);
-				awardPoints(user, multiplier);
+				var title = option6Title 
+				awardPoints(user, multiplier, title);
 			});
 		}
 	},
@@ -905,16 +932,24 @@ Meteor.methods({
 
 		var question = QuestionList.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
+		var option1Title = question.options.option1.title
 		var option2 = question.options.option2.usersPicked
+		var option2Title = question.options.option2.title
 
 		var list = []
 
-		function awardPoints(user, multiplier) {
+		function awardPoints(user, multiplier, title) {
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(user.amount * multiplier)
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
+			var que = question.que
+			var sharable = false
+			if(amount > 10000){
+				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + title + "' for '" + que + "'!"
+				var sharable = true
+			}
 
 			// See if user is on list already
 			var check = _.indexOf(list, user.userID)
@@ -937,7 +972,9 @@ Meteor.methods({
 							read: false,
 							notificationId: id,
 							dateCreated: timeCreated,
-							message: scoreMessage
+							message: scoreMessage,
+							sharable: sharable,
+							shareMessage: shareMessage
 						}
 					}
 				}
@@ -957,12 +994,14 @@ Meteor.methods({
 		if (answer == "option1") {
 			option1.map(function(user) {
 				var multiplier = parseFloat(question.options.option1.multiplier);
-				awardPoints(user, multiplier)
+				var title = option1Title
+				awardPoints(user, multiplier, title)
 			});
 		} else if (answer == "option2") {
 			option2.map(function(user) {
 				var multiplier = parseFloat(question.options.option2.multiplier);
-				awardPoints(user, multiplier)
+				var title = option2Title
+				awardPoints(user, multiplier, title)
 			});
 		}
 	},

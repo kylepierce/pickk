@@ -35,7 +35,6 @@ Template._situational.events({
 			$('input[name="m5b"]').val(m5b);
 			$('input[name="m6b"]').val(m6b);
 		}
-
 		switch (play){
 			case "Q1Cavs":
 				fillerUp(
@@ -46,150 +45,6 @@ Template._situational.events({
 					"30+", 2, 3.8
 					);
 				break;
-			case "Q2Cavs":
-				fillerUp(
-					"How many points will Cleveland Cavaliers Have in the 2nd Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q3Cavs":
-				fillerUp(
-					"How many points will Cleveland Cavaliers Have in the 3rd Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q4Cavs":
-				fillerUp(
-					"How many points will Cleveland Cavaliers Have in the 4th Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q1GW":
-				fillerUp(
-					"How many points will Golden State Warriors Have in the 1st Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q2GW":
-				fillerUp(
-					"How many points will Golden State Warriors Have in the 2nd Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q3GW":
-				fillerUp(
-					"How many points will Golden State Warriors Have in the 3rd Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "Q4GW":
-				fillerUp(
-					"How many points will Golden State Warriors Have in the 4th Quarter?",
-					"0-10", 15, 23,
-					"11-19", 8, 12.5,
-					"20-29", 4.5, 5,
-					"30+", 2, 3.8
-					);
-				break;
-			case "FQ1Cavs":
-				fillerUp(
-					"Who Will Commit The First Foul For The Cleveland Cavaliers?",
-					"Channing Frye", 3, 3.5,
-					"Tristan Thompson", 3, 3.5,
-					"LeBron James", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ1Cavs":
-				fillerUp(
-					"Who Will Commit The First Foul For The Cleveland Cavaliers in the First Quarter?",
-					"Channing Frye", 3, 3.5,
-					"Tristan Thompson", 3, 3.5,
-					"LeBron James", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ2Cavs":
-				fillerUp(
-					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Second Quarter?",
-					"Channing Frye", 3, 3.5,
-					"Tristan Thompson", 3, 3.5,
-					"LeBron James", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ3Cavs":
-				fillerUp(
-					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Third Quarter?",
-					"Channing Frye", 3, 3.5,
-					"Tristan Thompson", 3, 3.5,
-					"LeBron James", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ4Cavs":
-				fillerUp(
-					"Who Will Commit The First Foul For The Cleveland Cavaliers in the Fourth Quarter?",
-					"Channing Frye", 3, 3.5,
-					"Tristan Thompson", 3, 3.5,
-					"LeBron James", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ1GW":
-				fillerUp(
-					"Who Will Commit The First Foul For The Golden State Warriors in the First Quarter?",
-					"Stephen Curry", 3, 3.5,
-					"Klay Thompson", 3, 3.5,
-					"Draymond Green", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ2GW":
-				fillerUp(
-					"Who Will Commit The First Foul For The Golden State Warriors in the Second Quarter?",
-					"Stephen Curry", 3, 3.5,
-					"Klay Thompson", 3, 3.5,
-					"Draymond Green", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ3GW":
-				fillerUp(
-					"Who Will Commit The First Foul For The Golden State Warriors in the Third Quarter?",
-					"Stephen Curry", 3, 3.5,
-					"Klay Thompson", 3, 3.5,
-					"Draymond Green", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
-			case "FQ4GW":
-				fillerUp(
-					"Who Will Commit The First Foul For The Golden State Warriors in the Fourth Quarter?",
-					"Stephen Curry", 3, 3.5,
-					"Klay Thompson", 3, 3.5,
-					"Draymond Green", 3, 3.5,
-					"Other Player", 2, 2.5
-					);
-				break;
 		}
 	},
 
@@ -198,6 +53,7 @@ Template._situational.events({
 		var currentGame = Games.findOne({live: true});
 		var currentGameId = currentGame._id 
 		var question = $('#question').val()
+		var commerical = $('#commerical-option').val()
 		var options = '';
 		var odds = [];
 		var option1, option2, option3, option4, multi1, multi2, multi3, multi4
@@ -236,10 +92,16 @@ Template._situational.events({
 			return dec
 		}
 
+		if (commerical === 'true'){
+			var commerical = true
+		} else {
+			var commerical = false
+		}
+
 		// option5, multi5, option6, multi6
 
 		Meteor.call("questionPush", currentGameId, question)
 		Meteor.call("emptyInactive", currentGameId, question)
-		Meteor.call('insertFourQuestion', currentGameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4);
+		Meteor.call('insertFourQuestion', currentGameId, question, commerical, option1, multi1, option2, multi2, option3, multi3, option4, multi4, true);
 		}
 });

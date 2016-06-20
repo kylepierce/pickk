@@ -1004,7 +1004,7 @@ Meteor.methods({
 },
 
 'playersPlaying': function (){
-  var currentGame =Games.findOne({live: true})
+  var currentGame = Games.findOne({live: true})
   if (!currentGame) {
     return [];
   }

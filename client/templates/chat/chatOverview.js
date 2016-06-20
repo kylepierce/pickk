@@ -15,7 +15,7 @@ Template.chatRoom.onRendered( function() {
 
 Template.chatRoom.onCreated( function() {
   this.subscribe( 'chatUsersList', function() {
-    $( ".loader" ).delay( 3000 ).fadeOut( 'fast', function() {
+    $( ".loader" ).delay( 1000 ).fadeOut( 'fast', function() {
       $( ".loading-wrapper" ).fadeIn( 'fast' );
     });
   });
