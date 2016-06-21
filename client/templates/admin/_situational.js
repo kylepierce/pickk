@@ -100,7 +100,7 @@ Template._situational.events({
 
 		// option5, multi5, option6, multi6
 
-		Meteor.call("questionPush", currentGameId, question)
+		// Meteor.call("questionPush", currentGameId, question)
 		Meteor.call("emptyInactive", currentGameId, question)
 		Meteor.call('insertFourQuestion', currentGameId, question, commerical, option1, multi1, option2, multi2, option3, multi3, option4, multi4, true);
 		}

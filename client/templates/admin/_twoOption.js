@@ -56,7 +56,7 @@ Template._twoOption.events({
 
 		console.log(multi1 + " " + multi2)
 
-		Meteor.call("questionPush", currentGameId, question)
+		// Meteor.call("questionPush", currentGameId, question)
 		Meteor.call("emptyInactive", currentGameId, question)
 		Meteor.call('createTwoOption', currentGameId, question, option1, multi1, option2, multi2);
 		}

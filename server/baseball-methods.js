@@ -108,7 +108,7 @@ Meteor.methods({
 
   var question = "End of " + playerName + "'s at bat." ;
 
-  Meteor.call("questionPush", gameId, question)
+  // Meteor.call("questionPush", gameId, question)
   Meteor.call("emptyInactive", gameId)
 
   QuestionList.insert({

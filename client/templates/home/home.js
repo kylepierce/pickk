@@ -387,7 +387,7 @@ Template.activeQuestion.events({
     var checked = $( "input:checked" )
     if (checked.length === 2) {
       // Checkout this sexy daisy chain ;)
-      var answer = $('input:radio[name=play]:checked').siblings().children()[1].id
+      var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked
@@ -664,6 +664,13 @@ Template.wagers.rendered = function() {
     document.getElementById(previousWager).checked = true
   }
 }
+
+Template.wagers.events({
+  'click input[name=wager]': function(event, template){
+    var wager = this
+    console.log(wager)
+  }
+});
 
 Template.gameBar.helpers({
   strikes: function() {
