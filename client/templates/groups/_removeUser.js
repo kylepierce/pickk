@@ -38,7 +38,6 @@ Template._removeUser.events({
       },
       buttonClicked: function(index) {
         if (index === 0) {
-					console.log(id)
 					Meteor.call('removeGroupMember', id, groupId)
         	 sAlert.success("Removed " + username , {effect: 'slide', position: 'bottom', html: true});
         	return true

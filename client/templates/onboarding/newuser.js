@@ -60,15 +60,13 @@ Template.newUser.onRendered(function () {
 
 Template.newUser.events({
 	'click a': function () {
-		console.log("onboarding skipped")
 		hopscotch.endTour()
 	},
 	'click input:radio[name=play]': function () {
-		console.log('Next step...')
+
 		hopscotch.nextStep()
 	},
 	'click input:radio[name=wager]': function () {
-		console.log('Next step...')
 		hopscotch.nextStep()
 	},
 	'click input:submit': function (event) {

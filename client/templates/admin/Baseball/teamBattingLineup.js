@@ -145,7 +145,6 @@ Template.teamBattingLineup.events({
     var position = prompt("Position", 1);
     // Add data validation make sure the number is crazy large or negative
     if (position ) {
-        console.log(position)
         Meteor.call('changeBattingPostion', gameId, teamId, playerId, playerExists, position)
     }  
   },

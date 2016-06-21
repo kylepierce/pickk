@@ -14,6 +14,5 @@ configureFacebook = function(config) {
 // set the settings object with meteor --settings private/settings-local.json
 var facebookConfig = Meteor.settings.facebook;
 if(facebookConfig) {
-    console.log('Got settings for facebook', facebookConfig)
     configureFacebook(facebookConfig);
 }

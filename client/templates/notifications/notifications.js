@@ -36,14 +36,12 @@ Template.notifications.helpers({
 Template.notifications.events({
 	'click [data-action=delete]': function () {
 		var notificationId = this._id
-		console.log('Delete! ' + notificationId)
 		Meteor.call('removeNotification', notificationId);
 	}
 });
 
 // Template._notificationPopover.events({
 // 	'click #accept': function (id) {
-// 		console.log(this)
 // 		Router.go('group.show');
 // 	}
 // });

@@ -26,7 +26,6 @@ Template.singleGame.helpers({
     var game = Router.current().params._id
     Meteor.subscribe('allQuestions', game)
     var gameData = QuestionList.find({gameId: game}, {sort: {dateCreated: -1}}).fetch()    
-    console.log(gameData)
     return gameData
   },
   liveGame: function(){

@@ -12,7 +12,6 @@ Template.chatLayout.rendered = function() {
 //   var waypoint = new Waypoint({
 //   element: document.getElementById('chat-top'),
 //   handler: function(direction) {
-//     console.log('Scrolled to waypoint!')
 //   }
 // })
 // };
@@ -20,7 +19,6 @@ Template.chatLayout.rendered = function() {
 Template.chatHeader.events({
   'click': function(event, template){
     event.preventDefault();
-    console.log("Loading up something awesome")
   }
 })
 

@@ -57,8 +57,6 @@ Template.createQuestion.events({
 		var time = template.find('input[name=time]').value
 		var game = template.find('#gameList :selected').value
 
-		console.log(game)
-
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
 		function questionList(o1, o2, o3, o4, o5, o6){
@@ -1451,7 +1449,6 @@ Template.createQuestion.events({
 // Fourth Down
 		} else if (time == 4 && down == 4 && area >= 4) {
 			question = "4th Down..."
-			console.log(question)
 			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "/Blocked Kick")
 			multiplier(
 				1.3, 1.7, 
@@ -1462,7 +1459,6 @@ Template.createQuestion.events({
 				2.2, 3.61)
 		} else if (time == 4 && down == 4 && area < 4) {
 			question = "4th Down..."
-			console.log(question)
 			questionList("Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown")
 			multiplier(
 				1.3, 1.7, 
@@ -1473,7 +1469,6 @@ Template.createQuestion.events({
 				6.2, 8.61)
 		} else if (down == 4 && area >= 4) {
 			question = "4th Down..."
-			console.log(question)
 			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick")
 			multiplier(
 				1.3, 1.7, 
@@ -1484,7 +1479,6 @@ Template.createQuestion.events({
 				4.2, 8.61)
 		} else if (down == 4 && area < 4) {
 			question = "4th Down..."
-			console.log(question)
 			questionList("Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown")
 			multiplier(
 				1.3, 1.5, 
@@ -1498,7 +1492,6 @@ Template.createQuestion.events({
 // Point After
 		else if (down == 5){
 			question = "Point after"
-			console.log(question)
 			questionList("Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good")
 			multiplier(
 				1.3, 1.7, 

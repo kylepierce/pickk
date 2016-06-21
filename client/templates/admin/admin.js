@@ -8,14 +8,12 @@ Mousetrap.bind('d', function() {
  
 Template.createQuestion.helpers({
 	game: function(){
-		Meteor.subscribe('games');
 		return Games.find({live: true}).fetch();
 	}
 })
 
 Template.otherQuestions.helpers({
 	'commercial': function(){
-		Meteor.subscribe('games');
 		var game = Games.findOne({live: true});
 		var commercialBreak = game.commercial
 		return commercialBreak
@@ -85,7 +83,7 @@ Template.otherQuestions.events({
 						2.2, 4.81, 
 						2.9, 4.61)
 
-		Meteor.call("questionPush", game, question)
+		// Meteor.call("questionPush", game, question)
 		Meteor.call("emptyInactive", game, question)
 		Meteor.call('insertQuestion', game, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
  
@@ -104,7 +102,7 @@ Template.activeQuestionList.events({
 // Show all active questions
 Template.activeQuestionList.helpers({
 	'questions': function(){
-		return QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+		return QuestionList.find({active: true}, {sort: {dateCreated: -1}});
 	}
 });
 

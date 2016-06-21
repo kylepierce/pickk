@@ -7,7 +7,6 @@ Template.adminBaseball.events({
 		event.preventDefault();
 		var currentGame = Games.findOne({live: true});
 	  var currentGameId = currentGame._id
-	  console.log(currentGameId)
 		Meteor.call('createAtBat', "playerId", currentGameId);
 	},
 	'click [data-action=first]': function(){
@@ -48,7 +47,6 @@ Template.adminBaseball.helpers ({
   },
   numberOfOuts: function ( ) {
     var currentGame = Games.findOne({live: true});
-    console.log(currentGame.outs)
     return currentGame.outs
   },
   first: function () {
@@ -96,14 +94,11 @@ Template.adminBaseball.helpers ({
         return "<img src='/out.png><img src='/out.png><img src='/out.png>"
       break;
       case "1" :
-        console.log("There are one outs!")
-
       break;
       case "2" :
-        console.log("There are two outs!")
       break;
       case "3" :
-        console.log("There are three outs!")
+
       break;
     }
   }
@@ -202,7 +197,6 @@ Template.atBats.helpers({
 
 Template.atBats.events({
   'click [data-action=endAtBat]': function(){
-    console.log("Ending it now!")
     if(confirm("Are you sure?")) {
       var moveOn = confirm('Do you want to move on to next player?')
       if( moveOn == true ) {

@@ -9,18 +9,3 @@ Template.invites.helpers({
 		return Invites.find({ invited: false }, {fields: {"invited": 1}}).count()
 	}
 });
-
-
-Template.invites.events({
-	'click [data-action=invite]': function(){
-		var invitee = { id: this._id, email: this.email}
-
-		return Meteor.call('sendInvite', invitee, function(error){
-			if (error) {
-         return console.log(error);
-      } else {
-         return alert("Invite sent to " + invitee.email + "!");
-      }
-		})
-	}
-})

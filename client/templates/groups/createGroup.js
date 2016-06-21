@@ -15,7 +15,6 @@ Template.newGroup.events({
    }
 
     var privateCheck = event.target.value;
-    console.log(privateCheck)
   },
 
   'submit form': function (event, template) {

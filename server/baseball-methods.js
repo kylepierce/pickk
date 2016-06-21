@@ -214,12 +214,13 @@ Meteor.methods({
   var inning = currentGame.inning
   var outs = currentGame.outs
   if(outs == 3) {
-      // Check to see if its the bottom of the inning and less than 9th inning
-      if((topOfInning == false) && (inning < 9)  ){
-        Games.update({_id: currentGame._id}, {$inc: {'inning': +1}})
-      }
-      // Toggle the topOfInning
-      Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning, "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}})
+    // Check to see if its the bottom of the inning and less than 9th inning
+    if((topOfInning == false) && (inning < 9)  ){
+      Games.update({_id: currentGame._id}, {$inc: {'inning': +1}})
+    }
+    Meteor.call('toggleCommercial', currentGame, true)
+    // Toggle the topOfInning
+    Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning, "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}})
   }
 },
 

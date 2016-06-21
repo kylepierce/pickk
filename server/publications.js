@@ -223,6 +223,10 @@ Meteor.publish('games', function() {
   return Games.find({ });
 });
 
+Meteor.publish('activeGames', function() {
+  return Games.find({live: true});
+});
+
 Meteor.publish('gamesUserPlayedIn', function(user){
   var selector = {users: {$in: [user]}}
   return Games.find(selector);

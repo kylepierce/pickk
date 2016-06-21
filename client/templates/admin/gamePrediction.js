@@ -24,25 +24,7 @@ Template.gamePrediction.events({
 		Meteor.call('deactivateGame', gameId);
 	},
 
-	'click [data-action=schedule]': function() {
-		var d = new Date()
-		var tomorrow = new Date()
-		tomorrow.setDate(d.getDate() + 1)
-		tomorrow.setHours(14, 0, 0, 0)
-		var currentTime = d.toISOString();
-		var tomorrow = tomorrow.toISOString()
-		var currentTimeMilli = new Date(currentTime).getTime()
-		var tomorrowMilli = new Date(tomorrow).getTime()
-		var timeUntilActivation = tomorrowMilli - currentTimeMilli
-		console.log(timeUntilActivation)
-		Meteor.setTimeout(function(){
-			Meteor.call('activateDailyPickks')
-		}, timeUntilActivation);
-	},
-
 	'click [data-ion-popover=_gamePopover]': function(){
-		console.log("Wow much popover very game")
-		console.log(this._id)
 		Session.set("gamePrediction", this._id);
 	},
 

@@ -372,7 +372,6 @@ Template.activeQuestion.events({
   'click [name=play]': function( event, template ){
     var otherSelected = $('.wager') 
     // If a play has been selected before than remove that 
-    console.log(otherSelected)
     if (otherSelected) {
       // Remove old
       $('.wager').remove();
@@ -403,7 +402,6 @@ Template.commercialQuestion.events({
   'click [name=play]': function( event, template ){
     var otherSelected = $('.wager') 
     // If a play has been selected before than remove that 
-    console.log(otherSelected)
     if (otherSelected) {
       // Remove old
       $('.wager').remove();
@@ -526,7 +524,6 @@ Template.twoOptionQuestions.events({
   'click [name=binary]': function( event, template ){
     var otherSelected = $('.wager') 
     // If a play has been selected before than remove that 
-    console.log(otherSelected)
     if (otherSelected) {
       // Remove old
       $('.wager').remove();
@@ -543,7 +540,6 @@ Template.twoOptionQuestions.events({
     if (checked.length === 2) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=binary]:checked').siblings().children()[0].id
-      console.log(answer)
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer*wager)
       $('#wager').checked
@@ -560,8 +556,6 @@ Template.twoOptionQuestions.events({
     var currentUser = Meteor.userId();
     var questionId = template.data._id;
     var que = template.data.que 
-    console.log(template)
-    console.log(questionId + " " + que)
     var wager = template.find('input:radio[name=wager]:checked').value;
 
     // Move the card off screen
@@ -668,7 +662,6 @@ Template.wagers.rendered = function() {
 Template.wagers.events({
   'click input[name=wager]': function(event, template){
     var wager = this
-    console.log(wager)
   }
 });
 

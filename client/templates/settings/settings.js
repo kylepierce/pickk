@@ -174,8 +174,6 @@ Template.settings.events({
 				throw error;
 			}
 			Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
-			//console.log("Upload Error: ", error);
-			//console.log("Upload Result: ", result);
 		});
 	}
 
