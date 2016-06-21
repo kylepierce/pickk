@@ -213,15 +213,43 @@ Meteor.methods({
   var topOfInning = currentGame.topOfInning
   var inning = currentGame.inning
   var outs = currentGame.outs
+  var commercial = currentGame.commercial
   if(outs == 3) {
-    // Check to see if its the bottom of the inning and less than 9th inning
-    if((topOfInning == false) && (inning < 9)  ){
+    // Check to see if its the bottom of the inning
+    if(topOfInning == false){
       Games.update({_id: currentGame._id}, {$inc: {'inning': +1}})
     }
-    Meteor.call('toggleCommercial', currentGame, true)
+    console.log(commercial)
+    Meteor.call('toggleCommercial', currentGame, !commercial)
+
     // Toggle the topOfInning
     Games.update({_id: currentGame._id}, {$set: {'outs': 0, 'topOfInning': !topOfInning, "playersOnBase.second": false, "playersOnBase.first": false, "playersOnBase.third": false}})
+    Meteor.call('createCommericalQuestion')
   }
+},
+
+'createCommericalQuestion': function(){
+  var currentGame = Games.findOne({live: true})
+  var team = Meteor.call('topOfInningPostion')
+  var teamId = currentGame.teams[team].teamId
+  var inning = currentGame.inning
+  var teamNickName = Teams.findOne(teamId).nickname
+  var options = ["Hit a Single", "Hit a Double", "Hit a Triple", "Hit a Home Run", "Steal a Base", "Get Hit by a Pitch"]
+
+  if([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].indexOf(inning) >= 0) {
+    var inningGrammer = inning + "th"
+  } else if ([1].indexOf(inning) >= 0) {
+    var inningGrammer = inning + "st"
+  } else if ([2].indexOf(inning) >= 0) {
+    var inningGrammer = inning + "nd" 
+  } else if ([3].indexOf(inning) >= 0) {
+    var inningGrammer = inning + "rd"
+  } 
+  
+  var randomOption = options[Math.floor(Math.random()*options.length)];
+  var question = "Will a " + teamNickName + " Player " + randomOption + " in the " + inningGrammer + " inning?"
+
+  Meteor.call('createTrueFalse', question)
 },
 
 'increaseBatterCount': function(){
