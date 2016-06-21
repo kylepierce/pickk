@@ -9,41 +9,44 @@
 
   {{#ionView }}
     {{#ionContent}}
-      {{#with game}}
-	    <div class="bar bar-dark" > 
-	    	<div class="container" style="text-align: center; padding-top: 6px;">
-	    		<h1 class="title white-text-header">{{name}}</h1>
-	    	</div>
-	    </div>
-  		{{/with}}
-    	{{#ionList}}
-	    	{{#each question}}
-	    		{{#ionItem}}
-	    			
-		    		{{#if active}}
-								<p class="still-active"><b>{{que}}</b></p>
-								<p>{{date}}</p>
-						{{else}}
-								<p><b>{{que}}</b></p>
-								<p>{{date}}</p>
-								<p>Answer: {{{answerIs play}}}</p>
-						{{/if}}
-					
-					{{#with userAnswer _id play this}}
-						<p>
-						You Answered: {{description}}<br>
-						<!-- If correct Show Winnings-->
-						<!-- If Binary Show 2000 -->
-						Amount Wagered: {{wager}}
-						Muliplier: {{multiplier}}
-						Winnings: {{winnings}}
-						</p>
-					{{/with}}
-					
-					
+      {{> loader}}
+      {{#if Template.subscriptionsReady}}
+	      <div class="loading-wrapper">
+	      {{#with game}}
+		    <div class="bar bar-dark" > 
+		    	<div class="container" style="text-align: center; padding-top: 6px;">
+		    		<h1 class="title white-text-header">{{name}}</h1>
+		    	</div>
+		    </div>
+	  		{{/with}}
+	    	{{#ionList}}
+		    	{{#each question}}
+		    		{{#ionItem}}
+		    			
+			    		{{#if active}}
+									<p class="still-active"><b>{{que}}</b></p>
+									<p>{{date}}</p>
+							{{else}}
+									<p><b>{{que}}</b></p>
+									<p>{{date}}</p>
+									<p>Answer: {{{answerIs play}}}</p>
+							{{/if}}
+						
+						{{#with userAnswer _id play this}}
+							<p>
+							You Answered: {{description}}<br>
+							<!-- If correct Show Winnings-->
+							<!-- If Binary Show 2000 -->
+							Amount Wagered: {{wager}}
+							Muliplier: {{multiplier}}
+							Winnings: {{winnings}}
+							</p>
+						{{/with}}
 	    		{{/ionItem}}
 	    	{{/each}}
     	{{/ionList}}
+   	  </div>
+	    {{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template> 

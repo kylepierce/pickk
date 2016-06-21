@@ -1,7 +1,6 @@
 ------ Before App Store Submission -------
 
 Settings:
-- Add upload photo option
 - Break up the questions into sections. So settings leads to a page with each section
 
 Logout:
@@ -11,13 +10,6 @@ Routes:
 - 404 page
 
 - Add questions to specific game so all of one games answers are in one array.
-
-- Add ad's to the bottom of the app (https://github.com/floatinghotpot/cordova-admob-pro)
-- Add draftkings or fan duel ads
-
-- Add photos to users account (https://github.com/meteoric/camera)
-
-- Add registered people to mailchimp or something 
 
 ################## ALL ####################
 
@@ -106,7 +98,6 @@ Notifications:
 - Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.
 	- Create a trophy collection
 Notifications:
-- Create list of results from guesses (90 mins)
 
 cordova-plugin-console@0.2.13
 cordova-plugin-device@0.3.0

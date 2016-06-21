@@ -50,7 +50,6 @@ Meteor.methods({
 'createAtBat': function () {
   var currentUserId = Meteor.userId();
   var timeCreated = new Date();
-
   var currentGame = Games.findOne({live: true})
   var gameId = currentGame._id
   var team = Meteor.call('topOfInningPostion')
@@ -58,25 +57,17 @@ Meteor.methods({
   var atBatNumber = currentGame.teams[team].batterNum
   var battingLineUp = currentGame.teams[team].battingLineUp
   var playerId = battingLineUp[atBatNumber]
-  // var teamObj = Teams.findOne({_id: teamId})
-
-  // var playerId = teamObj.battingOrderLineUp[atBatNumber].playerId
-  // var pitcher = Meteor.call('findActivePitcher');
-  // pitcherId = pitcher.playerId
 
   AtBat.insert({
     createdBy: currentUserId,
     dateCreated: timeCreated,
     active: true,
     playerId: playerId,
-    // pitcherId: pitcherId,
     gameId: gameId,
     ballCount: 0,
     strikeCount: 0
   });
   
-  Meteor.call("questionPush", gameId, question)
-  Meteor.call("emptyInactive", currentGameId, question)
   Meteor.call('createAnAtBatQuestion')
   Meteor.call('createBaseballQuestion')
 
@@ -86,6 +77,7 @@ Meteor.methods({
   var timeCreated = new Date();
   var currentUserId = Meteor.userId();
   var currentGame = Games.findOne({live: true});
+  var gameId = currentGame._id
   
   // Find the Player "At Bat" 
   var currentAtBat = AtBat.findOne({active: true});
@@ -116,12 +108,15 @@ Meteor.methods({
 
   var question = "End of " + playerName + "'s at bat." ;
 
+  // Meteor.call("questionPush", gameId, question)
+  Meteor.call("emptyInactive", gameId)
+
   QuestionList.insert({
     dateCreated: timeCreated,
     createdBy: currentUserId,
     playerId: playerId,
     atBatQuestion: true,
-    gameId: currentGame._id,
+    gameId: gameId,
     active: true,
     commercial: false,
     que: question,
@@ -1009,7 +1004,7 @@ Meteor.methods({
 },
 
 'playersPlaying': function (){
-  var currentGame =Games.findOne({live: true})
+  var currentGame = Games.findOne({live: true})
   if (!currentGame) {
     return [];
   }

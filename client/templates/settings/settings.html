@@ -15,9 +15,10 @@
 		<div id="usernameReq" style="clear: both; float:left; padding-left: 15px; display: none; padding: 10px">
 		<strong>Username Requirements</strong>
 			<ul>
-				<li id="short"> Longer than 3 characters</li>
-				<li id="long"> Shorter than 15 characters</li>
-				<li id="space"> No spaces</li>
+				<li id="name" style="display: none;">That username already exists</li>
+				<li id="short">Username needs to be longer than 3 characters</li>
+				<li id="long">Username needs to be Shorter than 15 characters</li>
+				<li id="space">No spaces</li>
 			</ul>	
 		</div> 
 
@@ -32,7 +33,7 @@
 			<input type="text" name="lastName" value="{{lastName}}">
 		</label>
 
-    <label class="item item-input item-stack-label">
+    <label class="item item-input item-stack-label upload-photo">
       <span class="input-label">Avatar:</span>
       {{> userAvatar userId=currentUser._id}}
       <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>

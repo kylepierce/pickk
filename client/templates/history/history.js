@@ -1,3 +1,22 @@
+Template.history.created = function () {
+	var userId = Meteor.userId();
+  this.autorun(function () {
+    this.subscription = Meteor.subscribe('gamesUserPlayedIn', userId);
+  }.bind(this));
+};
+
+Template.history.onRendered( function() {
+  $( "svg" ).delay( 0 ).fadeIn();
+});
+
+Template.history.onCreated( function() {
+  this.subscribe( 'gamesUserPlayedIn', function() {
+    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
+      $( ".loading-wrapper" ).fadeIn( 'fast' );
+    });
+  });
+});
+
 Template.history.helpers({
 	gamePlayed: function(){
 		var userId = Meteor.userId();
@@ -13,8 +32,17 @@ Template.singleGameHistory.created = function () {
   }.bind(this));
 };
 
+Template.singleGameHistory.onRendered( function() {
+  $( "svg" ).delay( 0 ).fadeIn();
+});
 
-
+Template.singleGameHistory.onCreated( function() {
+  this.subscribe( 'questionsUserAnsweredSpecificGame', function() {
+    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
+      $( ".loading-wrapper" ).fadeIn( 'fast' );
+    });
+  });
+});
 
 Template.singleGameHistory.helpers({
 	game: function(){
@@ -87,7 +115,8 @@ Template.singleGameHistory.helpers({
 		} 
 	},
 	question: function () {
-		var questionsAnswered = QuestionList.find({}, {sort: {dateCreated: -1}}).fetch()
+		var userId = Meteor.userId();
+		var questionsAnswered = QuestionList.find({"usersAnswered": {$in: [userId]} }, {sort: {dateCreated: -1}}).fetch()
 		return questionsAnswered
 	},
 	userAnswer: function(id, play, q){

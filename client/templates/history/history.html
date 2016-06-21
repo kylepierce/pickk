@@ -15,13 +15,18 @@
 
   {{#ionView }}
     {{#ionContent}}
-			{{#ionList}}
-				{{#each gamePlayed }}
-					{{#ionItem path="gameHistory.show"}}
-						{{name}}
-					{{/ionItem}}
-				{{/each}}
-			{{/ionList}}
+      {{> loader}}
+      {{#if Template.subscriptionsReady}}
+        <div class="loading-wrapper">
+					{{#ionList}}
+						{{#each gamePlayed}}
+							{{#ionItem path="gameHistory.show"}}
+								{{name}}
+							{{/ionItem}}
+						{{/each}}
+					{{/ionList}}
+				</div>	
+			{{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template> 
