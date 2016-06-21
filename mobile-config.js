@@ -1,4 +1,5 @@
 App.info({
+  id: 'net.pickk',
   name: 'Pickk',
   description: 'Predict sports events in real time',
   author: 'Pickk Corporation',
