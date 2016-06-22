@@ -245,13 +245,14 @@ Meteor.methods({
 
 	// Update users info from the settings page
 
-	'updateProfile': function(userId, username, firstName, lastName) {
+	'updateProfile': function(userId, username, firstName, lastName, birthday) {
 		UserList.update(userId,
 			{
 				$set: {
 					'profile.username': username,
 					'profile.firstName': firstName,
-					'profile.lastName': lastName
+					'profile.lastName': lastName,
+					'profile.birthday': birthday
 				}
 			});
     var user = UserList.findOne(userId);

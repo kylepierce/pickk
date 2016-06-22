@@ -33,6 +33,15 @@ Template.settings.helpers({
       return "";
     }
   },
+  
+  birthday: function() {
+    var currentUser = Meteor.user();
+    if (currentUser.profile.birthday) {
+      return moment(currentUser.profile.birthday).format("YYYY-MM-DD");
+    } else {
+      return "";
+    }
+  }
 });
 
 Template.settings.events({
@@ -90,6 +99,7 @@ Template.settings.events({
     var username = event.target.username.value;
     var firstName = event.target.firstName.value;
     var lastName = event.target.lastName.value;
+    var birthday = event.target.birthday.value;
     // var avatar = $('#avatar').prop('src');
 
     if (username.length < 3) {
@@ -117,7 +127,7 @@ Template.settings.events({
       Meteor.call("isUsernameUnique", username, function(error, isUsernameUnique) {
         if (isUsernameUnique) {
           var newAccount = event.target.status.value;
-          Meteor.call('updateProfile', currentUserId, username, firstName, lastName);
+          Meteor.call('updateProfile', currentUserId, username, firstName, lastName, birthday);
           if (newAccount == "Finish Profile") {
             Router.go('/onboarding');
           } else {
