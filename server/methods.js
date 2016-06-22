@@ -179,7 +179,9 @@ Meteor.methods({
 			},
 			headings: {
 				en: "Pickk question"
-			}
+			},
+			ios_badgeType: "Increase",
+			ios_badgeCount: 1
 		});
 	},
 
@@ -215,7 +217,9 @@ Meteor.methods({
 			},
 			headings: {
 				en: "Pickk notification"
-			}
+			},
+			ios_badgeType: "Increase",
+			ios_badgeCount: 1
 		});
 		// }
 	},
@@ -238,7 +242,9 @@ Meteor.methods({
 					},
 					headings: {
 						en: "Pick invite"
-					}
+					},
+					ios_badgeType: "Increase",
+					ios_badgeCount: 1
 				});
 			}
 		}
