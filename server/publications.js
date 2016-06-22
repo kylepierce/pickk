@@ -155,6 +155,18 @@ Meteor.publish('chatUsers', function(id) {
   });
 })
 
+Meteor.publish("chatUsersAutocomplete", function(selector, options) {
+  if (!this.userId) {
+    return this.ready()
+  }
+  if (_.isEmpty(selector)) {
+    return this.ready()
+  }
+  options.limit = Math.min(5, Math.abs(options.limit || 5));
+  Autocomplete.publishCursor(UserList.find(selector, options), this);
+  return this.ready()
+})
+
 
 Meteor.publish('adminFindSingle', function(id) {
   return UserList.find({_id: id}, {fields: {questionAnswered: 1}});

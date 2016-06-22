@@ -22,7 +22,7 @@
   {{#ionView }}
     {{#ionContent}}
     <form id="" style="margin-bottom: 50px">
-      <textarea type="text" name="messageBox" rows="3" maxlength="150" placeholder="{{randomMessage}}" id="messageBox"></textarea>
+      {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage}}
       <!-- <div class="col-md-5 chat-buttons" data-action="mention">Mention</div> -->
       <div class="col-md-33 chat-buttons" data-ion-popover="_reaction" style="width: 50%">React</div>
       <button class="button" style="float:right; width: 50%; border: none;" type="submit">Send</button>
@@ -36,7 +36,7 @@
                 {{> userAvatar userId=_id alreadySubscribed=true}}
                 <h2>{{chatUser this._id}}</h2>
               {{/with}}
-              <p>{{{this.message}}}</p>
+              <p>{{{message}}}</p>
             {{/ionItem}}
               <div class="chat-options" style="display: none">
               <div class="col-md-25" data-action="reply">

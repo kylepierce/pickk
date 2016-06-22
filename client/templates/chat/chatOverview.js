@@ -85,6 +85,23 @@ Template.chatRoom.events({
 });
 
 Template.chatRoom.helpers({
+  settings: function() {
+    return {
+      position: "bottom",
+      limit: 5,
+      rules: [
+        {
+          token: '@',
+          collection: "UserList",
+          subscription: "chatUsersAutocomplete",
+          sort: true,
+          field: "profile.username",
+          template: Template.userPill,
+          noMatchTemplate: Template.noMatch
+        }
+      ]
+    };
+  },
   groupMessages: function() {
     var groupId = Session.get('chatGroup');
 
@@ -115,6 +132,9 @@ Template.chatRoom.helpers({
   },
   messages: function(messageList) {
     return messageList
+  },
+  message: function() {
+    return this.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
   },
   user: function(id) {
     var user = UserList.findOne({_id: id});
