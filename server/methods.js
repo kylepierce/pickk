@@ -1607,6 +1607,14 @@ Meteor.methods({
 		Meteor.users.update({_id: user}, {$inc: {"profile.coins": +wager}});
 	},
 
+	'isUsernameUnique': function(username) {
+		username = username.trim()
+		if (!username) {
+			return true;
+		}
+		return !UserList.find({_id: {$ne: this.userId}, "profile.username": username}).count()
+	},
+
 	'exportToMailChimp': function(limit) {
 		limit = limit || 10; // safety net; pass a very high limit to export all users
 		var user = UserList.findOne({_id: this.userId});
