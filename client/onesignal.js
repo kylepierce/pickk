@@ -2,6 +2,14 @@
 // For Intel XDK and please add this to your app.js.
 
 document.addEventListener('deviceready', function () {
+	Meteor.startup(function () {
+		Accounts.onLogin(function() {
+			window.initOneSignal();
+		});
+	});
+}, false);
+
+window.initOneSignal = function() {
 	// Enable to debug issues.
 	// window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
@@ -14,32 +22,20 @@ document.addEventListener('deviceready', function () {
 		notificationOpenedCallback);
 
 	window.plugins.OneSignal.getIds(function (data) {
-		window.oneSignalToken = data.userId;
-		if (Meteor.user()) {
-			sendOneSignalToken();
-		}
+		const token = data.userId;
+		sendOneSignalToken(token);
 	});
 
 	// Show an alert box if a notification comes in when the user is in your app.
 	window.plugins.OneSignal.enableInAppAlertNotification(true);
-}, false);
+};
 
-window.sendOneSignalToken = function () {
-	const token = window.oneSignalToken;
+window.sendOneSignalToken = function (token) {
 	Meteor.call("updateOneSignalToken", token, function (error) {
 		if (error) {
 			console.error("An error occurred during updateOneSignalToken", error)
 		} else {
-			window.oneSignalTokenIsSent = true;
 			console.log("OneSignal token has been successfully updated to ", token);
 		}
 	});
 };
-
-Meteor.startup(function () {
-	Accounts.onLogin(function() {
-		if (window.oneSignalToken && ! window.oneSignalTokenIsSent) {
-			window.sendOneSignalToken();
-		}
-	});
-});
