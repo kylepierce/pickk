@@ -28,6 +28,12 @@ Template.otherQuestions.events({
 		Meteor.call('toggleCommercial', game, true);
 	},
 
+	'click [data-action="createCommericalQuestion"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		Meteor.call('createCommericalQuestion')
+	},
+
 	'click [data-action="endCommercialBreak"]': function(event, template){
 		// Turn off reload
 		event.preventDefault();

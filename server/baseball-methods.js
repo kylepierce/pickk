@@ -219,7 +219,6 @@ Meteor.methods({
     if(topOfInning == false){
       Games.update({_id: currentGame._id}, {$inc: {'inning': +1}})
     }
-    console.log(commercial)
     Meteor.call('toggleCommercial', currentGame, !commercial)
 
     // Toggle the topOfInning
