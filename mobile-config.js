@@ -1,4 +1,5 @@
 App.info({
+  id: 'com.id5oyejxkvm3yq1jfiwr5',
   name: 'Pickk',
   description: 'Predict sports events in real time',
   author: 'Pickk Corporation',

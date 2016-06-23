@@ -1,5 +1,5 @@
 Meteor.methods({
-		'questionPush': function(gameId, message) {
+	'questionPush': function(gameId, message) {
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
 		const text = "Guess What Happens on " + message;
@@ -11,7 +11,9 @@ Meteor.methods({
 			},
 			headings: {
 				en: "Pickk question"
-			}
+			},
+			ios_badgeType: "Increase",
+			ios_badgeCount: 1
 		});
 	},
 
@@ -44,7 +46,9 @@ Meteor.methods({
 			},
 			headings: {
 				en: "Pickk notification"
-			}
+			},
+			ios_badgeType: "Increase",
+			ios_badgeCount: 1
 		});
 	},
 
@@ -66,9 +70,11 @@ Meteor.methods({
 					},
 					headings: {
 						en: "Pick invite"
-					}
+					},
+					ios_badgeType: "Increase",
+					ios_badgeCount: 1
 				});
 			}
 		}
-	},
-})
+	}
+});
