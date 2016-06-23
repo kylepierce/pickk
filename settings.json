@@ -25,7 +25,7 @@
     },
     "rateLimits": {
       "addChatMessage": {
-        "numRequests": 200,
+        "numRequests": 10,
         "timeInterval": 120000
       }
     }
@@ -39,7 +39,7 @@
       "cloud_name": "pickk"
     },
     "share": {
-      "message": "Have you heard about the Pickk app? Try it now!"
+      "message": "Love sports? Predict what happens next with Pickk!"
     },
     "oneSignal": {
       "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",

@@ -64,7 +64,7 @@ Template.chatRoom.events({
       Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
         if (error) {
           IonLoading.show({
-            customTemplate: '<h3>' + error.reason + '</h3>',
+            customTemplate: error.reason ,
             duration: 3000,
             backdrop: true
           })
@@ -203,14 +203,14 @@ Template._reaction.events({
     Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: '<h3>' + error.reason + '</h3>',
+          customTemplate: error.reason ,
           duration: 3000,
           backdrop: true
         })
       }
     });
-    $("#messageBox").val('');
     IonPopover.hide();
+    $("#messageBox").val('');
   },
 });
 
