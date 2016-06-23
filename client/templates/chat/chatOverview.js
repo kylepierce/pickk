@@ -61,7 +61,15 @@ Template.chatRoom.events({
         backdrop: true
       });
     } else {
-      Meteor.call('addChatMessage', currentUser, message, groupId);
+      Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+        if (error) {
+          IonLoading.show({
+            customTemplate: '<h3>' + error.reason + '</h3>',
+            duration: 3000,
+            backdrop: true
+          })
+        }
+      });
       $("#messageBox").val('');
     }
   },
@@ -81,6 +89,23 @@ Template.chatRoom.events({
 });
 
 Template.chatRoom.helpers({
+  settings: function() {
+    return {
+      position: "bottom",
+      limit: 5,
+      rules: [
+        {
+          token: '@',
+          collection: "UserList",
+          subscription: "chatUsersAutocomplete",
+          sort: true,
+          field: "profile.username",
+          template: Template.userPill,
+          noMatchTemplate: Template.noMatch
+        }
+      ]
+    };
+  },
   groupMessages: function() {
     var groupId = Session.get('chatGroup');
 
@@ -111,6 +136,9 @@ Template.chatRoom.helpers({
   },
   messages: function(messageList) {
     return messageList
+  },
+  message: function() {
+    return this.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
   },
   user: function(id) {
     var user = UserList.findOne({_id: id});
@@ -172,7 +200,15 @@ Template._reaction.events({
     var message = selected.attr("value")
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
-    Meteor.call('addChatMessage', currentUser, message, groupId);
+    Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+      if (error) {
+        IonLoading.show({
+          customTemplate: '<h3>' + error.reason + '</h3>',
+          duration: 3000,
+          backdrop: true
+        })
+      }
+    });
     $("#messageBox").val('');
     IonPopover.hide();
   },

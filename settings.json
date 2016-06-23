@@ -22,6 +22,12 @@
       "cloud_name": "pickk",
       "api_key": "645847953239515",
       "api_secret": "rWKh2JKeTYnnWIkHqNU1Azm5PyA"
+    },
+    "rateLimits": {
+      "addChatMessage": {
+        "numRequests": 200,
+        "timeInterval": 120000
+      }
     }
   },
   "public": {

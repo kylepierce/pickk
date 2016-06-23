@@ -24,16 +24,20 @@
 
 
 		<label class="item item-input item-stack-label">
-		<span class="input-label">First Name:</span>
+		  <span class="input-label">First Name:</span>
 			<input type="text" name="firstName" value="{{firstName}}">
 		</label>
  
 		<label class="item item-input item-stack-label">
-		<span class="input-label">Last Name:</span>
+		  <span class="input-label">Last Name:</span>
 			<input type="text" name="lastName" value="{{lastName}}">
 		</label>
+    <label class="item item-input item-stack-label">
+      <span class="input-label">Birthday:</span>
+      <input type="date" name="birthday" value="{{birthday}}">
+    </label>
 
-    <label class="item item-input item-stack-label upload-photo">
+    <label class="item item-input item-stack-label">
       <span class="input-label">Avatar:</span>
       {{> userAvatar userId=currentUser._id}}
       <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>

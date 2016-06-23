@@ -25,13 +25,14 @@ Meteor.methods({
 
 	// Update users info from the settings page
 
-	'updateProfile': function(userId, username, firstName, lastName) {
+	'updateProfile': function(userId, username, firstName, lastName, birthday) {
 		UserList.update(userId,
 			{
 				$set: {
 					'profile.username': username,
 					'profile.firstName': firstName,
-					'profile.lastName': lastName
+					'profile.lastName': lastName,
+					'profile.birthday': birthday
 				}
 			});
     var user = UserList.findOne(userId);
@@ -1212,6 +1213,14 @@ Meteor.methods({
 
 		//Once a users has removed question add wager to their coins.
 		Meteor.users.update({_id: user}, {$inc: {"profile.coins": +wager}});
+	},
+
+	'isUsernameUnique': function(username) {
+		username = username.trim()
+		if (!username) {
+			return true;
+		}
+		return !UserList.find({_id: {$ne: this.userId}, "profile.username": username}).count()
 	},
 
 	'exportToMailChimp': function(limit) {

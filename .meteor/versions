@@ -35,6 +35,7 @@ cmather:handlebars-server@2.0.0
 coffeescript@1.0.17
 cosmos:browserify@0.4.0
 d3js:d3@3.5.8
+dandv:caret-position@2.1.1
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.5
 ddp-client@1.2.7
@@ -109,6 +110,7 @@ minifier-js@1.1.11
 minimongo@1.0.16
 miro:mailchimp@1.0.4
 miro:mailchimp-lists@1.0.0
+mizzao:autocomplete@0.5.1
 mobile-experience@1.0.4
 mobile-status-bar@1.0.12
 modules@0.6.1

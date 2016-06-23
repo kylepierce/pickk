@@ -86,4 +86,9 @@ tmeasday:publish-counts
 lepozepo:cloudinary
 meteorhacks:fast-render
 astronomerio:core
+<<<<<<< HEAD
 astrocoders:one-signal
+=======
+ddp-rate-limiter
+mizzao:autocomplete
+>>>>>>> d6911eba6b82a4c85905442b4680684a516951e0
