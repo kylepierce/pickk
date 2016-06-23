@@ -4,7 +4,6 @@ Meteor.methods({
 		var id = Random.id();
 		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "");
 		var code = messagePosted.slice(0,6)
-		console.log(code)
 		if (code == "+!Meow") {
 				var message = messagePosted.slice(7, -1)
 				var messagePosted = "<b>" + message + "</b>"

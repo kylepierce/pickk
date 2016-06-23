@@ -64,7 +64,7 @@ Template.chatRoom.events({
       Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
         if (error) {
           IonLoading.show({
-            customTemplate: error.reason ,
+            customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
             duration: 3000,
             backdrop: true
           })
@@ -203,7 +203,7 @@ Template._reaction.events({
     Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: error.reason ,
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
           duration: 3000,
           backdrop: true
         })
