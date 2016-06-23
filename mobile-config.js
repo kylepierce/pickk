@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'kyle@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.9'
+  version: '0.0.10'
 });
 App.icons({
   "iphone_2x": "resources/icons/iphone_2x.png", // 120x120
