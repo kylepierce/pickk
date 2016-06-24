@@ -1,6 +1,6 @@
 Template.sportRadarGames.helpers({
 	game: function () {
-		return SportRadarGames.find({'status': 'scheduled'}, {sort: {"scheduled": 1}}).fetch();
+		return SportRadarGames.find({}, {sort: {"scheduled": 1}}).fetch();
 	},
 
 	gameAt: function () {
