@@ -235,6 +235,13 @@ Meteor.publish('games', function() {
   return Games.find({ });
 });
 
+Meteor.publish('SportRadarGames', function() {
+	const today = moment().toDate();
+	const tomorrow = moment().add("days", 1).toDate();
+	
+	return SportRadarGames.find({scheduled: {$gt: today, $lt: tomorrow}});
+});
+
 Meteor.publish('activeGames', function() {
   return Games.find({live: true});
 });
