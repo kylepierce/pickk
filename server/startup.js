@@ -1,27 +1,28 @@
-// Meteor.startup(function() {
-//   var templates = [];
-//   templates.push({
-//     name: "emailTemplate",
-//     path: "email-template.html"
-//   });
-//   EmailGenerator.addTemplates(templates);
+var fs = Npm.require('fs');
 
-//   var smtp = {
-//     username: Meteor.settings.mailgun_login,
-//     password: Meteor.settings.mailgun_password,
-//     server: Meteor.settings.mailgun_hostname,
-//     port: 25
-//   };
-
-//   process.env.MAIL_URL = "smtp://" + encodeURIComponent(smtp.username) + ":" +
-//     encodeURIComponent(smtp.password) + "@" + encodeURIComponent(smtp.server) +
-//     ":" + smtp.port;
-// });
-
-AccountController = RouteController.extend({
-    verifyEmail: function () {
-        Accounts.verifyEmail(this.params.token, function () {
-            Router.go('/verified');
-        });
-    }
+Meteor.startup(function() {
+  var databaseReset = !Migrations._collection.findOne("control");
+  if (databaseReset) {
+    Fixtures.insertAll([]);
+  } else {
+    Fixtures.ensureAll([]);
+  }
+  migrate();
 });
+
+process.on("SIGUSR2", Meteor.bindEnvironment(function() {
+  var err, filename, reloadedCollectionNames;
+  filename = "/tmp/meteorReloadedCollectionNames";
+  try {
+    fs.statSync(filename);
+  } catch (_error) {
+    err = _error;
+    if (err.code === "ENOENT") {
+      return;
+    }
+  }
+  reloadedCollectionNames = _.compact(fs.readFileSync(filename).toString().split("\n"));
+  console.info("Reloading fixtures for " + (reloadedCollectionNames.length ? reloadedCollectionNames.join(", ") : "all collections"));
+  Fixtures.insertAll(reloadedCollectionNames);
+  return migrate();
+}));

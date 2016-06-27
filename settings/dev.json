@@ -1,1 +1,7 @@
-{}
+{
+  "public": {
+    "isDebug": true,
+    "isDevLogin": true,
+    "isCronEnabled": false
+  }
+}

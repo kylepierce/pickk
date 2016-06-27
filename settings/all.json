@@ -11,6 +11,9 @@
     }
   },
   "public": {
+    "isDebug": false,
+    "isDevLogin": false,
+    "isCronEnabled": true,
     "astronomer": {
       "appId": "j7XLnHnQjbhkMXexn"
     },

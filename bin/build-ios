@@ -3,6 +3,7 @@
 set -eux
 
 DIRNAME=$(cd `dirname $0` && pwd)
+
 ENV=${1:-}
 if [ -z $ENV ]; then
   ENV="prod"
@@ -10,13 +11,13 @@ else
   shift
 fi
 
-echo $ENV
+source $DIRNAME/config
 
 $DIRNAME/merge-settings $ENV ios > /tmp/$ENV.json
 
 echo "DON'T FORGET CHANGE Project->Build Settings->Linking->Runpath Search Paths to '@executable_path/Frameworks'"
 
 rm -rf /tmp/build
-rm -rf .meteor/local/cordova-build
+rm -rf $DIRNAME/../.meteor/local/cordova-build
 
 meteor build /tmp/build --server=$BASE_URL --mobile-settings /tmp/$ENV.json "$@"

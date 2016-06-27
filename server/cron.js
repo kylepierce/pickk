@@ -24,4 +24,7 @@ SyncedCron.add({
   }
 });
 
-SyncedCron.start();
+
+if (Meteor.settings.public.isCronEnabled) {
+  SyncedCron.start();
+}

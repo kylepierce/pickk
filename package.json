@@ -5,6 +5,6 @@
   "scripts": {
     "start": "echo 'Please execute `./bin/run`'",
     "ios-test": "echo 'Please execute `./bin/run ios`'",
-    "production": "echo 'Please execute `??? (ask Alex)`'"
+    "production": "echo 'Please execute `./bin/build-ios`'"
   }
 }
