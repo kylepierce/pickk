@@ -21,6 +21,10 @@
     "cloudinary": {
       "api_key": "645847953239515",
       "api_secret": "rWKh2JKeTYnnWIkHqNU1Azm5PyA"
+    },
+    "oneSignal": {
+      "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
+      "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
     }
   },
   "public": {
@@ -33,9 +37,5 @@
         "googleProjectNumber": "259263435947"
       }
     }
-  },
-  "oneSignal": {
-    "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
-    "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
   }
 }
