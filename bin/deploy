@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -eux
+
+DIRNAME=$(cd `dirname $0` && pwd)
+
+if grep -P ^gadicc:ecmascript-hot $DIRNAME/../.meteor/packages; then
+  echo "[ERROR] .meteor/packages: please comment-out 'gadicc:ecmascript-hot' package"
+  exit
+fi
+if ! grep -P ^ecmascript $DIRNAME/../.meteor/packages; then
+  echo "[ERROR] .meteor/packages: please comment-in 'ecmascript' package"
+  exit
+fi
+
+source $DIRNAME/config
+source $DIRNAME/mongo/clean # WARNING! This removes all data. But don't worry, it's temporary.
+source $DIRNAME/mup/deploy
+notify-send -u normal -i face-glasses "Deployed to $DOMAIN!"
+source $DIRNAME/logs

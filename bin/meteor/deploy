@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -eux
+
+#SETTINGS="$DIRNAME/../settings/$SUBPROJECT-prod.json"
+SETTINGS="/tmp/prod.json"
+$DIRNAME/merge-settings prod > $SETTINGS
+
+meteor deploy --settings $SETTINGS $DOMAIN
+
+set +e # meteor exits with an error if the user is already authorized
+meteor authorized $DOMAIN --add alekskuzmenko
+meteor authorized $DOMAIN --add starfall
+set -e

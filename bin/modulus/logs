@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eux
+
+$DIRNAME/merge-settings prod > /tmp/prod.json
+export MODULUS_TOKEN=$(json -f /tmp/prod.json modulus.token)
+
+modulus -p $DOMAIN project logs

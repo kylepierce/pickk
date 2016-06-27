@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eux
+
+DIRNAME=$(cd `dirname $0` && pwd)
+
+source $DIRNAME/config
+source $DIRNAME/mup/logs

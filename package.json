@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Script to make sure process are done correctly.",
   "scripts": {
-    "start": "meteor --settings settings.json",
-    "ios-test": "meteor run ios-device --settings settings.json",
-    "production": "meteor build ios --mobile-settings=settings.json --server=http://pickk.net"
+    "start": "echo 'Please execute `./bin/run`'",
+    "ios-test": "echo 'Please execute `./bin/run ios`'",
+    "production": "echo 'Please execute `??? (ask Alex)`'"
   }
 }

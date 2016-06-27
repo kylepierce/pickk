@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BASE_URL=http://pickk.net
+DOMAIN=pickk.net
+MONGO_FLAGS=""

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eux
+
+DIRNAME=$(cd `dirname $0` && pwd)
+
+$DIRNAME/merge-settings prod > /tmp/prod.json
+export MODULUS_TOKEN=$(json -f /tmp/prod.json modulus.token)
+
+modulus -p $DOMAIN env set METEOR_SETTINGS "$(cat /tmp/prod.json)"
+modulus -p $DOMAIN project deploy
+modulus -p $DOMAIN project logs

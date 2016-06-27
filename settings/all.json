@@ -1,0 +1,24 @@
+{
+  "private": {
+    "cloudinary": {
+      "cloud_name": "pickk"
+    },
+    "rateLimits": {
+      "addChatMessage": {
+        "numRequests": 10,
+        "timeInterval": 120000
+      }
+    }
+  },
+  "public": {
+    "astronomer": {
+      "appId": "j7XLnHnQjbhkMXexn"
+    },
+    "cloudinary": {
+      "cloud_name": "pickk"
+    },
+    "share": {
+      "message": "Love sports? Predict what happens next with Pickk!"
+    }
+  }
+}

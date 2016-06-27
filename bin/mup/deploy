@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eux
+
+$DIRNAME/merge-settings prod > $DIRNAME/../settings.json
+(cd $DIRNAME/.. && mup deploy)

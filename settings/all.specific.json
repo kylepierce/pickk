@@ -19,27 +19,13 @@
       "listId": "051a9cc1a8"
     },
     "cloudinary": {
-      "cloud_name": "pickk",
       "api_key": "645847953239515",
       "api_secret": "rWKh2JKeTYnnWIkHqNU1Azm5PyA"
-    },
-    "rateLimits": {
-      "addChatMessage": {
-        "numRequests": 10,
-        "timeInterval": 120000
-      }
     }
   },
   "public": {
     "astronomer": {
       "appId": "j7XLnHnQjbhkMXexn"
-    },
-    
-    "cloudinary": {
-      "cloud_name": "pickk"
-    },
-    "share": {
-      "message": "Love sports? Predict what happens next with Pickk!"
     },
     "oneSignal": {
       "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
@@ -52,5 +38,4 @@
     "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
     "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
   }
-
 }
