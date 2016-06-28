@@ -35,7 +35,7 @@
     }
   },
   "oneSignal": {
-    "PLEASE": "DO NOT MOVE THIS SECTION FROM THE ROOT OF THE SETTINGS OBJECT!!!",
+    "_": "This section should stay on the first level of configuration file (required by `astrocoders:one-signal`)",
     "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
     "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
   }
