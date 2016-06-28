@@ -5,16 +5,18 @@ Meteor.methods({
 		const text = "Guess What Happens on " + message;
 		const users = Meteor.users.find({_id: {$in: userIds}}, {"oneSignalToken": 1}).fetch();
 		const tokens = _.without(_.uniq(_.pluck(users, "oneSignalToken")), undefined);
-		OneSignal.Notifications.create(tokens, {
-			contents: {
-				en: text
-			},
-			headings: {
-				en: "Pickk question"
-			},
-			ios_badgeType: "Increase",
-			ios_badgeCount: 1
-		});
+		if (tokens.length) {
+			OneSignal.Notifications.create(tokens, {
+				contents: {
+					en: text
+				},
+				headings: {
+					en: "Pickk question"
+				},
+				ios_badgeType: "Increase",
+				ios_badgeCount: 1
+			});
+		}
 	},
 
 	'emptyInactive': function(game) {
