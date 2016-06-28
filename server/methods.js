@@ -248,7 +248,6 @@ Meteor.methods({
 						'profile.username': 1,
 						'profile.coins': 1,
 						'profile.avatar': 1,
-						'services.twitter.screenName': 1,
 						'_id': 1
 					}
 				}).fetch();
@@ -265,7 +264,6 @@ Meteor.methods({
 					'profile.username': 1,
 					'profile.diamonds': 1,
 					'profile.avatar': 1,
-					'services.twitter.screenName': 1,
 					'_id': 1
 				}
 			}).fetch();

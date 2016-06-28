@@ -24,12 +24,7 @@ Template.userProfile.helpers({
     return user 
   },
   username: function(){
-    var twitter = this.services.twitter
-    if(twitter){
-      return twitter.screenName
-    } else {
-      return this.profile.username
-    }
+    return this.profile.username
   },
   group: function() {
     return this.profile.groups

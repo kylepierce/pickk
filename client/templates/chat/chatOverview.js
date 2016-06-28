@@ -145,11 +145,7 @@ Template.chatRoom.helpers({
     return user
   },
   chatUser: function() {
-    if (this.services && this.services.twitter && this.services.twitter.screenName) {
-      return this.services.twitter.screenName
-    } else {
-      return this.profile.username
-    }
+    return this.profile.username;
   },
   userCoins: function() {
     return this.profile.coins

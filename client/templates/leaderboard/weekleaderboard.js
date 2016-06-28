@@ -12,11 +12,6 @@ Template.weekLeaderboard.helpers({
 		}
 	},
 	'username': function(){
-		var twitter = this.services.twitter
-  	if(twitter){
-   	 return twitter.screenName
-  	} else {
    	 return this.profile.username
-  	}
 	}
 }); 

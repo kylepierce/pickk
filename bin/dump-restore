@@ -2,8 +2,7 @@
 
 set -eux
 
-COMMAND=dump-restore
-
 DIRNAME=$(cd `dirname $0` && pwd)
 
-source $DIRNAME/generic/execute
+source $DIRNAME/config
+source $DIRNAME/mongo/dump-restore

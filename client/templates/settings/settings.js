@@ -1,13 +1,7 @@
 Template.settings.helpers({
   username: function() {
     var currentUser = Meteor.user();
-    if (currentUser.profile.username) {
-      return currentUser.profile.username;
-    } else if (currentUser.services && currentUser.twitter && currentUser.services.twitter.screenName) {
-      return currentUser.services.twitter.screenName;
-    } else {
-      return "";
-    }
+    return currentUser.profile.username || "";
   },
 
 

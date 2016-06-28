@@ -25,13 +25,8 @@ Template.leaderboard.helpers({
 		var list = fixed.reverse()
 		return _.first(list, 25)
 	},
-	'username': function(){
-		var twitter = this.services.twitter
-  	if(twitter){
-   	 return twitter.screenName
-  	} else {
-   	 return this.profile.username
-  	}
+	'username': function() {
+		return this.profile.username
 	}
 }); 
 

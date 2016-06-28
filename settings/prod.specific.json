@@ -1,1 +1,9 @@
-{}
+{
+  "mongo": {
+    "username": "getpickk",
+    "password": "Imonaboat118",
+    "host": "candidate.43.mongolayer.com",
+    "port": "11034",
+    "db": "pickk-production"
+  }
+}
