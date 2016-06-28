@@ -1,7 +1,8 @@
 Fixtures.push(Meteor.users, {
   CharlieDalton: {
     profile: {
-      name: "Charlie Dalton"
+      name: "Charlie Dalton",
+      role: "admin"
     }
   },
   KnoxOverstreet: {
