@@ -73,6 +73,18 @@ var setUsernames = function() {
   Meteor._debug("[setUsernames] Done");
 };
 
+var setIsOnboarded = function() {
+  Meteor._debug("[setIsOnboarded] Running");
+  Meteor.users.update({}, {$set: {"profile.isOnboarded": true}}, {multi: true});
+  Meteor._debug("[setIsOnboarded] Done");
+};
+
+var clearBirthdays = function() {
+  Meteor._debug("[clearBirthdays] Running");
+  Meteor.users.update({}, {$unset: {"profile.birthday": 0}}, {multi: true});
+  Meteor._debug("[clearBirthdays] Done");
+};
+
 // Migrations.add({
 //   version: version++,
 //   up: cleanUsernames
@@ -87,8 +99,19 @@ var setUsernames = function() {
 //   version: version++,
 //   up: setUsernames
 // });
+//
+// Migrations.add({
+//   version: version++,
+//   up: setIsOnboarded
+// });
+//
+// Migrations.add({
+//   version: version++,
+//   up: clearBirthdays
+// });
 
 Meteor.startup(cleanUsernames);
 Meteor.startup(unsetDuplicateUsernames);
 Meteor.startup(setUsernames);
-
+Meteor.startup(setIsOnboarded);
+Meteor.startup(clearBirthdays);

@@ -1,77 +1,45 @@
 <template name="settings">
-	<!-- Standard Nav instead of the custom nav design -->
-
   {{#ionView}}
     {{#ionContent}}
+      <div class="container">
+        {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id="settings"}}
+          <div class="list">
+            {{> afQuickField name='username'}}
+            {{> afQuickField name='firstName'}}
+            {{> afQuickField name='lastName'}}
+            {{> afQuickField name='birthday'}}
+            <label class="item item-input item-stack-label">
+              <span class="input-label">
+                {{> userAvatar userId=currentUser._id}}
+                <i class="fa fa-spinner fa-spin loading" style="display: none;"></i></span>
+              <br>
+              <label style="display: inline-block; vertical-align: top">
+                <span>Click to change avatar</span>
+                <input type="file" name="avatar" style="display: none">
+              </label>
+            </label>
 
-  <div class="container">
-	<form id="settings">
-		<div style="background-color:white;">
-		<div class="list">
-		<label class="item item-input item-stack-label">
-		<span class="input-label">Username:</span>
-			<input type="text"  name="username" value="{{username}}" required>
-		</label>
-		<div id="usernameReq" style="clear: both; float:left; padding-left: 15px; display: none; padding: 10px">
-		<strong>Username Requirements</strong>
-			<ul>
-				<li id="name" style="display: none;">That username already exists</li>
-				<li id="short">Username needs to be longer than 3 characters</li>
-				<li id="long">Username needs to be Shorter than 15 characters</li>
-				<li id="space">No spaces</li>
-			</ul>	
-		</div> 
+            {{> yield 'submitButton'}}
+          </div>
+        {{/autoForm}}
+      </div>
 
-
-		<label class="item item-input item-stack-label">
-		  <span class="input-label">First Name:</span>
-			<input type="text" name="firstName" value="{{firstName}}">
-		</label>
- 
-		<label class="item item-input item-stack-label">
-		  <span class="input-label">Last Name:</span>
-			<input type="text" name="lastName" value="{{lastName}}">
-		</label>
-    <label class="item item-input item-stack-label">
-      <span class="input-label">Birthday:</span>
-      <input type="date" name="birthday" value="{{birthday}}">
-    </label>
-
-    <label class="item item-input item-stack-label">
-      <span class="input-label">      {{> userAvatar userId=currentUser._id}}
-      <i class="fa fa-spinner fa-spin loading" style="display: none;"></i></span>
-
-      <br>
-      <label style="display: inline-block; vertical-align: top">
-          <span>Click to change avatar</span>
-          <input type="file" name="avatar" style="display: none">
-      </label>
-    </label>
-
-			{{> yield 'submitButton'}}
-		</div>
-		</div>
-	</form> 
-  </div>
-
-    {{/ionContent}} 
+    {{/ionContent}}
   {{/ionView}}
 </template>
-
-<template name="submitNew"><input name="status" type="submit" class="button button-large button-positive" value="Finish Profile"></template>
-
-<template name="submitOld"><input name="status" type="submit" class="button button-large button-positive" value="Update Profile"></template>
-
+<template name="submitNew">
+  <input name="status" type="submit" class="button button-large button-positive" value="Finish Profile"></template>
+<template name="submitOld">
+  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile"></template>
 <template name="newUserHeader">
-	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header">
-		{{#with profile}} {{this.profile.username}} {{/with}} Create Profile
-		</h1>
-	{{/contentFor}}
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      {{#with profile}} {{this.profile.username}} {{/with}} Create Profile
+    </h1>
+  {{/contentFor}}
 </template>
-
 <template name="oldUserHeader">
-	{{#contentFor "headerButtonLeft"}}
+  {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
       {{#if isAndroid}}
         {{> ionIcon icon='android-more-vertical'}}
@@ -81,7 +49,7 @@
     </button>
   {{/contentFor}}
 
- {{#contentFor "headerTitle"}}
+  {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Update Profile</h1>
- {{/contentFor}}
+  {{/contentFor}}
 </template>

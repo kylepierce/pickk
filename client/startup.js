@@ -1,1 +1,1 @@
-Session.set('chatLimit', 10)
+Session.set('chatLimit', 10);

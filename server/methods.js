@@ -25,8 +25,11 @@ Meteor.methods({
 
 	// Update users info from the settings page
 
-	'updateProfile': function(userId, username, firstName, lastName, birthday) {
-		UserList.update(userId,
+	'updateProfile': function(username, firstName, lastName, birthday) {
+		if (!this.userId) {
+			return;
+		}
+		UserList.update(this.userId,
 			{
 				$set: {
 					'profile.username': username,
@@ -35,7 +38,7 @@ Meteor.methods({
 					'profile.birthday': birthday
 				}
 			});
-    var user = UserList.findOne(userId);
+    var user = UserList.findOne(this.userId);
     mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
@@ -1218,7 +1221,7 @@ Meteor.methods({
 		if (!username) {
 			return true;
 		}
-		return !UserList.find({_id: {$ne: this.userId}, "profile.username": username}).count()
+		return !UserList.find({_id: {$ne: this.userId}, "profile.username": new RegExp("^" + escapeRegExp(username) + "$", "i")}).count()
 	},
 
 	'exportToMailChimp': function(limit) {

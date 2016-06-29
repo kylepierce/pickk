@@ -1,20 +1,3 @@
-Accounts.onCreateUser(function(options, user) {
-  user.profile = {
-    coins: 10000,
-    avatar: null,
-    followers: [],
-    following: [],
-    badges: [],
-    trophies: [],
-    groups: [],
-    firstName: '',
-    lastName: ''
-  };
-  user.pendingNotifications = [];
-  mailChimpLists.subscribeUser(user);
-  return user;
-});
-
 Meteor.startup(function() {
 
   // Not sure what this is.

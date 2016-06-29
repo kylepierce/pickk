@@ -21,7 +21,7 @@ Fixtures.pre(Meteor.users, function(users) {
     results.push(_.defaults(user, {
       emails: [
         {
-          address: _id.toLowerCase() + "@pickk.net",
+          address: _id.toLowerCase() + "@example.com",
           verified: true
         }
       ],

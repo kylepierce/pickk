@@ -29,8 +29,8 @@ Template.home.helpers({
 		return Games.findOne({live: true});
 	},
   scoreMessage: function () {
-    var userData = Meteor.user();
-    var notifications = userData.pendingNotifications || [];
+    var user = Meteor.user();
+    var notifications = user && user.pendingNotifications || [];
 
     notifications.forEach(function (post) {
       var id = post._id

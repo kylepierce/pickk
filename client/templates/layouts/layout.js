@@ -9,6 +9,7 @@ Template.mainView.rendered = function() {
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
+    Router.go("/")
 	},
   'click .js-share-link': function(event) {
     event.preventDefault();

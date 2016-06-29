@@ -10,6 +10,9 @@ mailChimpLists.subscribeUser = function(user, defaults, callback) {
   if (!email) {
     return; // Twitter login
   }
+  if (email.match(/@example\.com$/)) {
+    return; // Fixture user
+  }
   return this.subscribe(_.defaults({
     id: Meteor.settings.private.mailchimp.listId,
     email: {
