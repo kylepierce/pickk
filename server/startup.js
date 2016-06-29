@@ -1,12 +1,12 @@
 var fs = Npm.require('fs');
 
 Meteor.startup(function() {
-  var databaseReset = !Migrations._collection.findOne("control");
-  if (databaseReset) {
-    Fixtures.insertAll([]);
-  } else {
-    Fixtures.ensureAll([]);
-  }
+  // var databaseReset = !Migrations._collection.findOne("control");
+  // if (databaseReset) {
+  //   Fixtures.insertAll([]);
+  // } else {
+  //   Fixtures.ensureAll([]);
+  // }
   migrate();
 });
 
