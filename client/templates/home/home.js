@@ -771,9 +771,12 @@ Template.withoutIcons.helpers({
 
 Template.playerCard.helpers({
   playerInfo: function () {
-    var playerAtBat = AtBat.findOne({active: true})
-    var playerId = playerAtBat.playerId
-    var player = Players.findOne({_id: playerId})
-    return player
+    var currentUser = Meteor.userId();
+    var question = QuestionList.findOne(
+        {active: true, commercial: false,
+          usersAnswered: {$nin: [currentUser]}},
+        {sort: {game_id: 1, dateCreated: 1}, limit: 1});
+
+    return question && question.player;
   }
 });
