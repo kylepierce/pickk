@@ -73,22 +73,17 @@ var setUsernames = function() {
   Meteor._debug("[setUsernames] Done");
 };
 
-// Migrations.add({
-//   version: version++,
-//   up: cleanUsernames
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: unsetDuplicateUsernames
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: setUsernames
-// });
+Migrations.add({
+  version: version++,
+  up: cleanUsernames
+});
 
-Meteor.startup(cleanUsernames);
-Meteor.startup(unsetDuplicateUsernames);
-Meteor.startup(setUsernames);
+Migrations.add({
+  version: version++,
+  up: unsetDuplicateUsernames
+});
 
+Migrations.add({
+  version: version++,
+  up: setUsernames
+});
