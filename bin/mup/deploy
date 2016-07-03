@@ -2,7 +2,16 @@
 
 set -eux
 
-echo $DIRNAME/../settings.json
+$DIRNAME/merge-settings $ENV > $DIRNAME/../settings.json
 
-$DIRNAME/merge-settings prod > $DIRNAME/../settings.json
+MUP_SOURCE_FILE=$DIRNAME/../mup/$ENV/mup.json
+if [ ! -f $MUP_SOURCE_FILE ]; then
+    echo "ERROR: $MUP_SOURCE_FILE doesn't exist"
+    exit 1
+fi
+
+cp $MUP_SOURCE_FILE $DIRNAME/../mup.json
+
 (cd $DIRNAME/.. && mup deploy)
+
+source $DIRNAME/mup/clear
