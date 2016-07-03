@@ -78,10 +78,6 @@ Meteor.methods({
 	'acceptRequest': function(groupId, id) {
 		Meteor.call('removeRequest', id, groupId)
 		Meteor.call('joinGroup', id, groupId)
-		// var group = Groups.findOne({_id: groupId});
-
-		// var message = "You have been added to " + group.groupId
-		// Meteor.call('createPendingNotification', );
 	},
 
 	'denyRequest': function(groupId, id) {
