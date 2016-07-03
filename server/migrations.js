@@ -85,6 +85,86 @@ var clearBirthdays = function() {
   Meteor._debug("[clearBirthdays] Done");
 };
 
+var normalizeQuestionsCollection = function() {
+  Meteor._debug("[normalizeQuestionsCollection] Running");
+  // TODO: ask Kyle about it
+  // QuestionList.update({commercial: null}, {$unset: {usersAnswered: 0}}, {multi: true});
+  QuestionList.remove("oSkEEYv8wTMKzfYQp"); // gameId contains an object // also, que: 'Upload a photo to make it easier for your friends to find you. Change your photo in settings!'
+  Meteor._debug("[normalizeQuestionsCollection] Done");
+};
+
+var createAnswersCollection = function() {
+  Meteor._debug("[createAnswersCollection] Running");
+  if (Meteor.settings.public.isDebug) {
+    Answers.remove({});
+  }
+  var question, answer, counter = 0;
+  Meteor.users.find().forEach(function(user) {
+    if (!user.questionAnswered) {
+      return;
+    }
+    for (var i = 0; i < user.questionAnswered.length; i++) {
+      answer = user.questionAnswered[i];
+      if (answer.questionId === "oSkEEYv8wTMKzfYQp") {
+        continue; // see normalizeQuestionsCollection
+      }
+      try {
+        check(answer, {
+          questionId: String,
+          answered: String,
+          wager: Match.Optional(String),
+          description: Match.Optional(String)
+        });
+      } catch (e) {
+        Meteor._debug(answer);
+        throw e;
+      }
+      question = QuestionList.findOne(answer.questionId);
+      try {
+        check(question, {
+          _id: String,
+          que: String,
+          gameId: String,
+          playerId: Match.Optional(String),
+          createdBy: String,
+          dateCreated: Date,
+          active: Boolean,
+          commercial: Match.Optional(Match.OneOf(null, true, false)),
+          binaryChoice: Match.Optional(Boolean),
+          atBatQuestion: Match.Optional(Boolean),
+          options: Object,
+          usersAnswered: [String],
+          play: String
+        });
+      } catch (e) {
+        Meteor._debug(question);
+        throw e;
+      }
+      Answers.insert({
+        userId: user._id,
+        gameId: question.gameId,
+        questionId: answer.questionId,
+        answer: answer.answered,
+        wager: answer.wager || 0,
+        multiplier: 0,
+        description: answer.description || ""
+      })
+    }
+    if (counter && counter % 100 === 0) {
+      Meteor._debug("[createAnswersCollection] Processed " + counter + " users");
+    }
+    counter++;
+  });
+  Meteor._debug("[createAnswersCollection] Done");
+};
+
+var dropAnswerFields = function() {
+  Meteor._debug("[dropAnswerFields] Running");
+  Meteor.users.update({}, {$unset: {questionAnswered: 0}}, {multi: true});
+  QuestionList.update({}, {$unset: {usersAnswered: 0}}, {multi: true});
+  Meteor._debug("[dropAnswerFields] Done");
+};
+
 // Migrations.add({
 //   version: version++,
 //   up: cleanUsernames
@@ -109,9 +189,29 @@ var clearBirthdays = function() {
 //   version: version++,
 //   up: clearBirthdays
 // });
+//
+// Migrations.add({
+//   version: version++,
+//   up: normalizeQuestionsCollection
+// });
+//
+// Migrations.add({
+//   version: version++,
+//   up: createAnswersCollection
+// });
+//
+// Migrations.add({
+//   version: version++,
+//   up: dropAnswerFields
+// });
 
-Meteor.startup(cleanUsernames);
-Meteor.startup(unsetDuplicateUsernames);
-Meteor.startup(setUsernames);
-Meteor.startup(setIsOnboarded);
-Meteor.startup(clearBirthdays);
+// temporary conditions, should be removed after all migrations pass
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("cleanUsernames")) Meteor.startup(cleanUsernames);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("unsetDuplicateUsernames")) Meteor.startup(unsetDuplicateUsernames);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("setUsernames")) Meteor.startup(setUsernames);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("setIsOnboarded")) Meteor.startup(setIsOnboarded);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("clearBirthdays")) Meteor.startup(clearBirthdays);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("normalizeQuestionsCollection")) Meteor.startup(normalizeQuestionsCollection);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("createAnswersCollection")) Meteor.startup(createAnswersCollection);
+if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("dropAnswerFields")) Meteor.startup(dropAnswerFields);
+
