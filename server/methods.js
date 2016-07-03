@@ -219,24 +219,6 @@ Meteor.methods({
 		})
 	},
 
-	'createPendingNotification': function(id, type, message) {
-		var timeCreated = new Date();
-		var id = Random.id();
-		UserList.update({_id: accountToFollow},
-			{
-				$push: {
-					pendingNotifications: {
-						_id: id,
-						dateCreated: timeCreated,
-						type: type,
-						message: message,
-					}
-				}
-			});
-	},
-
-
-
 	'loadLeaderboard': function() {
 		var liveGame = Games.findOne({live: true});
 		if (liveGame) {
