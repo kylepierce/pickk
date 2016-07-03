@@ -1,7 +1,15 @@
 {
+  "private": {
+    "mailchimp": {
+      "isEnabled": false
+    }
+  },
   "public": {
     "isDebug": true,
     "isDevLogin": false,
     "isCronEnabled": false
+  },
+  "oneSignal": {
+    "isEnabled": false
   }
 }

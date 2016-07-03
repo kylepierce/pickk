@@ -13,16 +13,21 @@ mailChimpLists.subscribeUser = function(user, defaults, callback) {
   if (email.match(/@example\.com$/)) {
     return; // Fixture user
   }
-  return this.subscribe(_.defaults({
-    id: Meteor.settings.private.mailchimp.listId,
-    email: {
-      email: email
-    },
-    merge_vars: {
-      FNAME: user.profile.firstName,
-      LNAME: user.profile.lastName,
-      UNAME: user.profile.username
-    },
-    update_existing: true
-  }, defaults), callback);
+  if (Meteor.settings.private.mailchimp.isEnabled) {
+    return this.subscribe(_.defaults({
+      id: Meteor.settings.private.mailchimp.listId,
+      email: {
+        email: email
+      },
+      merge_vars: {
+        FNAME: user.profile.firstName,
+        LNAME: user.profile.lastName,
+        UNAME: user.profile.username
+      },
+      update_existing: true
+    }, defaults), callback);
+  } else {
+    callback && callback();
+    return null;
+  }
 };

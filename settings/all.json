@@ -1,5 +1,8 @@
 {
   "private": {
+    "mailchimp": {
+      "isEnabled": true
+    },
     "cloudinary": {
       "cloud_name": "pickk"
     },
@@ -23,5 +26,8 @@
     "share": {
       "message": "Love sports? Predict what happens next with Pickk!"
     }
+  },
+  "oneSignal": {
+    "isEnabled": true
   }
 }
