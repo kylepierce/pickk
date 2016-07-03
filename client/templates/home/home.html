@@ -53,7 +53,6 @@
 			<!-- Commerical Break Has Been Activated -->
 		{{#if commercial}}
 			{{#if commercialQuestions}}
-
 				<!-- Show Commerical Quesitons that have Binary Options (No Multipler) -->
 				{{#if binary}}
 					<span style="text-align: center;">
@@ -498,7 +497,8 @@
       {{#ionSlide class=""}}
         {{#with playerInfo}}
         	<div  class="player-slider">
-					<span class="player-name">{{name}} {{number}}</span>
+					<span class="player-name">{{first_name}} {{last_name}} {{jersey_number}}</span>
+<!--
 					<table>
 						<thead>
 							<td>AVG</td>
@@ -513,6 +513,7 @@
 							<td>{{stats.y2016.obp}}</td>
 						</tr>
 					</table>
+-->
 					</div>
 				{{/with}}
       {{/ionSlide}}

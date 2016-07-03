@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -eux
+
+(cd $DIRNAME/.. && mupx logs -n 100 $@)

@@ -38,18 +38,19 @@ Template.home.helpers({
       var shareMessage = "+!Meow " + post.shareMessage
       var sharable = post.sharable
       Session.set("shareMessage", shareMessage);
-      if(post.type === "score" && post.read === false ){
+      if (post.type === "mention" && post.read === false){
+        Meteor.call('readNotification', id);
+        sAlert.warning('<em>You were mentioned in chat:</em> <strong>"' + message + '"</strong>', {effect: 'stackslide', html: true});
+      } else if (post.type === "score" && post.read === false ) {
         Meteor.call('readNotification', id);
         if(sharable == true){
-          var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'  
+          var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'
 
           sAlert.info(message , {effect: 'stackslide', html: true});
         } else {
           sAlert.info(message , {effect: 'stackslide', html: true});
         }
-        
-
-      } else if(post.type === "diamonds" && post.tag == null && post.read === false ){
+      } else if (post.type === "diamonds" && post.tag == null && post.read === false ){
         message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'        
         Meteor.call('readNotification', id);
          
@@ -771,9 +772,12 @@ Template.withoutIcons.helpers({
 
 Template.playerCard.helpers({
   playerInfo: function () {
-    var playerAtBat = AtBat.findOne({active: true})
-    var playerId = playerAtBat.playerId
-    var player = Players.findOne({_id: playerId})
-    return player
+    var currentUser = Meteor.userId();
+    var question = QuestionList.findOne(
+        {active: true, commercial: false,
+          usersAnswered: {$nin: [currentUser]}},
+        {sort: {game_id: 1, dateCreated: 1}, limit: 1});
+
+    return question && question.player;
   }
 });

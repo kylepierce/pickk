@@ -12,6 +12,6 @@ fi
 
 cp $MUP_SOURCE_FILE $DIRNAME/../mup.json
 
-(cd $DIRNAME/.. && mup deploy)
+(cd $DIRNAME/.. && mupx deploy)
 
-source $DIRNAME/mup/clear
+source $DIRNAME/mupx/clear

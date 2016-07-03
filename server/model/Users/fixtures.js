@@ -18,6 +18,9 @@ Fixtures.pre(Meteor.users, function(users) {
   results = [];
   for (_id in users) {
     user = users[_id];
+    _.defaults(user.profile, {
+      username: _id
+    });
     results.push(_.defaults(user, {
       emails: [
         {

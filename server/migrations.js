@@ -165,45 +165,45 @@ var dropAnswerFields = function() {
   Meteor._debug("[dropAnswerFields] Done");
 };
 
-// Migrations.add({
-//   version: version++,
-//   up: cleanUsernames
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: unsetDuplicateUsernames
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: setUsernames
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: setIsOnboarded
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: clearBirthdays
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: normalizeQuestionsCollection
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: createAnswersCollection
-// });
-//
-// Migrations.add({
-//   version: version++,
-//   up: dropAnswerFields
-// });
+Migrations.add({
+  version: version++,
+  up: cleanUsernames
+});
+
+Migrations.add({
+  version: version++,
+  up: unsetDuplicateUsernames
+});
+
+Migrations.add({
+  version: version++,
+  up: setUsernames
+});
+
+Migrations.add({
+  version: version++,
+  up: setIsOnboarded
+});
+
+Migrations.add({
+  version: version++,
+  up: clearBirthdays
+});
+
+Migrations.add({
+  version: version++,
+  up: normalizeQuestionsCollection
+});
+
+Migrations.add({
+  version: version++,
+  up: createAnswersCollection
+});
+
+Migrations.add({
+  version: version++,
+  up: dropAnswerFields
+});
 
 // temporary conditions, should be removed after all migrations pass
 if (!Meteor.settings.migrations || ~Meteor.settings.migrations.indexOf("cleanUsernames")) Meteor.startup(cleanUsernames);

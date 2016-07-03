@@ -2,7 +2,8 @@ Meteor.methods({
 	'addChatMessage': function(author, messagePosted, groupId) {
 		var timeCreated = new Date();
 		var id = Random.id();
-		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "");
+		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "").trim();
+		var plainMessagePosted = messagePosted;
 		var code = messagePosted.slice(0,6)
 		if (code == "+!Meow") {
 				var message = messagePosted.slice(7, -1)
@@ -47,12 +48,23 @@ Meteor.methods({
 			var messagePosted = "<i>Removed</i>"
 		}
 
-		Chat.insert({
+		var messageId = Chat.insert({
 			_id: id,
 			dateCreated: timeCreated,
 			group: groupId,
 			user: author,
 			message: messagePosted
 		});
-	},
-})
+
+		var usernames = messagePosted.match(/\@[\w\d_]+/g);
+		for (var i = 0; i < usernames.length; i++) {
+			var username = usernames[i].slice(1); // remove @
+			var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
+			if (user) {
+				// Push notifications don't support HTML, so we'll have to use plainMessagePosted
+				createPendingNotification(user._id, messageId + "_" + user._id, "mention", plainMessagePosted)
+			}
+		}
+
+	}
+});
