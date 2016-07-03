@@ -5,6 +5,6 @@ set -eux
 DIRNAME=$(cd `dirname $0` && pwd)
 
 source $DIRNAME/config
-source $DIRNAME/mup/deploy
+source $DIRNAME/mupx/deploy
 notify-send -u normal -i face-glasses "Deployed to $DOMAIN!"
 source $DIRNAME/logs
