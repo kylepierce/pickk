@@ -4,6 +4,8 @@ set -eux
 
 DIRNAME=$(cd `dirname $0` && pwd)
 
+ENV="prod"
+
 source $DIRNAME/config
-$DIRNAME/merge-settings prod > /tmp/prod.json
+$DIRNAME/merge-settings $ENV > /tmp/$ENV.json
 source $DIRNAME/mongo/production-mongo

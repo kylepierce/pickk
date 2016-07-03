@@ -1,5 +1,6 @@
 {
   "private": {
+    "migrations": [],
     "mailchimp": {
       "isEnabled": true
     },
