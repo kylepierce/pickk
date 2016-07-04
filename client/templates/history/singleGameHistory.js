@@ -264,7 +264,8 @@ Template.singleGameHistory.helpers({
 					winningObj.winnings = parseInt(winningObj.wager)
 					return winningObj;
 				} else {
-					winningtrue.titleObj.multiplier = 0
+					winningObj.description = this.options.option6.title
+					winningObj.multiplier = 0
 					winningObj.correct = false
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					return winningObj;
