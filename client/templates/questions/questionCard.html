@@ -1,0 +1,76 @@
+<template name="questionCard">
+	{{#if notLive}}
+		<!-- Pre Game Predictions for Daily Diamonds -->
+		{{#if gameQuestion}}
+		
+			{{#each gameQuestions}}
+			  {{> predictionQuestions}}
+			{{/each}}
+
+		<!-- No Game and No Questions -->
+		{{else}}
+			<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
+			<h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a></h5>
+		{{/if}}
+	{{/if}}
+
+	{{#if live}}
+			<!-- Commerical Break Has Been Activated -->
+		{{#if commercial}}
+			{{#if commercialQuestions}}
+				<!-- Show Commerical Quesitons that have Binary Options (No Multipler) -->
+				{{#if binary}}
+					<span style="text-align: center;">
+						<h4>Free Pickk!</h4>
+						<span style="text-align: center;">
+							<h5>500 coins for Pickking <br> 2000 coins if right!</h5>
+						</span>	
+					</span>
+
+					{{#each questions}}
+						{{> binaryChoice}}
+					{{/each}}
+				
+				<!-- Show Multiple Answer Questions -->
+				{{else}}
+					{{#each multiAnswerCommQuestions}}
+						{{> commercialQuestion}}
+					{{/each}}
+				{{/if}}
+			
+			<!-- No Questions Available  -->
+			{{else}}
+				<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
+				<!-- <h5 class="next-play">Commercial Break!</h5>	 -->
+				<br><br>
+				{{{commercialRandom}}}
+			{{/if}}
+		
+		{{else}}
+			{{#if active}}
+				{{> playerCard}}
+				{{#if multiOptions}}
+					<!-- Show In Game Quesitons that have Binary Options (With Multipler) -->
+					{{#if ingameBinary}}
+							{{#each twoOption}}
+								{{> twoOptionQuestions}}
+							{{/each}}
+					{{else}}
+							
+							{{#each activeQuestions}}
+								{{> activeQuestion}}
+							{{/each}}
+					{{/if}}
+				
+			{{else}}
+					<!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
+					<h5 class="next-play">Next question coming up soon!</h5>
+					{{#with lastPlay}}
+					<p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
+						<h5 class="next-play">You guessed {{description}} for {{wager}}</h5>
+					{{/with}}
+			{{/if}}
+			{{/if}}
+		{{/if}}
+	{{/if}}
+</template>
