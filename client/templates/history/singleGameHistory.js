@@ -55,10 +55,10 @@ Template.singleGameHistory.helpers({
         break;
     }
   },
-  question: function() {
-    var userId = Meteor.userId();
-    var questionsAnswered = QuestionList.find({"usersAnswered": {$in: [userId]}}, {sort: {dateCreated: -1}}).fetch()
-    return questionsAnswered
+  answeredQuestions: function() {
+    var answers = Answers.find({gameId: this._id}).fetch();
+    var answeredQuestionIds = _.pluck(answers, "questionId");
+    return QuestionList.find({_id: {$in: answeredQuestionIds}}, {sort: {dateCreated: -1}});
   },
   userAnswer: function(questionFromTemplate_id, play, questionFromTemplate) {
     var answer = Answers.findOne({questionId: questionFromTemplate_id});
