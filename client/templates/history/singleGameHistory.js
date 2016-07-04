@@ -93,38 +93,31 @@ Template.singleGameHistory.helpers({
 		return questionsAnswered
 	},
 	userAnswer: function(questionFromTemplate_id, play, questionFromTemplate){
-		var answers = Answers.find({questionId: questionFromTemplate_id}).fetch();
-		console.log(answers);
-		var questionIds = _.pluck(answers, "questionId")
-		var spot = _.indexOf(questionIds, questionFromTemplate_id)
-		var questionId = questionIds[spot]
-		var answer = answers[spot]
-		var userAnswered = answer.answered
-		var wager = answer.wager
+		var answer = Answers.findOne({questionId: questionFromTemplate_id});
+		var wager, binaryChoice;
 		var commercial = questionFromTemplate.commercial
-		if(answer.wager === undefined){
-			var wager = 500
+		if (answer.wager === undefined){
+			wager = 500
 		} else {
-			var binaryChoice = answer.wager
+			wager = answer.wager
 		}
-		if(questionFromTemplate.binaryChoice === undefined){
-			var binaryChoice = true
+		if (questionFromTemplate.binaryChoice === undefined){
+			binaryChoice = true
 		} else {
-			var binaryChoice = false
+			binaryChoice = false
 		}
 		var active = questionFromTemplate.active
-		var playName = this.options.option1.title
 		var winningObj = {
 				"active": active,
 				"wager": wager,
 				"winnings": 0,
-				"answered": userAnswered,
+				"answered": answer.answered,
 				"commercial": commercial,
 				"binaryChoice": binaryChoice,
 				"correctAnswer": play
 			}
 
-		switch (userAnswered){
+		switch (answer.answered){
 			case "option1":
 				if(play === "option1"){
 
