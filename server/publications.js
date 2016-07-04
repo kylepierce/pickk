@@ -1,6 +1,6 @@
 Meteor.publish('activeQuestions', function(){
 	var currentUserId = this.userId;
-	return QuestionList.find(
+	return Questions.find(
 				{active: true, 
 				usersAnswered: {$nin: [currentUserId]}}, 
 				{sort: {dateCreated: 1,}});
@@ -17,11 +17,11 @@ Meteor.publish("chatMessagesCount", function(groupId) {
 
 Meteor.publish('userNotAnswered', function(){
 	var currentUserId = this.userId;
-		return QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+		return Questions.find({active: true}, {sort: {dateCreated: 1}});
 });
 
 Meteor.publish('questions', function(){
-	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
+	var activeQuestions = Questions.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
 	if(activeQuestions){
 		return activeQuestions 
 	}
@@ -29,7 +29,7 @@ Meteor.publish('questions', function(){
 });
 
 // Meteor.publish('activeQuestions', function(){
-// 	var activeQuestions = QuestionList.find({active: true}, {sort: {dateCreated: 1}});
+// 	var activeQuestions = Questions.find({active: true}, {sort: {dateCreated: 1}});
 // 	if(activeQuestions){
 // 		return activeQuestions
 // 	}
@@ -37,7 +37,7 @@ Meteor.publish('questions', function(){
 // });
 
 Meteor.publish('pendingQuestions', function(){
-	var pendingQuestions = QuestionList.find({active: null}, {sort: {dateCreated: -1}});
+	var pendingQuestions = Questions.find({active: null}, {sort: {dateCreated: -1}});
 	if(pendingQuestions){
 		return pendingQuestions
 	}
@@ -45,7 +45,7 @@ Meteor.publish('pendingQuestions', function(){
 });
 
 Meteor.publish('gameQuestions', function(){
-  var allQuestions = QuestionList.find({gameId: 'prediction'});
+  var allQuestions = Questions.find({gameId: 'prediction'});
   if(allQuestions){
     return allQuestions
   }
@@ -53,7 +53,7 @@ Meteor.publish('gameQuestions', function(){
 })
 
 Meteor.publish('pendingGameQuestions', function(){
-  var pendingQuestions = QuestionList.find({active: "pending"}, {sort: {dateCreated: 1}});
+  var pendingQuestions = Questions.find({active: "pending"}, {sort: {dateCreated: 1}});
   if(pendingQuestions){
     return pendingQuestions
   }
@@ -61,7 +61,7 @@ Meteor.publish('pendingGameQuestions', function(){
 });
 
 Meteor.publish('oldQuestions', function(){
-	var oldQuestions = QuestionList.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
+	var oldQuestions = Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
 	if(oldQuestions){
 		return oldQuestions
 	}
@@ -69,7 +69,7 @@ Meteor.publish('oldQuestions', function(){
 })
 
 Meteor.publish('allQuestions', function(game){
-	var allQuestions = QuestionList.find({gameId: game});
+	var allQuestions = Questions.find({gameId: game});
 	if(allQuestions){
 		return allQuestions
 	}
@@ -77,7 +77,7 @@ Meteor.publish('allQuestions', function(game){
 })
 
 Meteor.publish('everyQuestions', function(){
-  var allQuestions = QuestionList.find({});
+  var allQuestions = Questions.find({});
   if(allQuestions){
     return allQuestions
   }
@@ -86,12 +86,12 @@ Meteor.publish('everyQuestions', function(){
 
 Meteor.publish('questionsUserAnswered', function(user){
   var selector = {usersAnswered: {$in: [user]}}
-  return QuestionList.find(selector);
+  return Questions.find(selector);
 })
 
 Meteor.publish('questionsByGameId', function(gameId) {
   check(gameId, String);
-  return QuestionList.find({gameId: gameId});
+  return Questions.find({gameId: gameId});
 })
 
 Meteor.publish('answersByGameId', function(gameId) {
@@ -100,7 +100,7 @@ Meteor.publish('answersByGameId', function(gameId) {
 })
 
 Meteor.publish('singleGame', function(id){
-  var singleGame = QuestionList.find({gameId: id}, {sort: {dateCreated: 1}});
+  var singleGame = Questions.find({gameId: id}, {sort: {dateCreated: 1}});
   if(singleGame){
     return singleGame
   }

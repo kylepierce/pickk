@@ -20,12 +20,12 @@ Template.singleGame.helpers({
     return Games.findOne({_id: Router.current().params._id});
   },
   question: function(){
-  	return QuestionList.find({gameId: Router.current().params._id}).fetch()
+  	return Questions.find({gameId: Router.current().params._id}).fetch()
   },
   'numberOfQuestions': function(){
     var game = Router.current().params._id
     Meteor.subscribe('allQuestions', game)
-    var gameData = QuestionList.find({gameId: game}, {sort: {dateCreated: -1}}).fetch()    
+    var gameData = Questions.find({gameId: game}, {sort: {dateCreated: -1}}).fetch()    
     return gameData
   },
   liveGame: function(){

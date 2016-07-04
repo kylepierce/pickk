@@ -87,14 +87,14 @@ var clearBirthdays = function() {
 
 var normalizeQuestionsCollection = function() {
   Meteor._debug("[normalizeQuestionsCollection] Running");
-  QuestionList.remove({que: null});
-  QuestionList.remove({gameId: {$exists: false}});
-  QuestionList.remove({gameId: null});
-  QuestionList.find({"gameId._id": {$exists: true}}).forEach(function(question) {
-    QuestionList.update(question._id, {$set: {gameId: question.gameId._id}})
+  Questions.remove({que: null});
+  Questions.remove({gameId: {$exists: false}});
+  Questions.remove({gameId: null});
+  Questions.find({"gameId._id": {$exists: true}}).forEach(function(question) {
+    Questions.update(question._id, {$set: {gameId: question.gameId._id}})
   });
-  QuestionList.update({}, {$pull: {usersAnswered: null}}, {multi: true});
-  QuestionList.update({}, {$unset: {icons: 0}}, {multi: true});
+  Questions.update({}, {$pull: {usersAnswered: null}}, {multi: true});
+  Questions.update({}, {$unset: {icons: 0}}, {multi: true});
   Meteor._debug("[normalizeQuestionsCollection] Done");
 };
 
@@ -124,7 +124,7 @@ var createAnswersCollection = function() {
         Meteor._debug(answer);
         throw e;
       }
-      question = QuestionList.findOne(answer.questionId);
+      question = Questions.findOne(answer.questionId);
       if (!question) {
         continue;
       }
@@ -172,13 +172,13 @@ var createAnswersCollection = function() {
 var dropAnswerFields = function() {
   Meteor._debug("[dropAnswerFields] Running");
   Meteor.users.update({}, {$unset: {questionAnswered: 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {usersAnswered: 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option1.usersPicked": 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option2.usersPicked": 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option3.usersPicked": 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option4.usersPicked": 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option5.usersPicked": 0}}, {multi: true});
-  QuestionList.update({}, {$unset: {"options.option6.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {usersAnswered: 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option1.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option2.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option3.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option4.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option5.usersPicked": 0}}, {multi: true});
+  Questions.update({}, {$unset: {"options.option6.usersPicked": 0}}, {multi: true});
   Meteor._debug("[dropAnswerFields] Done");
 };
 

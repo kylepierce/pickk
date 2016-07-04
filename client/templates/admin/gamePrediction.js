@@ -1,14 +1,14 @@
 Template.gamePrediction.helpers({
 	futureQuestion: function () {
-		var list = QuestionList.find({gameId: "prediction", active: "future"}).fetch();
+		var list = Questions.find({gameId: "prediction", active: "future"}).fetch();
 		return list
 	},
 	gameQuestion: function () {
-		var list = QuestionList.find({gameId: "prediction", active: true}).fetch();
+		var list = Questions.find({gameId: "prediction", active: true}).fetch();
 		return list
 	},
 	pendingGameQuestions: function () {
-				var list = QuestionList.find({gameId: "prediction", active: "pending"}).fetch();
+				var list = Questions.find({gameId: "prediction", active: "pending"}).fetch();
 		return list
 	}
 });

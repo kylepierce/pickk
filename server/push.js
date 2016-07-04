@@ -29,7 +29,7 @@ Meteor.methods({
 	},
 
 	'playerInactive': function(user, questionId) {
-		var gameInfo = QuestionList.findOne({_id: questionId})
+		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
 		var game = Games.find(
 			{

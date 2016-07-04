@@ -114,7 +114,7 @@ Template.questionCard.helpers({
   },
   gameQuestion: function() {
     var currentUser = Meteor.userId();
-    var active = QuestionList.find(
+    var active = Questions.find(
       {
         active: true, commercial: null,
         usersAnswered: {$nin: [currentUser]}
@@ -130,7 +130,7 @@ Template.questionCard.helpers({
   'gameQuestions': function() {
     var currentUser = Meteor.userId();
 
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, gameId: "prediction",
         usersAnswered: {$nin: [currentUser]}
@@ -162,7 +162,7 @@ Template.questionCard.helpers({
 
   'activeCheck': function() {
     questionId = Session.get('lastId');
-    var question = QuestionList.findOne({_id: questionId});
+    var question = Questions.findOne({_id: questionId});
     if (question.active === true) {
       return true
     }
@@ -188,7 +188,7 @@ Template.questionCard.helpers({
 
   'multiOptions': function() {
     var currentUser = Meteor.userId();
-    var active = QuestionList.find(
+    var active = Questions.find(
       {
         active: true, commercial: false,
         usersAnswered: {$nin: [currentUser]}
@@ -201,7 +201,7 @@ Template.questionCard.helpers({
 
   'ingameBinary': function() {
     var currentUser = Meteor.userId();
-    var active = QuestionList.find(
+    var active = Questions.find(
       {
         active: true, commercial: false, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}
@@ -218,7 +218,7 @@ Template.questionCard.helpers({
   'commercialQuestions': function() {
 
     var currentUser = Meteor.userId();
-    var active = QuestionList.find(
+    var active = Questions.find(
       {
         active: true, commercial: true,
         usersAnswered: {$nin: [currentUser]}
@@ -232,7 +232,7 @@ Template.questionCard.helpers({
   },
   'binary': function() {
     var currentUser = Meteor.userId();
-    var active = QuestionList.find(
+    var active = Questions.find(
       {
         active: true, commercial: true, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}
@@ -250,7 +250,7 @@ Template.questionCard.helpers({
   'questions': function() {
     var currentUser = Meteor.userId();
 
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, commercial: true, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}
@@ -260,7 +260,7 @@ Template.questionCard.helpers({
 
   'activeQuestions': function() {
     var currentUser = Meteor.userId();
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, commercial: false,
         usersAnswered: {$nin: [currentUser]}
@@ -270,7 +270,7 @@ Template.questionCard.helpers({
 
   'twoOption': function() {
     var currentUser = Meteor.userId();
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, commercial: false, binaryChoice: true,
         usersAnswered: {$nin: [currentUser]}
@@ -281,7 +281,7 @@ Template.questionCard.helpers({
   'multiAnswerCommQuestions': function() {
     var currentUser = Meteor.userId();
 
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, commercial: true,
         usersAnswered: {$nin: [currentUser]}
@@ -456,7 +456,7 @@ Template.predictionQuestions.helpers({
   'questions': function() {
     var currentUser = Meteor.userId();
 
-    return QuestionList.find(
+    return Questions.find(
       {
         active: true, commercial: null,
         usersAnswered: {$nin: [currentUser]}
@@ -786,7 +786,7 @@ Template.withoutIcons.helpers({
 Template.playerCard.helpers({
   playerInfo: function() {
     var currentUser = Meteor.userId();
-    var question = QuestionList.findOne(
+    var question = Questions.findOne(
       {
         active: true, commercial: false,
         usersAnswered: {$nin: [currentUser]}

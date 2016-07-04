@@ -139,7 +139,7 @@ Meteor.methods({
 		m6 = m6 || '';
 
 		// Insert the question into the database
-		QuestionList.insert({
+		Questions.insert({
 			que: que,
 			gameId: game,
 			createdBy: currentUserId,
@@ -166,7 +166,7 @@ Meteor.methods({
 		}
 
 		// Insert the question into the database
-		QuestionList.insert({
+		Questions.insert({
 			que: que,
 			gameId: game,
 			createdBy: currentUserId,
@@ -186,7 +186,7 @@ Meteor.methods({
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
-		QuestionList.insert({
+		Questions.insert({
 			que: que,
 			gameId: game,
 			createdBy: currentUserId,
@@ -206,7 +206,7 @@ Meteor.methods({
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
-		QuestionList.insert({
+		Questions.insert({
 			que: que,
 			gameId: game,
 			createdBy: currentUserId,
@@ -260,27 +260,27 @@ Meteor.methods({
 	//Once the play starts change active status
 
 	'deactivateStatus': function(questionId) {
-		QuestionList.update(questionId, {$set: {'active': null}});
+		Questions.update(questionId, {$set: {'active': null}});
 	},
 
 	'reactivateStatus': function(questionId) {
-		QuestionList.update(questionId, {$set: {'active': true}});
+		Questions.update(questionId, {$set: {'active': true}});
 	},
 
 	'deactivateGame': function(questionId) {
-		QuestionList.update(questionId, {$set: {'active': "pending"}});
+		Questions.update(questionId, {$set: {'active': "pending"}});
 	},
 
 	'activateGame': function(questionId) {
-		QuestionList.update(questionId, {$set: {'active': true}});
+		Questions.update(questionId, {$set: {'active': true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
 
 	'removeQuestion': function(questionId) {
-		QuestionList.update(questionId, {$set: {active: false, play: "deleted"}});
+		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 		if (question.options.option3) {
@@ -361,9 +361,9 @@ Meteor.methods({
 	// Once the play is over update what option it was. Then award points to those who guessed correctly.
 
 	'modifyQuestionStatus': function(questionId, answer) {
-		QuestionList.update(questionId, {$set: {active: false, play: answer}});
+		Questions.update(questionId, {$set: {active: false, play: answer}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option1Title = question.options.option1.title
 		var option2 = question.options.option2.usersPicked
@@ -480,9 +480,9 @@ Meteor.methods({
 	},
 
 	'modifyTwoOptionQuestionStatus': function(questionId, answer) {
-		QuestionList.update(questionId, {$set: {active: false, play: answer}});
+		Questions.update(questionId, {$set: {active: false, play: answer}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option1Title = question.options.option1.title
 		var option2 = question.options.option2.usersPicked
@@ -559,9 +559,9 @@ Meteor.methods({
 	},
 
 	'modifyBinaryQuestionStatus': function(questionId, answer) {
-		QuestionList.update(questionId, {$set: {active: false, play: answer}});
+		Questions.update(questionId, {$set: {active: false, play: answer}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 
@@ -625,9 +625,9 @@ Meteor.methods({
 	},
 
 	'modifyGameQuestionStatus': function(questionId, answer) {
-		QuestionList.update(questionId, {$set: {active: false, play: answer}});
+		Questions.update(questionId, {$set: {active: false, play: answer}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
@@ -637,7 +637,7 @@ Meteor.methods({
 
 		var list = []
 
-		var game = QuestionList.findOne({_id: questionId})
+		var game = Questions.findOne({_id: questionId})
 
 		function awardPoints(user) {
 			// Adjust multiplier based on when selected.
@@ -714,7 +714,7 @@ Meteor.methods({
 // Remove Coins from the people who answered it "correctly", the answer changed. 
 
 	'unAwardPoints': function(questionId, oldAnswer) {
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
@@ -768,9 +768,9 @@ Meteor.methods({
 	},
 
 	'unAwardPointsForDelete': function(questionId, oldAnswer) {
-		QuestionList.update(questionId, {$set: {active: false, play: "deleted"}});
+		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
@@ -842,7 +842,7 @@ Meteor.methods({
 	},
 
 	'awardInitalCoins': function(questionId) {
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 		var option3 = question.options.option3.usersPicked
@@ -902,7 +902,7 @@ Meteor.methods({
 
 	'questionAnswered': function(user, questionId, answer, wager, description) {
 		// Grab the entire userAnswered array
-		var question = QuestionList.find({_id: questionId},
+		var question = Questions.find({_id: questionId},
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array
@@ -927,10 +927,10 @@ Meteor.methods({
 			});
 
 		// Update question with the user who have answered.
-		QuestionList.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$push: {usersAnswered: user}});
 
 		// Add user to the users who have played in the game.
-		var gameInfo = QuestionList.findOne({_id: questionId})
+		var gameInfo = Questions.findOne({_id: questionId})
 		var game = Games.findOne({live: true});
 		var gameId = game._id
 		var game = Games.find(
@@ -967,7 +967,7 @@ Meteor.methods({
 			Meteor.call('awardDiamonds', user, 13)
 		}
 
-		// var question = QuestionList.findOne({"_id": questionId});
+		// var question = Questions.findOne({"_id": questionId});
 		// var option1 = question.options.option1.usersPicked
 		// var option2 = question.options.option2.usersPicked
 		// var option3 = question.options.option3.usersPicked
@@ -977,23 +977,23 @@ Meteor.methods({
 
 		//Update the question with the users answer and wager.
 		if (answer == "option1") {
-			QuestionList.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option2") {
-			QuestionList.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option3") {
-			QuestionList.update(questionId, {$push: {'options.option3.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option4") {
-			QuestionList.update(questionId, {$push: {'options.option4.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option5") {
-			QuestionList.update(questionId, {$push: {'options.option5.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option6") {
-			QuestionList.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
 		}
 	},
 
 	'twoOptionQuestionAnswered': function(user, questionId, answer, wager, que) {
 		// Grab the entire userAnswered array
-		var question = QuestionList.find({_id: questionId},
+		var question = Questions.find({_id: questionId},
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array
@@ -1018,11 +1018,11 @@ Meteor.methods({
 			});
 
 		// Update question with the user who have answered.
-		QuestionList.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$push: {usersAnswered: user}});
 
 		// Add user to the users who have played in the game.
 		console.log(questionId)
-		var gameInfo = QuestionList.findOne({_id: questionId})
+		var gameInfo = Questions.findOne({_id: questionId})
 		console.log(gameInfo)
 		var gameId = gameInfo.gameId
 		var game = Games.find(
@@ -1059,15 +1059,15 @@ Meteor.methods({
 			Meteor.call('awardDiamonds', user, 13)
 		}
 
-		var question = QuestionList.findOne({"_id": questionId});
+		var question = Questions.findOne({"_id": questionId});
 		var option1 = question.options.option1.usersPicked
 		var option2 = question.options.option2.usersPicked
 
 		//Update the question with the users answer and wager.
 		if (answer == "option1") {
-			QuestionList.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option2") {
-			QuestionList.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
 		}
 	},
 
@@ -1104,10 +1104,10 @@ Meteor.methods({
 		});
 
 		// Update question with the user who have answered.
-		QuestionList.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$push: {usersAnswered: user}});
 
 		// Add user to the users who have played in the game.
-		var gameInfo = QuestionList.findOne({_id: questionId})
+		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
 		var game = Games.find(
 			{
@@ -1128,16 +1128,16 @@ Meteor.methods({
 
 		//Update the question with the users answer and wager.
 		if (answer == "option1") {
-			QuestionList.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
+			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
 		} else if (answer == "option2") {
-			QuestionList.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
+			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
 		}
 	},
 
 	'gameQuestionAnswered': function(user, questionId, answer) {
 
 		// Grab the entire userAnswered array
-		var question = QuestionList.find({_id: questionId},
+		var question = Questions.find({_id: questionId},
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array
@@ -1149,7 +1149,7 @@ Meteor.methods({
 		} else {
 
 			// Update question with the user who have answered.
-			QuestionList.update(questionId, {$push: {usersAnswered: user}});
+			Questions.update(questionId, {$push: {usersAnswered: user}});
 
 			//Give user a diamond for answering
 			Meteor.call('awardDiamonds', user, 5)
@@ -1159,39 +1159,39 @@ Meteor.methods({
 
 			//Update the question with the users answer.
 			if (answer == "option1") {
-				QuestionList.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
+				Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
 			} else if (answer == "option2") {
-				QuestionList.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
+				Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
 			} else if (answer == "option3") {
-				QuestionList.update(questionId, {$push: {'options.option3.usersPicked': {userID: user}}});
+				Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: user}}});
 			} else if (answer == "option4") {
-				QuestionList.update(questionId, {$push: {'options.option4.usersPicked': {userID: user}}});
+				Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: user}}});
 			} else if (answer == "option5") {
-				QuestionList.update(questionId, {$push: {'options.option5.usersPicked': {userID: user}}});
+				Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: user}}});
 			}
 		}
 	},
 
 	'questionUnanswered': function(user, questionId, answer, wager) {
 		// Remove user from the answer list
-		QuestionList.update({_id: questionId}, {$pull: {usersAnswered: user}})
+		Questions.update({_id: questionId}, {$pull: {usersAnswered: user}})
 
 		//Remove question, wager and answer to the user's account.
 		Meteor.users.update({_id: user}, {$pull: {questionAnswered: {questionId: questionId}}});
 
 		//Update the question with the users answer and wager.
 		if (answer == "option1") {
-			QuestionList.update(questionId, {$pull: {'options.option1.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option1.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option2") {
-			QuestionList.update(questionId, {$pull: {'options.option2.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option2.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option3") {
-			QuestionList.update(questionId, {$pull: {'options.option3.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option3.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option4") {
-			QuestionList.update(questionId, {$pull: {'options.option4.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option4.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option5") {
-			QuestionList.update(questionId, {$pull: {'options.option5.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option5.usersPicked': {userID: user, amount: wager}}});
 		} else if (answer == "option6") {
-			QuestionList.update(questionId, {$pull: {'options.option6.usersPicked': {userID: user, amount: wager}}});
+			Questions.update(questionId, {$pull: {'options.option6.usersPicked': {userID: user, amount: wager}}});
 		}
 
 		//Once a users has removed question add wager to their coins.

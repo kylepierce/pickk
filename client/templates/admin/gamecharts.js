@@ -1,8 +1,8 @@
 Template.gameCharts.onRendered(function () {
 
-	var question = QuestionList.find({gameId: "J6DAePumAo46FR8eL"}, {sort: {dateCreated: 1}}).fetch();
+	var question = Questions.find({gameId: "J6DAePumAo46FR8eL"}, {sort: {dateCreated: 1}}).fetch();
 
-	var questionsCount = QuestionList.find({gameId: "J6DAePumAo46FR8eL"}, {sort: {dateCreated: 1}}).count()
+	var questionsCount = Questions.find({gameId: "J6DAePumAo46FR8eL"}, {sort: {dateCreated: 1}}).count()
 
     var negative_test_data = new d3.range(1,6).map(function(d,i) {
     		var i = i + 1
@@ -73,6 +73,6 @@ console.log(negative_test_data)
 
 Template.gameCharts.helpers({
 	game: function (id) {
-		return QuestionList.find({gameId: id}, {sort: {dateCreated: 1}}).fetch()
+		return Questions.find({gameId: id}, {sort: {dateCreated: 1}}).fetch()
 	}
 });

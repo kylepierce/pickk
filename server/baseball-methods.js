@@ -111,7 +111,7 @@ Meteor.methods({
   // Meteor.call("questionPush", gameId, question)
   Meteor.call("emptyInactive", gameId)
 
-  QuestionList.insert({
+  Questions.insert({
     dateCreated: timeCreated,
     createdBy: currentUserId,
     playerId: playerId,
@@ -180,7 +180,7 @@ Meteor.methods({
   // The Question will be the count
   var question =  playerName + ": " + balls + " - " + strikes ;
 
-  QuestionList.insert({
+  Questions.insert({
       dateCreated: timeCreated,
       createdBy: currentUserId,
       gameId: currentGame._id,
@@ -878,7 +878,7 @@ Meteor.methods({
 
 
 'updateAtBat': function( optionNumber ){
-  var currentAtBatQuestion = QuestionList.findOne({atBatQuestion: true, active: null})
+  var currentAtBatQuestion = Questions.findOne({atBatQuestion: true, active: null})
   var questionId = currentAtBatQuestion._id
 
   Meteor.call('modifyQuestionStatus', questionId, optionNumber)

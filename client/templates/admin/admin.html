@@ -19,9 +19,9 @@
 		
 		<!-- {{> createQuestion}} -->
 		{{> otherQuestions}}
-		{{> activeQuestionList}} 
-		{{> pendingQuestionList}}
-		{{> oldQuestionList}}
+		{{> activeQuestions}}
+		{{> pendingQuestions}}
+		{{> oldQuestions}}
 
 		  {{/ionContent}}
 	  {{/ionView}}
@@ -93,7 +93,7 @@
 	<button class='col col-33 wager-box button button-calm' style="float: left;"  data-action="createCommericalQuestion">Create Commerical Question</button>
 </template>
 
-<template name="activeQuestionList">
+<template name="activeQuestions">
 	<div class="panel">
 		<h3>Active Questions</h3>
 		<ul class="active-questions">
@@ -107,7 +107,7 @@
 	</div>	
 </template>
 
-<template name="pendingQuestionList">
+<template name="pendingQuestions">
 	<div class="panel">
 
 		<h3>Pending Questions</h3>
@@ -196,7 +196,7 @@
 	</div>	
 </template>
 
-<template name="oldQuestionList">
+<template name="oldQuestions">
 	<div class=" panel">
 		<h3>Old Questions</h3>
 		<ul class="old-questions">
