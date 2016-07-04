@@ -1,11 +1,4 @@
 Template.questionCard.helpers({
-  'notLive': function() {
-    var game = Games.findOne({live: true});
-    if (game == undefined) {
-      return true
-    }
-  },
-
   'live': function() {
     var game = Games.findOne({live: true});
     if (game && game.live == true) {
