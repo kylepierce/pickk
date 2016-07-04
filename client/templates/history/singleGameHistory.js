@@ -28,39 +28,7 @@ Template.singleGameHistory.helpers({
     }
   },
   date: function() {
-    var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
-    function twelveHours(i) {
-      if (i < 10) {
-        i = "0" + i;
-      } else if (i > 12) {
-        i -= 12
-        i = "0" + i
-      }
-      return i;
-    }
-
-    function addZero(i) {
-      if (i < 10) {
-        i = "0" + i;
-      }
-      return i
-    }
-
-    function addOne(i) {
-      i += 1
-      return i
-    }
-
-    var date = this.dateCreated
-    // var hour = date.getHours();
-    //   var min = date.getMinutes();
-    var month = monthArray[date.getMonth()];
-    var day = addOne(date.getDay());
-    var hour = twelveHours(date.getHours());
-    var min = addZero(date.getMinutes());
-    // return date.toDateString();
-    return month + " " + day + " at " + hour + ":" + min;
+    return moment(this.dateCreated).format("MMMM D [at] HH:mm");
   },
   answerIs: function(play) {
     switch (play) {
