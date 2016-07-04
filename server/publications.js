@@ -233,13 +233,17 @@ Meteor.publish('singleGroup', function(groupId) {
   return Groups.find({_id: groupId});
 });
 
+Meteor.publish('game', function(_id) {
+  check(_id, String);
+  return Games.find({_id: _id});
+});
+
 Meteor.publish('games', function() {
   return Games.find();
 });
 
-Meteor.publish('game', function(_id) {
-  check(_id, String);
-  return Games.find({_id: _id});
+Meteor.publish('gamesPlayed', function() {
+  return Games.find({users: this.userId});
 });
 
 Meteor.publish('SportRadarGames', function() {
@@ -252,12 +256,6 @@ Meteor.publish('SportRadarGames', function() {
 Meteor.publish('activeGames', function() {
   return Games.find({live: true});
 });
-
-Meteor.publish('gamesUserPlayedIn', function(user){
-  var selector = {users: {$in: [user]}}
-  return Games.find(selector);
-});
-
 
 Meteor.publish('trophy', function(){
   return Trophies.find({ });
