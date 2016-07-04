@@ -172,7 +172,6 @@ var createAnswersCollection = function() {
 var dropAnswerFields = function() {
   Meteor._debug("[dropAnswerFields] Running");
   Meteor.users.update({}, {$unset: {questionAnswered: 0}}, {multi: true});
-  Questions.update({}, {$unset: {usersAnswered: 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option1.usersPicked": 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option2.usersPicked": 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option3.usersPicked": 0}}, {multi: true});
