@@ -43,7 +43,8 @@ Fixtures.push(Questions, {
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    play: "option1"
   },
   InactiveQuestionForInactiveGame: {
     dateCreated: moment("2016-05-06").toDate(),
@@ -58,7 +59,8 @@ Fixtures.push(Questions, {
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    play: "option2"
   },
   CommercialQuestionForActiveGame: {
     dateCreated: moment("2016-05-06").toDate(),
