@@ -900,94 +900,70 @@ Meteor.methods({
 
 	// Users answered the question take away coins and add that info to their account.
 
-	'questionAnswered': function(user, questionId, answer, wager, description) {
+	'questionAnswered': function(questionId, answered, wager, description) {
 		// Grab the entire userAnswered array
-		var question = Questions.find({_id: questionId},
-			{fields: {'usersAnswered': 1}}).fetch();
-
-		// Check if userId is in the usersAnswered array
-		var userExists = _.indexOf(question, user)
+		var question = Questions.findOne(questionId, {fields: {'usersAnswered': 1}});
 
 		// If the user is already in the array exit this process
-		if (userExists !== -1) {
+		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
 
-		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: user},
-			{
-				$push: {
-					questionAnswered: {
-						questionId: questionId,
-						wager: wager,
-						answered: answer,
-						description: description
-					}
-				}
-			});
+		wager = parseInt(wager || "0", 10);
+
+		Answers.insert({
+			userId: this.userId,
+			gameId: question.gameId,
+			questionId: questionId,
+			answered: answered,
+			wager: wager,
+			multiplier: parseFloat(question.options[answered].multiplier || "0"),
+			description: description || ""
+		});
 
 		// Update question with the user who have answered.
-		Questions.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$addToSet: {usersAnswered: this.userId}});
 
-		// Add user to the users who have played in the game.
-		var gameInfo = Questions.findOne({_id: questionId})
-		var game = Games.findOne({live: true});
-		var gameId = game._id
-		var game = Games.find(
-			{
-				_id: gameId,
-				users: {$nin: [user]}
-			}, {fields: {'users': 1}}).fetch();
-		if (game.length == 1) {
-			Games.update(gameId, {$push: {users: user}});
-		}
+		Games.update({live: true}, {$addToSet: {users: this.userId}});
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update({_id: user}, {$inc: {"profile.coins": -wager}});
+		Meteor.users.update(this.userId, {$inc: {"profile.coins": -wager}});
 
 		//Increase counter by 1
-		Meteor.users.update({_id: user}, {$inc: {"profile.queCounter": +1}});
+		Meteor.users.update(this.userId, {$inc: {"profile.queCounter": +1}});
 
-		var currentUser = Meteor.users.findOne({_id: user})
+		var currentUser = Meteor.users.findOne(this.userId)
 		var counter = currentUser.profile.queCounter
 
 		if (counter === 1) {
-			Meteor.call('awardDiamonds', user, 1)
+			Meteor.call('awardDiamonds', this.userId, 1)
 		} else if (counter === 5) {
-			Meteor.call('awardDiamonds', user, 2)
+			Meteor.call('awardDiamonds', this.userId, 2)
 		} else if (counter === 25) {
-			Meteor.call('awardDiamonds', user, 3)
+			Meteor.call('awardDiamonds', this.userId, 3)
 		} else if (counter === 50) {
-			Meteor.call('awardDiamonds', user, 4)
+			Meteor.call('awardDiamonds', this.userId, 4)
 		} else if (counter === 75) {
-			Meteor.call('awardDiamonds', user, 5)
+			Meteor.call('awardDiamonds', this.userId, 5)
 		} else if (counter === 100) {
-			Meteor.call('awardDiamonds', user, 7)
+			Meteor.call('awardDiamonds', this.userId, 7)
 		} else if (counter === 140) {
-			Meteor.call('awardDiamonds', user, 13)
+			Meteor.call('awardDiamonds', this.userId, 13)
 		}
 
-		// var question = Questions.findOne({"_id": questionId});
-		// var option1 = question.options.option1.usersPicked
-		// var option2 = question.options.option2.usersPicked
-		// var option3 = question.options.option3.usersPicked
-		// var option4 = question.options.option4.usersPicked
-		// var option5 = question.options.option5.usersPicked
-		// var option6 = question.options.option6.usersPicked
-
 		//Update the question with the users answer and wager.
-		if (answer == "option1") {
-			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option2") {
-			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option3") {
-			Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option4") {
-			Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option5") {
-			Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option6") {
-			Questions.update(questionId, {$push: {'options.option6.usersPicked': {userID: user, amount: wager}}});
+		if (answered == "option1") {
+			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: this.userId, amount: wager}}});
+		} else if (answered == "option2") {
+			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: this.userId, amount: wager}}});
+		} else if (answered == "option3") {
+			Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: this.userId, amount: wager}}});
+		} else if (answered == "option4") {
+			Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: this.userId, amount: wager}}});
+		} else if (answered == "option5") {
+			Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: this.userId, amount: wager}}});
+		} else if (answered == "option6") {
+			Questions.update(questionId, {$push: {'options.option6.usersPicked': {userID: this.userId, amount: wager}}});
 		}
 	},
 
@@ -1208,7 +1184,7 @@ Meteor.methods({
 
 	'exportToMailChimp': function(limit) {
 		limit = limit || 10; // safety net; pass a very high limit to export all users
-		var user = UserList.findOne({_id: this.userId});
+		var user = UserList.findOne(this.userId);
 		var role = user.profile.role;
 		if (role !== "admin") {
 			throw new Meteor.Error(403, "Unauthorized");

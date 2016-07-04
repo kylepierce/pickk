@@ -268,7 +268,7 @@ Template.questionCard.events({
       })
 
       setTimeout(function() {
-        Meteor.call('questionAnswered', currentUser, questionId, answer, wager, description);
+        Meteor.call('questionAnswered', questionId, answer, wager, description);
       }, 250);
 
     }
