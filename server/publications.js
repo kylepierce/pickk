@@ -1,11 +1,9 @@
 Meteor.publish('activeQuestions', function() {
   var currentUserId = this.userId;
-  return Questions.find(
-    {
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    },
-    {sort: {dateCreated: 1,}});
+  return Questions.find({
+    active: true,
+    usersAnswered: {$nin: [currentUserId]}
+  });
 });
 
 Meteor.publish('chatMessages', function(groupId, limit) {
