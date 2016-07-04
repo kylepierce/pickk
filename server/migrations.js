@@ -87,6 +87,9 @@ var clearBirthdays = function() {
 
 var normalizeQuestionsCollection = function() {
   Meteor._debug("[normalizeQuestionsCollection] Running");
+  QuestionList.remove({que: null});
+  QuestionList.remove({gameId: {$exists: false}});
+  QuestionList.remove({gameId: null});
   QuestionList.find({"gameId._id": {$exists: true}}).forEach(function(question) {
     QuestionList.update(question._id, {$set: {gameId: question.gameId._id}})
   });
@@ -114,16 +117,22 @@ var createAnswersCollection = function() {
           wager: Match.Optional(String),
           description: Match.Optional(Match.OneOf(null, String))
         });
+        if (answer.wager && isNaN(answer.wager)) {
+          throw new Error("answer.wager is NaN");
+        }
       } catch (e) {
         Meteor._debug(answer);
         throw e;
       }
       question = QuestionList.findOne(answer.questionId);
+      if (!question) {
+        continue;
+      }
       try {
         check(question, {
           _id: String,
           que: String,
-          gameId: Match.OneOf(null, String),
+          gameId: String,
           playerId: Match.Optional(String),
           createdBy: String,
           dateCreated: Date,
@@ -135,6 +144,9 @@ var createAnswersCollection = function() {
           usersAnswered: [String],
           play: Match.Optional(String) // absent for un-resolved questions
         });
+        if (question.options[answer.answered].multiplier && isNaN(question.options[answer.answered].multiplier)) {
+          throw new Error("question.options[answer.answered].multiplier is NaN");
+        }
       } catch (e) {
         Meteor._debug(question);
         throw e;
@@ -144,10 +156,10 @@ var createAnswersCollection = function() {
         gameId: question.gameId,
         questionId: answer.questionId,
         answer: answer.answered,
-        wager: answer.wager || 0,
-        multiplier: question.options[answer.answered].multiplier || 0,
+        wager: parseInt(answer.wager || "0", 10),
+        multiplier: parseFloat(question.options[answer.answered].multiplier || "0"),
         description: answer.description || ""
-      })
+      });
     }
     if (counter && counter % 100 === 0) {
       Meteor._debug("[createAnswersCollection] Processed " + counter + " users");
