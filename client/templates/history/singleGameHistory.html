@@ -4,7 +4,13 @@
   {{/contentFor}}
 
 	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header">Game History</h1>
+		<h1 class="title white-text-header">
+      {{#if Template.subscriptionsReady}}
+        Game History: {{game.name}}
+      {{else}}
+        Game History
+      {{/if}}
+    </h1>
 	{{/contentFor}}
 
   {{#ionView }}
@@ -12,13 +18,6 @@
       {{> loader}}
       {{#if Template.subscriptionsReady}}
 	      <div class="loading-wrapper">
-	      {{#with game}}
-		    <div class="bar bar-dark" > 
-		    	<div class="container" style="text-align: center; padding-top: 6px;">
-		    		<h1 class="title white-text-header">{{name}}</h1>
-		    	</div>
-		    </div>
-	  		{{/with}}
 	    	{{#ionList}}
 		    	{{#each question}}
 		    		{{#ionItem}}

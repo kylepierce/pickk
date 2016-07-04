@@ -155,7 +155,7 @@ var createAnswersCollection = function() {
         userId: user._id,
         gameId: question.gameId,
         questionId: answer.questionId,
-        answer: answer.answered,
+        answered: answer.answered,
         wager: parseInt(answer.wager || "0", 10),
         multiplier: parseFloat(question.options[answer.answered].multiplier || "0"),
         description: answer.description || ""

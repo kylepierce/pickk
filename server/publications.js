@@ -89,11 +89,15 @@ Meteor.publish('questionsUserAnswered', function(user){
   return QuestionList.find(selector);
 })
 
-Meteor.publish('questionsUserAnsweredSpecificGame', function(user, gameId){
-  var selector = { $and: [{ gameId: { $eq: gameId}}, { usersAnswered: { $in: [user] }}]}
-  return QuestionList.find(selector, {sort: {dateCreated: 1}});
+Meteor.publish('questionsByGameId', function(gameId) {
+  check(gameId, String);
+  return QuestionList.find({gameId: gameId});
 })
 
+Meteor.publish('answersByGameId', function(gameId) {
+  check(gameId, String);
+  return Answers.find({userId: this.userId, gameId: gameId});
+})
 
 Meteor.publish('singleGame', function(id){
   var singleGame = QuestionList.find({gameId: id}, {sort: {dateCreated: 1}});
@@ -189,17 +193,15 @@ Meteor.publish('adminUserList', function(id) {
 })
 
 Meteor.publish("userData", function () {
-  if (this.userId) {
-    return UserList.find(
-    	{_id: this.userId},
-			{fields: 
-				{'pendingNotifications': 1, 
-				'questionAnswered': 1
-				}
-			});
-  } else {
-    this.ready();
+  if (!this.userId) {
+    return this.ready();
   }
+  return UserList.find(this.userId,
+    {fields:
+      {'pendingNotifications': 1,
+      'questionAnswered': 1
+      }
+    });
 });
 
 Meteor.publish('findUserGroups', function(id) {
@@ -232,7 +234,12 @@ Meteor.publish('singleGroup', function(groupId) {
 });
 
 Meteor.publish('games', function() {
-  return Games.find({ });
+  return Games.find();
+});
+
+Meteor.publish('game', function(_id) {
+  check(_id, String);
+  return Games.find({_id: _id});
 });
 
 Meteor.publish('SportRadarGames', function() {

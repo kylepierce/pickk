@@ -1,25 +1,25 @@
-Template.singleGameHistory.created = function () {
-	var userId = Meteor.userId();
-  this.autorun(function () {
-    this.subscription = Meteor.subscribe('questionsUserAnsweredSpecificGame', userId, Router.current().params._id);
-  }.bind(this));
-};
-
-Template.singleGameHistory.onRendered( function() {
-  $( "svg" ).delay( 0 ).fadeIn();
+Template.singleGameHistory.onCreated( function() {
+	this.subscribe('userData');
+	this.subscribe('game', this.data._id);
+	this.subscribe('questionsByGameId', this.data._id);
+	this.subscribe('answersByGameId', this.data._id);
+	this.autorun(function(computation) {
+		if (Template.instance().subscriptionsReady()) {
+			$( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
+				$( ".loading-wrapper" ).fadeIn( 'fast' );
+			});
+			computation.stop()
+		}
+	})
 });
 
-Template.singleGameHistory.onCreated( function() {
-  this.subscribe( 'questionsUserAnsweredSpecificGame', function() {
-    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
-      $( ".loading-wrapper" ).fadeIn( 'fast' );
-    });
-  });
+Template.singleGameHistory.onRendered( function() {
+	$( "svg" ).delay( 0 ).fadeIn();
 });
 
 Template.singleGameHistory.helpers({
 	game: function(){
-		return Games.find({_id: this.params._id})
+		return Games.findOne(this._id);
 	},
 	active: function(){
 		var active = this.active
@@ -92,29 +92,28 @@ Template.singleGameHistory.helpers({
 		var questionsAnswered = QuestionList.find({"usersAnswered": {$in: [userId]} }, {sort: {dateCreated: -1}}).fetch()
 		return questionsAnswered
 	},
-	userAnswer: function(id, play, q){
-		var questions = Meteor.user().questionAnswered
-		var questionIds = _.pluck(questions, "questionId")
-		var spot = _.indexOf(questionIds, id)
+	userAnswer: function(questionFromTemplate_id, play, questionFromTemplate){
+		var answers = Answers.find({questionId: questionFromTemplate_id}).fetch();
+		console.log(answers);
+		var questionIds = _.pluck(answers, "questionId")
+		var spot = _.indexOf(questionIds, questionFromTemplate_id)
 		var questionId = questionIds[spot]
-		var question = questions[spot]
-		var userAnswered = question.answered
-		var wager = question.wager
-		var questionObj = q
-		var commercial = q.commercial
-		if(question.wager === undefined){
+		var answer = answers[spot]
+		var userAnswered = answer.answered
+		var wager = answer.wager
+		var commercial = questionFromTemplate.commercial
+		if(answer.wager === undefined){
 			var wager = 500
 		} else {
-			var binaryChoice = question.wager
+			var binaryChoice = answer.wager
 		}
-		if(q.binaryChoice === undefined){
+		if(questionFromTemplate.binaryChoice === undefined){
 			var binaryChoice = true
 		} else {
 			var binaryChoice = false
 		}
-		var active = q.active
+		var active = questionFromTemplate.active
 		var playName = this.options.option1.title
-		var play = play
 		var winningObj = {
 				"active": active,
 				"wager": wager,
@@ -129,10 +128,10 @@ Template.singleGameHistory.helpers({
 			case "option1":
 				if(play === "option1"){
 
-					if(q.options.option1.multiplier === undefined){
+					if(questionFromTemplate.options.option1.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option1.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option1.multiplier)
 					}
 
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
@@ -157,10 +156,10 @@ Template.singleGameHistory.helpers({
 			case "option2":
 				if(play === "option2"){
 					
-					if(q.options.option2.multiplier === undefined){
+					if(questionFromTemplate.options.option2.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option2.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option2.multiplier)
 					}
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option2.title
@@ -182,10 +181,10 @@ Template.singleGameHistory.helpers({
 			case "option3":
 				if(play === "option3"){
 					
-					if(q.options.option3.multiplier === undefined){
+					if(questionFromTemplate.options.option3.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option3.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option3.multiplier)
 					}
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option3.title
@@ -207,10 +206,10 @@ Template.singleGameHistory.helpers({
 			case "option4":
 				if(play === "option4"){
 					
-					if(q.options.option4.multiplier === undefined){
+					if(questionFromTemplate.options.option4.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option4.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option4.multiplier)
 					}
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option4.title
@@ -232,10 +231,10 @@ Template.singleGameHistory.helpers({
 			case "option5":
 				if(play === "option5"){
 					
-					if(q.options.option5.multiplier === undefined){
+					if(questionFromTemplate.options.option5.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option5.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option5.multiplier)
 					}
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option5.title
@@ -257,10 +256,10 @@ Template.singleGameHistory.helpers({
 			case "option6":
 				if(play === "option6"){
 					
-					if(q.options.option6.multiplier === undefined){
+					if(questionFromTemplate.options.option6.multiplier === undefined){
 						winningObj.multiplier = 4
 					} else {
-						winningObj.multiplier = parseFloat(q.options.option6.multiplier)
+						winningObj.multiplier = parseFloat(questionFromTemplate.options.option6.multiplier)
 					}
 					winningObj.winnings = parseInt(winningObj.wager * winningObj.multiplier )
 					winningObj.description = this.options.option6.title
