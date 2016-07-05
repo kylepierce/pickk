@@ -103,12 +103,13 @@ var createAnswersCollection = function() {
   if (Meteor.settings.public.isDebug) {
     Answers.remove({});
   }
-  var question, answer, counter = 0;
+  var question, answer, existingAnswer, i, counter = 0;
   Meteor.users.find().forEach(function(user) {
     if (!user.questionAnswered) {
       return;
     }
-    for (var i = 0; i < user.questionAnswered.length; i++) {
+    var answers = [];
+    for (i = 0; i < user.questionAnswered.length; i++) {
       answer = user.questionAnswered[i];
       try {
         check(answer, {
@@ -120,10 +121,19 @@ var createAnswersCollection = function() {
         if (answer.wager && isNaN(answer.wager)) {
           throw new Error("answer.wager is NaN");
         }
+        existingAnswer = _.findWhere(answers, {questionId: answer.questionId});
+        if (existingAnswer) {
+          _.extend(existingAnswer, answer); // overwrite fields
+        } else {
+          answers.push(answer);
+        }
       } catch (e) {
         Meteor._debug(answer);
         throw e;
       }
+    }
+    for (i = 0; i < answers.length; i++) {
+      answer = answers[i];
       question = Questions.findOne(answer.questionId);
       if (!question) {
         continue;
@@ -136,7 +146,7 @@ var createAnswersCollection = function() {
           playerId: Match.Optional(String),
           createdBy: String,
           dateCreated: Date,
-          active: Boolean,
+          active: Match.OneOf(true, false, "future", "pending"),
           commercial: Match.Optional(Match.OneOf(null, true, false)),
           binaryChoice: Match.Optional(Boolean),
           atBatQuestion: Match.Optional(Boolean),
