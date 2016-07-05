@@ -2,4 +2,6 @@
 
 set -eux
 
-(cd $DIRNAME/.. && mupx logs -n 100 $@)
+source $DIRNAME/mupx/prepare
+
+(cd $DIRNAME/.. && mupx logs --tail=100 $@)

@@ -1,1 +1,9 @@
-{}
+{
+  "mongo": {
+    "username": "getpickk",
+    "password": "xEZMosrpQRqg",
+    "host": "candidate.11.mongolayer.com",
+    "port": "11179",
+    "db": "pickk-stag"
+  }
+}
