@@ -104,7 +104,7 @@ var createAnswersCollection = function() {
     Answers.remove({});
   }
   var question, answer, existingAnswer, i, counter = 0;
-  Meteor.users.find().forEach(function(user) {
+  Meteor.users.find().fetch().map(function(user) {
     if (!user.questionAnswered) {
       return;
     }
