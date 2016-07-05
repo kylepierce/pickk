@@ -124,7 +124,7 @@ Meteor.methods({
 
 	// Create a question. Each play has question text and six options.
 
-	'insertQuestion': function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6, active) {
+	'insertQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6, active) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -141,7 +141,7 @@ Meteor.methods({
 		// Insert the question into the database
 		Questions.insert({
 			que: que,
-			gameId: game,
+			gameId: gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			active: active,
@@ -157,7 +157,7 @@ Meteor.methods({
 		});
 	},
 
-		'insertFourQuestion': function(game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
+		'insertFourQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -168,7 +168,7 @@ Meteor.methods({
 		// Insert the question into the database
 		Questions.insert({
 			que: que,
-			gameId: game,
+			gameId: gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			active: active,
@@ -182,13 +182,13 @@ Meteor.methods({
 		});
 	},
 
-	'createTrueFalse': function(que, game) {
+	'createTrueFalse': function(que, gameId) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
 		Questions.insert({
 			que: que,
-			gameId: game,
+			gameId: gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			active: true,
@@ -202,13 +202,13 @@ Meteor.methods({
 		})
 	},
 
-	'createTwoOption': function(game, que, option1, multiplier1, option2, multiplier2) {
+	'createTwoOption': function(gameId, que, option1, multiplier1, option2, multiplier2) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
 		Questions.insert({
 			que: que,
-			gameId: game,
+			gameId: gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			active: true,

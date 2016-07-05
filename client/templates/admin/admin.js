@@ -44,7 +44,8 @@ Template.otherQuestions.events({
 	'click [data-action="situationalQuestion"]': function(event, template){
 		var que = prompt('Question you would like to ask')
 		var game = Games.findOne({live: true});
-		Meteor.call('createTrueFalse', que, game)
+		var gameId = game._id;
+		Meteor.call('createTrueFalse', que, gameId)
 	},
 	'click [data-action="thisDrive"]': function(event, template){
 		event.preventDefault();
@@ -52,7 +53,7 @@ Template.otherQuestions.events({
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
 		var time = template.find('input[name=time]').value
-		var game = template.find('#gameList :selected').value
+		var gameId = template.find('#gameList :selected').value
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -90,8 +91,8 @@ Template.otherQuestions.events({
 						2.9, 4.61)
 
 		// Meteor.call("questionPush", game, question)
-		Meteor.call("emptyInactive", game, question)
-		Meteor.call('insertQuestion', game, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+		Meteor.call("emptyInactive", gameId, question)
+		Meteor.call('insertQuestion', gameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
  
 	},
 });
