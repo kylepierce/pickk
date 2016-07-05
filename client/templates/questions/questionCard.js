@@ -1,3 +1,7 @@
+// Template.questionCard.onCreated(function() {
+//   this.subscribe('lastAnswer');
+// });
+
 Template.questionCard.helpers({
   'live': function() {
     var game = Games.findOne({live: true});
@@ -32,25 +36,11 @@ Template.questionCard.helpers({
   },
 
   'lastPlay': function() {
-    // Get the last question id 
-    var questionId = Session.get('lastId')
-
-    // Find the users answer and wager
-    var currentUser = Meteor.user();
-
-    // Find questionId in user answered 
-    var userAnsweredArray = currentUser.questionAnswered
-
-    // Search function to find the question in the array
-    function search(nameKey, myArray) {
-      for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i].questionId === nameKey) {
-          return myArray[i];
-        }
-      }
+    return {
+      lastAnswer: Session.get("lastAnswer"),
+      lastWager: Session.get("lastDescription"),
+      lastDescription: Session.get("lastDescription")
     }
-
-    return search(questionId, userAnsweredArray)
   },
 
   'activeCheck': function() {
@@ -242,6 +232,7 @@ Template.questionCard.events({
       Session.set('lastId', questionId);
       Session.set('lastAnswer', answer);
       Session.set('lastWager', wager);
+      Session.set('lastDescription', description);
 
       // analytics.track("userAnsweredQuestion", {
       //   id: currentUser,
