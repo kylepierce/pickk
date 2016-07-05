@@ -698,13 +698,13 @@ Meteor.methods({
 
 	},
 
-	'twoOptionQuestionAnswered': function(user, questionId, answer, wager, que) {
+	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
 		// Grab the entire userAnswered array
 		var question = Questions.find({_id: questionId},
 			{fields: {'usersAnswered': 1}}).fetch();
 
 		// Check if userId is in the usersAnswered array
-		var userExists = _.indexOf(question, user)
+		var userExists = _.indexOf(question, this.userId)
 
 		// If the user is already in the array exit this process
 		if (userExists !== -1) {
@@ -712,20 +712,20 @@ Meteor.methods({
 		}
 
 		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: user},
+		Meteor.users.update({_id: this.userId},
 			{
 				$push: {
 					questionAnswered: {
 						questionId: questionId,
 						wager: wager,
-						answered: answer,
-						description: que
+						answered: answered,
+						description: description
 					}
 				}
 			});
 
 		// Update question with the user who have answered.
-		Questions.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$push: {usersAnswered: this.userId}});
 
 		// Add user to the users who have played in the game.
 		console.log(questionId)
@@ -735,46 +735,46 @@ Meteor.methods({
 		var game = Games.find(
 			{
 				_id: gameId,
-				users: {$nin: [user]}
+				users: {$nin: [this.userId]}
 			}, {fields: {'users': 1}}).fetch();
 		if (game.length == 1) {
-			Games.update(gameId, {$push: {users: user}});
+			Games.update(gameId, {$push: {users: this.userId}});
 		}
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update({_id: user}, {$inc: {"profile.coins": -wager}});
+		Meteor.users.update({_id: this.userId}, {$inc: {"profile.coins": -wager}});
 
 		//Increase counter by 1
-		Meteor.users.update({_id: user}, {$inc: {"profile.queCounter": +1}});
+		Meteor.users.update({_id: this.userId}, {$inc: {"profile.queCounter": +1}});
 
-		var currentUser = Meteor.users.findOne({_id: user})
+		var currentUser = Meteor.users.findOne({_id: this.userId})
 		var counter = currentUser.profile.queCounter
 
 		if (counter === 1) {
-			Meteor.call('awardDiamonds', user, 1)
+			Meteor.call('awardDiamonds', this.userId, 1)
 		} else if (counter === 5) {
-			Meteor.call('awardDiamonds', user, 2)
+			Meteor.call('awardDiamonds', this.userId, 2)
 		} else if (counter === 25) {
-			Meteor.call('awardDiamonds', user, 3)
+			Meteor.call('awardDiamonds', this.userId, 3)
 		} else if (counter === 50) {
-			Meteor.call('awardDiamonds', user, 4)
+			Meteor.call('awardDiamonds', this.userId, 4)
 		} else if (counter === 75) {
-			Meteor.call('awardDiamonds', user, 5)
+			Meteor.call('awardDiamonds', this.userId, 5)
 		} else if (counter === 100) {
-			Meteor.call('awardDiamonds', user, 7)
+			Meteor.call('awardDiamonds', this.userId, 7)
 		} else if (counter === 140) {
-			Meteor.call('awardDiamonds', user, 13)
+			Meteor.call('awardDiamonds', this.userId, 13)
 		}
 	},
 
 	// Users answered the question take away coins and add that info to their account.
 
-	'binaryQuestionAnswered': function(user, questionId, answer, que) {
+	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
 		var timeCreated = new Date();
 		var id = Random.id();
-		var scoreMessage = "Thanks for Guessing! Here Are " + 500 + " Free Coins!"
+		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
 
-		Meteor.users.update({_id: user},
+		Meteor.users.update({_id: this.userId},
 			{
 				$push: {
 					pendingNotifications: {
@@ -790,17 +790,17 @@ Meteor.methods({
 		)
 
 		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: user}, {
+		Meteor.users.update({_id: this.userId}, {
 			$push: {
 				questionAnswered: {
 					questionId: questionId,
-					answered: answer, description: que
+					answered: answered, description: description
 				}
 			}
 		});
 
 		// Update question with the user who have answered.
-		Questions.update(questionId, {$push: {usersAnswered: user}});
+		Questions.update(questionId, {$push: {usersAnswered: this.userId}});
 
 		// Add user to the users who have played in the game.
 		var gameInfo = Questions.findOne({_id: questionId})
@@ -808,18 +808,18 @@ Meteor.methods({
 		var game = Games.find(
 			{
 				_id: gameId,
-				users: {$nin: [user]}
+				users: {$nin: [this.userId]}
 			}, {fields: {'users': 1}}).fetch();
 		if (game.length == 1) {
-			Games.update(gameId, {$push: {users: user}});
+			Games.update(gameId, {$push: {users: this.userId}});
 		}
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update({_id: user}, {$inc: {"profile.coins": +500}});
+		Meteor.users.update({_id: this.userId}, {$inc: {"profile.coins": +wager}});
 
 
 		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: user}, {$push: {questionAnswered: {questionId: questionId, answered: answer}}});
+		Meteor.users.update({_id: this.userId}, {$push: {questionAnswered: {questionId: questionId, answered: answered}}});
 	},
 
 	'gameQuestionAnswered': function(user, questionId, answer) {

@@ -201,8 +201,7 @@ Meteor.publish("userData", function() {
   return UserList.find(this.userId,
     {
       fields: {
-        'pendingNotifications': 1,
-        'questionAnswered': 1
+        'pendingNotifications': 1
       }
     });
 });

@@ -301,7 +301,7 @@ Template.binaryChoice.events({
 
     // Wait until the question card has disapeared
     Meteor.setTimeout(function() {
-      Meteor.call('binaryQuestionAnswered', currentUser, questionId, answer, que)
+      Meteor.call('binaryQuestionAnswered', questionId, answer, 500, que)
     }, 250);
   },
 });
@@ -362,7 +362,7 @@ Template.twoOptionQuestions.events({
 
     // Wait until the question card has disapeared
     Meteor.setTimeout(function() {
-      Meteor.call('twoOptionQuestionAnswered', currentUser, questionId, answer, wager, que)
+      Meteor.call('twoOptionQuestionAnswered', questionId, answer, wager, que)
     }, 250);
   },
 });
