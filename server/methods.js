@@ -147,12 +147,12 @@ Meteor.methods({
 			active: active,
 			commercial: commercial,
 			options: {
-				option1: {title: op1, usersPicked: [], multiplier: m1},
-				option2: {title: op2, usersPicked: [], multiplier: m2},
-				option3: {title: op3, usersPicked: [], multiplier: m3},
-				option4: {title: op4, usersPicked: [], multiplier: m4},
-				option5: {title: op5, usersPicked: [], multiplier: m5},
-				option6: {title: op6, usersPicked: [], multiplier: m6},
+				option1: {title: op1, multiplier: m1},
+				option2: {title: op2, multiplier: m2},
+				option3: {title: op3, multiplier: m3},
+				option4: {title: op4, multiplier: m4},
+				option5: {title: op5, multiplier: m5},
+				option6: {title: op6, multiplier: m6},
 			}
 		});
 	},
@@ -174,10 +174,10 @@ Meteor.methods({
 			active: active,
 			commercial: commercial,
 			options: {
-				option1: {title: op1, usersPicked: [], multiplier: m1},
-				option2: {title: op2, usersPicked: [], multiplier: m2},
-				option3: {title: op3, usersPicked: [], multiplier: m3},
-				option4: {title: op4, usersPicked: [], multiplier: m4},
+				option1: {title: op1, multiplier: m1},
+				option2: {title: op2, multiplier: m2},
+				option3: {title: op3, multiplier: m3},
+				option4: {title: op4, multiplier: m4},
 			}
 		});
 	},
@@ -195,8 +195,8 @@ Meteor.methods({
 			commercial: true,
 			binaryChoice: true,
 			options: {
-				option1: {title: "True", usersPicked: []},
-				option2: {title: "False", usersPicked: []},
+				option1: {title: "True"},
+				option2: {title: "False"},
 			}
 
 		})
@@ -215,8 +215,8 @@ Meteor.methods({
 			commercial: false,
 			binaryChoice: true,
 			options: {
-				option1: {title: option1, multiplier: multiplier1, usersPicked: []},
-				option2: {title: option2, multiplier: multiplier2, usersPicked: []},
+				option1: {title: option1, multiplier: multiplier1},
+				option2: {title: option2, multiplier: multiplier2},
 			}
 
 		})
@@ -280,26 +280,10 @@ Meteor.methods({
 	'removeQuestion': function(questionId) {
 		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
-		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		if (question.options.option3) {
-			var option4 = question.options.option3.usersPicked
-		}
-		if (question.options.option4) {
-			var option4 = question.options.option4.usersPicked
-		}
-		if (question.options.option5) {
-			var option5 = question.options.option5.usersPicked
-		}
-		if (question.options.option6) {
-			var option6 = question.options.option6.usersPicked
-		}
-
-		function awardPointsBack(user) {
+		function awardPointsBack(answer) {
 			// Update users coins
-			var amount = parseInt(user.amount)
-			var userId = user.userID
+			var amount = parseInt(answer.wager)
+			var userId = answer.userId
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
@@ -307,7 +291,7 @@ Meteor.methods({
 
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -325,81 +309,32 @@ Meteor.methods({
 
 		}
 
-		// Loop over each option and award points wagered back.
-		option1.map(function(user) {
-			awardPointsBack(user)
-		});
-		option2.map(function(user) {
-			awardPointsBack(user)
-		});
-		if (question.options.option3) {
-			option3.map(function(user) {
-				awardPointsBack(user)
-			});
-		}
-
-		if (question.options.option4) {
-			option4.map(function(user) {
-				awardPointsBack(user)
-			});
-		}
-
-		if (question.options.option5) {
-			option5.map(function(user) {
-				awardPointsBack(user)
-			});
-		}
-
-		if (question.options.option6) {
-			option6.map(function(user) {
-				awardPointsBack(user)
-			});
-		}
-
+		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
 
 	// Once the play is over update what option it was. Then award points to those who guessed correctly.
 
-	'modifyQuestionStatus': function(questionId, answer) {
-		Questions.update(questionId, {$set: {active: false, play: answer}});
+	'modifyQuestionStatus': function(questionId, answered) {
+		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option1Title = question.options.option1.title
-		var option2 = question.options.option2.usersPicked
-		var option2Title = question.options.option2.title
-		var option3 = question.options.option3.usersPicked
-		var option3Title = question.options.option3.title
-		var option4 = question.options.option4.usersPicked
-		var option4Title = question.options.option4.title
-
-		// If "op5" exists add the option to the end of the options object.
-		if (question.options.option5) {
-			var option5 = question.options.option5.usersPicked
-			var option5Title = question.options.option5.title
-		}
-
-		if (question.options.option6) {
-			var option6 = question.options.option6.usersPicked
-			var option6Title = question.options.option6.title
-		}
 
 		var list = []
 
-		function awardPoints(user, multiplier, title) {
+		function awardPoints(answer) {
 			// Adjust multiplier based on when selected.
-			var amount = parseInt(user.amount * multiplier)
+			var amount = parseInt(answer.wager * answer.multiplier);
 			var timeCreated = new Date();
 			var id = Random.id();
 			var que = question.que
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
 			var sharable = false
 			if(amount > 10000){
-				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + title + "' for '" + que + "'!"
+				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + answer.description + "' for '" + que + "'!"
 				var sharable = true
 			}
 			// See if user is on list already
-			var check = _.indexOf(list, user.userID)
+			var check = _.indexOf(list, answer.userId)
 
 			// If they are on the list exit the award process
 			if (check !== -1) {
@@ -410,9 +345,9 @@ Meteor.methods({
 				var shareMessage = ""
 			}
 			// if they are not we are going to add them to the list.
-			list.push(user.userID)
+			list.push(answer.userId)
 
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -430,7 +365,7 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$inc: {"profile.coins": amount},
 				})
@@ -439,72 +374,31 @@ Meteor.methods({
 
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (answer == "option1") {
-			option1.map(function(user) {
-				var multiplier = parseFloat(question.options.option1.multiplier);
-				var title = option1Title 
-				awardPoints(user, multiplier, title)
-			});
-		} else if (answer == "option2") {
-			option2.map(function(user) {
-				var multiplier = parseFloat(question.options.option2.multiplier);
-				var title = option2Title 
-				awardPoints(user, multiplier, title)
-			});
-		} else if (answer == "option3") {
-			option3.map(function(user) {
-				var multiplier = parseFloat(question.options.option3.multiplier);
-				var title = option3Title 
-				awardPoints(user, multiplier, title);
-			});
-		} else if (answer == "option4") {
-			option4.map(function(user) {
-				var multiplier = parseFloat(question.options.option4.multiplier);
-				var title = option4Title 
-				awardPoints(user, multiplier, title);
-			});
-		} else if (answer == "option5") {
-			option5.map(function(user) {
-				var multiplier = parseFloat(question.options.option5.multiplier);
-				var title = option5Title 
-				awardPoints(user, multiplier, title);
-			});
-		} else if (answer == "option6") {
-			option6.map(function(user) {
-				var multiplier = parseFloat(question.options.option6.multiplier);
-				var title = option6Title 
-				awardPoints(user, multiplier, title);
-			});
-		}
+		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
 	},
 
-	'modifyTwoOptionQuestionStatus': function(questionId, answer) {
-		Questions.update(questionId, {$set: {active: false, play: answer}});
+	'modifyTwoOptionQuestionStatus': function(questionId, answered) {
+		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option1Title = question.options.option1.title
-		var option2 = question.options.option2.usersPicked
-		var option2Title = question.options.option2.title
 
 		var list = []
 
-		function awardPoints(user, multiplier, title) {
+		function awardPoints(answer) {
 			// Adjust multiplier based on when selected.
-			var amount = parseInt(user.amount * multiplier)
+			var amount = parseInt(answer.wager * answer.multiplier)
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
 			var que = question.que
 			var sharable = false
 			if(amount > 10000){
-				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + title + "' for '" + que + "'!"
+				var shareMessage = "I Earned " + amount + " Coins! By Predicting '" + answer.description + "' for '" + que + "'!"
 				var sharable = true
 			}
 
 			// See if user is on list already
-			var check = _.indexOf(list, user.userID)
+			var check = _.indexOf(list, answer.userId)
 
 			// If they are on the list exit the award process
 			if (check !== -1) {
@@ -513,9 +407,9 @@ Meteor.methods({
 			}
 
 			// if they are not we are going to add them to the list.
-			list.push(user.userID)
+			list.push(answer.userId)
 
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -533,7 +427,7 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$inc: {"profile.coins": amount},
 				})
@@ -542,32 +436,17 @@ Meteor.methods({
 
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (answer == "option1") {
-			option1.map(function(user) {
-				var multiplier = parseFloat(question.options.option1.multiplier);
-				var title = option1Title
-				awardPoints(user, multiplier, title)
-			});
-		} else if (answer == "option2") {
-			option2.map(function(user) {
-				var multiplier = parseFloat(question.options.option2.multiplier);
-				var title = option2Title
-				awardPoints(user, multiplier, title)
-			});
-		}
+		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
 	},
 
-	'modifyBinaryQuestionStatus': function(questionId, answer) {
-		Questions.update(questionId, {$set: {active: false, play: answer}});
+	'modifyBinaryQuestionStatus': function(questionId, answered) {
+		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
 
 		var list = []
 
-		function awardPoints(user) {
+		function awardPoints(answer) {
 			// Adjust multiplier based on when selected.
 			var que = question.que
 			var amount = parseInt(2000)
@@ -576,7 +455,7 @@ Meteor.methods({
 			var scoreMessage = 'Nice Pickk! "' + que + '" 2000 Coins!'
 
 			// See if user is on list already
-			var check = _.indexOf(list, user.userID)
+			var check = _.indexOf(list, answer.userId)
 
 			// If they are on the list exit the award process
 			if (check !== -1) {
@@ -585,9 +464,9 @@ Meteor.methods({
 			}
 
 			// if they are not we are going to add them to the list.
-			list.push(user.userID)
+			list.push(answer.userId)
 
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -603,7 +482,7 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$inc: {"profile.coins": amount},
 				})
@@ -612,42 +491,25 @@ Meteor.methods({
 
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (answer == "option1") {
-			option1.map(function(user) {
-				awardPoints(user)
-			});
-		} else if (answer == "option2") {
-			option2.map(function(user) {
-				awardPoints(user)
-			});
-		}
+		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
 	},
 
-	'modifyGameQuestionStatus': function(questionId, answer) {
-		Questions.update(questionId, {$set: {active: false, play: answer}});
+	'modifyGameQuestionStatus': function(questionId, answered) {
+		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
 
 		var list = []
-
-		var game = Questions.findOne({_id: questionId})
 
 		function awardPoints(user) {
 			// Adjust multiplier based on when selected.
 			var amount = 10
 			var timeCreated = new Date();
 			var id = Random.id();
-			var scoreMessage = "Nice Pickk on " + game.que + "! You Earned " + amount + " Diamonds!"
+			var scoreMessage = "Nice Pickk on " + question.que + "! You Earned " + amount + " Diamonds!"
 
 			// See if user is on list already
-			var check = _.indexOf(list, user.userID)
+			var check = _.indexOf(list, user.userId)
 
 			// If they are on the list exit the award process
 			if (check !== -1) {
@@ -656,9 +518,9 @@ Meteor.methods({
 			}
 
 			// if they are not we are going to add them to the list.
-			list.push(user.userID)
+			list.push(user.userId)
 
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: user.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -674,7 +536,7 @@ Meteor.methods({
 			)
 
 			// Update users diamonds
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: user.userId},
 				{
 					$inc: {"profile.diamonds": amount},
 				})
@@ -683,115 +545,46 @@ Meteor.methods({
 
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (answer == "option1") {
-			option1.map(function(user) {
-				awardPoints(user)
-			});
-		} else if (answer == "option2") {
-			option2.map(function(user) {
-				awardPoints(user)
-			});
-		} else if (answer == "option3") {
-			option3.map(function(user) {
-				awardPoints(user);
-			});
-		} else if (answer == "option4") {
-			option4.map(function(user) {
-				awardPoints(user);
-			});
-		} else if (answer == "option5") {
-			option5.map(function(user) {
-				awardPoints(user);
-			});
-		} else if (answer == "option6") {
-			option5.map(function(user) {
-				awardPoints(user);
-			});
-		}
+		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
 	},
 
 // Remove Coins from the people who answered it "correctly", the answer changed. 
 
-	'unAwardPoints': function(questionId, oldAnswer) {
+	'unAwardPoints': function(questionId, oldAnswered) {
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
 
-		function awardPoints(user, multiplier) {
+		function unAwardPoints(answer) {
 			// Adjust multiplier based on when selected.
 
-			var amount = parseInt(user.amount * multiplier)
+			var amount = parseInt(answer.wager * answer.multiplier);
 
 			// Update users coins
-			Meteor.users.update({_id: user.userID}, {
+			Meteor.users.update({_id: answer.userId}, {
 				$inc: {"profile.coins": -amount}
 			})
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (oldAnswer == "option1") {
-			option1.map(function(user) {
-				var multiplier = parseFloat(question.options.option1.multiplier);
-				awardPoints(user, multiplier)
-			});
-		} else if (oldAnswer == "option2") {
-			option2.map(function(user) {
-				var multiplier = parseFloat(question.options.option2.multiplier);
-				awardPoints(user, multiplier)
-			});
-		} else if (oldAnswer == "option3") {
-			option3.map(function(user) {
-				var multiplier = parseFloat(question.options.option3.multiplier);
-				awardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option4") {
-			option4.map(function(user) {
-				var multiplier = parseFloat(question.options.option4.multiplier);
-				awardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option5") {
-			option5.map(function(user) {
-				var multiplier = parseFloat(question.options.option5.multiplier);
-				awardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option6") {
-			option6.map(function(user) {
-				var multiplier = parseFloat(question.options.option6.multiplier);
-				awardPoints(user, multiplier);
-			});
-		}
+		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
 	},
 
-	'unAwardPointsForDelete': function(questionId, oldAnswer) {
+	'unAwardPointsForDelete': function(questionId, oldAnswered) {
 		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
 
-		function unAwardPoints(user, multiplier) {
+		function unAwardPoints(answer) {
 			// Adjust multiplier based on when selected.
-			var userAmount = user.amount
-			var amount = parseInt(userAmount * multiplier)
+			var amount = parseInt(answer.wager * answer.multiplier);
 			var scoreMessage = "Play overturned bummer :( " + amount + " Coins!"
 			var timeCreated = new Date();
 			var id = Random.id();
 
 			// Update users coins
-			Meteor.users.update({_id: user.userID}, {
+			Meteor.users.update({_id: answer.userId}, {
 				$inc: {"profile.coins": -amount}
 			});
 
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -807,53 +600,16 @@ Meteor.methods({
 			)
 		}
 
-		// Can this be switch? Can it be refactored?
-		if (oldAnswer == "option1") {
-			option1.map(function(user) {
-				var multiplier = parseFloat(question.options.option1.multiplier);
-				unAwardPoints(user, multiplier)
-			});
-		} else if (oldAnswer == "option2") {
-			option2.map(function(user) {
-				var multiplier = parseFloat(question.options.option2.multiplier);
-				unAwardPoints(user, multiplier)
-			});
-		} else if (oldAnswer == "option3") {
-			option3.map(function(user) {
-				var multiplier = parseFloat(question.options.option3.multiplier);
-				unAwardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option4") {
-			option4.map(function(user) {
-				var multiplier = parseFloat(question.options.option4.multiplier);
-				unAwardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option5") {
-			option5.map(function(user) {
-				var multiplier = parseFloat(question.options.option5.multiplier);
-				unAwardPoints(user, multiplier);
-			});
-		} else if (oldAnswer == "option6") {
-			option6.map(function(user) {
-				var multiplier = parseFloat(question.options.option6.multiplier);
-				unAwardPoints(user, multiplier);
-			});
-		}
+		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
 	},
 
 	'awardInitalCoins': function(questionId) {
 		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-		var option3 = question.options.option3.usersPicked
-		var option4 = question.options.option4.usersPicked
-		var option5 = question.options.option5.usersPicked
-		var option6 = question.options.option6.usersPicked
 
-		function awardPointsBack(user) {
+		function awardPointsBack(answer) {
 			// Update users coins
-			var amount = parseInt(user.amount)
-			var userId = user.userID
+			var amount = parseInt(answer.wager)
+			var userId = answer.userId
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Play had removed. Here are your " + amount + " coins"
@@ -861,7 +617,7 @@ Meteor.methods({
 
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
-			Meteor.users.update({_id: user.userID},
+			Meteor.users.update({_id: answer.userId},
 				{
 					$push: {
 						pendingNotifications: {
@@ -877,25 +633,7 @@ Meteor.methods({
 			)
 		}
 
-		// Loop over each option and award points wagered back.
-		option1.map(function(user) {
-			awardPointsBack(user)
-		});
-		option2.map(function(user) {
-			awardPointsBack(user)
-		});
-		option3.map(function(user) {
-			awardPointsBack(user)
-		});
-		option4.map(function(user) {
-			awardPointsBack(user)
-		});
-		option5.map(function(user) {
-			awardPointsBack(user)
-		});
-		option6.map(function(user) {
-			awardPointsBack(user)
-		});
+		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
 
 	// Users answered the question take away coins and add that info to their account.
@@ -909,8 +647,14 @@ Meteor.methods({
 			return
 		}
 
+		var option = question.options[answered];
+		if (!option) {
+			throw new Meteor.Error("Can't find the option '" + answered + "' for question #" + questionId)
+		}
+
 		wager = parseInt(wager || "0", 10);
-		var multiplier = parseFloat(question.options[answered].multiplier || "0");
+		description = description || "";
+		var multiplier = parseFloat(option.multiplier || "0");
 
     Answers.insert({
 			userId: this.userId,
@@ -919,7 +663,7 @@ Meteor.methods({
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,
-			description: description || ""
+			description: description
 		});
 
 		// Update question with the user who have answered.
@@ -952,20 +696,6 @@ Meteor.methods({
 			Meteor.call('awardDiamonds', this.userId, 13)
 		}
 
-		//Update the question with the users answer and wager.
-		if (answered == "option1") {
-			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: this.userId, amount: wager}}});
-		} else if (answered == "option2") {
-			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: this.userId, amount: wager}}});
-		} else if (answered == "option3") {
-			Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: this.userId, amount: wager}}});
-		} else if (answered == "option4") {
-			Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: this.userId, amount: wager}}});
-		} else if (answered == "option5") {
-			Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: this.userId, amount: wager}}});
-		} else if (answered == "option6") {
-			Questions.update(questionId, {$push: {'options.option6.usersPicked': {userID: this.userId, amount: wager}}});
-		}
 	},
 
 	'twoOptionQuestionAnswered': function(user, questionId, answer, wager, que) {
@@ -1035,17 +765,6 @@ Meteor.methods({
 		} else if (counter === 140) {
 			Meteor.call('awardDiamonds', user, 13)
 		}
-
-		var question = Questions.findOne({"_id": questionId});
-		var option1 = question.options.option1.usersPicked
-		var option2 = question.options.option2.usersPicked
-
-		//Update the question with the users answer and wager.
-		if (answer == "option1") {
-			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option2") {
-			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user, amount: wager}}});
-		}
 	},
 
 	// Users answered the question take away coins and add that info to their account.
@@ -1101,14 +820,6 @@ Meteor.methods({
 
 		//Add question, wager and answer to the user's account.
 		Meteor.users.update({_id: user}, {$push: {questionAnswered: {questionId: questionId, answered: answer}}});
-
-
-		//Update the question with the users answer and wager.
-		if (answer == "option1") {
-			Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
-		} else if (answer == "option2") {
-			Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
-		}
 	},
 
 	'gameQuestionAnswered': function(user, questionId, answer) {
@@ -1133,19 +844,6 @@ Meteor.methods({
 
 			//Add question and answer to the user's account.
 			Meteor.users.update({_id: user}, {$push: {questionAnswered: {questionId: questionId, answered: answer}}});
-
-			//Update the question with the users answer.
-			if (answer == "option1") {
-				Questions.update(questionId, {$push: {'options.option1.usersPicked': {userID: user}}});
-			} else if (answer == "option2") {
-				Questions.update(questionId, {$push: {'options.option2.usersPicked': {userID: user}}});
-			} else if (answer == "option3") {
-				Questions.update(questionId, {$push: {'options.option3.usersPicked': {userID: user}}});
-			} else if (answer == "option4") {
-				Questions.update(questionId, {$push: {'options.option4.usersPicked': {userID: user}}});
-			} else if (answer == "option5") {
-				Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: user}}});
-			}
 		}
 	},
 

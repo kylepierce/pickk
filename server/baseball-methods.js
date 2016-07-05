@@ -96,12 +96,12 @@ Meteor.methods({
   var op6 = "Home Run";
 
   var options = {
-    option1: {title: op1, usersPicked: [], multiplier: 2.1 },
-    option2: {title: op2, usersPicked: [], multiplier: 2.2 },
-    option3: {title: op3, usersPicked: [], multiplier: 2.3 },
-    option4: {title: op4, usersPicked: [], multiplier: 2.4 },
-    option5: {title: op5, usersPicked: [], multiplier: 2.3 },
-    option6: {title: op6, usersPicked: [], multiplier: 2.4 },
+    option1: {title: op1, multiplier: 2.1 },
+    option2: {title: op2, multiplier: 2.2 },
+    option3: {title: op3, multiplier: 2.3 },
+    option4: {title: op4, multiplier: 2.4 },
+    option5: {title: op5, multiplier: 2.3 },
+    option6: {title: op6, multiplier: 2.4 },
   }
 
   var options = Meteor.call('playMultiplierGenerator', playerId, options)
@@ -163,15 +163,15 @@ Meteor.methods({
 
   // Finally we are going to create an option object to give to the database.
   var options = {
-      option1: { title: op1, usersPicked: [], multiplier: 1.45 },
-      option2: { title: op2, usersPicked: [], multiplier: 1.65 },
-      option3: { title: op3, usersPicked: [], multiplier: 7.35 },
-      option4: { title: op4, usersPicked: [], multiplier: 3.23 },
+      option1: { title: op1, multiplier: 1.45 },
+      option2: { title: op2, multiplier: 1.65 },
+      option3: { title: op3, multiplier: 7.35 },
+      option4: { title: op4, multiplier: 3.23 },
   }
 
   // If "op5" exists add the option to the end of the options object.
   if( op5 ){
-      options.option5 = { title: op5, usersPicked: [], multiplier: 1 }
+      options.option5 = { title: op5, multiplier: 1 }
   }
 
   // Generate what is likely to happen by calling the multiplier generator
