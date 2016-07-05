@@ -1,4 +1,4 @@
-
+/*
 Template.activeQuestion.animations({
   ".container-item": {
     container: ".container", // container of the ".item" elements
@@ -77,7 +77,7 @@ Template.binaryChoice.animations({
         $( "#binaryCard" ).css("display", "")
       }, // callback before the insert animation is triggered
       after: function(attrs, element, template) {
-        
+
       }, // callback after an element gets inserted
       delay: 200 // Delay before inserted items animate
     },
@@ -103,3 +103,4 @@ Template.playerCard.animations({
     animateInitialDelay: 500 // Delay before the initial items animate
   }
 });
+*/
