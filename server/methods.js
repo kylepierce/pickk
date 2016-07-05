@@ -902,7 +902,7 @@ Meteor.methods({
 
 	'questionAnswered': function(questionId, answered, wager, description) {
 		// Grab the entire userAnswered array
-		var question = Questions.findOne(questionId, {fields: {'usersAnswered': 1}});
+		var question = Questions.findOne(questionId);
 
 		// If the user is already in the array exit this process
 		if (~question.usersAnswered.indexOf(this.userId)) {
@@ -910,14 +910,15 @@ Meteor.methods({
 		}
 
 		wager = parseInt(wager || "0", 10);
+		var multiplier = parseFloat(question.options[answered].multiplier || "0");
 
-		Answers.insert({
+    Answers.insert({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
 			answered: answered,
 			wager: wager,
-			multiplier: parseFloat(question.options[answered].multiplier || "0"),
+			multiplier: multiplier,
 			description: description || ""
 		});
 
@@ -1146,32 +1147,6 @@ Meteor.methods({
 				Questions.update(questionId, {$push: {'options.option5.usersPicked': {userID: user}}});
 			}
 		}
-	},
-
-	'questionUnanswered': function(user, questionId, answer, wager) {
-		// Remove user from the answer list
-		Questions.update({_id: questionId}, {$pull: {usersAnswered: user}})
-
-		//Remove question, wager and answer to the user's account.
-		Meteor.users.update({_id: user}, {$pull: {questionAnswered: {questionId: questionId}}});
-
-		//Update the question with the users answer and wager.
-		if (answer == "option1") {
-			Questions.update(questionId, {$pull: {'options.option1.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option2") {
-			Questions.update(questionId, {$pull: {'options.option2.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option3") {
-			Questions.update(questionId, {$pull: {'options.option3.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option4") {
-			Questions.update(questionId, {$pull: {'options.option4.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option5") {
-			Questions.update(questionId, {$pull: {'options.option5.usersPicked': {userID: user, amount: wager}}});
-		} else if (answer == "option6") {
-			Questions.update(questionId, {$pull: {'options.option6.usersPicked': {userID: user, amount: wager}}});
-		}
-
-		//Once a users has removed question add wager to their coins.
-		Meteor.users.update({_id: user}, {$inc: {"profile.coins": +wager}});
 	},
 
 	'isUsernameUnique': function(username) {

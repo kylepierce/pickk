@@ -71,11 +71,6 @@ Meteor.publish('everyQuestions', function() {
   return this.ready();
 })
 
-Meteor.publish('questionsUserAnswered', function(user) {
-  var selector = {usersAnswered: {$in: [user]}}
-  return Questions.find(selector);
-})
-
 Meteor.publish('questionsByGameId', function(gameId) {
   check(gameId, String);
   return Questions.find({gameId: gameId});

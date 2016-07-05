@@ -9,14 +9,6 @@ Template.gameCharts.onRendered(function () {
         return {
             key: 'Option' + i,
             values: new d3.range(1,questionsCount).map( function(f,j) {
-                // console.log(question[j].usersAnswered)
-                // if(question[j].usersAnswered === "undefined"){
-                //     console.log("No answer")
-                // } else {
-                //     // console.log("Zero answers")
-                //     var number = 
-                // }
-            	// console.log(number)
                 var option = "option" + i
                 console.log(option)
                 console.log(question[j].que)

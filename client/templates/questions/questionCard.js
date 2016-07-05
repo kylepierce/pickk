@@ -219,16 +219,6 @@ Template.questionCard.events({
   // 	play = template.find('input:radio[name=play]:checked').value
   // },
 
-  'click #changeAnswer': function() {
-    var questionId = Session.get('lastId');
-    var answer = Session.get('lastAnswer');
-    var wager = Session.get('lastWager');
-    var currentUser = Meteor.userId();
-
-    Meteor.call('questionUnanswered', currentUser, questionId, answer, wager);
-
-  },
-
   'submit form': function(event, template) {
     event.preventDefault();
     var questionId = this._id;
