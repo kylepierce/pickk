@@ -1,7 +1,7 @@
 var version = 1;
 
 var cleanUsernames = function() {
-  Meteor._debug("[cleanUsernames] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [cleanUsernames] Running");
   var processedUsernames = [];
   Meteor.users.find().forEach(function(user) {
     var oldUsername = user.profile.username;
@@ -14,14 +14,14 @@ var cleanUsernames = function() {
     }
     processedUsernames.push(newUsername);
     if (processedUsernames.length % 100 === 0) {
-      Meteor._debug("[cleanUsernames] Processed " + processedUsernames.length + " usernames");
+      Meteor._debug("[" + new Date().toISOString() + "] [cleanUsernames] Processed " + processedUsernames.length + " usernames");
     }
   });
-  Meteor._debug("[cleanUsernames] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [cleanUsernames] Done");
 };
 
 var unsetDuplicateUsernames = function() {
-  Meteor._debug("[unsetDuplicateUsernames] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [unsetDuplicateUsernames] Running");
   var processedUsernames = [];
   Meteor.users.find().forEach(function(user) {
     var username = user.profile.username;
@@ -35,21 +35,21 @@ var unsetDuplicateUsernames = function() {
     processedUsernames.push(lowercasedUsername);
     var result = Meteor.users.update({_id: {$ne: user._id}, "profile.username": new RegExp("^" + escapeRegExp(username) + "$", "i")}, {$unset: {"profile.username": 0}}, {multi: true});
     if (result) {
-      Meteor._debug("[unsetDuplicateUsernames] " + username + ": " + result);
+      Meteor._debug("[" + new Date().toISOString() + "] [unsetDuplicateUsernames] " + username + ": " + result);
     }
 
     if (processedUsernames.length % 100 === 0) {
-      Meteor._debug("[unsetDuplicateUsernames] Processed " + processedUsernames.length + " usernames");
+      Meteor._debug("[" + new Date().toISOString() + "] [unsetDuplicateUsernames] Processed " + processedUsernames.length + " usernames");
     }
   });
-  Meteor._debug("[unsetDuplicateUsernames] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [unsetDuplicateUsernames] Done");
 };
 
 var setUsernames = function() {
-  Meteor._debug("[setUsernames] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [setUsernames] Running");
   var counter = 1;
   Meteor.users.find({"profile.username": {$exists: false}}).forEach(function(user) {
-    Meteor._debug("[setUsernames] #" + user._id + ": no username");
+    Meteor._debug("[" + new Date().toISOString() + "] [setUsernames] #" + user._id + ": no username");
     var username, usernames = [
       user.services && user.services.twitter && user.services.twitter.screenName,
       user.emails && user.emails[0].address.split("@")[0],
@@ -61,32 +61,32 @@ var setUsernames = function() {
     for (var i = 0; i < usernames.length; i++) {
       username = usernames[i].replace(/[^\w\d_]/g, "");
       if (username) {
-        Meteor._debug("[setUsernames] #" + user._id + ": trying " + username);
+        Meteor._debug("[" + new Date().toISOString() + "] [setUsernames] #" + user._id + ": trying " + username);
         if (!Meteor.users.findOne({"profile.username": new RegExp("^" + escapeRegExp(username) + "$", "i")})) {
-          Meteor._debug("[setUsernames] #" + user._id + ": assigning " + username);
+          Meteor._debug("[" + new Date().toISOString() + "] [setUsernames] #" + user._id + ": assigning " + username);
           Meteor.users.update(user._id, {$set: {"profile.username": username}});
           return; // process next user
         }
       }
     }
   });
-  Meteor._debug("[setUsernames] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [setUsernames] Done");
 };
 
 var setIsOnboarded = function() {
-  Meteor._debug("[setIsOnboarded] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [setIsOnboarded] Running");
   Meteor.users.update({}, {$set: {"profile.isOnboarded": true}}, {multi: true});
-  Meteor._debug("[setIsOnboarded] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [setIsOnboarded] Done");
 };
 
 var clearBirthdays = function() {
-  Meteor._debug("[clearBirthdays] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [clearBirthdays] Running");
   Meteor.users.update({}, {$unset: {"profile.birthday": 0}}, {multi: true});
-  Meteor._debug("[clearBirthdays] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [clearBirthdays] Done");
 };
 
 var normalizeQuestionsCollection = function() {
-  Meteor._debug("[normalizeQuestionsCollection] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [normalizeQuestionsCollection] Running");
   Questions.remove({que: null});
   Questions.remove({gameId: {$exists: false}});
   Questions.remove({gameId: null});
@@ -95,11 +95,11 @@ var normalizeQuestionsCollection = function() {
   });
   Questions.update({}, {$pull: {usersAnswered: null}}, {multi: true});
   Questions.update({}, {$unset: {icons: 0}}, {multi: true});
-  Meteor._debug("[normalizeQuestionsCollection] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [normalizeQuestionsCollection] Done");
 };
 
 var createAnswersCollection = function() {
-  Meteor._debug("[createAnswersCollection] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [createAnswersCollection] Running");
   if (Meteor.settings.public.isDebug) {
     Answers.remove({});
   }
@@ -172,15 +172,15 @@ var createAnswersCollection = function() {
       });
     }
     if (counter && counter % 100 === 0) {
-      Meteor._debug("[createAnswersCollection] Processed " + counter + " users");
+      Meteor._debug("[" + new Date().toISOString() + "] [createAnswersCollection] Processed " + counter + " users");
     }
     counter++;
   });
-  Meteor._debug("[createAnswersCollection] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [createAnswersCollection] Done");
 };
 
 var dropAnswerFields = function() {
-  Meteor._debug("[dropAnswerFields] Running");
+  Meteor._debug("[" + new Date().toISOString() + "] [dropAnswerFields] Running");
   Meteor.users.update({}, {$unset: {questionAnswered: 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option1.usersPicked": 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option2.usersPicked": 0}}, {multi: true});
@@ -188,7 +188,7 @@ var dropAnswerFields = function() {
   Questions.update({}, {$unset: {"options.option4.usersPicked": 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option5.usersPicked": 0}}, {multi: true});
   Questions.update({}, {$unset: {"options.option6.usersPicked": 0}}, {multi: true});
-  Meteor._debug("[dropAnswerFields] Done");
+  Meteor._debug("[" + new Date().toISOString() + "] [dropAnswerFields] Done");
 };
 
 Migrations.add({
