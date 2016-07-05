@@ -636,13 +636,9 @@ Meteor.methods({
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
 
-	// Users answered the question take away coins and add that info to their account.
-
 	'questionAnswered': function(questionId, answered, wager, description) {
-		// Grab the entire userAnswered array
 		var question = Questions.findOne(questionId);
 
-		// If the user is already in the array exit this process
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
@@ -695,59 +691,47 @@ Meteor.methods({
 		} else if (counter === 140) {
 			Meteor.call('awardDiamonds', this.userId, 13)
 		}
-
 	},
 
 	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
-		// Grab the entire userAnswered array
-		var question = Questions.find({_id: questionId},
-			{fields: {'usersAnswered': 1}}).fetch();
+		var question = Questions.findOne(questionId);
 
-		// Check if userId is in the usersAnswered array
-		var userExists = _.indexOf(question, this.userId)
-
-		// If the user is already in the array exit this process
-		if (userExists !== -1) {
+		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
 
-		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: this.userId},
-			{
-				$push: {
-					questionAnswered: {
-						questionId: questionId,
-						wager: wager,
-						answered: answered,
-						description: description
-					}
-				}
-			});
-
-		// Update question with the user who have answered.
-		Questions.update(questionId, {$push: {usersAnswered: this.userId}});
-
-		// Add user to the users who have played in the game.
-		console.log(questionId)
-		var gameInfo = Questions.findOne({_id: questionId})
-		console.log(gameInfo)
-		var gameId = gameInfo.gameId
-		var game = Games.find(
-			{
-				_id: gameId,
-				users: {$nin: [this.userId]}
-			}, {fields: {'users': 1}}).fetch();
-		if (game.length == 1) {
-			Games.update(gameId, {$push: {users: this.userId}});
+		var option = question.options[answered];
+		if (!option) {
+			throw new Meteor.Error("Can't find the option '" + answered + "' for question #" + questionId)
 		}
 
+		wager = parseInt(wager || "0", 10);
+		description = description || "";
+		var multiplier = parseFloat(option.multiplier || "0");
+
+		Answers.insert({
+			userId: this.userId,
+			gameId: question.gameId,
+			questionId: questionId,
+			answered: answered,
+			wager: wager,
+			multiplier: multiplier,
+			description: description
+		});
+
+		// Update question with the user who have answered.
+		Questions.update(questionId, {$addToSet: {usersAnswered: this.userId}});
+
+		// Add user to the users who have played in the game.
+		Games.update(question.gameId, {$addToSet: {users: this.userId}});
+
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update({_id: this.userId}, {$inc: {"profile.coins": -wager}});
+		Meteor.users.update(this.userId, {$inc: {"profile.coins": -wager}});
 
 		//Increase counter by 1
-		Meteor.users.update({_id: this.userId}, {$inc: {"profile.queCounter": +1}});
+		Meteor.users.update(this.userId, {$inc: {"profile.queCounter": +1}});
 
-		var currentUser = Meteor.users.findOne({_id: this.userId})
+		var currentUser = Meteor.users.findOne(this.userId)
 		var counter = currentUser.profile.queCounter
 
 		if (counter === 1) {
@@ -767,14 +751,46 @@ Meteor.methods({
 		}
 	},
 
-	// Users answered the question take away coins and add that info to their account.
-
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
+		var question = Questions.findOne(questionId);
+
+		if (~question.usersAnswered.indexOf(this.userId)) {
+			return
+		}
+
+		var option = question.options[answered];
+		if (!option) {
+			throw new Meteor.Error("Can't find the option '" + answered + "' for question #" + questionId)
+		}
+
+		wager = parseInt(wager || "0", 10);
+		description = description || "";
+		var multiplier = parseFloat(option.multiplier || "0");
+
+		Answers.insert({
+			userId: this.userId,
+			gameId: question.gameId,
+			questionId: questionId,
+			answered: answered,
+			wager: wager,
+			multiplier: multiplier,
+			description: description
+		});
+
+		// Update question with the user who have answered.
+		Questions.update(questionId, {$addToSet: {usersAnswered: this.userId}});
+
+		// Add user to the users who have played in the game.
+		Games.update(question.gameId, {$addToSet: {users: this.userId}});
+
+		//Once a users has answered take the amount wager from their coins.
+		Meteor.users.update(this.userId, {$inc: {"profile.coins": +wager}});
+
 		var timeCreated = new Date();
 		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
 
-		Meteor.users.update({_id: this.userId},
+		Meteor.users.update(this.userId,
 			{
 				$push: {
 					pendingNotifications: {
@@ -788,63 +804,39 @@ Meteor.methods({
 				}
 			}
 		)
+	},
 
-		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: this.userId}, {
-			$push: {
-				questionAnswered: {
-					questionId: questionId,
-					answered: answered, description: description
-				}
-			}
+	'gameQuestionAnswered': function(questionId, answered, wager, description) {
+		var question = Questions.findOne(questionId);
+
+		if (~question.usersAnswered.indexOf(this.userId)) {
+			return
+		}
+
+		var option = question.options[answered];
+		if (!option) {
+			throw new Meteor.Error("Can't find the option '" + answered + "' for question #" + questionId)
+		}
+
+		wager = parseInt(wager || "0", 10);
+		description = description || "";
+		var multiplier = parseFloat(option.multiplier || "0");
+
+		Answers.insert({
+			userId: this.userId,
+			gameId: question.gameId,
+			questionId: questionId,
+			answered: answered,
+			wager: wager,
+			multiplier: multiplier,
+			description: description
 		});
 
 		// Update question with the user who have answered.
-		Questions.update(questionId, {$push: {usersAnswered: this.userId}});
+		Questions.update(questionId, {$addToSet: {usersAnswered: this.userId}});
 
-		// Add user to the users who have played in the game.
-		var gameInfo = Questions.findOne({_id: questionId})
-		var gameId = gameInfo.gameId
-		var game = Games.find(
-			{
-				_id: gameId,
-				users: {$nin: [this.userId]}
-			}, {fields: {'users': 1}}).fetch();
-		if (game.length == 1) {
-			Games.update(gameId, {$push: {users: this.userId}});
-		}
-
-		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update({_id: this.userId}, {$inc: {"profile.coins": +wager}});
-
-
-		//Add question, wager and answer to the user's account.
-		Meteor.users.update({_id: this.userId}, {$push: {questionAnswered: {questionId: questionId, answered: answered}}});
-	},
-
-	'gameQuestionAnswered': function(user, questionId, answer) {
-
-		// Grab the entire userAnswered array
-		var question = Questions.find({_id: questionId},
-			{fields: {'usersAnswered': 1}}).fetch();
-
-		// Check if userId is in the usersAnswered array
-		var userExists = _.indexOf(question, user)
-
-		// If the user is already in the array exit this process
-		if (userExists !== -1) {
-			return
-		} else {
-
-			// Update question with the user who have answered.
-			Questions.update(questionId, {$push: {usersAnswered: user}});
-
-			//Give user a diamond for answering
-			Meteor.call('awardDiamonds', user, 5)
-
-			//Add question and answer to the user's account.
-			Meteor.users.update({_id: user}, {$push: {questionAnswered: {questionId: questionId, answered: answer}}});
-		}
+		//Give user a diamond for answering
+		Meteor.call('awardDiamonds', this.userId, 5);
 	},
 
 	'isUsernameUnique': function(username) {

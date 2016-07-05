@@ -277,7 +277,7 @@ Template.predictionQuestions.events({
 
     // Wait until the question card has disapeared
     Meteor.setTimeout(function() {
-      Meteor.call('gameQuestionAnswered', currentUser, questionId, answer);
+      Meteor.call('gameQuestionAnswered', questionId, answer, 0, "");
 
     }, 500);
   }
