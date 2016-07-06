@@ -4,6 +4,7 @@ Fixtures.push(Meteor.users, {
       firstName: "Charlie",
       lastName: "Dalton",
       birthday: new Date("1992-02-29"),
+      coins: 10000,
       role: "admin"
     }
   },
@@ -11,7 +12,8 @@ Fixtures.push(Meteor.users, {
     profile: {
       firstName: "Knox",
       lastName: "Overstreet",
-      birthday: new Date("1996-05-01")
+      birthday: new Date("1996-05-01"),
+      coins: 10000
     }
   }
 });

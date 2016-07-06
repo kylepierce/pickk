@@ -385,7 +385,9 @@ Template.wagers.rendered = function() {
   if (!this._rendered) {
     this._rendered = true;
     var previousWager = Session.get("lastWager");
-    document.getElementById(previousWager).checked = true
+    if (previousWager) {
+      document.getElementById(previousWager).checked = true
+    }
   }
 }
 

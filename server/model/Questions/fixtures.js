@@ -13,7 +13,8 @@ Fixtures.push(Questions, {
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    usersAnswered: []
   },
   PitchQuestion: {
     dateCreated: moment("2016-05-06").toDate(),
@@ -28,7 +29,8 @@ Fixtures.push(Questions, {
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    usersAnswered: []
   },
   InactiveQuestionForActiveGame: {
     dateCreated: moment("2016-05-06").toDate(),
@@ -44,6 +46,7 @@ Fixtures.push(Questions, {
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
     },
+    usersAnswered: [],
     play: "option1"
   },
   InactiveQuestionForInactiveGame: {
@@ -60,6 +63,7 @@ Fixtures.push(Questions, {
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
     },
+    usersAnswered: [],
     play: "option2"
   },
   CommercialQuestionForActiveGame: {
@@ -75,28 +79,30 @@ Fixtures.push(Questions, {
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    usersAnswered: []
   },
   FiveOptionsQuestion: {
     playerId: "ErikSmith",
     gameId: "ActiveGame",
     active: true,
     commercial: false,
-    que: "Which is an outcome of the bat?",
+    que: "End of Erik Smith's at bat.",
     options: {
       option1: {title: "Strike Out", multiplier: 2.1},
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Walk", multiplier: 2.3},
       option4: {title: "Foul Ball", multiplier: 2.4},
       option5: {title: "Out", multiplier: 2.5}
-    }
+    },
+    usersAnswered: []
   },
   SixOptionsQuestion: {
     playerId: "ErikSmith",
     gameId: "ActiveGame",
     active: true,
     commercial: false,
-    que: "Which is an outcome of the bat?",
+    que: "End of Erik Smith's at bat.",
     options: {
       option1: {title: "Out", multiplier: 2.1},
       option2: {title: "Walk", multiplier: 2.2},
@@ -104,7 +110,8 @@ Fixtures.push(Questions, {
       option4: {title: "Double", multiplier: 2.4},
       option5: {title: "Triple", multiplier: 2.5},
       option6: {title: "Home Run", multiplier: 2.6}
-    }
+    },
+    usersAnswered: []
   },
   BinaryQuestion: {
     playerId: "ErikSmith",
@@ -112,23 +119,25 @@ Fixtures.push(Questions, {
     active: true,
     commercial: false,
     binaryChoice: true,
-    que: "Which is an outcome of the bat?",
+    que: "Will a Erik Smith Hit a Home Run in the 6th inning?",
     options: {
-      option1: {title: "True", userPicked: []},
-      option2: {title: "False", userPicked: []}
-    }
+      option1: {title: "True"},
+      option2: {title: "False"}
+    },
+    usersAnswered: []
   },
   NoPlayerQuestion: {
     gameId: "ActiveGame",
     active: true,
     commercial: false,
-    que: "Which is an outcome of the bat?",
+    que: "What is an outcome of the bat?",
     options: {
       option1: {title: "Strike", multiplier: 2.1},
       option2: {title: "Ball", multiplier: 2.2},
       option3: {title: "Hit", multiplier: 2.3},
       option4: {title: "Out", multiplier: 2.4}
-    }
+    },
+    usersAnswered: []
   },
   FuturePredictionQuestion: {
     playerId: "ErikSmith",
@@ -137,10 +146,11 @@ Fixtures.push(Questions, {
     commercial: false,
     que: "Buffalo Bills vs Houston Texans",
     options: {
-      option1: {title: "Colorado Rockies Wins by 5+ runs", userPicked: [], multiplier: 1},
-      option2: {title: "Boston Red Sox Wins by 1 run", userPicked: [], multiplier: 1},
-      option3: {title: "Boston Red Sox Wins by 5+ runs", userPicked: [], multiplier: 1}
-    }
+      option1: {title: "Colorado Rockies Wins by 5+ runs", multiplier: 1},
+      option2: {title: "Boston Red Sox Wins by 1 run", multiplier: 1},
+      option3: {title: "Boston Red Sox Wins by 5+ runs", multiplier: 1}
+    },
+    usersAnswered: []
   },
   FutureActiveQuestion: {
     playerId: "ErikSmith",
@@ -149,10 +159,11 @@ Fixtures.push(Questions, {
     commercial: false,
     que: "Buffalo Bills vs Houston Texans",
     options: {
-      option1: {title: "Colorado Rockies Wins by 5+ runs", userPicked: [], multiplier: 1},
-      option2: {title: "Boston Red Sox Wins by 1 run", userPicked: [], multiplier: 1},
-      option3: {title: "Boston Red Sox Wins by 5+ runs", userPicked: [], multiplier: 1}
-    }
+      option1: {title: "Colorado Rockies Wins by 5+ runs", multiplier: 1},
+      option2: {title: "Boston Red Sox Wins by 1 run", multiplier: 1},
+      option3: {title: "Boston Red Sox Wins by 5+ runs", multiplier: 1}
+    },
+    usersAnswered: []
   },
   FuturePendingQuestion: {
     playerId: "ErikSmith",
@@ -161,9 +172,10 @@ Fixtures.push(Questions, {
     commercial: false,
     que: "Buffalo Bills vs Houston Texans",
     options: {
-      option1: {title: "Colorado Rockies Wins by 5+ runs", userPicked: [], multiplier: 1},
-      option2: {title: "Boston Red Sox Wins by 1 run", userPicked: [], multiplier: 1},
-      option3: {title: "Boston Red Sox Wins by 5+ runs", userPicked: [], multiplier: 1}
-    }
+      option1: {title: "Colorado Rockies Wins by 5+ runs", multiplier: 1},
+      option2: {title: "Boston Red Sox Wins by 1 run", multiplier: 1},
+      option3: {title: "Boston Red Sox Wins by 5+ runs", multiplier: 1}
+    },
+    usersAnswered: []
   },
 });

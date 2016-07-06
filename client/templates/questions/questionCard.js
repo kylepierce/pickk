@@ -38,7 +38,7 @@ Template.questionCard.helpers({
   'lastPlay': function() {
     return {
       lastAnswer: Session.get("lastAnswer"),
-      lastWager: Session.get("lastDescription"),
+      lastWager: Session.get("lastWager"),
       lastDescription: Session.get("lastDescription")
     }
   },
@@ -218,6 +218,7 @@ Template.questionCard.events({
     var wager = template.find('input:radio[name=wager]:checked').value;
     var description = template.find('input:radio[name=play]:checked').id;
     var userCoins = Meteor.user().profile.coins;
+    debugger;
 
     if (userCoins < wager) {
       IonLoading.show({
