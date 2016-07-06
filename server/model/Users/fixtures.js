@@ -1,13 +1,17 @@
 Fixtures.push(Meteor.users, {
   CharlieDalton: {
     profile: {
-      name: "Charlie Dalton",
+      firstName: "Charlie",
+      lastName: "Dalton",
+      birthday: new Date("1992-02-29"),
       role: "admin"
     }
   },
   KnoxOverstreet: {
     profile: {
-      name: "Knox Overstreet"
+      firstName: "Knox",
+      lastName: "Overstreet",
+      birthday: new Date("1996-05-01")
     }
   }
 });
