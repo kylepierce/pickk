@@ -146,7 +146,7 @@ var createAnswersCollection = function() {
           playerId: Match.Optional(String),
           createdBy: String,
           dateCreated: Date,
-          active: Match.OneOf(true, false, "future", "pending"),
+          active: Match.OneOf(null, true, false, "future", "pending"),
           commercial: Match.Optional(Match.OneOf(null, true, false)),
           binaryChoice: Match.Optional(Boolean),
           atBatQuestion: Match.Optional(Boolean),
@@ -169,6 +169,10 @@ var createAnswersCollection = function() {
         wager: parseInt(answer.wager || "0", 10),
         multiplier: parseFloat(question.options[answer.answered].multiplier || "0"),
         description: answer.description || ""
+      }, function(error) {
+        if (error) {
+          throw error;
+        }
       });
     }
     if (counter && counter % 100 === 0) {
