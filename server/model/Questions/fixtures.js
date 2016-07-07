@@ -1,6 +1,8 @@
+var dateCreatedTime = new Date("2016-05-06").getTime();
+
 Fixtures.push(Questions, {
   AtBatQuestion: {
-    dateCreated: moment("2016-05-06").toDate(),
+    dateCreated: new Date(dateCreatedTime += 60000),
     createdBy: "CharlieDalton",
     playerId: "MartinRamires",
     atBatQuestion: true,
@@ -17,7 +19,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   PitchQuestion: {
-    dateCreated: moment("2016-05-06").toDate(),
+    dateCreated: new Date(dateCreatedTime += 60000),
     createdBy: "CharlieDalton",
     playerId: "MartinRamires",
     gameId: "NoOutsGame",
@@ -33,7 +35,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   InactiveQuestionForActiveGame: {
-    dateCreated: moment("2016-05-06").toDate(),
+    dateCreated: new Date(dateCreatedTime += 60000),
     createdBy: "CharlieDalton",
     playerId: "JohnLubovsky",
     gameId: "ActiveGame",
@@ -50,7 +52,7 @@ Fixtures.push(Questions, {
     play: "option1"
   },
   InactiveQuestionForInactiveGame: {
-    dateCreated: moment("2016-05-06").toDate(),
+    dateCreated: new Date(dateCreatedTime += 60000),
     createdBy: "CharlieDalton",
     playerId: "JohnLubovsky",
     gameId: "ClosedGame",
@@ -67,7 +69,7 @@ Fixtures.push(Questions, {
     play: "option2"
   },
   CommercialQuestionForActiveGame: {
-    dateCreated: moment("2016-05-06").toDate(),
+    dateCreated: new Date(dateCreatedTime += 60000),
     createdBy: "CharlieDalton",
     playerId: "JohnLubovsky",
     gameId: "ActiveGame",
@@ -83,6 +85,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   FiveOptionsQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "ActiveGame",
     active: true,
@@ -98,6 +101,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   SixOptionsQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "ActiveGame",
     active: true,
@@ -114,12 +118,13 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   BinaryQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "ActiveGame",
     active: true,
-    commercial: false,
+    commercial: true,
     binaryChoice: true,
-    que: "Will a Erik Smith Hit a Home Run in the 6th inning?",
+    que: "Will Erik Smith Hit a Home Run in the 6th inning?",
     options: {
       option1: {title: "True"},
       option2: {title: "False"}
@@ -127,6 +132,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   NoPlayerQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     gameId: "ActiveGame",
     active: true,
     commercial: false,
@@ -140,6 +146,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   FuturePredictionQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "prediction",
     active: "future",
@@ -153,6 +160,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   FutureActiveQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "prediction",
     active: true,
@@ -166,6 +174,7 @@ Fixtures.push(Questions, {
     usersAnswered: []
   },
   FuturePendingQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "prediction",
     active: "pending",
