@@ -44,6 +44,18 @@ Template.settings.events({
         throw error;
       }
       Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
+      // Add a analytics code right here
+      var route = Router.current().originalUrl
+      if(route.includes("newUserSettings")) {
+        var newOrNah = true
+      } else {
+        var newOrNah = false
+      }
+      var currentUser = Meteor.userId();
+      analytics.track("userAddAvatar", {
+        id: currentUser,
+        newUser: newOrNah
+      });
       //console.log("Upload Error: ", error);
       //console.log("Upload Result: ", result);
     });

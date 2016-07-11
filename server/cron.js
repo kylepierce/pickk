@@ -10,7 +10,6 @@ SyncedCron.add({
   },
   job: function() {
     Meteor.call("activateDailyPickks");
-    Meteor.call("push", "Make Your Daily Diamond Pickks");
   }
 });
 
