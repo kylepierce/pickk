@@ -2,7 +2,7 @@
 
 set -eux
 
-$DIRNAME/merge-settings prod > /tmp/prod.json
+$DIRNAME/merge-settings $ENV > /tmp/prod.json
 
 source $DIRNAME/mongo/extract-variables
 
