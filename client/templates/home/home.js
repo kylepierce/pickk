@@ -102,12 +102,13 @@ Template.submitButton.rendered = function() {
   if (!this._rendered) {
     this._rendered = true;
     var checked = $("input:checked")
-    if (checked.length === 2) {
+    if (checked.length > 1) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
       answer = parseFloat(answer)
       var wager = $('input:radio[name=wager]:checked').val();
       var combined = parseInt(answer * wager)
+      debugger
       $('#wager').checked
       $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-response").prop("disabled", false)
@@ -135,12 +136,13 @@ Template.binarySubmitButton.rendered = function() {
   if (!this._rendered) {
     this._rendered = true;
     var checked = $("input:checked")
-    if (checked.length === 2) {
+    if (checked.length > 1) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=binary]:checked').siblings().children()[2].id
       answer = parseFloat(answer)
       var wager = $('input:radio[name=wager]:checked').val();
       var combined = parseInt(answer * wager)
+      debugger
       $('#wager').checked
       $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-response").prop("disabled", false)
@@ -179,8 +181,9 @@ Template.activeQuestion.events({
     Blaze.render(Template.submitAndWagers, selectedPlay)
   },
   'click input': function(event, template) {
+    debugger
     var checked = $("input:checked")
-    if (checked.length === 2) {
+    if (checked.length > 1) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=play]:checked').siblings().children()[2].id
       var wager = template.find('input:radio[name=wager]:checked').value;
@@ -210,11 +213,12 @@ Template.commercialQuestion.events({
   },
   'click input': function(event, template) {
     var checked = $("input:checked")
-    if (checked.length === 2) {
+    if (checked.length > 1) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=play]:checked').siblings().children()[1].id
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer * wager)
+      debugger
       $('#wager').checked
       $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-response").prop("disabled", false)
@@ -335,11 +339,12 @@ Template.twoOptionQuestions.events({
 
   'click input': function(event, template) {
     var checked = $("input:checked")
-    if (checked.length === 2) {
+    if (checked.length > 1) {
       // Checkout this sexy daisy chain ;)
       var answer = $('input:radio[name=binary]:checked').siblings().children()[0].id
       var wager = template.find('input:radio[name=wager]:checked').value;
       var combined = parseInt(answer * wager)
+      debugger
       $('#wager').checked
       $("#submit-binary").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
       $("#submit-binary").prop("disabled", false)
