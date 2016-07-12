@@ -21,7 +21,10 @@
   },
   "public": {
     "astronomer": {
-      "appId": "j7XLnHnQjbhkMXexn"
+      "appId": "j7XLnHnQjbhkMXexn",
+      "disableUserTracking": false,
+      "disableRouteTracking": false,
+      "disableMethodTracking": false
     },
     "oneSignal": {
       "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",

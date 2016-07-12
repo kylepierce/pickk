@@ -106,6 +106,16 @@ Meteor.methods({
      }
   },
 
+  updateMlbId: function (playerId, mlbId){
+    var player = Players.findOne({"playerId": playerId });
+
+    Players.update({"_id": player._id}, {
+      $set: {
+        'mlbId': mlbId,
+      }
+    });
+  },
+
   'getExtend2016Info': function ( playerId ) {
     result = Meteor.http.get("http://espn.go.com/mlb/player/splits/_/id/" + playerId + "/year/2016/");
     $ = cheerio.load(result.content); 
@@ -230,9 +240,38 @@ Meteor.methods({
     });
   },
 
+  findMLBIds: function(mlbCode){
+    var url = "http://m." + mlbCode + ".mlb.com/roster/40-man/"
+    result = Meteor.http.get(url)
+    mlbId = []
+
+    function cleanName(name){
+      var name = name.replace(/(\r\n|\n|\r)/gm,"");
+      var name = name.split('(')[0]
+      return name
+    }
+
+    function parseMLBPlayer(url) {
+      // Example: /player/455759/chris-young
+      var removeEspn = url.replace('/player/', '')
+      var lastDash = removeEspn.indexOf('/')
+      var playerId = removeEspn.slice(0,lastDash)
+      return playerId
+    }
+
+    $ = cheerio.load(result.content);
+    $($('td[class=dg-name_display_first_last]')).each(function(){
+      var url = $(this).find("a").attr('href')
+      var playerName = $(this).text()
+      var playerName = cleanName(playerName)
+      var playerId = parseMLBPlayer(url)
+      mlbId.push({"playerName": playerName, "playerId": playerId, "url": url})
+    })
+    return mlbId
+  },
 
   // Find all the players on the time and create/update the players 
-  findPlayersOnTeam: function (computerName) {
+  findPlayersOnTeam: function (computerName, mlbId) {
     var team = Teams.findOne({"computerName": computerName});
 
     // Get the player unique id
@@ -243,6 +282,16 @@ Meteor.methods({
       return playerId
     }
 
+    function findMlbObj(name, array) {
+      // (!) Cache the array length in a variable
+      for (var i = 0, len = array.length; i < len; i++) {
+        if (array[i].playerName === name)
+          return array[i]; // Return as soon as the object is found
+      }
+      console.log(name + " was not found")
+      return null; // The searched object was not found
+    }
+
     // Find the team url based on the two or three letter code
     var teamUrl = 'http://espn.go.com/mlb/team/stats/batting/_/name/' + team.computerName
     var teamId = team._id
@@ -251,22 +300,34 @@ Meteor.methods({
     $ = cheerio.load(result.content);
 
     // Grab every player
+    // This can refactored
     $('.oddrow a', '#my-players-table').each(function(){
       var url = $(this).attr('href')
+      var name = $(this).text()
       var playerId = parsePlayer(url)
-      teamInfo.push({"playerId": playerId, "url": url})
+      teamInfo.push({"name": name,"playerId": playerId, "url": url})
     })
     $('.evenrow a', '#my-players-table').each(function(){
       var url = $(this).attr('href')
+      var name = $(this).text()
       var playerId = parsePlayer(url)
-      teamInfo.push({"playerId": playerId, "url": url})
+      teamInfo.push({"name": name,"playerId": playerId, "url": url})
     })
-
+    var allIds = Meteor.call('findMLBIds', team.mlbCode)
     // Create / Update them
     for (var i = teamInfo.length - 1; i >= 0; i--) {
       Meteor.call('getPlayerInfo', teamInfo[i].playerId, teamId)
       Meteor.call('getExtend2016Info', teamInfo[i].playerId)
       Meteor.call('getExtendPlayerInfo', teamInfo[i].playerId)
+      // Find matching player
+      var name = teamInfo[i].name
+      var mlb = findMlbObj(name, allIds)
+      if(mlb === null){
+        continue;
+      } else {
+        console.log(mlb.playerName + " " + mlb.playerId)
+        Meteor.call('updateMlbId', teamInfo[i].playerId, mlb.playerId)
+      }
     }
     console.log("All Done! :D")
   },
