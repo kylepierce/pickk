@@ -218,7 +218,6 @@ Template.questionCard.events({
     var wager = template.find('input:radio[name=wager]:checked').value;
     var description = template.find('input:radio[name=play]:checked').id;
     var userCoins = Meteor.user().profile.coins;
-    debugger;
 
     if (userCoins < wager) {
       IonLoading.show({
