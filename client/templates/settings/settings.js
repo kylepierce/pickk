@@ -3,7 +3,9 @@ AutoForm.hooks({
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
       this.event.preventDefault();
       var done = this.done;
-      Meteor.call('updateProfile', insertDoc.username, insertDoc.firstName, insertDoc.lastName, insertDoc.birthday, function(error) {
+      var timezone = jstz.determine();
+
+      Meteor.call('updateProfile', insertDoc.username, insertDoc.firstName, insertDoc.lastName, insertDoc.birthday, timezone.name(), function(error) {
         if (error) {
           done(error);
         } else {

@@ -25,7 +25,7 @@ Meteor.methods({
 
 	// Update users info from the settings page
 
-	'updateProfile': function(username, firstName, lastName, birthday) {
+	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
 		if (!this.userId) {
 			return;
 		}
@@ -35,7 +35,8 @@ Meteor.methods({
 					'profile.username': username,
 					'profile.firstName': firstName,
 					'profile.lastName': lastName,
-					'profile.birthday': birthday
+					'profile.birthday': birthday,
+					'profile.timezone': timezone
 				}
 			});
     var user = UserList.findOne(this.userId);
