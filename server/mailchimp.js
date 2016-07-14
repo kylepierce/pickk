@@ -13,16 +13,29 @@ mailChimpLists.subscribeUser = function(user, defaults, callback) {
   if (email.match(/@example\.com$/)) {
     return; // Fixture user
   }
+
+  var merge_vars = {
+    FNAME: user.profile.firstName,
+    LNAME: user.profile.lastName,
+    UNAME: user.profile.username
+  }
+
+  if (user.profile.favoriteTeams) {
+    var teamCount = 1;
+    user.profile.favoriteTeams.forEach(function (team) {
+      merge_vars['FAV_TEAM' + teamCount] = team;
+      teamCount++;
+    });
+  }
+
+  console.log(merge_vars);
+
   return this.subscribe(_.defaults({
     id: Meteor.settings.private.mailchimp.listId,
     email: {
       email: email
     },
-    merge_vars: {
-      FNAME: user.profile.firstName,
-      LNAME: user.profile.lastName,
-      UNAME: user.profile.username
-    },
+    merge_vars: merge_vars,
     update_existing: true
   }, defaults), callback);
 };

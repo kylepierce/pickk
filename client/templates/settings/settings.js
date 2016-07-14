@@ -13,7 +13,7 @@ AutoForm.hooks({
           if (Meteor.user().profile.isOnboarded) {
             Router.go('/');
           } else {
-            Router.go('/onboarding');
+            Router.go('/newUserFavoriteTeams');
           }
         }
       });

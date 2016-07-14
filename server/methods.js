@@ -43,6 +43,21 @@ Meteor.methods({
     mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
+	// Update users Favorite teams info from the Favorite Teams page
+
+	'updateFavoriteTeams': function(teamsArr) {
+		if (!this.userId) {
+			return;
+		}
+
+		UserList.update(this.userId,
+			{
+				$set: {'profile.favoriteTeams': teamsArr}
+			});
+		var user = UserList.findOne(this.userId);
+		mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
+	},
+
 	// Update users info from the settings page
 
 	'addTrophy': function(name, description, img) {
