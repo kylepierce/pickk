@@ -46,7 +46,11 @@ Fixtures.post(Meteor.users, function(users) {
   results = [];
   for (_id in users) {
     user = users[_id];
-    Accounts.setPassword(_id, "123123");
+    try {
+      Accounts.setPassword(_id, "123123");
+    } catch (e) {
+      console.log("Unable to set password for user = \"" + _id + "\"");
+    }
     results.push(Meteor.users.update(_id, {
       $set: {
         "profile.username": _id
