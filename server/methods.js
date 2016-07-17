@@ -639,9 +639,9 @@ Meteor.methods({
 	'questionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
 
-		if (~question.usersAnswered.indexOf(this.userId)) {
-			return
-		}
+		// if (~question.usersAnswered.indexOf(this.userId)) {
+		// 	return
+		// }
 
 		var option = question.options[answered];
 		if (!option) {
