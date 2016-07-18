@@ -169,7 +169,8 @@ Meteor.methods({
 				option4: {title: op4, multiplier: m4},
 				option5: {title: op5, multiplier: m5},
 				option6: {title: op6, multiplier: m6},
-			}
+			},
+			usersAnswered: []
 		});
 	},
 
@@ -194,7 +195,8 @@ Meteor.methods({
 				option2: {title: op2, multiplier: m2},
 				option3: {title: op3, multiplier: m3},
 				option4: {title: op4, multiplier: m4},
-			}
+			},
+			usersAnswered: []
 		});
 	},
 
@@ -213,8 +215,8 @@ Meteor.methods({
 			options: {
 				option1: {title: "True"},
 				option2: {title: "False"},
-			}
-
+			},
+			usersAnswered: []
 		})
 	},
 
@@ -233,8 +235,8 @@ Meteor.methods({
 			options: {
 				option1: {title: option1, multiplier: multiplier1},
 				option2: {title: option2, multiplier: multiplier2},
-			}
-
+			},
+			usersAnswered: []
 		})
 	},
 

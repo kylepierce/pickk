@@ -120,7 +120,8 @@ Meteor.methods({
     active: true,
     commercial: false,
     que: question,
-    options: options
+    options: options,
+    usersAnswered: []
   });
 },
 
@@ -188,7 +189,8 @@ Meteor.methods({
       active: true,
       commercial: false,
       que: question,
-      options: options
+      options: options,
+      usersAnswered: []
   });
 },
 
