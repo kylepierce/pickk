@@ -1,5 +1,5 @@
 	
-Template.pendingQuestionList.helpers({
+Template.pendingQuestions.helpers({
 	'chart' : function(){
 		var ctx = $("#myChart").get(0).getContext("2d");
 		var myDoughnutChart = new Chart(ctx[0]).Doughnut(data,options);

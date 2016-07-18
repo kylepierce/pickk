@@ -5,7 +5,7 @@ Template.createQuestion.events({
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
 		var time = template.find('input[name=time]').value
-		var game = template.find('#gameList :selected').value
+		var gameId = template.find('#gameList :selected').value
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -42,9 +42,9 @@ Template.createQuestion.events({
 						2.2, 4.81, 
 						2.9, 4.61)
 
-		Meteor.call("questionPush", game, question)
-		Meteor.call("emptyInactive", game, question)
-		Meteor.call('insertQuestion', game, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+		Meteor.call("questionPush", gameId, question)
+		Meteor.call("emptyInactive", gameId, question)
+		Meteor.call('insertQuestion', gameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
  
 	},
 
@@ -55,7 +55,7 @@ Template.createQuestion.events({
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
 		var time = template.find('input[name=time]').value
-		var game = template.find('#gameList :selected').value
+		var gameId = template.find('#gameList :selected').value
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -1526,8 +1526,8 @@ Template.createQuestion.events({
 					9.9, 12.61)
 			} 
 		}
-		Meteor.call("questionPush", game, question)
-		Meteor.call("emptyInactive", game, question)
-		Meteor.call('insertQuestion', game, question, false, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+		Meteor.call("questionPush", gameId, question)
+		Meteor.call("emptyInactive", gameId, question)
+		Meteor.call('insertQuestion', gameId, question, false, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
 	} 
 });

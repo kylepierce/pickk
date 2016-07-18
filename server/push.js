@@ -6,16 +6,18 @@ Meteor.methods({
 		const users = Meteor.users.find({_id: {$in: userIds}}, {"oneSignalToken": 1}).fetch();
 		const tokens = _.without(_.uniq(_.pluck(users, "oneSignalToken")), undefined);
 		if (tokens.length) {
-			OneSignal.Notifications.create(tokens, {
-				contents: {
-					en: text
-				},
-				headings: {
-					en: "Pickk question"
-				},
-				ios_badgeType: "Increase",
-				ios_badgeCount: 1
-			});
+			if (Meteor.settings.oneSignal.isEnabled) {
+				OneSignal.Notifications.create(tokens, {
+					contents: {
+						en: text
+					},
+					headings: {
+						en: "Pickk question"
+					},
+					ios_badgeType: "Increase",
+					ios_badgeCount: 1
+				});
+			}
 		}
 	},
 
@@ -27,7 +29,7 @@ Meteor.methods({
 	},
 
 	'playerInactive': function(user, questionId) {
-		var gameInfo = QuestionList.findOne({_id: questionId})
+		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
 		var game = Games.find(
 			{
@@ -41,17 +43,19 @@ Meteor.methods({
 	},
 
 	'push': function(message) {
-		OneSignal.Notifications.create(undefined, {
-			included_segments: ["All"],
-			contents: {
-				en: message
-			},
-			headings: {
-				en: "Pickk notification"
-			},
-			ios_badgeType: "Increase",
-			ios_badgeCount: 1
-		});
+		if (Meteor.settings.oneSignal.isEnabled) {
+			OneSignal.Notifications.create(undefined, {
+				included_segments: ["All"],
+				contents: {
+					en: message
+				},
+				headings: {
+					en: "Pickk notification"
+				},
+				ios_badgeType: "Increase",
+				ios_badgeCount: 1
+			});
+		}
 	},
 
 	'updateOneSignalToken': function (token) {
@@ -66,16 +70,18 @@ Meteor.methods({
 		if (user) {
 			const token = user.oneSignalToken;
 			if (token) {
-				OneSignal.Notifications.create([token], {
-					contents: {
-						en: message
-					},
-					headings: {
-						en: "Pick invite"
-					},
-					ios_badgeType: "Increase",
-					ios_badgeCount: 1
-				});
+				if (Meteor.settings.oneSignal.isEnabled) {
+					OneSignal.Notifications.create([token], {
+						contents: {
+							en: message
+						},
+						headings: {
+							en: "Pick invite"
+						},
+						ios_badgeType: "Increase",
+						ios_badgeCount: 1
+					});
+				}
 			}
 		}
 	}

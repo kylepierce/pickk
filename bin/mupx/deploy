@@ -2,7 +2,6 @@
 
 set -eux
 
-echo $DIRNAME/../settings.json
+source $DIRNAME/mupx/prepare
 
-$DIRNAME/merge-settings prod > $DIRNAME/../settings.json
 (cd $DIRNAME/.. && mupx deploy)

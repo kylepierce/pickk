@@ -15,10 +15,10 @@ Meteor.methods({
 	'activateDailyPickks': function(){
 		console.log("Task complete")
 		// Find all questions with "future" set them to "active"
-		var futureQuestions = QuestionList.update({active: 'future'}, {$set: {active: true}}, {multi: true})
+		var futureQuestions = Questions.update({active: 'future'}, {$set: {active: true}}, {multi: true})
 	},
 	'deactivateDailyPickks': function(){
-		QuestionList.update({active: true}, {$set: {active: 'pending'}}, {multi: true})
+		Questions.update({active: true}, {$set: {active: 'pending'}}, {multi: true})
 	},
 	'quickSchedule': function () {
 		Meteor.setTimeout(function(){

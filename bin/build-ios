@@ -6,7 +6,9 @@ DIRNAME=$(cd `dirname $0` && pwd)
 
 ENV=${1:-}
 if [ -z $ENV ]; then
-  ENV="prod"
+  echo "Usage: $0 ENV"
+  echo "ENV = [prod, stag]"
+  exit 1
 else
   shift
 fi

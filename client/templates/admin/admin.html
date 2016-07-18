@@ -19,9 +19,9 @@
 		
 		<!-- {{> createQuestion}} -->
 		{{> otherQuestions}}
-		{{> activeQuestionList}} 
-		{{> pendingQuestionList}}
-		{{> oldQuestionList}}
+		{{> activeQuestions}}
+		{{> pendingQuestions}}
+		{{> oldQuestions}}
 
 		  {{/ionContent}}
 	  {{/ionView}}
@@ -93,7 +93,7 @@
 	<button class='col col-33 wager-box button button-calm' style="float: left;"  data-action="createCommericalQuestion">Create Commerical Question</button>
 </template>
 
-<template name="activeQuestionList">
+<template name="activeQuestions">
 	<div class="panel">
 		<h3>Active Questions</h3>
 		<ul class="active-questions">
@@ -107,7 +107,7 @@
 	</div>	
 </template>
 
-<template name="pendingQuestionList">
+<template name="pendingQuestions">
 	<div class="panel">
 
 		<h3>Pending Questions</h3>
@@ -174,29 +174,12 @@
 			</div>
 
 
-			<!-- Replace with chart -->
-			<div style="margin-left:30px; float:left;">
-				<ul> 
-				{{#if binary}}
-					<li><strong>{{options.option1.title}}:</strong> {{options.option1.usersPicked.length}} </li>
-					<li><strong>{{options.option2.title}}:</strong> {{options.option2.usersPicked.length}}</li> 
-				{{else}}
-					<li><strong>{{options.option1.title}}:</strong> {{options.option1.usersPicked.length}} </li>
-					<li><strong>{{options.option2.title}}:</strong> {{options.option2.usersPicked.length}}</li> 
-					<li><strong>{{options.option3.title}}:</strong> {{options.option3.usersPicked.length}}</li>
-					<li><strong>{{options.option4.title}}:</strong> {{options.option4.usersPicked.length}}</li>
-					<li><strong>{{options.option5.title}}:</strong> {{options.option5.usersPicked.length}}</li>
-					<li><strong>{{options.option6.title}}:</strong> {{options.option6.usersPicked.length}}</li>
-				{{/if}}
-				</ul> 
-			</div>
-
 		{{/each}}
 		</ul>
 	</div>	
 </template>
 
-<template name="oldQuestionList">
+<template name="oldQuestions">
 	<div class=" panel">
 		<h3>Old Questions</h3>
 		<ul class="old-questions">

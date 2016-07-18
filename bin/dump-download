@@ -4,5 +4,14 @@ set -eux
 
 DIRNAME=$(cd `dirname $0` && pwd)
 
+ENV=${1:-}
+if [ -z $ENV ]; then
+  echo "Usage: $0 ENV"
+  echo "ENV = [prod, stag]"
+  exit 1
+else
+  shift
+fi
+
 source $DIRNAME/config
 source $DIRNAME/mongo/dump-download
