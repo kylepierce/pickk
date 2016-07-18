@@ -61,9 +61,11 @@ Meteor.methods({
 	// Update users info from the settings page
 
 	'addTrophy': function(name, description, img) {
+		var dateCreated = new Date();
 		Trophies.insert({
 			title: name,
 			description: description,
+			dateCreated: dateCreated,
 			image: img
 		});
 	},
