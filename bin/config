@@ -1,5 +1,18 @@
 #!/bin/bash
 
-BASE_URL=http://pickk.net
-DOMAIN=pickk.net
-MONGO_FLAGS=""
+case $ENV in
+prod)
+  BASE_URL=http://pickk.net
+  DOMAIN=pickk.net
+  MONGO_FLAGS=""
+  ;;
+stag)
+  BASE_URL=http://stag.pickk.net
+  DOMAIN=stag.pickk.net
+  MONGO_FLAGS=""
+  ;;
+*)
+  echo "Undefined environment: $ENV"
+  exit 1
+  ;;
+esac

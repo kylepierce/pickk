@@ -4,8 +4,8 @@ set -eux
 
 DIRNAME=$(cd `dirname $0` && pwd)
 
-$DIRNAME/dump-download
+$DIRNAME/dump-download $@
 if [[ $? == 0 ]] ; then
-  $DIRNAME/dump-restore
+  $DIRNAME/dump-restore $@
 fi
 

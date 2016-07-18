@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -eux
-
-DIRNAME=$(cd `dirname $0` && pwd)
-
-source $DIRNAME/generic/mongo/production-mongo
