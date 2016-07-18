@@ -3,8 +3,9 @@
     {{#ionContent}}
       <div class="container">
         {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id="favoriteTeamsForm"}}
-          
-            {{> afQuickField name='favoriteTeams' type="selectize" multiple=true selectizeOptions=selectizeOptions}}
+          <div class="af-fav-teams">
+            {{> afQuickField name='favoriteTeams' type='select-checkbox'}}
+          </div>
           
           <input name="saveTeam" type="submit" class="button button-large button-positive" value="Save Teams">
         {{/autoForm}}

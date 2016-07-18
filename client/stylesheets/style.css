@@ -395,3 +395,8 @@ input[type=submit] {
 
 
 }
+
+/* Makes the label not take 100% of the available area */
+.af-fav-teams .checkbox  {
+	max-width: 50px;		
+}
