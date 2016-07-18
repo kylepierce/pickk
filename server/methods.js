@@ -64,6 +64,7 @@ Meteor.methods({
 		Trophies.insert({
 			title: name,
 			description: description,
+			dateCreated: new Date();
 			image: img
 		});
 	},

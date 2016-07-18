@@ -28,8 +28,6 @@ mailChimpLists.subscribeUser = function(user, defaults, callback) {
     });
   }
 
-  console.log(merge_vars);
-
   return this.subscribe(_.defaults({
     id: Meteor.settings.private.mailchimp.listId,
     email: {
