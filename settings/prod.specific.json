@@ -1,4 +1,10 @@
 {
+  "private": {
+    "facebook": {
+      "clientId": "1399965486969249",
+      "secret": "599da8e423c2d677eda352cde88d01f9"
+    }
+  },
   "mongo": {
     "username": "getpickk",
     "password": "Imonaboat118",

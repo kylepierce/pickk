@@ -1,7 +1,7 @@
 Template._gamePopover.helpers({
 	game: function () {
 		var gameId = Session.get('gamePrediction');
-		return QuestionList.findOne({_id: gameId})
+		return Questions.findOne({_id: gameId})
 	}
 });
 

@@ -67,10 +67,5 @@ Template.adminSettings.events({
         if(confirm("Are you sure?")) {
            Meteor.call('coinMachine')
         }
-    },
-    'click [data-action=addEmails]': function(){
-        if(confirm("Are you sure?")) {
-           Meteor.call('syncExistingUsersToMailgun')
-        }
     }
 });

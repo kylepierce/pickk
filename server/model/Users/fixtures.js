@@ -1,13 +1,19 @@
 Fixtures.push(Meteor.users, {
   CharlieDalton: {
     profile: {
-      name: "Charlie Dalton",
+      firstName: "Charlie",
+      lastName: "Dalton",
+      birthday: new Date("1992-02-29"),
+      coins: 10000,
       role: "admin"
     }
   },
   KnoxOverstreet: {
     profile: {
-      name: "Knox Overstreet"
+      firstName: "Knox",
+      lastName: "Overstreet",
+      birthday: new Date("1996-05-01"),
+      coins: 10000
     }
   }
 });
@@ -40,7 +46,11 @@ Fixtures.post(Meteor.users, function(users) {
   results = [];
   for (_id in users) {
     user = users[_id];
-    Accounts.setPassword(_id, "123123");
+    try {
+      Accounts.setPassword(_id, "123123");
+    } catch (e) {
+      console.log("Unable to set password for user = \"" + _id + "\"");
+    }
     results.push(Meteor.users.update(_id, {
       $set: {
         "profile.username": _id

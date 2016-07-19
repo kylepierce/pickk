@@ -1,0 +1,15 @@
+{
+  "private": {
+    "facebook": {
+      "clientId": "1590919307873865",
+      "secret": "8338d170ffd388e16a4d348c209de6fa"
+    }
+  },
+  "mongo": {
+    "username": "getpickk",
+    "password": "xEZMosrpQRqg",
+    "host": "candidate.11.mongolayer.com",
+    "port": "11179",
+    "db": "pickk-stag"
+  }
+}

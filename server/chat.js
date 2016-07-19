@@ -57,13 +57,15 @@ Meteor.methods({
 		});
 
 		var usernames = messagePosted.match(/\@[\w\d_]+/g);
-		for (var i = 0; i < usernames.length; i++) {
-			var username = usernames[i].slice(1); // remove @
-			var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
-			if (user) {
-				// Push notifications don't support HTML, so we'll have to use plainMessagePosted
-				Meteor.call('pushInvite', plainMessagePosted, user._id)
-				createPendingNotification(user._id, messageId + "_" + user._id, "mention", plainMessagePosted)
+		if (usernames) {
+			for (var i = 0; i < usernames.length; i++) {
+				var username = usernames[i].slice(1); // remove @
+				var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
+				if (user) {
+					// Push notifications don't support HTML, so we'll have to use plainMessagePosted
+					Meteor.call('pushInvite', plainMessagePosted, user._id)
+					createPendingNotification(user._id, messageId + "_" + user._id, "mention", plainMessagePosted)
+				}
 			}
 		}
 
