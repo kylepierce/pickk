@@ -33,10 +33,5 @@ AutoForm.hooks({
 Template.favoriteTeams.helpers({
   UsersProfileSchema: function() {
     return UsersProfileSchema;
-  },
-  selectizeOptions: function () {
-    return {
-      maxItems: 3
-    }
   }
 });
