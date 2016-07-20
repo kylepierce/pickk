@@ -11,6 +11,7 @@ Accounts.onCreateUser(function(options, user) {
     lastName: '',
     isOnboarded: false
   };
+
   user.pendingNotifications = [];
   if (user.services && user.services.twitter && user.services.twitter.screenName) {
     user.profile.username = user.services && user.services.twitter && user.services.twitter.screenName;
