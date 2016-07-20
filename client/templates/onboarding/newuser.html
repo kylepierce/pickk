@@ -7,121 +7,133 @@
 {{/contentFor}} -->
 
  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">How to Play</h1>
+	<h1 class="title white-text-header" style="font-size: 1.2em;">
+		<i class="fa fa-diamond"></i>
+    <strong>{{currentUser.profile.diamonds}}</strong> 
+			
+   	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
+    <strong>{{currentUser.profile.coins}}</strong>
+  </h1>
  {{/contentFor}}
-
-
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear coin-icon"> 
-    <i class="fa fa-circle"></i> 
-    <strong>6290</strong>
-    </button>
-  {{/contentFor}}
-
 
 	{{#ionView}}
     {{#ionContent}}
 				<div id="two" class="container">
+				<div style="margin-top: 10px"> 
+				{{> playerCardExample}}
 				{{>questionExample}}
+				</div>
 				</div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
+<template name="playerCardExample">
+	<div class="player-card" id="player">
+	  <div class="player-header">
+	  	<div  class="player-slider">
+			<span class="player-name">Joe McFly</span>
+
+			<table>
+				<thead>
+					<td>AVG</td>
+					<td>HR</td>
+					<td>RBI</td>
+					<td>OBP</td>
+				</thead>
+				<tr>
+					<td>.276</td>
+					<td>13</td>
+					<td>47</td>
+					<td>.382</td>
+				</tr>
+			</table>
+
+			</div>
+	  </div>
+  </div>
+</template>
+
 <template name="questionExample">
-	<div class="question">
-		First Down...
-	</div>
-	<div style="margin-bottom:10px">
+	<div class="question-options">
 		<div>
-		
-			<input type="radio" name="play" disabled id="run" required value="run">
-			<label for="run" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Run
-			 <span class="multiplier">x 1.22</span>
+			<input type="radio" disabled>
+			<label for="" class="play-option">
+			<img class="baseball-call-icon" src="/baseball-calls/Out.svg" >
+			<span class="play-text">Out</span> 
+			<span id="" class="multiplier">x 1.43</span>
 			</label>
 		</div>
 
 		<div>
-			
-			<input type="radio" name="play" disabled id="pass" required value="">
-			<label for="pass" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Pass
-			 <span class="multiplier">x 1.45</span>
-			</label>
-		</div>
-
-		<div class="play">
-			
-			<input type="radio" name="play" id="interception" required value="interception">
-			<label for="interception" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Interception
-			 <span id="multiplier" class="multiplier">x 3.71</span>
-			</label>
-			
+			<input type="radio" disabled>
+			<label for="" class="play-option">
+			<img class="baseball-call-icon" src="/baseball-calls/Walk.svg">
+			<span class="play-text">Walk</span> 
+			<span id="" class="multiplier">x 2.27</span></label>
 		</div>
 
 		<div>
-			
-			<input type="radio" name="play" disabled id="fumble" required value="fumble">
-			<label for="fumble" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Fumble
-			 <span class="multiplier">x 2.56</span>
-			</label>
-			
+			<input type="radio" disabled>
+			<label for="" class="play-option">
+
+			<img class="baseball-call-icon" src="/baseball-calls/Single.svg">
+			<span class="play-text">Single</span> 
+			<span id="" class="multiplier">x 2.46</span></label>
+		</div>
+
+		<div class="double">
+			<input type="radio" name="play" required>
+			<label for="double" class="play-option ">
+			<img class="baseball-call-icon" src="/baseball-calls/Double.svg">
+			<span class="play-text ">Double</span> 
+			<span id="" class="multiplier">x 3.76</span></label>
+		</div>
+		<div>
+			<input type="radio" disabled>
+			<label for="" class="play-option">
+			<img class="baseball-call-icon" src="/baseball-calls/Triple.svg">
+			<span class="play-text">Triple</span> 
+			<span id="" class="multiplier">x 6.73</span></label>
 		</div>
 
 		<div>
-			
-			<input type="radio" name="play" disabled id="pick-six" required value="pick-six">
-			<label for="pick-six" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Pick Six
-			 <span class="multiplier">x 8.23</span>
-			</label>
-		</div>
-
-		<div>
-			
-			<input type="radio" name="play" disabled id="Touchdown" required value="Touchdown">
-			<label for="Touchdown" class="play-option">
-			<i class="fa fa-star"></i> 
-			 Touchdown
-			 <span class="multiplier">x 4.32</span>
-			</label>
+			<input type="radio" disabled>
+			<label for="" class="play-option">
+			<img class="baseball-call-icon" src="/baseball-calls/Home Run.svg">
+			<span class="play-text">Home Run</span> 
+			<span id="" class="multiplier">x 5.21</span></label>
 		</div>
 	</div>
 
+</template>
+<template name="wagerExample">
 		<div style="margin-bottom:10px;">
 		<div>
+			<input type="radio" name="wager" disabled id="50" required value="50">
+			<label class="one-third wager-box" for="50">50</label>
+		</div>
+		<div>
 			<input type="radio" name="wager" disabled id="100" required value="100">
-			<label class="one-third wager-box" for="100">100</label>
+			<label class="one-third wager-box" for="100">100</label> 
 		</div>
 		<div>
 			<input type="radio" name="wager" disabled id="250" required value="250">
 			<label class="one-third wager-box" for="250">250</label> 
 		</div>
-		<div>
-			<input type="radio" name="wager" disabled id="500" required value="500">
-			<label class="one-third wager-box" for="500">500</label> 
-		</div>
 
-		<div>
-			<input type="radio" name="wager" id="1000" required value="1000">
-			<label id="bigBet" class="one-third wager-box" for="1000">1000</label> 
+		<div class="bigBet">
+			<input type="radio" name="wager" id="500" required value="500">
+			<label  class="one-third wager-box" for="500">500</label> 
 		</div>
 		<div >
+			<input type="radio" name="wager" disabled id="1000" required value="1000">
+			<label class="one-third wager-box" for="1000">1000</label> 
+		</div>
+		<div>
 			<input type="radio" name="wager" disabled id="2500" required value="2500">
 			<label class="one-third wager-box" for="2500">2500</label> 
 		</div>
-		<div>
-			<input type="radio" name="wager" disabled id="5000" required value="5000">
-			<label class="one-third wager-box" for="5000">5000</label> 
-		</div>
 	</div>
-	<input id="submit-response" class="button play-option button-assertive center" type="submit" disabled value="Submit">
+	<input class="submit-response button play-option button-assertive center" type="submit" disabled value="Submit">
 </template>

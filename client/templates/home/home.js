@@ -18,8 +18,11 @@ Template.home.rendered = function (template) {
 
   if (Meteor.user()) {
     var username = Meteor.user().profile.username;
+    var favoriteTeam = Meteor.user().profile.favoriteTeams;
     if (username === "" || username === null || username === "undefined") {
       Router.go('/newUserSettings')
+    } else if (!favoriteTeam){
+      Router.go('/newUserFavoriteTeams')
     }
   }
 };
