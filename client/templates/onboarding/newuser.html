@@ -12,11 +12,9 @@
 
 	{{#ionView}}
     {{#ionContent}}
-				<div id="two" class="container">
 				<div style="margin-top: 10px"> 
 				{{> playerCardExample}}
 				{{>questionExample}}
-				</div>
 				</div>
     {{/ionContent}}
   {{/ionView}}
@@ -49,7 +47,9 @@
 </template>
 
 <template name="questionExample">
-	<div class="question-options">
+	<div class="container" id="normalCard">
+		<div class="container-item">
+	<div class="question-options slideInLeft">
 		<div>
 			<input type="radio" disabled>
 			<label for="" class="play-option">
@@ -98,6 +98,8 @@
 			<span class="play-text">Home Run</span> 
 			<span id="" class="multiplier">x 5.21</span></label>
 		</div>
+	</div>
+	</div>
 	</div>
 
 </template>

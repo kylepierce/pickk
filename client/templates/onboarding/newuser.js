@@ -87,6 +87,13 @@ Template.questionExample.events({
 	},
 	'click input:submit': function (event) {
 		event.preventDefault();
+		var newUser = !Meteor.user().profile.isOnboarded
+		var userId = Meteor.user()._id
+		Meteor.users.update(Meteor.userId(), {$set: {"profile.isOnboarded": true}});
+    analytics.track("newOnboarded", {
+      id: userId,
+      newUser: newUser
+    });
 		hopscotch.endTour();
 		Router.go("/");
 	}
