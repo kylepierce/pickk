@@ -1,3 +1,33 @@
+
+// Template.home.onCreated( function() {
+
+//   this.subscribe( 'activeQuestions', function() {
+//     $( ".loader" ).delay( 1000 ).fadeOut( 'slow', function() {
+//       $( ".loading-wrapper" ).fadeIn( 'slow' );
+//     });
+//   });
+// }); 
+
+// Template.home.onRendered( function() {
+//   $( "svg" ).delay( 750 ).fadeIn();	
+
+// this should be changed to startup. There might also be some additions for user types
+Template.home.rendered = function (template) {
+  if (!Meteor.loggingIn() && !Meteor.user()) {
+   	 Router.go('/landing');
+  }
+
+  if (Meteor.user()) {
+    var username = Meteor.user().profile.username;
+    var favoriteTeam = Meteor.user().profile.favoriteTeams;
+    if (username === "" || username === null || username === "undefined") {
+      Router.go('/newUserSettings')
+    } else if (!favoriteTeam){
+      Router.go('/newUserFavoriteTeams')
+    }
+  }
+};
+
 Template.home.helpers({
   game: function() {
     return Games.findOne({live: true});
