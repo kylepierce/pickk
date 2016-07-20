@@ -14,6 +14,10 @@ AutoForm.hooks({
         if (error) {
           done(error);
         } else {
+          
+          // Update OneSignal Tags
+          updateOneSignalTeamTags(Meteor.user());
+
           done();
           if (Meteor.user().profile.isOnboarded) {
             Router.go('/');
