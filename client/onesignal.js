@@ -39,3 +39,29 @@ window.sendOneSignalToken = function (token) {
 		}
 	});
 };
+
+// Function to update the OneSignal tags of a user when Favorite Teams have been added / updated
+updateOneSignalTeamTags = function (user) {
+	var tags = {};
+
+	var teamCodes = ['ATL','ARI','BAL','BOS','CHC','CHW','CLE','CIN','COL','DET','HOU','KC','LAA','LAD','MIA','MIL','MIN','NYM','NYY','OAK','PHI','PIT','SD','SF','SEA','STL','TB', 'TEX','TOR','WSH'];
+
+	console.log("updating One Signal! " + user.profile.favoriteTeams);
+
+	// Clear out all codes first
+	teamCodes.forEach(function (teamCode) {
+		tags[teamCode] = "";
+	});
+
+	// Add the user selected favorite teams to the tags
+	if (user.profile.favoriteTeams) {
+	  user.profile.favoriteTeams.forEach(function (team) {
+	    tags[team] = 1;
+	  });
+	}
+
+	// Send the tags to OneSignal
+	if (!_.isEmpty(tags)) {
+		window.plugins.OneSignal.sendTags(tags);
+	}
+};

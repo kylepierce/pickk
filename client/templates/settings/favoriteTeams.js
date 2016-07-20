@@ -14,6 +14,10 @@ AutoForm.hooks({
         if (error) {
           done(error);
         } else {
+          
+          // Update OneSignal Tags
+          updateOneSignalTeamTags(Meteor.user());
+
           done();
           if (Meteor.user().profile.isOnboarded) {
             Router.go('/');
@@ -33,10 +37,5 @@ AutoForm.hooks({
 Template.favoriteTeams.helpers({
   UsersProfileSchema: function() {
     return UsersProfileSchema;
-  },
-  selectizeOptions: function () {
-    return {
-      maxItems: 3
-    }
   }
 });
