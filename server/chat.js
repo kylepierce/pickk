@@ -119,52 +119,29 @@ Meteor.methods({
 			if (reactedObj) {
 				// FOUND! - User already has a reaction - Remove it from the array and update the Chat
 				chat.reactions[lastCheckedKey].splice(lastCheckedIndex, 1); 
-				Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
 			}
 		}
 
+		// Object to be inserted
 		var reactionObj = {
 			user: author,
 			timestamp: timeCreated
 		};
 
-		console.log("****** Adding reaction --- " + reaction );
-
-		// cannot use variable inside DB update statement. Will need switch statement
-		switch (messagePosted) {
-			case "[dead]":
-					Chat.update({_id: messageId}, {$push: {'reactions.dead': reactionObj }});
-				break;
-			case "[omg]":
-					Chat.update({_id: messageId}, {$push: {'reactions.omg': reactionObj }});
-				break;
-			case "[fire]":
-					Chat.update({_id: messageId}, {$push: {'reactions.fire': reactionObj }});
-				break;
-			case "[dying]":
-					Chat.update({_id: messageId}, {$push: {'reactions.dying': reactionObj }});
-				break;
-			case "[hell-yeah]":
-					Chat.update({_id: messageId}, {$push: {'reactions.hell-yeah': reactionObj }});
-				break;
-			case "[what]":
-					Chat.update({_id: messageId}, {$push: {'reactions.what': reactionObj }});
-				break;
-			case "[pirate]":
-					Chat.update({_id: messageId}, {$push: {'reactions.pirate': reactionObj }});
-				break;
-			case "[love]":
-					Chat.update({_id: messageId}, {$push: {'reactions.love': reactionObj }});
-				break;
-			case "[tounge]":
-					Chat.update({_id: messageId}, {$push: {'reactions.tounge': reactionObj }});
-				break;
-			case "[oh-no]":
-					Chat.update({_id: messageId}, {$push: {'reactions.oh-no': reactionObj }});
-				break;
-			case "[what-the-hell]":
-					Chat.update({_id: messageId}, {$push: {'reactions.what-the-hell': reactionObj }});
-				break;
+		// If the message has no reactions, create an empty reactions object
+		if (!chat.reactions) {
+			chat['reactions'] = {};
 		}
+
+		// If there already is an array of the reaction to be inserted, just push the new object
+		if (chat.reactions[reaction] && chat.reactions[reaction].constructor === Array) {
+			chat.reactions[reaction].push(reactionObj);
+		} else {
+			// else, Create a new array and add the object
+			chat.reactions[reaction] = [reactionObj];
+		}
+
+		// Update the collection with the changes in reactions object
+		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
 	}
 });
