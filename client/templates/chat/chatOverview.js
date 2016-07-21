@@ -86,6 +86,9 @@ Template.chatRoom.events({
   'click #single-message ': function(event, template) {
     var entire = $(event.currentTarget).siblings().css({'display': 'block', 'opacity': '1'})
   },
+  'click [data-ion-popover=_reactionToMessage]': function(){
+    Session.set("reactToMessageId", this._id);
+  }
 });
 
 Template.chatRoom.helpers({
@@ -110,19 +113,19 @@ Template.chatRoom.helpers({
     var groupId = Session.get('chatGroup');
 
     // Find the chat messages from this group.
-    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch()
+    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
 
-    var chatArray = []
+    var chatArray = [];
 
     // Loop over all the messages and grab the user id. 
     // This is so we can limit the number of users we need to return. 
     for (var i = 0; i < chat.length; i++) {
 
-      var user = chat[i]
-      var userId = user.user
-      var userExists = chatArray.indexOf(userId)
+      var user = chat[i];
+      var userId = user.user;
+      var userExists = chatArray.indexOf(userId);
       if (userExists == -1) {
-        chatArray.push(userId)
+        chatArray.push(userId);
       }
     }
 
@@ -207,6 +210,29 @@ Template._reaction.events({
     });
     IonPopover.hide();
     $("#messageBox").val('');
+  },
+});
+
+Template._reactionToMessage.events({
+  'click button': function(event, template) {
+    var selected = $(event.currentTarget)
+    var message = selected.attr("value")
+    var currentUser = Meteor.userId()
+
+    var messageId = Session.get("reactToMessageId");
+
+    Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
+      if (error) {
+        IonLoading.show({
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+          duration: 3000,
+          backdrop: true
+        })
+      }
+    });
+    IonPopover.hide();
+    $("#messageBox").val('');
+    Session.set("reactToMessageId", null);
   },
 });
 
