@@ -122,6 +122,12 @@ Meteor.methods({
 			}
 		}
 
+		// If selected 'None', update colleciton and return
+		if (reaction === 'none') {
+			Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
+			return true;
+		}
+
 		// Object to be inserted
 		var reactionObj = {
 			user: author,
