@@ -37,6 +37,7 @@
                 <h2>{{chatUser this._id}}</h2>
               {{/with}}
               <p>{{{message}}}</p>
+              {{> messageReactions reactions=this.reactions}}
             {{/ionItem}}
             <div class="chat-options" style="display: none">
               <div class="col-md-25" data-action="reply">
@@ -166,4 +167,15 @@
       {{/ionPopover}}
     </div>
 
+</template>
+
+<template name="messageReactions">
+  <div class="row" align="right">
+    <p>
+    {{#each reactionCount}}
+        <img class="icon-small" src={{emojiIconSrc reactionName}}>
+        <strong class="reaction-count">{{count}}</strong>
+    {{/each}}
+    </p>
+  </div>
 </template>
