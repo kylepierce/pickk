@@ -19,7 +19,11 @@
 			{{#ionList}}
 			<div class="item item-divider">Upcoming Games</div>
 				{{#each game}}
-					{{#ionItem}} <h2>{{name}}</h2>{{gameDate}} on {{tv}}{{/ionItem}}
+					{{#ionItem class=gameClass}}
+                        <div class="game-item-outer" data-game-id="{{_id}}">
+                            <h2>{{name}}</h2>{{gameDate}} on {{tv}}
+                        </div>
+                    {{/ionItem}}
 				{{/each}}
 			{{/ionList}}
 		{{/ionContent}}

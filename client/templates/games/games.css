@@ -1,0 +1,11 @@
+.game-item-closed {
+    background-color: rgba(204, 204, 204, 0.44) !important
+}
+
+.game-item-inprogress {
+    background-color: rgba(200, 255, 200, 0.84) !important
+}
+
+.game-item-scheduled {
+    background-color: rgba(255, 250, 107, 0.85) !important
+}

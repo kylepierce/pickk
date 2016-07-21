@@ -1,6 +1,9 @@
-Meteor.publish('activeQuestions', function() {
+Meteor.publish('activeQuestions', function(gameId) {
+  check(gameId, String);
+  
   var currentUserId = this.userId;
   return Questions.find({
+    gameId: gameId,
     active: true,
     usersAnswered: {$nin: [currentUserId]}
   });
@@ -238,7 +241,10 @@ Meteor.publish('game', function(_id) {
 });
 
 Meteor.publish('games', function() {
-  return Games.find();
+  const today = moment().startOf('day').toDate();
+  const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
+
+  return Games.find({scheduled: {$gt: today, $lt: tomorrow}});
 });
 
 Meteor.publish('gamesPlayed', function() {
@@ -279,8 +285,10 @@ Meteor.publish('groupUsers', function(groupId) {
 });
 
 
-Meteor.publish('activeAtBat', function() {
-  return AtBat.find({active: true});
+Meteor.publish('activeAtBat', function(gameId) {
+  check(gameId, String);
+  
+  return AtBat.find({gameId: gameId, active: true});
 });
 
 Meteor.publish('atBatForThisGame', function() {
@@ -290,9 +298,10 @@ Meteor.publish('atBatForThisGame', function() {
   return AtBat.find({gameId: currentGameId});
 });
 
-Meteor.publish('activePlayers', function() {
-  var currentGame = Games.find({live: true});
-  var teams = Meteor.call('playersPlaying')
+Meteor.publish('activePlayers', function(gameId) {
+  check(gameId, String);
+  
+  var teams = Meteor.call('playersPlaying', gameId);
   return Players.find({_id: {$in: teams}})
 });
 
@@ -302,8 +311,10 @@ Meteor.publish('oneGamePlayers', function() {
   return Players.find({team: {$in: teams}})
 });
 
-Meteor.publish('atBatPlayer', function() {
-  var atBat = AtBat.findOne({active: true});
+Meteor.publish('atBatPlayer', function(gameId) {
+  check(gameId, String);
+
+  var atBat = AtBat.findOne({gameId: gameId, active: true});
   if (atBat) {
     var playerId = atBat.playerId
     return Players.find({_id: playerId});
