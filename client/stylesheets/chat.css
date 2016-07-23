@@ -56,6 +56,11 @@
 
 }
 
+.icon-small {
+  max-width: 20px;
+  min-width: 20px;
+}
+
 .space-between-icon {
 	padding-left: 15px;
 }
@@ -88,4 +93,9 @@ div.content.overflow-scroll.has-header {
 
 .load-more-wrapper button {
     width: 100%;
+}
+
+.reaction-count {
+  font-size: 10px;
+  margin-left: -5px;
 }
