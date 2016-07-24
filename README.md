@@ -69,4 +69,4 @@ settings/%env%.local.json (environment-specific counterpart of "settings/all.loc
 
 ---
 
-## [List of Methods](https://bitbucket.org/pickk/pickk/src/d62f3373b6cff6afa354e0ed057a7193ab306996/client-templates-docs.txt?at=redesign&fileviewer=file-view-default)
+## [List of Methods](https://bitbucket.org/pickk/pickk/wiki/Section%20Methods)
