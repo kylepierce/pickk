@@ -5,6 +5,12 @@ Template.newGroup.events({
 
   }
 });
+//Subscription for groups
+Template.newGroup.onCreated(function() {
+  this.autorun(() => {
+    this.subscribe('groups');
+  });
+});
 
 Template.newGroup.events({
   'click input:checkbox':function(event, template){
@@ -25,7 +31,7 @@ Template.newGroup.events({
     var uniqueGroupName = Groups.findOne({'name': groupName});
     var uniqueGroupId = Groups.findOne({'groupId': groupId});
 
-    if(privacySetting === "false"){ 
+    if(privacySetting === "false"){
       privacySetting = false
     }
 
@@ -63,17 +69,22 @@ Template.newGroup.events({
         duration: 1500,
         backdrop: true
       });
-    } else if(uniqueGroupId){
+    }
+    /*
+    else if(uniqueGroupId){
       IonLoading.show({
         customTemplate: '<h3>That Id has been already taken :(</h3>',
         duration: 1500,
-        backdrop: true 
+        backdrop: true
       });
-    } else if(uniqueGroupName){
+    } */
+
+    //Group names have to be unique
+    else if(!!uniqueGroupName){
       IonLoading.show({
         customTemplate: '<h3>That name has been already taken :(</h3>',
         duration: 1500,
-        backdrop: true 
+        backdrop: true
       });
     } else {
     // Create the group with group name and privacy check the user passed
@@ -85,12 +96,12 @@ Template.newGroup.events({
       duration: 1500,
       backdrop: true
     });
-    
+
   	Router.go('/groups/');
 
     var group = Groups.findOne({'groupId': groupId})
-    var groupLink = "/groups/" + group._id 
-    
+    var groupLink = "/groups/" + group._id
+
     // Close
     Router.go(groupLink);
     }

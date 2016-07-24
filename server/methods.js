@@ -2,7 +2,7 @@ Meteor.methods({
 	'userExists': function(username) {
 		return !!UserList.findOne({"profile.username": username});
 	},
-	
+
 	'toggleCommercial': function(game, toggle) {
 		Games.update(game, {$set: {'commercial': toggle}});
 	},
@@ -123,7 +123,7 @@ Meteor.methods({
 		UserList.update({}, {$set: {"profile.coins": amount}}, {multi: true});
 	},
 
-// Way for Admin to manually update users name 
+// Way for Admin to manually update users name
 	'updateName': function(user, name) {
 		Meteor.users.update({_id: user}, {$set: {"profile.username": name}});
 	},
@@ -568,7 +568,7 @@ Meteor.methods({
 		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
 	},
 
-// Remove Coins from the people who answered it "correctly", the answer changed. 
+// Remove Coins from the people who answered it "correctly", the answer changed.
 
 	'unAwardPoints': function(questionId, oldAnswered) {
 		var question = Questions.findOne({"_id": questionId});
@@ -866,7 +866,13 @@ Meteor.methods({
 		}
 		return !UserList.find({_id: {$ne: this.userId}, "profile.username": new RegExp("^" + escapeRegExp(username) + "$", "i")}).count()
 	},
-
+	'isGroupNameUnique': function(name) {
+		name = name.trim()
+		if (!name) {
+			return true;
+		}
+		return !Groups.find({groupId: {$ne: name}}).count()
+	},
 	'exportToMailChimp': function(limit) {
 		limit = limit || 10; // safety net; pass a very high limit to export all users
 		var user = UserList.findOne(this.userId);

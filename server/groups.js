@@ -120,5 +120,5 @@ Meteor.methods({
 	'leaveGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$pull: {members: user}});
 		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});
-	},
+	}
 })
