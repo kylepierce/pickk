@@ -65,8 +65,8 @@ settings/%env%.local.json (environment-specific counterpart of "settings/all.loc
 ## [Data Schema](https://docs.google.com/document/d/1ZDvnep8EnWKeMqWSUmbNrk8SSLp_BPHhIYUkbCOOGrQ/edit?usp=sharing)
 ----
 
-## [Client Template Explanation](https://bitbucket.org/pickk/pickk/src/d62f3373b6cff6afa354e0ed057a7193ab306996/Section-Methods.txt?at=redesign&fileviewer=file-view-default)
+## [Client Template Explanation](https://bitbucket.org/pickk/pickk/wiki/Client%20Templates)
 
 ---
 
-## [List of Methods](https://bitbucket.org/pickk/pickk/wiki/Section%20Methods)
+## [List of Methods(In Progress)](https://bitbucket.org/pickk/pickk/wiki/Section%20Methods)
