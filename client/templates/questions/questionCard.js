@@ -58,6 +58,12 @@ Template.questionCard.helpers({
     }
   },
 
+  'gameId': function(){
+    var game = Games.findOne({live: true});
+    var gameId = game._id
+    return gameId
+  },
+
   'activeCheck': function() {
     questionId = Session.get('lastId');
     var question = Questions.findOne({_id: questionId});

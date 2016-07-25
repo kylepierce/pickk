@@ -55,6 +55,13 @@
           {{/with}}
           <!-- Outstanding questions -->
           <div class="container">
+          <div class="item item-divider">Latest Answers
+          <a style="" href="/history/{{gameId}}">
+            <span class="home-history">
+              (View History)
+            </span>
+          </a>
+          </div>
           {{#each answeredQuestions}}
             {{#ionItem}}
               {{#if pendingAnswers}}
