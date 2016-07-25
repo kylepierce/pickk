@@ -1,11 +1,10 @@
 Meteor.methods({
 	// Users can create a group
-	'createGroup': function(groupId, groupName, secretStatus) {
+	'createGroup': function(groupName, secretStatus) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
 		Groups.insert({
-			groupId: groupId,
 			name: groupName,
 			commissioner: currentUserId,
 			dateCreated: timeCreated,
