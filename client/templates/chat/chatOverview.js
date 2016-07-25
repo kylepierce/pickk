@@ -35,8 +35,8 @@ Template.chatOverview.helpers({
   group: function() {
     var groupId = Session.get('chatGroup')
     if (groupId) {
-      var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
-      return group.groupId
+      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
+      return group.name
     }
   }
 });
@@ -170,6 +170,14 @@ Template.chatRoom.helpers({
 });
 
 Template._groupChats.helpers({
+  groups: function() {
+   var user = Meteor.user()
+    if (user.profile.groups) {
+      return user.profile.groups
+    } else {
+      return false
+    }
+  },
   group: function() {
     var user = Meteor.user()
     if (user.profile.groups) {
@@ -179,7 +187,7 @@ Template._groupChats.helpers({
     }
   },
   groupName: function(id) {
-    var group = Groups.findOne({_id: id}, {fields: {groupId: 1}})
+    var group = Groups.findOne({_id: id}, {fields: {name: 1}})
     return group
   }
 });
