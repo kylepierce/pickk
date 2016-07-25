@@ -3,12 +3,27 @@
 // });
 
 Template.questionCard.helpers({
+  userGroups: function() {
+    var currentUser = Meteor.userId();
+    return Groups.find({members: currentUser}).fetch()
+  },
+
+  groups: function(){
+    var currentUser = Meteor.user();
+    var groupCount = currentUser.profile.groups.length 
+    console.log(groupCount)
+    if (groupCount){
+      return true
+    }
+  },
+
   'live': function() {
     var game = Games.findOne({live: true});
     if (game && game.live == true) {
       return true
     }
   },
+
   gameQuestion: function() {
     var currentUser = Meteor.userId();
     var active = Questions.find(
@@ -204,7 +219,9 @@ Template.questionCard.events({
     // $("#submit-response").prop("disabled", false)
     // $("#submit-response").addClass('button-balanced');
   },
-
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  }, 
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },
