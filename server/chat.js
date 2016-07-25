@@ -1,5 +1,16 @@
 Meteor.methods({
 	'addChatMessage': function(author, messagePosted, groupId) {
+		check(author, String);
+		check(messagePosted, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (author !== Meteor.userId()) {
+			throw new Meteor.Error("not-authorized", "Cannot post message an another user");
+		}
+
 		var timeCreated = new Date();
 		var id = Random.id();
 		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "").trim();
@@ -69,5 +80,74 @@ Meteor.methods({
 			}
 		}
 
+	},
+	'addReactionToMessage': function(author, messagePosted, messageId) {
+		check(author, String);
+		check(messagePosted, String);
+		check(messageId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (author !== Meteor.userId()) {
+			throw new Meteor.Error("not-authorized", "Cannot post message an another user");
+		}
+
+		var timeCreated = new Date();
+		var reaction = messagePosted.slice(1, -1);
+
+		var chat = Chat.findOne({_id: messageId});
+
+		var checkUser;
+		var lastCheckedKey = null;
+		var lastCheckedIndex = null;
+		
+		// Check if the user already has a previous reaction stored in this chat message
+		if (chat && chat.reactions) {
+
+			// This "find" loop will return a valid 'reactedObj' ONLY if a previous rection was found.. Then lastCheckedKey and lastCheckedIndex will contain the values where the last reaction is stored exactly 
+			var reactedObj = _.find(chat.reactions, function (reactionArr, key) {
+					lastCheckedKey = key;
+					checkUser = _.find(reactionArr, function (obj, index) {
+						lastCheckedIndex = index
+						return obj.user === author;
+					});
+					return checkUser;
+				});
+
+			if (reactedObj) {
+				// FOUND! - User already has a reaction - Remove it from the array and update the Chat
+				chat.reactions[lastCheckedKey].splice(lastCheckedIndex, 1); 
+			}
+		}
+
+		// If selected 'None', update colleciton and return
+		if (reaction === 'none') {
+			Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
+			return true;
+		}
+
+		// Object to be inserted
+		var reactionObj = {
+			user: author,
+			timestamp: timeCreated
+		};
+
+		// If the message has no reactions, create an empty reactions object
+		if (!chat.reactions) {
+			chat['reactions'] = {};
+		}
+
+		// If there already is an array of the reaction to be inserted, just push the new object
+		if (chat.reactions[reaction] && chat.reactions[reaction].constructor === Array) {
+			chat.reactions[reaction].push(reactionObj);
+		} else {
+			// else, Create a new array and add the object
+			chat.reactions[reaction] = [reactionObj];
+		}
+
+		// Update the collection with the changes in reactions object
+		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
 	}
 });
