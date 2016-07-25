@@ -39,6 +39,9 @@ Template.groups.helpers({
 Template.groups.events({
   'click .newGroup': function () {
     Router.go('/newgroup');
+  },
+  'click [data-action=no-group]': function (){
+    Router.go('/allGroups')
   }
 });
  

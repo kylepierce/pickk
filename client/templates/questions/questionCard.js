@@ -219,7 +219,9 @@ Template.questionCard.events({
     // $("#submit-response").prop("disabled", false)
     // $("#submit-response").addClass('button-balanced');
   },
-
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  }, 
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },

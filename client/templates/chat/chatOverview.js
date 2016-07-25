@@ -189,8 +189,10 @@ Template._groupChats.events({
     var id = this.id
     Session.set('chatGroup', id)
     IonPopover.hide();
-
   },
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  } 
 });
 
 Template._reaction.events({

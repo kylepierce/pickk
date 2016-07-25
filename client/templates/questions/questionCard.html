@@ -72,19 +72,26 @@
         <h3 class="next-play">0 Live National Games
           <br><br>
           <a class="button next-play"  href="games">
-            View Upcomming Game Schedule
+            View Upcoming Game Schedule
           </a>
           <br>
         </h3>
-      
+
+        <h3>Groups</h3>
         {{#if groups}}
-          <h3>Groups</h3>
           {{#each userGroups}}
             {{#ionItem path="group.show" avatar=true}}
               {{> groupAvatar}}
               <h2 class="center-username">{{name}}</h2>
             {{/ionItem}}
           {{/each}}
+        {{else}}
+          {{#ionItem buttonRight=true}}
+            <p>No Groups :( Join a Group!</p>
+            <a data-action="no-group" class="button"> 
+              {{> ionIcon icon="ios-plus"}}
+            </a>
+          {{/ionItem}}
         {{/if}}
 
         <br>
