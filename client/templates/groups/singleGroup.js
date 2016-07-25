@@ -137,7 +137,6 @@ Template.requestInvite.helpers({
     var group = Groups.findOne({_id: groupId, 
       requests: {$in: [currentUser]}});
     return group
-
   }
 });
 
