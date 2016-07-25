@@ -52,8 +52,23 @@
           <h5 class="next-play">Next question coming up soon!</h5>
           {{#with lastPlay}}
             <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
-            <h5 class="next-play">You guessed {{lastDescription}} for {{lastWager}}</h5>
           {{/with}}
+          <!-- Outstanding questions -->
+          <div class="container">
+          {{#each answeredQuestions}}
+            {{#ionItem}}
+              {{#if pendingAnswers}}
+                <p class="still-active"><b>{{que}}</b></p>
+                <p>
+                You Answered: {{description}}<br>
+                Amount Wagered: {{wager}}
+                Muliplier: {{multiplier}}
+                </p>
+              {{/if}}
+            {{/ionItem}}
+          {{/each}}          
+          </div>
+
         {{/if}}
       {{/if}}
     {{/if}}

@@ -81,6 +81,12 @@ Meteor.publish('answersByGameId', function(gameId) {
   return Answers.find({userId: this.userId, gameId: gameId});
 })
 
+Meteor.publish('currentAnswers', function() {
+  var currentGame = Games.findOne({live: true})
+  currentGame = currentGame._id
+  return Answers.find({userId: this.userId, gameId: currentGame}, {sort: {dateCreated: -1}, limit: 3});
+})
+
 Meteor.publish('singleGame', function(id) {
   var singleGame = Questions.find({gameId: id}, {sort: {dateCreated: 1}});
   if (singleGame) {

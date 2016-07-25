@@ -658,7 +658,7 @@ Meteor.methods({
 
 	'questionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
-
+		var timeCreated = new Date();
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
@@ -675,6 +675,7 @@ Meteor.methods({
     Answers.insert({
 			userId: this.userId,
 			gameId: question.gameId,
+			dateCreated: timeCreated,
 			questionId: questionId,
 			answered: answered,
 			wager: wager,
@@ -715,7 +716,7 @@ Meteor.methods({
 
 	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
-
+		var timeCreated = new Date();
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
@@ -733,6 +734,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,
@@ -773,6 +775,7 @@ Meteor.methods({
 
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
+		var timeCreated = new Date();
 
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
@@ -791,6 +794,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,
@@ -806,7 +810,6 @@ Meteor.methods({
 		//Once a users has answered take the amount wager from their coins.
 		Meteor.users.update(this.userId, {$inc: {"profile.coins": +wager}});
 
-		var timeCreated = new Date();
 		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
 
@@ -828,6 +831,7 @@ Meteor.methods({
 
 	'gameQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
+		var timeCreated = new Date();
 
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
@@ -846,6 +850,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,

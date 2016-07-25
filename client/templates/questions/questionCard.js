@@ -208,7 +208,20 @@ Template.questionCard.helpers({
     } else if (random == 6) {
       return '<p class="did-you next-play"><b>What do Coins do?</b><br> Coins are how we track who performed the best in a game. Once the game is over the coins are exchanged into diamonds.</p>'
     }
-
+  },
+  'answeredQuestions': function(){
+    var game = Games.findOne({live: true});
+    game = game._id
+    var answers = Answers.find({gameId: game}).fetch();
+    var answeredQuestionIds = _.pluck(answers, "_id");
+    return Answers.find({_id: {$in: answeredQuestionIds}}, {sort: {dateCreated: -1}, limit: 3});    
+  },
+  'pendingAnswers': function(){
+    console.log(this.questionId)
+    var active = this.active
+    if (active == true || active == null) {
+      return true
+    } 
   }
 });
 
