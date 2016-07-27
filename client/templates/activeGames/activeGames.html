@@ -1,0 +1,36 @@
+<template name="activeGames">
+    {{#contentFor "headerButtonLeft"}}
+        <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+            {{#if isAndroid}}
+                {{> ionIcon icon='android-more-vertical'}}
+            {{else}}
+                {{> ionIcon icon='navicon'}}
+            {{/if}}
+        </button>
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title white-text-header">Active Games</h1>
+    {{/contentFor}}
+
+    {{#ionView}}
+        {{#ionContent}}
+            {{#if hasActiveGames}}
+                {{#ionList}}
+                    <div class="item item-divider">Select a game</div>
+                    {{#each games}}
+                        {{#ionItem class=gameClass}}
+                            <div class="game-item-outer" data-game-id="{{_id}}">
+                                <h2>{{name}}</h2>{{gameDate}} on {{tv}}
+                            </div>
+                        {{/ionItem}}
+                    {{/each}}
+                {{/ionList}}
+            {{else}}
+                <h5 class="next-play">No Active Games Right Now<br><br>
+                    <a class="button next-play" href="/games">View Game Schedule</a>
+                </h5>
+            {{/if}}
+        {{/ionContent}}
+    {{/ionView}}
+</template>

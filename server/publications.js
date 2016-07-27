@@ -1,3 +1,9 @@
+isTester = function (userId) {
+  var user = Meteor.users.findOne(userId);
+  var role = user.profile.role;
+  return role && (role == "admin" || role == "beta");
+};
+
 Meteor.publish('activeQuestions', function(gameId) {
   check(gameId, String);
   
@@ -244,7 +250,14 @@ Meteor.publish('games', function() {
   const today = moment().startOf('day').toDate();
   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
 
-  return Games.find({scheduled: {$gt: today, $lt: tomorrow}});
+  var selector = {scheduled: {$gt: today, $lt: tomorrow}};
+
+  var tester = isTester(this.userId);
+  if ( ! tester) {
+    selector.public = true;
+  }
+
+  return Games.find(selector);
 });
 
 Meteor.publish('gamesPlayed', function() {
@@ -259,7 +272,14 @@ Meteor.publish('SportRadarGames', function() {
 });
 
 Meteor.publish('activeGames', function() {
-  return Games.find({live: true});
+  var selector = {live: true};
+
+  var tester = isTester(this.userId);
+  if ( ! tester) {
+    selector.public = true;
+  }
+
+  return Games.find(selector);
 });
 
 Meteor.publish('trophy', function() {

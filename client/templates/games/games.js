@@ -1,10 +1,6 @@
 Template.games.helpers({
 	gameClass: function () {
 		return "game-item-" + this['status'];
-	},
-	
-	game: function () {
-		return Games.find({}, {sort: {"scheduled": 1}}).fetch();
 	}
 });
 
