@@ -256,6 +256,14 @@ Template.questionCard.events({
     var userCoins = Meteor.user().profile.coins;
 
     if (userCoins < wager) {
+      analytics.track("no coins", {
+        id: currentUser,
+        question: que,
+        questionId: questionId,
+        answer: answer,
+        wager: wager,
+        coins: userCoins
+      });
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,
