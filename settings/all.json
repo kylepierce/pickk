@@ -12,6 +12,11 @@
         "numRequests": 10,
         "timeInterval": 120000
       }
+    },
+    "emailText": {
+      "forgotPwdHeading": "You have requested to reset your password",
+      "forgotPwdMessage": "Click the button below to reset password",
+      "forgotPwdButton": "Reset Password"
     }
   },
   "public": {

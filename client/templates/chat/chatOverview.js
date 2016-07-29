@@ -35,8 +35,8 @@ Template.chatOverview.helpers({
   group: function() {
     var groupId = Session.get('chatGroup')
     if (groupId) {
-      var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
-      return group.groupId
+      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
+      return group.name
     }
   }
 });
@@ -86,6 +86,9 @@ Template.chatRoom.events({
   'click #single-message ': function(event, template) {
     var entire = $(event.currentTarget).siblings().css({'display': 'block', 'opacity': '1'})
   },
+  'click [data-ion-popover=_reactionToMessage]': function(){
+    Session.set("reactToMessageId", this._id);
+  }
 });
 
 Template.chatRoom.helpers({
@@ -110,19 +113,19 @@ Template.chatRoom.helpers({
     var groupId = Session.get('chatGroup');
 
     // Find the chat messages from this group.
-    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch()
+    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
 
-    var chatArray = []
+    var chatArray = [];
 
     // Loop over all the messages and grab the user id. 
     // This is so we can limit the number of users we need to return. 
     for (var i = 0; i < chat.length; i++) {
 
-      var user = chat[i]
-      var userId = user.user
-      var userExists = chatArray.indexOf(userId)
+      var user = chat[i];
+      var userId = user.user;
+      var userExists = chatArray.indexOf(userId);
       if (userExists == -1) {
-        chatArray.push(userId)
+        chatArray.push(userId);
       }
     }
 
@@ -167,6 +170,14 @@ Template.chatRoom.helpers({
 });
 
 Template._groupChats.helpers({
+  groups: function() {
+   var user = Meteor.user()
+    if (user.profile.groups) {
+      return user.profile.groups
+    } else {
+      return false
+    }
+  },
   group: function() {
     var user = Meteor.user()
     if (user.profile.groups) {
@@ -176,7 +187,7 @@ Template._groupChats.helpers({
     }
   },
   groupName: function(id) {
-    var group = Groups.findOne({_id: id}, {fields: {groupId: 1}})
+    var group = Groups.findOne({_id: id}, {fields: {name: 1}})
     return group
   }
 });
@@ -186,8 +197,10 @@ Template._groupChats.events({
     var id = this.id
     Session.set('chatGroup', id)
     IonPopover.hide();
-
   },
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  } 
 });
 
 Template._reaction.events({
@@ -210,3 +223,83 @@ Template._reaction.events({
   },
 });
 
+Template._reactionToMessage.events({
+  'click button': function(event, template) {
+    var selected = $(event.currentTarget)
+    var message = selected.attr("value")
+    var currentUser = Meteor.userId()
+
+    var messageId = Session.get("reactToMessageId");
+
+    Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
+      if (error) {
+        IonLoading.show({
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+          duration: 3000,
+          backdrop: true
+        })
+      }
+    });
+    IonPopover.hide();
+    $("#messageBox").val('');
+    Session.set("reactToMessageId", null);
+  },
+});
+
+Template.messageReactions.helpers({
+  reactionCount: function () {
+    var reactions = this.reactions;
+    var reactionCount = [];
+    var tempObj = {};
+
+    _.each(reactions, function (val, key) {
+      tempObj = {
+        reactionName: key,
+        count:  val.length
+      };
+      if (val.length > 0) {
+        reactionCount.push(tempObj);
+      }
+    });
+
+    console.log("reactionCount --- ", reactionCount);
+    return reactionCount;
+  },
+  emojiIconSrc: function (reactionName) {
+    switch(reactionName) {
+      case "dead":
+          return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
+        break;
+      case "omg":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+        break;
+      case "fire":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+        break;
+      case "dying":
+          return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
+        break;
+      case "hell-yeah":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
+        break;
+      case "what":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
+        break;
+      case "pirate":
+          return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
+        break;
+      case "love":
+          return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
+        break;
+      case "tounge":
+          return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
+        break;
+      case "oh-no":
+          return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
+        break;
+      case "what-the-hell":
+          return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
+        break;
+    }
+  }
+});

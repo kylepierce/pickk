@@ -25,7 +25,7 @@ Meteor.methods({
 
 	// Update users info from the settings page
 
-	'updateProfile': function(username, firstName, lastName, birthday) {
+	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
 		if (!this.userId) {
 			return;
 		}
@@ -35,19 +35,37 @@ Meteor.methods({
 					'profile.username': username,
 					'profile.firstName': firstName,
 					'profile.lastName': lastName,
-					'profile.birthday': birthday
+					'profile.birthday': birthday,
+					'profile.timezone': timezone
 				}
 			});
     var user = UserList.findOne(this.userId);
     mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
+	// Update users Favorite teams info from the Favorite Teams page
+
+	'updateFavoriteTeams': function(teamsArr) {
+		if (!this.userId) {
+			return;
+		}
+
+		UserList.update(this.userId,
+			{
+				$set: {'profile.favoriteTeams': teamsArr}
+			});
+		var user = UserList.findOne(this.userId);
+		mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
+	},
+
 	// Update users info from the settings page
 
 	'addTrophy': function(name, description, img) {
+		var dateCreated = new Date();
 		Trophies.insert({
 			title: name,
 			description: description,
+			dateCreated: dateCreated,
 			image: img
 		});
 	},
@@ -153,7 +171,8 @@ Meteor.methods({
 				option4: {title: op4, multiplier: m4},
 				option5: {title: op5, multiplier: m5},
 				option6: {title: op6, multiplier: m6},
-			}
+			},
+			usersAnswered: []
 		});
 	},
 
@@ -178,7 +197,8 @@ Meteor.methods({
 				option2: {title: op2, multiplier: m2},
 				option3: {title: op3, multiplier: m3},
 				option4: {title: op4, multiplier: m4},
-			}
+			},
+			usersAnswered: []
 		});
 	},
 
@@ -197,8 +217,8 @@ Meteor.methods({
 			options: {
 				option1: {title: "True"},
 				option2: {title: "False"},
-			}
-
+			},
+			usersAnswered: []
 		})
 	},
 
@@ -217,8 +237,8 @@ Meteor.methods({
 			options: {
 				option1: {title: option1, multiplier: multiplier1},
 				option2: {title: option2, multiplier: multiplier2},
-			}
-
+			},
+			usersAnswered: []
 		})
 	},
 
@@ -638,10 +658,10 @@ Meteor.methods({
 
 	'questionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
-
-		// if (~question.usersAnswered.indexOf(this.userId)) {
-		// 	return
-		// }
+		var timeCreated = new Date();
+		if (~question.usersAnswered.indexOf(this.userId)) {
+			return
+		}
 
 		var option = question.options[answered];
 		if (!option) {
@@ -655,6 +675,7 @@ Meteor.methods({
     Answers.insert({
 			userId: this.userId,
 			gameId: question.gameId,
+			dateCreated: timeCreated,
 			questionId: questionId,
 			answered: answered,
 			wager: wager,
@@ -695,7 +716,7 @@ Meteor.methods({
 
 	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
-
+		var timeCreated = new Date();
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
 		}
@@ -713,6 +734,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,
@@ -753,6 +775,7 @@ Meteor.methods({
 
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
+		var timeCreated = new Date();
 
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
@@ -771,6 +794,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,
@@ -786,7 +810,6 @@ Meteor.methods({
 		//Once a users has answered take the amount wager from their coins.
 		Meteor.users.update(this.userId, {$inc: {"profile.coins": +wager}});
 
-		var timeCreated = new Date();
 		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
 
@@ -808,6 +831,7 @@ Meteor.methods({
 
 	'gameQuestionAnswered': function(questionId, answered, wager, description) {
 		var question = Questions.findOne(questionId);
+		var timeCreated = new Date();
 
 		if (~question.usersAnswered.indexOf(this.userId)) {
 			return
@@ -826,6 +850,7 @@ Meteor.methods({
 			userId: this.userId,
 			gameId: question.gameId,
 			questionId: questionId,
+			dateCreated: timeCreated,
 			answered: answered,
 			wager: wager,
 			multiplier: multiplier,

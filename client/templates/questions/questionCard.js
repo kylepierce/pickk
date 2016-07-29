@@ -3,12 +3,27 @@
 // });
 
 Template.questionCard.helpers({
+  userGroups: function() {
+    var currentUser = Meteor.userId();
+    return Groups.find({members: currentUser}).fetch()
+  },
+
+  groups: function(){
+    var currentUser = Meteor.user();
+    var groupCount = currentUser.profile.groups.length 
+    console.log(groupCount)
+    if (groupCount){
+      return true
+    }
+  },
+
   'live': function() {
     var game = Games.findOne({live: true});
     if (game && game.live == true) {
       return true
     }
   },
+
   gameQuestion: function() {
     var currentUser = Meteor.userId();
     var active = Questions.find(
@@ -41,6 +56,12 @@ Template.questionCard.helpers({
       lastWager: Session.get("lastWager"),
       lastDescription: Session.get("lastDescription")
     }
+  },
+
+  'gameId': function(){
+    var game = Games.findOne({live: true});
+    var gameId = game._id
+    return gameId
   },
 
   'activeCheck': function() {
@@ -193,7 +214,20 @@ Template.questionCard.helpers({
     } else if (random == 6) {
       return '<p class="did-you next-play"><b>What do Coins do?</b><br> Coins are how we track who performed the best in a game. Once the game is over the coins are exchanged into diamonds.</p>'
     }
-
+  },
+  'answeredQuestions': function(){
+    var game = Games.findOne({live: true});
+    game = game._id
+    var answers = Answers.find({gameId: game}).fetch();
+    var answeredQuestionIds = _.pluck(answers, "_id");
+    return Answers.find({_id: {$in: answeredQuestionIds}}, {sort: {dateCreated: -1}, limit: 3});    
+  },
+  'pendingAnswers': function(){
+    console.log(this.questionId)
+    var active = this.active
+    if (active == true || active == null) {
+      return true
+    } 
   }
 });
 
@@ -204,7 +238,9 @@ Template.questionCard.events({
     // $("#submit-response").prop("disabled", false)
     // $("#submit-response").addClass('button-balanced');
   },
-
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  }, 
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },

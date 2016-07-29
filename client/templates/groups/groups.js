@@ -30,6 +30,10 @@ Template.groups.helpers({
   group: function () {
     return Groups.find({secret: false}).fetch();
   },
+  groups: function() {
+    var currentUser = Meteor.user();
+    return currentUser.profile.groups
+  },
   userGroups: function() {
     var currentUser = Meteor.userId();
     return Groups.find({members: currentUser}).fetch()
@@ -39,6 +43,9 @@ Template.groups.helpers({
 Template.groups.events({
   'click .newGroup': function () {
     Router.go('/newgroup');
+  },
+  'click [data-action=no-group]': function (){
+    Router.go('/allGroups')
   }
 });
  
