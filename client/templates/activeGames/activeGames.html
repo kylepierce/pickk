@@ -14,23 +14,28 @@
     {{/contentFor}}
 
     {{#ionView}}
-        {{#ionContent}}
-            {{#if hasActiveGames}}
-                {{#ionList}}
-                    <div class="item item-divider">Select a game</div>
-                    {{#each games}}
-                        {{#ionItem class=gameClass}}
-                            <div class="game-item-outer" data-game-id="{{_id}}">
-                                <h2>{{name}}</h2>{{gameDate}} on {{tv}}
-                            </div>
-                        {{/ionItem}}
-                    {{/each}}
-                {{/ionList}}
-            {{else}}
-                <h5 class="next-play">No Active Games Right Now<br><br>
-                    <a class="button next-play" href="/games">View Game Schedule</a>
-                </h5>
-            {{/if}}
-        {{/ionContent}}
+      {{#ionContent}}
+        {{#if hasActiveGames}}
+          {{#ionList}}
+            <div class="item item-divider">Select a game</div>
+            {{#each games}}
+              {{#ionItem class=gameClass buttonRight=true}}
+                <div class="game-item-outer" >
+                  <h2>{{name}}</h2>{{gameDate}} on {{tv}}
+                </div>
+                {{#if inprogress status}}
+                  <button class="button game" data-game-id="{{_id}}">
+                    {{> ionIcon icon="ios-arrow-right"}}
+                  </button>
+                {{/if}}
+              {{/ionItem}}
+            {{/each}}
+          {{/ionList}}
+        {{else}}
+          <h5 class="next-play">No Active Games Right Now<br><br>
+              <a class="button next-play" href="/games">View Game Schedule</a>
+          </h5>
+        {{/if}}
+      {{/ionContent}}
     {{/ionView}}
 </template>

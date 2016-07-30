@@ -261,8 +261,7 @@ Template.messageReactions.helpers({
         reactionCount.push(tempObj);
       }
     });
-
-    console.log("reactionCount --- ", reactionCount);
+    
     return reactionCount;
   },
   emojiIconSrc: function (reactionName) {

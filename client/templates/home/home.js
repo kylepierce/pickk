@@ -30,7 +30,7 @@ Template.home.rendered = function (template) {
 
 Template.home.helpers({
   game: function() {
-    return Games.findOne({live: true, public: true});
+    return Games.findOne({live: true});
   },
   scoreMessage: function() {
     var user = Meteor.user();

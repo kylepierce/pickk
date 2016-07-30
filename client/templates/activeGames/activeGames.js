@@ -5,12 +5,18 @@ Template.activeGames.helpers({
 
   hasActiveGames: function () {
 		return Template.instance().data.games.length > 0;
+  },
+  
+  inprogress: function (status) {
+    if (status == "inprogress"){
+      return true
+    }
   }
 });
 
 Template.activeGames.events({
-  "click .game-item-inprogress": function (event, template) {
-    var gameId = $(event.currentTarget).children('.game-item-outer').attr("data-game-id");
+  "click .game": function (event, template) {
+    var gameId = $(event.currentTarget).attr("data-game-id");
     Router.go("game", {id: gameId});
   }
 });
