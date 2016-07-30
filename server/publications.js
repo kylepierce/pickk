@@ -257,13 +257,14 @@ Meteor.publish('games', function() {
   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
 
   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
+  var parms = {fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
     selector.public = true;
   }
 
-  return Games.find(selector);
+  return Games.find(selector, parms);
 });
 
 Meteor.publish('gamesPlayed', function() {
