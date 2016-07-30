@@ -30,7 +30,7 @@ Template.home.rendered = function (template) {
 
 Template.home.helpers({
   game: function() {
-    return Games.findOne({live: true});
+    return Games.findOne({live: true, public: true});
   },
   scoreMessage: function() {
     var user = Meteor.user();
@@ -414,6 +414,19 @@ Template.wagers.events({
 });
 
 Template.gameBar.helpers({
+  top: function() {
+    var currentGame = Games.findOne({live: true});
+    var inningPosition = currentGame.topOfInning
+    if(inningPosition){
+      return true
+    } else {
+      return false
+    }
+  },
+  inning: function() {
+    var currentGame = Games.findOne({live: true});
+    return currentGame.inning
+  },
   strikes: function() {
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.strikeCount

@@ -119,7 +119,7 @@ Meteor.publish('chatUsersList', function(groupId) {
 
   groupId = groupId || null;
 
-  var messages = Chat.find({group: groupId}, {fields: {user: 1}}).fetch();
+  var messages = Chat.find({group: groupId}, {fields: {user: 1}},{ limit: 10}).fetch();
   var userIds = _.chain(messages).pluck("user").uniq().value();
 
   var users = UserList.find({_id: {$in: userIds}}, {
@@ -278,14 +278,15 @@ Meteor.publish('SportRadarGames', function() {
 });
 
 Meteor.publish('activeGames', function() {
-  var selector = {live: true};
+  var selector = {live: true} 
+  var parms = {fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
     selector.public = true;
   }
 
-  return Games.find(selector);
+  return Games.find(selector, parms);
 });
 
 Meteor.publish('trophy', function() {
