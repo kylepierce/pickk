@@ -10,7 +10,13 @@
     {{/contentFor}}
 
     {{#contentFor "headerTitle"}}
-        <h1 class="title white-text-header">Active Games</h1>
+        <h1 class="title white-text-header">Home</h1>
+    {{/contentFor}}
+
+    {{#contentFor "headerButtonRight"}}
+      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+        {{> ionIcon icon="ios-chatboxes"}}
+      </button>
     {{/contentFor}}
 
     {{#ionView}}
@@ -21,7 +27,7 @@
             {{#each games}}
               {{#ionItem class=gameClass buttonRight=true}}
                 <div class="game-item-outer" >
-                  <h2>{{name}}</h2>{{gameDate}} on {{tv}}
+                  <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
                 </div>
                 {{#if inprogress status}}
                   <button class="button game" data-game-id="{{_id}}">
@@ -32,10 +38,38 @@
             {{/each}}
           {{/ionList}}
         {{else}}
-          <h5 class="next-play">No Active Games Right Now<br><br>
-              <a class="button next-play" href="/games">View Game Schedule</a>
-          </h5>
+          <h3 class="next-play">0 Live National Games
+            <br><br>
+            <a class="button next-play"  href="games">
+              View Upcoming Game Schedule
+            </a>
+            <br>
+          </h3>
         {{/if}}
+        <h3>Groups</h3>
+          {{#if groups}}
+            {{#each userGroups}}
+              {{#ionItem path="group.show" avatar=true}}
+                {{> groupAvatar}}
+                <h2 class="center-username">{{name}}</h2>
+              {{/ionItem}}
+            {{/each}}
+          {{else}}
+            {{#ionItem buttonRight=true}}
+              <p>No Groups :( Join a Group!</p>
+              <a data-action="no-group" class="button"> 
+                {{> ionIcon icon="ios-plus"}}
+              </a>
+            {{/ionItem}}
+          {{/if}}
+
+          <br>
+          {{#if notBeta}}
+          <h3 class="next-play">Want more baseball?</h3>
+          <a style="width: 100%;" class="button button-balanced" href="beta">
+            Pickk Local Beta
+          </a>
+          {{/if}}
       {{/ionContent}}
     {{/ionView}}
 </template>

@@ -257,7 +257,7 @@ Meteor.publish('games', function() {
   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
 
   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
-  var parms = {fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
+  var parms = {sort: {scheduled: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
@@ -280,7 +280,7 @@ Meteor.publish('SportRadarGames', function() {
 
 Meteor.publish('activeGames', function() {
   var selector = {live: true} 
-  var parms = {fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
+  var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {

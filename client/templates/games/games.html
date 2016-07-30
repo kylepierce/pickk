@@ -21,7 +21,7 @@
 				{{#each games}}
 					{{#ionItem class=gameClass buttonRight=true}}
             <div class="game-item-outer" data-game-id="{{_id}}">
-              <h2>{{name}}</h2>{{gameDate}} on {{tv}}
+              <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
             </div>
 							{{#if inprogress status}}
                 <button class="button game" data-game-id="{{_id}}">
