@@ -358,3 +358,13 @@ Meteor.publish('teams', function() {
 Meteor.publish('futureTasks', function() {
   return FutureTasks.find({})
 })
+
+Meteor.publish('betaList', function() {
+  var selector = {"profile.beta_request": true}
+  return UserList.find(selector)
+})
+
+Meteor.publish('answersByUser', function (id) {
+  var selector = {"userId": id}
+  return Answers.find(selector)
+})

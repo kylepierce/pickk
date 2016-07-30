@@ -1,0 +1,27 @@
+<template name="betaList">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+    Request Invite
+    </h1>
+  {{/contentFor}}	
+  {{#ionView}}
+	  {{#ionContent}}
+			{{#each user}}
+				{{#ionItem buttonRight=true}}
+					{{username}} - {{questionsAnswered}}
+					<button class="button" data-action="addToBeta">
+						{{> ionIcon icon="ios-plus"}}
+					</button>
+				{{/ionItem}}
+			{{/each}}
+		{{/ionContent}}
+	{{/ionView}}
+</template>

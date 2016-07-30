@@ -8,8 +8,6 @@ AutoForm.hooks({
 
       var favTeamsArr = updateDoc['$set'].favoriteTeams;
 
-      console.log("updateDoc: ", favTeamsArr);
-
       Meteor.call('updateFavoriteTeams', favTeamsArr, function(error) {
         if (error) {
           done(error);

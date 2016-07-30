@@ -17,7 +17,8 @@ mailChimpLists.subscribeUser = function(user, defaults, callback) {
   var merge_vars = {
     FNAME: user.profile.firstName,
     LNAME: user.profile.lastName,
-    UNAME: user.profile.username
+    UNAME: user.profile.username,
+    ROLE: user.profile.role,
   }
 
   if (user.profile.favoriteTeams) {
