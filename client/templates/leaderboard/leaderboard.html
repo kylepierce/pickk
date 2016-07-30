@@ -1,24 +1,24 @@
 <template name="leaderboard">
 
- {{#contentFor "headerButtonLeft"}}
-  <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-    {{#if isAndroid}}
-      {{> ionIcon icon='android-more-vertical'}}
-    {{else}}
-      {{> ionIcon icon='navicon'}}
-    {{/if}}
-  </button>
-{{/contentFor}}
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Leaderboard</h1>
  {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-  <button class="button button-clear nav-icon pull-right" data-action="refresh">
-    {{> ionIcon icon='ios-reload'}}
-  </button>
-{{/contentFor}}
+    <button class="button button-clear nav-icon pull-right" data-action="refresh">
+      {{> ionIcon icon='ios-reload'}}
+    </button>
+  {{/contentFor}}
 
   {{#ionView}}      
     {{#ionContent}} 

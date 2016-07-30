@@ -242,8 +242,8 @@ Meteor.methods({
 		})
 	},
 
-	'loadLeaderboard': function() {
-		var liveGame = Games.findOne({live: true});
+	'loadLeaderboard': function(game) {
+		var liveGame = Games.findOne({_id: game});
 		if (liveGame) {
 			var selector = {_id: {$in: liveGame.users}}
 			return UserList.find(
@@ -261,21 +261,15 @@ Meteor.methods({
 		}
 	},
 
-	'loadWeekLeaderboard': function() {
-		return UserList.find(
-			{"profile.diamonds": {$gt: 0}},
-			{
-				fields: {
-					'profile.username': 1,
-					'profile.diamonds': 1,
-					'profile.avatar': 1,
-					'_id': 1
-				}
-			}).fetch();
-
+	'loadWeekLeaderboard': function(beta) {
+		if(beta === true){
+			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$eq: "beta"}}
+		} else {
+			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$ne: "beta"}}
+		}
+		var fields = {fields: {'profile.username': 1, 'profile.diamonds': 1, 'profile.avatar': 1, '_id': 1}}
+		return UserList.find(selector, fields).fetch();
 	},
-
-
 
 	//Once the play starts change active status
 

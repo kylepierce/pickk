@@ -63,24 +63,31 @@
 <div class="list">
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/">
   {{> ionIcon icon='ios-photos-outline'}}
-  Active 
+  Home 
   </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/history">
-  {{> ionIcon icon='ios-time-outline'}}
-  Question History
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/leaderboard">
-  {{> ionIcon icon='ios-list-outline'}}
-  Leaderboard
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/week-leaderboard">
-  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
-  Diamond Leaderboard
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/games">
+  {{> ionIcon icon='ios-calendar-outline'}} 
+  Game Schedule
   </a>
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/groups">
   {{> ionIcon icon='ios-people-outline'}}
   Groups
   </a>
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/history">
+  {{> ionIcon icon='ios-time-outline'}}
+  Question History
+  </a>
+  {{#if beta}}
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/beta-week-leaderboard">
+  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
+  Beta Diamond Leaderboard
+  </a>  
+  {{else}}
+  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/week-leaderboard">
+  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
+  Diamond Leaderboard
+  </a>
+  {{/if}}
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/notifications">
   {{> ionIcon icon='ios-bell-outline'}}
   Notifications 
@@ -88,32 +95,6 @@
     <span id="pendingNotifications">{{notificationNumber}}</span>
   {{/if}}
   </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/games">
-  {{> ionIcon icon='ios-calendar-outline'}} 
-  Game Schedule
-  </a>
-  {{#if admin}}
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin">
-  {{> ionIcon icon='bowtie'}}
-  Admin
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin/users">
- <!--  {{> ionIcon icon='bowtie'}} -->
-  > Edit Users
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin/push">
-  <!-- {{> ionIcon icon='bowtie'}} -->
-  > Push
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin/game">
-  <!-- {{> ionIcon icon='bowtie'}} -->
-  > Game
-  </a>
-  <a class="item item-icon-left" data-ion-menu-toggle="left" href="/admin/settings">
-  <!-- {{> ionIcon icon='bowtie'}} -->
-  > Settings
-  </a>
-  {{/if}}
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/profile">
   {{> ionIcon icon='ios-person-outline'}}
   Profile

@@ -19,7 +19,7 @@ Template.sideMenuContent.events({
         url: 'http://bit.ly/download-pickk-app',
       });
     }
-  }
+  } 
 });
 
 Template.mainView.events({
@@ -49,5 +49,23 @@ Template.sideMenuContent.helpers({
   notificationNumber: function() {
     var user = Meteor.user();
     return user && user.pendingNotifications && user.pendingNotifications.length;
+  },
+  userId: function () {
+    return Meteor.userId();
+  },
+  connected: function() {
+    if (Session.get(SHOW_CONNECTION_ISSUE_KEY)) {
+      return Meteor.status().connected;
+    } else {
+      return true;
+    }
+  },
+  admin: function() {
+    var currentUser = Meteor.user();
+    return currentUser && currentUser.profile.role === "admin";
+  },
+  beta: function() {
+    var currentUser = Meteor.user();
+    return currentUser && currentUser.profile.role === "beta";    
   }
 });

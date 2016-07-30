@@ -244,7 +244,11 @@ Template.questionCard.events({
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },
-
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/leaderboard/'+ $game)
+  },
   'submit form': function(event, template) {
     event.preventDefault();
     var questionId = this._id;
