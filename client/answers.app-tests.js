@@ -15,7 +15,7 @@ if (Meteor.isClient) {
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
-          assert.equal(Meteor.user().profile.coins, 10275);
+          assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}), 10275);
         });
     })
 

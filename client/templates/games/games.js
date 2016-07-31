@@ -17,6 +17,7 @@ Template.games.helpers({
 Template.games.events({
   "click .game": function (event, template) {
     var gameId = $(event.currentTarget).attr("data-game-id");
+    Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
     Router.go("game", {id: gameId});
   }
 });

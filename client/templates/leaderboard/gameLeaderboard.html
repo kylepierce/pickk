@@ -17,17 +17,21 @@
 	
   {{#ionView}}
 	  {{#ionContent}}
+      <ol type="1" class="list">
 			{{#each player}}
-        {{#ionItem path="user.show" avatar=true}}
-          {{> userAvatar userId=_id}}
+        {{#ionItem href=pathUrl avatar=true}}
+          {{> userAvatar userId=userId}}
           <li class="list-font">
 	          <h2 class="center-username">
-	            {{username}} 
-	            <span class="score">{{profile.coins}}</span>
+	            {{#with username userId}}
+                {{profile.username}}
+              {{/with}}
+	            <span class="score">{{coins}}</span>
 	          </h2>
         	</li>
         {{/ionItem}}
       {{/each}}
+      </ol>
 	  {{/ionContent}}
 	{{/ionView}}
 </template>

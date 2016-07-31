@@ -9,7 +9,7 @@
     <strong>{{currentUser.profile.diamonds}}</strong> 
 			
    	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
-    <strong>{{currentUser.profile.coins}}</strong>
+    <strong>{{gameCoins currentUser._id "null"}}</strong>
   </h1>
  {{/contentFor}}
 
@@ -19,11 +19,9 @@
 
     <!-- {{#if Template.subscriptionsReady}}   -->
     <!-- <div class="loading-wrapper"> -->
-    {{#if game}}
-			{{> gameBar}}
-    {{/if}}
+		{{> gameBar}}
 
-    <div style="{{#if game}}margin-top: 45px{{/if}}"> 
+    <div style="margin-top: 45px"> 
 			{{> questionCard}}
 		</div>
 <!-- 

@@ -216,7 +216,6 @@ Meteor.publish("userData", function() {
 Meteor.publish('findUserGroups', function(id) {
   return UserList.find(
     {"profile.groups": id},
-    {sort: {'profile.coins': -1}},
     {
       fields: {
         'profile.username': 1,
@@ -345,14 +344,22 @@ Meteor.publish('teams', function() {
 
 Meteor.publish('futureTasks', function() {
   return FutureTasks.find({})
-})
+});
 
 Meteor.publish('betaList', function() {
   var selector = {"profile.beta_request": true}
   return UserList.find(selector)
-})
+});
 
 Meteor.publish('answersByUser', function (id) {
   var selector = {"userId": id}
   return Answers.find(selector)
-})
+});
+
+Meteor.publish('gamePlayed', function (user, game) {
+  return GamePlayed.find({userId: user, gameId: game})
+});
+
+Meteor.publish('leaderboardGamePlayed', function(game) {
+  return GamePlayed.find({gameId: game})
+});

@@ -55,7 +55,7 @@
 
       <strong class="username">{{currentUser.profile.username}}</strong><br>
       <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong><span class="coin-icon"> <i class="fa fa-circle "></i> </span>
-        <strong>{{currentUser.profile.coins}}</strong>
+        <strong>{{gameCoins currentUser._id "null"}}</strong>
     </a>
     </div>
   {{/if}}
