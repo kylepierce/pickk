@@ -150,9 +150,6 @@ Template.chatRoom.helpers({
   chatUser: function() {
     return this.profile.username;
   },
-  userCoins: function() {
-    return this.profile.coins
-  },
   'randomMessage': function() {
     var random = Math.floor((Math.random() * 5) + 1)
     if (random == 1) {

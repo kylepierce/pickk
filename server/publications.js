@@ -137,7 +137,6 @@ Meteor.publish('findSingleUsername', function(id) {
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         'services': 1,
@@ -152,7 +151,6 @@ Meteor.publish('chatUsers', function(id) {
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         'services': 1,
@@ -198,7 +196,6 @@ Meteor.publish('adminUserList', function(id) {
       _id: 1,
       "profile.username": 1,
       "profile.avatar": 1,
-      "profile.coins": 1,
       "profile.diamonds": 1
     }
   });
@@ -223,7 +220,6 @@ Meteor.publish('findUserGroups', function(id) {
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         '_id': 1
@@ -231,13 +227,6 @@ Meteor.publish('findUserGroups', function(id) {
     }
   );
 })
-
-// Meteor.publish('worldLeaderboard', function() {
-//   Fetcher.retrieve("leaderboard", "loadLeaderboard")
-//   var leaderboard = Fetcher.get("leaderboard")
-//   var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
-//   return fixed.reverse()
-// })
 
 Meteor.publish('groups', function() {
   return Groups.find({});
@@ -302,7 +291,6 @@ Meteor.publish('groupUsers', function(groupId) {
   var fields = {
     fields: {
       'profile.username': 1,
-      'profile.coins': 1,
       'profile.avatar': 1,
       'pendingNotifications': 1,
       '_id': 1

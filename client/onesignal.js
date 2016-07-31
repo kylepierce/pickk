@@ -65,17 +65,3 @@ updateOneSignalTeamTags = function (user) {
 		window.plugins.OneSignal.sendTags(tags);
 	}
 };
-
-// Function to update the OneSignal tags of a user when Favorite Teams have been added / updated
-betaOneSignal = function (user) {
-	var oneSignalId = user.oneSignalToken
-	var postUrl = "https://onesignal.com/api/v1/players/" + oneSignalId
-	var appId = Meteor.settings.public.oneSignal.appId
-	$.ajax({
-  	type: "POST",
-  	url: postUrl,
-  	data: { tags: [{"beta": 1}], app_id: appId }
-	}).done(function( msg ) {
-  	console.log("added beta tag")
-	});
-};

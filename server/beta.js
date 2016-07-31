@@ -16,7 +16,6 @@ Meteor.methods({
 
 		var oneSignalId = user.oneSignalToken
 		var postUrl = "https://onesignal.com/api/v1/players/" + oneSignalId
-		console.log(postUrl)
 		var appId = Meteor.settings.public.oneSignal.appId
 		var basic = "Basic " + appId
 		this.unblock();
@@ -27,7 +26,7 @@ Meteor.methods({
 			},
           function (error, result) {
             if (!error) {
-              console.log("sucess")
+              console.log("success")
             } else {
             	console.log(error)
             }
