@@ -1,6 +1,15 @@
-Meteor.publish('activeQuestions', function() {
+isTester = function (userId) {
+  var user = Meteor.users.findOne(userId);
+  var role = user.profile.role;
+  return role && (role == "admin" || role == "beta");
+};
+
+Meteor.publish('activeQuestions', function(gameId) {
+  check(gameId, String);
+  
   var currentUserId = this.userId;
   return Questions.find({
+    gameId: gameId,
     active: true,
     usersAnswered: {$nin: [currentUserId]}
   });
@@ -244,7 +253,17 @@ Meteor.publish('game', function(_id) {
 });
 
 Meteor.publish('games', function() {
-  return Games.find();
+  const today = moment().startOf('day').toDate();
+  const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
+
+  var selector = {scheduled: {$gt: today, $lt: tomorrow}};
+
+  var tester = isTester(this.userId);
+  if ( ! tester) {
+    selector.public = true;
+  }
+
+  return Games.find(selector);
 });
 
 Meteor.publish('gamesPlayed', function() {
@@ -259,7 +278,14 @@ Meteor.publish('SportRadarGames', function() {
 });
 
 Meteor.publish('activeGames', function() {
-  return Games.find({live: true});
+  var selector = {live: true};
+
+  var tester = isTester(this.userId);
+  if ( ! tester) {
+    selector.public = true;
+  }
+
+  return Games.find(selector);
 });
 
 Meteor.publish('trophy', function() {
@@ -285,8 +311,10 @@ Meteor.publish('groupUsers', function(groupId) {
 });
 
 
-Meteor.publish('activeAtBat', function() {
-  return AtBat.find({active: true});
+Meteor.publish('activeAtBat', function(gameId) {
+  check(gameId, String);
+  
+  return AtBat.find({gameId: gameId, active: true});
 });
 
 Meteor.publish('atBatForThisGame', function() {
@@ -296,9 +324,10 @@ Meteor.publish('atBatForThisGame', function() {
   return AtBat.find({gameId: currentGameId});
 });
 
-Meteor.publish('activePlayers', function() {
-  var currentGame = Games.find({live: true});
-  var teams = Meteor.call('playersPlaying')
+Meteor.publish('activePlayers', function(gameId) {
+  check(gameId, String);
+  
+  var teams = Meteor.call('playersPlaying', gameId);
   return Players.find({_id: {$in: teams}})
 });
 
@@ -308,8 +337,10 @@ Meteor.publish('oneGamePlayers', function() {
   return Players.find({team: {$in: teams}})
 });
 
-Meteor.publish('atBatPlayer', function() {
-  var atBat = AtBat.findOne({active: true});
+Meteor.publish('atBatPlayer', function(gameId) {
+  check(gameId, String);
+
+  var atBat = AtBat.findOne({gameId: gameId, active: true});
   if (atBat) {
     var playerId = atBat.playerId
     return Players.find({_id: playerId});
