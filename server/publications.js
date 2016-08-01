@@ -119,7 +119,7 @@ Meteor.publish('chatUsersList', function(groupId) {
 
   groupId = groupId || null;
 
-  var messages = Chat.find({group: groupId}, {fields: {user: 1}}).fetch();
+  var messages = Chat.find({group: groupId}, {fields: {user: 1}},{ limit: 10}).fetch();
   var userIds = _.chain(messages).pluck("user").uniq().value();
 
   var users = UserList.find({_id: {$in: userIds}}, {
@@ -137,7 +137,6 @@ Meteor.publish('findSingleUsername', function(id) {
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         'services': 1,
@@ -152,7 +151,6 @@ Meteor.publish('chatUsers', function(id) {
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         'services': 1,
@@ -198,7 +196,6 @@ Meteor.publish('adminUserList', function(id) {
       _id: 1,
       "profile.username": 1,
       "profile.avatar": 1,
-      "profile.coins": 1,
       "profile.diamonds": 1
     }
   });
@@ -219,11 +216,9 @@ Meteor.publish("userData", function() {
 Meteor.publish('findUserGroups', function(id) {
   return UserList.find(
     {"profile.groups": id},
-    {sort: {'profile.coins': -1}},
     {
       fields: {
         'profile.username': 1,
-        'profile.coins': 1,
         'profile.avatar': 1,
         'pendingNotifications': 1,
         '_id': 1
@@ -231,13 +226,6 @@ Meteor.publish('findUserGroups', function(id) {
     }
   );
 })
-
-// Meteor.publish('worldLeaderboard', function() {
-//   Fetcher.retrieve("leaderboard", "loadLeaderboard")
-//   var leaderboard = Fetcher.get("leaderboard")
-//   var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.coins})
-//   return fixed.reverse()
-// })
 
 Meteor.publish('groups', function() {
   return Groups.find({});
@@ -257,13 +245,14 @@ Meteor.publish('games', function() {
   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
 
   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
+  var parms = {sort: {scheduled: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
     selector.public = true;
   }
 
-  return Games.find(selector);
+  return Games.find(selector, parms);
 });
 
 Meteor.publish('gamesPlayed', function() {
@@ -278,14 +267,15 @@ Meteor.publish('SportRadarGames', function() {
 });
 
 Meteor.publish('activeGames', function() {
-  var selector = {live: true};
+  var selector = {live: true} 
+  var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
     selector.public = true;
   }
 
-  return Games.find(selector);
+  return Games.find(selector, parms);
 });
 
 Meteor.publish('trophy', function() {
@@ -300,7 +290,6 @@ Meteor.publish('groupUsers', function(groupId) {
   var fields = {
     fields: {
       'profile.username': 1,
-      'profile.coins': 1,
       'profile.avatar': 1,
       'pendingNotifications': 1,
       '_id': 1
@@ -355,4 +344,22 @@ Meteor.publish('teams', function() {
 
 Meteor.publish('futureTasks', function() {
   return FutureTasks.find({})
-})
+});
+
+Meteor.publish('betaList', function() {
+  var selector = {"profile.beta_request": true}
+  return UserList.find(selector)
+});
+
+Meteor.publish('answersByUser', function (id) {
+  var selector = {"userId": id}
+  return Answers.find(selector)
+});
+
+Meteor.publish('gamePlayed', function (user, game) {
+  return GamePlayed.find({userId: user, gameId: game})
+});
+
+Meteor.publish('leaderboardGamePlayed', function(game) {
+  return GamePlayed.find({gameId: game})
+});

@@ -113,14 +113,9 @@ Meteor.methods({
 	},
 	// Way for Admin to manually update users coins
 
-	'updateCoins': function(user, coins) {
+	'updateCoins': function(user, coins, game) {
 		var amount = parseInt(coins)
-		Meteor.users.update({_id: user}, {$set: {"profile.coins": amount}});
-	},
-
-	'updateAllCoins': function(coins) {
-		var amount = parseInt(coins)
-		UserList.update({}, {$set: {"profile.coins": amount}}, {multi: true});
+		GamePlayed.update({userId: user, gameId: game}, {$set: {coins: amount}});
 	},
 
 // Way for Admin to manually update users name 
@@ -242,8 +237,8 @@ Meteor.methods({
 		})
 	},
 
-	'loadLeaderboard': function() {
-		var liveGame = Games.findOne({live: true});
+	'loadLeaderboard': function(game) {
+		var liveGame = Games.findOne({_id: game});
 		if (liveGame) {
 			var selector = {_id: {$in: liveGame.users}}
 			return UserList.find(
@@ -251,7 +246,6 @@ Meteor.methods({
 				{
 					fields: {
 						'profile.username': 1,
-						'profile.coins': 1,
 						'profile.avatar': 1,
 						'_id': 1
 					}
@@ -261,21 +255,15 @@ Meteor.methods({
 		}
 	},
 
-	'loadWeekLeaderboard': function() {
-		return UserList.find(
-			{"profile.diamonds": {$gt: 0}},
-			{
-				fields: {
-					'profile.username': 1,
-					'profile.diamonds': 1,
-					'profile.avatar': 1,
-					'_id': 1
-				}
-			}).fetch();
-
+	'loadWeekLeaderboard': function(beta) {
+		if(beta === true){
+			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$eq: "beta"}}
+		} else {
+			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$ne: "beta"}}
+		}
+		var fields = {fields: {'profile.username': 1, 'profile.diamonds': 1, 'profile.avatar': 1, '_id': 1}}
+		return UserList.find(selector, fields).fetch();
 	},
-
-
 
 	//Once the play starts change active status
 
@@ -303,12 +291,13 @@ Meteor.methods({
 		function awardPointsBack(answer) {
 			// Update users coins
 			var amount = parseInt(answer.wager)
-			var userId = answer.userId
+			var user = answer.userId
+			var game = answer.game
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
-			Meteor.users.update({_id: userId}, {$inc: {"profile.coins": amount}})
 
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
 			Meteor.users.update({_id: answer.userId},
@@ -345,6 +334,8 @@ Meteor.methods({
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(answer.wager * answer.multiplier);
 			var timeCreated = new Date();
+			var user = answer.userId
+			var game = answer.gameId
 			var id = Random.id();
 			var que = question.que
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
@@ -385,10 +376,7 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: answer.userId},
-				{
-					$inc: {"profile.coins": amount},
-				})
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
 
@@ -408,6 +396,8 @@ Meteor.methods({
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(answer.wager * answer.multiplier)
 			var timeCreated = new Date();
+			var user = answer.userId
+			var game = answer.gameId
 			var id = Random.id();
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
 			var que = question.que
@@ -447,10 +437,7 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: answer.userId},
-				{
-					$inc: {"profile.coins": amount},
-				})
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
 
@@ -502,10 +489,9 @@ Meteor.methods({
 			)
 
 			// Update users coins
-			Meteor.users.update({_id: answer.userId},
-				{
-					$inc: {"profile.coins": amount},
-				})
+			var user = answer.userId
+			var game = answer.gameId
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
 
@@ -579,9 +565,9 @@ Meteor.methods({
 			var amount = parseInt(answer.wager * answer.multiplier);
 
 			// Update users coins
-			Meteor.users.update({_id: answer.userId}, {
-				$inc: {"profile.coins": -amount}
-			})
+			var user = answer.userId
+			var game = answer.gameId
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
 		}
 
 		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
@@ -600,9 +586,9 @@ Meteor.methods({
 			var id = Random.id();
 
 			// Update users coins
-			Meteor.users.update({_id: answer.userId}, {
-				$inc: {"profile.coins": -amount}
-			});
+			var user = answer.userId
+			var game = answer.gameId
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
 
 			Meteor.users.update({_id: answer.userId},
 				{
@@ -633,7 +619,9 @@ Meteor.methods({
 			var timeCreated = new Date();
 			var id = Random.id();
 			var scoreMessage = "Play had removed. Here are your " + amount + " coins"
-			Meteor.users.update({_id: userId}, {$inc: {"profile.coins": amount}})
+			var user = answer.userId
+			var game = answer.gameId
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 
 			// Yeah this needs to be cleaned. I wanted to make sure it worked
@@ -689,7 +677,10 @@ Meteor.methods({
 		Games.update({live: true}, {$addToSet: {users: this.userId}});
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update(this.userId, {$inc: {"profile.coins": -wager}});
+		var user = this.userId
+		var game = question.gameId
+		console.log(user + " " + game)
+		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -wager}});
 
 		//Increase counter by 1
 		Meteor.users.update(this.userId, {$inc: {"profile.queCounter": +1}});
@@ -748,7 +739,9 @@ Meteor.methods({
 		Games.update(question.gameId, {$addToSet: {users: this.userId}});
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update(this.userId, {$inc: {"profile.coins": -wager}});
+			var user = this.userId
+			var game = question.gameId
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -wager}});
 
 		//Increase counter by 1
 		Meteor.users.update(this.userId, {$inc: {"profile.queCounter": +1}});
@@ -808,7 +801,9 @@ Meteor.methods({
 		Games.update(question.gameId, {$addToSet: {users: this.userId}});
 
 		//Once a users has answered take the amount wager from their coins.
-		Meteor.users.update(this.userId, {$inc: {"profile.coins": +wager}});
+		var user = this.userId
+		var game = question.gameId
+		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
 		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"

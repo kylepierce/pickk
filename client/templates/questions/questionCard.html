@@ -55,6 +55,7 @@
           {{/with}}
           <!-- Outstanding questions -->
           <div class="container">
+          <button class="button" data-action="game-leaderboard">Leaderboard</button>
           <div class="item item-divider">Latest Answers
           <a style="" href="/history/{{gameId}}">
             <span class="home-history">
@@ -90,38 +91,7 @@
       <!-- No Game and No Questions -->
     {{else}}
       <!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
-      <div class="container" style="margin-top: 15px;">
-        <h3 class="next-play">0 Live National Games
-          <br><br>
-          <a class="button next-play"  href="games">
-            View Upcoming Game Schedule
-          </a>
-          <br>
-        </h3>
-
-        <h3>Groups</h3>
-        {{#if groups}}
-          {{#each userGroups}}
-            {{#ionItem path="group.show" avatar=true}}
-              {{> groupAvatar}}
-              <h2 class="center-username">{{name}}</h2>
-            {{/ionItem}}
-          {{/each}}
-        {{else}}
-          {{#ionItem buttonRight=true}}
-            <p>No Groups :( Join a Group!</p>
-            <a data-action="no-group" class="button"> 
-              {{> ionIcon icon="ios-plus"}}
-            </a>
-          {{/ionItem}}
-        {{/if}}
-
-        <br>
-        <h3 class="next-play">Want more baseball?</h3>
-        <a style="width: 100%;" class="button button-balanced" href="beta">
-          Pickk Local Beta
-        </a>
-      </div>
+      
     {{/if}}
   {{/if}}
 </template>

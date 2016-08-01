@@ -37,6 +37,7 @@ Template.editUser.events({
   'click [data-action=update-coins]': function(event, template){
     var user = Router.current().params._id
     var coins = template.find('input[name=coins]').value
+    // Profile.coins -- Fix last
     Meteor.call("updateCoins", user, coins)
   },
   'click [data-action=update-name]': function(event, template){
