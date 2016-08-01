@@ -101,6 +101,7 @@ Template.otherQuestions.events({
 Template.activeQuestions.events({
 	'click [data-action=deactivate]': function() {
 		var questionId = this._id;
+		console.log(questionId)
 		Meteor.call('deactivateStatus', questionId);
 	}
 });

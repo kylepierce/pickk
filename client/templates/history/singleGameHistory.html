@@ -20,17 +20,17 @@
 	      <div class="loading-wrapper">
 	    	{{#ionList}}
 		    	{{#each answeredQuestions}}
-		    		{{#ionItem}}
-		    			
+		    		{{#ionItem }}
+		    			<div id="{{_id}}">
 			    		{{#if active}}
-									<p class="still-active"><b>{{que}}</b></p>
+									<p  class="still-active"><b>{{que}}</b></p>
 									<p>{{date}}</p>
 							{{else}}
 									<p><b>{{que}}</b></p>
 									<p>{{date}}</p>
 									<p>Answer: {{{answerIs play}}}</p>
 							{{/if}}
-						
+							
 						{{#with userAnswer _id play this}}
 							<p>
 							You Answered: {{description}}<br>
@@ -41,6 +41,7 @@
 							Winnings: {{winnings}}
 							</p>
 						{{/with}}
+						</div>
 	    		{{/ionItem}}
 	    	{{/each}}
     	{{/ionList}}

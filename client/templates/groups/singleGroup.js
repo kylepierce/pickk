@@ -137,7 +137,6 @@ Template.requestInvite.helpers({
     var group = Groups.findOne({_id: groupId, 
       requests: {$in: [currentUser]}});
     return group
-
   }
 });
 
@@ -259,10 +258,9 @@ Template.singleGroupLeaderboard.helpers({
   players: function(groupId){ 
     var id = groupId._id
      
-    return UserList.find({"profile.groups": id}, 
-      {sort: {'profile.coins': -1}},
+    return UserList.find({"profile.groups": id},
       {fields: 
-        {'profile.username': 1, 'profile.coins': 1, 'profile.avatar': 1, '_id': 1}}
+        {'profile.username': 1, 'profile.avatar': 1, '_id': 1}}
       ).fetch();
   }
 });

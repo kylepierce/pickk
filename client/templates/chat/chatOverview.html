@@ -75,17 +75,22 @@
 <template name="_groupChats">
   {{#ionPopover}}
     {{#ionList}}
-      {{#each group}}
-        {{#with groupName this}}
-          {{#ionItem class="group-selector" id=this._id}}
-            {{groupId}}
-          {{/ionItem}}
-        {{else}}
-          {{#ionItem}}
-            <p>No Groups :(</p>
-          {{/ionItem}}
-        {{/with}}
-      {{/each}}
+      {{#if groups}}
+        {{#each group}}
+          {{#with groupName this}}
+            {{#ionItem class="group-selector" id=this._id}}
+              {{name}}
+            {{/ionItem}}
+          {{/with}}
+        {{/each}}
+      {{else}}
+        {{#ionItem buttonRight=true}}
+          <p>No Groups :( Join a Group!</p>
+          <a data-action="no-group" class="button"> 
+            {{> ionIcon icon="ios-plus"}}
+          </a>
+        {{/ionItem}}
+      {{/if}}
     {{/ionList}}
   {{/ionPopover}}
 </template>

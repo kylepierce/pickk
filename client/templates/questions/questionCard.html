@@ -52,8 +52,31 @@
           <h5 class="next-play">Next question coming up soon!</h5>
           {{#with lastPlay}}
             <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
-            <h5 class="next-play">You guessed {{lastDescription}} for {{lastWager}}</h5>
           {{/with}}
+          <!-- Outstanding questions -->
+          <div class="container">
+          <button class="button" data-action="game-leaderboard">Leaderboard</button>
+          <div class="item item-divider">Latest Answers
+          <a style="" href="/history/{{gameId}}">
+            <span class="home-history">
+              (View History)
+            </span>
+          </a>
+          </div>
+          {{#each answeredQuestions}}
+            {{#ionItem}}
+              {{#if pendingAnswers}}
+                <p class="still-active"><b>{{que}}</b></p>
+                <p>
+                You Answered: {{description}}<br>
+                Amount Wagered: {{wager}}
+                Muliplier: {{multiplier}}
+                </p>
+              {{/if}}
+            {{/ionItem}}
+          {{/each}}          
+          </div>
+
         {{/if}}
       {{/if}}
     {{/if}}
@@ -68,8 +91,7 @@
       <!-- No Game and No Questions -->
     {{else}}
       <!-- <img class="next-play slideInLeft" src="wait-for-play.png"> -->
-      <h5 class="next-play">No Game Right Now<br><br>Check Back Tomorrow For Free Diamond Pickks<br><br><a class="button next-play" style="margin-left: center; margin-right: center;" href="games">View Game Schedule</a>
-      </h5>
+      
     {{/if}}
   {{/if}}
 </template>

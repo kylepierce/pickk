@@ -35,8 +35,8 @@ Template.chatOverview.helpers({
   group: function() {
     var groupId = Session.get('chatGroup')
     if (groupId) {
-      var group = Groups.findOne({_id: groupId}, {fields: {groupId: 1}})
-      return group.groupId
+      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
+      return group.name
     }
   }
 });
@@ -150,9 +150,6 @@ Template.chatRoom.helpers({
   chatUser: function() {
     return this.profile.username;
   },
-  userCoins: function() {
-    return this.profile.coins
-  },
   'randomMessage': function() {
     var random = Math.floor((Math.random() * 5) + 1)
     if (random == 1) {
@@ -170,6 +167,14 @@ Template.chatRoom.helpers({
 });
 
 Template._groupChats.helpers({
+  groups: function() {
+   var user = Meteor.user()
+    if (user.profile.groups) {
+      return user.profile.groups
+    } else {
+      return false
+    }
+  },
   group: function() {
     var user = Meteor.user()
     if (user.profile.groups) {
@@ -179,7 +184,7 @@ Template._groupChats.helpers({
     }
   },
   groupName: function(id) {
-    var group = Groups.findOne({_id: id}, {fields: {groupId: 1}})
+    var group = Groups.findOne({_id: id}, {fields: {name: 1}})
     return group
   }
 });
@@ -189,8 +194,10 @@ Template._groupChats.events({
     var id = this.id
     Session.set('chatGroup', id)
     IonPopover.hide();
-
   },
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  } 
 });
 
 Template._reaction.events({
@@ -251,8 +258,6 @@ Template.messageReactions.helpers({
         reactionCount.push(tempObj);
       }
     });
-
-    console.log("reactionCount --- ", reactionCount);
     return reactionCount;
   },
   emojiIconSrc: function (reactionName) {

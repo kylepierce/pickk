@@ -242,6 +242,7 @@ Meteor.methods({
 
   findMLBIds: function(mlbCode){
     var url = "http://m." + mlbCode + ".mlb.com/roster/40-man/"
+    console.log(url)
     result = Meteor.http.get(url)
     mlbId = []
 
@@ -313,6 +314,7 @@ Meteor.methods({
       var playerId = parsePlayer(url)
       teamInfo.push({"name": name,"playerId": playerId, "url": url})
     })
+    console.log(team.mlbCode)
     var allIds = Meteor.call('findMLBIds', team.mlbCode)
     // Create / Update them
     for (var i = teamInfo.length - 1; i >= 0; i--) {

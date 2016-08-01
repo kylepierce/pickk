@@ -1,0 +1,37 @@
+<template name="gameLeaderboard">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+    	Leaderboard
+    </h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear nav-icon pull-right" data-action="refresh">
+      {{> ionIcon icon='ios-reload'}}
+    </button>
+  {{/contentFor}}
+	
+  {{#ionView}}
+	  {{#ionContent}}
+      <ol type="1" class="list">
+			{{#each player}}
+        {{#ionItem href=pathUrl avatar=true}}
+          {{> userAvatar userId=userId}}
+          <li class="list-font">
+	          <h2 class="center-username">
+	            {{#with username userId}}
+                {{profile.username}}
+              {{/with}}
+	            <span class="score">{{coins}}</span>
+	          </h2>
+        	</li>
+        {{/ionItem}}
+      {{/each}}
+      </ol>
+	  {{/ionContent}}
+	{{/ionView}}
+</template>

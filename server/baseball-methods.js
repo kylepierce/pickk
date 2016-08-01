@@ -1033,8 +1033,10 @@ Meteor.methods({
   Games.update({_id: gameId, 'teams.teamId': teamId}, {$push: {"teams.$.battingLineUp": { $each: [playerId], $position: newPosition}}})
 },
 
-'playersPlaying': function (){
-  var currentGame = Games.findOne({live: true})
+'playersPlaying': function (gameId) {
+  check(gameId, String);
+  
+  var currentGame = Games.findOne({gameId: gameId, live: true})
   if (!currentGame) {
     return [];
   }

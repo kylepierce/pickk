@@ -31,6 +31,7 @@ aldeed:autoform
 random
 cmather:handlebars-server
 mrt:moment
+aldeed:moment-timezone
 themeteorchef:bert
 themeteorchef:jquery-validation
 meteorhacks:ssr
@@ -91,3 +92,4 @@ mizzao:autocomplete
 percolate:migrations
 practicalmeteor:mocha
 xolvio:cleaner
+http

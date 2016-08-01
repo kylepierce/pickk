@@ -3,12 +3,27 @@
 // });
 
 Template.questionCard.helpers({
+  userGroups: function() {
+    var currentUser = Meteor.userId();
+    return Groups.find({members: currentUser}).fetch()
+  },
+
+  groups: function(){
+    var currentUser = Meteor.user();
+    var groupCount = currentUser.profile.groups.length 
+    console.log(groupCount)
+    if (groupCount){
+      return true
+    }
+  },
+
   'live': function() {
     var game = Games.findOne({live: true});
     if (game && game.live == true) {
       return true
     }
   },
+
   gameQuestion: function() {
     var currentUser = Meteor.userId();
     var active = Questions.find(
@@ -41,6 +56,12 @@ Template.questionCard.helpers({
       lastWager: Session.get("lastWager"),
       lastDescription: Session.get("lastDescription")
     }
+  },
+
+  'gameId': function(){
+    var game = Games.findOne({live: true});
+    var gameId = game._id
+    return gameId
   },
 
   'activeCheck': function() {
@@ -193,7 +214,20 @@ Template.questionCard.helpers({
     } else if (random == 6) {
       return '<p class="did-you next-play"><b>What do Coins do?</b><br> Coins are how we track who performed the best in a game. Once the game is over the coins are exchanged into diamonds.</p>'
     }
-
+  },
+  'answeredQuestions': function(){
+    var game = Games.findOne({live: true});
+    game = game._id
+    var answers = Answers.find({gameId: game}).fetch();
+    var answeredQuestionIds = _.pluck(answers, "_id");
+    return Answers.find({_id: {$in: answeredQuestionIds}}, {sort: {dateCreated: -1}, limit: 3});    
+  },
+  'pendingAnswers': function(){
+    console.log(this.questionId)
+    var active = this.active
+    if (active == true || active == null) {
+      return true
+    } 
   }
 });
 
@@ -204,11 +238,17 @@ Template.questionCard.events({
     // $("#submit-response").prop("disabled", false)
     // $("#submit-response").addClass('button-balanced');
   },
-
+  'click [data-action=no-group]': function(){
+    Router.go('/groups')
+  }, 
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },
-
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/leaderboard/'+ $game)
+  },
   'submit form': function(event, template) {
     event.preventDefault();
     var questionId = this._id;
@@ -217,9 +257,17 @@ Template.questionCard.events({
     var answer = template.find('input:radio[name=play]:checked').value;
     var wager = template.find('input:radio[name=wager]:checked').value;
     var description = template.find('input:radio[name=play]:checked').id;
-    var userCoins = Meteor.user().profile.coins;
+    var userCoins = GamePlayed.findOne().coins;
 
     if (userCoins < wager) {
+      analytics.track("no coins", {
+        id: currentUser,
+        question: que,
+        questionId: questionId,
+        answer: answer,
+        wager: wager,
+        coins: userCoins
+      });
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,
