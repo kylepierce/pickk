@@ -1,11 +1,10 @@
 Meteor.methods({
 	// Users can create a group
-	'createGroup': function(groupId, groupName, secretStatus) {
+	'createGroup': function(groupName, secretStatus) {
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
 		Groups.insert({
-			groupId: groupId,
 			name: groupName,
 			commissioner: currentUserId,
 			dateCreated: timeCreated,
@@ -120,5 +119,5 @@ Meteor.methods({
 	'leaveGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$pull: {members: user}});
 		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});
-	},
+	}
 })

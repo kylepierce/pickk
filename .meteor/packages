@@ -14,6 +14,7 @@ useraccounts:core
 iron:router
 iron:middleware-stack@1.1.0 # fix for latest Chrome
 aldeed:simple-schema
+aldeed:collection2
 meteoric:autoform-ionic
 fortawesome:fontawesome
 email
