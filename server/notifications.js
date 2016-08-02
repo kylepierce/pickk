@@ -1,16 +1,17 @@
 createPendingNotification = function(o) {
+  // var notifyObj = {}
+  // createPendingNotification(notifyObj)
+
   // Basic arguments
   var obj = {
     dateCreated: new Date(),
     type: o.type,
     userId: o.userId, // Recieving
-    read: false,
-    message: o.message,   
-    notificationId: o.notificationId,  
+    read: false, 
   }
 
   // Optional arguments
-  var optional = ["senderId", "trophyId", "badgeId", "gameId", "tournamentId", "matchId", "value", "shareMessage", "sharable"]
+  var optional = ["message", "notificationId", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "matchId", "value", "shareMessage", "sharable"]
 
   // If those optional arguments exist append to object
   for (var i = 0; i < optional.length; i++) {
@@ -20,7 +21,7 @@ createPendingNotification = function(o) {
       obj[name] = o[name]
     }
   }
-  
+
   // Create the notification in the collection
   Notifications.insert(obj);
 };
@@ -39,43 +40,17 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
     }
 
-    var timeCreated = new Date();
-    var id = Random.id();
-    UserList.update({_id: user},
-      {
-        $push: {
-          pendingNotifications: {
-            _id: id,
-            type: "trophy",
-            notificationId: trophyId,
-            dateCreated: timeCreated
-          }
-        }
-      }
-    );
+    var notifyObj = {
+      userId: user,
+      type: "trophy",
+      trophyId: trophyId,
+    }
+
+    createPendingNotification(notifyObj)
   },
 
   'removeNotification': function(notifyId) {
     check(notifyId, String);
-
-    var user = Meteor.userId();
-    UserList.update({_id: user},
-      {
-        $pull: {
-          pendingNotifications: {_id: notifyId}
-        }
-      })
-  },
-
-  'readNotification': function(notifyId) {
-    check(notifyId, String);
-
-    var userId = Meteor.userId();
-    UserList.update({_id: userId},
-      {
-        $pull: {
-          pendingNotifications: {_id: notifyId}
-        }
-      })
+    Notifications.update({_id: notifyObj}, {$set: {read: true}})
   },
 })

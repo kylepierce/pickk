@@ -27,13 +27,13 @@ Template.home.helpers({
       var sharable = post.sharable
       Session.set("shareMessage", shareMessage);
       if (post.type === "mention" && post.read === false) {
-        Meteor.call('readNotification', id);
+        Meteor.call('removeNotification', id);
         sAlert.warning('<em>You were mentioned in chat:</em> <strong>"' + message + '"</strong>', {
           effect: 'stackslide',
           html: true
         });
       } else if (post.type === "score" && post.read === false) {
-        Meteor.call('readNotification', id);
+        Meteor.call('removeNotification', id);
         if (sharable == true) {
           var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'
 
@@ -43,7 +43,7 @@ Template.home.helpers({
         }
       } else if (post.type === "diamonds" && post.tag == null && post.read === false) {
         message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'
-        Meteor.call('readNotification', id);
+        Meteor.call('removeNotification', id);
 
         sAlert.warning(message, {effect: 'stackslide', html: true});
 
@@ -55,7 +55,7 @@ Template.home.helpers({
             text: 'Got It!',
             type: 'button-positive',
             onTap: function() {
-              Meteor.call('readNotification', id);
+              Meteor.call('removeNotification', id);
               $('body').removeClass('popup-open');
               $('.backdrop').remove();
               Blaze.remove(this.view);
@@ -71,7 +71,7 @@ Template.home.helpers({
             text: 'Got It!',
             type: 'button-positive',
             onTap: function() {
-              Meteor.call('readNotification', id);
+              Meteor.call('removeNotification', id);
               $('body').removeClass('popup-open');
               $('.backdrop').remove();
               Blaze.remove(this.view);

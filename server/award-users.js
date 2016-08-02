@@ -22,10 +22,8 @@ Meteor.methods({
 		function awardPoints(answer) {
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(answer.wager * answer.multiplier);
-			var timeCreated = new Date();
 			var user = answer.userId
 			var game = answer.gameId
-			var id = Random.id();
 			var que = question.que
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
 			var sharable = false
@@ -47,28 +45,19 @@ Meteor.methods({
 			// if they are not we are going to add them to the list.
 			list.push(answer.userId)
 
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage,
-							sharable: sharable,
-							shareMessage: shareMessage
-						}
-					}
-				}
-			)
+			var notifyObj = {
+				type: "score",
+				message: scoreMessage,
+				gameId: game,
+				value: amount,
+				sharable: sharable,
+				shareMessage: shareMessage
+			}
+
+  		createPendingNotification(notifyObj)
 
 			// Update users coins
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
-
-			// Yeah this needs to be cleaned. I wanted to make sure it worked
-
 		}
 
 		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
@@ -95,10 +84,8 @@ Meteor.methods({
 		function awardPoints(answer) {
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(answer.wager * answer.multiplier)
-			var timeCreated = new Date();
 			var user = answer.userId
 			var game = answer.gameId
-			var id = Random.id();
 			var scoreMessage = "Nice Pickk! You got " + amount + " Coins!"
 			var que = question.que
 			var sharable = false
@@ -119,22 +106,16 @@ Meteor.methods({
 			// if they are not we are going to add them to the list.
 			list.push(answer.userId)
 
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage,
-							sharable: sharable,
-							shareMessage: shareMessage
-						}
-					}
-				}
-			)
+			var notifyObj = {
+				type: "score",
+				message: scoreMessage,
+				gameId: game,
+				value: amount,
+				sharable: sharable,
+				shareMessage: shareMessage
+			}
+
+  		createPendingNotification(notifyObj)
 
 			// Update users coins
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
@@ -168,8 +149,8 @@ Meteor.methods({
 			// Adjust multiplier based on when selected.
 			var que = question.que
 			var amount = parseInt(2000)
-			var timeCreated = new Date();
-			var id = Random.id();
+			var user = answer.userId
+			var game = answer.gameId
 			var scoreMessage = 'Nice Pickk! "' + que + '" 2000 Coins!'
 
 			// See if user is on list already
@@ -184,28 +165,19 @@ Meteor.methods({
 			// if they are not we are going to add them to the list.
 			list.push(answer.userId)
 
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage
-						}
-					}
-				}
-			)
+			var notifyObj = {
+				type: "score",
+				message: scoreMessage,
+				gameId: game,
+				value: amount,
+				sharable: sharable,
+				shareMessage: shareMessage
+			}
+
+  		createPendingNotification(notifyObj)
 
 			// Update users coins
-			var user = answer.userId
-			var game = answer.gameId
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
-
-			// Yeah this needs to be cleaned. I wanted to make sure it worked
-
 		}
 
 		Answers.find({questionId: questionId, answered: answered}).forEach(awardPoints);
@@ -232,8 +204,6 @@ Meteor.methods({
 		function awardPoints(user) {
 			// Adjust multiplier based on when selected.
 			var amount = 10
-			var timeCreated = new Date();
-			var id = Random.id();
 			var scoreMessage = "Nice Pickk on " + question.que + "! You Earned " + amount + " Diamonds!"
 
 			// See if user is on list already
@@ -247,29 +217,20 @@ Meteor.methods({
 
 			// if they are not we are going to add them to the list.
 			list.push(user.userId)
+			var notifyObj = {
+				type: "diamonds",
+				message: scoreMessage,
+				gameId: game,
+				value: amount,
+			}
 
-			Meteor.users.update({_id: user.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "diamonds",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage
-						}
-					}
-				}
-			)
+  		createPendingNotification(notifyObj)
 
 			// Update users diamonds
 			Meteor.users.update({_id: user.userId},
 				{
 					$inc: {"profile.diamonds": amount},
 				})
-
-			// Yeah this needs to be cleaned. I wanted to make sure it worked
 
 		}
 
