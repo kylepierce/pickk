@@ -1,17 +1,4 @@
 
-// Template.home.onCreated( function() {
-
-//   this.subscribe( 'activeQuestions', function() {
-//     $( ".loader" ).delay( 1000 ).fadeOut( 'slow', function() {
-//       $( ".loading-wrapper" ).fadeIn( 'slow' );
-//     });
-//   });
-// }); 
-
-// Template.home.onRendered( function() {
-//   $( "svg" ).delay( 750 ).fadeIn();	
-
-// this should be changed to startup. There might also be some additions for user types
 Template.home.rendered = function (template) {
   if (!Meteor.loggingIn() && !Meteor.user()) {
    	 Router.go('/landing');
@@ -29,9 +16,6 @@ Template.home.rendered = function (template) {
 };
 
 Template.home.helpers({
-  game: function() {
-    return Games.findOne({live: true});
-  },
   scoreMessage: function() {
     var user = Meteor.user();
     var notifications = user && user.pendingNotifications || [];
@@ -414,6 +398,19 @@ Template.wagers.events({
 });
 
 Template.gameBar.helpers({
+  top: function() {
+    var currentGame = Games.findOne({live: true});
+    var inningPosition = currentGame.topOfInning
+    if(inningPosition){
+      return true
+    } else {
+      return false
+    }
+  },
+  inning: function() {
+    var currentGame = Games.findOne({live: true});
+    return currentGame.inning
+  },
   strikes: function() {
     var currentAtBat = AtBat.findOne({active: true});
     return currentAtBat.strikeCount

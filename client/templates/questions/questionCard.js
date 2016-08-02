@@ -244,7 +244,11 @@ Template.questionCard.events({
   // 'click input:radio[name=play]':function(event, template) {
   // 	play = template.find('input:radio[name=play]:checked').value
   // },
-
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/leaderboard/'+ $game)
+  },
   'submit form': function(event, template) {
     event.preventDefault();
     var questionId = this._id;
@@ -253,9 +257,17 @@ Template.questionCard.events({
     var answer = template.find('input:radio[name=play]:checked').value;
     var wager = template.find('input:radio[name=wager]:checked').value;
     var description = template.find('input:radio[name=play]:checked').id;
-    var userCoins = Meteor.user().profile.coins;
+    var userCoins = GamePlayed.findOne().coins;
 
     if (userCoins < wager) {
+      analytics.track("no coins", {
+        id: currentUser,
+        question: que,
+        questionId: questionId,
+        answer: answer,
+        wager: wager,
+        coins: userCoins
+      });
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,

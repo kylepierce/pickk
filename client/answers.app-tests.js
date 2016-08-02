@@ -6,6 +6,12 @@ if (Meteor.isClient) {
   });
 
   describe('questions & answers', function() {
+    beforeEach(function() {
+      // runs before each test in this block
+      Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
+      // 
+    });
+
     it('gives coins for a correct answer', function() {
       Meteor.loginWithToken("CharlieDalton");
       return Promise.resolve()
@@ -15,8 +21,21 @@ if (Meteor.isClient) {
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
-          assert.equal(Meteor.user().profile.coins, 10275);
+          assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 10275);
         });
+    })
+
+    it('notifies the user that they won', function() {
+      Meteor.loginWithToken("CharlieDalton");
+      return Promise.resolve()
+        .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
+        .then(denodeify(Tracker.afterFlush))
+        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", "250", "Strike", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
+        .then(function() {
+          assert.lengthOf(Meteor.user().pendingNotifications, 1);
+        })
     })
 
     it('does not give coins for an incorrect answer', function() {
@@ -28,7 +47,7 @@ if (Meteor.isClient) {
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
-          assert.equal(Meteor.user().profile.coins, 9500);
+          assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 9500);
         });
     });
   })

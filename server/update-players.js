@@ -64,82 +64,59 @@ Meteor.methods({
 		)
 	},
 
-	'coinMachine': function() {
-		var userIds = _.pluck(Meteor.users.find({}, {
-			fields: {
-				_id: 1,
-				"profile.coins": 1,
-				"profile.diamonds": 1
-			}
-		}).fetch(), '_id');
+	'coinMachine': function(game) {
+		var usersThatPlayed = GamePlayed.find({gameId: game});
+		var gameName = Games.findOne({_id: game}).name
 
-		userIds.forEach(function(item) {
-			var user = UserList.findOne({_id: item});
-			var coins = user.profile.coins
+		usersThatPlayed.forEach(function(item) {
+			var userId = item.userId;
+			var coins = item.coins
 			var exchange = "exchange"
+
+			exchangeRate = function (rate) {
+				var diamondExchange = coins / rate
+				diamondExchange = Math.floor(diamondExchange)
+				var message = "You traded " + coins + " coins you earned playing " + gameName + " for " + diamondExchange + ' diamonds '
+				Meteor.call('awardDiamondsCustom', userId, diamondExchange, message, exchange)
+			};
+
 			if (coins === 10000) {
 
-			}
-			if (coins < 10000) {
-				var diamondExchange = coins / 2500
-				diamondExchange = Math.floor(diamondExchange)
-				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
-				Meteor.call('awardDiamondsCustom', item, diamondExchange, message, exchange)
-				Meteor.users.update({_id: item}, {$set: {"profile.coins": 0}});
-			}
-			if (coins > 10001) {
-				var diamondExchange = coins / 7500
-				diamondExchange = Math.floor(diamondExchange)
-				var message = "You traded " + coins + " coins for " + diamondExchange + ' diamonds'
-				Meteor.call('awardDiamondsCustom', item, diamondExchange, message, exchange)
-				Meteor.users.update({_id: item}, {$set: {"profile.coins": 0}});
+			} else if (coins < 10000) {
+				exchangeRate(2500)
+			} else if (coins > 10001) {
+				exchangeRate(7500)
 			}
 		});
 	},
 
-	'awardLeaders': function(user) {
-		var liveGame = Games.findOne({live: true});
-		var selector = {_id: {$in: liveGame.users}}
-		var leaderboard = UserList.find(
-			selector,
-			{
-				fields: {
-					'profile.username': 1,
-					'profile.coins': 1,
-					'profile.avatar': 1,
-					'_id': 1
-				}
-			}, {sort: {'profile.coins': -1}}).fetch();
-		var fixed = _.sortBy(leaderboard, function(obj) {
-			return obj.profile.coins
-		})
-		fixed.reverse()
+	'awardLeaders': function(game) {
+		var usersThatPlayed = GamePlayed.find({gameId: game}, {sort: {coins: -1}, limit: 10}).fetch();
 
 		function awardTrophies(trophyId, user) {
 			Meteor.call('awardTrophy', trophyId, user);
 			Meteor.call('notifyTrophyAwarded', trophyId, user);
 		}
 
-		var user = UserList.findOne({_id: user})
-		var role = user.profile.role
-		if (role === "admin") {
-			awardTrophies('xNMMTjKRrqccnPHiZ', fixed[0]._id)
+		var diamondsToAward = [50, 40, 30, 25, 22, 20, 17, 15, 12, 10]
 
-			Meteor.call('awardDiamondsCustom', fixed[0]._id, 50, '<img style="max-width:100%;" src="/1st.png"> <br>Congrats On Winning First Place Here is 50 Diamonds!', "leader")
-
-			awardTrophies('aDJHkmcQKwgnpbnEk', fixed[1]._id)
-			Meteor.call('awardDiamondsCustom', fixed[1]._id, 40, '<img style="max-width:100%;" src="/2nd.png"> <br>Congrats On Winning Second Place Here is 20 Diamonds!', "leader")
-
-			awardTrophies('YxG4SKtrfT9j8Abdk', fixed[2]._id)
-			Meteor.call('awardDiamondsCustom', fixed[2]._id, 30, '<img style="max-width:100%;" src="/3rd.png"> <br>Congrats On Winning Third Place Here is 30 Diamonds!', "leader")
-
-			Meteor.call('awardDiamonds', fixed[3]._id, 25)
-			Meteor.call('awardDiamonds', fixed[4]._id, 22)
-			Meteor.call('awardDiamonds', fixed[5]._id, 20)
-			Meteor.call('awardDiamonds', fixed[6]._id, 17)
-			Meteor.call('awardDiamonds', fixed[7]._id, 15)
-			Meteor.call('awardDiamonds', fixed[8]._id, 12)
-			Meteor.call('awardDiamonds', fixed[9]._id, 10)
+		for (var i = 0; i < usersThatPlayed.length ; i++) {
+			switch (i){
+				case 0:
+					awardTrophies('xNMMTjKRrqccnPHiZ', usersThatPlayed[0].userId)
+					Meteor.call('awardDiamondsCustom', usersThatPlayed[0].userId, 50, '<img style="max-width:100%;" src="/1st.png"> <br>Congrats On Winning First Place Here is 50 Diamonds!', "leader")
+					break;
+				case 1:
+					awardTrophies('aDJHkmcQKwgnpbnEk', usersThatPlayed[1].userId)
+					Meteor.call('awardDiamondsCustom', usersThatPlayed[1].userId, 40, '<img style="max-width:100%;" src="/2nd.png"> <br>Congrats On Winning Second Place Here is 20 Diamonds!', "leader")
+					break;
+				case 2:
+					awardTrophies('YxG4SKtrfT9j8Abdk', usersThatPlayed[2].userId)
+					Meteor.call('awardDiamondsCustom', usersThatPlayed[2].userId, 30, '<img style="max-width:100%;" src="/3rd.png"> <br>Congrats On Winning Third Place Here is 30 Diamonds!', "leader")
+					break;
+				default:
+					Meteor.call('awardDiamonds', usersThatPlayed[i].userId, diamondsToAward[i])
+			}
 		}
 	},
 })

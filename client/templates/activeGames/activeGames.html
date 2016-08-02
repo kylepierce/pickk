@@ -1,0 +1,77 @@
+<template name="activeGames">
+    {{#contentFor "headerButtonLeft"}}
+        <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+            {{#if isAndroid}}
+                {{> ionIcon icon='android-more-vertical'}}
+            {{else}}
+                {{> ionIcon icon='navicon'}}
+            {{/if}}
+        </button>
+    {{/contentFor}}
+
+    {{#contentFor "headerTitle"}}
+        <h1 class="title white-text-header">Home</h1>
+    {{/contentFor}}
+
+    {{#contentFor "headerButtonRight"}}
+      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+        {{> ionIcon icon="ios-chatboxes"}}
+      </button>
+    {{/contentFor}}
+
+    {{#ionView}}
+      {{#ionContent}}
+        {{#if hasActiveGames}}
+          {{#ionList}}
+            <div class="item item-divider">Select a game</div>
+            {{#each games}}
+              {{#ionItem class=gameClass buttonRight=true}}
+                <div class="game-item-outer" >
+                  <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
+                </div>
+                {{#if inprogress status}}
+                  <button class="button game" data-game-id="{{_id}}">
+                    {{> ionIcon icon="ios-arrow-right"}}
+                  </button>
+                {{/if}}
+              {{/ionItem}}
+            {{/each}}
+          {{/ionList}}
+        {{else}}
+          <h3 class="next-play">0 Live National Games
+            <br><br>
+            <a class="button next-play"  href="games">
+              View Upcoming Game Schedule
+            </a>
+            <br>
+          </h3>
+        {{/if}}
+        <div class="container">
+        <h3>Groups</h3>
+          {{#if groups}}
+            {{#each userGroups}}
+              {{#ionItem path="group.show" avatar=true}}
+                {{> groupAvatar}}
+                <h2 class="center-username">{{name}}</h2>
+              {{/ionItem}}
+            {{/each}}
+          {{else}}
+            {{#ionItem buttonRight=true}}
+              <p>No Groups :( Join a Group!</p>
+              <a data-action="no-group" class="button"> 
+                {{> ionIcon icon="ios-plus"}}
+              </a>
+            {{/ionItem}}
+          {{/if}}
+
+          <br>
+          {{#if notBeta}}
+          <h3 class="next-play">Want more baseball?</h3>
+          <a style="width: 100%;" class="button button-balanced" href="beta">
+            Pickk Local Beta
+          </a>
+          {{/if}}
+        </div>
+      {{/ionContent}}
+    {{/ionView}}
+</template>

@@ -1,5 +1,23 @@
 Template.games.helpers({
-	game: function () {
-		return Games.find({'completed': false}, {sort: {"dateCreated": 1}}).fetch();
-	}
+  gameClass: function () {
+    return "game-item-" + this['status'];
+  },
+
+  hasActiveGames: function () {
+		return Template.instance().data.games.length > 0;
+  },
+  
+  inprogress: function (status) {
+    if (status == "inprogress"){
+      return true
+    }
+  }
+});
+
+Template.games.events({
+  "click .game": function (event, template) {
+    var gameId = $(event.currentTarget).attr("data-game-id");
+    Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
+    Router.go("game", {id: gameId});
+  }
 });
