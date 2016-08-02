@@ -1,20 +1,22 @@
 Template.notifications.helpers({
-	notification: function () {
-		var currentUser = Meteor.userId();
-		var userData = UserList.findOne({_id: currentUser})
-		return userData
+	notifications: function () {
+		var userId = Meteor.userId();
+		var notifications = Notifications.find({userId: userId}).fetch()
+		console.log(notifications)
+		return notifications
 	}, 
 	request: function() {
 		return this.pendingNotifications
 	},
-	alert: function() {
-		var currentUser = Meteor.userId();
-		var userData = UserList.findOne({_id: currentUser})
-		var notifications = userData.pendingNotifications
+	alert: function(type) {
+		var userId = Meteor.userId();
+		var notifications = Notifications.find({userId: userId, type: type }).fetch()
+		console.log(notifications)
 		return notifications
 	},
-	type: function(type) {
-		return this.type === type
+	type: function(obj, type) {
+		console.log(obj)
+		return obj.type === type
 	},  
 	trophy: function(id) {
 		var trophy = Trophies.findOne({_id: id});

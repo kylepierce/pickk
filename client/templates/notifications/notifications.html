@@ -17,32 +17,45 @@
 
   {{#ionView}}
     {{#ionContent}}
-		{{#ionList class="my-class"}} 
-			<div class="item item-divider">Invitations</div>
- 
-			{{#with notification}}
-				{{#each alert}}
-				{{#if type "group"}}	
-					{{#ionItem class="double-button" buttonRight=true avatar=true }}
-						{{#with user referrer}}
-            {{> userAvatar userId=_id}}
-			      <h2>{{profile.username}}</h2>
-			      {{/with}}
+    	{{#each note in notifications}}
+				{{> notification type=note.type}}
+    	{{/each}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
 
-			      {{#with groupData notificationId }}
-			      	
-			      <p>wants you to join <strong>{{name}}</strong></p>
-			      <a href="/groups/{{_id}}" class="button"> 
-			        {{> ionIcon icon="more"}}
-			      </a>
-			      {{/with}}
-			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
-			        {{> ionIcon icon="plus-circled"}}
-			      </a>
+<template name="notification">
+	{{#if type}}
+		{{#ionItem}}
+			Yup
+		{{/ionItem}}
+	{{/if}}
+</template>
+
+<!-- 
+			{{#with notification}}
+				{{#unless type "group"}}	
+					<div class="item item-divider">Invitations</div>
+
+						{{#ionItem class="double-button" buttonRight=true avatar=true }}
+							{{#with user referrer}}
+		            {{> userAvatar userId=_id}}
+					      <h2>{{profile.username}}</h2>
+				      {{/with}}
+
+				      {{#with groupData notificationId }}
+					      <p>wants you to join <strong>{{name}}</strong></p>
+					      <a href="/groups/{{_id}}" class="button"> 
+					        {{> ionIcon icon="more"}}
+					      </a>
+				      {{/with}}
+
+				      <a style="margin-right: 50px;" data-action="delete" class="button"> 
+				        {{> ionIcon icon="plus-circled"}}
+				      </a>
 			     
-	    	{{/ionItem}}
-				{{/if}}
-				{{/each}}
+	    			{{/ionItem}}
+			{{/unless}}
 
 		<div class="item item-divider">Followers</div>
 		{{#each alert}}
@@ -78,7 +91,7 @@
 		      </a>
 	    	{{/ionItem}}
 			{{/if}}
-  	{{/each}}
+  	{{/each}} -->
 
 <!--   	<div class="item item-divider">Score</div>
 		{{#each alert}}
@@ -91,9 +104,9 @@
 	    	{{/ionItem}}
 			{{/if}}
   	{{/each}} -->
-	  {{/with}}
+	<!--   {{/with}}
 
-				<br>
+				<br> -->
 <!-- 
 			<div class="item item-divider">All notifications</div>
 
@@ -123,15 +136,10 @@
 	        {{> ionIcon icon="more"}}
 	      </button>
     	{{/ionItem}} -->
-			
-		{{/ionList}}
-    {{/ionContent}}
-  {{/ionView}}
-</template>
+
 
 <template name="gameNotifications">
 	<div class="item item-divider">Game Notifications</div>
-
 		{{#ionItem}}
 				{{#each question}}
 					<p>You guessed... {{_id}}</p>
