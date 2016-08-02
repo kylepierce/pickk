@@ -138,7 +138,6 @@ Meteor.publish('findSingleUsername', function(id) {
       fields: {
         'profile.username': 1,
         'profile.avatar': 1,
-        'pendingNotifications': 1,
         'services': 1,
         '_id': 1
       }
@@ -152,7 +151,6 @@ Meteor.publish('chatUsers', function(id) {
       fields: {
         'profile.username': 1,
         'profile.avatar': 1,
-        'pendingNotifications': 1,
         'services': 1,
         '_id': 1
       }
@@ -220,7 +218,6 @@ Meteor.publish('findUserGroups', function(id) {
       fields: {
         'profile.username': 1,
         'profile.avatar': 1,
-        'pendingNotifications': 1,
         '_id': 1
       }
     }
@@ -367,3 +364,7 @@ Meteor.publish('leaderboardGamePlayed', function(game) {
 Meteor.publish('notifications', function() {
   return Notifications.find({})
 });
+
+Meteor.publish('unreadNotifications', function(user) {
+  return Notifications.find({userId: user, read: false})  
+})

@@ -1,9 +1,12 @@
 var SHOW_CONNECTION_ISSUE_KEY = 'showConnectionIssue';
 Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 
+
 Template.mainView.rendered = function() {
   // IonSideMenu.snapper.settings({disable: 'right'});  
   IonSideMenu.snapper.settings({touchToDrag: false});
+  var user = Meteor.userId()
+  Meteor.subscribe('unreadNotifications', user)
 };
 
 Template.sideMenuContent.events({
@@ -53,12 +56,16 @@ Template.mainView.events({
 
 Template.sideMenuContent.helpers({
   pendingNotifications: function(){
-    var user = Meteor.user();
-    return !! user && user.pendingNotifications && user.pendingNotifications.length;
+    var user = Meteor.userId();
+    var number = Notifications.find({userId: user, read: false})
+    if(number){
+      return true
+    }
   },
   notificationNumber: function() {
-    var user = Meteor.user();
-    return user && user.pendingNotifications && user.pendingNotifications.length;
+    var user = Meteor.userId();
+    var number = Notifications.find({userId: user, read: false}).count()
+    return number
   },
   userId: function () {
     return Meteor.userId();
