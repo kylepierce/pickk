@@ -25,14 +25,20 @@ Template.notifications.helpers({
 	// score: function() {
 	// 	return score
 	// },
-	user: function(ref) {
-		Meteor.subscribe('findSingle', ref);
-		return UserList.findOne({_id: ref})
+
+});
+
+Template.notification.helpers({
+	group: function(){
+		if(this.note.type === "group"){
+			return this.note
+		}
 	},
-	groupData: function(groupId) {
-		Meteor.subscribe('singleGroup', groupId);
-		return Groups.findOne({_id: groupId})
-	}
+	chat: function(){
+		if(this.note.type === "mention"){
+			return this.note
+		}
+	},
 });
 
 Template.notifications.events({
@@ -47,3 +53,31 @@ Template.notifications.events({
 // 		Router.go('group.show');
 // 	}
 // });
+
+Template.groupNotification.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+	groupData: function(groupId) {
+		Meteor.subscribe('singleGroup', groupId);
+		return Groups.findOne({_id: groupId})
+	}
+});
+
+Template.chatNotification.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+	groupData: function(groupId) {
+		Meteor.subscribe('singleGroup', groupId);
+		return Groups.findOne({_id: groupId})
+	}
+});
+
+
+
+
+
+
