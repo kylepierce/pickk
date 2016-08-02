@@ -13,19 +13,55 @@ Meteor.methods({
 		return timeUntilActivation
 	},
 	'activateDailyPickks': function(){
-		console.log("Task complete")
-		// Find all questions with "future" set them to "active"
-		var futureQuestions = Questions.update({active: 'future'}, {$set: {active: true}}, {multi: true})
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		activateDailyPickks();
 	},
 	'deactivateDailyPickks': function(){
-		Questions.update({active: true}, {$set: {active: 'pending'}}, {multi: true})
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		deactivateDailyPickks();
 	},
 	'quickSchedule': function () {
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Meteor.setTimeout(function(){
-			Meteor.call('activateDailyPickks')
+			activateDailyPickks();
 		}, 60);
 	},
 	'addTask': function(id, details) {
+		check(id, String);
+		check(details, {
+			date: Date 			// CHECK - date object?
+			// xyz: Match.Optional( String )		// If an optional object can be present
+		});
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		console.log(details)
 		SyncedCron.add({
 			name: id,
@@ -43,6 +79,14 @@ Meteor.methods({
 		});
 	},
 	'scheduledDailyPickks': function(  ){
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		
 		function addMinutes(date, minutes) {
    		return new Date(date.getTime() + minutes*60000);
 		}
@@ -62,4 +106,16 @@ Meteor.methods({
 			Meteor.call('addTask', thisId, details);
 		}
 	},
-})
+});
+
+// ------ Server functions - Cannot be direcctly called from the client ---------
+
+activateDailyPickks = function () {
+	console.log("Task complete");
+	// Find all questions with "future" set them to "active"
+	var futureQuestions = Questions.update({active: 'future'}, {$set: {active: true}}, {multi: true});
+};
+
+deactivateDailyPickks = function () {
+	Questions.update({active: true}, {$set: {active: 'pending'}}, {multi: true});
+}
