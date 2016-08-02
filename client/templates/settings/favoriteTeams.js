@@ -13,8 +13,10 @@ AutoForm.hooks({
           done(error);
         } else {
           
-          // Update OneSignal Tags
-          updateOneSignalTeamTags(Meteor.user());
+          if (Meteor.isCordova) {
+            // Update OneSignal Tags
+            updateOneSignalTeamTags(Meteor.user());
+          }
 
           done();
           if (Meteor.user().profile.isOnboarded) {

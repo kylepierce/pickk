@@ -9,7 +9,7 @@ SyncedCron.add({
     return parser.text("at 16:00"); // UTC timezone
   },
   job: function() {
-    Meteor.call("activateDailyPickks");
+    activateDailyPickks();
   }
 });
 
@@ -19,7 +19,7 @@ SyncedCron.add({
     return parser.text("at 19:00"); // UTC timezone
   },
   job: function() {
-    Meteor.call("deactivateDailyPickks");
+    deactivateDailyPickks();
   }
 });
 

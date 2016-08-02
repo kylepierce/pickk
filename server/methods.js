@@ -4,10 +4,36 @@ Meteor.methods({
 	},
 
 	'toggleCommercial': function(game, toggle) {
+		check(game, String);
+		check(toggle, Boolean);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Games.update(game, {$set: {'commercial': toggle}});
 	},
 
 	'createGame': function(team1, team2, title, active, channel, gameTime) {
+		check(team1, String);
+		check(team2, String);
+		check(title, String);
+		check(active, Boolean);		// CHECK - Boolean or String?
+		check(channel, String);
+		check(gameTime, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var timeCreated = new Date();
 		Games.insert({
 			teams: [team1, team2],
@@ -26,6 +52,14 @@ Meteor.methods({
 	// Update users info from the settings page
 
 	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
+		check(username, String);									
+		check(firstName, Match.Maybe(String));		// Match.Maybe -> used for optional fields.. updateProfile being called only with username in 'at_config,js' file
+		check(lastName, Match.Maybe(String));
+		check(birthday, Match.Maybe(Date));
+		check(timezone, Match.Maybe(String));
+
+		console.log("**** firstName", firstName);
+
 		if (!this.userId) {
 			return;
 		}
@@ -46,6 +80,8 @@ Meteor.methods({
 	// Update users Favorite teams info from the Favorite Teams page
 
 	'updateFavoriteTeams': function(teamsArr) {
+		check(teamsArr, String);
+
 		if (!this.userId) {
 			return;
 		}
@@ -61,6 +97,18 @@ Meteor.methods({
 	// Update users info from the settings page
 
 	'addTrophy': function(name, description, img) {
+		check(name, String);
+		check(description, String);
+		check(img, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var dateCreated = new Date();
 		Trophies.insert({
 			title: name,
@@ -71,11 +119,33 @@ Meteor.methods({
 	},
 
 	'awardTrophy': function(trophyId, user) {
+		check(trophyId, String);
+		check(user, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var timeCreated = new Date();
 		UserList.update({_id: user}, {$push: {"profile.trophies": trophyId}})
 	},
 
 	'notifyTrophyAwarded': function(trophyId, user) {
+		check(trophyId, String);
+		check(user, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var timeCreated = new Date();
 		var id = Random.id();
 		UserList.update({_id: user},
@@ -93,7 +163,9 @@ Meteor.methods({
 	},
 
 	'removeNotification': function(notifyId) {
-		var user = Meteor.userId()
+		check(notifyId, String);
+
+		var user = Meteor.userId();
 		UserList.update({_id: user},
 			{
 				$pull: {
@@ -103,7 +175,9 @@ Meteor.methods({
 	},
 
 	'readNotification': function(notifyId) {
-		var userId = Meteor.userId()
+		check(notifyId, String);
+
+		var userId = Meteor.userId();
 		UserList.update({_id: userId},
 			{
 				$pull: {
@@ -113,13 +187,55 @@ Meteor.methods({
 	},
 	// Way for Admin to manually update users coins
 
+	'updateCoins': function(user, coins) {
+		check(user, String);
+		check(coins, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		var amount = parseInt(coins)
+		Meteor.users.update({_id: user}, {$set: {"profile.coins": amount}});
+	},
+
+	'updateAllCoins': function(coins) {
+		check(coins, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+	},
+
 	'updateCoins': function(user, coins, game) {
+		check(user, String);
+		check(coins, String);
+		check(game, String);
 		var amount = parseInt(coins)
 		GamePlayed.update({userId: user, gameId: game}, {$set: {coins: amount}});
 	},
 
 // Way for Admin to manually update users name
 	'updateName': function(user, name) {
+		check(user, String);
+		check(name, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Meteor.users.update({_id: user}, {$set: {"profile.username": name}});
 	},
 
@@ -134,10 +250,34 @@ Meteor.methods({
 		console.log("Email Sent!")
 	},
 
-
 	// Create a question. Each play has question text and six options.
 
 	'insertQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6, active) {
+		check(gameId, String);
+		check(que, String);
+		check(commercial, Match.Maybe(Boolean));
+		check(op1, String);
+		check(m1, Number);
+		check(op2, String);
+		check(m2, Number);
+		check(op3, String);
+		check(m3, Number);
+		check(op4, String);
+		check(m4, Number);
+		check(op5, Match.Maybe(String));
+		check(m5, Match.Maybe(Number));
+		check(op6, Match.Maybe(String));
+		check(m6, Match.Maybe(Number));
+		check(active, Match.Maybe(String));
+			
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -171,7 +311,28 @@ Meteor.methods({
 		});
 	},
 
-		'insertFourQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
+	'insertFourQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
+		check(gameId, String);
+		check(que, String);
+		check(commercial, Match.Maybe(Boolean));
+		check(op1, String);
+		check(m1, Number);
+		check(op2, String);
+		check(m2, Number);
+		check(op3, String);
+		check(m3, Number);
+		check(op4, String);
+		check(m4, Number);
+		check(active, Match.Maybe(Boolean));
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -198,6 +359,17 @@ Meteor.methods({
 	},
 
 	'createTrueFalse': function(que, gameId) {
+		check(que, String);
+		check(gameId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -218,6 +390,21 @@ Meteor.methods({
 	},
 
 	'createTwoOption': function(gameId, que, option1, multiplier1, option2, multiplier2) {
+		check(gameId, String);
+		check(que, String);
+		check(option1, String);
+		check(multiplier1, Number);
+		check(option2, String);
+		check(multiplier2, Number);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -268,24 +455,74 @@ Meteor.methods({
 	//Once the play starts change active status
 
 	'deactivateStatus': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {'active': null}});
 	},
 
 	'reactivateStatus': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {'active': true}});
 	},
 
 	'deactivateGame': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {'active': "pending"}});
 	},
 
 	'activateGame': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {'active': true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
 
 	'removeQuestion': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
 		function awardPointsBack(answer) {
@@ -324,6 +561,17 @@ Meteor.methods({
 	// Once the play is over update what option it was. Then award points to those who guessed correctly.
 
 	'modifyQuestionStatus': function(questionId, answered) {
+		check(questionId, String);
+		check(answered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		
 		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
@@ -386,6 +634,17 @@ Meteor.methods({
 	},
 
 	'modifyTwoOptionQuestionStatus': function(questionId, answered) {
+		check(questionId, String);
+		check(answered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
@@ -447,6 +706,17 @@ Meteor.methods({
 	},
 
 	'modifyBinaryQuestionStatus': function(questionId, answered) {
+		check(questionId, String);
+		check(answered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
@@ -501,6 +771,17 @@ Meteor.methods({
 	},
 
 	'modifyGameQuestionStatus': function(questionId, answered) {
+		check(questionId, String);
+		check(answered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {active: false, play: answered}});
 
 		var question = Questions.findOne({"_id": questionId});
@@ -557,6 +838,17 @@ Meteor.methods({
 // Remove Coins from the people who answered it "correctly", the answer changed.
 
 	'unAwardPoints': function(questionId, oldAnswered) {
+		check(questionId, String);
+		check(oldAnswered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var question = Questions.findOne({"_id": questionId});
 
 		function unAwardPoints(answer) {
@@ -574,6 +866,17 @@ Meteor.methods({
 	},
 
 	'unAwardPointsForDelete': function(questionId, oldAnswered) {
+		check(questionId, String);
+		check(oldAnswered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
 		var question = Questions.findOne({"_id": questionId});
@@ -610,6 +913,16 @@ Meteor.methods({
 	},
 
 	'awardInitalCoins': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		var question = Questions.findOne({"_id": questionId});
 
 		function awardPointsBack(answer) {
@@ -645,6 +958,11 @@ Meteor.methods({
 	},
 
 	'questionAnswered': function(questionId, answered, wager, description) {
+		check(questionId, String);
+		check(answered, String);
+		check(wager, String);
+		check(description, String);
+
 		var question = Questions.findOne(questionId);
 		var timeCreated = new Date();
 		if (~question.usersAnswered.indexOf(this.userId)) {
@@ -706,6 +1024,11 @@ Meteor.methods({
 	},
 
 	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
+		check(questionId, String);
+		check(answered, String);
+		check(wager, String);
+		check(description, String);
+
 		var question = Questions.findOne(questionId);
 		var timeCreated = new Date();
 		if (~question.usersAnswered.indexOf(this.userId)) {
@@ -767,6 +1090,11 @@ Meteor.methods({
 	},
 
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
+		check(questionId, String);
+		check(answered, String);
+		check(wager, String);
+		check(description, String);
+
 		var question = Questions.findOne(questionId);
 		var timeCreated = new Date();
 
@@ -825,6 +1153,11 @@ Meteor.methods({
 	},
 
 	'gameQuestionAnswered': function(questionId, answered, wager, description) {
+		check(questionId, String);
+		check(answered, String);
+		check(wager, String);
+		check(description, String);
+
 		var question = Questions.findOne(questionId);
 		var timeCreated = new Date();
 
@@ -860,6 +1193,8 @@ Meteor.methods({
 	},
 
 	'isUsernameUnique': function(username) {
+		check(username, String);
+
 		username = username.trim()
 		if (!username) {
 			return true;
@@ -874,6 +1209,8 @@ Meteor.methods({
 		return !Groups.find({groupId: {$ne: name}}).count()
 	},
 	'exportToMailChimp': function(limit) {
+		check(limit, Number);
+
 		limit = limit || 10; // safety net; pass a very high limit to export all users
 		var user = UserList.findOne(this.userId);
 		var role = user.profile.role;
