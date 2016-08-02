@@ -171,7 +171,6 @@ spacebars@1.0.12
 spacebars-compiler@1.0.12
 srp@1.0.9
 standard-minifier-css@1.0.7_1
-standard-minifier-js@1.0.7_1
 templating@1.1.12_1
 templating-tools@1.0.4
 themeteorchef:bert@1.1.0

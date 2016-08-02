@@ -74,7 +74,6 @@ ejson
 spacebars
 check
 standard-minifier-css
-standard-minifier-js
 fourseven:scss@3.2.0
 selaias:accounts-entry
 hashwin:ionic-sass
