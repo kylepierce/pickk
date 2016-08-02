@@ -65,6 +65,7 @@ Meteor.methods({
 	},
 
 	'coinMachine': function(game) {
+		check(game, String)
 		var usersThatPlayed = GamePlayed.find({gameId: game});
 		var gameName = Games.findOne({_id: game}).name
 
