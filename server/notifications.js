@@ -1,20 +1,29 @@
-createPendingNotification = function(userId, notificationId, type, message) {
-  Meteor.users.update(userId,
-    {
-      $push: {
-        pendingNotifications: {
-          _id: Random.id(),
-          type: type,
-          read: false,
-          notificationId: notificationId,
-          dateCreated: new Date(),
-          message: message
-        }
-      }
-    }
-  );
-};
+createPendingNotification = function(o) {
+  // Basic arguments
+  var obj = {
+    dateCreated: new Date(),
+    type: o.type,
+    userId: o.userId, // Recieving
+    read: false,
+    message: o.message,   
+    notificationId: o.notificationId,  
+  }
 
+  // Optional arguments
+  var optional = ["senderId", "trophyId", "badgeId", "gameId", "tournamentId", "matchId", "value", "shareMessage", "sharable"]
+
+  // If those optional arguments exist append to object
+  for (var i = 0; i < optional.length; i++) {
+    var name = optional[i]
+    var keyIncluded = o[name]
+    if (keyIncluded){
+      obj[name] = o[name]
+    }
+  }
+  
+  // Create the notification in the collection
+  Notifications.insert(obj);
+};
 
 Meteor.methods({
 

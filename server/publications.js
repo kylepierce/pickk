@@ -363,3 +363,7 @@ Meteor.publish('gamePlayed', function (user, game) {
 Meteor.publish('leaderboardGamePlayed', function(game) {
   return GamePlayed.find({gameId: game})
 });
+
+Meteor.publish('notifications', function() {
+  return Notifications.find({})
+});
