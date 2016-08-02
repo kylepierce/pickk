@@ -13,10 +13,20 @@ Template.sideMenuContent.events({
 	},
   'click .js-share-link': function(event) {
     event.preventDefault();
+    var userId = Meteor.userId()
+    var username = Meteor.user().profile.username
+    var url = "pick.co/download/?utm_campaign=menu&utm_content=" + username
+    
+    // Analytics
+    analytics.track("Invite Friend", {
+      userId: userId,
+      location: "Menu"
+    });
+
     if (Meteor.isCordova) {
       window.plugins.socialsharing.shareWithOptions({
         message: Meteor.settings.public.share.message,
-        url: 'http://bit.ly/download-pickk-app',
+        url: url,
       });
     }
   } 

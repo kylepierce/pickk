@@ -7,6 +7,27 @@ Template.friends.helpers({
   }
 });
 
+Template.friends.events({
+  'click [data-action=invite]': function () {
+    var userId = Meteor.userId()
+    var username = Meteor.user().profile.username
+    var url = "pick.co/download/?utm_campaign=friend-search&utm_content=" + username
+    // Analytics
+    analytics.track("Invite Friend", {
+      userId: userId,
+      location: "Find a Friend"
+    });
+
+    event.preventDefault();
+    if (Meteor.isCordova) {
+      window.plugins.socialsharing.shareWithOptions({
+        message: Meteor.settings.public.share.message,
+        url: 'http://bit.ly/download-pickk-app',
+      });
+    }
+  }
+});
+
 Template.followButton.events({
   'click [data-action=follow]': function(event, template) {
     var user = this._id;
