@@ -227,29 +227,19 @@ Meteor.methods({
 			var amount = parseInt(answer.wager)
 			var user = answer.userId
 			var game = answer.game
-			var timeCreated = new Date();
-			var id = Random.id();
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
 
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
-			// Yeah this needs to be cleaned. I wanted to make sure it worked
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage
-						}
-					}
-				}
-			)
+		  var notifyObj = {
+		  	userId: user,
+				type: "score",
+				message: scoreMessage,
+				amount: amount,
+				gameId: game,
+		  }
 
-
+		  createPendingNotification(notifyObj)
 		}
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
@@ -307,28 +297,19 @@ Meteor.methods({
 			// Adjust multiplier based on when selected.
 			var amount = parseInt(answer.wager * answer.multiplier);
 			var scoreMessage = "Play overturned bummer :( " + amount + " Coins!"
-			var timeCreated = new Date();
-			var id = Random.id();
-
-			// Update users coins
 			var user = answer.userId
 			var game = answer.gameId
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
 
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage
-						}
-					}
-				}
-			)
+		  var notifyObj = {
+		  	userId: user,
+				type: "score",
+				message: scoreMessage,
+				amount: amount,
+				gameId: game,
+		  }
+
+		  createPendingNotification(notifyObj)
 		}
 
 		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
@@ -351,29 +332,20 @@ Meteor.methods({
 			// Update users coins
 			var amount = parseInt(answer.wager)
 			var userId = answer.userId
-			var timeCreated = new Date();
-			var id = Random.id();
 			var scoreMessage = "Play had removed. Here are your " + amount + " coins"
 			var user = answer.userId
 			var game = answer.gameId
 			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
+		  var notifyObj = {
+		  	userId: user,
+				type: "score",
+				message: scoreMessage,
+				amount: amount,
+				gameId: game,
+		  }
 
-			// Yeah this needs to be cleaned. I wanted to make sure it worked
-			Meteor.users.update({_id: answer.userId},
-				{
-					$push: {
-						pendingNotifications: {
-							_id: id,
-							type: "score",
-							read: false,
-							notificationId: id,
-							dateCreated: timeCreated,
-							message: scoreMessage
-						}
-					}
-				}
-			)
+		  createPendingNotification(notifyObj)
 		}
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);

@@ -1,5 +1,8 @@
 createPendingNotification = function(o) {
-  // var notifyObj = {}
+  // var notifyObj = {
+  //     type: ,
+  //     userId: ,
+  // }
   // createPendingNotification(notifyObj)
 
   // Basic arguments
@@ -11,7 +14,7 @@ createPendingNotification = function(o) {
   }
 
   // Optional arguments
-  var optional = ["message", "notificationId", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "matchId", "value", "shareMessage", "sharable"]
+  var optional = ["message", "notificationId", "question", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "groupId", "matchId", "value", "shareMessage", "sharable"]
 
   // If those optional arguments exist append to object
   for (var i = 0; i < optional.length; i++) {

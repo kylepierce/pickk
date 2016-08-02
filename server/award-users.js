@@ -49,6 +49,7 @@ Meteor.methods({
 				type: "score",
 				message: scoreMessage,
 				gameId: game,
+				questionId: questionId,
 				value: amount,
 				sharable: sharable,
 				shareMessage: shareMessage
@@ -110,6 +111,7 @@ Meteor.methods({
 				type: "score",
 				message: scoreMessage,
 				gameId: game,
+				questionId: questionId,
 				value: amount,
 				sharable: sharable,
 				shareMessage: shareMessage
@@ -170,6 +172,7 @@ Meteor.methods({
 				message: scoreMessage,
 				gameId: game,
 				value: amount,
+				questionId: questionId,
 				sharable: sharable,
 				shareMessage: shareMessage
 			}
@@ -219,6 +222,7 @@ Meteor.methods({
 			list.push(user.userId)
 			var notifyObj = {
 				type: "diamonds",
+				questionId: questionId,
 				message: scoreMessage,
 				gameId: game,
 				value: amount,

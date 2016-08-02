@@ -56,22 +56,16 @@ Meteor.methods({
 
 	// Users can add other users to join their group.
 
-	'inviteToGroup': function(userId, ref, noteId) {
-		var timeCreated = new Date();
-		var id = Random.id();
-		Groups.update({_id: noteId}, {$addToSet: {invites: userId}})
-		UserList.update({_id: userId},
-			{
-				$push: {
-					pendingNotifications: {
-						_id: id,
-						dateCreated: timeCreated,
-						referrer: ref,
-						type: "group",
-						notificationId: noteId
-					}
-				}
-			});
+	'inviteToGroup': function(userId, ref, groupId) {
+		Groups.update({_id: groupId}, {$addToSet: {invites: userId}})
+
+	  var notifyObj = {
+	  	type: "group",
+	  	senderId: ref,
+	  	userId: userId,
+	  	groupId: groupId
+	  }
+	  createPendingNotification(notifyObj)
 	},
 
 	'acceptRequest': function(groupId, id) {

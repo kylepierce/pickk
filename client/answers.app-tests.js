@@ -9,7 +9,7 @@ if (Meteor.isClient) {
     beforeEach(function() {
       // runs before each test in this block
       Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
-      // 
+      Meteor.subscribe('notifications')
     });
 
     it('gives coins for a correct answer', function() {
@@ -34,7 +34,7 @@ if (Meteor.isClient) {
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
-          assert.lengthOf(Meteor.user().pendingNotifications, 1);
+          assert.lengthOf(Notifications.findOne({userId: "CharlieDalton", questionId: "PitchQuestion"});, 1);
         })
     })
 

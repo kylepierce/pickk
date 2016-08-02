@@ -1,5 +1,14 @@
 Meteor.methods({
 	'updateAllCounters': function(user) {
+		check(user, String);
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+    }
+
+    if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+    }
+
 		var user = UserList.findOne({_id: user})
 		var role = user.profile.role
 		if (role === "admin") {
@@ -8,6 +17,15 @@ Meteor.methods({
 	},
 
 	'updateAllDiamonds': function(user) {
+		check(user, String);
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+    }
+
+    if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+    }
+
 		var user = UserList.findOne({_id: user})
 		var role = user.profile.role
 		if (role === "admin") {
@@ -16,27 +34,21 @@ Meteor.methods({
 	},
 
 	'awardDiamonds': function(user, number) {
-		var timeCreated = new Date();
-		var id = Random.id();
+		check(user, String)
+		check(number, Number)
+		
 		var number = parseInt(number)
 		var message = "You Earned " + number + " Diamonds!"
 
 		Meteor.users.update({_id: user}, {$inc: {"profile.diamonds": +number}});
 
-		Meteor.users.update({_id: user},
-			{
-				$push: {
-					pendingNotifications: {
-						_id: id,
-						type: "diamonds",
-						read: false,
-						notificationId: id,
-						dateCreated: timeCreated,
-						message: message
-					}
-				}
-			}
-		)
+	  var notifyObj = {
+      type: "diamonds",
+      userId: user,
+      message: message,
+      amount: number,
+	  }
+	  createPendingNotification(notifyObj)
 	},
 
 	'awardDiamondsCustom': function(user, number, message, tag) {
@@ -47,21 +59,13 @@ Meteor.methods({
 
 		Meteor.users.update({_id: user}, {$inc: {"profile.diamonds": +number}});
 
-		Meteor.users.update({_id: user},
-			{
-				$push: {
-					pendingNotifications: {
-						_id: id,
-						type: "diamonds",
-						tag: tag,
-						read: false,
-						notificationId: id,
-						dateCreated: timeCreated,
-						message: message
-					}
-				}
-			}
-		)
+	  var notifyObj = {
+      type: "diamonds",
+      userId: user,
+      message: message,
+      amount: number,
+	  }
+	  createPendingNotification(notifyObj)
 	},
 
 	'coinMachine': function(game) {

@@ -13,21 +13,16 @@ Meteor.methods({
 			throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		var timeCreated = new Date();
-		var id = Random.id();
-
 		UserList.update({_id: user}, {$push: {'profile.following': accountToFollow}});
 
 		UserList.update({_id: accountToFollow}, {$push: {'profile.followers': user}});
 
-		UserList.update({_id: accountToFollow},	{$push: {
-			pendingNotifications: {
-				_id: id,
-				dateCreated: timeCreated,
-				referrer: user,
-				type: "follower",
-			}
-		}});
+	  var notifyObj = {
+	  	type: "follower",
+	  	userId: accountToFollow,
+	  	senderId: user,
+	  }
+	  createPendingNotification(notifyObj)
 	},
 	// Unfollow users they follow
 

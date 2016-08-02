@@ -174,23 +174,16 @@ Meteor.methods({
 		var game = question.gameId
 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
 
-		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
 
-		Meteor.users.update(this.userId,
-			{
-				$push: {
-					pendingNotifications: {
-						_id: id,
-						type: "score",
-						read: false,
-						notificationId: id,
-						dateCreated: timeCreated,
-						message: scoreMessage
-					}
-				}
-			}
-		)
+	  var notifyObj = {
+	  	type: "score",
+	  	gameId: game,
+	  	amount: amount,
+	  	message: scoreMessage,
+	  	userId: user,
+	  }
+  	createPendingNotification(notifyObj)
 	},
 
 	'gameQuestionAnswered': function(questionId, answered, wager, description) {
