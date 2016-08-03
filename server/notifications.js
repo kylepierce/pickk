@@ -31,9 +31,10 @@ createPendingNotification = function(o) {
 
 Meteor.methods({
 
-  'notifyTrophyAwarded': function(trophyId, user) {
+  'notifyTrophyAwarded': function(trophyId, user, gameId) {
     check(trophyId, String);
     check(user, String);
+    check(gameId, String);
 
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -47,6 +48,7 @@ Meteor.methods({
       userId: user,
       type: "trophy",
       trophyId: trophyId,
+      gameId: gameId,
     }
 
     createPendingNotification(notifyObj)

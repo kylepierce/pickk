@@ -31,15 +31,33 @@
 </template>
 
 <template name="notification">
-	{{#if group }}
+	{{#if item "group"}}
 		{{> groupNotification}}
 	{{/if}}
-	{{#if chat}}
+	{{#if item "mention"}}
 		{{> chatNotification}}
 	{{/if}}
-<!-- 	{{#if score}}
+	{{#if item "score"}}
 		{{> scoreNotification}}
-	{{/if}} -->
+	{{/if}}
+	{{#if item "diamonds"}}
+		{{> diamondNotification}}
+	{{/if}}
+	{{#if item "leaderboard"}}
+		{{> leaderboardNotification}}
+	{{/if}}
+	{{#if item "badge"}}
+		{{> badgeNotification}}
+	{{/if}}
+	{{#if item "trophy"}}
+		{{> badgeNotification}}
+	{{/if}}
+	{{#if item "matchupInvite"}}
+		{{> matchupInvite}}
+	{{/if}}
+	{{#if item "matchupNotification"}}
+		{{> matchupNotification}}
+	{{/if}}
 </template>
 
 <template name="groupNotification">
@@ -72,17 +90,32 @@
 	{{/ionItem}}	
 </template>
 
-<template name="scoreNotification"></template>
+<template name="scoreNotification">
+	{{#ionItem}}
+		<p>{{note.value}}</p>
+	{{/ionItem}}
+</template>
 
-<template name="diamondNotification"></template>
+<template name="diamondNotification">
+	{{#ionItem class="diamond-notifications"}}
+		<img class="diamond-image" src="/diamonds.png">
+		<p>{{{note.message}}}</p>
+	{{/ionItem}}	
+</template>
 
 <template name="leaderboardNotification"></template>
 
 <template name="badgeNotification"></template>
 
+<template name="trophyNotification"></template>
+
 <template name="matchupInvite"></template>
 
 <template name="matchupNotification"></template>
+
+<template name="templateNotification">
+	{{#ionItem}}{{/ionItem}}
+</template>
 
 <!-- 
 		<div class="item item-divider">Followers</div>

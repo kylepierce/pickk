@@ -1,7 +1,7 @@
 Meteor.methods({
 	'userJoinsAGame': function (user, game) {
 		// check(user, String)
-		var gameExists = GamePlayed.findOne({gameId: game}, {fields: {_id: 1}})
+		var gameExists = GamePlayed.findOne({gameId: game, userId: user}, {fields: {_id: 1, gameId: 1}})
 		if(!gameExists){
 			var date = new Date(); 
 			GamePlayed.insert({

@@ -118,9 +118,9 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("awardDiamonds", "CharlieDalton", 50, callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("awardDiamonds", "CharlieDalton", "ActiveGame", 50, callback)}))
         .then(function() {
-          assert.equal(Notifications.findOne({userId: "CharlieDalton", type: "diamonds"}).message, "You Earned 50 Diamonds!");
+          assert.equal(Notifications.findOne({userId: "CharlieDalton", type: "diamonds", value: 50}).message, "You Earned 50 Diamonds!");
         })
     });  
 
@@ -129,7 +129,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("notifyTrophyAwarded", "xNMMTjKRrqccnPHiZ", "CharlieDalton", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("notifyTrophyAwarded", "xNMMTjKRrqccnPHiZ", "CharlieDalton", "ActiveGame", callback)}))
         .then(function() {
           assert.equal(Notifications.find({userId: "CharlieDalton", type: "trophy", trophyId: "xNMMTjKRrqccnPHiZ"}).count(), 1);
         })

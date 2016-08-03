@@ -13,7 +13,7 @@ AutoForm.hooks({
           done(error);
         } else {
           
-          if (Meteor.isCordova) {
+          if (Meteor.isCordova && Meteor.user().OneSignalToken) {
             // Update OneSignal Tags
             updateOneSignalTeamTags(Meteor.user());
           }

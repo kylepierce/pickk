@@ -24,3 +24,16 @@
 .double-button {
 	padding-right: 120px!important;
 }
+
+.diamond-notifications {
+	padding-left: 72px;
+	min-height: 72px;
+}
+
+.diamond-image {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	max-width: 40px;
+	max-height: 40px;
+}

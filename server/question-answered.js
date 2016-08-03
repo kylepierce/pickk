@@ -39,7 +39,6 @@ Meteor.methods({
 		//Once a users has answered take the amount wager from their coins.
 		var user = this.userId
 		var game = question.gameId
-		console.log(user + " " + game)
 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -wager}});
 
 		//Increase counter by 1
@@ -48,20 +47,23 @@ Meteor.methods({
 		var currentUser = Meteor.users.findOne(this.userId)
 		var counter = currentUser.profile.queCounter
 
+		Meteor.call('activityForDiamonds', this.userId, counter, game)
+	},
+	'activityForDiamonds': function(userId, gameId, counter){
 		if (counter === 1) {
-			Meteor.call('awardDiamonds', this.userId, 1)
+			Meteor.call('awardDiamonds', this.userId, gameId, 1)
 		} else if (counter === 5) {
-			Meteor.call('awardDiamonds', this.userId, 2)
+			Meteor.call('awardDiamonds', this.userId, gameId, 2)
 		} else if (counter === 25) {
-			Meteor.call('awardDiamonds', this.userId, 3)
+			Meteor.call('awardDiamonds', this.userId, gameId, 3)
 		} else if (counter === 50) {
-			Meteor.call('awardDiamonds', this.userId, 4)
+			Meteor.call('awardDiamonds', this.userId, gameId, 4)
 		} else if (counter === 75) {
-			Meteor.call('awardDiamonds', this.userId, 5)
+			Meteor.call('awardDiamonds', this.userId, gameId, 5)
 		} else if (counter === 100) {
-			Meteor.call('awardDiamonds', this.userId, 7)
+			Meteor.call('awardDiamonds', this.userId, gameId, 7)
 		} else if (counter === 140) {
-			Meteor.call('awardDiamonds', this.userId, 13)
+			Meteor.call('awardDiamonds', this.userId, gameId, 13)
 		}
 	},
 	'twoOptionQuestionAnswered': function(questionId, answered, wager, description) {
@@ -113,21 +115,7 @@ Meteor.methods({
 		var currentUser = Meteor.users.findOne(this.userId)
 		var counter = currentUser.profile.queCounter
 
-		if (counter === 1) {
-			Meteor.call('awardDiamonds', this.userId, 1)
-		} else if (counter === 5) {
-			Meteor.call('awardDiamonds', this.userId, 2)
-		} else if (counter === 25) {
-			Meteor.call('awardDiamonds', this.userId, 3)
-		} else if (counter === 50) {
-			Meteor.call('awardDiamonds', this.userId, 4)
-		} else if (counter === 75) {
-			Meteor.call('awardDiamonds', this.userId, 5)
-		} else if (counter === 100) {
-			Meteor.call('awardDiamonds', this.userId, 7)
-		} else if (counter === 140) {
-			Meteor.call('awardDiamonds', this.userId, 13)
-		}
+		Meteor.call('activityForDiamonds', this.userId, counter, question.gameId)
 	},
 
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
@@ -233,6 +221,6 @@ Meteor.methods({
 		createPendingNotification(notifyObj)
 
 		//Give user a diamond for answering
-		Meteor.call('awardDiamonds', this.userId, 5);
+		Meteor.call('awardDiamonds', this.userId, question.gameId, 5);
 	},
 })
