@@ -29,7 +29,7 @@ Meteor.methods({
 	// Update users Favorite teams info from the Favorite Teams page
 
 	'updateFavoriteTeams': function(teamsArr) {
-		check(teamsArr, String);
+		check(teamsArr, Array);
 
 		if (!this.userId) {
 			return;
