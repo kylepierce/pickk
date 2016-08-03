@@ -73,6 +73,24 @@ Template.chatRoom.events({
       $("#messageBox").val('');
     }
   },
+
+  'click .message ': function(event, template) {
+    var otherSelected = $('.chat-options')
+    // If a play has been selected before than remove that
+    if (otherSelected) {
+      // Remove old
+      $('.chat-options').remove();
+    }
+    var message = $(event.currentTarget)[0]
+    var data = this
+    Blaze.renderWithData(Template.chatOptions, data, message)
+  },
+  'click [data-ion-popover=_reactionToMessage]': function(){
+    Session.set("reactToMessageId", this._id);
+  }
+});
+
+Template.chatOptions.events({
   'click [data-action=reply]': function(event, template) {
     console.log(this)
     var username = Meteor.users.findOne({_id: this.user}).profile.username
@@ -86,12 +104,6 @@ Template.chatRoom.events({
   'click [data-action=close]': function(event, template) {
     var entire = $(event.currentTarget).parent().css({'display': 'none', 'opacity': '0'})
   },
-  'click #single-message ': function(event, template) {
-    var entire = $(event.currentTarget).siblings().css({'display': 'block', 'opacity': '1'})
-  },
-  'click [data-ion-popover=_reactionToMessage]': function(){
-    Session.set("reactToMessageId", this._id);
-  }
 });
 
 Template.chatRoom.helpers({

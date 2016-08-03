@@ -11,7 +11,6 @@ Template.questionCard.helpers({
   groups: function(){
     var currentUser = Meteor.user();
     var groupCount = currentUser.profile.groups.length 
-    console.log(groupCount)
     if (groupCount){
       return true
     }
