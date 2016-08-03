@@ -1,9 +1,9 @@
-Template.singleGroup.created = function () {
-  this.autorun(function () {
-    var groupId = Router.current().params._id
-    this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
-  }.bind(this));
-};
+// Template.singleGroup.created = function () {
+//   this.autorun(function () {
+//     var groupId = Router.current().params._id
+//     this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
+//   }.bind(this));
+// };
 
 Template.singleGroup.helpers({
   group: function () {
