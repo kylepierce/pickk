@@ -172,7 +172,7 @@ Meteor.methods({
 		//Once a users has answered take the amount wager from their coins.
 		var user = this.userId
 		var game = question.gameId
-		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
+		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: wager}});
 
 		var id = Random.id();
 		var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
