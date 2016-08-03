@@ -65,6 +65,13 @@ Template.groupNotification.helpers({
 	}
 });
 
+Template.groupNotification.events({
+	'click [data-action=delete]': function () {
+		var notificationId = this.note._id
+		Meteor.call('removeNotification', notificationId);
+	}
+});
+
 Template.chatNotification.helpers({
 	user: function(ref) {
 		Meteor.subscribe('findSingle', ref);

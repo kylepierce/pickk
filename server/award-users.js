@@ -48,6 +48,7 @@ Meteor.methods({
 			var notifyObj = {
 				type: "score",
 				message: scoreMessage,
+				userId: user,
 				gameId: game,
 				questionId: questionId,
 				value: amount,

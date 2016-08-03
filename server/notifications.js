@@ -14,7 +14,7 @@ createPendingNotification = function(o) {
   }
 
   // Optional arguments
-  var optional = ["message", "notificationId", "question", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "groupId", "matchId", "value", "shareMessage", "sharable"]
+  var optional = ["message", "notificationId", "questionId", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "groupId", "matchId", "value", "shareMessage", "sharable"]
 
   // If those optional arguments exist append to object
   for (var i = 0; i < optional.length; i++) {
@@ -54,6 +54,6 @@ Meteor.methods({
 
   'removeNotification': function(notifyId) {
     check(notifyId, String);
-    Notifications.update({_id: notifyObj}, {$set: {read: true}})
+    Notifications.update({_id: notifyId}, {$set: {read: true}})
   },
 })

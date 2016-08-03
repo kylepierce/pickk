@@ -23,20 +23,7 @@ if (Meteor.isClient) {
         .then(function() {
           assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 10275);
         });
-    })
-
-    it('notifies the user that they won', function() {
-      Meteor.loginWithToken("CharlieDalton");
-      return Promise.resolve()
-        .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
-        .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", "250", "Strike", callback)}))
-        .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
-        .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
-        .then(function() {
-          assert.lengthOf(Notifications.findOne({userId: "CharlieDalton", questionId: "PitchQuestion"});, 1);
-        })
-    })
+    });
 
     it('does not give coins for an incorrect answer', function() {
       Meteor.loginWithToken("CharlieDalton");

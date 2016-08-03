@@ -21,11 +21,10 @@ Meteor.methods({
 
 	},
 
-	'editGroup': function(id, groupId, groupName, secretStatus, description) {
+	'editGroup': function(id, groupName, secretStatus, description) {
 		Groups.update({_id: id},
 			{
 				$set: {
-					groupId: groupId,
 					name: groupName,
 					secret: secretStatus,
 					desc: description
@@ -56,12 +55,12 @@ Meteor.methods({
 
 	// Users can add other users to join their group.
 
-	'inviteToGroup': function(userId, ref, groupId) {
+	'inviteToGroup': function(userId, sender, groupId) {
 		Groups.update({_id: groupId}, {$addToSet: {invites: userId}})
 
 	  var notifyObj = {
 	  	type: "group",
-	  	senderId: ref,
+	  	senderId: sender,
 	  	userId: userId,
 	  	groupId: groupId
 	  }

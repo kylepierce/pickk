@@ -264,7 +264,7 @@ Meteor.publish('SportRadarGames', function() {
 });
 
 Meteor.publish('activeGames', function() {
-  var selector = {live: true} 
+  var selector = {live: true, status: "inprogress"} 
   var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
 
   var tester = isTester(this.userId);
@@ -288,7 +288,6 @@ Meteor.publish('groupUsers', function(groupId) {
     fields: {
       'profile.username': 1,
       'profile.avatar': 1,
-      'pendingNotifications': 1,
       '_id': 1
     }
   }
