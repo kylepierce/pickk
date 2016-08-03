@@ -74,6 +74,9 @@ Template.chatRoom.events({
     }
   },
   'click [data-action=reply]': function(event, template) {
+    console.log(this)
+    var username = Meteor.users.findOne({_id: this.user}).profile.username
+    $('[name=messageBox]').val("@"+username)
   },
   'click [data-action=react]': function(event, template) {
   },
