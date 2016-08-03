@@ -223,6 +223,15 @@ Meteor.methods({
 		// Update question with the user who have answered.
 		Questions.update(questionId, {$addToSet: {usersAnswered: this.userId}});
 
+		var notifyObj = {
+			userId: this.userId,
+			type: "diamonds",
+			questionId: questionId,
+			value: 5,
+		}
+
+		createPendingNotification(notifyObj)
+
 		//Give user a diamond for answering
 		Meteor.call('awardDiamonds', this.userId, 5);
 	},

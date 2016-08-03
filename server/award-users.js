@@ -109,6 +109,7 @@ Meteor.methods({
 			list.push(answer.userId)
 
 			var notifyObj = {
+				userId: user,
 				type: "score",
 				message: scoreMessage,
 				gameId: game,
@@ -169,13 +170,12 @@ Meteor.methods({
 			list.push(answer.userId)
 
 			var notifyObj = {
+				userId: user,
 				type: "score",
 				message: scoreMessage,
 				gameId: game,
 				value: amount,
 				questionId: questionId,
-				sharable: sharable,
-				shareMessage: shareMessage
 			}
 
   		createPendingNotification(notifyObj)
@@ -222,13 +222,12 @@ Meteor.methods({
 			// if they are not we are going to add them to the list.
 			list.push(user.userId)
 			var notifyObj = {
+				userId: user.userId,
 				type: "diamonds",
 				questionId: questionId,
 				message: scoreMessage,
-				gameId: game,
 				value: amount,
 			}
-
   		createPendingNotification(notifyObj)
 
 			// Update users diamonds
