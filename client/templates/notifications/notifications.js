@@ -59,6 +59,13 @@ Template.trophyNotification.helpers({
 	}
 });
 
+Template.newFollower.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+});
+
 
 
 

@@ -25,12 +25,12 @@
 	padding-right: 120px!important;
 }
 
-.diamond-notifications {
+.notification-has-image {
 	padding-left: 72px;
 	min-height: 72px;
 }
 
-.diamond-image {
+.notification-image {
 	position: absolute;
 	top: 16px;
 	left: 16px;

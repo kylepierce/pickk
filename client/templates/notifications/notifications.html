@@ -37,6 +37,9 @@
 	{{#if item "mention"}}
 		{{> chatNotification}}
 	{{/if}}
+	{{#if item "follower"}}
+		{{> newFollower}}
+	{{/if}}
 	{{#if item "score"}}
 		{{> scoreNotification}}
 	{{/if}}
@@ -92,14 +95,24 @@
 
 <template name="scoreNotification">
 	{{#ionItem}}
-		<p>{{note.value}}</p>
+		<p>You won {{note.value}} coins!</p>
 	{{/ionItem}}
 </template>
 
 <template name="diamondNotification">
-	{{#ionItem class="diamond-notifications"}}
-		<img class="diamond-image" src="/diamonds.png">
+	{{#ionItem class="notification-has-image"}}
+		<img class="notification-image" src="/diamonds.png">
 		<p>{{{note.message}}}</p>
+	{{/ionItem}}	
+</template>
+
+<template name="newFollower">
+	{{#ionItem avatar=true}}
+		{{#with user note.senderId}}
+	    {{> userAvatar userId=_id}}
+	   	<p>{{profile.username}} started following you!</p>
+	  {{/with}}
+
 	{{/ionItem}}	
 </template>
 
@@ -108,9 +121,9 @@
 <template name="badgeNotification"></template>
 
 <template name="trophyNotification">
-	{{#ionItem}}
+	{{#ionItem class="notification-has-image"}}
 		{{#with trophy note.trophyId}}
-			<img class="diamond-image" src="/{{image}}">
+			<img class="notification-image" src="/{{image}}">
 			<h2>You won {{title}} place!</h2>
 		{{/with}}
 		{{#with game note.gameId}}
