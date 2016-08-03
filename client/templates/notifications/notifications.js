@@ -50,7 +50,14 @@ Template.chatNotification.helpers({
 	}
 });
 
-
+Template.trophyNotification.helpers({
+	trophy: function (trophyId) {
+		return Trophies.findOne({_id: trophyId})
+	},
+	game: function ( gameId ) {
+		return Game.findOne({_id: gameId});
+	}
+});
 
 
 

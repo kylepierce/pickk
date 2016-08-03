@@ -50,7 +50,7 @@
 		{{> badgeNotification}}
 	{{/if}}
 	{{#if item "trophy"}}
-		{{> badgeNotification}}
+		{{> trophyNotification}}
 	{{/if}}
 	{{#if item "matchupInvite"}}
 		{{> matchupInvite}}
@@ -107,7 +107,17 @@
 
 <template name="badgeNotification"></template>
 
-<template name="trophyNotification"></template>
+<template name="trophyNotification">
+	{{#ionItem}}
+		{{#with trophy note.trophyId}}
+			<img class="diamond-image" src="/{{image}}">
+			<h2>You won {{title}} place!</h2>
+		{{/with}}
+		{{#with game note.gameId}}
+			<p>Congr{{note.message}}</p>
+		{{/with}}
+	{{/ionItem}}
+</template>
 
 <template name="matchupInvite"></template>
 
