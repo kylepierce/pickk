@@ -8,7 +8,10 @@ if (Meteor.isClient) {
   describe('question notifications', function() {
     beforeEach(function() {
       // runs before each test in this block
-      Meteor.subscribe('notifications')
+      Meteor.subscribe('userData')
+      Meteor.subscribe('activeGames')
+      Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
+      Meteor.subscribe('unreadNotifications, "CharlieDalton"')
     });
 
     it('got free pickk coins', function() {
@@ -77,7 +80,10 @@ if (Meteor.isClient) {
   describe('other notifications', function() {
     beforeEach(function() {
       // runs before each test in this block
-      Meteor.subscribe('notifications')
+      Meteor.subscribe('userData')
+      Meteor.subscribe('activeGames')
+      Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
+      Meteor.subscribe('unreadNotifications, "CharlieDalton"')
     });
 
     it('user is mentioned', function() {

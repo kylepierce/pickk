@@ -1,6 +1,7 @@
 // Global
 
 isTester = function (userId) {
+  console.log(userId)
   var user = Meteor.users.findOne(userId);
   var role = user.profile.role;
   return role && (role == "admin" || role == "beta");
@@ -73,8 +74,8 @@ Meteor.publish('gamePlayed', function (user, game) {
 Meteor.publish('activeGames', function() {
   var selector = {live: true, status: "inprogress"} 
   var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
-
-  var tester = isTester(this.userId);
+  
+  var tester = isTester();
   if ( ! tester) {
     selector.public = true;
   }
