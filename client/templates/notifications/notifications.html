@@ -66,7 +66,7 @@
 </template>
 
 <template name="groupNotification">
-	{{#ionItem class="double-button" buttonRight=true avatar=true }}
+	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	    <h2>{{profile.username}}</h2>
@@ -74,14 +74,7 @@
 
 	  {{#with groupData note.groupId }}
 	    <p>wants you to join <strong>{{name}}</strong></p>
-	    <a href="/groups/{{_id}}" class="button"> 
-	      {{> ionIcon icon="more"}}
-	    </a>
 	  {{/with}}
-
-	  <a style="margin-right: 50px;" alt="Delete this notification" data-action="delete" class="button"> 
-	    {{> ionIcon icon="plus-circled"}}
-	  </a>
 	{{/ionItem}}
 </template>
 
@@ -89,7 +82,7 @@
 	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
-	    <h2>{{profile.username}}</h2>
+	    <h3>{{profile.username}} Mentioned You:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
 	{{/ionItem}}	
@@ -144,26 +137,52 @@
 </template>
 
 <template name="notificationOptions">
-  <div class="chat-options">
-    <div class="col-md-25" data-action="reply">
-      {{> ionIcon class="reply-icon" icon='forward'}}<br>
-      Reply
-    </div>
-    <div class="col-md-25" data-action="react">
-      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
-      React
-    </div>
-    <div class="col-md-25" data-action="user">
-      {{> ionIcon class="reply-icon" icon='ios-person'}}
-      <br>
-      User
-    </div>
-    <div class="col-md-25" data-action="close">
-      {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
-      <br>
-      Cancel
-    </div>
-  </div>
+	{{#with options}}
+		{{#if mention}}
+	    <div class="{{options}}" data-action="reply">
+	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
+	      Reply
+	    </div>
+	    <div class="{{options}}" data-action="react">
+	      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
+	      React
+	  	</div>
+	  {{/if}}
+	  {{#if award}}
+	    <div class="{{options}}" data-action="reply">
+	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
+	      Share
+	    </div>
+	  {{/if}}
+	  {{#if group}}
+			<div class="{{options}}" data-action="user">
+	   		{{> ionIcon class="reply-icon" icon='ios-people'}}
+	    	<br>
+	    	View Group
+	  	</div>
+	  {{/if}}
+		{{#if interaction}}
+			<div class="{{options}}" data-action="user">
+	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
+	    	<br>
+	    	View User
+	  	</div>
+		{{/if}}
+
+		{{#if follower}}
+			<div class="{{options}}" data-action="user">
+	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
+	    	<br>
+	    	Follow 
+	  	</div>
+		{{/if}}
+
+	  <div class="{{options}}" data-action="close">
+	    {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
+	    <br>
+	    Cancel
+	  </div>
+	{{/with}}
 </template>
 
 

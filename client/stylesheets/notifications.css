@@ -17,6 +17,22 @@
 	text-overflow: normal;
 }
 
+#notification-options {
+  width:100%;
+  float: left;
+  background-color: #009688;
+  padding: 10px 0;
+  text-align:center;
+  opacity:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  -webkit-transition: all 1s ease-in-out;;
+  transition: all 1s ease-in-out;;
+	color: white;
+	font-family: 'lato'
+}
+
 .actions-section {
 	text-align: right;
 }
