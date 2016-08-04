@@ -23,9 +23,11 @@
 
   {{#ionView}}
     {{#ionContent}}
-    	{{#each note in notifications}}
-				{{> notification note=note}}
-    	{{/each}}
+    	{{#ionList class=notificationsList}}
+	    	{{#each note in notifications}}
+					{{> notification note=note}}
+	    	{{/each}}
+    	{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -110,7 +112,8 @@
 	{{#ionItem avatar=true}}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
-	   	<p>{{profile.username}} started following you!</p>
+	   	<h2>{{profile.username}}</h2> 
+	   	<p>started following you!</p>
 	  {{/with}}
 
 	{{/ionItem}}	

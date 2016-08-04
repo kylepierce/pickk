@@ -5,12 +5,12 @@ Template.newGroup.events({
 
   }
 });
-//Subscription for groups
-Template.newGroup.onCreated(function() {
-  this.autorun(() => {
-    this.subscribe('groups');
-  });
-});
+// //Subscription for groups
+// Template.newGroup.onCreated(function() {
+//   this.autorun(() => {
+//     this.subscribe('groups');
+//   });
+// });
 
 Template.newGroup.events({
   'click input:checkbox':function(event, template){

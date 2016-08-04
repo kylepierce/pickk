@@ -11,14 +11,14 @@ Template.notification.helpers({
 		if(this.note.type === type){
 			return this.note
 		}
-	}
+	},
 });
 
 Template.notifications.events({
 	'click [data-action=delete]': function () {
 		var notificationId = this._id
 		Meteor.call('removeNotification', notificationId);
-	}
+	},
 });
 
 Template.groupNotification.helpers({
@@ -29,7 +29,7 @@ Template.groupNotification.helpers({
 	groupData: function(groupId) {
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
-	}
+	},
 });
 
 Template.groupNotification.events({
@@ -64,6 +64,14 @@ Template.newFollower.helpers({
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
+});
+
+Template.notifications.events({
+	'click .item': function (event, template) {
+		console.log(event, template, this)
+		var notification = event.currentTarget
+		console.log(notification)
+	}
 });
 
 
