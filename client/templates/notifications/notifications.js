@@ -70,7 +70,7 @@ Template.notifications.events({
 	'click .item': function (event, template) {
 		console.log(event, template, this)
 		var notification = event.currentTarget
-		console.log(notification)
+		Blaze.renderWithData('notificationOptions', notificationContainer)
 	}
 });
 
