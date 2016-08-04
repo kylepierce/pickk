@@ -73,17 +73,39 @@ Template.chatRoom.events({
       $("#messageBox").val('');
     }
   },
+  'click .item': function (e, t) {
+    var displayOptions = function ( o ) {
+      // The select item dom and data
+      var $selected = $(e.currentTarget)
+      var selectedObj = t.data.note
+      var templateName = o.insertedTemplate
 
-  'click .message ': function(event, template) {
-    var otherSelected = $('.chat-options')
-    // If a play has been selected before than remove that
-    if (otherSelected) {
-      // Remove old
-      $('.chat-options').remove();
+      var addOptions = function ( id, data ){
+        var options = "<div id='" + id + "'></div>"
+        $selected.after(options);
+        var container = $('#' + id + '')[0]
+        Blaze.renderWithData(templateName, data, container)
+      }
+
+      var container = $('#' + o.containerId + '')[0]
+      if ( container ){
+        if ( container.previousSibling !== $selected[0] ){
+          container.remove();
+          addOptions( o.containerId, selectedObj )  
+        } else {
+          container.remove();
+        }
+      } else {
+        addOptions( o.containerId, selectedObj )  
+      }
     }
-    var message = $(event.currentTarget)[0]
-    var data = this
-    Blaze.renderWithData(Template.chatOptions, data, message)
+    parms = {
+      insertedTemplate: Template.chatOptions,
+      containerId: "chat-options",
+      event: e,
+      template: t,
+    }
+    displayOptions( parms )
   },
   'click [data-ion-popover=_reactionToMessage]': function(){
     Session.set("reactToMessageId", this._id);

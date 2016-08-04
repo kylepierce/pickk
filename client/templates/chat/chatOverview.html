@@ -53,25 +53,23 @@
 </template>
 
 <template name="chatOptions">
-  <div class="chat-options">
-    <div class="col-md-25" data-action="reply">
-      {{> ionIcon class="reply-icon" icon='forward'}}<br>
-      Reply
-    </div>
-    <div class="col-md-25" data-action="react">
-      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
-      React
-    </div>
-    <div class="col-md-25" data-action="user">
-      {{> ionIcon class="reply-icon" icon='ios-person'}}
-      <br>
-      User
-    </div>
-    <div class="col-md-25" data-action="close">
-      {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
-      <br>
-      Cancel
-    </div>
+  <div class="col-md-25" data-action="reply">
+    {{> ionIcon class="reply-icon" icon='forward'}}<br>
+    Reply
+  </div>
+  <div class="col-md-25" data-action="react">
+    <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
+    React
+  </div>
+  <div class="col-md-25" data-action="user">
+    {{> ionIcon class="reply-icon" icon='ios-person'}}
+    <br>
+    User
+  </div>
+  <div class="col-md-25" data-action="close">
+    {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
+    <br>
+    Delete
   </div>
 </template>
 

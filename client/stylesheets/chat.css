@@ -20,7 +20,7 @@
 	opacity: 1;
 }
 
-.chat-options {
+#chat-options {
   width:100%;
   float: left;
   background-color: #009688;
