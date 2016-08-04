@@ -1,20 +1,22 @@
 // Chat
 Meteor.publish('chatMessages', function(groupId, limit) {
-  check(groupId, String);
-  check(limit, String);
+  // check(groupId, String);
+  // check(limit, String);
+  
   limit = limit || 10;
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
 });
 
 // Lets "Load more chats work"
 Meteor.publish("chatMessagesCount", function(groupId) {
-  check(groupId, String);
+  // check(groupId, String);
+
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 
 // Hacky way to load chat users
 Meteor.publish('chatUsers', function(id) {
-  check(id, Object);
+  // check(id, Array);
 
   var fields = { fields: {
     'profile.username': 1,
