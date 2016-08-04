@@ -211,7 +211,7 @@ Meteor.publish("userData", function() {
     });
 });
 
-Meteor.publish('findUserGroups', function(id) {
+Meteor.publish('findUsersInGroup', function(id) {
   return UserList.find(
     {"profile.groups": id},
     {
@@ -223,6 +223,12 @@ Meteor.publish('findUserGroups', function(id) {
     }
   );
 })
+
+Meteor.publish('usersGroups', function ( user ) {
+  var selector = {"group.members": {$in: user }}
+  // Find this user id in any group 
+  return Groups.find(selector)
+});
 
 Meteor.publish('groups', function() {
   return Groups.find({});

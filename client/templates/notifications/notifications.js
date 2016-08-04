@@ -13,7 +13,7 @@ Template.notification.helpers({
 		}
 	},
 });
-
+ 
 Template.notifications.events({
 	'click [data-action=delete]': function () {
 		var notificationId = this._id
@@ -105,8 +105,8 @@ Template.notification.events({
 
 Template.notificationOptions.events({
 	'click [data-action=user]': function (event, template) {
-		var note = template.data.data.note
-		console.log(note.senderId)
+		var note = template
+		console.log(note)
 	}, 
 	'click [data-action=close]': function(){
 		$('#notification-options').remove();

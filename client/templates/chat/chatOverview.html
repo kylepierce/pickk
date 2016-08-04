@@ -21,56 +21,66 @@
 <template name="chatRoom">
   {{#ionView }}
     {{#ionContent}}
-    <form id="" style="margin-bottom: 50px">
-      {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage}}
-      <!-- <div class="col-md-5 chat-buttons" data-action="mention">Mention</div> -->
-      <div class="col-md-33 chat-buttons" data-ion-popover="_reaction" style="width: 50%">React</div>
-      <button class="button" style="float:right; width: 50%; border: none;" type="submit">Send</button>
-    </form>
-    {{#ionList}}
-      {{#with groupMessages}}
-        {{#each messages this}}
-          <div data-action="message" class="message">
-            {{#ionItem avatar=true id=this._id class="single-message"}}
-              {{#with user this.user}}
-                {{> userAvatar userId=_id alreadySubscribed=true}}
-                <h2>{{chatUser this._id}}</h2>
-              {{/with}}
-              <p>{{{message}}}</p>
-              {{> messageReactions reactions=this.reactions}}
-            {{/ionItem}}
-          </div>
-          {{/each}}
-        {{/with}}
+      {{> messageBox}}
+
+      {{#ionList}}
+        {{#each item in groupMessages}}
+          {{> singleMessage i=item}}
+        {{/each}}
+
         {{#if showLoadMore}}
           <div class="load-more-wrapper text-center">
             <button class="button load-more" type="button">Load more</button>
           </div>
         {{/if}}
       {{/ionList}} 
+
     {{/ionContent}}
   {{/ionView}}
 </template>
 
+<template name="messageBox">
+  <form id="" style="margin-bottom: 50px">
+    {{> inputAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
+    <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
+    <div class="col-md-33 chat-buttons" data-ion-popover="_reaction" >React</div>
+    <button tabindex=2 class="col-md-33 button" style="float:right;  border: none;" type="submit">Send</button>
+  </form> 
+</template>
+
+<template name="singleMessage">
+  {{#ionItem avatar=true id=i._id class="single-message"}}
+    {{#with userObj i.user}}
+      {{> userAvatar userId=_id alreadySubscribed=true}}
+      <h2>{{username}}</h2>
+    {{/with}}
+    <p>{{{messageText i}}}</p>
+    {{> messageReactions reactions=i.reactions}}
+  {{/ionItem}}  
+</template>
+
 <template name="chatOptions">
-  <div class="col-md-25" data-action="reply">
-    {{> ionIcon class="reply-icon" icon='forward'}}<br>
-    Reply
-  </div>
-  <div class="col-md-25" data-action="react">
-    <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
-    React
-  </div>
-  <div class="col-md-25" data-action="user">
-    {{> ionIcon class="reply-icon" icon='ios-person'}}
-    <br>
-    User
-  </div>
-  <div class="col-md-25" data-action="close">
-    {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
-    <br>
-    Delete
-  </div>
+  {{#with options}}
+    <div class="{{options}}" data-action="reply">
+      {{> ionIcon class="reply-icon" icon='forward'}}<br>
+      Reply
+    </div>
+    <div class="{{options}}" data-action="react">
+      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
+      React
+    </div>
+    <div class="{{options}}" data-action="user">
+      {{> ionIcon class="reply-icon" icon='ios-person'}}<br>
+      User
+    </div>
+    {{#if canDelete}}
+      <div class="{{options}}" data-action="close">
+        {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
+        <br>
+        Delete
+      </div>
+    {{/if}}
+  {{/with}}
 </template>
 
 <template name="_groupChats">

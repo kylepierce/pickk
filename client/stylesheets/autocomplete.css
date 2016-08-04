@@ -1,3 +1,9 @@
 .-autocomplete-container i {
-    margin: 5px 8px;
+  margin: 5px 8px;
+}
+
+.-autocomplete-container {
+	top: 118px!important;
+	left: 5%;
+	position: fixed!important;
 }

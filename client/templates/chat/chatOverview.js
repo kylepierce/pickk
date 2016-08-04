@@ -3,8 +3,7 @@ Template.chatRoom.created = function() {
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
     Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
     Meteor.subscribe("chatMessagesCount", groupId);
-    Meteor.subscribe('groups', groupId);
-    Meteor.subscribe('findUserGroups', groupId);
+    Meteor.subscribe('findUsersInGroup', groupId);
     Meteor.subscribe('chatUsersList', groupId);
   }.bind(this));
 };
@@ -73,11 +72,18 @@ Template.chatRoom.events({
       $("#messageBox").val('');
     }
   },
+  'click [data-action=mention]': function(){
+    $("#messageBox").focus()
+    $("#messageBox").val("@")
+  },  
+});
+
+Template.singleMessage.events({
   'click .item': function (e, t) {
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
-      var selectedObj = t.data.note
+      var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
 
       var addOptions = function ( id, data ){
@@ -104,31 +110,57 @@ Template.chatRoom.events({
       containerId: "chat-options",
       event: e,
       template: t,
+      dataPath: t.data.i
     }
     displayOptions( parms )
   },
-  'click [data-ion-popover=_reactionToMessage]': function(){
-    Session.set("reactToMessageId", this._id);
-  }
+});
+
+Template.chatOptions.helpers({
+  'options': function ( ) {
+    var owner = Template.instance().data.user
+    var currentUser = Meteor.userId()
+    if ( owner === currentUser || currentUser.role === "admin") {
+      return "col-md-25"
+    } else {
+      return "col-md-33"
+    }    
+  },
+  'canDelete': function (){
+    var owner = Template.instance().data.user
+    var currentUser = Meteor.userId()
+    if ( owner === currentUser || currentUser.role === "admin") {
+      return true
+    } else {
+      return false
+    }
+  } 
 });
 
 Template.chatOptions.events({
   'click [data-action=reply]': function(event, template) {
-    console.log(this)
-    var username = Meteor.users.findOne({_id: this.user}).profile.username
-    $('[name=messageBox]').val("@"+username)
+    var userId = Template.instance().data.user
+    var user = Meteor.users.findOne({_id: userId});
+    var userName = user.profile.username
+    $('[name=messageBox]').val("@" + userName)
+    $("#messageBox").focus()
+    var container = $('#chat-options')[0]
+    container.remove();
   },
-  'click [data-action=react]': function(event, template) {
+  'click [data-ion-popover=_reactionToMessage]': function(){
+    var messageId = Template.instance().data._id
+    Session.set("reactToMessageId", messageId);
   },
   'click [data-action=user]': function(event, template) {
-    Router.go('/user-profile/' + this.user);
+    var userId = Template.instance().data.user
+    Router.go('/user-profile/' + userId);
   },
   'click [data-action=close]': function(event, template) {
     var entire = $(event.currentTarget).parent().css({'display': 'none', 'opacity': '0'})
   },
 });
 
-Template.chatRoom.helpers({
+Template.messageBox.helpers({
   settings: function() {
     return {
       position: "bottom",
@@ -146,47 +178,6 @@ Template.chatRoom.helpers({
       ]
     };
   },
-  groupMessages: function() {
-    var groupId = Session.get('chatGroup');
-
-    // Find the chat messages from this group.
-    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
-
-    var chatArray = [];
-
-    // Loop over all the messages and grab the user id. 
-    // This is so we can limit the number of users we need to return. 
-    for (var i = 0; i < chat.length; i++) {
-
-      var user = chat[i];
-      var userId = user.user;
-      var userExists = chatArray.indexOf(userId);
-      if (userExists == -1) {
-        chatArray.push(userId);
-      }
-    }
-
-    Meteor.subscribe('chatUsers', chatArray);
-
-    return chat
-  },
-  showLoadMore: function() {
-    var groupId = Session.get('chatGroup');
-    return Chat.find({group: groupId}).fetch().length < Counts.get("chatMessagesCount");
-  },
-  messages: function(messageList) {
-    return messageList
-  },
-  message: function() {
-    return this.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
-  },
-  user: function(id) {
-    var user = UserList.findOne({_id: id});
-    return user
-  },
-  chatUser: function() {
-    return this.profile.username;
-  },
   'randomMessage': function() {
     var random = Math.floor((Math.random() * 5) + 1)
     if (random == 1) {
@@ -201,6 +192,48 @@ Template.chatRoom.helpers({
       return 'Who will win?'
     }
   }
+});
+
+Template.chatRoom.helpers({
+  groupMessages: function() {
+    var groupId = Session.get('chatGroup');
+
+    var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
+
+    // Find the chat messages from this group.
+    var chatArray = [];
+
+    // Loop over all the messages and grab the user id. 
+    // This is so we can limit the number of users we need to return. 
+    for (var i = 0; i < chat.length; i++) {
+      var user = chat[i];
+      var userId = user.user;
+      var userExists = chatArray.indexOf(userId);
+      if (userExists == -1) {
+        chatArray.push(userId);
+      }
+    }
+
+    Meteor.subscribe('chatUsers', chatArray);
+
+    return chat
+    
+  },
+  showLoadMore: function() {
+    var groupId = Session.get('chatGroup');
+    return Chat.find({group: groupId}).fetch().length < Counts.get("chatMessagesCount");
+  },
+  // messages: function(messageList) {
+  //   return messageList
+  // },
+
+  // user: function(id) {
+  //   var user = UserList.findOne({_id: id});
+  //   return user
+  // },
+  // chatUser: function() {
+  //   return this.profile.username;
+  // },
 });
 
 Template._groupChats.helpers({
@@ -262,7 +295,6 @@ Template._reactionToMessage.events({
     var selected = $(event.currentTarget)
     var message = selected.attr("value")
     var currentUser = Meteor.userId()
-
     var messageId = Session.get("reactToMessageId");
 
     Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
@@ -275,6 +307,8 @@ Template._reactionToMessage.events({
       }
     });
     IonPopover.hide();
+    var container = $('#chat-options')[0]
+    container.remove();
     $("#messageBox").val('');
     Session.set("reactToMessageId", null);
   },

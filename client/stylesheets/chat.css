@@ -6,6 +6,8 @@
 
 #messageBox {
 	padding: 10px;
+  word-break: break-word;
+  height: 75px;
 }
 
 #chat-button{
