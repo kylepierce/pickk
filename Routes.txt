@@ -1,0 +1,77 @@
+Routes:
+
+[!] - Urgent
+[*] - Look into
+
+Before Sign In:
+Landing Page (/landing)
+Login (/login)
+- Send again (Its on the same page...) [*]
+Forgot your password (/recover-password)
+Register (/register)
+Privacy Policy (/privacy) [*]
+Terms of User (/terms-of-use) [*]
+
+Onboarding:
+New User Settings (/newUserSettings)
+New Favorite Teams (/newUserFavoriteTeams)
+How To play (/onboarding)
+
+All:
+- UserData
+- Number of Notifications
+- User's Groups
+
+Home (/)
+- Upcoming Games
+
+Game Schedule (/games)
+- Upcoming Games
+- Teams
+
+ChatRoom (Sidebar)
+- Chat messages
+- Users who posted them
+
+Groups Home (/groups)
+
+Search Groups (/searchGroups)
+- Index searches
+
+All Groups (/allGroups)
+- All groups [*] If possible move to page system.
+
+Single Group (/group/:id)
+- All group user data
+- Individual Group data
+
+Create a Group (/newGroup)
+- Not sure it needs any
+
+Question History 
+- All Games participated in
+
+Single Game History
+- All questions with User._id is in the card
+- All Answers 
+
+Week Leaderboard 
+- Top 25 users
+
+Game Leaderboard
+- Top 25 users
+- GamePlayed to sort
+
+Notifications [*] Be able to filter
+- Group Invites
+- Follower requests
+- Game Details
+- Answer details
+- Chat details
+
+Profile / User 
+- Single User Details
+- Groups
+- Trophies
+
+

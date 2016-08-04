@@ -3,11 +3,11 @@ Template.betaList.helpers({
 	  var selector = {"profile.beta_request": true}
 	  return UserList.find(selector).fetch()
 	},
-	questionsAnswered: function () {
-		var userId = this._id
-		Meteor.subscribe('answersByUser', userId)
-		return Answers.find({userId: userId}).count()
-	}
+	// questionsAnswered: function () {
+	// 	var userId = this._id
+	// 	Meteor.subscribe('answersByUser', userId)
+	// 	return Answers.find({userId: userId}).count()
+	// }
 });
 
 Template.betaList.events({
