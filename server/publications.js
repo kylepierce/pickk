@@ -24,6 +24,7 @@ Meteor.publish("chatMessagesCount", function(groupId) {
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 
+// Remove soon
 Meteor.publish('questions', function() {
   var activeQuestions = Questions.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
   if (activeQuestions) {
@@ -64,21 +65,21 @@ Meteor.publish('oldQuestions', function() {
   return this.ready();
 })
 
-Meteor.publish('allQuestions', function(game) {
-  var allQuestions = Questions.find({gameId: game});
-  if (allQuestions) {
-    return allQuestions
-  }
-  return this.ready();
-})
+// Meteor.publish('allQuestions', function(game) {
+//   var allQuestions = Questions.find({gameId: game});
+//   if (allQuestions) {
+//     return allQuestions
+//   }
+//   return this.ready();
+// })
 
-Meteor.publish('everyQuestions', function() {
-  var allQuestions = Questions.find({});
-  if (allQuestions) {
-    return allQuestions
-  }
-  return this.ready();
-})
+// Meteor.publish('everyQuestions', function() {
+//   var allQuestions = Questions.find({});
+//   if (allQuestions) {
+//     return allQuestions
+//   }
+//   return this.ready();
+// })
 
 Meteor.publish('questionsByGameId', function(gameId) {
   check(gameId, String);
@@ -90,29 +91,24 @@ Meteor.publish('answersByGameId', function(gameId) {
   return Answers.find({userId: this.userId, gameId: gameId});
 })
 
-Meteor.publish('currentAnswers', function() {
-  var currentGame = Games.findOne({live: true})
-  currentGame = currentGame._id
-  return Answers.find({userId: this.userId, gameId: currentGame}, {sort: {dateCreated: -1}, limit: 3});
-})
+// Meteor.publish('currentAnswers', function() {
+//   var currentGame = Games.findOne({live: true})
+//   currentGame = currentGame._id
+//   return Answers.find({userId: this.userId, gameId: currentGame}, {sort: {dateCreated: -1}, limit: 3});
+// })
 
-Meteor.publish('singleGame', function(id) {
-  var singleGame = Questions.find({gameId: id}, {sort: {dateCreated: 1}});
-  if (singleGame) {
-    return singleGame
-  }
-  return this.ready();
-});
+// Meteor.publish('singleGame', function(id) {
+//   var singleGame = Questions.find({gameId: id}, {sort: {dateCreated: 1}});
+//   if (singleGame) {
+//     return singleGame
+//   }
+//   return this.ready();
+// });
 
 Meteor.publish('findSingle', function(id) {
-  return UserList.find({_id: id},
-    {
-      fields: {
-        'profile': 1,
-        '_id': 1
-      }
-    });
-})
+  var fields = {fields: {'profile': 1,'_id': 1}}
+  return UserList.find({_id: id}, fields);
+});
 
 Meteor.publish('chatUsersList', function(groupId) {
   // check( groupId, String );
@@ -133,30 +129,26 @@ Meteor.publish('chatUsersList', function(groupId) {
 });
 
 Meteor.publish('findSingleUsername', function(id) {
-  return UserList.find({_id: id},
-    {
-      fields: {
-        'profile.username': 1,
-        'profile.avatar': 1,
-        'services': 1,
-        '_id': 1
-      }
-    });
-})
+  var fields = { fields: {
+    'profile.username': 1,
+    'profile.avatar': 1,
+    'services': 1,
+    '_id': 1
+  }}
+  return UserList.find({_id: id}, fields);
+});
 
 Meteor.publish('chatUsers', function(id) {
+  var fields = { fields: {
+    'profile.username': 1,
+    'profile.avatar': 1,
+    'services': 1,
+    '_id': 1
+  }}
+  return UserList.find({_id: {$in: id}}, fields)
+});
 
-  return UserList.find({_id: {$in: id}},
-    {
-      fields: {
-        'profile.username': 1,
-        'profile.avatar': 1,
-        'services': 1,
-        '_id': 1
-      }
-    });
-})
-
+// Switch to load latest users first
 Meteor.publish("chatUsersAutocomplete", function(selector, options) {
   if (!this.userId) {
     return this.ready()
@@ -167,8 +159,7 @@ Meteor.publish("chatUsersAutocomplete", function(selector, options) {
   options.limit = Math.min(5, Math.abs(options.limit || 5));
   Autocomplete.publishCursor(UserList.find(selector, options), this);
   return this.ready()
-})
-
+});
 
 Meteor.publish('followingUserList', function() {
   if (!this.userId) {
@@ -188,16 +179,16 @@ Meteor.publish('userList', function(id) {
   return UserList.find({}, {fields: {_id: 1, "profile.username": 1, "profile.avatar": 1}, limit: 10});
 })
 
-Meteor.publish('adminUserList', function(id) {
-  return UserList.find({}, {
-    fields: {
-      _id: 1,
-      "profile.username": 1,
-      "profile.avatar": 1,
-      "profile.diamonds": 1
-    }
-  });
-})
+// Meteor.publish('adminUserList', function(id) {
+//   return UserList.find({}, {
+//     fields: {
+//       _id: 1,
+//       "profile.username": 1,
+//       "profile.avatar": 1,
+//       "profile.diamonds": 1
+//     }
+//   });
+// })
 
 Meteor.publish("userData", function() {
   if (!this.userId) {
@@ -262,7 +253,8 @@ Meteor.publish('games', function() {
 });
 
 Meteor.publish('gamesPlayed', function() {
-  return Games.find({users: this.userId});
+  var selector = {users: {$in: [this.userId]}}
+  return Games.find(selector);
 });
 
 Meteor.publish('SportRadarGames', function() {
@@ -311,25 +303,29 @@ Meteor.publish('activeAtBat', function(gameId) {
   return AtBat.find({gameId: gameId, active: true});
 });
 
-Meteor.publish('atBatForThisGame', function() {
-  var currentGame = Games.findOne({live: true});
-  var currentGameId = currentGame._id
-  // return AtBat.find({});
-  return AtBat.find({gameId: currentGameId});
-});
+// Meteor.publish('atBatForThisGame', function() {
+//   var currentGame = Games.findOne({live: true});
+//   var currentGameId = currentGame._id
+//   // return AtBat.find({});
+//   return AtBat.find({gameId: currentGameId});
+// });
 
 Meteor.publish('activePlayers', function(gameId) {
   check(gameId, String);
   
+  // Fix Next
+  // var fields = {
+  //   name: 
+  // }
   var teams = Meteor.call('playersPlaying', gameId);
   return Players.find({_id: {$in: teams}})
 });
 
-Meteor.publish('oneGamePlayers', function() {
-  var currentGame = Games.find({live: true});
-  var teams = Meteor.call('teamPlaying')
-  return Players.find({team: {$in: teams}})
-});
+// Meteor.publish('oneGamePlayers', function() {
+//   var currentGame = Games.find({live: true});
+//   var teams = Meteor.call('teamPlaying')
+//   return Players.find({team: {$in: teams}})
+// });
 
 Meteor.publish('atBatPlayer', function(gameId) {
   check(gameId, String);
@@ -347,9 +343,9 @@ Meteor.publish('teams', function() {
   return Teams.find({})
 });
 
-Meteor.publish('futureTasks', function() {
-  return FutureTasks.find({})
-});
+// Meteor.publish('futureTasks', function() {
+//   return FutureTasks.find({})
+// });
 
 Meteor.publish('betaList', function() {
   var selector = {"profile.beta_request": true}
@@ -369,9 +365,9 @@ Meteor.publish('leaderboardGamePlayed', function(game) {
   return GamePlayed.find({gameId: game})
 });
 
-Meteor.publish('notifications', function() {
-  return Notifications.find({})
-});
+// Meteor.publish('notifications', function() {
+//   return Notifications.find({})
+// });
 
 Meteor.publish('unreadNotifications', function(user) {
   return Notifications.find({userId: user, read: false})  

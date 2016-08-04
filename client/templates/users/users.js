@@ -1,31 +1,4 @@
-Template.userProfile.created = function () {
-  this.autorun(function () {
-    var userId = Router.current().params._id
-    this.subscription = Meteor.subscribe('findSingle', userId);
-  }.bind(this));
-};
-
-Template.userProfile.onRendered( function() {
-  $( "svg" ).delay( 0 ).fadeIn();
-});
-
-Template.userProfile.onCreated( function() {
-  this.subscribe( 'findSingle', function() {
-    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
-      $( ".loading-wrapper" ).fadeIn( 'fast' );
-    });
-  });
-});
-
 Template.userProfile.helpers({
-  profile: function () {
-    var userId = Router.current().params._id
-    var user = UserList.findOne({_id: userId});
-    return user 
-  },
-  username: function(){
-    return this.profile.username
-  },
   group: function() {
     return this.profile.groups
   }, 
@@ -34,14 +7,6 @@ Template.userProfile.helpers({
   },
   trophyData: function(id){
     return Trophies.findOne({_id: id})
-  },
-  following: function(){
-    var numFollowing = this.profile.following;
-    return numFollowing.length
-  },
-  follower: function(){
-    var numFollow = this.profile.followers;
-    return numFollow.length
   },
   ownProfile: function(){
     var userId = Router.current().params._id

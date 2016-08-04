@@ -1,20 +1,3 @@
-
-Template.home.rendered = function (template) {
-  if (!Meteor.loggingIn() && !Meteor.user()) {
-   	 Router.go('/landing');
-  }
-
-  if (Meteor.user()) {
-    var username = Meteor.user().profile.username;
-    var favoriteTeam = Meteor.user().profile.favoriteTeams;
-    if (username === "" || username === null || username === "undefined") {
-      Router.go('/newUserSettings')
-    } else if (!favoriteTeam){
-      Router.go('/newUserFavoriteTeams')
-    }
-  }
-};
-
 Template.home.helpers({
   scoreMessage: function() {
     var user = Meteor.user();
