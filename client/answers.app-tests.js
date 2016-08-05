@@ -17,7 +17,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", "250", "Strike", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", 250, "Strike", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
@@ -30,7 +30,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option3", "500", "Hit", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option3", 500, "Hit", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {

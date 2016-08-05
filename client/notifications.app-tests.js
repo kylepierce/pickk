@@ -11,7 +11,7 @@ if (Meteor.isClient) {
       Meteor.subscribe('userData')
       Meteor.subscribe('activeGames')
       Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
-      Meteor.subscribe('unreadNotifications, "CharlieDalton"')
+      Meteor.subscribe('userNotifications', "CharlieDalton" )
     });
 
     it('got free pickk coins', function() {
@@ -19,7 +19,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("binaryQuestionAnswered", "BinaryQuestion", "option1",  "500", "Will Erik Smith Hit a Home Run in the 6th inning?", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("binaryQuestionAnswered", "BinaryQuestion", "option1",  500, "Will Erik Smith Hit a Home Run in the 6th inning?", callback)}))
         .then(function() {
           assert.equal(Notifications.find({userId: "CharlieDalton", questionId: "BinaryQuestion", gameId: "ActiveGame"}).count(), 1);
         })
@@ -31,7 +31,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "BinaryQuestion", "option1", "500", "Will Erik Smith Hit a Home Run in the 6th inning?", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "BinaryQuestion", "option1", 500, "Will Erik Smith Hit a Home Run in the 6th inning?", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyBinaryQuestionStatus", "BinaryQuestion", "option1", callback)}))
         .then(function() {
@@ -44,7 +44,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", "250", "Strike", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", 250, "Strike", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
         .then(function() {
@@ -57,7 +57,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("gameQuestionAnswered", "FutureActiveQuestion", "option1", "0", "", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("gameQuestionAnswered", "FutureActiveQuestion", "option1", 0, "", callback)}))
         .then(function() {
           assert.equal(Notifications.find({userId: "CharlieDalton", questionId: "FutureActiveQuestion", type: "diamonds"}).count(), 1);
         })
@@ -68,7 +68,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("gameQuestionAnswered", "FutureActiveQuestion", "option1", "0", "", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("gameQuestionAnswered", "FutureActiveQuestion", "option1", 0, "", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "FutureActiveQuestion", callback)}))
         .then(denodeify(function(callback) {return Meteor.call("modifyGameQuestionStatus", "FutureActiveQuestion", "option1", callback)}))
         .then(function() {
@@ -83,7 +83,7 @@ if (Meteor.isClient) {
       Meteor.subscribe('userData')
       Meteor.subscribe('activeGames')
       Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
-      Meteor.subscribe('unreadNotifications, "CharlieDalton"')
+      Meteor.subscribe('userNotifications', "CharlieDalton" )
     });
 
     it('user is mentioned', function() {

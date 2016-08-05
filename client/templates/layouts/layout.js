@@ -5,8 +5,6 @@ Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 Template.mainView.rendered = function() {
   // IonSideMenu.snapper.settings({disable: 'right'});  
   IonSideMenu.snapper.settings({touchToDrag: false});
-  var user = Meteor.userId()
-  Meteor.subscribe('unreadNotifications', user)
 };
 
 Template.sideMenuContent.events({

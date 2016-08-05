@@ -121,7 +121,7 @@ Meteor.methods({
 	'binaryQuestionAnswered': function(questionId, answered, wager, description) {
 		check(questionId, String);
 		check(answered, String);
-		check(wager, String);
+		check(wager, Number);
 		check(description, String);
 
 		var question = Questions.findOne(questionId);
@@ -178,7 +178,7 @@ Meteor.methods({
 	'gameQuestionAnswered': function(questionId, answered, wager, description) {
 		check(questionId, String);
 		check(answered, String);
-		check(wager, String);
+		check(wager, Number);
 		check(description, String);
 
 		var question = Questions.findOne(questionId);

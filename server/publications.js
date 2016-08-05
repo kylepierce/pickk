@@ -20,6 +20,10 @@ Meteor.publish('unreadNotifications', function() {
   return Notifications.find({userId: this.userId, read: false})  
 });
 
+Meteor.publish('userNotifications', function(userId) {
+  return Notifications.find({userId: userId, read: false})  
+});
+
 Meteor.publish('usersGroups', function ( user ) {
   check(user, String);
 
