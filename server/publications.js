@@ -138,7 +138,7 @@ Meteor.publish('activeQuestions', function(gameId) {
     gameId: gameId,
     active: true,
     usersAnswered: {$nin: [currentUserId]}
-  });
+  }, {limit: 10});
 });
 
 Meteor.publish('gameQuestions', function() {

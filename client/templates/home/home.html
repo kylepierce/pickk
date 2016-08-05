@@ -5,24 +5,71 @@
 			<i class="fa fa-diamond"></i>
 		  <strong>{{currentUser.profile.diamonds}}</strong> 
 				
-		 	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
-		  <strong>{{gameCoins currentUser._id "null"}}</strong>
+<!-- 		 	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
+		  <strong>{{gameCoins currentUser._id "null"}}</strong> -->
 		</h1>
 	{{/contentFor}}
 
   {{#ionView }}
     {{#ionContent}}
 
-		{{> gameBar}}
+	    {{#each game in games}}
+				{{> singleGameInfo game=game}}
+				<div class="container" style="margin-top: 10px;"> 
+					{{> singleGameCard game=game}}
+				</div>
+			{{/each}}
 
-    <div style="margin-top: 45px"> 
-			{{> questionCard}}
-		</div>
+			{{#each question in questions}}
+				{{> singleQuestion q=question}}
+			{{/each}}
 
-		{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
 </template>
+
+<template name="singleQuestion">
+	{{#if eventQuestions q}}
+		{{> eventQuestion q=q}}
+	{{/if}}
+	{{#if commericalQuestions q}}
+		{{> commericalQuestion q=q}}
+	{{/if}}
+	{{#if liveQuestion q}}
+		Live
+	{{/if}}
+</template>
+
+<template name="eventQuestion">
+	{{q.que}}
+	{{#each o in options q}}
+		{{> option o=o q=q}}
+	{{/each}}
+</template>
+
+<!-- <template name="commericalQuestion">
+	{{#each option in options}}
+		<div>{{title}}</div>
+	{{/each}}
+</template> -->
+
+<template name="option">
+	<option>{{o.title}} {{o.multiplier}}</option>
+</template>
+
+
+
+
+
+
+<!-- <template name="gameBar">
+  <div class="bar bar-game"> 
+	</div>
+</template> -->
+
+<!--     <div style="margin-top: 45px"> 
+			{{> questionCard}}
+		</div> -->
 
 <template name="activeQuestion">
 	<div class="container" id="normalCard" style="display: none;">
@@ -357,24 +404,6 @@
 		{{/if}}
 	</div>
 </template>
-
-
-<!-- <template name="gameBar">
-  <div class="bar bar-game"> 
-		<div class="container" style="text-align: center; padding-top: 6px;"> 
-			<div class="col-md-10 float-left" style="font-family: 'lato'; margin: 0 2%;">
-				{{#if top}} 
-
-				{{/if}}
-					{{inning}}
-			</div>
-			<div class="col-md-33 float-left" style="font-family: 'lato'">
-				COUNT: {{balls}} - {{strikes}} 
-			</div>
-			
-		</div>
-	</div>
-</template> -->
 
 <template name="playerCard">
 	<div class="player-card" id="player">

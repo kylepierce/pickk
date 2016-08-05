@@ -1,8 +1,3 @@
-Template.activeGames.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
-
-
 Template.activeGames.helpers({
   games: function ( ) {
     return Games.find({}).fetch();

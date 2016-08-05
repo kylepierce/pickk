@@ -3,6 +3,10 @@ Meteor.methods({
 		return !!UserList.findOne({"profile.username": username});
 	},
 
+	'activeQuestions': function (gameId) {
+		Questions.update({gameId: gameId}, {$set: {'active': true}},  {multi: true})
+	},
+
 	'toggleCommercial': function(game, toggle) {
 		check(game, String);
 		check(toggle, Boolean);

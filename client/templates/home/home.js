@@ -1,4 +1,23 @@
+Template.home.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
+};
+
+Template.eventQuestion.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
+};
+
+Template.option.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
+};
+
+
 Template.home.helpers({
+  games: function () {
+    return Games.find({}).fetch();
+  },
+  questions: function () {
+    return Questions.find({}, {limit: 20}).fetch()
+  },
   scoreMessage: function() {
     var user = Meteor.user();
     var notifications = user && user.pendingNotifications || [];
@@ -65,6 +84,60 @@ Template.home.helpers({
     });
   }
 });
+
+Template.singleQuestion.helpers({
+  eventQuestions: function (q) {
+    if(q.atBatQuestion || q.event){
+      return true
+    }
+  },
+  commericalQuestions: function (q){
+    if(q.commercial === true ){
+      return true
+    }
+  },
+  liveQuestion: function (q) {
+    if(!q.atBatQuestion && !q.binaryChoice){
+      return true
+    }
+  }
+});
+
+Template.eventQuestion.helpers({
+  options: function (q) {
+    var imported = q
+    var data = this.q.options
+    var keys = _.keys(data)
+    var values = _.values(data)
+    var optionsArray = []
+
+    // I want to end up with a array of objects
+    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+    // So that o.number = option1
+    
+    for (var i = 0; i < keys.length; i++) {
+      var obj = values[i]
+      var number = keys[i]
+      obj["option"] = number 
+      optionsArray.push(obj)
+    }
+
+    return optionsArray
+  }
+});
+
+// Template.commericalQuestion.helpers({
+//   options: function (t) {
+//     var data = this
+//     console.log(data, t)
+//     return data.options
+//   }
+// });
+
+
+
+
+
 
 Template.sAlert.events({
   'click [data-action="shareResult"]': function() {
