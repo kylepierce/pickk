@@ -43,20 +43,20 @@ Meteor.publish('game', function(_id) {
 });
 
 // All Games for the next 3 days
-Meteor.publish('games', function() {
-  const today = moment().startOf('day').toDate();
-  const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
+// Meteor.publish('games', function() {
+//   const today = moment().startOf('day').toDate();
+//   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
 
-  var selector = {scheduled: {$gt: today, $lt: tomorrow}};
-  var parms = {sort: {scheduled: -1}, fields: {_id: 1, id: 1, name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
+//   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
+//   var parms = {sort: {scheduled: -1}, fields: {_id: 1, id: 1, name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
 
-  // var tester = isTester(this.userId);
-  // if ( ! tester) {
-  //   selector.public = true;
-  // }
+//   // var tester = isTester(this.userId);
+//   // if ( ! tester) {
+//   //   selector.public = true;
+//   // }
 
-  return Games.find(selector, parms);
-});
+//   return Games.find(selector, parms);
+// });
 
 
 // ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game) 

@@ -1,6 +1,5 @@
 Template._situational.helpers({
 	teams: function () {
-		Meteor.subscribe('games');
 		var live =  Games.find({live: true}).fetch();
 		return live
 	}

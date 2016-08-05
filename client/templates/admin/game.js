@@ -28,7 +28,6 @@ Template.gameInfo.events({
 
 Template.gameInfo.helpers({
 	game: function () {
-		Meteor.subscribe('games')
 		return Games.find({}, {sort: {"dateCreated": -1}}).fetch();
 	}
 });
