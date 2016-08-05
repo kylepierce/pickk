@@ -8,17 +8,17 @@ Template.chatRoom.created = function() {
   }.bind(this));
 };
 
-Template.chatRoom.onRendered( function() {
-  $( "svg" ).delay( 0 ).fadeIn();
-});
+// Template.chatRoom.onRendered( function() {
+//   $( "svg" ).delay( 0 ).fadeIn();
+// });
 
-Template.chatRoom.onCreated( function() {
-  this.subscribe( 'chatUsersList', function() {
-    $( ".loader" ).delay( 1000 ).fadeOut( 'fast', function() {
-      $( ".loading-wrapper" ).fadeIn( 'fast' );
-    });
-  });
-});
+// Template.chatRoom.onCreated( function() {
+//   this.subscribe( 'chatUsersList', function() {
+//     $( ".loader" ).delay( 1000 ).fadeOut( 'fast', function() {
+//       $( ".loading-wrapper" ).fadeIn( 'fast' );
+//     });
+//   });
+// });
 
 Template.chatOverview.events({
   'click #all-chats': function() { 
@@ -41,6 +41,14 @@ Template.chatOverview.helpers({
 });
 
 Template.chatRoom.events({
+  'keyup input': function(e, t){
+    var length = e.currentTarget.value.length
+    if (length < 3){
+      $('#chat-submit').removeClass('allow-chats')
+    } else if ( length >= 4){
+      $('#chat-submit').addClass('allow-chats')
+    }
+  },
   'submit form': function(event) {
     event.preventDefault();
     var currentUser = Meteor.userId()
@@ -74,7 +82,8 @@ Template.chatRoom.events({
   },
   'click [data-action=mention]': function(){
     $("#messageBox").focus()
-    $("#messageBox").val("@")
+    var currentMessage = $("#messageBox").val()
+    $("#messageBox").val(currentMessage + " @")
   },  
 });
 
@@ -142,7 +151,7 @@ Template.chatOptions.events({
     var userId = Template.instance().data.user
     var user = Meteor.users.findOne({_id: userId});
     var userName = user.profile.username
-    $('[name=messageBox]').val("@" + userName)
+    $('[name=messageBox]').val("@" + userName + " ")
     $("#messageBox").focus()
     var container = $('#chat-options')[0]
     container.remove();

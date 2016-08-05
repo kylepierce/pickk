@@ -11,6 +11,7 @@
 }
 
 #chat-button{
+  background-color: #222c31;
   padding: 5px!important;
 	line-height: 25px!important;
 	min-width: 0!important;
@@ -67,6 +68,9 @@
 }
 
 .chat-buttons {
+  background-color: #222c31;
+  color: white;
+  font-family: lato;
 	height: 47px;
 	padding-top: 15px;
 	text-align: center;
@@ -99,4 +103,12 @@ div.content.overflow-scroll.has-header {
 .reaction-count {
   font-size: 10px;
   margin-left: -5px;
+}
+
+#chat-submit {
+  background-color: #B2B2B2;
+}
+
+.allow-chats {
+  background-color: #F1C40F!important;
 }

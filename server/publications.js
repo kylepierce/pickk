@@ -28,10 +28,6 @@ Meteor.publish('usersGroups', function ( user ) {
   return Groups.find(selector)
 });
 
-
-
-
-
 // Upcoming Games
 
 Meteor.publish('game', function(_id) {

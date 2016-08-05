@@ -119,7 +119,7 @@ Template.singleQuestion.events({
   },
   'click [data-action=wager-selected]': function (e, t) {
     // console.log(this, e, t)    
-
+    $(e.currentTarget).addClass('selected')
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
@@ -183,7 +183,6 @@ Template.submitButton.events({
     var option = this.o
     var question = this.q
     var userCoins = GamePlayed.findOne({}).coins
-    console.log(userCoins)
 
     // console.log(this, e, t)
     if (userCoins < wager) {
