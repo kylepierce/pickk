@@ -41,10 +41,3 @@ Template.registerHelper('gameCoins', function (user, game) {
 	var gameObj = GamePlayed.findOne({gameId: game, userId: user});
 	return gameObj.coins
 });
-
-Template.registerHelper('teamColors', function ( teamId ) {
-	Meteor.subscribe('singleTeam', teamId )
-	var team = Teams.findOne({_id: teamId})
-	var color = "#" + team.hex[0] || "#134A8E"
-	return color
-});

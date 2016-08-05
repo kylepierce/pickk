@@ -380,92 +380,92 @@ Template.wagers.events({
   }
 });
 
-Template.gameBar.helpers({
-  top: function() {
-    var currentGame = Games.findOne({live: true});
-    var inningPosition = currentGame.topOfInning
-    if(inningPosition){
-      return true
-    } else {
-      return false
-    }
-  },
-  inning: function() {
-    var currentGame = Games.findOne({live: true});
-    return currentGame.inning
-  },
-  strikes: function() {
-    var currentAtBat = AtBat.findOne({active: true});
-    return currentAtBat.strikeCount
-  },
-  balls: function() {
-    var currentAtBat = AtBat.findOne({active: true});
-    return currentAtBat.ballCount
-  },
-  // outs: function ( ) {
-  //   var currentGame = Games.findOne({live: true});
-  //   return currentGame.outs
-  // },
-  first: function() {
-    var currentGame = Games.findOne({live: true});
-    //  
-    var first = currentGame.playersOnBase.first
-    if (first) {
-      return true
-    } else {
-      return false
-    }
-  },
-  second: function() {
-    var currentGame = Games.findOne({live: true});
-    // 
-    var second = currentGame.playersOnBase.second
-    if (second) {
-      return true
-    } else {
-      return false
-    }
-  },
-  third: function() {
-    var currentGame = Games.findOne({live: true});
-    // 
-    var third = currentGame.playersOnBase.third
-    if (third) {
-      return true
-    } else {
-      return false
-    }
-  },
-  inning: function() {
-    var currentGame = Games.findOne({live: true});
-    return currentGame.inning
-  },
-  oneOut: function() {
-    var currentGame = Games.findOne({live: true});
-    var outs = currentGame.outs
-    if (outs >= 1) {
-      return true
-    }
-  },
-  twoOuts: function() {
-    var currentGame = Games.findOne({live: true});
-    var outs = currentGame.outs
-    if (outs >= 2) {
-      return true
-    }
-  },
-  threeOuts: function() {
-    var currentGame = Games.findOne({live: true});
-    var outs = currentGame.outs
-    if (outs >= 3) {
-      return true
-    }
-  },
-  outs: function() {
-    var currentGame = Games.findOne({live: true});
-    return currentGame.outs
-  }
-});
+// Template.gameBar.helpers({
+//   top: function() {
+//     var currentGame = Games.findOne({live: true});
+//     var inningPosition = currentGame.topOfInning
+//     if(inningPosition){
+//       return true
+//     } else {
+//       return false
+//     }
+//   },
+//   inning: function() {
+//     var currentGame = Games.findOne({live: true});
+//     return currentGame.inning
+//   },
+//   strikes: function() {
+//     var currentAtBat = AtBat.findOne({active: true});
+//     return currentAtBat.strikeCount
+//   },
+//   balls: function() {
+//     var currentAtBat = AtBat.findOne({active: true});
+//     return currentAtBat.ballCount
+//   },
+//   // outs: function ( ) {
+//   //   var currentGame = Games.findOne({live: true});
+//   //   return currentGame.outs
+//   // },
+//   first: function() {
+//     var currentGame = Games.findOne({live: true});
+//     //  
+//     var first = currentGame.playersOnBase.first
+//     if (first) {
+//       return true
+//     } else {
+//       return false
+//     }
+//   },
+//   second: function() {
+//     var currentGame = Games.findOne({live: true});
+//     // 
+//     var second = currentGame.playersOnBase.second
+//     if (second) {
+//       return true
+//     } else {
+//       return false
+//     }
+//   },
+//   third: function() {
+//     var currentGame = Games.findOne({live: true});
+//     // 
+//     var third = currentGame.playersOnBase.third
+//     if (third) {
+//       return true
+//     } else {
+//       return false
+//     }
+//   },
+//   inning: function() {
+//     var currentGame = Games.findOne({live: true});
+//     return currentGame.inning
+//   },
+//   oneOut: function() {
+//     var currentGame = Games.findOne({live: true});
+//     var outs = currentGame.outs
+//     if (outs >= 1) {
+//       return true
+//     }
+//   },
+//   twoOuts: function() {
+//     var currentGame = Games.findOne({live: true});
+//     var outs = currentGame.outs
+//     if (outs >= 2) {
+//       return true
+//     }
+//   },
+//   threeOuts: function() {
+//     var currentGame = Games.findOne({live: true});
+//     var outs = currentGame.outs
+//     if (outs >= 3) {
+//       return true
+//     }
+//   },
+//   outs: function() {
+//     var currentGame = Games.findOne({live: true});
+//     return currentGame.outs
+//   }
+// });
 
 Template.normalPlay.helpers({
   option6Exists: function() {

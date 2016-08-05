@@ -41,3 +41,72 @@ Template.activeGames.events({
     Router.go('/groups')
   }, 
 });
+
+
+Template.outDisplay.helpers({
+  outs: function (number) {
+    var out = "<div class='out'></div>"
+    var noOut = "<div class='no-out'></div>"
+
+    var repeat = function (s, n) {
+      return --n ? s + ("") + repeat(s, n) : "" + s;
+    };
+
+    if (number === 0) {
+      return repeat(noOut, 3) 
+    } else if (number === 3) {
+      return repeat(out, 3)
+    } else {
+      var diff = Math.abs(number - 3)
+      var outs = repeat(out, number)
+      var noOuts = repeat(noOut, diff)
+      return outs + noOuts
+    }
+  },
+});
+
+Template.count.helpers({
+  userPlaying: function (game) {
+    var user = Meteor.userId();
+    var exists = game.indexOf(user)
+    if (!exists) return true
+  }
+});
+
+Template.teamBlock.helpers({
+  teamColors: function (id) {
+    var team = Teams.findOne({_id: id})
+    var color = "#" + team.hex[0] || "#134A8E"
+    return color
+  }
+});
+
+Template.singleGameInfo.helpers({
+  inProgress: function () {
+    if (this.game.status === "inprogress"){
+      return true
+    }
+  },
+  future: function () {
+    if (this.game.status === "scheduled"){
+      return true
+    }
+  }
+});
+Template.singleGameCTA.helpers({
+  inProgress: function () {
+    if (this.game.status === "inprogress"){
+      return true
+    }
+  },
+  future: function () {
+    if (this.game.status === "scheduled"){
+      return true
+    }
+  }
+});
+
+
+
+
+

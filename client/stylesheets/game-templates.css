@@ -2,14 +2,44 @@
 	width: 100%;
 	background-color: white;
 	font-family: lato;
-	margin-bottom: 5px;
 	font-size: 16px;
 }
 
 .single-game-info {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
 	height: 40px;
 	background-color: #455A64;
+	font-size: 16px;
+	font-family: lato;
+	font-weight: bold;
+	color: white;
+}
+
+.single-game-cta {
+	height: 40px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 34px;
+	background-color: #F1C40F;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.single-game-section {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row 
+	flex-direction: row;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
 }
 
 .team-block{

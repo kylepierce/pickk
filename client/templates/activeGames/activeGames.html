@@ -21,10 +21,11 @@
 
   {{#ionView}}
     {{#ionContent}}
-      <div class="container">
+      <div class="container" style="margin-top: 10px;">
         {{#each game in games}}
           {{> singleGameInfo game=game}}
           {{> singleGameCard game=game}}
+          {{> singleGameCTA game=game}}
         {{/each}}
       </div>
     {{/ionContent}}
@@ -33,34 +34,86 @@
 
 <template name="singleGameInfo">
   <div class="single-game-info">
-    {{game.status}}
-    Inning: {{game.inning}}
-    {{game.topOfInning}}
-    {{count}}
-    Outs: {{game.outs}}
+    {{#if inProgress}}
+      {{> gameInProgressInfo game=game}}
+    {{/if}}
+
+    {{#if future}}
+      {{> futureGameInfo game=game}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="singleGameCTA">
+  {{#if inProgress}}
+    <div class="single-game-cta">
+      Play Now! ({{game.tv}})
+    </div>
+  {{/if}}
+  {{#if future}}
+    <div class="single-game-cta">
+      Remind Me
+    </div>
+  {{/if}}
+</template>
+
+<template name="gameInProgressInfo">
+ <!--  <div class="col-md-20 single-game-section">
+    {{> count id=game.users}}
+  </div> -->
+  <div class="col-md-33 single-game-section">
+    {{> inningDisplay inning=game.inning position=game.topOfInning}}
+  </div>
+  <div class="col-md-33 single-game-section">
+    {{> outDisplay number=game.outs}}
+  </div>
+  <div class="col-md-33 single-game-section">
     {{> playersOnBase base=game.playersOnBase}}
   </div>
 </template>
 
+<template name="futureGameInfo">
+  {{ userTimeZone game.scheduled}}
+</template>
+
+<template name="count">
+  {{#if userPlaying id}}
+    Playing
+  {{else}}
+    Join
+  {{/if}} 
+</template>
+
+<template name="outDisplay">
+    {{{outs number}}}
+</template>
+
+<template name="inningDisplay">
+  {{#if position}}
+    <i class="fa fa-caret-up"></i>
+  {{else}} 
+    <i class="fa fa-caret-down"></i>
+  {{/if}}
+  {{inning}} 
+</template>
+
 <template name="playersOnBase">
-  <!-- Fix last -->
-  <div class="col-md-25 float-left" style="display:flex;justify-content:center;">
-    {{#if base.third}} 
-      <div class="base-empty base-diamond base-fix third-base "></div> 
-    {{else}} 
-      <div class="base-diamond base-fix third-base "></div> 
-    {{/if}}
-    {{#if base.second}} 
-      <div class="base-empty base-diamond"></div> 
-    {{else}} 
-      <div class="base-diamond"></div>
-    {{/if}} 
-    {{#if base.first}} 
-      <div class="base-empty base-diamond base-fix first-base"></div> 
-    {{else}} 
-      <div class="base-diamond base-fix first-base"></div>
-    {{/if}}
-  </div>  
+  <!-- Fix last / clean up -->
+  {{#if base.third}} 
+    <div class="base-empty base-diamond base-fix third-base "></div> 
+  {{else}} 
+    <div class="base-diamond base-fix third-base "></div> 
+  {{/if}}
+  {{#if base.second}} 
+    <div class="base-empty base-diamond"></div> 
+  {{else}} 
+    <div class="base-diamond"></div>
+  {{/if}} 
+  {{#if base.first}} 
+    <div class="base-empty base-diamond base-fix first-base"></div> 
+  {{else}} 
+    <div class="base-diamond base-fix first-base"></div>
+  {{/if}}
 </template>
 
 
