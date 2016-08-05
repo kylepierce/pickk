@@ -1,77 +1,86 @@
 <template name="activeGames">
-    {{#contentFor "headerButtonLeft"}}
-        <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-            {{#if isAndroid}}
-                {{> ionIcon icon='android-more-vertical'}}
-            {{else}}
-                {{> ionIcon icon='navicon'}}
-            {{/if}}
-        </button>
-    {{/contentFor}}
-
-    {{#contentFor "headerTitle"}}
-        <h1 class="title white-text-header">Home</h1>
-    {{/contentFor}}
-
-    {{#contentFor "headerButtonRight"}}
-      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
-        {{> ionIcon icon="ios-chatboxes"}}
-      </button>
-    {{/contentFor}}
-
-    {{#ionView}}
-      {{#ionContent}}
-        {{#if hasActiveGames}}
-          {{#ionList}}
-            <div class="item item-divider">Select a game</div>
-            {{#each games}}
-              {{#ionItem class=gameClass buttonRight=true}}
-                <div class="game-item-outer" >
-                  <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
-                </div>
-                {{#if inprogress status}}
-                  <button class="button game" data-game-id="{{_id}}">
-                    {{> ionIcon icon="ios-arrow-right"}}
-                  </button>
-                {{/if}}
-              {{/ionItem}}
-            {{/each}}
-          {{/ionList}}
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+        {{#if isAndroid}}
+            {{> ionIcon icon='android-more-vertical'}}
         {{else}}
-          <h3 class="next-play">0 Live National Games
-            <br><br>
-            <a class="button next-play"  href="games">
-              View Upcoming Game Schedule
-            </a>
-            <br>
-          </h3>
+            {{> ionIcon icon='navicon'}}
         {{/if}}
-        <div class="container">
-        <h3>Groups</h3>
-          {{#if groups}}
-            {{#each userGroups}}
-              {{#ionItem path="group.show" avatar=true}}
-                {{> groupAvatar}}
-                <h2 class="center-username">{{name}}</h2>
-              {{/ionItem}}
-            {{/each}}
-          {{else}}
-            {{#ionItem buttonRight=true}}
-              <p>No Groups :( Join a Group!</p>
-              <a data-action="no-group" class="button"> 
-                {{> ionIcon icon="ios-plus"}}
-              </a>
-            {{/ionItem}}
-          {{/if}}
+    </button>
+  {{/contentFor}}
 
-          <br>
-          {{#if notBeta}}
-          <h3 class="next-play">Want more baseball?</h3>
-          <a style="width: 100%;" class="button button-balanced" href="beta">
-            Pickk Local Beta
-          </a>
-          {{/if}}
-        </div>
-      {{/ionContent}}
-    {{/ionView}}
+  {{#contentFor "headerTitle"}}
+      <h1 class="title white-text-header">Home</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+      {{> ionIcon icon="ios-chatboxes"}}
+    </button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container">
+        {{#each game in games}}
+          {{> singleGameInfo game=game}}
+          {{> singleGameCard game=game}}
+        {{/each}}
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="singleGameInfo">
+  <div class="single-game-info">
+    {{game.status}}
+    Inning: {{game.inning}}
+    {{game.topOfInning}}
+    {{count}}
+    Outs: {{game.outs}}
+    {{> playersOnBase base=game.playersOnBase}}
+  </div>
+</template>
+
+<template name="playersOnBase">
+  <!-- Fix last -->
+  <div class="col-md-25 float-left" style="display:flex;justify-content:center;">
+    {{#if base.third}} 
+      <div class="base-empty base-diamond base-fix third-base "></div> 
+    {{else}} 
+      <div class="base-diamond base-fix third-base "></div> 
+    {{/if}}
+    {{#if base.second}} 
+      <div class="base-empty base-diamond"></div> 
+    {{else}} 
+      <div class="base-diamond"></div>
+    {{/if}} 
+    {{#if base.first}} 
+      <div class="base-empty base-diamond base-fix first-base"></div> 
+    {{else}} 
+      <div class="base-diamond base-fix first-base"></div>
+    {{/if}}
+  </div>  
+</template>
+
+
+<template name="singleGameCard">
+  <div class="single-game-card">
+
+    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
+
+    {{> teamBlock id=game.away.id abbr=game.away.abbr name=game.away.name runs=game.scoring.away.runs }}
+
+  </div>
+</template>
+
+
+<template name="teamBlock">
+  <div class="team-block">
+    <span class="team-colors team-text" style="background-color:{{teamColors id}}">
+      {{abbr}}
+    </span> 
+    <span class="team-name team-text">{{name}}</span>
+    <span class="team-score team-text">{{runs}}</span>
+  </div>
 </template>

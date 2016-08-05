@@ -1,0 +1,39 @@
+<template name="mainLayout">
+
+{{#ionBody}}
+  {{#ionSideMenuContainer}}
+    {{#ionSideMenus}}
+
+      {{#ionSideMenu}}
+        {{> sideMenuContent}}
+      {{/ionSideMenu}}
+
+      <!-- {{#ionSideMenu side="right"}} -->
+      <!-- {{> chatOverview}} -->
+      <!-- {{/ionSideMenu}} -->
+
+    {{/ionSideMenus}}
+      {{#ionSideMenuContent}}
+
+        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+        {{> ionNavBar name="stub"}}
+
+          {{#ionNavView transition="forward"}}
+            {{#contentFor "headerButtonLeft"}}
+              <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+                {{#if isAndroid}}
+                  {{> ionIcon icon='android-more-vertical'}}
+                {{else}}
+                  {{> ionIcon icon='navicon'}}
+                {{/if}}
+              </button>
+            {{/contentFor}}
+
+        {{/ionNavView}}
+
+        {{> yield}}
+
+      {{/ionSideMenuContent}}
+    {{/ionSideMenuContainer}}
+  {{/ionBody}}
+</template>

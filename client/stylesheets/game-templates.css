@@ -1,0 +1,41 @@
+.single-game-card {
+	width: 100%;
+	background-color: white;
+	font-family: lato;
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+
+.single-game-info {
+	width: 100%;
+	height: 40px;
+	background-color: #455A64;
+}
+
+.team-block{
+	width: 100%;
+	height: 44px;
+	display: table;
+}
+
+.team-text{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.team-colors {
+	width: 20%;
+	text-align: center;
+	font-weight: bold; 
+	color: white;
+}
+
+.team-name {
+	padding: 0 0 0 15px;
+	width: 60%;
+}
+
+.team-score {
+	text-align: center;
+	width: 20%;
+}

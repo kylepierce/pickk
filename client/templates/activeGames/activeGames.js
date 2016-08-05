@@ -1,17 +1,16 @@
+Template.activeGames.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
+};
+
+
 Template.activeGames.helpers({
+  games: function ( ) {
+    return Games.find({}).fetch();
+  },
   gameClass: function () {
     return "game-item-" + this['status'];
-  },
+  },  
 
-  hasActiveGames: function () {
-		return Template.instance().data.games.length > 0;
-  },
-  
-  inprogress: function (status) {
-    if (status == "inprogress"){
-      return true
-    }
-  },
   notBeta: function () {
     var betaUser = Meteor.user().profile.role
     if(betaUser === "beta" || betaUser === "admin"){
