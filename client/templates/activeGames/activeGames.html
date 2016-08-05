@@ -1,31 +1,19 @@
 <template name="activeGames">
-  {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-        {{#if isAndroid}}
-            {{> ionIcon icon='android-more-vertical'}}
-        {{else}}
-            {{> ionIcon icon='navicon'}}
-        {{/if}}
-    </button>
-  {{/contentFor}}
-
+  {{> homeLayoutHeader}}
+  
   {{#contentFor "headerTitle"}}
       <h1 class="title white-text-header">Home</h1>
-  {{/contentFor}}
-
-  {{#contentFor "headerButtonRight"}}
-    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
-      {{> ionIcon icon="ios-chatboxes"}}
-    </button>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
       <div class="container" style="margin-top: 10px;">
         {{#each game in games}}
-          {{> singleGameInfo game=game}}
-          {{> singleGameCard game=game}}
-          {{> singleGameCTA game=game}}
+          <div class="complete-game-card">
+            {{> singleGameInfo game=game}}
+            {{> singleGameCard game=game}}
+            {{> singleGameCTA game=game}}
+          </div>
         {{/each}}
       </div>
     {{/ionContent}}
@@ -33,7 +21,7 @@
 </template>
 
 <template name="singleGameInfo">
-  <div class="single-game-info">
+  <div class="single-game-shared single-game-info">
     {{#if inProgress}}
       {{> gameInProgressInfo game=game}}
     {{/if}}
@@ -46,12 +34,12 @@
 
 <template name="singleGameCTA">
   {{#if inProgress}}
-    <div class="single-game-cta">
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
       Play Now! ({{game.tv}})
     </div>
   {{/if}}
   {{#if future}}
-    <div class="single-game-cta">
+    <div class="single-game-shared future-game-cta">
       Remind Me
     </div>
   {{/if}}

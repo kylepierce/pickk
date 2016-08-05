@@ -93,6 +93,7 @@ Template.singleGameInfo.helpers({
     }
   }
 });
+
 Template.singleGameCTA.helpers({
   inProgress: function () {
     if (this.game.status === "inprogress"){
@@ -106,7 +107,13 @@ Template.singleGameCTA.helpers({
   }
 });
 
-
+Template.singleGameCTA.events({
+  'click [data-action=play]': function ( e, t ) {
+    var gameId = this.game._id
+    console.log(this, gameId);
+    Router.go('game.show', {id: gameId});
+  }
+});
 
 
 

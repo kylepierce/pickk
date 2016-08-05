@@ -1,31 +1,24 @@
 <template name="home">
-
-<!-- Standard Nav instead of the custom nav design -->
- {{> homeLayoutHeader}}
-
- {{#contentFor "headerTitle"}}
-	<h1 class="title white-text-header" style="font-size: 1.2em;">
-		<i class="fa fa-diamond"></i>
-    <strong>{{currentUser.profile.diamonds}}</strong> 
-			
-   	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
-    <strong>{{gameCoins currentUser._id "null"}}</strong>
-  </h1>
- {{/contentFor}}
+	{{> homeLayoutHeader}}
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header" style="font-size: 1.2em;">
+			<i class="fa fa-diamond"></i>
+		  <strong>{{currentUser.profile.diamonds}}</strong> 
+				
+		 	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
+		  <strong>{{gameCoins currentUser._id "null"}}</strong>
+		</h1>
+	{{/contentFor}}
 
   {{#ionView }}
     {{#ionContent}}
-    <!-- {{> loader}}  -->
 
-    <!-- {{#if Template.subscriptionsReady}}   -->
-    <!-- <div class="loading-wrapper"> -->
 		{{> gameBar}}
 
     <div style="margin-top: 45px"> 
 			{{> questionCard}}
 		</div>
-<!-- 
-		{{/if}} -->
+
 		{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
