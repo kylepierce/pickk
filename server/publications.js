@@ -1,11 +1,11 @@
 // Global
 
-isTester = function (userId) {
-  console.log(userId)
-  var user = Meteor.users.findOne(userId);
-  var role = user.profile.role;
-  return role && (role == "admin" || role == "beta");
-};
+// isTester = function (userId) {
+//   console.log(userId)
+//   var user = Meteor.users.findOne(userId);
+//   var role = user.profile.role;
+//   return role && (role == "admin" || role == "beta");
+// };
 
 // Most Common / Basic layout
 
@@ -16,10 +16,8 @@ Meteor.publish("userData", function() {
   return UserList.find(this.userId);
 });
 
-Meteor.publish('unreadNotifications', function(user) {
-  check(user, String);
-
-  return Notifications.find({userId: user, read: false})  
+Meteor.publish('unreadNotifications', function() {
+  return Notifications.find({userId: this.userId, read: false})  
 });
 
 Meteor.publish('usersGroups', function ( user ) {
@@ -52,10 +50,10 @@ Meteor.publish('games', function() {
   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
   var parms = {sort: {scheduled: -1}, fields: {_id: 1, id: 1, name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
 
-  var tester = isTester(this.userId);
-  if ( ! tester) {
-    selector.public = true;
-  }
+  // var tester = isTester(this.userId);
+  // if ( ! tester) {
+  //   selector.public = true;
+  // }
 
   return Games.find(selector, parms);
 });
@@ -75,10 +73,10 @@ Meteor.publish('activeGames', function() {
   var selector = {live: true, status: "inprogress"} 
   var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
   
-  var tester = isTester();
-  if ( ! tester) {
-    selector.public = true;
-  }
+  // var tester = isTester();
+  // if ( ! tester) {
+  //   selector.public = true;
+  // }
 
   return Games.find(selector, parms);
 });
