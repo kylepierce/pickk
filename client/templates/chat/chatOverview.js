@@ -88,7 +88,7 @@ Template.chatRoom.events({
 });
 
 Template.singleMessage.events({
-  'click .item': function (e, t) {
+  'click .single-message': function (e, t) {
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
