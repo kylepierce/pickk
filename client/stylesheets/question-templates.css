@@ -1,6 +1,5 @@
 .single-question {
 	width: 100%;
-	background-color: white;
 	font-size: 18px;
 	font-family: lato;
 }
@@ -10,6 +9,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: white;
 	height: 44px;
 	margin-top: -1px;
 }
@@ -34,4 +34,22 @@
 .baseball-call-icon {
 	height: 25px;
 	width: 25px;
+}
+
+.selected{
+	background-color: pink;
+}
+
+.wagers {
+	margin-top: -1px;
+}
+
+.wagers li {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 33.33%;
+	height: 45px;
+	float: left;
+	border: 1px solid #DDDDDD;
 }

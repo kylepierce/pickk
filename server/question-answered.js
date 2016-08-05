@@ -2,7 +2,7 @@ Meteor.methods({
 	'questionAnswered': function(questionId, answered, wager, description) {
 		check(questionId, String);
 		check(answered, String);
-		check(wager, String);
+		check(wager, Number);
 		check(description, String);
 
 		var question = Questions.findOne(questionId);

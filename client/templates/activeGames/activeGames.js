@@ -26,16 +26,16 @@ Template.activeGames.helpers({
   },
 });
 
-Template.activeGames.events({
-  "click .game": function (event, template) {
-    var gameId = $(event.currentTarget).attr("data-game-id");
-    Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
-    Router.go("game", {id: gameId});
-  },
-  'click [data-action=no-group]': function(){
-    Router.go('/groups')
-  }, 
-});
+// Template.activeGames.events({
+//   "click .game": function (event, template) {
+//     var gameId = $(event.currentTarget).attr("data-game-id");
+//     Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
+//     Router.go("game", {id: gameId});
+//   },
+//   'click [data-action=no-group]': function(){
+//     Router.go('/groups')
+//   }, 
+// });
 
 
 Template.outDisplay.helpers({
@@ -105,7 +105,7 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
-    console.log(this, gameId);
+    Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
     Router.go('game.show', {id: gameId});
   }
 });

@@ -40,15 +40,15 @@
 </template>
 
 <template name="eventQuestion">
-	<div class="single-question">
+	<ul class="single-question animated fast slideInLeft">
 		{{#each o in options q}}
 			{{> option o=o q=q}}
 		{{/each}}
-	</div>
+	</ul>
 </template>
 
 <template name="option">
-	<div class="option">
+	<li class="option" data-action="play-selected">
 		<span class="icon-container">
 			{{#if hasIcon o.title}} 
 				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
@@ -56,7 +56,28 @@
 		</span>
 		<span class="option-title">{{o.title}}</span>
 		<span class="multiplier">x {{o.multiplier}}</span>
-	</div>
+	</li>
+</template>
+
+<template name="wagers">
+	<ul class="wagers">
+		{{#each w in wagers}}
+			{{> wager w=w q=q o=o}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="wager">
+	<li class="wager" data-action=wager-selected>{{w}}</li>
+</template>
+
+ 
+<template name="submitButton">
+	{{#if live}}
+		<button class="button button-balanced center" data-action="submit">Submit ({{{potential}}})</button>
+	{{else}}
+		<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+	{{/if}}
 </template>
 
 
