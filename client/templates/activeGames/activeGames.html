@@ -106,22 +106,24 @@
 
 
 <template name="singleGameCard">
-  <div class="single-game-card">
+  <ul class="single-game-card">
 
     {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
 
     {{> teamBlock id=game.away.id abbr=game.away.abbr name=game.away.name runs=game.scoring.away.runs }}
 
-  </div>
+  </ul>
 </template>
 
 
 <template name="teamBlock">
-  <div class="team-block">
-    <span class="team-colors team-text" style="background-color:{{teamColors id}}">
+  <li class="team-block">
+    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
       {{abbr}}
-    </span> 
-    <span class="team-name team-text">{{name}}</span>
-    <span class="team-score team-text">{{runs}}</span>
-  </div>
+    </div> 
+    <div class="team-block-border">
+      <span class="team-name team-text">{{name}}</span>
+      <span class="team-score team-text">{{runs}}</span>
+    </div>
+  </li>
 </template>

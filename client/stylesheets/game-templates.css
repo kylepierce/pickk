@@ -6,7 +6,8 @@
 	width: 100%;
 	background-color: white;
 	font-family: lato;
-	font-size: 16px;
+	font-weight: bold;
+	font-size: 18px;
 }
 
 .single-game-shared {
@@ -15,8 +16,6 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	font-size: 16px;
-	font-weight: bold;
 }
 
 .single-game-info {
@@ -53,6 +52,23 @@
 	display: table;
 }
 
+.team-block:last-child {
+	margin-top: -1px;
+}
+
+.team-block:last-child .team-colors {
+	border-top: 1px solid #979797;
+}
+
+.team-block-border {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #DDDDDD;
+	border-left: none;
+	height: 45px;
+}
+
 .team-text{
 	display: table-cell;
 	vertical-align: middle;
@@ -66,8 +82,7 @@
 }
 
 .team-name {
-	padding: 0 0 0 15px;
-	width: 60%;
+	width: 70%;
 }
 
 .team-score {

@@ -1,0 +1,37 @@
+.single-question {
+	width: 100%;
+	background-color: white;
+	font-size: 18px;
+	font-family: lato;
+}
+
+.option {
+	border: 1px solid #DDDDDD;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 44px;
+	margin-top: -1px;
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+.option-title{
+	width: 50%;
+}
+
+.multiplier {
+	width: 30%;
+	text-align: right;
+	padding-right: 15px; 
+}
+
+.baseball-call-icon {
+	height: 25px;
+	width: 25px;
+}

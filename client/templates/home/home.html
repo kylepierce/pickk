@@ -4,9 +4,6 @@
 		<h1 class="title white-text-header" style="font-size: 1.2em;">
 			<i class="fa fa-diamond"></i>
 		  <strong>{{currentUser.profile.diamonds}}</strong> 
-				
-<!-- 		 	<span class="coin-icon"><i class="fa fa-circle"></i></span> 
-		  <strong>{{gameCoins currentUser._id "null"}}</strong> -->
 		</h1>
 	{{/contentFor}}
 
@@ -20,9 +17,11 @@
 				</div>
 			{{/each}}
 
-			{{#each question in questions}}
-				{{> singleQuestion q=question}}
-			{{/each}}
+			<div class="container" style="margin-top: 10px;">
+				{{#each question in questions}}
+					{{> singleQuestion q=question}}
+				{{/each}}
+			</div>
 
     {{/ionContent}}
   {{/ionView}}
@@ -36,49 +35,59 @@
 		{{> commericalQuestion q=q}}
 	{{/if}}
 	{{#if liveQuestion q}}
-		Live
+		{{> eventQuestion q=q}}
 	{{/if}}
 </template>
 
 <template name="eventQuestion">
-	{{q.que}}
-	{{#each o in options q}}
-		{{> option o=o q=q}}
-	{{/each}}
+	<div class="single-question">
+		{{#each o in options q}}
+			{{> option o=o q=q}}
+		{{/each}}
+	</div>
 </template>
 
-<!-- <template name="commericalQuestion">
+<template name="option">
+	<div class="option">
+		<span class="icon-container">
+			{{#if hasIcon o.title}} 
+				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
+			{{/if}}
+		</span>
+		<span class="option-title">{{o.title}}</span>
+		<span class="multiplier">x {{o.multiplier}}</span>
+	</div>
+</template>
+
+
+<!--  <template name="commericalQuestion">
 	{{#each option in options}}
 		<div>{{title}}</div>
 	{{/each}}
-</template> -->
-
-<template name="option">
-	<option>{{o.title}} {{o.multiplier}}</option>
-</template>
+</template>  -->
 
 
 
 
 
 
-<!-- <template name="gameBar">
+ <!-- <template name="gameBar">
   <div class="bar bar-game"> 
 	</div>
-</template> -->
+</template>  
 
-<!--     <div style="margin-top: 45px"> 
+     <div style="margin-top: 45px"> 
 			{{> questionCard}}
-		</div> -->
+		</div> 
 
 <template name="activeQuestion">
 	<div class="container" id="normalCard" style="display: none;">
 		<div class="container-item">
-<!-- 		<div class="question">
+ 		<div class="question">
 			{{ que}}
-		</div> -->
+		</div> 
 			<form>
-				<!-- Options -->
+				 Options 
 				{{> normalPlay}}
 			</form>
 		</div>
@@ -92,7 +101,7 @@
 			<h4>{{ que}}</h4>
 		</div>
 
-			<!-- Options -->
+			 Options 
 			<div id="two-choice">
 				<div class="binary">
 					<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
@@ -124,7 +133,7 @@
 		</div>
 
 		<form>
-			<!-- Options -->
+			 Options 
 				{{> withoutIcons}}
 
 		</form>
@@ -139,7 +148,7 @@
 		<div class="question larger-card">
 			<h4>{{ que}}</h4>
 		</div>
-			<!-- Options -->
+			 Options 
 		<div>
 			<div class="binary">
 				<input type="radio" name="binary" id="{{options.option1.title}}" required value="option1">
@@ -177,7 +186,7 @@
 				</div>
 
 				<form>
-					<!-- Options -->
+					 Options 
 					<div>
 						<input type="radio" name="score" id="{{options.option1.title}}" required value="option1">
 						<label for="{{options.option1.title}}" class="play-option score-option">
@@ -403,7 +412,7 @@
 		</div>
 		{{/if}}
 	</div>
-</template>
+</template> 
 
 <template name="playerCard">
 	<div class="player-card" id="player">
@@ -436,3 +445,4 @@
   </div>
   </div>
 </template>
+ -->

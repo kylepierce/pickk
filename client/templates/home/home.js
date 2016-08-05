@@ -1,14 +1,14 @@
-Template.home.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
+// Template.home.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
 
-Template.eventQuestion.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
+// Template.eventQuestion.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
 
-Template.option.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
+// Template.option.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
 
 
 Template.home.helpers({
@@ -114,7 +114,7 @@ Template.eventQuestion.helpers({
     // I want to end up with a array of objects
     // [{number: option1}, {title: Run}, {multiplier: 2.43}]
     // So that o.number = option1
-    
+
     for (var i = 0; i < keys.length; i++) {
       var obj = values[i]
       var number = keys[i]
@@ -135,7 +135,16 @@ Template.eventQuestion.helpers({
 // });
 
 
-
+Template.option.helpers({
+  hasIcon: function (title) {
+    var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
+    console.log(title)
+    if (baseball.indexOf(title)){
+      console.log(this)
+      return title
+    }
+  }
+});
 
 
 
