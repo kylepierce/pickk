@@ -3,7 +3,6 @@
 }
 
 .-autocomplete-container {
-	top: 118px!important;
-	left: 5%;
-	position: fixed!important;
+	margin-top: 50px;
+	margin-left: -30px;
 }
