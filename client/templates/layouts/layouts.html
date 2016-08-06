@@ -1,37 +1,22 @@
 <template name="mainView">
-
-{{#ionBody}}
-
-  {{#ionSideMenuContainer}}
-
-    {{#ionSideMenus draggable=false}}
-
-      {{#ionSideMenu}}
-        {{> sideMenuContent}}
-      {{/ionSideMenu}}
-
-      {{> sideMenuRight}}
-
-    {{/ionSideMenus}}
-
+  {{#ionBody}}
+    {{#ionSideMenuContainer}}
+      {{#ionSideMenus draggable=false}}
+        {{#ionSideMenu}}
+          {{> sideMenuContent}}
+        {{/ionSideMenu}}
+        {{> sideMenuRight}}
+      {{/ionSideMenus}}
       {{#ionSideMenuContent}}
-
         <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
-        {{> ionNavBar name="stub"}}
-
-        {{#ionNavView transition="backward"}}
-          {{> yield "header"}}
-
-        {{/ionNavView}}
-
+          {{> ionNavBar name="stub"}}
+          {{#ionNavView transition="backward"}}
+            {{> yield "header"}}
+          {{/ionNavView}}
         {{> yield}}
-
       {{/ionSideMenuContent}}
-
     {{/ionSideMenuContainer}}
-
   {{/ionBody}}
-
 </template>
 
 <template name="standardNav">
@@ -48,16 +33,12 @@
 
 <template name="sideMenuContent">
 <div class="scrollable">
-  {{#if currentUser}}
-    <div class="profile-container">
-    <a href="/profile" data-ion-menu-toggle="left">
-      {{> userAvatar userId=currentUser._id}}
+  <div class="profile-container">
+    {{> userAvatar userId=currentUser._id}}
 
-      <strong class="username">{{currentUser.profile.username}}</strong><br>
-      <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong>
-    </a>
-    </div>
-  {{/if}}
+    <strong class="username">{{currentUser.profile.username}}</strong><br>
+    <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong>
+  </div>
 
 <div class="list">
   <a class="item item-icon-left" data-ion-menu-toggle="left" href="/">

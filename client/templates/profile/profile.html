@@ -1,57 +1,64 @@
-<template name="myProfile">
-  <!-- Standard Nav instead of the custom nav design -->
+<template name="userProfile">
   {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
+    {{>ionNavBackButton path="index"}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Your Profile</h1>
+    <h1 class="title white-text-header">
+      {{#if notOwnProfile user._id}}
+        {{user.profile.username}}
+      {{else}}
+        Your Profile
+      {{/if}}
+    </h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-      {{#with profile}}
-        <div class="profile-wrapper" style="margin-left:20px;">
-          {{> userAvatar userId=_id}}
-          <div style="float: left; margin:30px">
-            <h4>{{this.profile.username}}</h4>
-            {{{following}}} Following
-            {{{follower}}} Followers
-            <br>
-          </div>
-        </div>
-        {{#ionList}}
-          <div style="clear:both;" class="item item-divider">Badges</div>
-          <div class="item item-divider">Trophies</div>
-          {{#ionItem}}
-            {{#each trophy}}
-              {{#with trophyData this}}
-                <div class="col-25" style="float: left; padding: 0 5px;">
-                  <img width="70px" src="/{{image}}">
-                </div>
-              {{/with}}
-            {{/each}}
-          {{/ionItem}}
 
-          <div style="clear:both;" class="item item-divider">Groups</div>
-          {{#each group}}
-            {{> profileDisplayGroup groupId=this}}
+      <div class="col-md-33 float-left profile-image">
+        {{> userAvatar userId=user._id}}
+      </div>
+      <div class="float-left">
+        <h4>{{user.profile.username}}</h4>
+        {{user.profile.following.length}} Following
+        {{user.profile.followers.length}} Followers
+      </div>
+      
+      {{#if notOwnProfile user._id}}
+        {{> followerCheck }}
+      {{/if}}
+      <div class="clear-fix"></div>
+      {{#ionList}}
+        <div class="item item-divider">Trophies</div>
+        <ul class="trophy-list item">
+          {{#each trophy in trophies}}
+            <li class="trophy-image">
+              {{> displayTrophy t=trophy}}
+            </li>
           {{/each}}
-        {{/ionList}}
+        </ul>
 
-      {{/with}}
+        <div class="item item-divider">Badges</div>
+
+        <div class="item item-divider">Groups</div>
+        {{#each group in groups}}
+          {{> displayGroup g=group}}
+        {{/each}}
+      {{/ionList}}
+
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="profileDisplayGroup">
-  {{#with groupName groupId}}
+<template name="displayTrophy">
+  {{#with trophy t}}
+    <img src="/{{image}}">
+  {{/with}}
+</template>
+
+<template name="displayGroup">
+  {{#with group g}}
     {{#ionItem path="group.show" avatar=true}}
       {{> groupAvatar}}
       {{name}}
@@ -59,4 +66,11 @@
   {{/with}}
 </template>
 
+<template name="followerCheck">
+  {{#if alreadyFollower }}
+    <button data-action="unfollowUser" id="join-toggle" class="button button-assertive col col-100">Unfollow</button>
 
+  {{else}}
+    <button data-action="followUser" id="join-toggle" class="button button-balanced col col-100">Follow</button>
+  {{/if}}
+</template>
