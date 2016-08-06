@@ -58,11 +58,8 @@ Meteor.methods({
 
 		var answer = Answers.findOne({questionId: c.questionId, userId: c.userId})
 
-		console.log(answer)
-
 		// Update question with the user who have answered.
 		Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
-
 
 		// Finally award or whatever
 

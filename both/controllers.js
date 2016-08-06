@@ -1,6 +1,6 @@
-AppController = RouteController.extend({
-  layoutTemplate: 'mainView'
-});
+// AppController = RouteController.extend({
+//   layoutTemplate: 'mainView'
+// });
 
 // ProfileController = AppController.extend({
 //   waitOn: function () {
