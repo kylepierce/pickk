@@ -9,7 +9,7 @@
     </h1>
 	{{/contentFor}}
 
-	{{#ionSubheaderBar}}
+	{{#ionSubheaderBar class="subheader"}}
 		{{#each g in game}}
 			{{g.name}}
 		{{/each}}
@@ -19,7 +19,9 @@
     {{#ionContent}}
 	    {{#ionList}}
 	    	{{#each q in questions}}
-	    		{{> singleAnswer q=q}}
+	    		{{#with answers q._id}}
+	    			{{> singleAnswer q=q a=this}}
+	    		{{/with}}
 	    	{{/each}}
     	{{/ionList}}
     {{/ionContent}}
@@ -28,36 +30,15 @@
 
 <template name="singleAnswer">
 	{{#ionItem}}
-		<span class="{{active q.active}}">
-			{{q.que}} -- {{q.play}}
+		<span class="{{active q.active}} {{correct a.answered q.outcome}} question-text">
+			{{q.que}}
 		</span><br>
-		{{#with answer q._id}}
-			{{answered}} -- {{wager}} -- {{multiplier}} <br>
-		{{/with}}
+		<ul class="question-attributes">
+			<li>Selected: {{title a.answered}}</li>
+			<li>Result: {{title q.outcome}}</li>
+			{{#if winner}}
+				<li>Winnings: {{winnings a.answered q.outcome}}</li>
+			{{/if}}
+		</ul> 
 	{{/ionItem}}	
 </template>
-
-<!-- 		    	{{#each answeredQuestions}}
-		    		{{#ionItem }}
-		    			<div id="{{_id}}">
-			    		{{#if active}}
-									<p  class="still-active"><b>{{que}}</b></p>
-									<p>{{date}}</p>
-							{{else}}
-									<p><b>{{que}}</b></p>
-									<p>{{date}}</p>
-									<p>Answer: {{{answerIs play}}}</p>
-							{{/if}}
-							
-						{{#with userAnswer _id play this}}
-							<p>
-							You Answered: {{description}}<br>
-
-							Amount Wagered: {{wager}}
-							Muliplier: {{multiplier}}
-							Winnings: {{winnings}}
-							</p>
-						{{/with}}
-						</div>
-	    		{{/ionItem}}
-	    	{{/each}} -->

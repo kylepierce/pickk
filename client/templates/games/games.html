@@ -17,19 +17,15 @@
 	{{#ionView}}
 		{{#ionContent}}
 			{{#ionList}}
-			<div class="item item-divider">Upcoming Games</div>
-				{{#each games}}
-					{{#ionItem class=gameClass buttonRight=true}}
-            <div class="game-item-outer" data-game-id="{{_id}}">
-              <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
-            </div>
-							{{#if inprogress status}}
-                <button class="button game" data-game-id="{{_id}}">
-                  {{> ionIcon icon="ios-arrow-right"}}
-                </button>
-              {{/if}}
-        	{{/ionItem}}
-				{{/each}}
+				<div class="container" style="margin-top: 10px;">
+	        {{#each game in games}}
+	          <div class="complete-game-card">
+	            {{> singleGameInfo game=game}}
+	            {{> singleGameCard game=game}}
+	            {{> singleGameCTA game=game}}
+	          </div>
+	        {{/each}}
+	      </div>
 			{{/ionList}}
 		{{/ionContent}}
 	{{/ionView}}

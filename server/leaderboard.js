@@ -18,7 +18,7 @@ Meteor.methods({
 	},
 
 	'loadWeekLeaderboard': function(beta) {
-		check(beta, String);
+		check(beta, Boolean);
 		
 		if(beta === true){
 			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$eq: "beta"}}

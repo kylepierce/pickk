@@ -38,11 +38,6 @@
       Play Now! ({{game.tv}})
     </div>
   {{/if}}
-  {{#if future}}
-    <div class="single-game-shared future-game-cta">
-      Remind Me
-    </div>
-  {{/if}}
 </template>
 
 <template name="gameInProgressInfo">
@@ -61,7 +56,12 @@
 </template>
 
 <template name="futureGameInfo">
-  {{ userTimeZone game.scheduled}}
+  <div class="col-md-50">
+    {{ userTimeZone game.scheduled}} ({{game.tv}})
+  </div>
+  <div class="col-md-25" style="background-color: red; height: 44px">
+    Remind me
+  </div>
 </template>
 
 <template name="count">

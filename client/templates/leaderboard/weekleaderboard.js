@@ -1,6 +1,6 @@
 Template.weekLeaderboard.helpers({
 	'player': function(){
-		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard")
+		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", false)
 		var leaderboard = Fetcher.get("weekLeaderboard")
 		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.diamonds})
 		var list = fixed.reverse()

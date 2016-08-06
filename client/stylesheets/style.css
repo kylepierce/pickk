@@ -17,6 +17,22 @@ body, .ionic-body {
 	height: 100%;
 }
 
+.item-divider {
+	background-color: #37474F!important;
+	color: white;
+}
+
+.bar-subheader {
+	background-color: #455A64!important;
+	color: white;
+	font-family: lato;
+	font-size: 16px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .clear-fix{
 	clear: both;
 }
@@ -325,12 +341,14 @@ input[type=submit] {
 
 .profile-container {
 	height: 170px;
-	background-color: #16A085;
+	background-color: #222C31;
 	color:white;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
 }
+
+
 
 /*.scrollable {
 	overflow-y: auto;

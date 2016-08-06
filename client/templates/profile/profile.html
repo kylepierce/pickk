@@ -16,41 +16,36 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{> loader}}
-      {{#if Template.subscriptionsReady}}
-        <div class="loading-wrapper">
-          {{#with profile}}
-            <div class="profile-wrapper" style="margin-left:20px;">
-              {{> userAvatar userId=_id}}
-              <div style="float: left; margin:30px">
-                <h4>{{this.profile.username}}</h4>
-                {{{following}}} Following
-                {{{follower}}} Followers
-                <br>
-              </div>
-            </div>
-            {{#ionList}}
-              <div style="clear:both;" class="item item-divider">Badges</div>
-              <div class="item item-divider">Trophies</div>
-              {{#ionItem}}
-                {{#each trophy}}
-                  {{#with trophyData this}}
-                    <div class="col-25" style="float: left; padding: 0 5px;">
-                      <img width="70px" src="/{{image}}">
-                    </div>
-                  {{/with}}
-                {{/each}}
-              {{/ionItem}}
-
-              <div style="clear:both;" class="item item-divider">Groups</div>
-              {{#each group}}
-                {{> profileDisplayGroup groupId=this}}
-              {{/each}}
-            {{/ionList}}
-
-          {{/with}}
+      {{#with profile}}
+        <div class="profile-wrapper" style="margin-left:20px;">
+          {{> userAvatar userId=_id}}
+          <div style="float: left; margin:30px">
+            <h4>{{this.profile.username}}</h4>
+            {{{following}}} Following
+            {{{follower}}} Followers
+            <br>
+          </div>
         </div>
-      {{/if}}
+        {{#ionList}}
+          <div style="clear:both;" class="item item-divider">Badges</div>
+          <div class="item item-divider">Trophies</div>
+          {{#ionItem}}
+            {{#each trophy}}
+              {{#with trophyData this}}
+                <div class="col-25" style="float: left; padding: 0 5px;">
+                  <img width="70px" src="/{{image}}">
+                </div>
+              {{/with}}
+            {{/each}}
+          {{/ionItem}}
+
+          <div style="clear:both;" class="item item-divider">Groups</div>
+          {{#each group}}
+            {{> profileDisplayGroup groupId=this}}
+          {{/each}}
+        {{/ionList}}
+
+      {{/with}}
     {{/ionContent}}
   {{/ionView}}
 </template>
