@@ -18,6 +18,9 @@ Template.home.helpers({
   questions: function () {
     return Questions.find({}, {limit: 1}).fetch()
   },
+  gameCoins: function () {
+    return GamePlayed.findOne().coins;
+  }
 });
 
 Template.singleQuestion.helpers({
@@ -80,14 +83,14 @@ Template.wagers.helpers({
 
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
-    console.log(this, e, t)
+    // console.log(this, e, t)
     $(e.currentTarget).addClass('selected')
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      console.log($selected, selectedObj, templateName)
+      // console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -179,21 +182,34 @@ Template.submitButton.helpers({
 Template.submitButton.events({
   "click [data-action='submit']": function (e, t) {
     e.preventDefault()
-    var wager = this.w
-    var option = this.o
-    var question = this.q
-    var userCoins = GamePlayed.findOne({}).coins
+    var w = this.w
+    var o = this.o
+    var q = this.q
+    var t = this.t
+    var userId = Meteor.userId()
+    var userCoins = GamePlayed.find({userId: userId, gameId: q.gameId}).fetch();
+    var hasEnoughCoins = userCoins[0].coins >= w
+    
+    var c = {
+      userId: userId,
+      gameId: q.gameId,
+      questionId: q._id,
+      type: t,
+      answered: o.option,
+      wager: w,
+      multiplier: o.multiplier,
+      description: o.title
+    }
 
-    // console.log(this, e, t)
-    if (userCoins < wager) {
-      analytics.track("no coins", {
-        id: Meteor.userId,
-        question: question.que,
-        questionId: question._id,
-        answer: option.number,
-        wager: wager,
-        coins: userCoins
-      });
+    analytics.track("question answered", {
+      id: c.userId,
+      answered: c.answered,
+      type: c.type,
+      gameId: c.gameId,
+      wager: w,
+    });
+
+    if (!hasEnoughCoins) {
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,
@@ -203,27 +219,18 @@ Template.submitButton.events({
       $(".container-item").removeClass("slideInLeft")
       $(".container-item").addClass("slideOutRight")
 
-      Session.set('lastId', question._id);
-      Session.set('lastAnswer', option.option);
-      Session.set('lastWager', wager);
-      Session.set('lastDescription', option.title);
-
-      // analytics.track("userAnsweredQuestion", {
-      //   id: currentUser,
-      //   question: que,
-      //   questionId: questionId,
-      //   answer: answer,
-      //   wager: wager,
-      //   description: description
-      // });
+      Session.set('lastId', q._id);
+      Session.set('lastAnswer', o.option);
+      Session.set('lastWager', w);
+      Session.set('lastDescription', o.title);
 
       var countdown = new ReactiveCountdown(360);
       countdown.start(function() {
-        Meteor.call('playerInactive', currentUser, questionId);
+        Meteor.call('playerInactive', c.userId, c.questionId);
       })
 
       setTimeout(function() {
-        Meteor.call('questionAnswered', question._id, option.option, wager, option.title);
+        Meteor.call('questionAnswered', c);
       }, 250);
     }
   }

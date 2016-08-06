@@ -1,10 +1,4 @@
 createPendingNotification = function(o) {
-  // var notifyObj = {
-  //     type: ,
-  //     userId: ,
-  // }
-  // createPendingNotification(notifyObj)
-
   // Basic arguments
   var obj = {
     dateCreated: new Date(),

@@ -4,6 +4,8 @@
 		<h1 class="title white-text-header" style="font-size: 1.2em;">
 			<i class="fa fa-diamond"></i>
 		  <strong>{{currentUser.profile.diamonds}}</strong> 
+		  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
+    <strong>{{gameCoins}}</strong>
 		</h1>
 	{{/contentFor}}
 
@@ -29,20 +31,20 @@
 
 <template name="singleQuestion">
 	{{#if eventQuestions q}}
-		{{> eventQuestion q=q}}
+		{{> eventQuestion q=q t="atBat"}}
 	{{/if}}
 	{{#if commericalQuestions q}}
-		{{> commericalQuestion q=q}}
+		{{> eventQuestion q=q t="free pickk"}}
 	{{/if}}
 	{{#if liveQuestion q}}
-		{{> eventQuestion q=q}}
+		{{> eventQuestion q=q t="live"}}
 	{{/if}}
 </template>
 
 <template name="eventQuestion">
 	<ul class="single-question animated fast slideInLeft">
 		{{#each o in options q}}
-			{{> option o=o q=q}}
+			{{> option o=o q=q t=t}}
 		{{/each}}
 	</ul>
 </template>
@@ -62,7 +64,7 @@
 <template name="wagers">
 	<ul class="wagers">
 		{{#each w in wagers}}
-			{{> wager w=w q=q o=o}}
+			{{> wager w=w q=q o=o t=t}}
 		{{/each}}
 	</ul>
 </template>
