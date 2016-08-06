@@ -138,7 +138,7 @@ Meteor.publish('activeQuestions', function(gameId) {
     gameId: gameId,
     active: true,
     usersAnswered: {$nin: [currentUserId]}
-  }, {limit: 10});
+  }, {limit: 3});
 });
 
 Meteor.publish('gameQuestions', function() {
@@ -163,8 +163,8 @@ Meteor.publish('pendingGameQuestions', function() {
 
 Meteor.publish('questionsByGameId', function(gameId) {
   check(gameId, String);
-
-  return Questions.find({gameId: gameId});
+  var user = this.userId
+  return Questions.find({gameId: gameId, usersAnswered: {$in: [user]}});
 });
 
 Meteor.publish('answersByGameId', function(gameId) {

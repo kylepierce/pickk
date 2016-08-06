@@ -5,25 +5,39 @@
 
 	{{#contentFor "headerTitle"}}
 		<h1 class="title white-text-header">
-      {{#if Template.subscriptionsReady}}
-        Game History: 
-      {{else}}
-        Game History
-      {{/if}}
+      Game History
     </h1>
 	{{/contentFor}}
 
 	{{#ionSubheaderBar}}
-		{{game.name}}
+		{{#each g in game}}
+			{{g.name}}
+		{{/each}}
 	{{/ionSubheaderBar}}
 
   {{#ionView }}
     {{#ionContent}}
-      {{> loader}}
-      {{#if Template.subscriptionsReady}}
-	      <div class="loading-wrapper">
-	    	{{#ionList}}
-		    	{{#each answeredQuestions}}
+	    {{#ionList}}
+	    	{{#each q in questions}}
+	    		{{> singleAnswer q=q}}
+	    	{{/each}}
+    	{{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template> 
+
+<template name="singleAnswer">
+	{{#ionItem}}
+		<span class="{{active q.active}}">
+			{{q.que}} -- {{q.play}}
+		</span><br>
+		{{#with answer q._id}}
+			{{answered}} -- {{wager}} -- {{multiplier}} <br>
+		{{/with}}
+	{{/ionItem}}	
+</template>
+
+<!-- 		    	{{#each answeredQuestions}}
 		    		{{#ionItem }}
 		    			<div id="{{_id}}">
 			    		{{#if active}}
@@ -38,8 +52,7 @@
 						{{#with userAnswer _id play this}}
 							<p>
 							You Answered: {{description}}<br>
-							<!-- If correct Show Winnings-->
-							<!-- If Binary Show 2000 -->
+
 							Amount Wagered: {{wager}}
 							Muliplier: {{multiplier}}
 							Winnings: {{winnings}}
@@ -47,10 +60,4 @@
 						{{/with}}
 						</div>
 	    		{{/ionItem}}
-	    	{{/each}}
-    	{{/ionList}}
-   	  </div>
-	    {{/if}}
-    {{/ionContent}}
-  {{/ionView}}
-</template> 
+	    	{{/each}} -->
