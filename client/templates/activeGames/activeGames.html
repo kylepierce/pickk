@@ -1,5 +1,5 @@
 <template name="activeGames">
-  {{> homeLayoutHeader}}
+  {{> standardNav}}
   
   {{#contentFor "headerTitle"}}
       <h1 class="title white-text-header">Home</h1>
@@ -56,11 +56,8 @@
 </template>
 
 <template name="futureGameInfo">
-  <div class="col-md-50">
-    {{ userTimeZone game.scheduled}} ({{game.tv}})
-  </div>
-  <div class="col-md-25" style="background-color: red; height: 44px">
-    Remind me
+  <div >
+    {{ displayDate game.scheduled}} ({{game.tv}})
   </div>
 </template>
 

@@ -8,14 +8,9 @@
         {{> sideMenuContent}}
       {{/ionSideMenu}}
 
-      <!-- {{#ionSideMenu side="right"}} -->
-      <!-- {{> chatOverview}} -->
-      <!-- {{/ionSideMenu}} -->
-
     {{/ionSideMenus}}
       {{#ionSideMenuContent}}
 
-        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
 
           {{#ionNavView transition="forward"}}
@@ -26,8 +21,8 @@
                 {{else}}
                   {{> ionIcon icon='navicon'}}
                 {{/if}}
-              </button>
-            {{/contentFor}}
+            </button>
+          {{/contentFor}}
 
         {{/ionNavView}}
 

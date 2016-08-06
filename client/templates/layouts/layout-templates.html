@@ -1,24 +1,3 @@
-<template name="mainView">
-  {{#ionBody}}
-    {{#ionSideMenuContainer}}
-      {{#ionSideMenus draggable=false}}
-        {{#ionSideMenu}}
-          {{> sideMenuContent}}
-        {{/ionSideMenu}}
-        {{> sideMenuRight}}
-      {{/ionSideMenus}}
-      {{#ionSideMenuContent}}
-        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
-          {{> ionNavBar name="stub"}}
-          {{#ionNavView transition="backward"}}
-            {{> yield "header"}}
-          {{/ionNavView}}
-        {{> yield}}
-      {{/ionSideMenuContent}}
-    {{/ionSideMenuContainer}}
-  {{/ionBody}}
-</template>
-
 <template name="standardNav">
   {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
@@ -46,4 +25,8 @@
     </path>
   </svg>
   </div>
+</template>
+
+<template name="notFound">
+  Meow!
 </template>

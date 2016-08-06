@@ -5,7 +5,6 @@ Template.activeGames.helpers({
   gameClass: function () {
     return "game-item-" + this['status'];
   },  
-
   notBeta: function () {
     var betaUser = Meteor.user().profile.role
     if(betaUser === "beta" || betaUser === "admin"){
@@ -16,7 +15,6 @@ Template.activeGames.helpers({
     var currentUser = Meteor.userId();
     return Groups.find({members: currentUser}).fetch()
   },
-
   groups: function(){
     var currentUser = Meteor.user();
     var groupCount = currentUser.profile.groups.length 
@@ -25,18 +23,6 @@ Template.activeGames.helpers({
     }
   },
 });
-
-// Template.activeGames.events({
-//   "click .game": function (event, template) {
-//     var gameId = $(event.currentTarget).attr("data-game-id");
-//     Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
-//     Router.go("game", {id: gameId});
-//   },
-//   'click [data-action=no-group]': function(){
-//     Router.go('/groups')
-//   }, 
-// });
-
 
 Template.outDisplay.helpers({
   outs: function (number) {
@@ -89,6 +75,31 @@ Template.singleGameInfo.helpers({
   }
 });
 
+Template.futureGameInfo.helpers({
+  displayDate: function (date) {
+    function compare(today, game) {
+      var momentA = moment(today,"MM/DD/YYYY", true).date();
+      var momentB = moment(game,"MM/DD/YYYY", true).date();
+      if (momentA > momentB) return 1;
+      else if (momentA < momentB) return -1;
+      else return 0;
+    }
+    var gameTime = moment(date)
+    var now = moment();
+    var futureOrToday = compare(now, gameTime)
+    var timezone = Meteor.user().profile.timezone
+    if (!timezone) {var timezone = "America/New_York"}
+    
+    if (futureOrToday == 1){
+      return "Closed"
+    } else if (futureOrToday === 0) {
+      return gameTime.tz(timezone).format("h:mm a z");
+    } else {
+      return gameTime.tz(timezone).format("MMM Do h:mm a z");
+    }
+  }
+});
+
 Template.singleGameCTA.helpers({
   inProgress: function () {
     if (this.game.status === "inprogress"){
@@ -109,6 +120,3 @@ Template.singleGameCTA.events({
     Router.go('game.show', {id: gameId});
   }
 });
-
-
-

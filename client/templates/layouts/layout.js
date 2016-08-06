@@ -2,7 +2,7 @@ var SHOW_CONNECTION_ISSUE_KEY = 'showConnectionIssue';
 Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 
 
-Template.mainView.rendered = function() {
+Template.mainLayout.rendered = function() {
   // IonSideMenu.snapper.settings({disable: 'right'});  
   IonSideMenu.snapper.settings({touchToDrag: false});
 };
@@ -33,7 +33,7 @@ Template.sideMenuContent.events({
   } 
 });
 
-Template.mainView.events({
+Template.mainLayout.events({
   'click [data-action=refresh]': function () {
     IonLoading.show({
       customTemplate: '<h3>Loading...</h3>',
