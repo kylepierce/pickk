@@ -27,6 +27,8 @@
 .single-game-cta {
 	height: 34px;
 	background-color: #F1C40F;
+	font-weight: bold;
+	font-family: lato; 
 }
 
 .future-game-cta {

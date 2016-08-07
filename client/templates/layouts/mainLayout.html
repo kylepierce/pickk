@@ -1,18 +1,15 @@
 <template name="mainLayout">
+  {{#ionBody}}
+    {{#ionSideMenuContainer}}
+      {{#ionSideMenus}}
 
-{{#ionBody}}
-  {{#ionSideMenuContainer}}
-    {{#ionSideMenus}}
+        {{#ionSideMenu}}
+          {{> sideMenuContent}}
+        {{/ionSideMenu}}
 
-      {{#ionSideMenu}}
-        {{> sideMenuContent}}
-      {{/ionSideMenu}}
-
-    {{/ionSideMenus}}
+      {{/ionSideMenus}}
       {{#ionSideMenuContent}}
-
         {{> ionNavBar name="stub"}}
-
           {{#ionNavView transition="forward"}}
             {{#contentFor "headerButtonLeft"}}
               <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
@@ -21,10 +18,9 @@
                 {{else}}
                   {{> ionIcon icon='navicon'}}
                 {{/if}}
-            </button>
-          {{/contentFor}}
-
-        {{/ionNavView}}
+              </button>
+            {{/contentFor}}
+          {{/ionNavView}}
 
         {{> yield}}
 
