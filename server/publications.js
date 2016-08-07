@@ -23,13 +23,13 @@ Meteor.publish("chatMessagesCount", function(groupId) {
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 
-Meteor.publish('questions', function() {
-  var activeQuestions = Questions.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
-  if (activeQuestions) {
-    return activeQuestions
-  }
-  return this.ready();
-});
+// Meteor.publish('questions', function() {
+//   var activeQuestions = Questions.find({active: true}, {sort: {dateCreated: 1}, limit: 15});
+//   if (activeQuestions) {
+//     return activeQuestions
+//   }
+//   return this.ready();
+// });
 
 Meteor.publish('pendingQuestions', function() {
   var pendingQuestions = Questions.find({active: null}, {sort: {dateCreated: -1}});
