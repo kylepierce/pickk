@@ -11,7 +11,6 @@ Meteor.publish('activeQuestions', function(gameId) {
   return Questions.find({
     gameId: gameId,
     active: true,
-    usersAnswered: {$nin: [currentUserId]}
   });
 });
 
@@ -90,10 +89,11 @@ Meteor.publish('answersByGameId', function(gameId) {
   return Answers.find({userId: this.userId, gameId: gameId});
 })
 
-Meteor.publish('currentAnswers', function() {
-  var currentGame = Games.findOne({live: true})
-  currentGame = currentGame._id
-  return Answers.find({userId: this.userId, gameId: currentGame}, {sort: {dateCreated: -1}, limit: 3});
+Meteor.publish('lastQuestions', function(gameId) {
+  var user = this.userId;
+  var selector = {gameId: gameId}
+  var sort = {sort: {dateCreated: -1}, limit: 3}
+  return Questions.find(selector, sort);
 })
 
 Meteor.publish('singleGame', function(id) {
@@ -237,7 +237,10 @@ Meteor.publish('singleGroup', function(groupId) {
 
 Meteor.publish('game', function(_id) {
   check(_id, String);
-  return Games.find({_id: _id});
+  return Games.find({_id: _id}, 
+    {fields: {
+      _id: 1, id: 1, football: 1, status: 1, coverage: 1, game_number: 1, day_night: 1, scheduled: 1, home_team: 1, away_team: 1, venue: 1, broadcast: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1, inning: 1, topOfInning: 1, playersOnBase: 1, users: 1, nonActive: 1, commercialStartedAt: 1, 
+    }})
 });
 
 Meteor.publish('games', function() {
@@ -268,7 +271,7 @@ Meteor.publish('SportRadarGames', function() {
 
 Meteor.publish('activeGames', function() {
   var selector = {live: true} 
-  var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1}}
+  var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1, live: 1}}
 
   var tester = isTester(this.userId);
   if ( ! tester) {
@@ -276,6 +279,18 @@ Meteor.publish('activeGames', function() {
   }
 
   return Games.find(selector, parms);
+});
+
+Meteor.publish('upcomingGames', function(){
+  var selector = {completed: false, football: true} 
+  var parms = {sort: {gameDate: 1}, fields: {name: 1, tv: 1, gameDate: 1, status: 1, football: 1}}
+
+  var tester = isTester(this.userId);
+  if ( ! tester) {
+    selector.public = true;
+  }
+
+  return Games.find(selector, parms);  
 });
 
 Meteor.publish('trophy', function() {

@@ -1,6 +1,6 @@
 Template.createQuestion.events({
 	'click [data-action="thisDrive"]': function(event, template){
-				event.preventDefault();
+		event.preventDefault();
 		var down = template.find('input[name=down]').value
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
@@ -35,14 +35,14 @@ Template.createQuestion.events({
 		questionList("Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other")
 
 		multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						3.4, 5.42, 
 						3.2, 4.81, 
 						2.2, 4.81, 
 						2.2, 4.81, 
 						2.9, 4.61)
 
-		Meteor.call("questionPush", gameId, question)
+		// Meteor.call("questionPush", game, question)
 		Meteor.call("emptyInactive", gameId, question)
 		Meteor.call('insertQuestion', gameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
  
@@ -55,7 +55,8 @@ Template.createQuestion.events({
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
 		var time = template.find('input[name=time]').value
-		var gameId = template.find('#gameList :selected').value
+		var game = Games.findOne({live: true});
+		var gameId = game._id;
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -91,7 +92,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -100,7 +101,7 @@ Template.createQuestion.events({
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -109,7 +110,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -118,7 +119,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -127,7 +128,7 @@ Template.createQuestion.events({
 				} else if (area == 6)	{
 					// Goal Line
 					multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -137,7 +138,7 @@ Template.createQuestion.events({
 			}
 			else {
 				multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -156,7 +157,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 2., 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -165,7 +166,7 @@ Template.createQuestion.events({
 				} else if (area == 2){
 					// Most of the field 11 - 80 yard
 					multiplier(
-						1.1, 2., 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -174,7 +175,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 2., 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -183,7 +184,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 2., 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -192,7 +193,7 @@ Template.createQuestion.events({
 				} else if (area == 6)	{
 					// Goal Line
 					multiplier(
-						1.1, 2., 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -202,7 +203,7 @@ Template.createQuestion.events({
 			}
 			else {
 				multiplier(
-						1.1, 2.3, 
+						1.4, 2.3, 
 						2.4, 3.42, 
 						1.5, 1.9,	
 						2.9, 3.61, 
@@ -221,7 +222,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						3.2, 4.81, 
 						(3.2 * 2), (4.81 * 2), 
@@ -239,7 +240,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(4.2 * 2), (8.81 * 2), 
@@ -248,7 +249,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(4.2 * 2), (8.81 * 2), 
@@ -271,7 +272,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						3.2, 4.81, 
 						(3.2 * 2), (4.81 * 2), 
@@ -289,7 +290,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(10.2 * 2), (14.81 * 2), 
@@ -298,7 +299,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(12.2 * 2), (16.81 * 2), 
@@ -321,7 +322,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						3.2, 4.81, 
 						(3.2 * 2), (4.81 * 2), 
@@ -339,7 +340,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(6.2 * 2), (8.81 * 2), 
@@ -348,7 +349,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(12.2 * 2), (14.81 * 2), 
@@ -371,7 +372,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-					 1.1, 1.3,
+					 1.4, 1.3,
 					 1.4, 2.42,
 					 3.2, 4.81, 
 					 (2.9 * 2), (3.61 * 2), 
@@ -389,7 +390,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(6.2 * 2), (8.81 * 2), 
@@ -398,7 +399,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7,
+						1.4, 1.7,
 					 1.4, 1.92,
 					 2.2, 4.81, 
 					 (12.9 * 2), (14.61 * 2), 
@@ -421,7 +422,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						3.2, 4.81, 
 						(2.9 * 2), (3.61 * 2),
@@ -439,7 +440,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(5.2 * 2), (8.81 * 2), 
@@ -448,7 +449,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(8.9 * 2), (11.61 * 2),
@@ -471,7 +472,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						3.2, 4.81, 
 						(2.9 * 2), (3.61 * 2), 
@@ -489,7 +490,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(5.2 * 2), (6.81 * 2), 
@@ -498,7 +499,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						2.2, 4.81, 
 						(8.9 * 2), (13.61 * 2), 
@@ -833,7 +834,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -851,7 +852,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(5.2 * 2), (9.81 * 2), 
 						2.2, 4.81, 
@@ -860,7 +861,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(8.9 * 2), (13.61 * 2), 
 						2.9, 4.61, 
@@ -883,7 +884,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -901,7 +902,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(5.2 * 2), (9.81 * 2), 
 						2.2, 4.81, 
@@ -910,7 +911,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(9.9 * 2), (14.61 * 2), 
 						2.9, 4.61, 
@@ -933,7 +934,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -951,7 +952,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(4.2 * 2), (8.81 * 2), 
 						2.2, 4.81, 
@@ -960,7 +961,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(9.9 * 2), (12.61 * 2), 
 						2.9, 4.61, 
@@ -983,7 +984,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -1001,7 +1002,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(4.2 * 2), (8.81 * 2), 
 						2.2, 4.81, 
@@ -1010,7 +1011,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(8.9 * 2), (12.61 * 2), 
 						2.9, 4.61, 
@@ -1033,7 +1034,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -1051,7 +1052,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(6.2 * 2), (8.81 * 2), 
 						2.2, 4.81, 
@@ -1060,7 +1061,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(9.9 * 2), (12.61 * 2), 
 						2.9, 4.61, 
@@ -1083,7 +1084,7 @@ Template.createQuestion.events({
 				if(area == 1){
 					// Danger zone
 					multiplier(
-						1.1, 1.3, 
+						1.4, 1.3, 
 						1.4, 2.42, 
 						(2.9 * 2), (3.61 * 2), 
 						2.9, 3.61, 
@@ -1101,7 +1102,7 @@ Template.createQuestion.events({
 				} else if (area == 3 || area == 4){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(5.2 * 2), (8.81 * 2), 
 						2.2, 4.81, 
@@ -1110,7 +1111,7 @@ Template.createQuestion.events({
 				} else if (area == 5){
 					// Red Zone
 					multiplier(
-						1.1, 1.7, 
+						1.4, 1.7, 
 						1.4, 1.92, 
 						(8.9 * 2), (12.61 * 2), 
 						2.9, 4.61, 
@@ -1506,9 +1507,9 @@ Template.createQuestion.events({
 		else if (down == 6){
 			if(time < 5){
 				question = "Kick off..."
-				questionList("Touchback", "0-25 Return",  "26-45 Return", "46+", "Fumble", "Touchdown")
+				questionList("Touchback", "0-25 Return",  "26-45 Return", "46+ Return", "Fumble", "Touchdown")
 				multiplier(
-					1.1, 1.5, 
+					1.4, 1.5, 
 					2.4, 3.42, 
 					5.2, 9.81, 
 					8.9, 15.61, 
@@ -1518,7 +1519,7 @@ Template.createQuestion.events({
 				question = "Onside Kick..."
 				questionList("Touchback", "5-10 Return",  "11+ Return", "Penalty", "Fumble Recovered by Reciving Team", "Kicking Team Recovers")
 				multiplier(
-					1.1, 1.5, 
+					1.4, 1.5, 
 					2.4, 3.42, 
 					5.2, 9.81, 
 					2.9, 4.61,  

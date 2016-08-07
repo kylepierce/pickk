@@ -88,7 +88,7 @@ Template._situational.events({
 
 		function randomizer(min, max){
 			var calculations =  Math.random() * (max-min) + min
-			var dec = calculations.toFixed(2)
+			var dec = parseInt(calculations.toFixed(2))
 			return dec
 		}
 

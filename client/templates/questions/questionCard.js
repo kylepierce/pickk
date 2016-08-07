@@ -216,19 +216,15 @@ Template.questionCard.helpers({
     }
   },
   'answeredQuestions': function(){
-    var game = Games.findOne({live: true});
-    game = game._id
-    var answers = Answers.find({gameId: game}).fetch();
-    var answeredQuestionIds = _.pluck(answers, "_id");
-    return Answers.find({_id: {$in: answeredQuestionIds}}, {sort: {dateCreated: -1}, limit: 3});    
+    var user = Meteor.userId();
+    return Questions.find({gameId: this.params.id}, {sort: {dateCreated: -1}, limit: 3});    
   },
-  'pendingAnswers': function(){
-    console.log(this.questionId)
-    var active = this.active
-    if (active == true || active == null) {
-      return true
-    } 
-  }
+  // 'active': function () {
+  //   console.log(this)
+  // },
+  // 'pendingAnswers': function(id){
+  //   console.log(id)
+  // }
 });
 
 Template.questionCard.events({

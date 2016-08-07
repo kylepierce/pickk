@@ -4,7 +4,7 @@ Meteor.methods({
 	},
 
 	'toggleCommercial': function(game, toggle) {
-		check(game, String);
+		check(game, Object);
 		check(toggle, Boolean);
 
 		if (!Meteor.userId()) {
@@ -25,17 +25,17 @@ Meteor.methods({
 		check(que, String);
 		check(commercial, Match.Maybe(Boolean));
 		check(op1, String);
-		check(m1, Number);
+		check(m1, String);
 		check(op2, String);
-		check(m2, Number);
+		check(m2, String);
 		check(op3, String);
-		check(m3, Number);
+		check(m3, String);
 		check(op4, String);
-		check(m4, Number);
+		check(m4, String);
 		check(op5, Match.Maybe(String));
-		check(m5, Match.Maybe(Number));
+		check(m5, Match.Maybe(String));
 		check(op6, Match.Maybe(String));
-		check(m6, Match.Maybe(Number));
+		check(m6, Match.Maybe(String));
 		check(active, Match.Maybe(String));
 			
 		if (!Meteor.userId()) {

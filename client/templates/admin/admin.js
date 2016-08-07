@@ -49,11 +49,8 @@ Template.otherQuestions.events({
 	},
 	'click [data-action="thisDrive"]': function(event, template){
 		event.preventDefault();
-		var down = template.find('input[name=down]').value
-		var yards = template.find('input[name=yards]').value
-		var area = template.find('input[name=area]').value
-		var time = template.find('input[name=time]').value
-		var gameId = template.find('#gameList :selected').value
+		var game = Games.findOne({live: true});
+		var gameId = game._id;
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -101,7 +98,6 @@ Template.otherQuestions.events({
 Template.activeQuestions.events({
 	'click [data-action=deactivate]': function() {
 		var questionId = this._id;
-		console.log(questionId)
 		Meteor.call('deactivateStatus', questionId);
 	}
 });

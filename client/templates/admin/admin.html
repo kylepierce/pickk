@@ -17,7 +17,7 @@
 					<h1 class="title white-text-header">FootballAdmin Panel</h1>
    		 {{/contentFor}}
 		
-		<!-- {{> createQuestion}} -->
+		{{> createQuestion}}
 		{{> otherQuestions}}
 		{{> activeQuestions}}
 		{{> pendingQuestions}}
@@ -65,17 +65,10 @@
 	      <option class="slider-5-options" value="5" label="Overtime"></option>
 		<br>
 
-	<span style="clear: both; float: left; margin-top: 20px;">Game Info</span>
-
-			<select style="clear:both;" id="gameList">
-				{{#each game}}
-					<option value="{{_id}}">{{name}}</option>
-				{{/each}}
-			</select>
-
 		<button class='full' style="margin-top: 25px;" data-action="createQuestion">Create Question</button>
 
 	</div>
+
 </template>
 
 <template name="otherQuestions">

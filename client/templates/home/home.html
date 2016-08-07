@@ -19,8 +19,11 @@
 
     <!-- {{#if Template.subscriptionsReady}}   -->
     <!-- <div class="loading-wrapper"> -->
-		{{> gameBar}}
-
+    {{#if football}}
+    	{{name}}
+    {{else}}
+			{{> gameBar}}
+		{{/if}}
     <div style="margin-top: 45px"> 
 			{{> questionCard}}
 		</div>
@@ -258,7 +261,11 @@
 		<div>
 			<input type="radio" name="play" id="{{options.option1.title}}" required value="option1">
 			<label for="{{options.option1.title}}" class="play-option">
+			{{#if football}}
+	<i class="fa fa-star" style="vertical-align: super;"></i>
+			{{else}}
 			<img class="baseball-call-icon" src="/baseball-calls/{{options.option1.title}}.svg" >
+			{{/if}}
 			<span class="play-text">{{options.option1.title}}</span> 
 			<span id="{{options.option1.multiplier}}" class="multiplier">x {{options.option1.multiplier}}</span>
 			</label>
@@ -267,7 +274,11 @@
 		<div>
 			<input type="radio" name="play" id="{{options.option2.title}}" required value="option2">
 			<label for="{{options.option2.title}}" class="play-option">
-			<img class="baseball-call-icon" src="/baseball-calls/{{options.option2.title}}.svg">
+			{{#if football}}
+				<i class="fa fa-star" style="vertical-align: super;"></i>
+			{{else}}
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option2.title}}.svg" >
+			{{/if}}
 			<span class="play-text">{{options.option2.title}}</span> 
 			<span id="{{options.option2.multiplier}}" class="multiplier">x {{options.option2.multiplier}}</span></label>
 		</div>
@@ -276,7 +287,11 @@
 			<input type="radio" name="play" id="{{options.option3.title}}" required value="option3">
 			<label for="{{options.option3.title}}" class="play-option">
 
-			<img class="baseball-call-icon" src="/baseball-calls/{{options.option3.title}}.svg">
+			{{#if football}}
+				<i class="fa fa-star" style="vertical-align: super;"></i>
+			{{else}}
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option3.title}}.svg" >
+			{{/if}}
 
 			<span class="play-text">{{options.option3.title}}</span> 
 			<span id="{{options.option3.multiplier}}" class="multiplier">x {{options.option3.multiplier}}</span></label>
@@ -286,7 +301,11 @@
 			<input type="radio" name="play" id="{{options.option4.title}}" required value="option4">
 			<label for="{{options.option4.title}}" class="play-option">
 
-			<img class="baseball-call-icon" src="/baseball-calls/{{options.option4.title}}.svg">
+			{{#if football}}
+				<i class="fa fa-star" style="vertical-align: super;"></i> 
+			{{else}}
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option4.title}}.svg" >
+			{{/if}}
 
 			<span class="play-text">{{options.option4.title}}</span> 
 			<span id="{{options.option4.multiplier}}" class="multiplier">x {{options.option4.multiplier}}</span></label>
@@ -296,7 +315,11 @@
 			<input type="radio" name="play" id="{{options.option5.title}}" required value="option5">
 			<label for="{{options.option5.title}}" class="play-option">
 
-			<img class="baseball-call-icon" src="/baseball-calls/{{options.option5.title}}.svg">
+			{{#if football}}
+				<i class="fa fa-star" style="vertical-align: super;"></i>
+			{{else}}
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option5.title}}.svg" >
+			{{/if}}
 
 			<span class="play-text">{{options.option5.title}}</span> 
 			<span id="{{options.option5.multiplier}}" class="multiplier">x {{options.option5.multiplier}}</span></label>
@@ -307,7 +330,11 @@
 			<input type="radio" name="play" id="{{options.option6.title}}" required value="option6">
 			<label for="{{options.option6.title}}" class="play-option">
 
-			<img class="baseball-call-icon" src="/baseball-calls/{{options.option6.title}}.svg">
+			{{#if football}}
+				<i class="fa fa-star" style="vertical-align: super;"></i>
+			{{else}}
+			<img class="baseball-call-icon" src="/baseball-calls/{{options.option6.title}}.svg" >
+			{{/if}}
 
 			<span class="play-text">{{options.option6.title}}</span> 
 			<span id="{{options.option6.multiplier}}" class="multiplier">x {{options.option6.multiplier}}</span></label>

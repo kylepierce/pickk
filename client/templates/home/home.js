@@ -16,6 +16,10 @@ Template.home.rendered = function (template) {
 };
 
 Template.home.helpers({
+  football: function() {
+    var game = Games.findOne({});
+    return game.football
+  },
   scoreMessage: function() {
     var user = Meteor.user();
     var notifications = user && user.pendingNotifications || [];
@@ -485,6 +489,10 @@ Template.gameBar.helpers({
 });
 
 Template.normalPlay.helpers({
+  football: function() {
+    var game = Games.findOne({});
+    return game.football
+  },
   option6Exists: function() {
     var option6 = this.options.option6
     if (option6) {

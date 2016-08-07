@@ -56,25 +56,9 @@
           <!-- Outstanding questions -->
           <div class="container">
           <button class="button" data-action="game-leaderboard">Leaderboard</button>
-          <div class="item item-divider">Latest Answers
           <a style="" href="/history/{{gameId}}">
-            <span class="home-history">
-              (View History)
-            </span>
+            <button class="button" data-action="game-leaderboard">Previous Answers</button>
           </a>
-          </div>
-          {{#each answeredQuestions}}
-            {{#ionItem}}
-              {{#if pendingAnswers}}
-                <p class="still-active"><b>{{que}}</b></p>
-                <p>
-                You Answered: {{description}}<br>
-                Amount Wagered: {{wager}}
-                Muliplier: {{multiplier}}
-                </p>
-              {{/if}}
-            {{/ionItem}}
-          {{/each}}          
           </div>
 
         {{/if}}

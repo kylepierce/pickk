@@ -22,6 +22,7 @@ Meteor.methods({
 			gameDate: gameTime,
 			name: title,
 			tv: channel,
+			football: true,
 			commercial: false,
 			complete: false,
 			live: active,
