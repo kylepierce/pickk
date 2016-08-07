@@ -48,6 +48,10 @@
 	margin-left: -5px;
 }
 
+.second-base {
+	margin-top: -9px;
+}
+
 .third-base {
   margin-right: -5px;
 }
@@ -67,6 +71,18 @@
 	background-color: white;
 	border: 1px #fcfcfc solid;
   margin: 3px;
+}
+
+.inning-position {
+	font-size: 1.5rem;
+	font-family: lato;
+	padding-right: 10px;
+}
+
+.inning {
+	font-size: 1.25rem;
+	font-family: lato;
+	font-weight: bold;
 }
 
 .player-slider {

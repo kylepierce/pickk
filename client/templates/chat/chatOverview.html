@@ -40,12 +40,12 @@
 </template>
 
 <template name="messageBox">
-  <form id="" style="margin-bottom: 50px">
-    {{> inputAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
+  <form id="chat-message-area">
+    {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
     <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
-    <div class="col-md-33 chat-buttons" data-ion-popover="_reaction" >React</div>
-    <button tabindex=2 id="chat-submit" class="col-md-33 button" style="float:right;  border: none;" type="submit">Send</button>
-  </form> 
+    <div class="col-md-33 chat-buttons" data-ion-popover="_reaction">React</div>
+    <button tabindex=2 id="chat-submit" class="col-md-33 button" type="submit">Send</button>
+  </form>
 </template>
 
 <template name="singleMessage">
@@ -147,45 +147,43 @@
 
 
 <template name="_reactionToMessage">
-
-    <div class="emoji-layer">
-      {{#ionPopover}}
-        <button value="[dead]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
-        </button>
-        <button value="[fire]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
-        </button>
-        <button value="[dying]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
-        </button>
-        <button value="[hell-yeah]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
-        </button>
-        <button value="[what]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
-        </button>
-        <button value="[pirate]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
-        </button>
-        <button value="[love]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
-        </button>
-        <button value="[tounge]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
-        </button>
-        <button value="[oh-no]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
-        </button>
-        <button value="[what-the-hell]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
-        </button>
-        <button value="[none]" >
-          <img class="preview" src='/close-white.svg'>
-        </button>
-      {{/ionPopover}}
-    </div>
-
+  <div class="emoji-layer">
+    {{#ionPopover}}
+      <button value="[dead]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
+      </button>
+      <button value="[fire]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
+      </button>
+      <button value="[dying]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
+      </button>
+      <button value="[hell-yeah]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
+      </button>
+      <button value="[what]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
+      </button>
+      <button value="[pirate]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
+      </button>
+      <button value="[love]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
+      </button>
+      <button value="[tounge]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
+      </button>
+      <button value="[oh-no]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
+      </button>
+      <button value="[what-the-hell]" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
+      </button>
+      <button value="[none]" >
+        <img class="preview" src='/close-white.svg'>
+      </button>
+    {{/ionPopover}}
+  </div>
 </template>
 
 <template name="messageReactions">

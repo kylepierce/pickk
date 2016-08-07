@@ -56,7 +56,7 @@
 </template>
 
 <template name="futureGameInfo">
-  <div >
+  <div>
     {{ displayDate game.scheduled}} ({{game.tv}})
   </div>
 </template>
@@ -74,25 +74,27 @@
 </template>
 
 <template name="inningDisplay">
-  {{#if position}}
-    <i class="fa fa-caret-up"></i>
-  {{else}} 
-    <i class="fa fa-caret-down"></i>
-  {{/if}}
-  {{inning}} 
+  <span class="inning-position">
+    {{#if position}}
+      <i class="fa fa-caret-up"></i>
+    {{else}} 
+      <i class="fa fa-caret-down"></i>
+    {{/if}}
+  </span>
+  <span class="inning">{{inning}}</span> 
 </template>
 
 <template name="playersOnBase">
   <!-- Fix last / clean up -->
   {{#if base.third}} 
-    <div class="base-empty base-diamond base-fix third-base "></div> 
+    <div class="base-empty base-diamond base-fix third-base"></div> 
   {{else}} 
-    <div class="base-diamond base-fix third-base "></div> 
+    <div class="base-diamond base-fix third-base"></div> 
   {{/if}}
   {{#if base.second}} 
-    <div class="base-empty base-diamond"></div> 
+    <div class="base-empty base-diamond second-base"></div> 
   {{else}} 
-    <div class="base-diamond"></div>
+    <div class="base-diamond second-base"></div>
   {{/if}} 
   {{#if base.first}} 
     <div class="base-empty base-diamond base-fix first-base"></div> 

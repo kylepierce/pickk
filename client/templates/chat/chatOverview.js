@@ -41,7 +41,7 @@ Template.chatOverview.helpers({
 });
 
 Template.chatRoom.events({
-  'keyup input': function(e, t){
+  'keyup textarea': function(e, t){
     var length = e.currentTarget.value.length
     if (length < 3){
       $('#chat-submit').removeClass('allow-chats')
