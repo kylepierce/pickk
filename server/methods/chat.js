@@ -157,5 +157,32 @@ Meteor.methods({
 
 		// Update the collection with the changes in reactions object
 		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
+	},
+	'deleteMessage': function(messageId, deletor){
+		check(messageId, String);
+		check(deletor, String);
+		
+		var message = Chat.findOne({_id: messageId})
+		var userId = message.user
+		var deletorProfile = Meteor.users.findOne({_id: deletor})
+		var isAdmin = deletorProfile.profile.role
+		if (userId === deletor) {
+			console.log("Message owner. This user has permission to delete.")
+			Chat.update({_id: messageId}, {$set: {group: "Deleted"}});
+		} else if (isAdmin === "admin"){
+			console.log("This user has permission to delete.")
+			Chat.update({_id: messageId}, {$set: {group: "Deleted"}});
+		} else {
+			throw new Meteor.Error("not-authorized", "Cannot delete a message of another user");
+		}
 	}
 });
+
+
+
+
+
+
+
+
+

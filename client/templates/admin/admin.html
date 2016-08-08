@@ -16,8 +16,8 @@
    		 {{#contentFor "headerTitle"}}
 					<h1 class="title white-text-header">FootballAdmin Panel</h1>
    		 {{/contentFor}}
-		
-		<!-- {{> createQuestion}} -->
+
+		{{> createQuestion}}
 		{{> otherQuestions}}
 		{{> activeQuestions}}
 		{{> pendingQuestions}}
@@ -25,7 +25,7 @@
 
 		  {{/ionContent}}
 	  {{/ionView}}
-    </div>
+  </div>
 </template>
 
  
@@ -172,7 +172,6 @@
 
 			{{/if}}
 			</div>
-
 
 		{{/each}}
 		</ul>

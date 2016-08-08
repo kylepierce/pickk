@@ -14,11 +14,20 @@
 
 	    {{#each game in games}}
 				{{> singleGameInfo game=game}}
-				<div class="container" style="margin-top: 10px;"> 
-					<ul>
-						<li>{{> singleGameCard game=game}}</li>
-						<li>{{> playerCard}}</li>
-					</ul>
+				<div id="notification-center" style="margin-top: 10px;">
+					{{#ionSlideBox}}
+						{{#ionSlide}}
+							{{> singleGameCard game=game}}
+						{{/ionSlide}}
+						{{#ionSlide}}
+							{{> playerCard}}
+					  {{/ionSlide}}
+					  {{#each notification in notifications}}
+							{{#ionSlide}}
+								Notification
+							{{/ionSlide}}
+					  {{/each}}
+      		{{/ionSlideBox}}
 				</div>
 			{{/each}}
 

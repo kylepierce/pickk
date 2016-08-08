@@ -8,18 +8,6 @@ Template.chatRoom.created = function() {
   }.bind(this));
 };
 
-// Template.chatRoom.onRendered( function() {
-//   $( "svg" ).delay( 0 ).fadeIn();
-// });
-
-// Template.chatRoom.onCreated( function() {
-//   this.subscribe( 'chatUsersList', function() {
-//     $( ".loader" ).delay( 1000 ).fadeOut( 'fast', function() {
-//       $( ".loading-wrapper" ).fadeIn( 'fast' );
-//     });
-//   });
-// });
-
 Template.chatOverview.events({
   'click #all-chats': function() { 
     Session.set('chatGroup', null)
@@ -138,7 +126,8 @@ Template.chatOptions.helpers({
   'canDelete': function (){
     var owner = Template.instance().data.user
     var currentUser = Meteor.userId()
-    if ( owner === currentUser || currentUser.role === "admin") {
+    var userIsAdmin = Meteor.user().profile.role
+    if ( owner === currentUser || userIsAdmin === "admin") {
       return true
     } else {
       return false
@@ -164,8 +153,12 @@ Template.chatOptions.events({
     var userId = Template.instance().data.user
     Router.go('/user-profile/' + userId);
   },
-  'click [data-action=close]': function(event, template) {
-    var entire = $(event.currentTarget).parent().css({'display': 'none', 'opacity': '0'})
+  'click [data-action=delete]': function(event, template) {
+    var deletor = Meteor.userId();
+    var messageId = Template.instance().data._id
+    var container = $('#chat-options')[0]
+    container.remove();
+    Meteor.call('deleteMessage', messageId, deletor)
   },
 });
 

@@ -93,5 +93,6 @@ percolate:migrations
 practicalmeteor:mocha
 xolvio:cleaner
 http@1.2.8
-
 jamielob:reloader
+hammer:hammer
+chriswessels:hammer

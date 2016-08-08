@@ -19,8 +19,13 @@ Template.home.helpers({
   },
   gameCoins: function () {
     return GamePlayed.findOne().coins;
+  },
+  notifications: function () {
+    return Notifications.find({gameId: this.params.id })
   }
 });
+
+
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
