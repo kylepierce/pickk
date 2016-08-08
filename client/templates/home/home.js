@@ -10,7 +10,6 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
-
 Template.home.helpers({
   games: function () {
     return Games.find({}).fetch();
@@ -79,7 +78,6 @@ Template.wagers.helpers({
     return wagerArray
   }
 });
-
 
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
@@ -236,14 +234,14 @@ Template.submitButton.events({
   }
 });
 
-// Template.playerCard.helpers({
-//   playerInfo: function () {
-//     var playerAtBat = AtBat.findOne({active: true})
-//     var playerId = playerAtBat.playerId
-//     var player = Players.findOne({_id: playerId})
-//     return player
-//   }
-// });
+Template.playerCard.helpers({
+  playerInfo: function () {
+    var playerAtBat = AtBat.findOne({active: true})
+    var playerId = playerAtBat.playerId
+    var player = Players.findOne({_id: playerId})
+    return player
+  }
+});
 
 // Template.sAlert.events({
 //   'click [data-action="shareResult"]': function() {

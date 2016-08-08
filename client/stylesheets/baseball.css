@@ -89,10 +89,8 @@
 	text-align: center;
 	overflow-x: hidden;
   padding: 15px;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #00695C;
+  background-color: #263238;
+  font-family: lato;
   color: #fff;
 }
 
