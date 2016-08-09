@@ -87,8 +87,8 @@ Meteor.methods({
 				}
 			}
 		}
-
 	},
+
 	'addReactionToMessage': function(author, messagePosted, messageId) {
 		check(author, String);
 		check(messagePosted, String);
@@ -158,6 +158,7 @@ Meteor.methods({
 		// Update the collection with the changes in reactions object
 		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
 	},
+
 	'deleteMessage': function(messageId, deletor){
 		check(messageId, String);
 		check(deletor, String);
@@ -177,12 +178,3 @@ Meteor.methods({
 		}
 	}
 });
-
-
-
-
-
-
-
-
-

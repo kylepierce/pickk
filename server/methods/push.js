@@ -1,5 +1,8 @@
 Meteor.methods({
 	'questionPush': function(gameId, message) {
+		check(gameId, String);
+		check(message, String);
+
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
 		const text = "Guess What Happens on " + message;
@@ -21,14 +24,17 @@ Meteor.methods({
 		}
 	},
 
-	'emptyInactive': function(game) {
-		var game = Games.findOne({_id: game})
+	'emptyInactive': function(gameId) {
+		check(gameId, String);
+
 		console.log("removing all users from inactive")
-		var gameId = game._id
 		return Games.update({_id: gameId}, {$set: {'nonActive': []}}, {multi: true});
 	},
 
-	'playerInactive': function(user, questionId) {
+	'playerInactive': function(userId, questionId) {
+		check(userId, String);
+		check(questionId, String);
+
 		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
 		var game = Games.find(
@@ -43,6 +49,16 @@ Meteor.methods({
 	},
 
 	'push': function(message) {
+		check(message, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
 		if (Meteor.settings.oneSignal.isEnabled) {
 			OneSignal.Notifications.create(undefined, {
 				included_segments: ["All"],
@@ -66,6 +82,9 @@ Meteor.methods({
 	},
 
 	'pushInvite': function(message, userId) {
+		check(message, String);
+		check(userId, String);
+
 		var user = Meteor.users.findOne({_id: userId}, {"oneSignalToken": 1});
 		if (user) {
 			const token = user.oneSignalToken;

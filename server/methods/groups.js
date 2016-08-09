@@ -21,6 +21,14 @@ Meteor.methods({
 
 	},
 
+	'isGroupNameUnique': function(name) {
+		name = name.trim()
+		if (!name) {
+			return true;
+		}
+		return !Groups.find({groupId: {$ne: name}}).count()
+	},
+	
 	'editGroup': function(id, groupName, secretStatus, description) {
 		Groups.update({_id: id},
 			{
@@ -54,7 +62,6 @@ Meteor.methods({
 	},
 
 	// Users can add other users to join their group.
-
 	'inviteToGroup': function(userId, sender, groupId) {
 		Groups.update({_id: groupId}, {$addToSet: {invites: userId}})
 
@@ -91,7 +98,6 @@ Meteor.methods({
 		Groups.remove({_id: groupId});
 	},
 
-
 	'removeGroupMember': function(user, groupId) {
 		// Remove user from the group's list
 		Groups.update({_id: groupId}, {$pull: {members: user}});
@@ -101,14 +107,12 @@ Meteor.methods({
 	},
 
 	// Users can join any group
-
 	'joinGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$push: {members: user}});
 		UserList.update({_id: user}, {$push: {'profile.groups': groupId}});
 	},
 
 	// Users can leave groups they are apart of
-
 	'leaveGroup': function(user, groupId) {
 		Groups.update({_id: groupId}, {$pull: {members: user}});
 		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});

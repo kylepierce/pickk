@@ -1,7 +1,5 @@
 Meteor.methods({
-
 	// Update users info from the settings page
-
 	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
 		check(username, String);									
 		check(firstName, Match.Maybe(String));		// Match.Maybe -> used for optional fields.. updateProfile being called only with username in 'at_config,js' file
@@ -27,7 +25,6 @@ Meteor.methods({
 	},
 
 	// Update users Favorite teams info from the Favorite Teams page
-
 	'updateFavoriteTeams': function(teamsArr) {
 		check(teamsArr, Array);
 

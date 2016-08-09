@@ -38,7 +38,6 @@ Meteor.methods({
 	},
 
 	// Way for Admin to manually update users coins
-
 	'updateCoins': function(user, coins) {
 		check(user, String);
 		check(coins, String);

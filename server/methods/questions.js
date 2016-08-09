@@ -7,6 +7,17 @@ Meteor.methods({
 		Questions.update({gameId: gameId}, {$set: {'active': true}},  {multi: true})
 	},
 
+	'flushQuestions': function (){
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		Questions.update({active: true}, {$set: {'active': false}}, {multi: true});
+	},
+
 	'toggleCommercial': function(game, toggle) {
 		check(game, String);
 		check(toggle, Boolean);
@@ -162,42 +173,6 @@ Meteor.methods({
 		})
 	},
 
-	'createTwoOption': function(gameId, que, option1, multiplier1, option2, multiplier2) {
-		check(gameId, String);
-		check(que, String);
-		check(option1, String);
-		check(multiplier1, Number);
-		check(option2, String);
-		check(multiplier2, Number);
-
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
-
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
-
-		var currentUserId = Meteor.userId();
-		var timeCreated = new Date();
-
-		Questions.insert({
-			que: que,
-			gameId: gameId,
-			createdBy: currentUserId,
-			dateCreated: timeCreated,
-			active: true,
-			commercial: false,
-			binaryChoice: true,
-			options: {
-				option1: {title: option1, multiplier: multiplier1},
-				option2: {title: option2, multiplier: multiplier2},
-			},
-			usersAnswered: []
-		})
-	},
-
-
 	'reactivateStatus': function(questionId) {
 		check(questionId, String);
 
@@ -212,7 +187,6 @@ Meteor.methods({
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
-
 	'removeQuestion': function(questionId) {
 		check(questionId, String);
 
@@ -249,10 +223,7 @@ Meteor.methods({
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
 
-
-
 // Remove Coins from the people who answered it "correctly", the answer changed.
-
 	'unAwardPoints': function(questionId, oldAnswered) {
 		check(questionId, String);
 		check(oldAnswered, String);
@@ -353,35 +324,5 @@ Meteor.methods({
 		}
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
-	},
-
-	'isGroupNameUnique': function(name) {
-		name = name.trim()
-		if (!name) {
-			return true;
-		}
-		return !Groups.find({groupId: {$ne: name}}).count()
-	},
-	'exportToMailChimp': function(limit) {
-		check(limit, Number);
-
-		limit = limit || 10; // safety net; pass a very high limit to export all users
-		var user = UserList.findOne(this.userId);
-		var role = user.profile.role;
-		if (role !== "admin") {
-			throw new Meteor.Error(403, "Unauthorized");
-		}
-		var selector = {"emails.address": {$exists: true}};
-		var options = {sort: {_id: 1}, limit: limit};
-		UserList.find(selector, options).forEach(function(user) {
-			console.info("[exportToMailChimp] Subscribing " + user.emails[0].address + " (" + user._id + ")");
-			mailChimpLists.subscribeUser(user, {double_optin: false}, function(error, result) {
-				if (error) {
-					console.error("[exportToMailChimp] Error for " + user.emails[0].address + ": " + JSON.stringify(error));
-				} else {
-					console.info("[exportToMailChimp] Result for " + user.emails[0].address + ": " + JSON.stringify(result));
-				}
-			});
-		});
 	}
 });
