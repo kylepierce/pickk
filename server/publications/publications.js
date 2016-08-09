@@ -32,56 +32,12 @@ Meteor.publish('usersGroups', function ( user ) {
   return Groups.find(selector)
 });
 
-// Upcoming Games
-
-Meteor.publish('game', function(_id) {
-  check(_id, String);
-  return Games.find({_id: _id}, 
-    {fields: {
-      _id: 1, id: 1, status: 1, coverage: 1, game_number: 1, day_night: 1, scheduled: 1, home_team: 1, away_team: 1, venue: 1, broadcast: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1, inning: 1, topOfInning: 1, playersOnBase: 1, users: 1, nonActive: 1, commercialStartedAt: 1, 
-    }});
-});
-
-// All Games for the next 3 days
-// Meteor.publish('games', function() {
-//   const today = moment().startOf('day').toDate();
-//   const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
-
-//   var selector = {scheduled: {$gt: today, $lt: tomorrow}};
-//   var parms = {sort: {scheduled: -1}, fields: {_id: 1, id: 1, name: 1, tv: 1, gameDate: 1, status: 1, scheduled: 1}}
-
-//   // var tester = isTester(this.userId);
-//   // if ( ! tester) {
-//   //   selector.public = true;
-//   // }
-
-//   return Games.find(selector, parms);
-// });
-
-
 // ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game) 
 Meteor.publish('gamePlayed', function (user, game) {
   check(user, String);
   check(game, String);
 
   return GamePlayed.find({userId: user, gameId: game})
-});
-
-
-// Only live games
-Meteor.publish('activeGames', function() {
-  const today = moment().startOf('day').toDate();
-  const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
-
-  var selector = {$or: [{live: true}, {scheduled: {$gt: today, $lt: tomorrow}}]};
-  var parms = {sort: {scheduled: 1}, fields: {name: 1, tv: 1, gameDate: 1, scheduled: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1}}
-  
-  // var tester = isTester();
-  // if ( ! tester) {
-  //   selector.public = true;
-  // }
-
-  return Games.find(selector, parms);
 });
 
 // Teams
@@ -92,8 +48,6 @@ Meteor.publish('teams', function() {
 Meteor.publish('singleTeam', function ( teamId ) {
   return Teams.find({_id: teamId})
 });
-
-
 
 // At Bat 
 Meteor.publish('activeAtBat', function(gameId) {
@@ -126,8 +80,6 @@ Meteor.publish('atBatPlayer', function(gameId) {
   }
 });
 
-
-
 // Questions and Answers
 // Active Questions for one game
 Meteor.publish('activeQuestions', function(gameId) {
@@ -141,6 +93,15 @@ Meteor.publish('activeQuestions', function(gameId) {
   }, {limit: 3});
 });
 
+Meteor.publish('adminActiveQuestions', function(gameId) {
+  check(gameId, String);
+  
+  return Questions.find({
+    gameId: gameId,
+    active: true,
+  });
+});
+
 Meteor.publish('gameQuestions', function() {
   var allQuestions = Questions.find({gameId: 'prediction'});
   if (allQuestions) {
@@ -150,14 +111,10 @@ Meteor.publish('gameQuestions', function() {
 });
 
 Meteor.publish('pendingGameQuestions', function() {
-  var pendingQuestions = Questions.find({active: "pending"}, {sort: {dateCreated: 1}});
-  if (pendingQuestions) {
-    return pendingQuestions
-  }
-  return this.ready();
+  var selector = {active: "pending"}
+  var sort = {sort: {dateCreated: 1}}
+  return Questions.find(selector, sort);
 });
-
-
 
 // History
 
@@ -179,7 +136,6 @@ Meteor.publish('gamesPlayed', function() {
   var fields = { fields: {_id: 1, id: 1, status: 1, coverage: 1, game_number: 1, day_night: 1, scheduled: 1, home_team: 1, away_team: 1, venue: 1, broadcast: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1, inning: 1, topOfInning: 1, playersOnBase: 1, users: 1, nonActive: 1, commercialStartedAt: 1}}
   return Games.find(selector, fields );
 });
-
 
 // Miscellaneous
 

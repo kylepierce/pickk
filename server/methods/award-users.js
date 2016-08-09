@@ -27,7 +27,6 @@ Meteor.methods({
 
 			// if unique add them to the list.
 			list.push(a.userId)
-			console.log(a)
 			var amount = parseInt(a.wager * a.multiplier);
 			var notifyObj = {
 				type: "score",
@@ -38,8 +37,6 @@ Meteor.methods({
 			}
 
 			var game = GamePlayed.findOne({userId: a.userId, gameId: a.gameId});
-
-			console.log(game, game.coins)
 
 			// Update users coins
 			GamePlayed.update({userId: a.userId, gameId: a.gameId}, {$inc: {coins: amount}}, createPendingNotification(notifyObj));

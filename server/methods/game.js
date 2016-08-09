@@ -41,7 +41,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Questions.update(questionId, {$set: {'active': "pending"}});
+		Questions.update({_id: questionId}, {$set: {'active': "pending"}});
 	},
 
 	'activateGame': function(questionId) {

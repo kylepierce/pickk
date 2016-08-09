@@ -101,4 +101,19 @@ Meteor.methods({
 		});
 		console.log("Email Sent!")
 	},
+	//Once the play starts change active status
+
+	'deactivateStatus': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		Questions.update({"_id": questionId}, {$set: {'active': null}});
+	},
 })

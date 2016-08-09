@@ -28,20 +28,4 @@ Meteor.methods({
 		var fields = {fields: {'profile.username': 1, 'profile.diamonds': 1, 'profile.avatar': 1, '_id': 1}}
 		return UserList.find(selector, fields).fetch();
 	},
-
-	//Once the play starts change active status
-
-	'deactivateStatus': function(questionId) {
-		check(questionId, String);
-
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
-
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
-
-		Questions.update(questionId, {$set: {'active': null}});
-	},
 })

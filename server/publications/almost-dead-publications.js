@@ -45,14 +45,6 @@ Meteor.publish('oldQuestions', function() {
   return this.ready();
 });
 
-Meteor.publish('pendingQuestions', function() {
-  var pendingQuestions = Questions.find({active: null}, {sort: {dateCreated: -1}});
-  if (pendingQuestions) {
-    return pendingQuestions
-  }
-  return this.ready();
-});
-
 Meteor.publish('SportRadarGames', function() {
   const today = moment().toDate();
   const tomorrow = moment().add("days", 1).toDate();
