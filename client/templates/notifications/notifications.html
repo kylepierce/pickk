@@ -14,19 +14,27 @@
     <h1 class="title white-text-header">Notifications</h1>
   {{/contentFor}}
 
-  {{#contentFor "headerButtonRight"}}
+
+<!-- Filter notifications by type.    
+	{{#contentFor "headerButtonRight"}}
     <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
       {{> ionIcon icon="funnel"}}
     </button>
-  {{/contentFor}}
+  {{/contentFor}} -->
 
   {{#ionView}}
     {{#ionContent}}
-    	{{#ionList class=notificationsList}}
-	    	{{#each note in notifications}}
-					{{> notification note=note}}
-	    	{{/each}}
-    	{{/ionList}}
+	    {{#if noNotifications}}
+				<div class="no-notifications">
+					No Unread Notifications
+				</div>
+    	{{else}}
+    		{{#ionList class=notificationsList}}
+		    	{{#each note in notifications}}
+						{{> notification note=note}}
+		    	{{/each}}
+    		{{/ionList}}
+    	{{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -137,30 +145,30 @@
 <template name="notificationOptions">
 	{{#with options}}
 		{{#if mention}}
-	    <div class="{{options}}" data-action="reply">
+	    <div class="{{options}} actions-section" data-action="reply">
 	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
 	      Reply
 	    </div>
-	    <div class="{{options}}" data-action="react">
+	    <div class="{{options}} actions-section" data-action="react">
 	      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
 	      React
 	  	</div>
 	  {{/if}}
 	  {{#if award}}
-	    <div class="{{options}}" data-action="reply">
+	    <div class="{{options}} actions-section" data-action="share">
 	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
 	      Share
 	    </div>
 	  {{/if}}
 	  {{#if group}}
-			<div class="{{options}}" data-action="user">
+			<div class="{{options}} actions-section" data-action="group">
 	   		{{> ionIcon class="reply-icon" icon='ios-people'}}
 	    	<br>
 	    	View Group
 	  	</div>
 	  {{/if}}
 		{{#if interaction}}
-			<div class="{{options}}" data-action="user">
+			<div class="{{options}} actions-section" data-action="user">
 	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
 	    	<br>
 	    	View User
@@ -168,111 +176,30 @@
 		{{/if}}
 
 		{{#if follower}}
-			<div class="{{options}}" data-action="user">
-	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
-	    	<br>
-	    	Follow 
-	  	</div>
+			{{#if notAlreadyFollowing}}
+				<div class="{{options}} actions-section" data-action="follow">
+	   			{{> ionIcon class="reply-icon" icon='ios-person'}}
+	    		<br>
+	    		Follow 
+	  		</div>
+	  	{{/if}}
 		{{/if}}
 
-	  <div class="{{options}}" data-action="close">
+	  <div class="{{options}} actions-section" data-action="read">
 	    {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
 	    <br>
-	    Cancel
+	    Mark Read
 	  </div>
 	{{/with}}
 </template>
 
-
-<!-- 
-		<div class="item item-divider">Followers</div>
-		{{#each alert}}
-			{{#if type "follower"}}	
-		    {{#ionItem class="double-button" buttonRight=true avatar=true}}
-		    	{{#with user referrer}}
-            {{> userAvatar userId=_id}}
-			      <h2>{{profile.username}}</h2>
-			    	
-			    	Is now following you
-			      <a href="/user-profile/{{_id}}" class="button"> 
-			        {{> ionIcon icon="more"}}
-			      </a>
-					{{/with}}
-			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
-			        {{> ionIcon icon="ios-close"}}
-			      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}}
-
-	<div class="item item-divider">Trophies</div>
-		{{#each alert}}
-			{{#if type "trophy"}}	
-		    {{#ionItem buttonRight=true class="item-thumbnail-left"}}
-		    	{{#with trophy notificationId}}
-					<img style="width: 66px!important;" src="/{{image}}">
-		      <h2>{{title}}</h2>
-		      <p>{{description}}</p>
-		      {{/with}}
-		      <a data-action="delete" class="button"> 
-	        {{> ionIcon icon="ios-close"}}
-		      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}} -->
-
-<!--   	<div class="item item-divider">Score</div>
-		{{#each alert}}
-			{{#if type "score"}}	
-		    {{#ionItem buttonRight=true}}
-		      <p>{{message}}</p>
-		      <a data-action="delete" class="button"> 
-	        {{> ionIcon icon="ios-close"}}
-		      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}} -->
-	<!--   {{/with}}
-
-				<br> -->
-<!-- 
-			<div class="item item-divider">All notifications</div>
-
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="brad.jpg">
-		    <h2>John Smith</h2>
-		    <p>is now following you!</p>
-		    <button class="button" data-ion-popover="_notificationPopover">
-		      {{> ionIcon icon="more"}}
-		    </button>
-    	{{/ionItem}}
-
-			{{#ionItem buttonRight=true class="item-thumbnail-left"}}
-				<img class="pickk-badge" src="san-fran.png">
-	      <h2>San Fransico Badge</h2>
-	      <p>You watched San Fransico play!</p>
-	      <button class="button" data-ion-popover="_notificationPopover">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}}
-
-	    {{#ionItem buttonRight=true class="item-thumbnail-left"}}
-				<img src="fire.png">
-	      <h2>1% Trophy</h2>
-	      <p>You ranked in the top 1% of all players!</p>
-	      <button class="button" data-ion-popover="_notification">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}} -->
-
-
 <template name="gameNotifications">
 	<div class="item item-divider">Game Notifications</div>
-		{{#ionItem}}
-				{{#each question}}
-					<p>You guessed... {{_id}}</p>
-				{{/each}}
-    	{{/ionItem}}
+	{{#ionItem}}
+		{{#each question}}
+			<p>You guessed... {{_id}}</p>
+		{{/each}}
+  {{/ionItem}}
 </template>
 
 <template name="type">

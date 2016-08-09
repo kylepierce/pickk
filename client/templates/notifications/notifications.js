@@ -4,6 +4,13 @@ Template.notifications.helpers({
 		var notifications = Notifications.find({userId: userId}).fetch()
 		return notifications
 	}, 
+	noNotifications: function () {
+		var numberOfNotifications = this.notifications.length;
+		console.log(numberOfNotifications)
+		if (numberOfNotifications === 0){
+			return true
+		}
+	}
 });
 
 Template.notification.helpers({
@@ -12,13 +19,10 @@ Template.notification.helpers({
 			return this.note
 		}
 	},
-});
- 
-Template.notifications.events({
-	'click [data-action=delete]': function () {
-		var notificationId = this._id
-		Meteor.call('removeNotification', notificationId);
-	},
+	noNotifications: function () {
+		var data = Template.instance()
+		console.log(this, data)
+	}
 });
 
 Template.groupNotification.helpers({
@@ -30,13 +34,6 @@ Template.groupNotification.helpers({
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
 	},
-});
-
-Template.groupNotification.events({
-	'click [data-action=delete]': function () {
-		var notificationId = this.note._id
-		Meteor.call('removeNotification', notificationId);
-	}
 });
 
 Template.chatNotification.helpers({
@@ -104,12 +101,35 @@ Template.notification.events({
 });
 
 Template.notificationOptions.events({
-	'click [data-action=user]': function (event, template) {
-		var note = template
-		console.log(note)
+	'click [data-action=reply]': function (e, t) {
+		console.log(t)
 	}, 
-	'click [data-action=close]': function(){
+	'click [data-action=react]': function (e, t) {
+		console.log(t)
+	}, 
+	'click [data-action=share]': function (e, t) {
+		console.log(t)
+	}, 
+	'click [data-action=group]': function (e, t) {
+		var groupId = t.data.groupId
+		Router.go('/groups/' + groupId);
+	}, 
+	'click [data-action=user]': function (e, t) {
+		var userId = t.data.userId
+		Router.go('/user-profile/' + userId);
+	}, 
+	'click [data-action=follow]': function (e, t) {
+		var senderId = t.data.senderId
+		var sender = Meteor.users.findOne({_id: senderId});
+		var username = sender.profile.username
+		sAlert.success("Followed " + username + "!" , {effect: 'slide', position: 'bottom', html: true});
+		Meteor.call('followUser', Meteor.userId(), senderId)
+	}, 
+	'click [data-action=read]': function(e, t){
 		$('#notification-options').remove();
+		var notificationId = t.data._id
+		Meteor.call('removeNotification', notificationId);
+		sAlert.success("Maked as read" , {effect: 'slide', position: 'bottom', html: true});
 	}
 });
 
@@ -160,6 +180,15 @@ Template.notificationOptions.helpers({
 		if(exists){
 			return true
 		}		
+	},
+	notAlreadyFollowing: function () {
+    var t = Template.instance()
+    var senderId = t.data.senderId
+    var following = Meteor.user().profile.following
+    var alreadyFollowing = following.indexOf(senderId)
+    if(alreadyFollowing === -1 ){
+      return true
+    }		
 	},
 	group: function () {
 		var note = Template.instance().data.type
