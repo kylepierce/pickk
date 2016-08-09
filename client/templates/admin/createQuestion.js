@@ -1538,7 +1538,7 @@ Template.createQuestion.events({
 // Fourth Down
 		} else if (time == 4 && down == 4 && area >= 4) {
 			question = "4th Down..."
-			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "/Blocked Kick")
+			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick")
 			multiplier(
 				1.3, 1.7, 
 				2.4, 3.42, 

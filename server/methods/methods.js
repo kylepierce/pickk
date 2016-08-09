@@ -94,8 +94,7 @@ Meteor.methods({
 		return que
 	},
 
-	// Create a question. Each play has question text and six options.
-
+	// Create a question.
 	'insertQuestion': function(q) {
 		check(q, Object);
 			
