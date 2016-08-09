@@ -11,6 +11,9 @@ Template.activeGames.rendered = function () {
 };
 
 Template.activeGames.helpers({
+  hero: function () {
+    return Hero.find({}).fetch()
+  },
   games: function ( ) {
     return Games.find({}).fetch();
   },

@@ -9,20 +9,9 @@
     {{#ionContent}}
       
       <div class="hero-section">
-        <a href="">
-          <div class="single-slide" style="background-image: url('http://pickk.co/wp-content/uploads/2016/06/CBP160614036_Yankees_at_Rockies.jpg')">
-            <div class="slider-text">
-              Miami vs St. Louis -- Live
-            </div>
-          </div>
-        </a>
-        <a href="">
-          <div class="single-slide" style="background-image: url('http://pickk.co/wp-content/uploads/2016/06/DAW16060236Red-Sox_at_Orioles.jpg')">
-            <div class="slider-text">
-              Yankees vs Boston -- Live Yankees vs Boston -- Live
-            </div>
-          </div>
-        </a>
+        {{#each item in hero}}
+          {{> heroImage item=item}}
+        {{/each}}
       </div>
 
       <div class="container" style="margin-top: 10px;">
@@ -36,6 +25,16 @@
       </div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="heroImage">
+  <a href="{{item.url}}">
+    <div class="single-slide" style="background-image: url({{item.image}})">
+      <div class="slider-text">
+        {{item.text}}
+      </div>
+    </div>
+  </a>
 </template>
 
 <template name="singleGameInfo">

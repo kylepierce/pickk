@@ -115,4 +115,20 @@ Meteor.methods({
 
 		Questions.update({"_id": questionId}, {$set: {'active': null}});
 	},
+	'createHero': function (o) {
+		check(o, Object);
+		console.log(o)
+		Hero.insert({
+			startDate: o.startDate,
+			endDate: o.endDate,
+			liveStartDate: o.liveStartDate,
+			liveEndDate: o.liveEndDate,
+			button: o.button,
+			buttonText: o.buttonText,
+			active: o.active,
+			image: o.image,
+			url: o.url,
+			important: o.important,
+		});
+	}
 })

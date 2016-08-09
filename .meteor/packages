@@ -96,3 +96,5 @@ http@1.2.8
 jamielob:reloader
 hammer:hammer
 chriswessels:hammer
+notorii:autoform-datetimepicker
+drewy:pikaday-time
