@@ -19,7 +19,7 @@
    "setupNode": true,
 
   // WARNING: nodeVersion defaults to 0.10.36 if omitted. Do not use v, just the version number.
-   "nodeVersion": "0.10.45",
+   "nodeVersion": "4.4.7",
 
   // Install PhantomJS on the server
   // "setupPhantom": false,
@@ -43,7 +43,7 @@
     "PORT": 80,
     "ROOT_URL": "http://stag.pickk.net",
     "MONGO_URL": "mongodb://getpickk:xEZMosrpQRqg@candidate.11.mongolayer.com:11179,candidate.43.mongolayer.com:11034/pickk-stag?replicaSet=set-55dbc8150df18460e00000cf",
-    "MONGO_OPLOG_URL": "mongodb://getpickk:xEZMosrpQRqg@candidate.11.mongolayer.com:11179,candidate.43.mongolayer.com:11034/local?authSource=pickk-stag",
+    "MONGO_OPLOG_URL": "mongodb://getpickk:xEZMosrpQRqg@candidate.11.mongolayer.com:11179,candidate.43.mongolayer.com:11034/local?authSource=pickk-stag&replicaSet=set-55dbc8150df18460e00000cf",
     "MAIL_URL": "smtp://postmaster%40mg.pickk.co:2e53ee0dce2deade7b63443c39322243@smtp.mailgun.org:587"
   },
 
