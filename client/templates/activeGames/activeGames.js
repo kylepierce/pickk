@@ -1,4 +1,19 @@
+Template.activeGames.rendered = function () {
+  $('.hero-section').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 20000,
+    accessibility: false,
+    arrows: false,
+    mobileFirst: true,
+  });
+};
+
 Template.activeGames.helpers({
+  hero: function () {
+    return Hero.find({}).fetch()
+  },
   games: function ( ) {
     return Games.find({}).fetch();
   },

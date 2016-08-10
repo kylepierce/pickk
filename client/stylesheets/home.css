@@ -1,3 +1,25 @@
+.hero-section {
+	height: 200px;
+	background-size: contain;
+}
+
+.single-slide {
+	background-size: cover;
+	display: flex!important;
+	height: 100%;
+}
+
+.slider-text {
+	width: 100%;
+	padding: 15px;
+	bottom: 0;
+	font-size: 1.25rem;
+	background-color: rgba(0, 0, 0, 0.75);
+	color: white;
+	font-family: lato;
+	align-self: flex-end;
+}
+
 /*.next-play{
   max-width: 100%;
   margin-top: 20px;

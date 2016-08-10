@@ -10,6 +10,7 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
+
 Template.home.onCreated(function () {
   this.coinsVar = new ReactiveVar(0);
   this.diamondsVar = new ReactiveVar(0);
@@ -85,21 +86,40 @@ Template.home.rendered = function() {
     }
 };
 
+Template.home.rendered = function () {
+  $('#notification-center').slick({
+    arrows: false,
+    infinite: false,
+    draggable: false,
+    centerMode: true,
+    centerPadding: '4.5%'
+  });
+};
 
 Template.home.helpers({
   games: function () {
     return Games.find({}).fetch();
   },
   questions: function () {
-    return Questions.find({}, {limit: 1}).fetch()
+    return Questions.find({}, {limit: 1}).fetch();
   },
   gameCoins: function () {
+
     return Template.instance().coinsVar.get();
   },
   diamonds: function () {
     return Template.instance().diamondsVar.get();
+    return GamePlayed.findOne().coins;
+  },
+  notifications: function () {
+    return Notifications.find({}).fetch();
+  },
+  player: function () {
+    return AtBat.findOne()
   }
 });
+
+
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
@@ -157,7 +177,6 @@ Template.wagers.helpers({
     return wagerArray
   }
 });
-
 
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
@@ -314,14 +333,14 @@ Template.submitButton.events({
   }
 });
 
-// Template.playerCard.helpers({
-//   playerInfo: function () {
-//     var playerAtBat = AtBat.findOne({active: true})
-//     var playerId = playerAtBat.playerId
-//     var player = Players.findOne({_id: playerId})
-//     return player
-//   }
-// });
+Template.playerCard.helpers({
+  playerInfo: function () {
+    var playerAtBat = AtBat.findOne({active: true})
+    var playerId = playerAtBat.playerId
+    var player = Players.findOne({_id: playerId})
+    return player
+  }
+});
 
 // Template.sAlert.events({
 //   'click [data-action="shareResult"]': function() {

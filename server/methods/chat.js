@@ -75,20 +75,20 @@ Meteor.methods({
 				if (user) {
 					// Push notifications don't support HTML, so we'll have to use plainMessagePosted
 					var notifyObj = {
-						userId: user._id, 
-						notificationId: messageId + "_" + user._id, 
-						type: "mention", 
+						userId: user._id,
+						messageId: messageId, 
+						type: "mention",
 						senderId: author,
 						message: plainMessagePosted
 					}
 					
 					Meteor.call('pushInvite', plainMessagePosted, user._id)
-					createPendingNotification(notifyObj)
+ 					createPendingNotification(notifyObj)
 				}
 			}
 		}
-
 	},
+
 	'addReactionToMessage': function(author, messagePosted, messageId) {
 		check(author, String);
 		check(messagePosted, String);
@@ -157,5 +157,24 @@ Meteor.methods({
 
 		// Update the collection with the changes in reactions object
 		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
+	},
+
+	'deleteMessage': function(messageId, deletor){
+		check(messageId, String);
+		check(deletor, String);
+		
+		var message = Chat.findOne({_id: messageId})
+		var userId = message.user
+		var deletorProfile = Meteor.users.findOne({_id: deletor})
+		var isAdmin = deletorProfile.profile.role
+		if (userId === deletor) {
+			console.log("Message owner. This user has permission to delete.")
+			Chat.update({_id: messageId}, {$set: {group: "Deleted"}});
+		} else if (isAdmin === "admin"){
+			console.log("This user has permission to delete.")
+			Chat.update({_id: messageId}, {$set: {group: "Deleted"}});
+		} else {
+			throw new Meteor.Error("not-authorized", "Cannot delete a message of another user");
+		}
 	}
 });

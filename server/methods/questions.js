@@ -7,7 +7,18 @@ Meteor.methods({
 		Questions.update({gameId: gameId}, {$set: {'active': true}},  {multi: true})
 	},
 
-	'toggleCommercial': function(game, toggle) {
+	'flushQuestions': function (){
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		Questions.update({active: true}, {$set: {'active': false}}, {multi: true});
+	},
+
+	'toggleCommercial': function(gameId, toggle) {
 		check(game, String);
 		check(toggle, Boolean);
 
@@ -19,28 +30,84 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Games.update(game, {$set: {'commercial': toggle}});
+		Games.update({"_id": game}, {$set: {'commercial': toggle}});
 	},
 
-	// Create a question. Each play has question text and six options.
+	// Create options
+	'createOptions': function(inputs, type){
+		check(inputs, Object);
+		check(type, String);
 
-	'insertQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6, active) {
-		check(gameId, String);
-		check(que, String);
-		check(commercial, Match.Maybe(Boolean));
-		check(op1, String);
-		check(m1, Number);
-		check(op2, String);
-		check(m2, Number);
-		check(op3, String);
-		check(m3, Number);
-		check(op4, String);
-		check(m4, Number);
-		check(op5, Match.Maybe(String));
-		check(m5, Match.Maybe(Number));
-		check(op6, Match.Maybe(String));
-		check(m6, Match.Maybe(Number));
-		check(active, Match.Maybe(String));
+		if ( type === "drive") {
+			var optionList = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
+		}
+
+		if (inputs.down === 1) {
+			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
+		}
+
+		if (inputs.down === 2) {
+			var optionArray = ["Negative Yards", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass/Incomplete", "6-20 Yard Pass", "21+ Gain (Run or Pass)"]
+		}
+
+		if (inputs.down === 3 && inputs.area === 6) {
+			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+		} else {
+			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+		}
+
+		if (inputs.down === 4 && inputs.area >= 4 ) {
+			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
+		} else {
+			var optionArray = ["Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown"]
+		}
+
+		// Create the options of the play
+		var options = {}
+		var optionNum = 1
+		
+		optionList.map(function (option){
+			var optionNumber = "option" + optionNum
+			options[optionNumber] = {"option": optionNumber, "title": option}
+			optionNum += 1
+		});
+
+		return options
+	},
+
+	'questionText': function (inputs, type) {
+		check(inputs, Object);
+		check(type, String);
+		
+		if ( type === "drive") {
+			var que = "How will this drive end?"
+		}
+		switch (inputs.down){
+			case 1: 
+				var que = "First Down..."
+				break;
+			case 2: 
+				var que = "Second Down..."
+				break;
+			case 3: 
+				var que = "Third Down..."
+				break;
+			case 4: 
+				var que = "Fourth Down..."
+				break;
+			case 5: 
+				var que = "Point After..."
+				break;
+			case 6: 
+				var que = "Kickoff..."
+				break;
+		}
+		return que
+	},
+
+	// Create a question.
+	'insertQuestion': function(q) {
+		check(q, Object);
 			
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -50,84 +117,29 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		var currentUserId = Meteor.userId();
-		var timeCreated = new Date();
+		// function randomizer(min, max){
+		// 	return (Math.random() * (max-min) + min).toFixed(2)
+		// }
+		q["que"] = Meteor.call('questionText', q.inputs, q.type )
 
-		if (!active) {
-			var active = true
-		}
-
-		// If there less than 6 options we will set the other options to nothing.
-		op5 = op5 || '';
-		m5 = m5 || '';
-		op6 = op6 || '';
-		m6 = m6 || '';
-
-		// Insert the question into the database
-		Questions.insert({
-			que: que,
-			gameId: gameId,
-			createdBy: currentUserId,
-			dateCreated: timeCreated,
-			active: active,
-			commercial: commercial,
-			options: {
-				option1: {title: op1, multiplier: m1},
-				option2: {title: op2, multiplier: m2},
-				option3: {title: op3, multiplier: m3},
-				option4: {title: op4, multiplier: m4},
-				option5: {title: op5, multiplier: m5},
-				option6: {title: op6, multiplier: m6},
-			},
-			usersAnswered: []
-		});
-	},
-
-	'insertFourQuestion': function(gameId, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, active) {
-		check(gameId, String);
-		check(que, String);
-		check(commercial, Match.Maybe(Boolean));
-		check(op1, String);
-		check(m1, Number);
-		check(op2, String);
-		check(m2, Number);
-		check(op3, String);
-		check(m3, Number);
-		check(op4, String);
-		check(m4, Number);
-		check(active, Match.Maybe(Boolean));
-
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
-
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
+		var options = Meteor.call('createOptions', q.inputs, q.type )
+		
+		console.log(q, options)
 
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
-		if (!active) {
-			var active = true
-		}
-
 		// Insert the question into the database
-		Questions.insert({
-			que: que,
-			gameId: gameId,
-			createdBy: currentUserId,
-			dateCreated: timeCreated,
-			active: active,
-			commercial: commercial,
-			options: {
-				option1: {title: op1, multiplier: m1},
-				option2: {title: op2, multiplier: m2},
-				option3: {title: op3, multiplier: m3},
-				option4: {title: op4, multiplier: m4},
-			},
-			usersAnswered: []
-		});
+		// Questions.insert({
+		// 	que: que,
+		// 	gameId: gameId,
+		// 	createdBy: currentUserId,
+		// 	dateCreated: timeCreated,
+		// 	active: active,
+		// 	commercial: commercial,
+		// 	options: q.options,
+		// 	usersAnswered: []
+		// });
 	},
 
 	'createTrueFalse': function(que, gameId) {
@@ -161,42 +173,6 @@ Meteor.methods({
 		})
 	},
 
-	'createTwoOption': function(gameId, que, option1, multiplier1, option2, multiplier2) {
-		check(gameId, String);
-		check(que, String);
-		check(option1, String);
-		check(multiplier1, Number);
-		check(option2, String);
-		check(multiplier2, Number);
-
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
-
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
-
-		var currentUserId = Meteor.userId();
-		var timeCreated = new Date();
-
-		Questions.insert({
-			que: que,
-			gameId: gameId,
-			createdBy: currentUserId,
-			dateCreated: timeCreated,
-			active: true,
-			commercial: false,
-			binaryChoice: true,
-			options: {
-				option1: {title: option1, multiplier: multiplier1},
-				option2: {title: option2, multiplier: multiplier2},
-			},
-			usersAnswered: []
-		})
-	},
-
-
 	'reactivateStatus': function(questionId) {
 		check(questionId, String);
 
@@ -207,12 +183,10 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-
-		Questions.update(questionId, {$set: {'active': true}});
+		Questions.update({"_id": questionId}, {$set: {'active': true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
-
 	'removeQuestion': function(questionId) {
 		check(questionId, String);
 
@@ -249,10 +223,7 @@ Meteor.methods({
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
 
-
-
 // Remove Coins from the people who answered it "correctly", the answer changed.
-
 	'unAwardPoints': function(questionId, oldAnswered) {
 		check(questionId, String);
 		check(oldAnswered, String);
@@ -353,35 +324,5 @@ Meteor.methods({
 		}
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
-	},
-
-	'isGroupNameUnique': function(name) {
-		name = name.trim()
-		if (!name) {
-			return true;
-		}
-		return !Groups.find({groupId: {$ne: name}}).count()
-	},
-	'exportToMailChimp': function(limit) {
-		check(limit, Number);
-
-		limit = limit || 10; // safety net; pass a very high limit to export all users
-		var user = UserList.findOne(this.userId);
-		var role = user.profile.role;
-		if (role !== "admin") {
-			throw new Meteor.Error(403, "Unauthorized");
-		}
-		var selector = {"emails.address": {$exists: true}};
-		var options = {sort: {_id: 1}, limit: limit};
-		UserList.find(selector, options).forEach(function(user) {
-			console.info("[exportToMailChimp] Subscribing " + user.emails[0].address + " (" + user._id + ")");
-			mailChimpLists.subscribeUser(user, {double_optin: false}, function(error, result) {
-				if (error) {
-					console.error("[exportToMailChimp] Error for " + user.emails[0].address + ": " + JSON.stringify(error));
-				} else {
-					console.info("[exportToMailChimp] Result for " + user.emails[0].address + ": " + JSON.stringify(result));
-				}
-			});
-		});
 	}
 });

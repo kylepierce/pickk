@@ -306,29 +306,6 @@ Meteor.methods({
 
 },
 
-'increasePitch': function ( ) {   
-  var currentGame = Games.findOne({live: true})
-  var team = Meteor.call('topOfInningPostion')
-  var teamId = currentGame.teams[team].teamId
-
-  var pitcher = Meteor.call('findActivePitcher')
-
-  var pitcherId = pitcher[0].playerId
-
-  // Games.update({live: true, 'teams.teamId': teamId}, {$inc: {'teams.$.pitcher.pitchCounter': +1}});
-
-  // ,  'teams.team.pitcher.active': true
-
-  var pitcherObj = Games.findOne({'live': true, 'teams.team.pitcher.playerId': pitcherId})
-  // Games.update({live: true, 'teams.team.pitcher.playerId': pitcherId, 'teams.team.pitcher.active': true}, 
-  //   {$set: 
-  //       {'teams.team.pitcher.$.pitchCounter':  +1 }
-  //   });
-
-
-    // Increase the number of pitches by pitcher by 1
-},
-
 'multiplierGenerator': function ( batter, strikes, balls, options ) {
   // Find the batter's info
   var playerAtBat = Players.findOne({_id: batter})
@@ -878,14 +855,12 @@ Meteor.methods({
 
 },
 
-
 'updateAtBat': function( optionNumber ){
   var currentAtBatQuestion = Questions.findOne({atBatQuestion: true, active: null})
   var questionId = currentAtBatQuestion._id
 
   Meteor.call('modifyQuestionStatus', questionId, optionNumber)
 },
-
 
 'checkIfPlayerIsOn': function ( number ){
   // Check to see if a player if on that base

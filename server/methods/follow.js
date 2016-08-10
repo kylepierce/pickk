@@ -24,8 +24,8 @@ Meteor.methods({
 	  }
 	  createPendingNotification(notifyObj)
 	},
+	
 	// Unfollow users they follow
-
 	'unfollowUser': function(user, accountToFollow) {
 		check(user, String);
 		check(accountToFollow, String);

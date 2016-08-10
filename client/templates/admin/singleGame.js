@@ -1,37 +1,59 @@
-// Template.singleGame.created = function () {
-//   this.autorun(function () {
-//     this.subscription = Meteor.subscribe('games', Router.current().params._id);
-//   }.bind(this));
-// };
+// Deactivate question once the play has started.
+Template.activeQuestions.events({
+	'click [data-action=deactivate]': function() {
+		var questionId = this._id;
+		Meteor.call('deactivateStatus', questionId);
+	}
+});
 
-// // Template.home.onRendered( function() {
-// //   var w = 600;
-// //   var h = 500;
-// //   var padding = {top: 40, right: 40, bottom: 40, left: 40};
-// //   var dataset;
-// //   var stack = d3.layout.stack();
+// Show all active questions
+Template.activeQuestions.helpers({
+	'questions': function(){
+		return Questions.find({active: true}, {sort: {dateCreated: -1}});
+	}
+});
 
-// // }
+Template.pendingQuestions.helpers({
+	questions: function () {
+		return Questions.find({active: null}, {sort: {dateCreated: -1}})
+	}
+});
 
-// Template.singleGame.helpers({
-  
-//   game: function () {
-//     var game = Router.current().params._id
-//     return Games.findOne({_id: Router.current().params._id});
-//   },
-//   question: function(){
-//   	return Questions.find({gameId: Router.current().params._id}).fetch()
-//   },
-//   'numberOfQuestions': function(){
-//     var game = Router.current().params._id
-//     Meteor.subscribe('allQuestions', game)
-//     var gameData = Questions.find({gameId: game}, {sort: {dateCreated: -1}}).fetch()    
-//     return gameData
-//   },
-//   liveGame: function(){
-//   	var gameData = Games.findOne({_id: Router.current().params._id}); 
-//   	if(gameData.live === true){
-//   		return "checked"
-//   	}
-//   }
-// }); 
+Template.pendingQuestion.helpers({
+	options: function (q) {
+    var imported = q
+    var data = q.options
+    var keys = _.keys(data)
+    var values = _.values(data)
+    var optionsArray = []
+
+    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+
+    for (var i = 0; i < keys.length; i++) {
+      var obj = values[i]
+      var number = keys[i]
+      obj["option"] = number 
+      optionsArray.push(obj)
+    }
+
+    return optionsArray
+	}
+});
+
+// Select correct answer and award points to those who guessed correctly.
+Template.pendingQuestion.events({
+	'click [data-action=remove]' : function() {
+		if(confirm("Are you sure?")) {
+			Meteor.call('removeQuestion', this._id)
+		}
+	},
+	'click [data-action=reactivate]' : function(e, t) {
+		console.log(this.q, e, t)
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this.q._id)
+		}
+	},
+	'click [data-action=playSelection]': function (e, t) {
+		console.log(this, e, t)
+	}
+});

@@ -1,50 +1,139 @@
+// // Inputs downs, yards, area, time, 
+// // Create a question based on situation. (i.e "first down...")
+// //
+// // Generate a list of 4-6 questions with multipliers
+// // Output into object
+
+// // Question appears after every drive. (Punt, field goal scored, touchdown scored, interception, fumble, turnover on downs.)
+// var question = "How Will This Drive End?"
+// var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
+// var requirements = {
+
+// }
+
+// // Three versions of first down. This allows the questions to be unique and test which is most effective.
+// var question = "First Down ..."
+// var optionArray = ["0 - 3 Yard Run", "3+ Yard Run", "Pass", "Sack", "Turnover", "Touchdown"]
+// var requirements = {
+// 	down: 1
+// }
+
+// var question = "First Down ..."
+// var optionArray = ["0 - 5 Yard Pass (Incomplete)", "5+ Yard Pass", "Run", "Sack", "Turnover", "Touchdown"]
+// var requirements = {
+// 	down: 1
+// }
+
+// var question = "First Down ..."
+// var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
+// var requirements = {
+// 	down: 1
+// }
+
+
+// // Two versions of second down. 
+// var question = "Second Down ..."
+// var optionArray = ["Negative Yards", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass/Incomplete", "6-20 Yard Pass", "21+ Gain (Run or Pass)"]
+// var requirements = {
+// 	down: 2
+// }
+
+// var question = "Second Down ..."
+// var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+// var requirements = {
+// 	down: 2
+// }
+
+// // Third down if the team is 3rd and goal (>10 yards from scoring)
+// var question = "Third Down ..."
+// var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+// var requirements = {
+// 	down: 3
+// }
+
+// // Normal third down. Allows the user to select if they will conver to first down.
+// var question = "Third Down ..."
+// var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+// var requirements = {
+// 	down: 3,
+// 	area: 6
+// }
+
+// // In field goal range
+// var question = "4th Down..."
+// var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
+// var requirements = {
+// 	down: 4,
+// 	area: >= 4,
+// }
+
+// // Attempting the 4th down conversion
+// var question = "4th Down..."
+// var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+// var requirements = {
+// 	down: 4,
+// 	area: < 4,
+// }
+
+// // Punting
+// var question = "4th Down..."
+// var optionArray = ["Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown"]
+// var requirements = {
+// 	down: 4,
+// 	area: < 4,	
+// }
+
+// // After a team scores
+// var question = "Point after"
+// var optionArray = ["Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good"]
+// var requirements = {
+// 	down: ??,
+// }
+
+// // At the start of the game, start of 2nd half, and after a team scores.
+// var question = "Kick off..."
+// var optionArray = ["Touchback", "0-25 Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
+// var requirements = {
+	
+// }
+
+// // Special play when a team tries to recover the ball.
+// var question = "Onside Kick..."
+// var optionArray = ["Touchback", "5-10 Return",  "11+ Return", "Penalty", "Fumble Recovered by Reciving Team", "Kicking Team Recovers"]
+// var requirements = {
+	
+// }
+var getInputs = 
+
+
 Template.createQuestion.events({
-	'click [data-action="thisDrive"]': function(event, template){
-				event.preventDefault();
-		var down = template.find('input[name=down]').value
-		var yards = template.find('input[name=yards]').value
-		var area = template.find('input[name=area]').value
-		var time = template.find('input[name=time]').value
-		var gameId = template.find('#gameList :selected').value
+	'click [data-action="thisDrive"]': function(e, t){
+		event.preventDefault();
+		var gameId = Router.current().params._id
 
-		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
+		// Capture the current situation in the game
+		var inputsObj = {}
+		var inputs = ["down", "yards", "area", "time"]
 
-		function questionList(o1, o2, o3, o4, o5, o6){
-			option1 = o1
-			option2 = o2
-			option3 = o3
-			option4 = o4
-			option5 = o5
-			option6 = o6
+		inputs.map(function (input){
+			var text = "input[name=" + input + "]"
+			var inputValue = t.find(text).value
+			inputsObj[input] = inputValue
+		});
+
+		// One object to be passed to the insertQuestion method.
+		var q = {
+			gameId: gameId,
+			commercial: true,
+			type: "drive",
+			inputs: inputsObj
 		}
 
-		function randomizer(min, max){
-			return (Math.random() * (max-min) + min).toFixed(2)
-		}
+		console.log(this, e, t, q)
 
-		function multiplier(m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
-			multi1 = randomizer(m1a, m1b)
-			multi2 = randomizer(m2a, m2b)
-			multi3 = randomizer(m3a, m3b)
-			multi4 = randomizer(m4a, m4b)
-			multi5 = randomizer(m5a, m5b)
-			multi6 = randomizer(m6a, m6b)
-		}
-
-		question = "How Will This Drive End?"
-		questionList("Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other")
-
-		multiplier(
-						1.1, 1.3, 
-						3.4, 5.42, 
-						3.2, 4.81, 
-						2.2, 4.81, 
-						2.2, 4.81, 
-						2.9, 4.61)
-
-		Meteor.call("questionPush", gameId, question)
-		Meteor.call("emptyInactive", gameId, question)
-		Meteor.call('insertQuestion', gameId, question, true, option1, multi1, option2, multi2, option3, multi3, option4, multi4, option5, multi5, option6, multi6);
+		// Meteor.call("questionPush", gameId, question)
+		// Meteor.call("emptyInactive", gameId, question)
+		Meteor.call('insertQuestion', q);
  
 	},
 
@@ -55,7 +144,7 @@ Template.createQuestion.events({
 		var yards = template.find('input[name=yards]').value
 		var area = template.find('input[name=area]').value
 		var time = template.find('input[name=time]').value
-		var gameId = template.find('#gameList :selected').value
+		var gameId = Router.current().params._id
 
 		var question, option1, option2, option3, option4, option5, option6, multi1, multi2, multi3, multi4, multi5, multi6
 
@@ -69,7 +158,7 @@ Template.createQuestion.events({
 		}
 
 		function randomizer(min, max){
-			return (Math.random() * (max-min) + min).toFixed(2)
+			return parseFloat((Math.random() * (max-min) + min).toFixed(2))
 		}
 
 		function multiplier(m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
@@ -1449,7 +1538,7 @@ Template.createQuestion.events({
 // Fourth Down
 		} else if (time == 4 && down == 4 && area >= 4) {
 			question = "4th Down..."
-			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "/Blocked Kick")
+			questionList("Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick")
 			multiplier(
 				1.3, 1.7, 
 				2.4, 3.42, 

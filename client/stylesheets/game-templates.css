@@ -27,6 +27,8 @@
 .single-game-cta {
 	height: 34px;
 	background-color: #F1C40F;
+	font-weight: bold;
+	font-family: lato; 
 }
 
 .future-game-cta {
@@ -88,4 +90,29 @@
 .team-score {
 	text-align: center;
 	width: 20%;
+}
+
+#notification-center {
+	height: 90px;
+}
+
+.single-notification {
+	padding: 0 2px;
+}
+
+.single-notification > .notification-has-image {
+	height: 91px;
+  background-color: #ffc900;
+}
+
+.single-notification > .notification-has-image p{
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: lato;
+}	
+
+.single-notification .notification-image{
+	max-width: 66px;
+  max-height: 61px;
 }

@@ -38,7 +38,6 @@ Meteor.methods({
 	},
 
 	// Way for Admin to manually update users coins
-
 	'updateCoins': function(user, coins) {
 		check(user, String);
 		check(coins, String);
@@ -101,4 +100,35 @@ Meteor.methods({
 		});
 		console.log("Email Sent!")
 	},
+	//Once the play starts change active status
+
+	'deactivateStatus': function(questionId) {
+		check(questionId, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		Questions.update({"_id": questionId}, {$set: {'active': null}});
+	},
+	'createHero': function (o) {
+		check(o, Object);
+		console.log(o)
+		Hero.insert({
+			startDate: o.startDate,
+			endDate: o.endDate,
+			liveStartDate: o.liveStartDate,
+			liveEndDate: o.liveEndDate,
+			button: o.button,
+			buttonText: o.buttonText,
+			active: o.active,
+			image: o.image,
+			url: o.url,
+			important: o.important,
+		});
+	}
 })

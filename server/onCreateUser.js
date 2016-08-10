@@ -1,6 +1,5 @@
 Accounts.onCreateUser(function(options, user) {
   user.profile = {
-    coins: 10000,
     avatar: null,
     followers: [],
     following: [],

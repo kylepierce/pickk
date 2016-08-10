@@ -7,7 +7,7 @@
   </div>
 
   {{#ionList}}
-    {{#ionItem iconLeft=true path="home"}}
+    {{#ionItem iconLeft=true href="/"}}
       {{> ionIcon icon='ios-photos-outline'}}
       Home 
     {{/ionItem}}
@@ -32,13 +32,13 @@
       Question History
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="week"}}
+    {{#ionItem iconLeft=true path="week-leaderboard"}}
       <!-- Fix lastprofile -->
       <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
       Diamond Leaderboard
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="profile"}}
+    {{#ionItem iconLeft=true}}
       {{> ionIcon icon='ios-person-outline'}}
       Profile
     {{/ionItem}}
