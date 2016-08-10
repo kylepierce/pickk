@@ -1,9 +1,11 @@
 <template name="sideMenuContent">
   <div class="profile-container">
+    {{#if currentUser}}
     {{> userAvatar userId=currentUser._id}}
 
     <strong class="username">{{currentUser.profile.username}}</strong><br>
     <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong>
+    {{/if}}
   </div>
 
   {{#ionList}}
