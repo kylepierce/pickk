@@ -10,6 +10,81 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
+Template.home.onCreated(function () {
+  this.coinsVar = new ReactiveVar(0);
+  this.diamondsVar = new ReactiveVar(0);
+});
+
+Template.home.rendered = function() {
+    let self = this;
+
+    // Logic to increment / decrement animate coics
+    this.coinsVar.set(parseInt(GamePlayed.findOne().coins));
+    this.coinsFinal = 0;
+    this.coinsCurrent = 0;
+    this.coinsDifference = 0;
+
+    self.autorun(function() {
+      self.coinsFinal = parseInt(GamePlayed.findOne().coins);
+
+      // If coinsVar is read inside Autorun and then changes, it would go in an infinite loop. Hence, 'nonreactive'
+      Tracker.nonreactive(function(){
+        self.coinsCurrent = self.coinsVar.get();
+      }); 
+
+      self.coinsDifference = self.coinsFinal - self.coinsCurrent;
+
+      if (self.coinsDifference !== 0) {
+        // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
+        let interval = Meteor.setInterval(function () {
+            if (self.coinsDifference < 0) {
+              self.coinsVar.set(--self.coinsCurrent);
+            } else {
+              self.coinsVar.set(++self.coinsCurrent);
+            }
+
+            if (self.coinsCurrent === self.coinsFinal) {
+              Meteor.clearInterval(interval); // Stop the interval
+            }
+          }, 20);
+      }
+    });
+
+    // Logic to increment / decrement animate diamonds
+    if (Meteor.user()) {
+      self.diamondsVar.set(parseInt(Meteor.user().profile.diamonds));
+
+      self.diamondsFinal = 0;
+      self.diamondsCurrent = 0;
+      self.diamondsDifference = 0;
+
+      self.autorun(function() {
+        self.diamondsFinal = parseInt(Meteor.user().profile.diamonds);
+
+        Tracker.nonreactive(function(){
+          self.diamondsCurrent = self.diamondsVar.get();
+        }); 
+
+        self.diamondsDifference = self.diamondsFinal - self.diamondsCurrent;
+
+        if (self.diamondsDifference !== 0) {
+          // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
+          let interval = Meteor.setInterval(function () {
+              if (self.diamondsDifference < 0) {
+                self.diamondsVar.set(--self.diamondsCurrent);
+              } else {
+                self.diamondsVar.set(++self.diamondsCurrent);
+              }
+
+              if (self.diamondsCurrent === self.diamondsFinal) {
+                Meteor.clearInterval(interval); // Stop the interval
+              }
+            }, 20);
+        }
+      });
+    }
+};
+
 
 Template.home.helpers({
   games: function () {
@@ -19,7 +94,10 @@ Template.home.helpers({
     return Questions.find({}, {limit: 1}).fetch()
   },
   gameCoins: function () {
-    return GamePlayed.findOne().coins;
+    return Template.instance().coinsVar.get();
+  },
+  diamonds: function () {
+    return Template.instance().diamondsVar.get();
   }
 });
 
