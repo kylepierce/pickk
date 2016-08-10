@@ -87,8 +87,6 @@
 
 .player-slider {
 	text-align: center;
-	overflow-x: hidden;
-  padding: 15px;
   background-color: #263238;
   font-family: lato;
   color: #fff;
@@ -100,6 +98,10 @@
 
 .player-slider thead td {
 
+}
+
+.slide-inside {
+	padding: 15px;
 }
 
 .player-name {

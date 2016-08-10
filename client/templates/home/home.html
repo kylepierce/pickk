@@ -11,26 +11,31 @@
 
   {{#ionView}}
     {{#ionContent}}
-
 	    {{#each game in games}}
 				{{> singleGameInfo game=game}}
-				<div id="notification-center" style="margin-top: 10px;">
-					{{#ionSlideBox}}
-						{{#ionSlide}}
-							{{> singleGameCard game=game}}
-						{{/ionSlide}}
-						{{#ionSlide}}
-							{{> playerCard}}
-					  {{/ionSlide}}
-					  {{#each notification in notifications}}
-							{{#ionSlide}}
-								Notification
-							{{/ionSlide}}
-					  {{/each}}
-      		{{/ionSlideBox}}
-				</div>
 			{{/each}}
 
+			<div id="notification-center" style="margin-top: 10px;">
+				
+				<div class="single-notification">
+					{{#each game in games}}
+							{{> singleGameCard game=game}}
+					{{/each}}
+				</div>
+
+				<div class="single-notification">
+					{{#if player}}
+							{{> playerCard}}
+					{{/if}}
+				</div >
+
+				{{#each notification in notifications}}
+					<div class="single-notification">
+						Notification
+					</div>
+			  {{/each}}
+
+			</div>
 			<div class="container" style="margin-top: 10px;">
 				{{#each question in questions}}
 					{{> singleQuestion q=question}}
@@ -98,23 +103,24 @@
 <template name="playerCard">
   {{#with playerInfo}}
   	<div class="player-slider">
-		<span class="player-name">{{name}}</span>
+	  	<div class="slide-inside">
+				<span class="player-name">{{name}}</span>
 
-		<table>
-			<thead>
-				<td>AVG</td>
-				<td>HR</td>
-				<td>RBI</td>
-				<td>OBP</td>
-			</thead>
-			<tr>
-				<td>{{stats.y2016.avg}}</td>
-				<td>{{stats.y2016.hr}}</td>
-				<td>{{stats.y2016.rbi}}</td>
-				<td>{{stats.y2016.obp}}</td>
-			</tr>
-		</table>
-
+				<table>
+					<thead>
+						<td>AVG</td>
+						<td>HR</td>
+						<td>RBI</td>
+						<td>OBP</td>
+					</thead>
+					<tr>
+						<td>{{stats.y2016.avg}}</td>
+						<td>{{stats.y2016.hr}}</td>
+						<td>{{stats.y2016.rbi}}</td>
+						<td>{{stats.y2016.obp}}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	{{/with}}
 </template>

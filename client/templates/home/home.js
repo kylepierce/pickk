@@ -10,18 +10,31 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
+Template.home.rendered = function () {
+  $('#notification-center').slick({
+    arrows: false,
+    infinite: false,
+    draggable: false,
+    centerMode: true,
+    centerPadding: '4.5%'
+  });
+};
+
 Template.home.helpers({
   games: function () {
     return Games.find({}).fetch();
   },
   questions: function () {
-    return Questions.find({}, {limit: 1}).fetch()
+    return Questions.find({}, {limit: 1}).fetch();
   },
   gameCoins: function () {
     return GamePlayed.findOne().coins;
   },
   notifications: function () {
-    return Notifications.find({gameId: this.params.id })
+    return Notifications.find({gameId: this.params.id }).fetch();
+  },
+  player: function () {
+    return AtBat.findOne()
   }
 });
 

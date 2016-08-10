@@ -93,5 +93,9 @@
 }
 
 #notification-center {
-	
+	height: 90px;
+}
+
+.single-notification {
+	padding: 0 2px;
 }
