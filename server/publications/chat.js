@@ -1,7 +1,7 @@
 // Chat
 Meteor.publish('chatMessages', function(groupId, limit) {
-  // check(groupId, String);
-  // check(limit, String);
+  check(groupId, Match.Maybe(String));
+  check(limit, Number);
   
   limit = limit || 10;
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
@@ -9,14 +9,14 @@ Meteor.publish('chatMessages', function(groupId, limit) {
 
 // Lets "Load more chats work"
 Meteor.publish("chatMessagesCount", function(groupId) {
-  // check(groupId, String);
+  check(groupId, Match.Maybe(String));
 
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 
 // Hacky way to load chat users
 Meteor.publish('chatUsers', function(id) {
-  // check(id, Array);
+  check(id, Array);
 
   var fields = { fields: {
     'profile.username': 1,
@@ -29,7 +29,7 @@ Meteor.publish('chatUsers', function(id) {
 
 // "Improved way"
 Meteor.publish('chatUsersList', function(groupId) {
-  // check( groupId, String );
+  check( groupId, Match.Maybe(String) );
 
   groupId = groupId || null;
 

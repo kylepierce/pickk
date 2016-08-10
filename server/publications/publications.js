@@ -21,10 +21,12 @@ Meteor.publish('unreadNotifications', function() {
 });
 
 Meteor.publish('userNotifications', function(userId) {
+  check(userId, String);
   return Notifications.find({userId: userId, read: false})  
 });
 
 Meteor.publish('gameNotifications', function(gameId) {
+  check(gameId, String);
   return Notifications.find({gameId: gameId, read: false})  
 });
 
@@ -50,6 +52,7 @@ Meteor.publish('teams', function() {
 });
 
 Meteor.publish('singleTeam', function ( teamId ) {
+  check(teamId, String);
   return Teams.find({_id: teamId})
 });
 
