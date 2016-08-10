@@ -29,9 +29,9 @@
 					{{/if}}
 				</div >
 
-				{{#each notification in notifications}}
+				{{#each note in notifications}}
 					<div class="single-notification">
-						Notification
+						{{> notification note=note}}
 					</div>
 			  {{/each}}
 

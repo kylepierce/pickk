@@ -31,7 +31,7 @@ Template.home.helpers({
     return GamePlayed.findOne().coins;
   },
   notifications: function () {
-    return Notifications.find({gameId: this.params.id }).fetch();
+    return Notifications.find({}).fetch();
   },
   player: function () {
     return AtBat.findOne()

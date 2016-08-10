@@ -1,16 +1,16 @@
-Template.insertHero.helpers({
-    optsDatetimepicker: function() {
-      return {
-        //WHAT IS STORED (i.e in the database)
-        formatValue: 'YYYY-MM-DD'
-        pikaday: {
-          // what is DISPLAYED (to the user)
-          format: 'YYYY-MM-DD h:mmA',
-          showTime: true,
-        }
-      }
-    }
-  });
+// Template.insertHero.helpers({
+//     optsDatetimepicker: function() {
+//       return {
+//         //WHAT IS STORED (i.e in the database)
+//         formatValue: 'YYYY-MM-DD'
+//         pikaday: {
+//           // what is DISPLAYED (to the user)
+//           format: 'YYYY-MM-DD h:mmA',
+//           showTime: true,
+//         }
+//       }
+//     }
+//   });
 
 SimpleSchema.debug = true;
 
