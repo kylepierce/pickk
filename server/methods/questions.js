@@ -18,7 +18,7 @@ Meteor.methods({
 		Questions.update({active: true}, {$set: {'active': false}}, {multi: true});
 	},
 
-	'toggleCommercial': function(game, toggle) {
+	'toggleCommercial': function(gameId, toggle) {
 		check(game, String);
 		check(toggle, Boolean);
 
@@ -30,7 +30,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Games.update(game, {$set: {'commercial': toggle}});
+		Games.update({"_id": game}, {$set: {'commercial': toggle}});
 	},
 
 	// Create options

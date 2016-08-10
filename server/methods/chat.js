@@ -75,15 +75,15 @@ Meteor.methods({
 				if (user) {
 					// Push notifications don't support HTML, so we'll have to use plainMessagePosted
 					var notifyObj = {
-						userId: user._id, 
-						notificationId: messageId + "_" + user._id, 
-						type: "mention", 
+						userId: user._id,
+						messageId: messageId, 
+						type: "mention",
 						senderId: author,
 						message: plainMessagePosted
 					}
 					
 					Meteor.call('pushInvite', plainMessagePosted, user._id)
-					createPendingNotification(notifyObj)
+ 					createPendingNotification(notifyObj)
 				}
 			}
 		}
