@@ -14,16 +14,15 @@
 	    {{#each game in games}}
 				{{> singleGameInfo game=game}}
 			{{/each}}
-
-			<div id="notification-center" style="margin-top: 10px;">
+			<div id="notification-center" class="ten-spacing">
 				
 				<div class="single-notification">
 					{{#each game in games}}
-							{{> singleGameCard game=game}}
+						{{> singleGameCard game=game}}
 					{{/each}}
 				</div>
 
-				<div class="single-notification">
+<!-- 				<div class="single-notification">
 					{{#if player}}
 							{{> playerCard}}
 					{{/if}}
@@ -33,31 +32,57 @@
 					<div class="single-notification">
 						{{> notification note=note}}
 					</div>
-			  {{/each}}
+			  {{/each}} -->
 
 			</div>
-			<div class="container" style="margin-top: 10px;">
-				{{#each question in questions}}
-					{{> singleQuestion q=question}}
-				{{/each}}
+			<div class="container ten-spacing">
+
+				{{#if isCommercial}}
+					{{#each question in commericalQuestions}}
+						{{> commericalQuestion q=question}}
+					{{/each}}
+
+				{{else}}
+					{{#each question in questions}}
+						{{> singleQuestion q=question}}
+					{{/each}}
+				{{/if}}
+
 			</div>
 
-			<!-- Temp for testing -->
 			{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="commericalQuestion">
+	{{#if binary q}}
+		{{> binaryQuestion q=q t="free-pickk"}}
+	{{else}}
+		{{> eventQuestion q=q t="drive"}}
+	{{/if}}
 </template>
 
 <template name="singleQuestion">
 	{{#if eventQuestions q}}
 		{{> eventQuestion q=q t="atBat"}}
 	{{/if}}
-	{{#if commericalQuestions q}}
-		{{> eventQuestion q=q t="free pickk"}}
-	{{/if}}
 	{{#if liveQuestion q}}
 		{{> eventQuestion q=q t="live"}}
 	{{/if}}
+</template>
+
+<template name="binaryQuestion">
+	<div>
+		<div class="question larger-card">
+			<h4>Free Pickk: {{q.que}}</h4>
+		</div>
+		<div id="binaryOptions" class="ten-spacing">
+			{{#each o in options q}}
+				{{> binaryOption o=o q=q t=t w=500}}
+			{{/each}}
+		</div>
+	</div>
 </template>
 
 <template name="eventQuestion">
@@ -66,6 +91,12 @@
 			{{> option o=o q=q t=t}}
 		{{/each}}
 	</ul>
+</template>
+
+<template name="binaryOption">
+	<div data-action="pickk" class="option col-md-50">
+		{{o.title}}
+	</div>	
 </template>
 
 <template name="option">
@@ -94,9 +125,9 @@
  
 <template name="submitButton">
 	{{#if live}}
-		<button class="button button-balanced center" data-action="submit">Submit ({{{potential}}})</button>
+		<button class="full button button-balanced center ten-spacing" data-action="submit">Submit ({{{potential}}})</button>
 	{{else}}
-		<button class="button play-option button-assertive center" disabled >No Connection To Server</button>
+		<button class="full button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
 	{{/if}}
 </template>
 

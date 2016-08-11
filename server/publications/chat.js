@@ -1,7 +1,7 @@
 // Chat
 Meteor.publish('chatMessages', function(groupId, limit) {
   check(groupId, Match.Maybe(String));
-  check(limit, Number);
+  check(limit, Match.Maybe(Number));
   
   limit = limit || 10;
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});

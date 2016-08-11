@@ -2,19 +2,11 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
-// Template.eventQuestion.rendered = function() {
-//     console.log(this.data); // you should see your passage object in the console
-// };
-
-// Template.option.rendered = function() {
-//     console.log(this.data); // you should see your passage object in the console
-// };
-
 Template.home.rendered = function () {
   $('#notification-center').slick({
     arrows: false,
     infinite: false,
-    draggable: false,
+    draggable: true,
     centerMode: true,
     centerPadding: '4.5%'
   });
@@ -24,9 +16,6 @@ Template.home.helpers({
   games: function () {
     return Games.find({}).fetch();
   },
-  questions: function () {
-    return Questions.find({}, {limit: 1}).fetch();
-  },
   gameCoins: function () {
     return GamePlayed.findOne().coins;
   },
@@ -35,65 +24,87 @@ Template.home.helpers({
   },
   player: function () {
     return AtBat.findOne()
+  },
+  isCommercial: function (){
+    var isCommerical = Games.findOne().commercial;
+    if (isCommerical) {
+      console.log("Commerical is active")
+      return true
+    } 
+  },
+  commericalQuestions: function () {
+    return Questions.find({commercial: true}, {limit: 1}).fetch();
+  },
+  questions: function () {
+    return Questions.find({}, {limit: 1}).fetch();
+  },
+});
+
+Template.commericalQuestion.helpers({
+  binary: function (q) {
+    console.log(this, q)
+    if(q.binaryChoice === true){
+      return true
+    }
   }
 });
 
+Template.commericalQuestion.events({
+  'click [data-action=pickk]': function (e, t) {
+    // console.log(this, e, t)    
+    $(e.currentTarget).addClass('selected')
+    var displayOptions = function ( o ) {
+      // The select item dom and data
+      var $selected = $(e.currentTarget)
+      var selectedObj = o.dataPath
+      var templateName = o.insertedTemplate
+      console.log($selected, selectedObj, templateName)
 
+      var addOptions = function ( id, data ){
+        var options = "<div id='" + id + "'></div>"
+        $('#binaryOptions').after(options);
+        var container = $('#' + id + '')[0]
+        Blaze.renderWithData(templateName, data, container)
+      }
+
+      var container = $('#' + o.containerId + '')[0]
+      if ( container ){
+        if ( container.previousSibling !== $selected[0] ){
+          container.remove();
+          addOptions( o.containerId, selectedObj )  
+        } else {
+          container.remove();
+        }
+      } else {
+        addOptions( o.containerId, selectedObj )  
+      }
+    }
+    parms = {
+      insertedTemplate: Template.submitButton,
+      containerId: "submit",
+      event: e,
+      template: t,
+      dataPath: this,
+    }
+    displayOptions( parms )
+  }
+});
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
+    console.log(this, q, "event")
     if(q.atBatQuestion || q.event){
       return true
     }
   },
-  commericalQuestions: function (q){
-    if(q.commercial === true ){
-      return true
-    }
-  },
   liveQuestion: function (q) {
-    if(!q.atBatQuestion && !q.binaryChoice){
+    console.log(this, q, "live")
+    var isCommerical = Games.findOne().commercial;
+    var atBatQuestion = q && q.atBatQuestion
+    var binaryChoice = q && q.binaryChoice
+    if(!isCommerical && !atBatQuestion && !binaryChoice){
       return true
     }
-  }
-});
-
-Template.eventQuestion.helpers({
-  options: function (q) {
-    var imported = q
-    var data = this.q.options
-    var keys = _.keys(data)
-    var values = _.values(data)
-    var optionsArray = []
-
-    // I want to end up with a array of objects
-    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
-    // So that o.number = option1
-
-    for (var i = 0; i < keys.length; i++) {
-      var obj = values[i]
-      var number = keys[i]
-      obj["option"] = number 
-      optionsArray.push(obj)
-    }
-
-    return optionsArray
-  }
-});
-
-Template.option.helpers({
-  hasIcon: function (title) {
-    var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
-    if (baseball.indexOf(title)){
-      return title
-    }
-  }
-});
-
-Template.wagers.helpers({
-  wagers: function () {
-    var wagerArray = [50, 100, 250, 500, 1000, 2500]
-    return wagerArray
   }
 });
 
@@ -173,6 +184,64 @@ Template.singleQuestion.events({
       dataPath: this,
     }
     displayOptions( parms )
+  },
+});
+
+Template.eventQuestion.helpers({
+  options: function (q) {
+    var imported = q
+    var data = this.q.options
+    var keys = _.keys(data)
+    var values = _.values(data)
+    var optionsArray = []
+
+    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+
+    for (var i = 0; i < keys.length; i++) {
+      var obj = values[i]
+      var number = keys[i]
+      obj["option"] = number 
+      optionsArray.push(obj)
+    }
+
+    return optionsArray
+  }
+});
+
+Template.binaryQuestion.helpers({
+  options: function (q) {
+    var imported = q
+    var data = this.q.options
+    var keys = _.keys(data)
+    var values = _.values(data)
+    var optionsArray = []
+
+    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+
+    for (var i = 0; i < keys.length; i++) {
+      var obj = values[i]
+      var number = keys[i]
+      obj["option"] = number 
+      optionsArray.push(obj)
+    }
+
+    return optionsArray
+  }
+});
+
+Template.option.helpers({
+  hasIcon: function (title) {
+    var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
+    if (baseball.indexOf(title)){
+      return title
+    }
+  }
+});
+
+Template.wagers.helpers({
+  wagers: function () {
+    var wagerArray = [50, 100, 250, 500, 1000, 2500]
+    return wagerArray
   }
 });
 
@@ -198,13 +267,14 @@ Template.submitButton.helpers({
 Template.submitButton.events({
   "click [data-action='submit']": function (e, t) {
     e.preventDefault()
-    var w = this.w
-    var o = this.o
-    var q = this.q
-    var t = this.t
+    var w = this.w // wager
+    var o = this.o // option
+    var q = this.q // question
+    var t = this.t // type
     var userId = Meteor.userId()
     var userCoins = GamePlayed.find({userId: userId, gameId: q.gameId}).fetch();
     var hasEnoughCoins = userCoins[0].coins >= w
+    console.log(this, w, o, q, t)
     
     var c = {
       userId: userId,
@@ -240,10 +310,10 @@ Template.submitButton.events({
       Session.set('lastWager', w);
       Session.set('lastDescription', o.title);
 
-      var countdown = new ReactiveCountdown(360);
-      countdown.start(function() {
-        Meteor.call('playerInactive', c.userId, c.questionId);
-      })
+      // var countdown = new ReactiveCountdown(360);
+      // countdown.start(function() {
+      //   Meteor.call('playerInactive', c.userId, c.questionId);
+      // })
 
       setTimeout(function() {
         Meteor.call('questionAnswered', c);
@@ -260,6 +330,8 @@ Template.playerCard.helpers({
     return player
   }
 });
+
+
 
 // Template.sAlert.events({
 //   'click [data-action="shareResult"]': function() {

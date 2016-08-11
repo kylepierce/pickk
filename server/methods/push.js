@@ -40,11 +40,11 @@ Meteor.methods({
 		var game = Games.find(
 			{
 				_id: gameId,
-				nonActive: {$nin: [user]}
+				nonActive: {$nin: [userId]}
 			}, {fields: {'nonActive': 1}}).fetch();
 		if (game.length == 1) {
-			Games.update(gameId, {$push: {nonActive: user}});
-			console.log("added " + user + " to the inactive list")
+			Games.update(gameId, {$push: {nonActive: userId}});
+			console.log("added " + userId + " to the inactive list")
 		}
 	},
 

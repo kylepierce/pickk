@@ -16,35 +16,37 @@ Template.activeQuestions.helpers({
 Template.pendingQuestions.helpers({
 	questions: function () {
 		return Questions.find({active: null}, {sort: {dateCreated: -1}})
-	}
+	},
 });
 
 Template.pendingQuestion.helpers({
-	options: function (q) {
-    var imported = q
-    var data = q.options
-    var keys = _.keys(data)
-    var values = _.values(data)
-    var optionsArray = []
+	questionOptions: function (q) {
+	  var imported = q
+	  var data = q.options
+	  var keys = _.keys(data)
+	  var values = _.values(data)
+	  var optionsArray = []
 
-    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+	  // [{number: option1}, {title: Run}, {multiplier: 2.43}]
 
-    for (var i = 0; i < keys.length; i++) {
-      var obj = values[i]
-      var number = keys[i]
-      obj["option"] = number 
-      optionsArray.push(obj)
-    }
+	  for (var i = 0; i < keys.length; i++) {
+	    var obj = values[i]
+	    var number = keys[i]
+	    obj["option"] = number 
+	    optionsArray.push(obj)
+	  }
 
-    return optionsArray
+	  return optionsArray
 	}
 });
 
+
 // Select correct answer and award points to those who guessed correctly.
 Template.pendingQuestion.events({
-	'click [data-action=remove]' : function() {
+	'click [data-action=removeQuestion]' : function(e, t) {
+		console.log(this, e, t)
 		if(confirm("Are you sure?")) {
-			Meteor.call('removeQuestion', this._id)
+			Meteor.call('removeQuestion', this.q._id)
 		}
 	},
 	'click [data-action=reactivate]' : function(e, t) {
@@ -54,6 +56,7 @@ Template.pendingQuestion.events({
 		}
 	},
 	'click [data-action=playSelection]': function (e, t) {
-		console.log(this, e, t)
+		console.log(this, this.q._id, this.o.option)
+		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
 	}
 });

@@ -7,8 +7,8 @@ Meteor.methods({
 			var date = new Date(); 
 			GamePlayed.insert({
 				dateCreated: date,
-				userId: user,
-				gameId: game,
+				userId: userId,
+				gameId: gameId,
 				coins: 10000,
 				diamonds: 0,
 				matches: []

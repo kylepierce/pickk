@@ -71,11 +71,8 @@ Meteor.publish('activeQuestions', function(gameId) {
 
 Meteor.publish('adminActiveQuestions', function(gameId) {
   check(gameId, String);
-  
-  return Questions.find({
-    gameId: gameId,
-    active: true,
-  });
+  var selector = {gameId: gameId, active: {$ne: false}}
+  return Questions.find(selector);
 });
 
 Meteor.publish('gameQuestions', function() {

@@ -1,10 +1,7 @@
 Meteor.methods({
 	'userExists': function(username) {
+		check(username, String);
 		return !!UserList.findOne({"profile.username": username});
-	},
-
-	'activeQuestions': function (gameId) {
-		Questions.update({gameId: gameId}, {$set: {'active': true}},  {multi: true})
 	},
 
 	'flushQuestions': function (){
@@ -19,7 +16,7 @@ Meteor.methods({
 	},
 
 	'toggleCommercial': function(gameId, toggle) {
-		check(game, String);
+		check(gameId, String);
 		check(toggle, Boolean);
 
 		if (!Meteor.userId()) {
@@ -30,7 +27,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Games.update({"_id": game}, {$set: {'commercial': toggle}});
+		Games.update({"_id": gameId}, {$set: {'commercial': toggle}});
 	},
 
 	// Create options
@@ -38,37 +35,31 @@ Meteor.methods({
 		check(inputs, Object);
 		check(type, String);
 
+		console.log(inputs, inputs.down, type)
+		var down = parseInt(inputs.down)
 		if ( type === "drive") {
-			var optionList = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
-		}
-
-		if (inputs.down === 1) {
+			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
+		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
-		}
-
-		if (inputs.down === 2) {
+		} else if (down === 2) {
 			var optionArray = ["Negative Yards", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass/Incomplete", "6-20 Yard Pass", "21+ Gain (Run or Pass)"]
-		}
-
-		if (inputs.down === 3 && inputs.area === 6) {
+		} else if (down === 3 && inputs.area === 6) {
 			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
-		} else {
+		} else if (down === 3) {
 			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
-		}
-
-		if (inputs.down === 4 && inputs.area >= 4 ) {
+		} else if (down === 4 && inputs.area >= 4 ) {
 			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
-		} else {
+		} else if (down === 4) {
 			var optionArray = ["Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown"]
 		}
 
 		// Create the options of the play
 		var options = {}
 		var optionNum = 1
-		
-		optionList.map(function (option){
+		console.log(optionArray)
+		optionArray.map(function (option){
 			var optionNumber = "option" + optionNum
-			options[optionNumber] = {"option": optionNumber, "title": option}
+			options[optionNumber] = {"option": optionNumber, "title": option, multiplier: 3}
 			optionNum += 1
 		});
 
@@ -78,11 +69,9 @@ Meteor.methods({
 	'questionText': function (inputs, type) {
 		check(inputs, Object);
 		check(type, String);
-		
-		if ( type === "drive") {
-			var que = "How will this drive end?"
-		}
-		switch (inputs.down){
+
+		var down = parseInt(inputs.down)
+		switch (down){
 			case 1: 
 				var que = "First Down..."
 				break;
@@ -102,6 +91,11 @@ Meteor.methods({
 				var que = "Kickoff..."
 				break;
 		}
+
+		if ( type === "drive") {
+			var que = "How will this drive end?"
+		}
+
 		return que
 	},
 
@@ -124,22 +118,22 @@ Meteor.methods({
 
 		var options = Meteor.call('createOptions', q.inputs, q.type )
 		
-		console.log(q, options)
+		// console.log(q, options)
 
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
 		// Insert the question into the database
-		// Questions.insert({
-		// 	que: que,
-		// 	gameId: gameId,
-		// 	createdBy: currentUserId,
-		// 	dateCreated: timeCreated,
-		// 	active: active,
-		// 	commercial: commercial,
-		// 	options: q.options,
-		// 	usersAnswered: []
-		// });
+		Questions.insert({
+			que: q.que,
+			gameId: q.gameId,
+			createdBy: currentUserId,
+			dateCreated: timeCreated,
+			active: true,
+			commercial: q.commercial,
+			options: options,
+			usersAnswered: []
+		});
 	},
 
 	'createTrueFalse': function(que, gameId) {
@@ -162,12 +156,13 @@ Meteor.methods({
 			gameId: gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
+			type: "freePickk",
 			active: true,
 			commercial: true,
 			binaryChoice: true,
 			options: {
-				option1: {title: "True"},
-				option2: {title: "False"},
+				option1: {title: "True", multiplier: 4},
+				option2: {title: "False", multiplier: 4},
 			},
 			usersAnswered: []
 		})
@@ -183,7 +178,7 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		Questions.update({"_id": questionId}, {$set: {'active': true}});
+		Questions.update({_id: questionId}, {$set: {active: true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
@@ -198,23 +193,23 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
+		Questions.update({_id: questionId}, {$set: {active: false, play: "deleted"}});
 
 		function awardPointsBack(answer) {
 			// Update users coins
 			var amount = parseInt(answer.wager)
-			var user = answer.userId
-			var game = answer.game
+			var userId = answer.userId
+			var gameId = answer.gameId
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
 
-			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
+			GamePlayed.update({userId: userId, gameId: gameId}, {$inc: {coins: amount}});
 
 		  var notifyObj = {
-		  	userId: user,
+		  	userId: userId,
 				type: "score",
 				message: scoreMessage,
 				amount: amount,
-				gameId: game,
+				gameId: gameId,
 		  }
 
 		  createPendingNotification(notifyObj)
