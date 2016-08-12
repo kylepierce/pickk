@@ -418,3 +418,7 @@ input[type=submit] {
 .af-fav-teams .checkbox  {
 	max-width: 50px;		
 }
+
+.hidden {
+	display: none
+}
