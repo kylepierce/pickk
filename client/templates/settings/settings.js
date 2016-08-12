@@ -28,6 +28,12 @@ Template.settings.helpers({
   }
 });
 
+// Template.settings.onRendered(function(){
+//   console.log("*** rendeing settings - ", UsersProfileSchema);
+// });
+
+// console.log(UsersProfileSchema)
+
 Template.settings.events({
   "change input[name='avatar']": function(event, template) {
     var files = event.currentTarget.files;

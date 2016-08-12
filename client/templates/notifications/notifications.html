@@ -40,34 +40,34 @@
 </template>
 
 <template name="notification">
-	{{#if item "group"}}
+	{{#if notif "group"}}
 		{{> groupNotification}}
 	{{/if}}
-	{{#if item "mention"}}
+	{{#if notif "mention"}}
 		{{> chatNotification}}
 	{{/if}}
-	{{#if item "follower"}}
+	{{#if notif "follower"}}
 		{{> newFollower}}
 	{{/if}}
-	{{#if item "score"}}
+	{{#if notif "score"}}
 		{{> scoreNotification}}
 	{{/if}}
-	{{#if item "diamonds"}}
+	{{#if notif "diamonds"}}
 		{{> diamondNotification}}
 	{{/if}}
-	{{#if item "leaderboard"}}
+	{{#if notif "leaderboard"}}
 		{{> leaderboardNotification}}
 	{{/if}}
-	{{#if item "badge"}}
+	{{#if notif "badge"}}
 		{{> badgeNotification}}
 	{{/if}}
-	{{#if item "trophy"}}
+	{{#if notif "trophy"}}
 		{{> trophyNotification}}
 	{{/if}}
-	{{#if item "matchupInvite"}}
+	{{#if notif "matchupInvite"}}
 		{{> matchupInvite}}
 	{{/if}}
-	{{#if item "matchupNotification"}}
+	{{#if notif "matchupNotification"}}
 		{{> matchupNotification}}
 	{{/if}}
 </template>
