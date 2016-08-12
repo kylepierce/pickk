@@ -39,4 +39,37 @@ Meteor.methods({
 		var user = UserList.findOne(this.userId);
 		mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
+
+	'updateFavorites': function (selectionArray, type) {
+		check(selectionArray, Array);
+		check(type, String);
+
+		if (!this.userId) {
+			return;
+		}
+
+		console.log("updating - ", type, selectionArray);
+
+		switch(type) {
+			case 'favoriteSports':
+				UserList.update(this.userId,
+					{
+						$set: {'profile.favoriteSports': selectionArray}
+					});
+				break;
+			case 'favoriteMLBTeams':
+				UserList.update(this.userId,
+					{
+						$set: {'profile.favoriteMLBTeams': selectionArray}
+					});
+				break;
+			case 'favoriteNFLTeams':
+				UserList.update(this.userId,
+					{
+						$set: {'profile.favoriteNFLTeams': selectionArray}
+					});
+				break;	
+		}
+		
+	},
 })
