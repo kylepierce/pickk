@@ -1,1 +1,3 @@
-Cloudinary.config(Meteor.settings.private.cloudinary);
+Meteor.startup(function () {
+  $.cloudinary.config(Meteor.settings.public.cloudinary);
+});

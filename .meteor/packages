@@ -4,7 +4,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 jquery@1.11.9
 accounts-base@1.2.9
 accounts-password@1.2.12
@@ -95,7 +94,5 @@ practicalmeteor:mocha
 xolvio:cleaner
 http@1.2.8
 jamielob:reloader
-hammer:hammer
-chriswessels:hammer
 notorii:autoform-datetimepicker
 drewy:pikaday-time
