@@ -51,6 +51,10 @@ Meteor.methods({
 			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
 		} else if (down === 4) {
 			var optionArray = ["Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown"]
+		} else if (down === 5) {
+			var optionArray = ["Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good"]
+		} else if (down === 6)  {
+			var optionArray = ["Touchback", "0-25 Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
 		}
 
 		// Create the options of the play
@@ -64,6 +68,29 @@ Meteor.methods({
 		});
 
 		return options
+	},
+
+	'addMultipliers': function ( inputs, options ) {
+		check(inputs, Object);
+		check(options, Object);
+		var down = parseInt(inputs.down)
+		var yards = parseInt(inputs.yards)
+		var area = parseInt(inputs.area)
+		var multiplier = Multipliers.findOne({down: down, yards: yards, area: area}).options
+		return multiplier
+	},
+
+	'createMultipliers': function (inputs, existing){
+		check(inputs, Object);
+		check(existing, Object);
+
+		Multipliers.insert({
+			down: inputs.down,
+  		area: inputs.area,
+  		yards: inputs.yards,
+  		options: existing,
+		});
+
 	},
 
 	'questionText': function (inputs, type) {
@@ -111,14 +138,26 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		// function randomizer(min, max){
-		// 	return (Math.random() * (max-min) + min).toFixed(2)
-		// }
-		q["que"] = Meteor.call('questionText', q.inputs, q.type )
+		function randomizer(min, max){
+			return (Math.random() * (max-min) + min).toFixed(2)
+		}
 
+		q["que"] = Meteor.call('questionText', q.inputs, q.type )
 		var options = Meteor.call('createOptions', q.inputs, q.type )
+		var multiplier = Meteor.call('addMultipliers', q.inputs, options )
+
+		var newObject = Object.keys(multiplier).map(function(value, index) {
+		   var low = multiplier[value].low
+		   var high = multiplier[value].high
+		   return randomizer(low, high)
+		});
+
+		var counter = 0
 		
-		// console.log(q, options)
+		_.each(options, function (value, prop) {  
+			options[prop].multiplier = newObject[counter]
+		  counter += 1
+		});
 
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();

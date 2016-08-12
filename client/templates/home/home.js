@@ -13,6 +13,9 @@ Template.home.rendered = function () {
 };
 
 Template.home.helpers({
+  gameInfo: function () {
+    return Games.find({}).fetch();
+  },
   games: function () {
     return Games.find({}).fetch();
   },
@@ -52,7 +55,8 @@ Template.commericalQuestion.helpers({
 Template.commericalQuestion.events({
   'click [data-action=pickk]': function (e, t) {
     // console.log(this, e, t)    
-    $(e.currentTarget).addClass('selected')
+    $('.play-selected').removeClass('play-selected')
+    $(e.currentTarget).addClass('play-selected')
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
@@ -111,7 +115,8 @@ Template.singleQuestion.helpers({
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
     // console.log(this, e, t)
-    $(e.currentTarget).addClass('selected')
+    $('.play-selected').removeClass('play-selected ten-spacing')
+    $(e.currentTarget).addClass('play-selected ten-spacing')
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
@@ -149,7 +154,8 @@ Template.singleQuestion.events({
   },
   'click [data-action=wager-selected]': function (e, t) {
     // console.log(this, e, t)    
-    $(e.currentTarget).addClass('selected')
+    $('.wager-selected').removeClass('wager-selected')
+    $(e.currentTarget).addClass('wager-selected')
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
@@ -232,7 +238,7 @@ Template.binaryQuestion.helpers({
 Template.option.helpers({
   hasIcon: function (title) {
     var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
-    if (baseball.indexOf(title)){
+    if (baseball.indexOf(title) !== -1){
       return title
     }
   }

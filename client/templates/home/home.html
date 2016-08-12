@@ -101,13 +101,17 @@
 
 <template name="option">
 	<li class="option" data-action="play-selected">
-		<span class="icon-container">
-			{{#if hasIcon o.title}} 
-				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
-			{{/if}}
-		</span>
-		<span class="option-title">{{o.title}}</span>
-		<span class="multiplier">x {{o.multiplier}}</span>
+		<div class="option-inner">
+			<span class="icon-container">
+				{{#if hasIcon o.title}} 
+					<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
+				{{else}}
+					<i class="fa fa-star"></i>
+				{{/if}}
+			</span>
+			<span class="option-title">{{o.title}}</span>
+			<span class="multiplier">x {{o.multiplier}}</span>
+		</div>
 	</li>
 </template>
 
@@ -120,14 +124,16 @@
 </template>
 
 <template name="wager">
-	<li class="wager" data-action=wager-selected>{{w}}</li>
+	<li class="wager" data-action=wager-selected>
+		<div class="wager-inner">{{w}}</div>
+	</li>
 </template>
  
 <template name="submitButton">
 	{{#if live}}
-		<button class="full button button-balanced center ten-spacing" data-action="submit">Submit ({{{potential}}})</button>
+		<button class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit ({{{potential}}})</button>
 	{{else}}
-		<button class="full button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
+		<button class="submit-button button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
 	{{/if}}
 </template>
 
