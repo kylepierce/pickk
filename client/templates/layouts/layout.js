@@ -12,6 +12,9 @@ Template.sideMenuContent.events({
     AccountsTemplates.logout();
     Router.go("/")
 	},
+  'click .item-icon-left': function (){
+    IonSideMenu.snapper.close();
+  },
   'click .js-share-link': function(event) {
     event.preventDefault();
     var userId = Meteor.userId()

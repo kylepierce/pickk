@@ -92,7 +92,7 @@ Meteor.publish('pendingGameQuestions', function() {
 // All of the games user has played 
 Meteor.publish('gamesPlayed', function() {
   var selector = {users: {$in: [this.userId]}}
-  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1}}
+  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}
   return Games.find(selector, fields );
 });
 

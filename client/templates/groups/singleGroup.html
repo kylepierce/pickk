@@ -121,12 +121,12 @@
   <div style="clear:both" class="item item-divider">Group Leaderboard</div>
     <ol type="1" class="list" style="clear:both">
       
-      {{#each players groupId}}
+      {{#each player in players}}
         {{#ionItem path="user.show" avatar=true}}
-        {{> userAvatar userId=_id}}
+        {{> userAvatar userId=player._id}}
         <li class="list-font">
           
-          <h2 class="center-username">{{profile.username}}</h2>
+          <h2 class="center-username">{{player.profile.username}}</h2>
         </li>
 
         {{/ionItem}}

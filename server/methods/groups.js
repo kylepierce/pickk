@@ -10,7 +10,8 @@ Meteor.methods({
 			dateCreated: timeCreated,
 			members: [currentUserId],
 			secret: secretStatus,
-			avatar: "/twitter_logo.png"
+			avatar: "/twitter_logo.png",
+			invites: []
 		});
 
 		var groupData = Groups.findOne({'name': groupName});
@@ -63,6 +64,9 @@ Meteor.methods({
 
 	// Users can add other users to join their group.
 	'inviteToGroup': function(userId, sender, groupId) {
+		check(userId, String);
+		check(sender, String);
+		check(groupId, String);
 		Groups.update({_id: groupId}, {$addToSet: {invites: userId}})
 
 	  var notifyObj = {

@@ -48,9 +48,8 @@ Meteor.publish('chatUsersList', function(groupId) {
 
 // Mention another player. Switch to load latest users first
 Meteor.publish("chatUsersAutocomplete", function(selector, options) {
-
-  // check(selector, String);
-  // check(options, String);
+  check(selector, Object);
+  check(options, Object);
 
   if (!this.userId) {
     return this.ready()
@@ -62,3 +61,4 @@ Meteor.publish("chatUsersAutocomplete", function(selector, options) {
   Autocomplete.publishCursor(UserList.find(selector, options), this);
   return this.ready()
 });
+
