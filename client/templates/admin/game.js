@@ -22,7 +22,7 @@ Template.gameInfo.events({
 		var tv = template.find('#tv').value
 		var gameTime = template.find('#gameTime').value
 		var timeOfGame = "now"
-		Meteor.call('createBaseballGame', team1, team2, title, active, tv, gameTime, timeOfGame);
+		Meteor.call('createGame', team1, team2, title, active, tv, gameTime);
 	}
 }); 
 

@@ -255,12 +255,9 @@ Template._adminOptions.events({
 })
 
 Template.singleGroupLeaderboard.helpers({
-  players: function(groupId){ 
-    var id = groupId._id
-     
-    return UserList.find({"profile.groups": id},
-      {fields: 
-        {'profile.username': 1, 'profile.avatar': 1, '_id': 1}}
-      ).fetch();
+  players: function(){ 
+    var id = Router.current().params._id
+    var currentUser = Meteor.user()
+    return UserList.find();
   }
 });

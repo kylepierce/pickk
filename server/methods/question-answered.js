@@ -1,5 +1,6 @@
 Meteor.methods({
 	'activityForDiamonds': function(d){
+		check(d, Object);
 
 		if (d.counter === 1) {
 			Meteor.call('awardDiamonds', d.userId, d.gameId, 1)

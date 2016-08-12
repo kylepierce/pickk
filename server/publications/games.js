@@ -25,6 +25,7 @@ Meteor.publish('activeGames', function() {
 });
 
 Meteor.publish('pendingQuestions', function(gameId) {
+  check(gameId, String);
   var selector = {gameId: gameId, active: null}
   var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);

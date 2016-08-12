@@ -1,76 +1,79 @@
 <template name="sideMenuContent">
   <div class="profile-container">
+    {{#if currentUser}}
+    <a href="#" data-ion-menu-toggle="left"> 
     {{> userAvatar userId=currentUser._id}}
-
+    </a>
     <strong class="username">{{currentUser.profile.username}}</strong><br>
     <i class="fa fa-diamond"></i><strong> {{currentUser.profile.diamonds}}</strong>
+    {{/if}}
   </div>
 
   {{#ionList}}
-    {{#ionItem iconLeft=true href="/"}}
+    {{#ionItem iconLeft=true href="/"  data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-photos-outline'}}
       Home 
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="games"}}
+    {{#ionItem iconLeft=true path="games" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-calendar-outline'}} 
       Game Schedule
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="notifications"}}
+    {{#ionItem iconLeft=true path="notifications" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-bell-outline'}}
       Notifications
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="groups"}}
+    {{#ionItem iconLeft=true path="groups" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-people-outline'}}
       Groups
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="history"}}
+    {{#ionItem iconLeft=true path="history" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-time-outline'}}
       Question History
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="week-leaderboard"}}
+    {{#ionItem iconLeft=true path="week-leaderboard" data-ion-menu-toggle="left"}}
       <!-- Fix lastprofile -->
       <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
       Diamond Leaderboard
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true}}
+<!--     {{#ionItem iconLeft=true data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-person-outline'}}
       Profile
-    {{/ionItem}}
+    {{/ionItem}} -->
 
-    {{#ionItem iconLeft=true path="rules"}}
+    {{#ionItem iconLeft=true path="rules" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-medical-outline'}}
       Common Questions
     {{/ionItem}}
 
     {{#if isMobile}}
-      {{#ionItem iconLeft=true}}
+      {{#ionItem iconLeft=true data-ion-menu-toggle="left"}}
         {{> ionIcon icon='share'}}
         Share
       {{/ionItem}}
     {{/if}}
 
-    {{#ionItem iconLeft=true path="onboarding"}}
+    {{#ionItem iconLeft=true path="onboarding" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-help-outline'}}
       How to play
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="friends"}}
+    {{#ionItem iconLeft=true path="friends" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-personadd-outline'}}
       Find Friends
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="settings"}}
+    {{#ionItem iconLeft=true path="settings" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-cog-outline'}}
       Settings
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true}}
+    {{#ionItem iconLeft=true data-action="logout"}}
       {{> ionIcon icon='log-out'}}
       Logout
     {{/ionItem}}

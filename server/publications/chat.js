@@ -1,7 +1,7 @@
 // Chat
 Meteor.publish('chatMessages', function(groupId, limit) {
-  // check(groupId, String);
-  // check(limit, String);
+  check(groupId, Match.Maybe(String));
+  check(limit, Match.Maybe(Number));
   
   limit = limit || 10;
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
@@ -9,14 +9,14 @@ Meteor.publish('chatMessages', function(groupId, limit) {
 
 // Lets "Load more chats work"
 Meteor.publish("chatMessagesCount", function(groupId) {
-  // check(groupId, String);
+  check(groupId, Match.Maybe(String));
 
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 
 // Hacky way to load chat users
 Meteor.publish('chatUsers', function(id) {
-  // check(id, Array);
+  check(id, Array);
 
   var fields = { fields: {
     'profile.username': 1,
@@ -29,7 +29,7 @@ Meteor.publish('chatUsers', function(id) {
 
 // "Improved way"
 Meteor.publish('chatUsersList', function(groupId) {
-  // check( groupId, String );
+  check( groupId, Match.Maybe(String) );
 
   groupId = groupId || null;
 
@@ -48,9 +48,8 @@ Meteor.publish('chatUsersList', function(groupId) {
 
 // Mention another player. Switch to load latest users first
 Meteor.publish("chatUsersAutocomplete", function(selector, options) {
-
-  // check(selector, String);
-  // check(options, String);
+  check(selector, Object);
+  check(options, Object);
 
   if (!this.userId) {
     return this.ready()
@@ -62,3 +61,4 @@ Meteor.publish("chatUsersAutocomplete", function(selector, options) {
   Autocomplete.publishCursor(UserList.find(selector, options), this);
   return this.ready()
 });
+

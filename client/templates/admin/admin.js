@@ -42,23 +42,7 @@ Template.otherQuestions.events({
 	},
 });
 
-// Show pending questions
-Template.pendingQuestions.helpers({
-	'questions': function(){
-		var questions = Questions.find({ $and: [{active: null}, { atBatQuestion: { $ne: true }}]}, {sort: {dateCreated: -1}}).fetch();
-		return questions
-	},
-	'binary': function(){
-		if(this.binaryChoice == true){
-			return true
-		}
-	},
-	'binaryCommerical': function(question){
-		if(this.commercial == true){
-			return true
-		}
-	}
-});
+
 
 // Show all old questions
 Template.oldQuestions.helpers ({

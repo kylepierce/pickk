@@ -72,7 +72,12 @@ Template.count.helpers({
 Template.teamBlock.helpers({
   teamColors: function (id) {
     var team = Teams.findOne({_id: id})
-    var color = "#" + team.hex[0] || "#134A8E"
+    var hex = team && team.hex
+    if(hex){
+      var color = "#" + team.hex[0]
+    } else {
+      var color = "#134A8E"
+    }
     return color
   }
 });

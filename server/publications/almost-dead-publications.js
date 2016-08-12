@@ -54,6 +54,7 @@ Meteor.publish('SportRadarGames', function() {
 
 // ???? This could be combined with findSingle if I dont decide to do everything through router.
 Meteor.publish('findSingleUsername', function(id) {
+  check(id, String);
   var fields = { fields: {
     'profile.username': 1,
     'profile.avatar': 1,

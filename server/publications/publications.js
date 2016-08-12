@@ -21,10 +21,12 @@ Meteor.publish('unreadNotifications', function() {
 });
 
 Meteor.publish('userNotifications', function(userId) {
+  check(userId, String);
   return Notifications.find({userId: userId, read: false})  
 });
 
 Meteor.publish('gameNotifications', function(gameId) {
+  check(gameId, String);
   return Notifications.find({gameId: gameId, read: false})  
 });
 
@@ -50,6 +52,7 @@ Meteor.publish('teams', function() {
 });
 
 Meteor.publish('singleTeam', function ( teamId ) {
+  check(teamId, String);
   return Teams.find({_id: teamId})
 });
 
@@ -68,11 +71,8 @@ Meteor.publish('activeQuestions', function(gameId) {
 
 Meteor.publish('adminActiveQuestions', function(gameId) {
   check(gameId, String);
-  
-  return Questions.find({
-    gameId: gameId,
-    active: true,
-  });
+  var selector = {gameId: gameId, active: {$ne: false}}
+  return Questions.find(selector);
 });
 
 Meteor.publish('gameQuestions', function() {
@@ -92,7 +92,7 @@ Meteor.publish('pendingGameQuestions', function() {
 // All of the games user has played 
 Meteor.publish('gamesPlayed', function() {
   var selector = {users: {$in: [this.userId]}}
-  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1}}
+  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}
   return Games.find(selector, fields );
 });
 

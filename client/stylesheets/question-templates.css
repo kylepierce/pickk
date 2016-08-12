@@ -14,6 +14,16 @@
 	margin-top: -1px;
 }
 
+.option-inner {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	height: 38px;
+	margin: 3px;
+}
+
 .icon-container {
 	display: flex;
 	align-items: center;
@@ -36,9 +46,9 @@
 	width: 25px;
 }
 
-.selected{
+/*.selected{
 	background-color: pink;
-}
+}*/
 
 .wagers {
 	margin-top: -1px;
@@ -51,5 +61,38 @@
 	width: 33.33%;
 	height: 45px;
 	float: left;
+	background-color: white;
 	border: 1px solid #DDDDDD;
 }
+
+.wager-inner {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	height: 38px;
+	margin: 3px;
+}
+
+.wager-selected, .play-selected {
+  background: linear-gradient(45deg, #F1C40F, gold, #F1C40F);
+  border: 0!important;
+}
+
+.wager-selected .wager-inner, .play-selected .option-inner {
+  background: #F1C40F;
+}
+
+.submit-button {
+	width: 100%;
+	height: 45px;
+	margin: 5px 0;
+}
+
+
+
+
+
+
+

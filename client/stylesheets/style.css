@@ -41,6 +41,10 @@ body, .ionic-body {
 	background-color: #f2f2f2;
 }
 
+.ten-spacing {
+	margin-top: 10px;
+}
+
 .loader {
   display: none;
 }
