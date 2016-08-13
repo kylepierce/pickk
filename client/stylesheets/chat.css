@@ -8,6 +8,9 @@
 	padding: 10px;
   word-break: break-word;
   height: 75px;
+  white-space:pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 #chat-message-area {
