@@ -9,9 +9,11 @@ Meteor.publish('singleGame', function(_id) {
 });
 
 // Only live games
-Meteor.publish('activeGames', function() {
+Meteor.publish('activeGames', function(days) {
+  check(days, Number);
+  
   const today = moment().startOf('day').toDate();
-  const tomorrow = moment().startOf('day').add(2, "days").toDate(); // today and tomorrow
+  const tomorrow = moment().startOf('day').add(days, "days").toDate(); // today and tomorrow
 
   var selector = {$or: [{live: true}, {scheduled: {$gt: today, $lt: tomorrow}}]};
   var parms = {sort: {scheduled: 1}, fields: {name: 1, ball: 1, strike: 1, tv: 1, gameDate: 1, scheduled: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1}}

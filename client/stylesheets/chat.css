@@ -117,3 +117,11 @@ div.content.overflow-scroll.has-header {
 .allow-chats {
   background-color: #F1C40F!important;
 }
+
+.option-dividers {
+  border-left: 1px solid white;
+}
+
+.option-dividers:first-child {
+  border: 0px;
+}

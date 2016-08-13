@@ -42,9 +42,9 @@
 <template name="messageBox">
   <form id="chat-message-area">
     {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
-    <div class="col-md-33 chat-buttons" data-action="mention">Mention</div>
-    <div class="col-md-33 chat-buttons" data-ion-popover="_reaction">React</div>
-    <button tabindex=2 id="chat-submit" class="col-md-33 button" type="submit">Send</button>
+    <div class="col-md-33 chat-buttons option-dividers" data-action="mention">Mention</div>
+    <div class="col-md-33 chat-buttons option-dividers" data-ion-popover="_reaction">React</div>
+    <button tabindex=2 id="chat-submit" class="col-md-33 button option-dividers" type="submit">Send</button>
   </form>
 </template>
 
@@ -61,20 +61,20 @@
 
 <template name="chatOptions">
   {{#with options}}
-    <div class="{{options}}" data-action="reply">
+    <div class="{{options}} option-dividers" data-action="reply">
       {{> ionIcon class="reply-icon" icon='forward'}}<br>
       Reply
     </div>
-    <div class="{{options}}" data-action="react">
+    <div class="{{options}} option-dividers" data-action="react">
       <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
       React
     </div>
-    <div class="{{options}}" data-action="user">
+    <div class="{{options}} option-dividers" data-action="user">
       {{> ionIcon class="reply-icon" icon='ios-person'}}<br>
       User
     </div>
     {{#if canDelete}}
-      <div class="{{options}}" data-action="delete">
+      <div class="{{options}} option-dividers" data-action="delete">
         {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
         <br>
         Delete

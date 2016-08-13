@@ -45,10 +45,6 @@ body, .ionic-body {
 	margin-top: 10px;
 }
 
-.loader {
-  display: none;
-}
-
 .loader-holder {
   margin-left: auto;
   margin-right: auto;
