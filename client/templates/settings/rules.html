@@ -9,102 +9,16 @@
 
   {{#ionView }}
     {{#ionContent}}
-    <div class="container">
-    	{{#ionList}}				
-    		{{#ionItem}}
-				<p class="common-question">Can I win money or prizes?</p>
-				<p>Pickk is a free app and there is NO money wagered and NO money won by playing. We host weekly contests to win prizes.</p>
-				{{/ionItem}}
-				{{#ionItem}}
-				<p class="common-question">What do my coins do?</p>
-				<p>Coins are how we track who performed the best in a game. Once the game is over the coins are transfered to diamonds.
-				<br>
-				</p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">What do my diamonds do?</p>
-				<p>Diamonds are how we track who performed the best in a week. Once the week is over the diamond leaders are given prizes.
-				<br>
-				</p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">What are weekly contests?</p>
-				<p>Our weekly contest is who wins the most Diamonds by the end of the week (Tuesday Morning).</p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">How Do I Earn Diamonds?</p>
-					<p><strong>1. Game Predictions </strong> (5 per pick) Every Day We Send Out Free Diamond Questions. Game Predictions Are Only Around for 24 Hours.</p>
-					<p><strong>2. Getting Game Predictions Correct </strong>(10 Diamonds for correct Pickks)</p>
-					<p><strong>3. Pickking Plays During Live Games </strong>(Earn Up to 40 diamonds for playing the entire game)</p>
-					<p><strong>4. Ranking in the Top 10 in a Pickk Game </strong>(50 Diamonds for 1st - 10 Diamonds for 10th) </p>
-					<p><strong>5. At the end of the game the coins you earn are exchanged for diamonds. If you get 50,000 coins at the end of the game you will earn 5 extra diamonds regardless if you are in the top 10</strong></p>					
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">How many diamonds are Top 10 Game Leaders Awarded?</p>
-				<br>
-				<p>1st - 50 Diamonds</p>
-				<p>2nd - 40</p>
-				<p>3rd - 30</p>
-				<p>4th - 25 </p>
-				<p>5th - 22</p>
-				<p>6th - 20</p>
-				<p>7th - 17 </p>
-				<p>8th - 15</p>
-				<p>9th - 12</p>
-				<p>10th - 10</p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">What are weekly contests prizes?</p>
-				<br>
-				<p><strong>Baseball (July 5th - July 18th)</strong></p>
-				<p>Two weeks combine because of All Star Break</p>
-				<p>1st - $50 Best Buy Gift Card</p>
-				<p>2nd - $25 Best Buy Gift Card</p>
-				<p>3rd - $10 Best Buy Gift Card</p>
-				<br>
-				<p><strong>Baseball (July 19th - July 25th)</strong></p>
-				<p>1st - $50 Best Buy Gift Card</p>
-				<p>2nd - $25 Best Buy Gift Card</p>
-				<p>3rd - $10 Best Buy Gift Card</p>
-				{{/ionItem}}
-
-	    	{{#ionItem}}
-	    	<p class="common-question">I predicted the play but I didnt win any coins!</p>
-				<p>When you predict what will happen you are predict what the <strong>end of the play will be.</strong> </p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-	    	<p class="common-question">I predicted the play <strong>correctly</strong> but I didnt win any coins!</p>
-				<p>Please check Question History to see if you were awarded coins. The notifications can sometimes overlap. </p>
-				{{/ionItem}}
-
-				{{#ionItem}}
-				<p class="common-question">Examples</p>
-				<p>If the play starts as a run but ends up as a fumble the people who guessed fumble will earn coins. <br>
-				Sacks are considered runs. <br>
-				If you predict convert to first down but the team scores a touchdown that would be considered a touchdown. There is only one outcome of the play.
-				<br>
-				</p>
-				{{/ionItem}}
-
-<!-- 				{{#ionItem}}
-				<p class="common-question">There is penalty. Do I get my coins back?</p>
-				<p>If the play down is going to be replayed all players get their coins returned to them. If the play is a loss of down or doesnt effect the offense the play outcome stands.</p>
-				{{/ionItem}} -->
-
-<!-- 				{{#ionItem}}
-				<p class="common-question">There is penalty that got the team to convert to a first down. Doesnt that count?</p>
-				<p>No Play is removed.</p>
-				{{/ionItem}} -->
-
-			{{/ionList}}
-		</div>
-		
+    	<div class="container">
+				{{#ionList}}	
+					{{#each rule in rules}}
+						{{#ionItem}}
+						<p class="common-question">{{{rule.headline}}}</p>
+						<p>{{{rule.text}}}</p>
+						{{/ionItem}}
+					{{/each}}
+				{{/ionList}}	
+			</div>
     {{/ionContent}}
   {{/ionView}}
 </template>

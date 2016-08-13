@@ -16,7 +16,7 @@
 
       <div class="container ten-spacing">
         {{#each game in games}}
-          <div class="complete-game-card">
+          <div class="complete-game-card" data-action="play"> 
             {{> singleGameInfo game=game}}
             {{> singleGameCard game=game}}
             {{> singleGameCTA game=game}}
@@ -58,18 +58,30 @@
 </template>
 
 <template name="gameInProgressInfo">
- <!--  <div class="col-md-20 single-game-section">
-    {{> count id=game.users}}
-  </div> -->
-  <div class="col-md-33 single-game-section">
-    {{> inningDisplay inning=game.inning position=game.topOfInning}}
-  </div>
-  <div class="col-md-33 single-game-section">
-    {{> outDisplay number=game.outs}}
-  </div>
-  <div class="col-md-33 single-game-section">
-    {{> playersOnBase base=game.playersOnBase}}
-  </div>
+  {{#if baseball}}
+    <div class="col-md-25 single-game-section">
+      {{> inningDisplay inning=game.inning position=game.topOfInning}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> outDisplay number=game.outs}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> playersOnBase base=game.playersOnBase}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> count users=game.users }}
+    </div>
+  {{else}}
+<!--     <div class="col-md-25 single-game-section">
+      {{> down}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> quarter}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      
+    </div> -->
+  {{/if}}
 </template>
 
 <template name="futureGameInfo">
@@ -79,10 +91,10 @@
 </template>
 
 <template name="count">
-  {{#if userPlaying id}}
+  {{#if userPlaying users}}
     Playing
   {{else}}
-    Join
+    <strong>Join</strong>
   {{/if}} 
 </template>
 
@@ -98,7 +110,7 @@
       <i class="fa fa-caret-down"></i>
     {{/if}}
   </span>
-  <span class="inning">{{inning}}</span> 
+  <span class="inning">{{grammer inning}}</span> 
 </template>
 
 <template name="playersOnBase">
@@ -120,7 +132,6 @@
   {{/if}}
 </template>
 
-
 <template name="singleGameCard">
   <ul class="single-game-card">
 
@@ -131,13 +142,15 @@
   </ul>
 </template>
 
-
 <template name="teamBlock">
   <li class="team-block">
     <div class="team-colors team-text" style="background-color:{{teamColors id}}">
       {{abbr}}
     </div> 
     <div class="team-block-border">
+<!--       {{#if whoHasBall}}
+        <i class="fa fa-angle-right"></i>
+      {/if} -->
       <span class="team-name team-text">{{name}}</span>
       <span class="team-score team-text">{{runs}}</span>
     </div>
