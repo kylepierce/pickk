@@ -47,6 +47,13 @@ Template.chatNotification.helpers({
 	}
 });
 
+Template.chatReaction.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+});
+
 Template.trophyNotification.helpers({
 	trophy: function (trophyId) {
 		return Trophies.findOne({_id: trophyId})

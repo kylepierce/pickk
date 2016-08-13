@@ -157,6 +157,15 @@ Meteor.methods({
 
 		// Update the collection with the changes in reactions object
 		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});
+
+		var notifyObj = {
+						userId: chat.user,
+						messageId: messageId, 
+						type: "chatReaction",
+						senderId: author,
+						message: chat.message
+					}
+		createPendingNotification(notifyObj);
 	},
 
 	'deleteMessage': function(messageId, deletor){

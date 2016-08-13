@@ -70,6 +70,10 @@
 	{{#if item "matchupNotification"}}
 		{{> matchupNotification}}
 	{{/if}}
+	{{#if item "chatReaction"}}
+		{{> chatReaction}}
+	{{/if}}
+	
 </template>
 
 <template name="groupNotification">
@@ -90,6 +94,16 @@
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	    <h3>{{profile.username}} Mentioned You:</h3>
+	  {{/with}}
+	  <p>{{note.message}}</p>
+	{{/ionItem}}	
+</template>
+
+<template name="chatReaction">
+	{{#ionItem avatar=true }}
+		{{#with user note.senderId}}
+	    {{> userAvatar userId=_id}}
+	    <h3>{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
 	{{/ionItem}}	
