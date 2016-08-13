@@ -57,45 +57,56 @@ Template.newUser.onRendered(function () {
 });
 // Start the tour!
 
-Template.questionExample.events({
-	'click .double': function (event, template) {
-		var otherSelected = $('.wager') 
-    // If a play has been selected before than remove that 
-    if (otherSelected) {
-      // Remove old
-      $('.wager').remove();
-    } 
-		$('input:radio[name=play]').prop( "checked", true )
-    var answer = $('input:radio[name=play]:checked').parent()
-    answer.after($("<div class='wager'></div>")) 
-    var selectedPlay = $('.wager')[0]
-    Blaze.render(Template.wagerExample, selectedPlay)
-		hopscotch.nextStep()
-	},
-	'click .wager': function (event, template) {
-    var checked = $( "input:checked" )
-    if (checked.length === 2) {
-      // Checkout this sexy daisy chain ;)
-      var combined = parseInt(3.76*500)
-      $('#wager').checked
-      $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
-      $(".submit-response").prop("disabled", false)
-      $(".submit-response").addClass('button-balanced');
-      return true 
-    }
-		hopscotch.nextStep()
-	},
-	'click input:submit': function (event) {
-		event.preventDefault();
-		var newUser = !Meteor.user().profile.isOnboarded
-		var userId = Meteor.user()._id
-		Meteor.users.update(Meteor.userId(), {$set: {"profile.isOnboarded": true}});
-    analytics.track("newOnboarded", {
-      id: userId,
-      newUser: newUser
-    });
-		hopscotch.endTour();
-		Router.go("/");
+// Template.questionExample.events({
+// 	'click .double': function (event, template) {
+// 		var otherSelected = $('.wager') 
+//     // If a play has been selected before than remove that 
+//     if (otherSelected) {
+//       // Remove old
+//       $('.wager').remove();
+//     } 
+// 		$('input:radio[name=play]').prop( "checked", true )
+//     var answer = $('input:radio[name=play]:checked').parent()
+//     answer.after($("<div class='wager'></div>")) 
+//     var selectedPlay = $('.wager')[0]
+//     Blaze.render(Template.wagerExample, selectedPlay)
+// 		hopscotch.nextStep()
+// 	},
+// 	'click .wager': function (event, template) {
+//     var checked = $( "input:checked" )
+//     if (checked.length === 2) {
+//       // Checkout this sexy daisy chain ;)
+//       var combined = parseInt(3.76*500)
+//       $('#wager').checked
+//       $("#submit-response").prop('value', 'Submit ( Potential Winnings: ' + combined + " )");
+//       $(".submit-response").prop("disabled", false)
+//       $(".submit-response").addClass('button-balanced');
+//       return true 
+//     }
+// 		hopscotch.nextStep()
+// 	},
+// 	'click input:submit': function (event) {
+// 		event.preventDefault();
+// 		var newUser = !Meteor.user().profile.isOnboarded
+// 		var userId = Meteor.user()._id
+// 		Meteor.users.update(Meteor.userId(), {$set: {"profile.isOnboarded": true}});
+//     analytics.track("newOnboarded", {
+//       id: userId,
+//       newUser: newUser
+//     });
+// 		hopscotch.endTour();
+// 		Router.go("/");
+// 	}
+// });
+
+Template.newUser.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
+};
+
+Template.newUser.helpers({
+	questions: function () {
+		var questions = Questions.find({}).fetch()
+		return questions
 	}
-})
+});
 

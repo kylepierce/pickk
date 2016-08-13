@@ -1,5 +1,4 @@
 <template name="newUser">
-
  {{#contentFor "headerTitle"}}
 	<h1 class="title white-text-header" style="font-size: 1.2em;">
 		<i class="fa fa-diamond"></i>
@@ -12,20 +11,20 @@
 
 	{{#ionView}}
     {{#ionContent}}
-				<div style="margin-top: 10px"> 
+			<div class="container" style="margin-top: 10px"> 
 				{{> playerCardExample}}
-				{{>questionExample}}
-				</div>
+				{{#each q in questions}}
+					{{> eventQuestion q=q}}
+				{{/each}}
+			</div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="playerCardExample">
-	<div class="player-card" id="player">
-	  <div class="player-header">
-	  	<div  class="player-slider">
-			<span class="player-name">Joe McFly</span>
-
+	<div class="player-slider">
+  	<div class="slide-inside">
+			<span class="player-name">Benny Rodriguez</span>
 			<table>
 				<thead>
 					<td>AVG</td>
@@ -40,69 +39,76 @@
 					<td>.382</td>
 				</tr>
 			</table>
-
-			</div>
-	  </div>
+		</div>
   </div>
 </template>
-
+<!-- 
 <template name="questionExample">
-	<div class="container" id="normalCard">
-		<div class="container-item">
-	<div class="question-options slideInLeft">
-		<div>
+	<ul class="question-options slideInLeft">
+		<li class="option">
 			<input type="radio" disabled>
 			<label for="" class="play-option">
-			<img class="baseball-call-icon" src="/baseball-calls/Out.svg" >
-			<span class="play-text">Out</span> 
-			<span id="" class="multiplier">x 1.43</span>
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Out.svg" >
+				</span>
+				<span class="option-title">Out</span> 
+				<span id="" class="multiplier">x 1.43</span>
 			</label>
-		</div>
+		</li>
 
-		<div>
+		<li class="option">
 			<input type="radio" disabled>
 			<label for="" class="play-option">
-			<img class="baseball-call-icon" src="/baseball-calls/Walk.svg">
-			<span class="play-text">Walk</span> 
+			<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/Walk.svg">
+			</span>
+			<span class="option-title">Walk</span> 
 			<span id="" class="multiplier">x 2.27</span></label>
-		</div>
+		</li>
 
-		<div>
+		<li class="option">
 			<input type="radio" disabled>
 			<label for="" class="play-option">
 
-			<img class="baseball-call-icon" src="/baseball-calls/Single.svg">
-			<span class="play-text">Single</span> 
+			<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/Single.svg">
+			</span>
+			<span class="option-title">Single</span> 
 			<span id="" class="multiplier">x 2.46</span></label>
-		</div>
+		</li>
 
-		<div class="double">
+		<li class="option">
 			<input type="radio" name="play" required>
 			<label for="double" class="play-option ">
-			<img class="baseball-call-icon" src="/baseball-calls/Double.svg">
-			<span class="play-text ">Double</span> 
+			<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/Double.svg">
+			</span>
+			<span class="option-title ">Double</span> 
 			<span id="" class="multiplier">x 3.76</span></label>
-		</div>
-		<div>
+		</li>
+		<li class="option">
 			<input type="radio" disabled>
 			<label for="" class="play-option">
-			<img class="baseball-call-icon" src="/baseball-calls/Triple.svg">
-			<span class="play-text">Triple</span> 
+			<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/Triple.svg">
+			</span>
+			<span class="option-title">Triple</span> 
 			<span id="" class="multiplier">x 6.73</span></label>
-		</div>
+		</li>
 
-		<div>
+		<li class="option">
 			<input type="radio" disabled>
 			<label for="" class="play-option">
-			<img class="baseball-call-icon" src="/baseball-calls/Home Run.svg">
-			<span class="play-text">Home Run</span> 
+			<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/Home Run.svg">
+			</span>
+			<span class="option-title">Home Run</span> 
 			<span id="" class="multiplier">x 5.21</span></label>
-		</div>
-	</div>
-	</div>
-	</div>
-
+		</li>
+	</ul>
+ 
 </template>
+
 <template name="wagerExample">
 		<div style="margin-bottom:10px;">
 		<div>
@@ -132,4 +138,4 @@
 		</div>
 	</div>
 	<input class="submit-response button play-option button-assertive center" type="submit" disabled value="Submit">
-</template>
+</template> -->
