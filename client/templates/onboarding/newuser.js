@@ -12,15 +12,15 @@ Template.newUser.onRendered(function () {
 			},
 			{
 				title: "Select A Play",
-				content: "Depending on what happens in the game you get different options. You watch every game, so you know Joe will hit a double.<br><br><strong>Tap Double</strong>",
-				target: document.querySelector(".double"),
+				content: "Depending on what happens in the game you get different options. You watch every game, so you know The Jet will hit a double.<br><br><strong>Tap Double</strong>",
+				target: document.querySelector("#double"),
 				placement: "bottom",
 				showNextButton: false
 			},
 			{
 				title: "Multiplier",
 				content: "Each option has a real time multiplier. They change depending on the player, opposing team, and pitcher.",
-				target: document.querySelector(".double"),
+				target: document.querySelector("#double"),
 				placement: "top",
 				arrowOffset: "230"
 			},
@@ -34,7 +34,7 @@ Template.newUser.onRendered(function () {
 			{
 				title: "Wager",
 				content: "Select what wager you want for this play. <br><br><strong>Tap 500</strong>",
-				target: document.querySelector(".double"),
+				target: document.querySelector("#double"),
 				placement: "top",
 				yOffset: "50",
 				showNextButton: true,
@@ -99,8 +99,32 @@ Template.newUser.onRendered(function () {
 // 	}
 // });
 
-Template.newUser.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
+Template.exampleOptions.events({
+	'click #double': function (e, t) {
+		var $selected = $(e.currentTarget)
+		$selected.addClass('play-selected ten-spacing')
+		setInterval(function() {
+	    $('.play-selected').animate( { backgroundColor: 'red' }, 300)
+	    .animate( { backgroundColor: 'green' }, 300); 
+	   }, 1000);
+    var container = $('#wagers')[0]
+    console.log(container, $selected)
+    Blaze.render(Template.exampleWagers, container)
+	}
+});
+
+Template.exampleWagers.events({
+	'click #500': function (e, t) {
+		var $selected = $(e.currentTarget)
+		$selected.addClass('wager-selected')
+		var container = $('#submit-button')[0]
+    console.log(container, $selected)
+    Blaze.render(Template.exampleSubmit, container)
+	}
+});
+
+Template.exampleOptions.rendered = function() {
+
 };
 
 Template.newUser.helpers({

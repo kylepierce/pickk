@@ -111,7 +111,7 @@ Template.singleQuestion.helpers({
     }
   }
 });
-
+ 
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
     // console.log(this, e, t)
@@ -238,8 +238,9 @@ Template.binaryQuestion.helpers({
 Template.option.helpers({
   hasIcon: function (title) {
     var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
+    console.log(title)
     if (baseball.indexOf(title) !== -1){
-      return title
+      return true
     }
   }
 });

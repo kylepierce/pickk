@@ -8,17 +8,105 @@
     <strong>10000</strong>
   </h1>
  {{/contentFor}}
-
+ 
 	{{#ionView}}
     {{#ionContent}}
 			<div class="container" style="margin-top: 10px"> 
 				{{> playerCardExample}}
-				{{#each q in questions}}
-					{{> eventQuestion q=q}}
-				{{/each}}
+				{{> exampleOptions}}
 			</div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="exampleOptions">
+	<ul class="single-question animated fast slideInLeft">
+		<li class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Out.svg">
+				</span>
+				<span class="option-title">Out</span>
+				<span class="multiplier">x 1.43</span>
+			</div>
+		</li>
+		<li class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Walk.svg">
+				</span>
+				<span class="option-title">Walk</span>
+				<span class="multiplier">x 2.27</span>
+			</div>
+		</li>
+		<li class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Single.svg">
+				</span>
+				<span class="option-title">Single</span>
+				<span class="multiplier">x 2.46</span>
+			</div>
+		</li>
+		<li id="double" class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Double.svg">
+				</span>
+				<span class="option-title">Double</span>
+				<span class="multiplier">x 3.76</span>
+			</div>
+		</li>
+		<div id='wagers'></div>
+		<li class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Triple.svg">
+				</span>
+				<span class="option-title">Triple</span>
+				<span class="multiplier">x 6.73</span>
+			</div>
+		</li>
+		<li class="option" data-action="play-selected">
+			<div class="option-inner">
+				<span class="icon-container">
+					<img class="baseball-call-icon" src="/baseball-calls/Home Run.svg">
+				</span>
+				<span class="option-title">Home Run</span>
+				<span class="multiplier">x 5.21</span>
+			</div>
+		</li>
+	</ul>
+</template>
+
+<template name="exampleWagers">
+	<ul class="wagers">
+		<li class="wager" data-action=wager-selected>
+			<div class="wager-inner">50</div>
+		</li>
+		<li class="wager" data-action=wager-selected>
+			<div class="wager-inner">100</div>
+		</li>
+		<li class="wager" data-action=wager-selected>
+			<div class="wager-inner">250</div>
+		</li>
+		<li id="500" class="wager" data-action=wager-selected>
+			<div class="wager-inner">500</div>
+		</li>
+		<li class="wager" data-action=wager-selected>
+			<div class="wager-inner">1000</div>
+		</li>
+		<li class="wager" data-action=wager-selected>
+			<div class="wager-inner">2500</div>
+		</li>
+	</ul>
+	<div id="submit-button">
+		
+	</div>
+</template>
+
+<template name="exampleSubmit">
+	<button class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit (1880)</button>
 </template>
 
 <template name="playerCardExample">
