@@ -20,6 +20,13 @@ Template.home.helpers({
     var game = Games.findOne({});
     return game.football
   },
+  gameCoins: function (){
+    var gameId = Router.current().params.id
+
+    var userId = Meteor.userId();
+    var game = GamePlayed.findOne({gameId: gameId, userId: userId})
+    return game.coins
+  },  
   scoreMessage: function() {
     var user = Meteor.user();
     var notifications = user && user.pendingNotifications || [];
