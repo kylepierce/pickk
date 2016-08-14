@@ -11,7 +11,7 @@
  
 	{{#ionView}}
     {{#ionContent}}
-			<div class="container" style="margin-top: 10px"> 
+			<div class="container ten-spacing"> 
 				{{> playerCardExample}}
 				{{> exampleOptions}}
 			</div>
@@ -20,7 +20,7 @@
 </template>
 
 <template name="exampleOptions">
-	<ul class="single-question animated fast slideInLeft">
+	<ul class="single-question animated fast slideInLeft ten-spacing">
 		<li class="option" data-action="play-selected">
 			<div class="option-inner">
 				<span class="icon-container">
@@ -48,7 +48,7 @@
 				<span class="multiplier">x 2.46</span>
 			</div>
 		</li>
-		<li id="double" class="option" data-action="play-selected">
+		<li  class="option" data-action="play-selected">
 			<div class="option-inner">
 				<span class="icon-container">
 					<img class="baseball-call-icon" src="/baseball-calls/Double.svg">
@@ -57,7 +57,7 @@
 				<span class="multiplier">x 3.76</span>
 			</div>
 		</li>
-		<div id='wagers'></div>
+		
 		<li class="option" data-action="play-selected">
 			<div class="option-inner">
 				<span class="icon-container">
@@ -67,7 +67,7 @@
 				<span class="multiplier">x 6.73</span>
 			</div>
 		</li>
-		<li class="option" data-action="play-selected">
+		<li id="double" class="option" data-action="play-selected">
 			<div class="option-inner">
 				<span class="icon-container">
 					<img class="baseball-call-icon" src="/baseball-calls/Home Run.svg">
@@ -77,6 +77,8 @@
 			</div>
 		</li>
 	</ul>
+	<div id='wagers'></div>
+	<div id="triple"></div>
 </template>
 
 <template name="exampleWagers">
@@ -106,7 +108,7 @@
 </template>
 
 <template name="exampleSubmit">
-	<button class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit (1880)</button>
+	<button id="exampleSubmit" class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit (2605)</button>
 </template>
 
 <template name="playerCardExample">
