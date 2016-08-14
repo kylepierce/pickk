@@ -43,8 +43,9 @@ Template.chatNotification.helpers({
 	},
 	groupData: function(groupId) {
 		Meteor.subscribe('singleGroup', groupId);
-		return Groups.findOne({_id: groupId})
-	}
+		var group = Groups.findOne({_id: groupId})
+		return group
+	},
 });
 
 Template.chatReaction.helpers({

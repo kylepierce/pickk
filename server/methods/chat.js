@@ -80,7 +80,8 @@ Meteor.methods({
 						messageId: messageId, 
 						type: "mention",
 						senderId: author,
-						message: plainMessagePosted
+						message: plainMessagePosted,
+						groupId: groupId
 					}
 					
 					Meteor.call('pushInvite', plainMessagePosted, user._id)

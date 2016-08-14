@@ -67,3 +67,7 @@
   margin: 50px 0;
   text-align: center;
 }
+
+.item h3 {
+	white-space: initial!important;
+} 

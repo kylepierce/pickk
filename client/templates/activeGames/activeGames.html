@@ -37,16 +37,21 @@
   </a>
 </template>
 
-<template name="singleGameInfo">
-  <div class="single-game-shared single-game-info">
+<template name="singleGameInfo">  
+  {{#if baseball}}
     {{#if inProgress}}
-      {{> gameInProgressInfo game=game}}
+      <div class="single-game-shared single-game-info">
+        {{> gameInProgressInfo game=game}}
+      </div>
     {{/if}}
+  {{else}}
 
-    {{#if future}}
+  {{/if}}
+  {{#if future}}
+    <div class="single-game-shared single-game-info">
       {{> futureGameInfo game=game}}
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 </template>
 
 <template name="singleGameCTA">
@@ -58,7 +63,7 @@
 </template>
 
 <template name="gameInProgressInfo">
-  {{#if baseball}}
+  
     <div class="col-md-25 single-game-section">
       {{> inningDisplay inning=game.inning position=game.topOfInning}}
     </div>
@@ -71,7 +76,6 @@
     <div class="col-md-25 single-game-section">
       {{> count users=game.users }}
     </div>
-  {{else}}
 <!--     <div class="col-md-25 single-game-section">
       {{> down}}
     </div>
@@ -81,7 +85,6 @@
     <div class="col-md-25 single-game-section">
       
     </div> -->
-  {{/if}}
 </template>
 
 <template name="futureGameInfo">

@@ -92,9 +92,16 @@
 <template name="chatNotification">
 	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
-	    {{> userAvatar userId=_id}}
-	    <h3>@{{profile.username}} Mentioned You:</h3>
-	  {{/with}}
+		  {{> userAvatar userId=_id}}
+		{{/with}}
+		<h3>
+			{{#with user note.senderId}}
+			  @{{profile.username}} Mentioned You
+		  {{/with}} 
+		  {{#with groupData note.groupId}}
+		  	in {{name}}
+		  {{/with}}
+	  </h3>
 	  <p>{{note.message}}</p>
 	{{/ionItem}}	
 </template>

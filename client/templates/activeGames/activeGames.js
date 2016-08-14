@@ -72,7 +72,6 @@ Template.outDisplay.helpers({
 Template.count.helpers({
   userPlaying: function (players) {
     var user = Meteor.userId();
-    console.log("count", this, players)
     var exists = players.indexOf(user)
     if (!exists) return true
   },
@@ -108,14 +107,18 @@ Template.singleGameInfo.helpers({
     if (this.game.status === "scheduled"){
       return true
     }
+  },
+  baseball: function () {
+    console.log(this.game)
+    var football = this.game && this.game.football
+    if (!football) {
+      return true
+    }
   }
 });
 
 Template.gameInProgressInfo.helpers({
-  baseball: function () {
-    console.log(this.game)
-    return true
-  }
+
 });
 
 Template.inningDisplay.helpers({

@@ -1,11 +1,17 @@
 Template.chatRoom.created = function() {
   this.autorun(function() {
+    var userId = Meteor.userId()
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
     Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
     Meteor.subscribe("chatMessagesCount", groupId);
     Meteor.subscribe('findUsersInGroup', groupId);
+    Meteor.subscribe('usersGroups', userId)
     Meteor.subscribe('chatUsersList', groupId);
   }.bind(this));
+};
+
+Template.chatRoom.rendered = function() {
+    console.log(this.data); // you should see your passage object in the console
 };
 
 Template.chatOverview.events({
