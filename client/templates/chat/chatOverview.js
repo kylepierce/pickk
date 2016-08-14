@@ -293,7 +293,8 @@ Template._reaction.events({
 });
 
 Template._reactionToMessage.events({
-  'click button': function(event, template) {
+  'click button': function(e, t) {
+    console.log(e, t, this)
     var selected = $(event.currentTarget)
     var message = selected.attr("value")
     var currentUser = Meteor.userId()
@@ -302,7 +303,7 @@ Template._reactionToMessage.events({
     Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error) + " seconds before adding another reaction.",
           duration: 3000,
           backdrop: true
         })

@@ -95,6 +95,8 @@ Meteor.methods({
 		check(messagePosted, String);
 		check(messageId, String);
 
+		console.log(author, messagePosted, messageIds)
+
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -164,6 +166,7 @@ Meteor.methods({
 						messageId: messageId, 
 						type: "chatReaction",
 						senderId: author,
+						reaction: reaction,
 						message: chat.message
 					}
 		createPendingNotification(notifyObj);
