@@ -39,6 +39,14 @@ Template.activeGames.helpers({
   },
 });
 
+Template.activeGames.events({
+  'click [data-action=play]': function ( e, t ) {
+    var gameId = this.game._id
+    Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
+    Router.go('game.show', {id: gameId});
+  }
+});
+
 Template.outDisplay.helpers({
   outs: function (number) {
     var out = "<div class='out'></div>"
@@ -62,11 +70,13 @@ Template.outDisplay.helpers({
 });
 
 Template.count.helpers({
-  userPlaying: function (game) {
+  userPlaying: function (players) {
     var user = Meteor.userId();
-    var exists = game.indexOf(user)
+    console.log("count", this, players)
+    var exists = players.indexOf(user)
     if (!exists) return true
-  }
+  },
+  
 });
 
 Template.teamBlock.helpers({
@@ -79,6 +89,12 @@ Template.teamBlock.helpers({
       var color = "#134A8E"
     }
     return color
+  },
+  whoHasBall: function () {
+    return false
+  },
+  whoHasBall: function (){
+    console.log(this)
   }
 });
 
@@ -92,6 +108,29 @@ Template.singleGameInfo.helpers({
     if (this.game.status === "scheduled"){
       return true
     }
+  }
+});
+
+Template.gameInProgressInfo.helpers({
+  baseball: function () {
+    console.log(this.game)
+    return true
+  }
+});
+
+Template.inningDisplay.helpers({
+  grammer: function (inning) {
+    
+    if([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].indexOf(inning) >= 0) {
+      var inningGrammer = inning + "th"
+    } else if ([1].indexOf(inning) >= 0) {
+      var inningGrammer = inning + "st"
+    } else if ([2].indexOf(inning) >= 0) {
+      var inningGrammer = inning + "nd" 
+    } else if ([3].indexOf(inning) >= 0) {
+      var inningGrammer = inning + "rd"
+    } 
+    return inningGrammer
   }
 });
 

@@ -46,6 +46,11 @@
 	align-items: center;
 	-webkit-justify-content: center;
 	justify-content: center;
+	border-left: 1px solid white;
+}
+
+.single-game-section:first-child {
+	border-left: 0px;
 }
 
 .team-block{

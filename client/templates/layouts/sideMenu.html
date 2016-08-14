@@ -72,10 +72,12 @@
       {{> ionIcon icon='ios-cog-outline'}}
       Settings
     {{/ionItem}}
-
-    {{#ionItem iconLeft=true data-action="logout"}}
+    
+    <a href="/landing" data-action="logout">
+    {{#ionItem iconLeft=true }}
       {{> ionIcon icon='log-out'}}
       Logout
     {{/ionItem}}
+    </a>
   {{/ionList}}
 </template>

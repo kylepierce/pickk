@@ -8,6 +8,9 @@
 	padding: 10px;
   word-break: break-word;
   height: 75px;
+  white-space:pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 #chat-message-area {
@@ -30,7 +33,7 @@
 #chat-options {
   width:100%;
   float: left;
-  background-color: #009688;
+  background-color: #303E46;
   padding: 10px 0;
   text-align:center;
   display:flex;
@@ -116,4 +119,12 @@ div.content.overflow-scroll.has-header {
 
 .allow-chats {
   background-color: #F1C40F!important;
+}
+
+.option-dividers {
+  border-left: 1px solid white;
+}
+
+.option-dividers:first-child {
+  border: 0px;
 }

@@ -75,6 +75,7 @@ Meteor.methods({
 	},
 
 	'updateOneSignalToken': function (token) {
+		check(token, String);
 		// target device will be able to receive broadcast notifications but we can't send a message to it personally
 		if (Meteor.user()) {
 			Meteor.users.update(Meteor.userId(), {$set: {oneSignalToken: token}});

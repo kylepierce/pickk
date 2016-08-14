@@ -10,7 +10,7 @@ Template.mainLayout.rendered = function() {
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
-    Router.go("/")
+    Router.go("/landing")
 	},
   'click .item-icon-left': function (){
     IonSideMenu.snapper.close();

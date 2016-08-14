@@ -2,6 +2,7 @@ Meteor.methods({
 	'addChatMessage': function(author, messagePosted, groupId) {
 		check(author, String);
 		check(messagePosted, String);
+		check(messagePosted, Match.Maybe(String));
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");

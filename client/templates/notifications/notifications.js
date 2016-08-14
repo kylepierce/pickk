@@ -14,7 +14,7 @@ Template.notifications.helpers({
 });
 
 Template.notification.helpers({
-	item: function(type){
+	notif: function(type){
 		if(this.note.type === type){
 			return this.note
 		}
