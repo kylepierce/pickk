@@ -10,9 +10,9 @@ Template.chatRoom.created = function() {
   }.bind(this));
 };
 
-Template.chatRoom.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
+// Template.chatRoom.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
 
 Template.chatOverview.events({
   'click #all-chats': function() { 

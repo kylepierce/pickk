@@ -15,7 +15,6 @@
 				{{> singleGameInfo game=game}}
 			{{/each}}
 			<div id="notification-center" class="ten-spacing">
-				
 				<div class="single-notification">
 					{{#each game in games}}
 						{{> singleGameCard game=game}}
@@ -36,7 +35,6 @@
 
 			</div>
 			<div class="container ten-spacing">
-
 				{{#if isCommercial}}
 					{{#each question in commericalQuestions}}
 						{{> commericalQuestion q=question}}
@@ -47,9 +45,7 @@
 						{{> singleQuestion q=question}}
 					{{/each}}
 				{{/if}}
-
 			</div>
-
 			{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}

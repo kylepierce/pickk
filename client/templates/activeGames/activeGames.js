@@ -109,7 +109,6 @@ Template.singleGameInfo.helpers({
     }
   },
   baseball: function () {
-    console.log(this.game)
     var football = this.game && this.game.football
     if (!football) {
       return true

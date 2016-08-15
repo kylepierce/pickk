@@ -29,16 +29,21 @@ Template.home.rendered = function() {
     if (self.coinsDifference !== 0) {
       // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
       let interval = Meteor.setInterval(function () {
-          if (self.coinsDifference < 0) {
-            self.coinsVar.set(--self.coinsCurrent);
-          } else {
-            self.coinsVar.set(++self.coinsCurrent);
-          }
-
-          if (self.coinsCurrent === self.coinsFinal) {
+        if (self.coinsDifference < 0) {
+          self.coinsVar.set(self.coinsCurrent--);
+        } else {
+          self.coinsVar.set(self.coinsCurrent++);
+        }
+        if (self.coinsCurrent === self.coinsFinal) {
             Meteor.clearInterval(interval); // Stop the interval
-          }
-        }, 20);
+        }
+        // The counter can go up by a few thousand, this lets it jump to final result afte 1 second.
+        Meteor.setInterval( function(){
+          Meteor.clearInterval(interval);
+          var final = parseInt(GamePlayed.findOne().coins)
+          self.coinsVar.set(final)
+        }, 1000);
+      }, 0);
     }
   });
 
@@ -61,7 +66,7 @@ Template.home.rendered = function() {
 
       if (self.diamondsDifference !== 0) {
         // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
-        let interval = Meteor.setInterval(function () {
+        var interval = Meteor.setInterval(function () {
             if (self.diamondsDifference < 0) {
               self.diamondsVar.set(--self.diamondsCurrent);
             } else {
@@ -75,9 +80,7 @@ Template.home.rendered = function() {
       }
     });
   }
-};
 
-Template.home.rendered = function () {
   $('#notification-center').slick({
     arrows: false,
     infinite: false,
@@ -95,7 +98,6 @@ Template.home.helpers({
     return Games.find({}).fetch();
   },
   gameCoins: function () {
-
     return Template.instance().coinsVar.get();
   },
   diamonds: function () {
@@ -176,13 +178,11 @@ Template.commericalQuestion.events({
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
-    console.log(this, q, "event")
     if(q.atBatQuestion || q.event){
       return true
     }
   },
   liveQuestion: function (q) {
-    console.log(this, q, "live")
     var isCommerical = Games.findOne().commercial;
     var atBatQuestion = q && q.atBatQuestion
     var binaryChoice = q && q.binaryChoice
@@ -318,7 +318,6 @@ Template.binaryQuestion.helpers({
 Template.option.helpers({
   hasIcon: function (title) {
     var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
-    console.log(title)
     if (baseball.indexOf(title) !== -1){
       return true
     }
@@ -361,7 +360,6 @@ Template.submitButton.events({
     var userId = Meteor.userId()
     var userCoins = GamePlayed.find({userId: userId, gameId: q.gameId}).fetch();
     var hasEnoughCoins = userCoins[0].coins >= w
-    console.log(this, w, o, q, t)
     
     var c = {
       userId: userId,
