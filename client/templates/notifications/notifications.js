@@ -31,6 +31,7 @@ Template.groupNotification.helpers({
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
+		console.log(groupId)
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
 	},
@@ -109,6 +110,8 @@ Template.notificationOptions.events({
 	}, 
 	'click [data-action=share]': function (e, t) {
 		console.log(t)
+		// Popover to choose where to share
+		IonPopover.show('_sharePopover', t.data, e.currentTarget);
 	}, 
 	'click [data-action=group]': function (e, t) {
 		var groupId = t.data.groupId

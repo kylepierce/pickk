@@ -2,6 +2,7 @@ Template.chatRoom.created = function() {
   this.autorun(function() {
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
     Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
+    Meteor.subscribe('findThisUsersGroups', Meteor.userId())
     Meteor.subscribe("chatMessagesCount", groupId);
     Meteor.subscribe('findUsersInGroup', groupId);
     Meteor.subscribe('chatUsersList', groupId);

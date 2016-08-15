@@ -1,0 +1,17 @@
+<template name="_sharePopover">
+  {{#ionPopover}}
+    {{#ionList}}
+      {{#ionItem iconRight=true}}
+        {{> ionIcon class="reply-icon" icon='forward'}}
+        Global
+      {{/ionItem}}
+      
+      {{#each group in groups}}
+        {{#ionItem id=group._id name=group.name iconRight=true}}
+          {{> ionIcon class="reply-icon" icon='forward'}}
+          {{group.name}}
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+  {{/ionPopover}}
+</template>
