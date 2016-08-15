@@ -6,10 +6,6 @@
 				<form>
 				<div class="item item-divider">Name</div>
 				<label type="stacked" style="background-color: white;" class="item item-input item-stacked-label">
-					<span class="input-label">Group Id:</span>
-					<input type='text' label-type="stacked" id="groupId" value="{{groupId}}">
-				</label>
-				<label type="stacked" style="background-color: white;" class="item item-input item-stacked-label">
 					<span class="input-label">Group Display Name:</span>
 					<input type='text' label-type="stacked" id="groupName" value="{{groupName}}">
 				</label>
@@ -17,23 +13,23 @@
 					<span class="input-label">Group Description:</span>
 					<textarea rows="4" type='text' maxlength="200" label-type="stacked" id="groupDesc" value="{{desc}}"></textarea>
 				</label>
-                    <label type="stacked" style="background-clabe: white;" class="item item-input item-stacked-label">
-                        <span class="input-label">Group Avatar:</span>
-                        <div>
-                            {{#with group}}
-                                {{> groupAvatar}}
-                            {{/with}}
-                            <div class="loading" style="display: none;">
-                                <i class="fa fa-spinner fa-spin"></i>
-                            </div>
-                            <label style="display: inline-block; vertical-align: top">
-                                <span>Click to change avatar</span>
-                                <input type="file" name="avatar" style="display: none">
-                            </label>
-                        </div>
-                    </label>
+        <label type="stacked" style="background-clabe: white;" class="item item-input item-stacked-label">
+          <span class="input-label">Group Avatar:</span>
+          <div>
+            {{#with group}}
+              {{> groupAvatar}}
+            {{/with}}
+            <div class="loading" style="display: none;">
+              <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <label style="display: inline-block; vertical-align: top">
+              <span>Click to change avatar</span>
+              <input type="file" name="avatar" style="display: none">
+            </label>
+          </div>
+        </label>
 
-                    <br>
+        <br>
 				<div class="item item-divider">Display Settings</div>
 				
 				<div class="edit-radio" >
@@ -65,7 +61,7 @@
 				</button>
 				</form>				
 				</div>
-				</div>
+			</div>
     </div>
   {{/ionModal}}
 </template>
