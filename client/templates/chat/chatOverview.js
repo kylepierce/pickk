@@ -149,7 +149,7 @@ Template.singleMessage.events({
     }
     parms = {
       insertedTemplate: Template.chatOptions,
-      containerId: "chat-options",
+      containerId: "options",
       event: e,
       template: t,
       dataPath: t.data.i
@@ -174,37 +174,37 @@ Template.singleMessage.helpers({
   emojiIconSrc: function (item) {
     var reactionName = item.i.reaction
     switch(reactionName) {
-      case "[dead]":
+      case "dead":
           return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
         break;
-      case "[omg]":
+      case "omg":
           return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
         break;
-      case "[fire]":
+      case "fire":
           return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
         break;
-      case "[dying]":
+      case "dying":
           return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
         break;
-      case "[hell-yeah]":
+      case "hell-yeah":
           return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
         break;
-      case "[what]":
+      case "what":
           return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
         break;
-      case "[pirate]":
+      case "pirate":
           return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
         break;
-      case "[love]":
+      case "love":
           return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
         break;
-      case "[tounge]":
+      case "tounge":
           return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
         break;
-      case "[oh-no]":
+      case "oh-no":
           return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
         break;
-      case "[what-the-hell]":
+      case "what-the-hell":
           return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
         break;
     }
@@ -240,12 +240,13 @@ Template.chatOptions.events({
     var userName = user.profile.username
     $('[name=messageBox]').val("@" + userName + " ")
     $("#messageBox").focus()
-    var container = $('#chat-options')[0]
+    var container = $('#options')[0]
     container.remove();
   },
-  'click [data-ion-popover=_reactionToMessage]': function(){
-    var messageId = Template.instance().data._id
-    Session.set("reactToMessageId", messageId);
+  'click [data-action=react]': function(e, t){
+    // var messageId = Template.instance().data._id
+    IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
+    // Session.set("reactToMessageId", messageId);
   },
   'click [data-action=user]': function(event, template) {
     var userId = Template.instance().data.user
@@ -254,7 +255,7 @@ Template.chatOptions.events({
   'click [data-action=delete]': function(event, template) {
     var deletor = Meteor.userId();
     var messageId = Template.instance().data._id
-    var container = $('#chat-options')[0]
+    var container = $('#options')[0]
     container.remove();
     Meteor.call('deleteMessage', messageId, deletor)
   },
@@ -398,26 +399,30 @@ Template._reaction.events({
 });
 
 Template._reactionToMessage.events({
-  'click button': function(event, template) {
-    var selected = $(event.currentTarget)
-    var message = selected.attr("value")
+  'click button': function(e, t) {
     var currentUser = Meteor.userId()
-    var messageId = Session.get("reactToMessageId");
+    var message = e.currentTarget.value
+    var messageIdExists = this && this.messageId 
+    
+    if(messageIdExists){
+      var messageId = this.messageId
+    } else {
+      var messageId = this._id
+    }
 
     Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+          customTemplate: "Not so fast! Please wait " + error + " seconds before sending another message.",
           duration: 3000,
           backdrop: true
         })
       }
     });
     IonPopover.hide();
-    var container = $('#chat-options')[0]
+    var container = $('#options')[0]
     container.remove();
     $("#messageBox").val('');
-    Session.set("reactToMessageId", null);
   },
 });
 

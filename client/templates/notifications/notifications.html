@@ -89,13 +89,19 @@
 
 <template name="chatNotification">
 	{{#ionItem avatar=true }}
+		{{> userAvatar userId=note.senderId}}
+		<h3>
 		{{#with user note.senderId}}
-	    {{> userAvatar userId=_id}}
-	    <h3>@{{profile.username}} Mentioned You:</h3>
+			@{{profile.username}} Mentioned You
 	  {{/with}}
-	  <p>{{note.message}}</p>
 	  {{#with groupData note.groupId}}
 			in <strong>{{name}}</strong>
+		{{/with}}
+		</h3>
+
+	  <p>{{note.message}}</p>
+	  {{#with reactions note.messageId}}
+	  	{{> messageReactions reactions=this.reactions}}
 		{{/with}}
 	{{/ionItem}}	
 </template>
@@ -133,7 +139,7 @@
 	{{#ionItem avatar=true }}
 		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
 		{{#with user note.senderId}}
-	    <h3>{{profile.username}} reacted to your chat message:</h3>
+	    <h3>@{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
 	{{/ionItem}}	
@@ -171,7 +177,7 @@
 	      Reply
 	    </div>
 	    <div class="{{options}} actions-section" data-action="react">
-	      <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
+	      <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
 	      React
 	  	</div>
 	  {{/if}}

@@ -63,3 +63,8 @@ Meteor.publish("chatUsersAutocomplete", function(selector, options, collection) 
   return this.ready()
 });
 
+Meteor.publish('singleMessage', function(messageId){
+  check(messageId, String);
+  return Chat.find({_id: messageId})
+});
+

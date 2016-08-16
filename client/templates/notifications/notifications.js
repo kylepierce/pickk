@@ -6,7 +6,6 @@ Template.notifications.helpers({
 	}, 
 	noNotifications: function () {
 		var numberOfNotifications = this.notifications.length;
-		console.log(numberOfNotifications)
 		if (numberOfNotifications === 0){
 			return true
 		}
@@ -21,7 +20,6 @@ Template.notification.helpers({
 	},
 	noNotifications: function () {
 		var data = Template.instance()
-		console.log(this, data)
 	}
 });
 
@@ -31,7 +29,6 @@ Template.groupNotification.helpers({
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
-		console.log(groupId)
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
 	},
@@ -45,6 +42,10 @@ Template.chatNotification.helpers({
 	groupData: function(groupId) {
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
+	},
+	reactions: function(messageId){
+		Meteor.subscribe('singleMessage', messageId);
+		return Chat.findOne({_id: messageId});
 	}
 });
 
@@ -137,7 +138,7 @@ Template.notification.events({
 		}
 		parms = {
 			insertedTemplate: Template.notificationOptions,
-			containerId: "notification-options",
+			containerId: "options",
 		 	event: e,
 		 	template: t,
 		}
@@ -150,11 +151,9 @@ Template.notificationOptions.events({
 		console.log(t)
 	}, 
 	'click [data-action=react]': function (e, t) {
-		console.log(t, t.data)
-		IonPopover.show('_reactionToMessage', t.data)
+		IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
 	}, 
 	'click [data-action=share]': function (e, t) {
-		console.log(t)
 		// Popover to choose where to share
 		IonPopover.show('_sharePopover', t.data, e.currentTarget);
 	}, 
@@ -174,7 +173,7 @@ Template.notificationOptions.events({
 		Meteor.call('followUser', Meteor.userId(), senderId)
 	}, 
 	'click [data-action=read]': function(e, t){
-		$('#notification-options').remove();
+		$('#options').remove();
 		var notificationId = t.data._id
 		Meteor.call('removeNotification', notificationId);
 		sAlert.success("Maked as read" , {effect: 'slide', position: 'bottom', html: true});
@@ -215,7 +214,7 @@ Template.notificationOptions.helpers({
 	},
 	interaction: function () {
 		var note = Template.instance().data.type
-		var types = ["follower", "mention", "group"] 
+		var types = ["follower", "mention", "group", "chatReaction"] 
 		var exists = types.indexOf(note) !== -1
 		if(exists){
 			return true
@@ -250,17 +249,13 @@ Template.notificationOptions.helpers({
 
 Template.coinsNotification.helpers({
 	gameName: function (id) {
-		console.log(id)
 		Meteor.subscribe('singleGameData', id)
 		var game = Games.findOne({_id: id})
-		console.log(game)
 		return game.name
 	},
 	question: function (id) {
-		console.log(id)
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id})
-		console.log(question)
 		return question.que
 	}
 });

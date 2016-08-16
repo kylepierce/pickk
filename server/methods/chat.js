@@ -1,9 +1,6 @@
 Meteor.methods({
 	'addChatMessage': function(o) {
 		check(o, Object);
-
-		console.log(o)
-
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -24,10 +21,8 @@ Meteor.methods({
 		// if it is an award 
 		var sharableTypes = ["coins", "diamonds", "trophy"]
 		var sharable = sharableTypes.indexOf(o.type)
-		console.log(sharable, o.type)
 		if ( sharable >= 0 ) {
 			messageData['type'] = o.type
-			console.log(o)
 		}
 		if (o.type === "reaction"){
 			messageData['type'] = "reaction"
@@ -68,45 +63,46 @@ Meteor.methods({
 					break;
 			} 
 		}
-		// var messagePosted = o.message.replace(/<\/?[^>]+(>|$)/g, "").trim();
-		// console.log(messagePosted)
-		// var plainMessagePosted = messagePosted;
+		var messagePosted = o.message.replace(/<\/?[^>]+(>|$)/g, "").trim();
+		console.log(messagePosted)
 
-		// if (messagePosted == "" || messagePosted == null) {
-		// 	var messagePosted = "<i>Removed</i>"
-		// }
-		console.log(messageData)
+		if (messagePosted == "" || messagePosted == null) {
+			messageData['message'] = "<i>Removed</i>"
+		} else {
+			messageData['message'] = messagePosted
+		}
 		Chat.insert(messageData)
 
-		// var message = o.message
-		// console.log(message)
-		// var usernames = message.match(/\@[\w\d_]+/g);
-		// if (usernames) {
-		// 	for (var i = 0; i < usernames.length; i++) {
-		// 		var username = usernames[i].slice(1); // remove @
-		// 		var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
-		// 		if (user) {
-		// 			// Push notifications don't support HTML, so we'll have to use plainMessagePosted
-		// 			var notifyObj = {
-		// 				userId: user._id,
-		// 				messageId: messageId, 
-		// 				type: "mention",
-		// 				senderId: o.user,
-		// 				message: o.message,
-		// 				groupId: o.groupId
-		// 			}
+		var message = o.message
+
+		var usernames = message.match(/\@[\w\d_]+/g);
+		if (usernames) {
+			for (var i = 0; i < usernames.length; i++) {
+				var username = usernames[i].slice(1); // remove @
+				var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
+				if (user) {
+					// Push notifications don't support HTML, so we'll have to use plainMessagePosted
+					var notifyObj = {
+						userId: user._id,
+						messageId: messageData._id, 
+						type: "mention",
+						senderId: o.user,
+						message: o.message,
+						groupId: o.groupId
+					}
 					
-		// 			Meteor.call('pushInvite', o.message, user._id)
- 	// 				createPendingNotification(notifyObj)
-		// 		}
-		// 	}
-		// }
+					Meteor.call('pushInvite', o.message, user._id)
+ 					createPendingNotification(notifyObj)
+				}
+			}
+		}
 	},
 
 	'addReactionToMessage': function(author, messagePosted, messageId) {
 		check(author, String);
 		check(messagePosted, String);
 		check(messageId, String);
+		console.log(author, messagePosted, messageId)
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -117,9 +113,10 @@ Meteor.methods({
 		}
 
 		var timeCreated = new Date();
-		var reaction = messagePosted.slice(1, -1);
+		var reaction = messagePosted
 
 		var chat = Chat.findOne({_id: messageId});
+		console.log(chat, reaction)
 
 		var checkUser;
 		var lastCheckedKey = null;
