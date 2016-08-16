@@ -29,7 +29,7 @@ Meteor.methods({
 			list.push(a.userId)
 			var amount = parseInt(a.wager * a.multiplier);
 			var notifyObj = {
-				type: "score",
+				type: "coins",
 				userId: a.userId,
 				gameId: a.gameId,
 				questionId: a.questionId,

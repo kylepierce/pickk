@@ -38,15 +38,16 @@
 </template>
 
 <template name="singleGameInfo">
-  <div class="single-game-shared single-game-info">
-    {{#if inProgress}}
-      {{> gameInProgressInfo game=game}}
-    {{/if}}
-
-    {{#if future}}
-      {{> futureGameInfo game=game}}
-    {{/if}}
-  </div>
+  {{#if baseball}}
+    <div class="single-game-shared single-game-info">      
+      {{#if inProgress}}
+        {{> gameInProgressInfo game=game}}
+      {{/if}}
+    </div>
+  {{/if}}
+  {{#if future}}
+    {{> futureGameInfo game=game}}
+  {{/if}}
 </template>
 
 <template name="singleGameCTA">

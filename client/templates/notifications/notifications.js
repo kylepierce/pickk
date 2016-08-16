@@ -139,7 +139,7 @@ Template.notificationOptions.events({
 Template.notificationOptions.helpers({
 	options: function(){
 		var note = Template.instance().data.type
-		var twoOption = ["score", "diamonds", "badge", "trophy"] 
+		var twoOption = ["coins", "diamonds", "badge", "trophy"] 
 		var threeOption = ["follower", "group"]
 		var fourOption = ["mention"]
 
@@ -163,7 +163,7 @@ Template.notificationOptions.helpers({
 	},
 	award: function () {
 		var note = Template.instance().data.type
-		var types = ["score", "diamonds", "badge", "trophy"] 
+		var types = ["coins", "diamonds", "badge", "trophy"] 
 		if(types.indexOf(note) !== -1){
 			return true
 		}

@@ -1,5 +1,6 @@
 Meteor.methods({
 	'userJoinsAGame': function (userId, gameId) {
+		console.log(userId, gameId)
 		check(userId, String)
 		check(gameId, String)
 		var gameExists = GamePlayed.findOne({gameId: gameId, userId: userId}, {fields: {_id: 1, gameId: 1}})

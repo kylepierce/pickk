@@ -11,7 +11,7 @@ Template._sharePopover.events({
 		var groupName = this.name
 		var currentUser = Meteor.user();
 
-		if (t.data.type === "score" || t.data.type === "diamonds"){
+		if (t.data.type === "coins" || t.data.type === "diamonds"){
 			var value = t.data.value
 			var message = "+!Meow" + "I earned " + value + " " + t.data.type + "!"
 

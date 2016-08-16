@@ -39,14 +39,6 @@ Template.activeGames.helpers({
   },
 });
 
-Template.activeGames.events({
-  'click [data-action=play]': function ( e, t ) {
-    var gameId = this.game._id
-    Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
-    Router.go('game.show', {id: gameId});
-  }
-});
-
 Template.outDisplay.helpers({
   outs: function (number) {
     var out = "<div class='out'></div>"
@@ -72,7 +64,6 @@ Template.outDisplay.helpers({
 Template.count.helpers({
   userPlaying: function (players) {
     var user = Meteor.userId();
-    console.log("count", this, players)
     var exists = players.indexOf(user)
     if (!exists) return true
   },
@@ -93,9 +84,6 @@ Template.teamBlock.helpers({
   whoHasBall: function () {
     return false
   },
-  whoHasBall: function (){
-    console.log(this)
-  }
 });
 
 Template.singleGameInfo.helpers({
@@ -108,13 +96,23 @@ Template.singleGameInfo.helpers({
     if (this.game.status === "scheduled"){
       return true
     }
+  },
+  baseball: function () {
+    console.log("is this baseball?", this.game.football)
+    var football = this.game && this.game.football
+    if (!football){
+      return true
+    }
   }
 });
 
 Template.gameInProgressInfo.helpers({
   baseball: function () {
-    console.log(this.game)
-    return true
+    console.log(this.game.football)
+    var football = this.game && this.game.football
+    if (!football){
+      return true
+    }
   }
 });
 
@@ -175,6 +173,7 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
+    console.log(gameId)
     Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
     Router.go('game.show', {id: gameId});
   }

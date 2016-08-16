@@ -49,8 +49,8 @@
 	{{#if notif "follower"}}
 		{{> newFollower}}
 	{{/if}}
-	{{#if notif "score"}}
-		{{> scoreNotification}}
+	{{#if notif "coins"}}
+		{{> coinsNotification}}
 	{{/if}}
 	{{#if notif "diamonds"}}
 		{{> diamondNotification}}
@@ -94,9 +94,9 @@
 	{{/ionItem}}	
 </template>
 
-<template name="scoreNotification">
+<template name="coinsNotification">
 	{{#ionItem}}
-		<p>You won {{note.value}} coins!</p>
+		<p>You won {{note.value}} coins! {{note.gameId}} {{note.questionId}}</p>
 	{{/ionItem}}
 </template>
 
