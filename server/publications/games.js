@@ -32,3 +32,13 @@ Meteor.publish('pendingQuestions', function(gameId) {
   var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);
 });
+
+Meteor.publish('singleGameData', function(id) {
+  check(id, String);
+  return Games.find({_id: id}, {fields: {name: 1}});
+});
+
+Meteor.publish('singleQuestion', function(id) {
+  check(id, String);
+  return Questions.find({_id: id})
+})

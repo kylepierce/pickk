@@ -203,5 +203,19 @@ Template.notificationOptions.helpers({
 	},
 });
 
-
-
+Template.coinsNotification.helpers({
+	gameName: function (id) {
+		console.log(id)
+		Meteor.subscribe('singleGameData', id)
+		var game = Games.findOne({_id: id})
+		console.log(game)
+		return game.name
+	},
+	question: function (id) {
+		console.log(id)
+		Meteor.subscribe('singleQuestion', id)
+		var question = Questions.findOne({_id: id})
+		console.log(question)
+		return question.que
+	}
+});

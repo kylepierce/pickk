@@ -95,8 +95,14 @@
 </template>
 
 <template name="coinsNotification">
-	{{#ionItem}}
-		<p>You won {{note.value}} coins! {{note.gameId}} {{note.questionId}}</p>
+	{{#ionItem class="notification-has-image"}}
+		<span class="notification-image">
+			<div class="outer-coin">
+				<div class="inner-coin"></div>
+			</div>
+		</span>
+		<h2>You earned {{note.value}} coins!</h2> 
+		<p>{{question note.questionId}} ({{gameName note.gameId}})</p>
 	{{/ionItem}}
 </template>
 
