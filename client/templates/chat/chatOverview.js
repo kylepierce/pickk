@@ -1,5 +1,6 @@
 Template.chatRoom.created = function() {
   this.autorun(function() {
+    var userId = Meteor.userId()
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
     Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
     Meteor.subscribe('findThisUsersGroups', Meteor.userId())
@@ -308,7 +309,7 @@ Template._groupChats.events({
 });
 
 Template._reaction.events({
-  'click button': function(event, template) {
+  'click button': function(e, t) {
     var selected = $(event.currentTarget)
     var message = selected.attr("value")
     var currentUser = Meteor.userId()
@@ -316,7 +317,7 @@ Template._reaction.events({
     Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error.Math.ceil(error)) + " seconds before adding another reaction.",
           duration: 3000,
           backdrop: true
         })

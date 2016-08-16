@@ -70,7 +70,10 @@
 	{{#if notif "matchupNotification"}}
 		{{> matchupNotification}}
 	{{/if}}
-</template>
+	{{#if notif "chatReaction"}}
+		{{> chatReaction}}
+	{{/if}}
+ </template>
 
 <template name="groupNotification">
 	{{#ionItem avatar=true }}
@@ -88,9 +91,12 @@
 	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
-	    <h3>{{profile.username}} Mentioned You:</h3>
+	    <h3>@{{profile.username}} Mentioned You:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
+	  {{#with groupData note.groupId}}
+			in <strong>{{name}}</strong>
+		{{/with}}
 	{{/ionItem}}	
 </template>
 
@@ -120,6 +126,16 @@
 	   	<h2>{{profile.username}}</h2> 
 	   	<p>started following you!</p>
 	  {{/with}}
+	{{/ionItem}}	
+</template>
+
+<template name="chatReaction">
+	{{#ionItem avatar=true }}
+		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
+		{{#with user note.senderId}}
+	    <h3>{{profile.username}} reacted to your chat message:</h3>
+	  {{/with}}
+	  <p>{{note.message}}</p>
 	{{/ionItem}}	
 </template>
 

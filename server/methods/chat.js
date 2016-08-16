@@ -80,7 +80,8 @@ Meteor.methods({
 						messageId: messageId, 
 						type: "mention",
 						senderId: author,
-						message: plainMessagePosted
+						message: plainMessagePosted,
+						groupId: groupId
 					}
 					
 					Meteor.call('pushInvite', plainMessagePosted, user._id)
@@ -155,6 +156,16 @@ Meteor.methods({
 			// else, Create a new array and add the object
 			chat.reactions[reaction] = [reactionObj];
 		}
+
+		var notifyObj = {
+			userId: chat.user,
+			messageId: messageId, 
+			type: "chatReaction",
+			senderId: author,
+			reaction: reaction,
+			message: chat.message
+		}
+		createPendingNotification(notifyObj);
 
 		// Update the collection with the changes in reactions object
 		Chat.update({_id: messageId}, {$set: {'reactions': chat.reactions}});

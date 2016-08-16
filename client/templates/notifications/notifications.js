@@ -48,6 +48,50 @@ Template.chatNotification.helpers({
 	}
 });
 
+Template.chatReaction.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+	emojiIconSrc: function (reactionName) {
+	 switch(reactionName) {
+	   case "dead":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
+	     break;
+	   case "omg":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+	     break;
+	   case "fire":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+	     break;
+	   case "dying":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
+	     break;
+	   case "hell-yeah":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
+	     break;
+	   case "what":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
+	     break;
+	   case "pirate":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
+	     break;
+	   case "love":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
+	     break;
+	   case "tounge":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
+	     break;
+	   case "oh-no":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
+	     break;
+	   case "what-the-hell":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
+	     break;
+	 	}
+	}
+});
+
 Template.trophyNotification.helpers({
 	trophy: function (trophyId) {
 		return Trophies.findOne({_id: trophyId})
@@ -106,7 +150,8 @@ Template.notificationOptions.events({
 		console.log(t)
 	}, 
 	'click [data-action=react]': function (e, t) {
-		console.log(t)
+		console.log(t, t.data)
+		IonPopover.show('_reactionToMessage', t.data)
 	}, 
 	'click [data-action=share]': function (e, t) {
 		console.log(t)
@@ -139,7 +184,7 @@ Template.notificationOptions.events({
 Template.notificationOptions.helpers({
 	options: function(){
 		var note = Template.instance().data.type
-		var twoOption = ["coins", "diamonds", "badge", "trophy"] 
+		var twoOption = ["coins", "diamonds", "badge", "trophy", "chatReaction"] 
 		var threeOption = ["follower", "group"]
 		var fourOption = ["mention"]
 

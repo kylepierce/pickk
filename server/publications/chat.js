@@ -47,8 +47,7 @@ Meteor.publish('chatUsersList', function(groupId) {
 });
 
 // Mention another player. Switch to load latest users first
-Meteor.publish("chatUsersAutocomplete", function(selector, options, collection, fourth) {
-  console.log(selector, options, collection, fourth)
+Meteor.publish("chatUsersAutocomplete", function(selector, options, collection) {
   check(selector, Match.Maybe(Object));
   check(options, Match.Maybe(Object));
   check(collection, String);
