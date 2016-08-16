@@ -42,7 +42,11 @@ Template.chatRoom.events({
       var currentUser = Meteor.userId()
       var groupId = Session.get('chatGroup')
       var message = e.currentTarget.value;
-
+      var chatObj = {
+        user: currentUser, 
+        message: message, 
+        groupId: groupId
+      }
       if (message.length <= 2) {
         IonLoading.show({
           customTemplate: 'Message is too short',
@@ -56,7 +60,7 @@ Template.chatRoom.events({
           backdrop: true
         });
       } else {
-        Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+        Meteor.call('addChatMessage', chatObj, function(error) {
           if (error) {
             IonLoading.show({
               customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
@@ -76,6 +80,11 @@ Template.chatRoom.events({
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
     var message = e.target.messageBox.value;
+    var chatObj = {
+        user: currentUser, 
+        message: message, 
+        groupId: groupId
+      }
 
     if (message.length <= 2) {
       IonLoading.show({
@@ -90,7 +99,7 @@ Template.chatRoom.events({
         backdrop: true
       });
     } else {
-      Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+      Meteor.call('addChatMessage', chatObj, function(error) {
         if (error) {
           IonLoading.show({
             customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
@@ -147,6 +156,54 @@ Template.singleMessage.events({
     }
     displayOptions( parms )
   },
+});
+
+Template.singleMessage.helpers({
+  type: function (type) {
+    console.log(this, type)
+    if(this.i.type === type){
+      return this
+    }
+  },
+  emojiIconSrc: function (item) {
+    console.log(item.i.reaction)
+    var reactionName = item.i.reaction
+    switch(reactionName) {
+      case "[dead]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
+        break;
+      case "[omg]":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+        break;
+      case "[fire]":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+        break;
+      case "[dying]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
+        break;
+      case "[hell-yeah]":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
+        break;
+      case "[what]":
+          return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
+        break;
+      case "[pirate]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
+        break;
+      case "[love]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
+        break;
+      case "[tounge]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
+        break;
+      case "[oh-no]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
+        break;
+      case "[what-the-hell]":
+          return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
+        break;
+    }
+  }
 });
 
 Template.chatOptions.helpers({
@@ -310,14 +367,21 @@ Template._groupChats.events({
 
 Template._reaction.events({
   'click button': function(e, t) {
-    var selected = $(event.currentTarget)
+    var selected = $(e.currentTarget)
     var message = selected.attr("value")
+    console.log(message)
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
-    Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+    var chatObj = {
+      user: currentUser, 
+      reaction: message, 
+      groupId: groupId,
+      type: "reaction"
+    }
+    Meteor.call('addChatMessage', chatObj, function(error) {
       if (error) {
         IonLoading.show({
-          customTemplate: "Not so fast! Please wait " + Math.ceil(error.Math.ceil(error)) + " seconds before adding another reaction.",
+          customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before adding another reaction.",
           duration: 3000,
           backdrop: true
         })

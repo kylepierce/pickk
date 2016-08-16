@@ -54,7 +54,15 @@
       {{> userAvatar userId=_id alreadySubscribed=true}}
       <h2>{{username}}</h2>
     {{/with}}
-    <p>{{{messageText i}}}</p>
+    {{#if type "reaction"}}
+      <img class="reaction-message" src="{{emojiIconSrc this}}">
+    {{/if}}
+    {{#if type "award"}}
+      <p>{{messageText i}}</p>
+    {{else}}
+      <p>{{messageText i}}</p>
+    {{/if}}
+    
     {{> messageReactions reactions=i.reactions}}
   {{/ionItem}}  
 </template>

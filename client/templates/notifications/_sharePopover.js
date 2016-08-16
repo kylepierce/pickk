@@ -24,8 +24,12 @@ Template._sharePopover.events({
 			groupId = null
 			groupName = "Global"
 		} 
-
-    Meteor.call('addChatMessage', currentUser._id, message, groupId, function(error) {
+	  var chatObj = {
+      user: currentUser, 
+      message: message, 
+      groupId: groupId
+    }
+    Meteor.call('addChatMessage', chatObj, function(error) {
         if (error) {
           IonLoading.show({
             customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",

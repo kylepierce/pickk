@@ -1,27 +1,38 @@
 Meteor.methods({
-	'addChatMessage': function(author, messagePosted, groupId) {
-		check(author, String);
-		check(messagePosted, String);
-		check(groupId, Match.Maybe(String));
+	'addChatMessage': function(o) {
+		check(o, Object);
+
+		console.log(o)
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
 
-		if (author !== Meteor.userId()) {
+		if (o.user !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized", "Cannot post message an another user");
 		}
 
 		var timeCreated = new Date();
 		var id = Random.id();
-		var messagePosted = messagePosted.replace(/<\/?[^>]+(>|$)/g, "").trim();
-		var plainMessagePosted = messagePosted;
-		var code = messagePosted.slice(0,6)
-		if (code == "+!Meow") {
-				var message = messagePosted.slice(7, -1)
-				var messagePosted = "<b>" + message + "</b>"
-		} else if (messagePosted[0] == "[") {
-			switch (messagePosted) {
+		var messageData = {
+			_id: id,
+			dateCreated: timeCreated,
+			group: o.groupId,
+			user: o.user,
+			message: o.message
+		}
+		// if it is an award 
+		var sharableTypes = ["coins", "diamonds", "trophy"]
+		var sharable = sharableTypes.indexOf(o.type)
+		
+		if ( sharable > 0 ) {
+			messageData['type'] = o.type
+			console.log(o)
+		}
+		if (o.type === "reaction"){
+			messageData['type'] = "reaction"
+			messageData['reaction'] = o.reaction
+			switch (o.reaction) {
 				case "[dead]":
 					var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>"
 					break;
@@ -56,39 +67,40 @@ Meteor.methods({
 					var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>"
 					break;
 			} 
-		} else if (messagePosted == "" || messagePosted == null) {
-			var messagePosted = "<i>Removed</i>"
 		}
+		// var messagePosted = o.message.replace(/<\/?[^>]+(>|$)/g, "").trim();
+		// console.log(messagePosted)
+		// var plainMessagePosted = messagePosted;
 
-		var messageId = Chat.insert({
-			_id: id,
-			dateCreated: timeCreated,
-			group: groupId,
-			user: author,
-			message: messagePosted
-		});
+		// if (messagePosted == "" || messagePosted == null) {
+		// 	var messagePosted = "<i>Removed</i>"
+		// }
+		console.log(messageData)
+		Chat.insert(messageData)
 
-		var usernames = messagePosted.match(/\@[\w\d_]+/g);
-		if (usernames) {
-			for (var i = 0; i < usernames.length; i++) {
-				var username = usernames[i].slice(1); // remove @
-				var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
-				if (user) {
-					// Push notifications don't support HTML, so we'll have to use plainMessagePosted
-					var notifyObj = {
-						userId: user._id,
-						messageId: messageId, 
-						type: "mention",
-						senderId: author,
-						message: plainMessagePosted,
-						groupId: groupId
-					}
+		// var message = o.message
+		// console.log(message)
+		// var usernames = message.match(/\@[\w\d_]+/g);
+		// if (usernames) {
+		// 	for (var i = 0; i < usernames.length; i++) {
+		// 		var username = usernames[i].slice(1); // remove @
+		// 		var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
+		// 		if (user) {
+		// 			// Push notifications don't support HTML, so we'll have to use plainMessagePosted
+		// 			var notifyObj = {
+		// 				userId: user._id,
+		// 				messageId: messageId, 
+		// 				type: "mention",
+		// 				senderId: o.user,
+		// 				message: o.message,
+		// 				groupId: o.groupId
+		// 			}
 					
-					Meteor.call('pushInvite', plainMessagePosted, user._id)
- 					createPendingNotification(notifyObj)
-				}
-			}
-		}
+		// 			Meteor.call('pushInvite', o.message, user._id)
+ 	// 				createPendingNotification(notifyObj)
+		// 		}
+		// 	}
+		// }
 	},
 
 	'addReactionToMessage': function(author, messagePosted, messageId) {
