@@ -244,9 +244,7 @@ Template.chatOptions.events({
     container.remove();
   },
   'click [data-action=react]': function(e, t){
-    // var messageId = Template.instance().data._id
     IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
-    // Session.set("reactToMessageId", messageId);
   },
   'click [data-action=user]': function(event, template) {
     var userId = Template.instance().data.user
@@ -375,7 +373,6 @@ Template._reaction.events({
   'click button': function(e, t) {
     var selected = $(e.currentTarget)
     var message = selected.attr("value")
-    console.log(message)
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
     var chatObj = {

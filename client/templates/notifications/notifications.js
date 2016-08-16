@@ -6,6 +6,7 @@ Template.notifications.helpers({
 	}, 
 	noNotifications: function () {
 		var numberOfNotifications = this.notifications.length;
+		console.log(numberOfNotifications, this)
 		if (numberOfNotifications === 0){
 			return true
 		}
@@ -40,8 +41,10 @@ Template.chatNotification.helpers({
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
-		Meteor.subscribe('singleGroup', groupId);
-		return Groups.findOne({_id: groupId})
+		if (groupId !== undefined){
+			Meteor.subscribe('singleGroup', groupId);
+			return Groups.findOne({_id: groupId})
+		}
 	},
 	reactions: function(messageId){
 		Meteor.subscribe('singleMessage', messageId);
@@ -249,13 +252,17 @@ Template.notificationOptions.helpers({
 
 Template.coinsNotification.helpers({
 	gameName: function (id) {
-		Meteor.subscribe('singleGameData', id)
-		var game = Games.findOne({_id: id})
-		return game.name
+		console.log(id, this)
+		if (id !== undefined){
+			Meteor.subscribe('singleGameData', id)
+			var game = Games.findOne({_id: id})
+			console.log(game)
+			return game
+		}
 	},
 	question: function (id) {
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id})
-		return question.que
+		return question
 	}
 });

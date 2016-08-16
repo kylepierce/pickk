@@ -114,7 +114,7 @@
 			</div>
 		</span>
 		<h2>You earned {{note.value}} coins!</h2> 
-		<p>{{question note.questionId}} ({{gameName note.gameId}})</p>
+		<p>{{#with question note.questionId}} {{que}} {{/with}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
 	{{/ionItem}}
 </template>
 
