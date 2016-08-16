@@ -160,13 +160,18 @@ Template.singleMessage.events({
 
 Template.singleMessage.helpers({
   type: function (type) {
-    console.log(this, type)
     if(this.i.type === type){
       return this
     }
   },
+  award: function () {
+    var awardTypes = ["coins", "diamonds", "trophy"]
+    var award = awardTypes.indexOf(this.i.type)
+    if(award >= 0){
+      return true
+    }
+  },
   emojiIconSrc: function (item) {
-    console.log(item.i.reaction)
     var reactionName = item.i.reaction
     switch(reactionName) {
       case "[dead]":

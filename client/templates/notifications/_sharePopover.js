@@ -13,22 +13,24 @@ Template._sharePopover.events({
 
 		if (t.data.type === "coins" || t.data.type === "diamonds"){
 			var value = t.data.value
-			var message = "+!Meow" + "I earned " + value + " " + t.data.type + "!"
+			var message = "I earned " + value + " " + t.data.type + "!"
 
 		} else if (t.data.type === "trophy" || t.data.type === "badge"){
-			var message = "+!Meow" + t.data.message
-			console.log("Trophy or badge")
+			var message = t.data.message
 		}
 
 		if(!groupId){
 			groupId = null
 			groupName = "Global"
 		} 
-	  var chatObj = {
-      user: currentUser, 
+
+		var chatObj = {
+			type: t.data.type,
+      user: currentUser._id, 
       message: message, 
-      groupId: groupId
+      groupId: groupId,
     }
+
     Meteor.call('addChatMessage', chatObj, function(error) {
         if (error) {
           IonLoading.show({

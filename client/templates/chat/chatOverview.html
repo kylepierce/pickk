@@ -57,10 +57,10 @@
     {{#if type "reaction"}}
       <img class="reaction-message" src="{{emojiIconSrc this}}">
     {{/if}}
-    {{#if type "award"}}
-      <p>{{messageText i}}</p>
+    {{#if award}}
+      <p><strong>{{{i.message}}}</strong></p>
     {{else}}
-      <p>{{messageText i}}</p>
+      <p>{{{messageText i}}}</p>
     {{/if}}
     
     {{> messageReactions reactions=i.reactions}}

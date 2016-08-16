@@ -24,8 +24,8 @@ Meteor.methods({
 		// if it is an award 
 		var sharableTypes = ["coins", "diamonds", "trophy"]
 		var sharable = sharableTypes.indexOf(o.type)
-		
-		if ( sharable > 0 ) {
+		console.log(sharable, o.type)
+		if ( sharable >= 0 ) {
 			messageData['type'] = o.type
 			console.log(o)
 		}
