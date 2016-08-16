@@ -41,7 +41,7 @@
 
 <template name="messageBox">
   <form id="chat-message-area">
-    {{> inputAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
+    {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
     <div class="col-md-33 chat-buttons option-dividers" data-action="mention">Mention</div>
     <div class="col-md-33 chat-buttons option-dividers" data-ion-popover="_reaction">React</div>
     <button tabindex=2 id="chat-submit" class="col-md-33 button option-dividers" type="submit">Send</button>

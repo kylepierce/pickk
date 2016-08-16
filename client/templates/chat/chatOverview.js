@@ -30,19 +30,51 @@ Template.chatOverview.helpers({
 });
 
 Template.chatRoom.events({
-  'keyup input': function(e, t){
+  'keyup textarea': function(e, t){
     var length = e.currentTarget.value.length
     if (length < 3){
       $('#chat-submit').removeClass('allow-chats')
     } else if ( length >= 4){
       $('#chat-submit').addClass('allow-chats')
     }
+    if (e.which == 13 && ! e.shiftKey) {
+      var currentUser = Meteor.userId()
+      var groupId = Session.get('chatGroup')
+      var message = e.currentTarget.value;
+
+      if (message.length <= 2) {
+        IonLoading.show({
+          customTemplate: 'Message is too short',
+          duration: 1500,
+          backdrop: true
+        });
+      } else if (message.length >= 151) {
+        IonLoading.show({
+          customTemplate: "<h4>Ain't Nobody Got Time for Your Novel.</h4> ;) Shorten Your Messsage! (Think Twitter Length)",
+          duration: 1500,
+          backdrop: true
+        });
+      } else {
+        Meteor.call('addChatMessage', currentUser, message, groupId, function(error) {
+          if (error) {
+            IonLoading.show({
+              customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+              duration: 3000,
+              backdrop: true
+            })
+          } else {
+            IonKeyboard.close()
+            $("#messageBox").val('');
+          }
+        });
+      }
+    }
   },
-  'submit form': function(event) {
-    event.preventDefault();
+  'submit form': function(e) {
+    e.preventDefault();
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
-    var message = event.target.messageBox.value;
+    var message = e.target.messageBox.value;
 
     if (message.length <= 2) {
       IonLoading.show({
@@ -64,9 +96,11 @@ Template.chatRoom.events({
             duration: 3000,
             backdrop: true
           })
+        } else {
+            IonKeyboard.close()
+            $("#messageBox").val('');
         }
       });
-      $("#messageBox").val('');
     }
   },
   'click [data-action=mention]': function(){
