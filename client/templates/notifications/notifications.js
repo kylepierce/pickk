@@ -151,7 +151,15 @@ Template.notification.events({
 
 Template.notificationOptions.events({
 	'click [data-action=reply]': function (e, t) {
-		console.log(t)
+		console.log(e,t,this)
+		IonPopover.show('_replyToMessage', t.data, e.currentTarget)
+	  var senderId = t.data.senderId
+    var user = Meteor.users.findOne({_id: senderId});
+    var userName = user.profile.username
+    $('[name=messageBox]').val("@" + userName + " ")
+    $("#messageBox").focus()
+    var container = $('#options')[0]
+    container.remove();
 	}, 
 	'click [data-action=react]': function (e, t) {
 		IonPopover.show('_reactionToMessage', t.data, e.currentTarget)

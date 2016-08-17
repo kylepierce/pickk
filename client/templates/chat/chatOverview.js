@@ -27,97 +27,7 @@ Template.chatOverview.helpers({
       var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
       return group.name
     }
-  }
-});
-
-Template.chatRoom.events({
-  'keyup textarea': function(e, t){
-    var length = e.currentTarget.value.length
-    if (length < 3){
-      $('#chat-submit').removeClass('allow-chats')
-    } else if ( length >= 4){
-      $('#chat-submit').addClass('allow-chats')
-    }
-    if (e.which == 13 && ! e.shiftKey) {
-      var currentUser = Meteor.userId()
-      var groupId = Session.get('chatGroup')
-      var message = e.currentTarget.value;
-      var chatObj = {
-        user: currentUser, 
-        message: message, 
-        groupId: groupId
-      }
-      if (message.length <= 2) {
-        IonLoading.show({
-          customTemplate: 'Message is too short',
-          duration: 1500,
-          backdrop: true
-        });
-      } else if (message.length >= 151) {
-        IonLoading.show({
-          customTemplate: "<h4>Ain't Nobody Got Time for Your Novel.</h4> ;) Shorten Your Messsage! (Think Twitter Length)",
-          duration: 1500,
-          backdrop: true
-        });
-      } else {
-        Meteor.call('addChatMessage', chatObj, function(error) {
-          if (error) {
-            IonLoading.show({
-              customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
-              duration: 3000,
-              backdrop: true
-            })
-          } else {
-            IonKeyboard.close()
-            $("#messageBox").val('');
-          }
-        });
-      }
-    }
-  },
-  'submit form': function(e) {
-    e.preventDefault();
-    var currentUser = Meteor.userId()
-    var groupId = Session.get('chatGroup')
-    var message = e.target.messageBox.value;
-    var chatObj = {
-        user: currentUser, 
-        message: message, 
-        groupId: groupId
-      }
-
-    if (message.length <= 2) {
-      IonLoading.show({
-        customTemplate: 'Message is too short',
-        duration: 1500,
-        backdrop: true
-      });
-    } else if (message.length >= 151) {
-      IonLoading.show({
-        customTemplate: "<h4>Ain't Nobody Got Time for Your Novel.</h4> ;) Shorten Your Messsage! (Think Twitter Length)",
-        duration: 1500,
-        backdrop: true
-      });
-    } else {
-      Meteor.call('addChatMessage', chatObj, function(error) {
-        if (error) {
-          IonLoading.show({
-            customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
-            duration: 3000,
-            backdrop: true
-          })
-        } else {
-            IonKeyboard.close()
-            $("#messageBox").val('');
-        }
-      });
-    }
-  },
-  'click [data-action=mention]': function(){
-    $("#messageBox").focus()
-    var currentMessage = $("#messageBox").val()
-    $("#messageBox").val(currentMessage + " @")
-  },  
+  } 
 });
 
 Template.singleMessage.events({
@@ -257,6 +167,114 @@ Template.chatOptions.events({
     container.remove();
     Meteor.call('deleteMessage', messageId, deletor)
   },
+});
+
+Template.messageBox.events({
+  'keyup textarea': function(e, t){
+    e.preventDefault();
+    console.log(e, t, this)    
+    // Check if the message is longer than 3 characters
+    var length = e.currentTarget.value.length
+    if (length < 3){
+      $('#chat-submit').removeClass('allow-chats')
+    } else if ( length >= 4){
+      // If its long enough make the submit box light up.
+      $('#chat-submit').addClass('allow-chats')
+    }
+
+    // If the user uses the return button submit the chat.
+    if (e.which == 13 && ! e.shiftKey) {
+      var currentUser = Meteor.userId()
+      // There are two places to submit chats
+      if (this.type === "mention"){
+        var groupId = this.groupId
+      } else {
+        var groupId = Session.get('chatGroup')
+      }
+
+      var message = e.currentTarget.value;
+      var chatObj = {
+        user: currentUser, 
+        message: message, 
+        groupId: groupId
+      }
+      if (message.length <= 2) {
+        IonLoading.show({
+          customTemplate: 'Message is too short',
+          duration: 1500,
+          backdrop: true
+        });
+      } else if (message.length >= 151) {
+        IonLoading.show({
+          customTemplate: "<h4>Ain't Nobody Got Time for Your Novel.</h4> ;) Shorten Your Messsage! (Think Twitter Length)",
+          duration: 1500,
+          backdrop: true
+        });
+      } else {
+        Meteor.call('addChatMessage', chatObj, function(error) {
+          if (error) {
+            IonLoading.show({
+              customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+              duration: 3000,
+              backdrop: true
+            })
+          } else {
+            IonKeyboard.close()
+            $("#messageBox").val('');
+          }
+        });
+      }
+    }
+  },
+  'submit form': function(e, t) {
+    e.preventDefault();
+    console.log(e, t, this)
+    var currentUser = Meteor.userId()
+    // There are two places to submit chats
+    if (this.type === "mention"){
+      var groupId = this.groupId
+    } else {
+      var groupId = Session.get('chatGroup')
+    }
+    var message = e.target.messageBox.value;
+    var chatObj = {
+        user: currentUser, 
+        message: message, 
+        groupId: groupId
+      }
+
+    if (message.length <= 2) {
+      IonLoading.show({
+        customTemplate: 'Message is too short',
+        duration: 1500,
+        backdrop: true
+      });
+    } else if (message.length >= 151) {
+      IonLoading.show({
+        customTemplate: "<h4>Ain't Nobody Got Time for Your Novel.</h4> ;) Shorten Your Messsage! (Think Twitter Length)",
+        duration: 1500,
+        backdrop: true
+      });
+    } else {
+      Meteor.call('addChatMessage', chatObj, function(error) {
+        if (error) {
+          IonLoading.show({
+            customTemplate: "Not so fast! Please wait " + Math.ceil(error.details.timeToReset / 1000) + " seconds before sending another message.",
+            duration: 3000,
+            backdrop: true
+          })
+        } else {
+            IonKeyboard.close()
+            $("#messageBox").val('');
+        }
+      });
+    }
+  },
+  'click [data-action=mention]': function(){
+    $("#messageBox").focus()
+    var currentMessage = $("#messageBox").val()
+    $("#messageBox").val(currentMessage + " @")
+  },  
 });
 
 Template.messageBox.helpers({

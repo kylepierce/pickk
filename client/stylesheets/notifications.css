@@ -17,6 +17,10 @@
 	text-overflow: normal;
 }
 
+.chat-popover {
+	width: 95%;
+}
+
 /*#notification-options {
   width:100%;
   float: left;
