@@ -1,43 +1,37 @@
+.full-landing {
+	height: 100%;
+	background-color: #37474f; 
+}
+
 .intro {
-	text-align: center;
 	margin-top: 25px;
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
 }
 
-.intro form {
-	overflow: auto;
+.cta {
+	width: 48%;
 }
 
-.intro input {
-	font-size: 1.25em;
-	margin-bottom: 10px;
-	border: none;
-	padding: 10px;
-	line-height: 1.5em;
-	-webkit-appearance: none;
+.register {
+	font-weight: 500;
+	margin-left: 2%;
 }
 
-.intro input[type="submit"]{
-	width: 100%;
-	margin-top: 0px;
-	background-color: #2ecc71;
-	border: none;
-	font-size: 1.2em;
+.cta-fed33e {
+	background-color: #fee345;
+	color: black;
+	border: 1px solid #fed33e;
+}
+
+.cta-2b1d4d {
+	background-color: #2b1d4d;
 	color: white;
-	float: right;
+	border: 1px solid #2b1d4d;	
 }
 
-.thanks-message {
-	width: 50%;
-  margin: 15px;
-  text-align: center;
-  padding: 37px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid;
-
+.cta-26ad68 {
+	background-color: #26ad68;
+	color: white;
+	border: 1px solid #26ad68;	
 }
 
 button.at-social-btn i {
@@ -47,7 +41,7 @@ button.at-social-btn i {
 }
 
 .landing-bg {
-	background-color: #f2ebda;
+	background-color: #F5F5F5;
 }
 
 .landing-image {
@@ -90,12 +84,17 @@ button.at-social-btn i {
 
 #landing h1 {
 	font-family: 'open sans';
-	font-size: 2rem;
+	font-size: 1.8rem;
+	font-weight: 600;
+	color: #212121;
 }
 
 #landing p {
 	font-family: 'lato';
-
+	color: #212121;
+	font-size: 1.25rem;
+	padding: 0 10%;
+	line-height: 2.5rem
 }
 
 .login {

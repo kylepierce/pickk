@@ -19,8 +19,11 @@ Template.sideMenuContent.events({
     event.preventDefault();
     var userId = Meteor.userId()
     var username = Meteor.user().profile.username
-    var url = "pick.co/download/?utm_campaign=menu&utm_content=" + username
-    
+    username = username.toLowerCase()
+    var customUrl = "pickk.co/download/?utm_campaign=menu&utm_content=" + username
+    var options = {
+      message: "Love Sports? Predict What Happens Next With Pickk! " + customUrl
+    }
     // Analytics
     analytics.track("Invite Friend", {
       userId: userId,
@@ -28,10 +31,7 @@ Template.sideMenuContent.events({
     });
 
     if (Meteor.isCordova) {
-      window.plugins.socialsharing.shareWithOptions({
-        message: Meteor.settings.public.share.message,
-        url: url,
-      });
+      window.plugins.socialsharing.shareWithOptions(options);
     }
   } 
 });

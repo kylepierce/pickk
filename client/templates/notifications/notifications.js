@@ -6,7 +6,6 @@ Template.notifications.helpers({
 	}, 
 	noNotifications: function () {
 		var numberOfNotifications = this.notifications.length;
-		console.log(numberOfNotifications, this)
 		if (numberOfNotifications === 0){
 			return true
 		}
@@ -151,7 +150,6 @@ Template.notification.events({
 
 Template.notificationOptions.events({
 	'click [data-action=reply]': function (e, t) {
-		console.log(e,t,this)
 		IonPopover.show('_replyToMessage', t.data, e.currentTarget)
 	  var senderId = t.data.senderId
     var user = Meteor.users.findOne({_id: senderId});
@@ -260,11 +258,9 @@ Template.notificationOptions.helpers({
 
 Template.coinsNotification.helpers({
 	gameName: function (id) {
-		console.log(id, this)
 		if (id !== undefined){
 			Meteor.subscribe('singleGameData', id)
 			var game = Games.findOne({_id: id})
-			console.log(game)
 			return game
 		}
 	},

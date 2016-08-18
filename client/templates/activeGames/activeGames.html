@@ -13,7 +13,7 @@
           {{> heroImage item=item}}
         {{/each}}
       </div>
-
+      <div class="item item-divider" style="border: 0">Today's Games</div>
       <div class="container ten-spacing">
         {{#each game in games}}
           <div class="complete-game-card" data-action="play"> 
@@ -38,16 +38,16 @@
 </template>
 
 <template name="singleGameInfo">
-  {{#if baseball}}
-    <div class="single-game-shared single-game-info">
+  <div class="single-game-shared single-game-info">
+    {{#if baseball}}
       {{#if inProgress}}
         {{> gameInProgressInfo game=game}}
       {{/if}}
-    </div>
-  {{/if}}
-  {{#if future}}
-    {{> futureGameInfo game=game}}
-  {{/if}}
+    {{/if}}
+    {{#if future}}
+      {{> futureGameInfo game=game}}
+    {{/if}}
+  </div>
 </template>
 
 <template name="singleGameCTA">

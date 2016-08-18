@@ -171,8 +171,7 @@ Template.chatOptions.events({
 
 Template.messageBox.events({
   'keyup textarea': function(e, t){
-    e.preventDefault();
-    console.log(e, t, this)    
+    e.preventDefault();   
     // Check if the message is longer than 3 characters
     var length = e.currentTarget.value.length
     if (length < 3){
@@ -220,6 +219,7 @@ Template.messageBox.events({
             })
           } else {
             IonKeyboard.close()
+            IonPopover.hide()
             $("#messageBox").val('');
           }
         });
@@ -228,7 +228,6 @@ Template.messageBox.events({
   },
   'submit form': function(e, t) {
     e.preventDefault();
-    console.log(e, t, this)
     var currentUser = Meteor.userId()
     // There are two places to submit chats
     if (this.type === "mention"){
@@ -265,6 +264,7 @@ Template.messageBox.events({
           })
         } else {
             IonKeyboard.close()
+            IonPopover.hide()
             $("#messageBox").val('');
         }
       });
