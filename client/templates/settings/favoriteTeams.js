@@ -62,6 +62,7 @@ var moveNextStep = function () {
   var step = stepsToDo.pop();
   if (step) {
     currentStep.set('favorite' + step + 'Teams'); 
+    $('.header-text').text('Teams');
   } else {
     // End of steps
     if (Meteor.user().profile.isOnboarded) {
