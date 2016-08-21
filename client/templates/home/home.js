@@ -44,6 +44,25 @@ Template.home.helpers({
   questions: function () {
     return Questions.find({}, {limit: 1}).fetch();
   },
+  noQuestions: function () {
+    var questions = Questions.find({}).count(); 
+    if (questions === 0 ){
+      return true
+    }
+  }
+});
+
+Template.home.events({
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/leaderboard/'+ $game)
+  },
+  'click [data-action=previous-answers]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/history/'+ $game)
+  }, 
 });
 
 Template.commericalQuestion.helpers({
