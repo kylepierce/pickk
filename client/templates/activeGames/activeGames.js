@@ -15,7 +15,7 @@ Template.activeGames.helpers({
     return Hero.find({}).fetch()
   },
   games: function ( ) {
-    return Games.find({}).fetch();
+    return Games.find({live: true}, {sort: {}}).fetch();
   },
   gameClass: function () {
     return "game-item-" + this['status'];
@@ -62,12 +62,12 @@ Template.outDisplay.helpers({
 });
 
 Template.count.helpers({
-  userPlaying: function (players) {
-    var user = Meteor.userId();
-    var exists = players.indexOf(user)
-    if (!exists) return true
-  },
-  
+  count: function () {
+    var gameId = this.gameId
+    Meteor.subscribe('singleAtBat', gameId)
+    return AtBat.findOne({gameId: gameId})
+    
+  }
 });
 
 Template.teamBlock.helpers({
@@ -107,7 +107,6 @@ Template.singleGameInfo.helpers({
 
 Template.gameInProgressInfo.helpers({
   baseball: function () {
-    console.log(this.game.football)
     var football = this.game && this.game.football
     if (!football){
       return true
@@ -172,7 +171,6 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
-    console.log(gameId)
     Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
     Router.go('game.show', {id: gameId});
   }

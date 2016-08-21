@@ -28,6 +28,9 @@ Template.home.helpers({
   player: function () {
     return AtBat.findOne()
   },
+  // gameCompleted: function () {
+  //   console.log(this)
+  // },
   isCommercial: function (){
     var isCommerical = Games.findOne().commercial;
     if (isCommerical) {
@@ -45,7 +48,6 @@ Template.home.helpers({
 
 Template.commericalQuestion.helpers({
   binary: function (q) {
-    console.log(this, q)
     if(q.binaryChoice === true){
       return true
     }
@@ -53,8 +55,7 @@ Template.commericalQuestion.helpers({
 });
 
 Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) {
-    // console.log(this, e, t)    
+  'click [data-action=pickk]': function (e, t) { 
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
     var displayOptions = function ( o ) {
@@ -62,7 +63,6 @@ Template.commericalQuestion.events({
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -96,13 +96,11 @@ Template.commericalQuestion.events({
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
-    console.log(this, q, "event")
     if(q.atBatQuestion || q.event){
       return true
     }
   },
   liveQuestion: function (q) {
-    console.log(this, q, "live")
     var isCommerical = Games.findOne().commercial;
     var atBatQuestion = q && q.atBatQuestion
     var binaryChoice = q && q.binaryChoice
@@ -114,7 +112,6 @@ Template.singleQuestion.helpers({
  
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
-    // console.log(this, e, t)
     $('.play-selected').removeClass('play-selected ten-spacing')
     $(e.currentTarget).addClass('play-selected ten-spacing')
     var displayOptions = function ( o ) {
@@ -122,7 +119,6 @@ Template.singleQuestion.events({
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      // console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -152,16 +148,15 @@ Template.singleQuestion.events({
     }
     displayOptions( parms )
   },
-  'click [data-action=wager-selected]': function (e, t) {
-    // console.log(this, e, t)    
+  'click [data-action=wager-selected]': function (e, t) {  
     $('.wager-selected').removeClass('wager-selected')
     $(e.currentTarget).addClass('wager-selected')
+    Session.set('lastWager', this.w);
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      // console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -238,12 +233,19 @@ Template.binaryQuestion.helpers({
 Template.option.helpers({
   hasIcon: function (title) {
     var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
-    console.log(title)
     if (baseball.indexOf(title) !== -1){
       return true
     }
   }
 });
+
+Template.wagers.rendered = function () {
+  var wagerArray = [50, 100, 250, 500, 1000, 2500]
+  var lastWager = Session.get('lastWager');
+  var position = wagerArray.indexOf(lastWager)
+  var wager = $('[value=' + lastWager + ']' ).click();
+};
+
 
 Template.wagers.helpers({
   wagers: function () {
@@ -281,7 +283,6 @@ Template.submitButton.events({
     var userId = Meteor.userId()
     var userCoins = GamePlayed.find({userId: userId, gameId: q.gameId}).fetch();
     var hasEnoughCoins = userCoins[0].coins >= w
-    console.log(this, w, o, q, t)
     
     var c = {
       userId: userId,

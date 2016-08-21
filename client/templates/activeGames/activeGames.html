@@ -70,7 +70,7 @@
       {{> playersOnBase base=game.playersOnBase}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> count users=game.users }}
+      {{> count gameId=game._id }}
     </div>
   {{else}}
 <!--     <div class="col-md-25 single-game-section">
@@ -92,11 +92,9 @@
 </template>
 
 <template name="count">
-  {{#if userPlaying users}}
-    Playing
-  {{else}}
-    <strong>Join</strong>
-  {{/if}} 
+  {{#with count}}
+    <span class="inning">{{ballCount}} - {{strikeCount}}</span>
+  {{/with}}
 </template>
 
 <template name="outDisplay">
@@ -136,9 +134,9 @@
 <template name="singleGameCard">
   <ul class="single-game-card">
 
-    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
-
     {{> teamBlock id=game.away.id abbr=game.away.abbr name=game.away.name runs=game.scoring.away.runs }}
+
+    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
 
   </ul>
 </template>

@@ -36,6 +36,9 @@
 
 			</div>
 			<div class="container ten-spacing">
+				{{#if gameCompleted}}
+					Game completed
+				{{/if}}
 
 				{{#if isCommercial}}
 					{{#each question in commericalQuestions}}
@@ -124,7 +127,7 @@
 </template>
 
 <template name="wager">
-	<li class="wager" data-action=wager-selected>
+	<li class="wager" data-action="wager-selected" value="{{w}}">
 		<div class="wager-inner">{{w}}</div>
 	</li>
 </template>
