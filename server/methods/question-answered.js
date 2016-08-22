@@ -63,27 +63,24 @@ Meteor.methods({
 		// Update question with the user who have answered.
 		Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
 
-		// Finally award or whatever
-
 		// Live game questions remove coins and give activity diamonds
 		if (c.type === "live" || c.type === "atBat"){
 			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
 			var selector = {userId: c.userId, gameId: c.gameId}
-			var modify = {$inc: {coins: -c.wager}}
+			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
 
 			var gameName = Games.findOne({_id: c.gameId}).name;
-			
-			//Increase counter by 1
-			Meteor.users.update({_id: c.userId}, {$inc: {"profile.queCounter": +1}})
-			var counter = Meteor.users.findOne(c.userId).profile.queCounter
+			var counter = GamePlayed.findOne(selector).queCounter
+
 			var diamondExchange = {
 				userId: c.userId, 
 				counter: counter, 
 				gameId: c.gameId,
 				gameName: gameName
 			}
+
 			// Award diamonds if they have been active
 			Meteor.call('activityForDiamonds', diamondExchange)
 		} 
@@ -91,6 +88,10 @@ Meteor.methods({
 		// Free pickks give coins and adds a notification
 		else if (c.type === "free pickk"){
 			var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
+
+			var selector = {userId: c.userId, gameId: c.gameId}
+			var modify = {$inc: {coins: +c.wager}}
+			GamePlayed.update(selector, modify);
 
 		  var notifyObj = {
 		  	type: "score",
@@ -106,17 +107,17 @@ Meteor.methods({
 
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
-			var notifyObj = {
-				userId: c.userId,
-				type: "diamonds",
+			var o = {
+				userId: c.userId, 
+				gameId: c.gameId,
 				questionId: c.questionId,
+				gameName: c.gameName,
 				value: 5,
+				source: "Daily Pickks"
 			}
 
-			createPendingNotification(notifyObj)
-
 			//Give user a diamond for answering
-			Meteor.call('awardDiamonds', c.userId, c.gameId, 5);
+			Meteor.call('awardDiamonds', o);
 		}
 	},
 })

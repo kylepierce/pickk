@@ -1,12 +1,7 @@
 <template name="home">
 	{{> homeLayoutHeader}}
 	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header" style="font-size: 1.2em;">
-			<i class="fa fa-diamond"></i>
-		  <strong>{{currentUser.profile.diamonds}}</strong> 
-		  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
-    <strong>{{gameCoins}}</strong>
-		</h1>
+		{{> singleGameAwards}}
 	{{/contentFor}}
 
   {{#ionView}}
@@ -68,6 +63,15 @@
 			{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="singleGameAwards">
+	<h1 class="title white-text-header" style="font-size: 1.2em;">
+		<i class="fa fa-diamond"></i>
+	  <strong>{{diamonds}}</strong> 
+	  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
+  <strong>{{gameCoins}}</strong>
+	</h1>	
 </template>
 
 <template name="commericalQuestion">

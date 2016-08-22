@@ -12,7 +12,18 @@ Template.home.rendered = function () {
   });
 };
 
+Template.home.onCreated = function () {
+  var instance = Template.instance();
+  instance.somevar = new ReactiveVar(10);
+  console.log("there should be something here", instance)
+}
+
 Template.home.helpers({
+  diamonds: function () {
+    console.log("I exist")
+
+    return 1
+  },
   gameInfo: function () {
     return Games.find({}).fetch();
   },
@@ -67,6 +78,15 @@ Template.home.events({
     var $game = Router.current().params.id
     Router.go('/history/'+ $game)
   }, 
+});
+
+Template.singleGameAwards.helpers({
+  gameCoins: function () {
+    return GamePlayed.findOne().coins;
+  },
+  diamonds: function () {
+    return GamePlayed.findOne().diamonds;
+  }
 });
 
 Template.commericalQuestion.helpers({

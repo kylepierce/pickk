@@ -37,15 +37,16 @@ Meteor.methods({
 		check(o, Object);
 		
 		var value = parseInt(o.value)
-
     o.type = "diamonds"
 
 	  if (!o.message) {
 	  	o.message = "You Earned " + value + " Diamonds!"
 	  }
 
+	  // Add coins to gameId or week
+	  GamePlayed.update({userId: o.userId, gameId: o.gameId}, {$inc: {diamonds: + value}})
+	  
 	  createPendingNotification(o)
-	  Meteor.users.update({_id: o.userId}, {$inc: {"profile.diamonds": + value}});
 	},
 
 	'coinMachine': function(game) {
