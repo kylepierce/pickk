@@ -21,12 +21,16 @@ Template.singleAnswer.helpers({
 		}
 	},
 	title: function ( option ){
+		if (option === "Removed" || option === "deleted") {
+			return "Removed"
+		}
 		var options = this.q.options
 		var selected = options[option]
 		return selected.title
 	},
 	result: function (){
 		if (this.q.outcome){
+			console.log(this.q.outcome)
 			return this.q.outcome
 		} else {
 			return this.q.play

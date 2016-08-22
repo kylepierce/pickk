@@ -47,13 +47,11 @@ Template.home.helpers({
     var currentUserId = Meteor.userId()
     var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
     var query = Questions.find(selector, {limit: 1}).fetch();
-    console.log("query", query) 
     return query
   },
   noQuestions: function () {
     var currentUserId = Meteor.userId()
     var questions = Questions.find({active: true, usersAnswered: {$nin: [currentUserId]}}).count();
-    console.log(questions)
     if (questions === 0 ){
       return true
     }
@@ -63,12 +61,10 @@ Template.home.helpers({
 Template.home.events({
   'click [data-action=game-leaderboard]': function(event, template){
     var $game = Router.current().params.id
-    console.log($game)
     Router.go('/leaderboard/'+ $game)
   },
   'click [data-action=previous-answers]': function(event, template){
     var $game = Router.current().params.id
-    console.log($game)
     Router.go('/history/'+ $game)
   }, 
 });

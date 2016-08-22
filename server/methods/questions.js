@@ -232,23 +232,23 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Questions.update({_id: questionId}, {$set: {active: false, play: "deleted"}});
+		Questions.update({_id: questionId}, {$set: {active: false, outcome: "Removed"}});
 
-		function awardPointsBack(answer) {
+		function awardPointsBack(a) {
 			// Update users coins
-			var amount = parseInt(answer.wager)
-			var userId = answer.userId
-			var gameId = answer.gameId
+			var amount = parseInt(a.wager)
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
 
-			GamePlayed.update({userId: userId, gameId: gameId}, {$inc: {coins: amount}});
+			GamePlayed.update({userId: a.userId, gameId: a.gameId}, {$inc: {coins: amount}});
 
 		  var notifyObj = {
-		  	userId: userId,
-				type: "score",
+		  	userId: a.userId,
+				type: "coins",
+				source: "removed",
+				questionId: questionId,
 				message: scoreMessage,
-				amount: amount,
-				gameId: gameId,
+				value: amount,
+				gameId: a.gameId,
 		  }
 
 		  createPendingNotification(notifyObj)
@@ -256,107 +256,114 @@ Meteor.methods({
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
+});
 
 // Remove Coins from the people who answered it "correctly", the answer changed.
-	'unAwardPoints': function(questionId, oldAnswered) {
-		check(questionId, String);
-		check(oldAnswered, String);
 
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
 
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
 
-		var question = Questions.findOne({"_id": questionId});
 
-		function unAwardPoints(answer) {
-			// Adjust multiplier based on when selected.
+	// 'unAwardPoints': function(questionId, oldAnswered) {
+	// 	check(questionId, String);
+	// 	check(oldAnswered, String);
 
-			var amount = parseInt(answer.wager * answer.multiplier);
+	// 	if (!Meteor.userId()) {
+ //      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+	// 	}
 
-			// Update users coins
-			var user = answer.userId
-			var game = answer.gameId
-			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
-		}
+	// 	if (Meteor.user().profile.role !== "admin") {
+ //      throw new Meteor.Error(403, "Unauthorized");
+	// 	}
 
-		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
-	},
+	// 	var question = Questions.findOne({"_id": questionId});
 
-	'unAwardPointsForDelete': function(questionId, oldAnswered) {
-		check(questionId, String);
-		check(oldAnswered, String);
+	// 	function unAwardPoints(answer) {
+	// 		// Adjust multiplier based on when selected.
 
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
+	// 		var amount = parseInt(answer.wager * answer.multiplier);
 
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
+	// 		// Update users coins
+	// 		var user = answer.userId
+	// 		var game = answer.gameId
+	// 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
+	// 	}
 
-		Questions.update(questionId, {$set: {active: false, play: "deleted"}});
+	// 	Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
+	// },
 
-		var question = Questions.findOne({"_id": questionId});
 
-		function unAwardPoints(answer) {
-			// Adjust multiplier based on when selected.
-			var amount = parseInt(answer.wager * answer.multiplier);
-			var scoreMessage = "Play overturned bummer :( " + amount + " Coins!"
-			var user = answer.userId
-			var game = answer.gameId
-			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
+	// 'unAwardPointsForDelete': function(questionId, oldAnswered) {
+	// 	check(questionId, String);
+	// 	check(oldAnswered, String);
 
-		  var notifyObj = {
-		  	userId: user,
-				type: "score",
-				message: scoreMessage,
-				amount: amount,
-				gameId: game,
-		  }
+	// 	if (!Meteor.userId()) {
+ //      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+	// 	}
 
-		  createPendingNotification(notifyObj)
-		}
+	// 	if (Meteor.user().profile.role !== "admin") {
+ //      throw new Meteor.Error(403, "Unauthorized");
+	// 	}
 
-		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
-	},
+	// 	Questions.update(questionId, {$set: {active: false, play: "deleted"}});
 
-	'awardInitalCoins': function(questionId) {
-		check(questionId, String);
+	// 	var question = Questions.findOne({"_id": questionId});
 
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-		}
+	// 	function unAwardPoints(answer) {
+	// 		// Adjust multiplier based on when selected.
+	// 		var amount = parseInt(answer.wager * answer.multiplier);
+	// 		var scoreMessage = "Play overturned. Bummer :(  Here are your " + amount + " Coins!"
+	// 		var user = answer.userId
+	// 		var game = answer.gameId
+	// 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
 
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
+	// 	  var notifyObj = {
+	// 	  	userId: user,
+	// 			type: "coins",
+	// 			message: scoreMessage,
+	// 			questionId: ,
+	// 			value: ,
+	// 			amount: amount,
+	// 			gameId: game,
+	// 	  }
 
-		var question = Questions.findOne({"_id": questionId});
+	// 	  createPendingNotification(notifyObj)
+	// 	}
 
-		function awardPointsBack(answer) {
-			// Update users coins
-			var amount = parseInt(answer.wager)
-			var userId = answer.userId
-			var scoreMessage = "Play had removed. Here are your " + amount + " coins"
-			var user = answer.userId
-			var game = answer.gameId
-			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
+	// 	Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
+	// },
 
-		  var notifyObj = {
-		  	userId: user,
-				type: "score",
-				message: scoreMessage,
-				amount: amount,
-				gameId: game,
-		  }
+	// 	'awardInitalCoins': function(questionId) {
+	// 	check(questionId, String);
 
-		  createPendingNotification(notifyObj)
-		}
+	// 	if (!Meteor.userId()) {
+ //      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+	// 	}
 
-		Answers.find({questionId: questionId}).forEach(awardPointsBack);
-	}
-});
+	// 	if (Meteor.user().profile.role !== "admin") {
+ //      throw new Meteor.Error(403, "Unauthorized");
+	// 	}
+
+	// 	var question = Questions.findOne({"_id": questionId});
+
+	// 	function awardPointsBack(answer) {
+	// 		// Update users coins
+	// 		var amount = parseInt(answer.wager)
+	// 		var userId = answer.userId
+	// 		var scoreMessage = "Play had removed. Here are your " + amount + " coins"
+	// 		var user = answer.userId
+	// 		var game = answer.gameId
+	// 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: amount}});
+
+	// 	  var notifyObj = {
+	// 	  	userId: user,
+	// 			type: "coins",
+	// 			message: scoreMessage,
+	// 			amount: amount,
+	// 			gameId: game,
+	// 	  }
+
+	// 	  createPendingNotification(notifyObj)
+	// 	}
+
+	// 	Answers.find({questionId: questionId}).forEach(awardPointsBack);
+	// }

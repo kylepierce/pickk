@@ -14,7 +14,6 @@
     <h1 class="title white-text-header">Notifications</h1>
   {{/contentFor}}
 
-
 <!-- Filter notifications by type.    
 	{{#contentFor "headerButtonRight"}}
     <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
@@ -50,7 +49,9 @@
 		{{> newFollower}}
 	{{/if}}
 	{{#if notif "coins"}}
-		{{> coinsNotification}}
+		{{#ionItem class="notification-has-image"}}
+			{{> coinsNotification}}
+		{{/ionItem}}
 	{{/if}}
 	{{#if notif "diamonds"}}
 		{{#ionItem class="notification-has-image"}}
@@ -111,15 +112,13 @@
 </template>
 
 <template name="coinsNotification">
-	{{#ionItem class="notification-has-image"}}
-		<span class="notification-image">
-			<div class="outer-coin">
-				<div class="inner-coin"></div>
-			</div>
-		</span>
-		<h2>You earned {{note.value}} coins!</h2> 
-		<p>{{#with question note.questionId}} {{que}} {{/with}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
-	{{/ionItem}}
+	<span class="notification-image">
+		<div class="outer-coin">
+			<div class="inner-coin"></div>
+		</div>
+	</span>
+	<h2>You earned {{note.value}} coins!</h2> 
+	<p>{{#with question note.questionId}} {{que}} {{/with}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
 </template>
 
 <template name="diamondNotification">
