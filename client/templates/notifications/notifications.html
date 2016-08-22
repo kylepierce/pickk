@@ -53,7 +53,9 @@
 		{{> coinsNotification}}
 	{{/if}}
 	{{#if notif "diamonds"}}
-		{{> diamondNotification}}
+		{{#ionItem class="notification-has-image"}}
+			{{> diamondNotification}}
+		{{/ionItem}}	
 	{{/if}}
 	{{#if notif "leaderboard"}}
 		{{> leaderboardNotification}}
@@ -62,7 +64,9 @@
 		{{> badgeNotification}}
 	{{/if}}
 	{{#if notif "trophy"}}
-		{{> trophyNotification}}
+		{{#ionItem class="notification-has-image"}}
+			{{> trophyNotification}}
+		{{/ionItem}}
 	{{/if}}
 	{{#if notif "matchupInvite"}}
 		{{> matchupInvite}}
@@ -119,10 +123,9 @@
 </template>
 
 <template name="diamondNotification">
-	{{#ionItem class="notification-has-image"}}
-		<img class="notification-image" src="/diamonds.png">
-		<p>{{{note.message}}}</p>
-	{{/ionItem}}	
+	<h2>{{note.source}}: {{note.gameName}}</h2>
+	<img class="notification-image" src="/diamonds.png">
+	<p>{{{note.message}}}</p>
 </template>
 
 <template name="newFollower">
@@ -146,15 +149,12 @@
 </template>
 
 <template name="trophyNotification">
-	{{#ionItem class="notification-has-image"}}
-		{{#with trophy note.trophyId}}
-			<img class="notification-image" src="/{{image}}">
-			<h2>You won {{title}} place!</h2>
-		{{/with}}
-		{{#with game note.gameId}}
-			<p>Congr{{note.message}}</p>
-		{{/with}}
-	{{/ionItem}}
+	{{#with trophy note.trophyId}}
+		<img class="notification-image" src="/{{image}}">
+		<h2>You won {{title}}!</h2>
+		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
+	{{/with}}
+	
 </template>
 
 <template name="leaderboardNotification"></template>

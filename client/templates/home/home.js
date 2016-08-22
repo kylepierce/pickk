@@ -28,13 +28,15 @@ Template.home.helpers({
   player: function () {
     return AtBat.findOne()
   },
-  // gameCompleted: function () {
-  //   console.log(this)
-  // },
+  isLive: function () {
+    var game = Games.findOne();
+    if (game.live === true && game.completed === false) {
+      return true
+    } 
+  },
   isCommercial: function (){
-    var isCommerical = Games.findOne().commercial;
-    if (isCommerical) {
-      console.log("Commerical is active")
+    var game = Games.findOne();
+    if (game.commercial === true) {
       return true
     } 
   },
@@ -42,10 +44,16 @@ Template.home.helpers({
     return Questions.find({commercial: true}, {limit: 1}).fetch();
   },
   questions: function () {
-    return Questions.find({}, {limit: 1}).fetch();
+    var currentUserId = Meteor.userId()
+    var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
+    var query = Questions.find(selector, {limit: 1}).fetch();
+    console.log("query", query) 
+    return query
   },
   noQuestions: function () {
-    var questions = Questions.find({}).count(); 
+    var currentUserId = Meteor.userId()
+    var questions = Questions.find({active: true, usersAnswered: {$nin: [currentUserId]}}).count();
+    console.log(questions)
     if (questions === 0 ){
       return true
     }

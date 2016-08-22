@@ -40,12 +40,12 @@
 					Game completed
 				{{/if}}
 
-				{{#if isCommercial}}
-					{{#each question in commericalQuestions}}
+				{{#if isLive}}
+					<!-- {{#each question in commericalQuestions}}
 						{{> commericalQuestion q=question}}
-					{{/each}}
+					{{/each}} -->
 
-				{{else}}
+				<!-- {{else}} -->
 					{{#each question in questions}}
 						{{> singleQuestion q=question}}
 					{{/each}}

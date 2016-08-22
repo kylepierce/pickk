@@ -8,7 +8,7 @@ createPendingNotification = function(o) {
   }
 
   // Optional arguments
-  var optional = ["message", "notificationId", "questionId", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "groupId", "matchId", "messageId", "value", "shareMessage", "sharable", "reaction"]
+  var optional = ["message", "notificationId", "questionId", "senderId", "trophyId", "badgeId", "gameId", "tournamentId", "groupId", "matchId", "messageId", "value", "shareMessage", "sharable", "reaction", "source", "gameName"]
 
   // If those optional arguments exist append to object
   for (var i = 0; i < optional.length; i++) {
@@ -25,10 +25,8 @@ createPendingNotification = function(o) {
 
 Meteor.methods({
 
-  'notifyTrophyAwarded': function(trophyId, user, gameId) {
-    check(trophyId, String);
-    check(user, String);
-    check(gameId, String);
+  'notifyTrophyAwarded': function(a) {
+    check(a, Object);
 
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -38,14 +36,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
     }
 
-    var notifyObj = {
-      userId: user,
-      type: "trophy",
-      trophyId: trophyId,
-      gameId: gameId,
-    }
-
-    createPendingNotification(notifyObj)
+    createPendingNotification(a)
   },
 
   'removeNotification': function(notifyId) {

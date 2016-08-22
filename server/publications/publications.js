@@ -65,7 +65,6 @@ Meteor.publish('activeQuestions', function(gameId) {
   return Questions.find({
     gameId: gameId,
     active: true,
-    atBatQuestion: true,
     usersAnswered: {$nin: [currentUserId]}
   }, {limit: 3});
 });

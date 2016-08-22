@@ -1,5 +1,6 @@
 Meteor.methods({
 	'loadLeaderboard': function(game) {
+		check(game, String);
 		var liveGame = Games.findOne({_id: game});
 		if (liveGame) {
 			var selector = {_id: {$in: liveGame.users}}
