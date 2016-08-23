@@ -16,12 +16,15 @@ Template.home.rendered = function() {
   this.coinsCurrent = 0;
   this.coinsDifference = 0;
 
+
   self.autorun(function() {
     self.coinsFinal = parseInt(GamePlayed.findOne().coins);
+    var startCount;
 
     // If coinsVar is read inside Autorun and then changes, it would go in an infinite loop. Hence, 'nonreactive'
     Tracker.nonreactive(function(){
       self.coinsCurrent = self.coinsVar.get();
+      startCount = self.coinsVar.get();
     }); 
 
     self.coinsDifference = self.coinsFinal - self.coinsCurrent;
@@ -29,21 +32,24 @@ Template.home.rendered = function() {
     if (self.coinsDifference !== 0) {
       // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
       let interval = Meteor.setInterval(function () {
-        if (self.coinsDifference < 0) {
-          self.coinsVar.set(self.coinsCurrent--);
-        } else {
-          self.coinsVar.set(self.coinsCurrent++);
-        }
-        if (self.coinsCurrent === self.coinsFinal) {
+          if (self.coinsDifference < 0) {
+            if (startCount - self.coinsCurrent === 1000 && Math.abs(self.coinsDifference) > 5000 ) {
+              self.coinsCurrent = self.coinsFinal+1000;
+            }
+
+            self.coinsVar.set(--self.coinsCurrent);
+          } else {
+            if (self.coinsCurrent - startCount === 1000 && Math.abs(self.coinsDifference) > 5000 ) {
+              self.coinsCurrent = self.coinsFinal-1000;
+            }
+
+            self.coinsVar.set(++self.coinsCurrent);
+          }
+
+          if (self.coinsCurrent === self.coinsFinal) {
             Meteor.clearInterval(interval); // Stop the interval
-        }
-        // The counter can go up by a few thousand, this lets it jump to final result afte 1 second.
-        Meteor.setInterval( function(){
-          Meteor.clearInterval(interval);
-          var final = parseInt(GamePlayed.findOne().coins)
-          self.coinsVar.set(final)
-        }, 1000);
-      }, 0);
+          }
+        }, 1);
     }
   });
 
@@ -76,7 +82,7 @@ Template.home.rendered = function() {
             if (self.diamondsCurrent === self.diamondsFinal) {
               Meteor.clearInterval(interval); // Stop the interval
             }
-          }, 20);
+          }, 1);
       }
     });
   }
