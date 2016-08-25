@@ -80,7 +80,6 @@
 	{{/if}}
  </template>
 
-
 <template name="groupNotification">
 	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
@@ -93,7 +92,24 @@
 	{{/ionItem}}
 </template>
 
-<!--  ???????? -->
+<template name="chatNotification">
+	{{#ionItem avatar=true }}
+		{{> userAvatar userId=note.senderId}}
+		<h3>
+		{{#with user note.senderId}}
+			@{{profile.username}} Mentioned You
+	  {{/with}}
+	  {{#with groupData note.groupId}}
+			in <strong>{{name}}</strong>
+		{{/with}}
+		</h3>
+
+	  <p>{{note.message}}</p>
+	  {{#with reactions note.messageId}}
+	  	{{> messageReactions reactions=this.reactions}}
+		{{/with}}
+	{{/ionItem}}	
+</template>
 
 <template name="coinsNotification">
 	<span class="notification-image">

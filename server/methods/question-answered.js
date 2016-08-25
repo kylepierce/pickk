@@ -86,22 +86,21 @@ Meteor.methods({
 		} 
 
 		// Free pickks give coins and adds a notification
-		else if (c.type === "free pickk"){
-			var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
+		else if (c.type === "free-pickk"){
+			var scoreMessage = "Thanks for Guessing! Here Are " + c.wager + " Free Coins!"
 
 			var selector = {userId: c.userId, gameId: c.gameId}
 			var modify = {$inc: {coins: +c.wager}}
 			GamePlayed.update(selector, modify);
 
 		  var notifyObj = {
-		  	type: "score",
+		  	type: "coins",
 		  	questionId: c.questionId,
 		  	gameId: c.gameId,
 		  	value: c.wager, // Free coins
 		  	message: scoreMessage,
 		  	userId: c.userId,
 		  }
-
   		createPendingNotification(notifyObj)
 		} 
 

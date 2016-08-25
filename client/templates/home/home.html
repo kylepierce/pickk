@@ -1,15 +1,13 @@
 <template name="home">
 	{{> homeLayoutHeader}}
 	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header" style="font-size: 1.2em;">
+<!-- 		<h1 class="title white-text-header" style="font-size: 1.2em;">
 			<i class="fa fa-diamond"></i>
 		  <strong>{{diamonds}}</strong> 
 		  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
     <strong>{{gameCoins}}</strong>
-		</h1>
-<!-- =======
+		</h1> -->
 		{{> singleGameAwards}}
->>>>>>> notifications -->
 	{{/contentFor}}
 
   {{#ionView}}
@@ -28,9 +26,9 @@
 					{{#if player}}
 							{{> playerCard}}
 					{{/if}}
-				</div >
+				</div > -->
 
-				{{#each note in notifications}}
+<!-- 				{{#each note in notifications}}
 					<div class="single-notification">
 						{{> notification note=note}}
 					</div>

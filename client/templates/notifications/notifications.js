@@ -265,7 +265,6 @@ Template.coinsNotification.helpers({
 		}
 	},
 	question: function (id) {
-		console.log("questionId", id, this)
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id})
 		return question

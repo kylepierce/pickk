@@ -2,14 +2,15 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
-Template.home.onCreated(function () {
+Template.singleGameAwards.onCreated(function () {
   this.coinsVar = new ReactiveVar(0);
   this.diamondsVar = new ReactiveVar(0);
 });
 
-Template.home.rendered = function() {
+Template.singleGameAwards.rendered = function() {
   let self = this;
 
+  console.log(self)
   // Logic to increment / decrement animate coics
   this.coinsVar.set(parseInt(GamePlayed.findOne().coins));
   this.coinsFinal = 0;
@@ -33,11 +34,12 @@ Template.home.rendered = function() {
       // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
       let interval = Meteor.setInterval(function () {
           if (self.coinsDifference < 0) {
-            if (startCount - self.coinsCurrent === 1000 && Math.abs(self.coinsDifference) > 5000 ) {
-              self.coinsCurrent = self.coinsFinal+1000;
-            }
+            // if (startCount - self.coinsCurrent === 1000 && Math.abs(self.coinsDifference) > 500 ) {
+            //   self.coinsCurrent = self.coinsFinal+1000;
+            // }
 
-            self.coinsVar.set(--self.coinsCurrent);
+            self.coinsVar.set(--self.coinsFinal);
+            Meteor.clearInterval(interval)
           } else {
             if (self.coinsCurrent - startCount === 1000 && Math.abs(self.coinsDifference) > 5000 ) {
               self.coinsCurrent = self.coinsFinal-1000;
@@ -96,29 +98,12 @@ Template.home.rendered = function() {
   });
 };
 
-Template.home.onCreated = function () {
-  var instance = Template.instance();
-  instance.somevar = new ReactiveVar(10);
-  console.log("there should be something here", instance)
-}
-
 Template.home.helpers({
-  diamonds: function () {
-    console.log("I exist")
-    return 1
-  },
   gameInfo: function () {
     return Games.find({}).fetch();
   },
   games: function () {
     return Games.find({}).fetch();
-  },
-  gameCoins: function () {
-    return Template.instance().coinsVar.get();
-  },
-  diamonds: function () {
-    return Template.instance().diamondsVar.get();
-    return GamePlayed.findOne().coins;
   },
   notifications: function () {
     return Notifications.find({}).fetch();
@@ -145,7 +130,6 @@ Template.home.helpers({
     var currentUserId = Meteor.userId()
     var selector = {active: true, commercial: {$ne: true}, usersAnswered: {$nin: [currentUserId]}}
     var query = Questions.find(selector, {limit: 1}).fetch();
-    console.log(query)
     return query
   },
   noQuestions: function () {
@@ -174,82 +158,6 @@ Template.home.events({
     var $game = Router.current().params.id
     Router.go('/history/'+ $game)
   }, 
-});
-
-Template.singleGameAwards.helpers({
-  gameCoins: function () {
-    return GamePlayed.findOne().coins;
-  },
-  diamonds: function () {
-    return GamePlayed.findOne().diamonds;
-  }
-});
-
-Template.commericalQuestion.helpers({
-  binary: function (q) {
-    if(q.binaryChoice === true){
-      return true
-    }
-  }
-});
-
-Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) { 
-    $('.play-selected').removeClass('play-selected')
-    $(e.currentTarget).addClass('play-selected')
-    var displayOptions = function ( o ) {
-      // The select item dom and data
-      var $selected = $(e.currentTarget)
-      var selectedObj = o.dataPath
-      var templateName = o.insertedTemplate
-
-      var addOptions = function ( id, data ){
-        var options = "<div id='" + id + "'></div>"
-        $('#binaryOptions').after(options);
-        var container = $('#' + id + '')[0]
-        Blaze.renderWithData(templateName, data, container)
-      }
-
-      var container = $('#' + o.containerId + '')[0]
-      if ( container ){
-        if ( container.previousSibling !== $selected[0] ){
-          container.remove();
-          addOptions( o.containerId, selectedObj )  
-        } else {
-          container.remove();
-        }
-      } else {
-        addOptions( o.containerId, selectedObj )  
-      }
-    }
-    parms = {
-      insertedTemplate: Template.submitButton,
-      containerId: "submit",
-      event: e,
-      template: t,
-      dataPath: this,
-    }
-    displayOptions( parms )
-  }
-});
-
-Template.singleQuestion.helpers({
-  eventQuestions: function (q) {
-    if(q.atBatQuestion || q.event){
-      return true
-    }
-  },
-  liveQuestion: function (q) {
-    var isCommerical = Games.findOne().commercial;
-    var atBatQuestion = q && q.atBatQuestion
-    var binaryChoice = q && q.binaryChoice
-    if(!isCommerical && !atBatQuestion && !binaryChoice){
-      return true
-    }
-  }
-});
- 
-Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
     $('.play-selected').removeClass('play-selected ten-spacing')
     $(e.currentTarget).addClass('play-selected ten-spacing')
@@ -326,6 +234,83 @@ Template.singleQuestion.events({
     displayOptions( parms )
   },
 });
+
+Template.singleGameAwards.helpers({
+  gameCoins: function () {
+    return Template.instance().coinsVar.get();
+  },
+  diamonds: function () {
+    return Template.instance().diamondsVar.get();
+    return GamePlayed.findOne().coins;
+  },
+});
+
+
+Template.commericalQuestion.helpers({
+  binary: function (q) {
+    if(q.binaryChoice === true){
+      return true
+    }
+  }
+});
+
+Template.commericalQuestion.events({
+  'click [data-action=pickk]': function (e, t) { 
+    $('.play-selected').removeClass('play-selected')
+    $(e.currentTarget).addClass('play-selected')
+    var displayOptions = function ( o ) {
+      // The select item dom and data
+      var $selected = $(e.currentTarget)
+      var selectedObj = o.dataPath
+      var templateName = o.insertedTemplate
+
+      var addOptions = function ( id, data ){
+        var options = "<div id='" + id + "'></div>"
+        $('#binaryOptions').after(options);
+        var container = $('#' + id + '')[0]
+        Blaze.renderWithData(templateName, data, container)
+      }
+
+      var container = $('#' + o.containerId + '')[0]
+      if ( container ){
+        if ( container.previousSibling !== $selected[0] ){
+          container.remove();
+          addOptions( o.containerId, selectedObj )  
+        } else {
+          container.remove();
+        }
+      } else {
+        addOptions( o.containerId, selectedObj )  
+      }
+    }
+    parms = {
+      insertedTemplate: Template.submitButton,
+      containerId: "submit",
+      event: e,
+      template: t,
+      dataPath: this,
+    }
+    displayOptions( parms )
+  }
+});
+
+Template.singleQuestion.helpers({
+  eventQuestions: function (q) {
+    if(q.atBatQuestion || q.event){
+      return true
+    }
+  },
+  liveQuestion: function (q) {
+    var isCommerical = Games.findOne().commercial;
+    var atBatQuestion = q && q.atBatQuestion
+    var binaryChoice = q && q.binaryChoice
+    if(!isCommerical && !atBatQuestion && !binaryChoice){
+      return true
+    }
+  }
+});
+ 
+
 
 Template.eventQuestion.helpers({
   options: function (q) {
@@ -461,7 +446,7 @@ Template.submitButton.events({
       // countdown.start(function() {
       //   Meteor.call('playerInactive', c.userId, c.questionId);
       // })
-
+      console.log(c)
       setTimeout(function() {
         Meteor.call('questionAnswered', c);
       }, 250);
