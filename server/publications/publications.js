@@ -31,7 +31,7 @@ Meteor.publish('gameNotifications', function(gameId) {
 });
 
 Meteor.publish('usersGroups', function ( user ) {
-  check(user, String);
+  check(user, Match.Maybe(String));
 
   var selector = {members: {$in: [user]}};
   // Find this user id in any group 
