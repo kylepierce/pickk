@@ -36,33 +36,35 @@
 				{{/if}}
 
 				{{#if isLive}}
-					<!-- {{#each question in commericalQuestions}}
-						{{> commericalQuestion q=question}}
-					{{/each}} -->
+					{{#if commericalBreak}}
+						{{#each question in commericalQuestions}}
+							{{> commericalQuestion q=question}}
+						{{/each}}
+					{{/if}}
 
-				<!-- {{else}} -->
-					{{#each question in questions}}
-						{{> singleQuestion q=question}}
-					{{/each}}
+					{{#if questions}}
+						{{#each question in questions}}
+							{{> singleQuestion q=question}}
+						{{/each}}
+					{{/if}}
+				
+					{{#if noQuestions}}
+						{{> waitingForNextPlay}}
+					{{/if}}
 				{{/if}}
-
-				{{#if noQuestions}}
-					<h5 class="no-notifications">Next question coming up soon!</h5>
-          {{#with lastPlay}}
-            <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
-          {{/with}}
-          <!-- Outstanding questions -->
-          <div class="container">
-          <button class="button" style="width: 100%" data-action="game-leaderboard">Leaderboard</button>
-          <button class="button ten-spacing" style="width: 100%" data-action="previous-answers">Previous Answers</button>
-          </div>
-				{{/if}}
-
 			</div>
-
 			{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="waitingForNextPlay">
+		<h5 class="no-notifications">Next question coming up soon!</h5>
+
+    <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
+
+    <button class="button" style="width: 100%" data-action="game-leaderboard">Leaderboard</button>
+    <button class="button ten-spacing" style="width: 100%" data-action="previous-answers">Previous Answers</button>
 </template>
 
 <template name="singleGameAwards">

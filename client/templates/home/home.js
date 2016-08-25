@@ -21,7 +21,6 @@ Template.home.onCreated = function () {
 Template.home.helpers({
   diamonds: function () {
     console.log("I exist")
-
     return 1
   },
   gameInfo: function () {
@@ -42,10 +41,10 @@ Template.home.helpers({
   isLive: function () {
     var game = Games.findOne();
     if (game.live === true && game.completed === false) {
-      return true
+      return true 
     } 
   },
-  isCommercial: function (){
+  commericalBreak: function (){
     var game = Games.findOne();
     if (game.commercial === true) {
       return true
@@ -56,13 +55,22 @@ Template.home.helpers({
   },
   questions: function () {
     var currentUserId = Meteor.userId()
-    var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
+    var selector = {active: true, commercial: {$ne: true}, usersAnswered: {$nin: [currentUserId]}}
     var query = Questions.find(selector, {limit: 1}).fetch();
+    console.log(query)
     return query
   },
   noQuestions: function () {
     var currentUserId = Meteor.userId()
-    var questions = Questions.find({active: true, usersAnswered: {$nin: [currentUserId]}}).count();
+    var game = Games.findOne();
+    // Checking the game commerical status and seeing if there are any questions that are avaiable for that status.
+    var selector = {
+      active: true, 
+      commercial: {$eq: game.commercial}, 
+      usersAnswered: {$nin: [currentUserId]}
+    }
+
+    var questions = Questions.find(selector).count();
     if (questions === 0 ){
       return true
     }
