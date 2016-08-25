@@ -7,11 +7,6 @@ Template._editGroup.helpers({
     var groupId = Session.get('groupId');
     return Groups.findOne({_id: groupId})
   },
-  'groupId': function(){
-    var groupId = Session.get('groupId');
-    var group = Groups.findOne({_id: groupId});
-    return group.groupId
-  },
   'groupName': function(){
     var groupId = Session.get('groupId');
     var group = Groups.findOne({_id: groupId});
@@ -33,12 +28,10 @@ Template._editGroup.events({
   'submit form': function (event, template) {
     event.preventDefault();
     var id = Session.get('groupId');
-    var groupId = event.target.groupId.value;
     var groupName = event.target.groupName.value;
 		var privacySetting = template.find('input:radio[name=privacy]:checked').value
     var desc = event.target.groupDesc.value;
     var uniqueGroupName = Groups.findOne({'name': groupName});
-    var uniqueGroupId = Groups.findOne({'groupId': groupId});
     var currentGroup = Groups.findOne({_id: id});
 
     if(privacySetting === "false"){
@@ -49,25 +42,7 @@ Template._editGroup.events({
       return /\s/g.test(s);
     }
 
-    if(groupId.length < 5){
-        IonLoading.show({
-        customTemplate: '<h3>That name is not long enough :(</h3>',
-        duration: 1500,
-        backdrop: true
-      });
-    } else if(groupId.length > 25){
-      IonLoading.show({
-        customTemplate: '<h3>That name is too long :(</h3>',
-        duration: 1500,
-        backdrop: true
-      });
-    } else if(hasWhiteSpace(groupId)){
-      IonLoading.show({
-        customTemplate: '<h3>Group name can not have spaces :(</h3>',
-        duration: 1500,
-        backdrop: true
-      });
-    } else if(groupName.length < 5){
+    if(groupName.length < 5){
       IonLoading.show({
         customTemplate: '<h3>Group display name not long enough :(</h3>',
         duration: 1500,
@@ -79,12 +54,6 @@ Template._editGroup.events({
         duration: 1500,
         backdrop: true
       });
-    } else if(uniqueGroupId && (currentGroup.groupId != groupId)){
-      IonLoading.show({
-        customTemplate: '<h3>That Id has been already taken :(</h3>',
-        duration: 1500,
-        backdrop: true 
-      });
     } else if(uniqueGroupName && (currentGroup.name != groupName)){
       IonLoading.show({
         customTemplate: '<h3>That name has been already taken :(</h3>',
@@ -93,7 +62,7 @@ Template._editGroup.events({
       });
     } else {
       // Create the group with group name and privacy check the user passed
-      Meteor.call('editGroup', id, groupId, groupName, privacySetting, desc);
+      Meteor.call('editGroup', id, groupName, privacySetting, desc);
       IonModal.close();
       sAlert.success("Group Updated" , {effect: 'slide', position: 'bottom', html: true});
 

@@ -2,20 +2,21 @@ Meteor.methods({
 	'activityForDiamonds': function(d){
 		check(d, Object);
 
-		if (d.counter === 1) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 1)
-		} else if (d.counter === 5) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 2)
-		} else if (d.counter === 25) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 3)
-		} else if (d.counter === 50) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 4)
-		} else if (d.counter === 75) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 5)
-		} else if (d.counter === 100) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 7)
-		} else if (d.counter === 140) {
-			Meteor.call('awardDiamonds', d.userId, d.gameId, 13)
+		var o = {
+			userId: d.userId, 
+			gameId: d.gameId,
+			gameName: d.gameName,
+			source: "Activity"
+		}
+		var stringCounter = d.counter.toString()
+		var activityExchange = {
+			"1": 1, "3": 2, "8": 3, "15": 4, "30": 5, "45": 6, "60": 7, "75": 8, "100": 9, "125": 12, "150": 14,
+		} 
+
+		var x = activityExchange.hasOwnProperty(stringCounter);
+		if (x) {
+			o.value = activityExchange[stringCounter]
+			Meteor.call('awardDiamonds', o)
 		}
 	},
 
@@ -62,20 +63,24 @@ Meteor.methods({
 		// Update question with the user who have answered.
 		Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
 
-		// Finally award or whatever
-
 		// Live game questions remove coins and give activity diamonds
 		if (c.type === "live" || c.type === "atBat"){
 			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
 			var selector = {userId: c.userId, gameId: c.gameId}
-			var modify = {$inc: {coins: -c.wager}}
+			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
-			
-			//Increase counter by 1
-			Meteor.users.update({_id: c.userId}, {$inc: {"profile.queCounter": +1}})
-			var counter = Meteor.users.findOne(c.userId).profile.queCounter
-			var diamondExchange = {userId: c.userId, counter: counter, gameId: c.gameId}
+
+			var gameName = Games.findOne({_id: c.gameId}).name;
+			var counter = GamePlayed.findOne(selector).queCounter
+
+			var diamondExchange = {
+				userId: c.userId, 
+				counter: counter, 
+				gameId: c.gameId,
+				gameName: gameName
+			}
+
 			// Award diamonds if they have been active
 			Meteor.call('activityForDiamonds', diamondExchange)
 		} 
@@ -83,6 +88,10 @@ Meteor.methods({
 		// Free pickks give coins and adds a notification
 		else if (c.type === "free pickk"){
 			var scoreMessage = "Thanks for Guessing! Here Are " + wager + " Free Coins!"
+
+			var selector = {userId: c.userId, gameId: c.gameId}
+			var modify = {$inc: {coins: +c.wager}}
+			GamePlayed.update(selector, modify);
 
 		  var notifyObj = {
 		  	type: "score",
@@ -98,17 +107,17 @@ Meteor.methods({
 
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
-			var notifyObj = {
-				userId: c.userId,
-				type: "diamonds",
+			var o = {
+				userId: c.userId, 
+				gameId: c.gameId,
 				questionId: c.questionId,
+				gameName: c.gameName,
 				value: 5,
+				source: "Daily Pickks"
 			}
 
-			createPendingNotification(notifyObj)
-
 			//Give user a diamond for answering
-			Meteor.call('awardDiamonds', c.userId, c.gameId, 5);
+			Meteor.call('awardDiamonds', o);
 		}
 	},
 })

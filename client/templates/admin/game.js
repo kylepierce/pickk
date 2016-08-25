@@ -1,16 +1,3 @@
-// Template.gameInfo.onRendered( function() {
-// 	var picker = new Pikaday({
-// 	    field: document.getElementById('datepicker'),
-// 	    format: 'D MMM YYYY',
-// 	    onSelect: function() {
-// 	        var date = this.getMoment().toString();
-// 	        console.log(date)
-// 	        Session.set('datePicker', date);
-// 	    }
-// 	});
-// });
-
-
 Template.gameInfo.events({
 	'submit form': function (event, template) {
 		// Get the value of the input box

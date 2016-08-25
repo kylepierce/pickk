@@ -14,7 +14,6 @@
     <h1 class="title white-text-header">Notifications</h1>
   {{/contentFor}}
 
-
 <!-- Filter notifications by type.    
 	{{#contentFor "headerButtonRight"}}
     <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
@@ -49,11 +48,15 @@
 	{{#if notif "follower"}}
 		{{> newFollower}}
 	{{/if}}
-	{{#if notif "score"}}
-		{{> scoreNotification}}
+	{{#if notif "coins"}}
+		{{#ionItem class="notification-has-image"}}
+			{{> coinsNotification}}
+		{{/ionItem}}
 	{{/if}}
 	{{#if notif "diamonds"}}
-		{{> diamondNotification}}
+		{{#ionItem class="notification-has-image"}}
+			{{> diamondNotification}}
+		{{/ionItem}}	
 	{{/if}}
 	{{#if notif "leaderboard"}}
 		{{> leaderboardNotification}}
@@ -62,7 +65,9 @@
 		{{> badgeNotification}}
 	{{/if}}
 	{{#if notif "trophy"}}
-		{{> trophyNotification}}
+		{{#ionItem class="notification-has-image"}}
+			{{> trophyNotification}}
+		{{/ionItem}}
 	{{/if}}
 	{{#if notif "matchupInvite"}}
 		{{> matchupInvite}}
@@ -73,8 +78,8 @@
 	{{#if notif "chatReaction"}}
 		{{> chatReaction}}
 	{{/if}}
-	
-</template>
+ </template>
+
 
 <template name="groupNotification">
 	{{#ionItem avatar=true }}
@@ -82,52 +87,28 @@
 	    {{> userAvatar userId=_id}}
 	    <h2>{{profile.username}}</h2>
 	  {{/with}}
-
-	  {{#with groupData note.groupId }}
+	  {{#with groupData note.groupId}}
 	    <p>wants you to join <strong>{{name}}</strong></p>
 	  {{/with}}
 	{{/ionItem}}
 </template>
 
-<template name="chatNotification">
-	{{#ionItem avatar=true }}
-		{{#with user note.senderId}}
-		  {{> userAvatar userId=_id}}
-		{{/with}}
-		<h3>
-			{{#with user note.senderId}}
-			  @{{profile.username}} Mentioned You
-		  {{/with}} 
-		  {{#with groupData note.groupId}}
-		  	in {{name}}
-		  {{/with}}
-	  </h3>
-	  <p>{{note.message}}</p>
-	{{/ionItem}}	
-</template>
+<!--  ???????? -->
 
-<template name="chatReaction">
-	{{#ionItem avatar=true }}
-		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
-		{{#with user note.senderId}}
-	    <!-- {{> userAvatar userId=_id}} -->
-	    <h3>@{{profile.username}} reacted to this message:</h3>
-	  {{/with}}
-	  <p>{{note.message}}</p>
-	{{/ionItem}}	
-</template>
-
-<template name="scoreNotification">
-	{{#ionItem}}
-		<p>You won {{note.value}} coins!</p>
-	{{/ionItem}}
+<template name="coinsNotification">
+	<span class="notification-image">
+		<div class="outer-coin">
+			<div class="inner-coin"></div>
+		</div>
+	</span>
+	<h2>You earned {{note.value}} coins!</h2> 
+	<p>{{#with question note.questionId}} {{que}} {{/with}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
 </template>
 
 <template name="diamondNotification">
-	{{#ionItem class="notification-has-image"}}
-		<img class="notification-image" src="/diamonds.png">
-		<p>{{{note.message}}}</p>
-	{{/ionItem}}	
+	<h2>{{note.source}}: {{note.gameName}}</h2>
+	<img class="notification-image" src="/diamonds.png">
+	<p>{{{note.message}}}</p>
 </template>
 
 <template name="newFollower">
@@ -140,29 +121,32 @@
 	{{/ionItem}}	
 </template>
 
+<template name="chatReaction">
+	{{#ionItem avatar=true }}
+		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
+		{{#with user note.senderId}}
+	    <h3>@{{profile.username}} reacted to your chat message:</h3>
+	  {{/with}}
+	  <p>{{note.message}}</p>
+	{{/ionItem}}	
+</template>
+
+<template name="trophyNotification">
+	{{#with trophy note.trophyId}}
+		<img class="notification-image" src="/{{image}}">
+		<h2>You won {{title}}!</h2>
+		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
+	{{/with}}
+	
+</template>
+
 <template name="leaderboardNotification"></template>
 
 <template name="badgeNotification"></template>
 
-<template name="trophyNotification">
-	{{#ionItem class="notification-has-image"}}
-		{{#with trophy note.trophyId}}
-			<img class="notification-image" src="/{{image}}">
-			<h2>You won {{title}} place!</h2>
-		{{/with}}
-		{{#with game note.gameId}}
-			<p>Congr{{note.message}}</p>
-		{{/with}}
-	{{/ionItem}}
-</template>
-
 <template name="matchupInvite"></template>
 
 <template name="matchupNotification"></template>
-
-<template name="templateNotification">
-	{{#ionItem}}{{/ionItem}}
-</template>
 
 <template name="notificationOptions">
 	{{#with options}}

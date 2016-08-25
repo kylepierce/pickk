@@ -256,8 +256,11 @@ Template._adminOptions.events({
 
 Template.singleGroupLeaderboard.helpers({
   players: function(){ 
-    var id = Router.current().params._id
-    var currentUser = Meteor.user()
-    return UserList.find();
+    var group = Groups.findOne()
+    var members = group.members
+    return members
+  },
+  userData: function (player) {
+    return Meteor.users.findOne({_id: player});
   }
 });

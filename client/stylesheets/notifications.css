@@ -17,7 +17,11 @@
 	text-overflow: normal;
 }
 
-#notification-options {
+.chat-popover {
+	width: 95%;
+}
+
+/*#notification-options {
   width:100%;
   float: left;
   background-color: #455A64;
@@ -31,7 +35,7 @@
   transition: all 1s ease-in-out;;
 	color: white;
 	font-family: 'lato'
-}
+}*/
 
 .actions-section:first-child {
 	border-left: 0px solid white;

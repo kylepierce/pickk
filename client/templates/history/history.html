@@ -16,6 +16,11 @@
   {{#ionView }}
     {{#ionContent}}
 			{{#ionList}}
+				{{#if noGamesPlayed}}
+					<div class="no-notifications">
+						No games Played
+					</div>
+				{{/if}}
 				{{#each gamesPlayed}}
 					{{#ionItem path="gameHistory.show"}}
 						{{name}}

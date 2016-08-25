@@ -33,70 +33,51 @@ Meteor.methods({
 		}
 	},
 
-	'awardDiamonds': function(user, gameId, number) {
-		check(user, String)
-		check(gameId, String)
-		check(number, Number)
+	'awardDiamonds': function(o) {
+		check(o, Object);
 		
-		var number = parseInt(number)
-		var message = "You Earned " + number + " Diamonds!"
+		var value = parseInt(o.value)
+    o.type = "diamonds"
 
-		Meteor.users.update({_id: user}, {$inc: {"profile.diamonds": +number}});
-
-	  var notifyObj = {
-      type: "diamonds",
-      userId: user,
-      gameId: gameId,
-      value: number,
-      message: message,
+	  if (!o.message) {
+	  	o.message = "You Earned " + value + " Diamonds!"
 	  }
 
-	  createPendingNotification(notifyObj)
-	},
-
-	'awardDiamondsCustom': function(user, gameId, number, message, trophyId) {
-		check(user, String);
-		check(gameId, String);
-		check(number, Number);
-		check(message, String);
-		var number = parseInt(number)
-		var message = message
-
-		Meteor.users.update({_id: user}, {$inc: {"profile.diamonds": +number}});
-
-	  var notifyObj = {
-      type: "diamonds",
-      userId: user,
-      gameId: gameId,
-      message: message,
-      value: number,
-	  }
-	  createPendingNotification(notifyObj)
+	  // Add coins to gameId or week
+	  GamePlayed.update({userId: o.userId, gameId: o.gameId}, {$inc: {diamonds: + value}})
+	  
+	  createPendingNotification(o)
 	},
 
 	'coinMachine': function(game) {
 		check(game, String)
 		var usersThatPlayed = GamePlayed.find({gameId: game});
-		var gameName = Games.findOne({_id: game}).name
+		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
+
+		exchangeRate = function (coins, rate, userId) {
+			var diamondExchange = Math.floor(coins / rate)
+			var message = "You traded " + coins + " coins you earned playing " + gameName + " for " + diamondExchange + ' diamonds!'
+
+			var o = {
+				userId: userId, 
+				gameId: game,
+				gameName: gameName,
+				value: diamondExchange, 
+				message: message, 
+				source: "Exchange"
+			}
+
+			Meteor.call('awardDiamonds', o)
+		};
 
 		usersThatPlayed.forEach(function(item) {
 			var userId = item.userId;
 			var coins = item.coins
-			var exchange = "exchange"
-
-			exchangeRate = function (rate) {
-				var diamondExchange = coins / rate
-				diamondExchange = Math.floor(diamondExchange)
-				var message = "You traded " + coins + " coins you earned playing " + gameName + " for " + diamondExchange + ' diamonds '
-				Meteor.call('awardDiamondsCustom', userId, game, diamondExchange, message, exchange)
-			};
-
 			if (coins === 10000) {
-
 			} else if (coins < 10000) {
-				exchangeRate(2500)
+				exchangeRate(coins, 2500, userId)
 			} else if (coins > 10001) {
-				exchangeRate(7500)
+				exchangeRate(coins, 7500, userId)
 			}
 		});
 	},
@@ -105,30 +86,54 @@ Meteor.methods({
 		check(game, String);
 
 		var usersThatPlayed = GamePlayed.find({gameId: game}, {sort: {coins: -1}, limit: 10}).fetch();
+		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
 
 		function awardTrophies(trophyId, user) {
+			var a = {
+	      userId: user,
+	      type: "trophy",
+	      trophyId: trophyId,
+	      gameId: game,
+	      gameName: gameName
+    	}
 			Meteor.call('awardTrophy', trophyId, user);
-			Meteor.call('notifyTrophyAwarded', trophyId, user, game);
+			Meteor.call('notifyTrophyAwarded', a);
 		}
 
 		var diamondsToAward = [50, 40, 30, 25, 22, 20, 17, 15, 12, 10]
 
 		for (var i = 0; i < usersThatPlayed.length ; i++) {
+
+			var o = {
+				userId: usersThatPlayed[i].userId, 
+				gameId: game,
+				gameName: gameName,
+				source: "Leaderboard",
+				value: diamondsToAward[i]
+			}
+
 			switch (i){
 				case 0:
 					awardTrophies('xNMMTjKRrqccnPHiZ', usersThatPlayed[0].userId)
-					Meteor.call('awardDiamondsCustom', usersThatPlayed[0].userId, game, 50, 'Congrats On Winning First Place Here is 50 Diamonds!', "xNMMTjKRrqccnPHiZ")
+					o.message = 'Congrats On Winning First Place! Here is 50 Diamonds!'
+					o.trophyId = "xNMMTjKRrqccnPHiZ"
+					Meteor.call('awardDiamonds', o)
 					break;
 				case 1:
 					awardTrophies('aDJHkmcQKwgnpbnEk', usersThatPlayed[1].userId)
-					Meteor.call('awardDiamondsCustom', usersThatPlayed[1].userId, game, 40, 'Congrats On Winning Second Place Here is 20 Diamonds!', "aDJHkmcQKwgnpbnEk")
+					 40, 
+					o.message = 'Congrats On Winning Second Place! Here is 40 Diamonds!'
+					o.trophyId = "aDJHkmcQKwgnpbnEk"
+					Meteor.call('awardDiamonds', o)
 					break;
 				case 2:
 					awardTrophies('YxG4SKtrfT9j8Abdk', usersThatPlayed[2].userId)
-					Meteor.call('awardDiamondsCustom', usersThatPlayed[2].userId, game, 30, 'Congrats On Winning Third Place Here is 30 Diamonds!', "YxG4SKtrfT9j8Abdk")
+					o.message = 'Congrats On Winning Third Place! Here is 30 Diamonds!', 
+					o.trophyId = "YxG4SKtrfT9j8Abdk"
+					Meteor.call('awardDiamonds', o)
 					break;
 				default:
-					Meteor.call('awardDiamonds', usersThatPlayed[i].userId, game, diamondsToAward[i])
+					Meteor.call('awardDiamonds', o)
 			}
 		}
 	},

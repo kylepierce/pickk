@@ -7,6 +7,9 @@
 		  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
     <strong>{{gameCoins}}</strong>
 		</h1>
+<!-- =======
+		{{> singleGameAwards}}
+>>>>>>> notifications -->
 	{{/contentFor}}
 
   {{#ionView}}
@@ -35,20 +38,51 @@
 
 			</div>
 			<div class="container ten-spacing">
-				{{#if isCommercial}}
-					{{#each question in commericalQuestions}}
-						{{> commericalQuestion q=question}}
-					{{/each}}
+				{{#if gameCompleted}}
+					Game completed
+				{{/if}}
 
-				{{else}}
-					{{#each question in questions}}
-						{{> singleQuestion q=question}}
-					{{/each}}
+				{{#if isLive}}
+					{{#if commericalBreak}}
+						{{#each question in commericalQuestions}}
+							{{> commericalQuestion q=question}}
+						{{/each}}
+					{{/if}}
+
+					{{#if questions}}
+						{{#each question in questions}}
+							{{> singleQuestion q=question}}
+						{{/each}}
+					{{/if}}
+				
+					{{#if noQuestions}}
+						{{> waitingForNextPlay}}
+					{{/if}}
 				{{/if}}
 			</div>
 			{{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="waitingForNextPlay">
+	<h5 class="no-notifications">
+		Next question coming up soon!
+	</h5>
+
+  <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p>
+
+  <button class="button" style="width: 100%" data-action="game-leaderboard">Leaderboard</button>
+  <button class="button ten-spacing" style="width: 100%" data-action="previous-answers">Previous Answers</button>
+</template>
+
+<template name="singleGameAwards">
+	<h1 class="title white-text-header" style="font-size: 1.2em;">
+		<i class="fa fa-diamond"></i>
+	  <strong>{{diamonds}}</strong> 
+	  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
+  <strong>{{gameCoins}}</strong>
+	</h1>	
 </template>
 
 <template name="commericalQuestion">
@@ -82,7 +116,7 @@
 </template>
 
 <template name="eventQuestion">
-	<ul class="single-question animated fast slideInLeft">
+	<ul class="single-question">
 		{{#each o in options q}}
 			{{> option o=o q=q t=t}}
 		{{/each}}
@@ -120,7 +154,7 @@
 </template>
 
 <template name="wager">
-	<li class="wager" data-action=wager-selected>
+	<li class="wager" data-action="wager-selected" value="{{w}}">
 		<div class="wager-inner">{{w}}</div>
 	</li>
 </template>

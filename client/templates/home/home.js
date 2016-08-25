@@ -90,7 +90,17 @@ Template.home.rendered = function() {
   });
 };
 
+Template.home.onCreated = function () {
+  var instance = Template.instance();
+  instance.somevar = new ReactiveVar(10);
+  console.log("there should be something here", instance)
+}
+
 Template.home.helpers({
+  diamonds: function () {
+    console.log("I exist")
+    return 1
+  },
   gameInfo: function () {
     return Games.find({}).fetch();
   },
@@ -110,10 +120,15 @@ Template.home.helpers({
   player: function () {
     return AtBat.findOne()
   },
-  isCommercial: function (){
-    var isCommerical = Games.findOne().commercial;
-    if (isCommerical) {
-      console.log("Commerical is active")
+  isLive: function () {
+    var game = Games.findOne();
+    if (game.live === true && game.completed === false) {
+      return true 
+    } 
+  },
+  commericalBreak: function (){
+    var game = Games.findOne();
+    if (game.commercial === true) {
       return true
     } 
   },
@@ -121,13 +136,51 @@ Template.home.helpers({
     return Questions.find({commercial: true}, {limit: 1}).fetch();
   },
   questions: function () {
-    return Questions.find({}, {limit: 1}).fetch();
+    var currentUserId = Meteor.userId()
+    var selector = {active: true, commercial: {$ne: true}, usersAnswered: {$nin: [currentUserId]}}
+    var query = Questions.find(selector, {limit: 1}).fetch();
+    console.log(query)
+    return query
   },
+  noQuestions: function () {
+    var currentUserId = Meteor.userId()
+    var game = Games.findOne();
+    // Checking the game commerical status and seeing if there are any questions that are avaiable for that status.
+    var selector = {
+      active: true, 
+      commercial: {$eq: game.commercial}, 
+      usersAnswered: {$nin: [currentUserId]}
+    }
+
+    var questions = Questions.find(selector).count();
+    if (questions === 0 ){
+      return true
+    }
+  }
+});
+
+Template.home.events({
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    Router.go('/leaderboard/'+ $game)
+  },
+  'click [data-action=previous-answers]': function(event, template){
+    var $game = Router.current().params.id
+    Router.go('/history/'+ $game)
+  }, 
+});
+
+Template.singleGameAwards.helpers({
+  gameCoins: function () {
+    return GamePlayed.findOne().coins;
+  },
+  diamonds: function () {
+    return GamePlayed.findOne().diamonds;
+  }
 });
 
 Template.commericalQuestion.helpers({
   binary: function (q) {
-    console.log(this, q)
     if(q.binaryChoice === true){
       return true
     }
@@ -135,8 +188,7 @@ Template.commericalQuestion.helpers({
 });
 
 Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) {
-    // console.log(this, e, t)    
+  'click [data-action=pickk]': function (e, t) { 
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
     var displayOptions = function ( o ) {
@@ -144,7 +196,6 @@ Template.commericalQuestion.events({
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -194,7 +245,6 @@ Template.singleQuestion.helpers({
  
 Template.singleQuestion.events({
   'click [data-action=play-selected]': function (e, t) {
-    // console.log(this, e, t)
     $('.play-selected').removeClass('play-selected ten-spacing')
     $(e.currentTarget).addClass('play-selected ten-spacing')
     var displayOptions = function ( o ) {
@@ -202,7 +252,6 @@ Template.singleQuestion.events({
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      // console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -232,16 +281,15 @@ Template.singleQuestion.events({
     }
     displayOptions( parms )
   },
-  'click [data-action=wager-selected]': function (e, t) {
-    // console.log(this, e, t)    
+  'click [data-action=wager-selected]': function (e, t) {  
     $('.wager-selected').removeClass('wager-selected')
     $(e.currentTarget).addClass('wager-selected')
+    Session.set('lastWager', this.w);
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
-      // console.log($selected, selectedObj, templateName)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -323,6 +371,14 @@ Template.option.helpers({
     }
   }
 });
+
+Template.wagers.rendered = function () {
+  var wagerArray = [50, 100, 250, 500, 1000, 2500]
+  var lastWager = Session.get('lastWager');
+  var position = wagerArray.indexOf(lastWager)
+  var wager = $('[value=' + lastWager + ']' ).click();
+};
+
 
 Template.wagers.helpers({
   wagers: function () {

@@ -124,6 +124,7 @@ Meteor.methods({
 			liveStartDate: o.liveStartDate,
 			liveEndDate: o.liveEndDate,
 			button: o.button,
+			text: o.text,
 			buttonText: o.buttonText,
 			active: o.active,
 			image: o.image,

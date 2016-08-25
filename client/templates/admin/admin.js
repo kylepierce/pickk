@@ -45,63 +45,63 @@ Template.otherQuestions.events({
 
 
 // Show all old questions
-Template.oldQuestions.helpers ({
-	'questions': function(){
-		Meteor.subscribe('oldQuestions')
-		return Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 5});
-	}
-});
+// Template.oldQuestions.helpers ({
+// 	'questions': function(){
+// 		Meteor.subscribe('oldQuestions')
+// 		return Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 5});
+// 	}
+// });
  
-Template.oldQuestions.events({
-	'click [data-action=editOption1]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option1");
-		}
-	},
-	'click [data-action=editOption2]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option2");
-		}
-	},
-	'click [data-action=editOption3]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option3");
-		}
-	},
-	'click [data-action=editOption4]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option4");
-		}
-	},
-	'click [data-action=editOption5]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option5");
-		}
-	},
-	'click [data-action=editOption6]': function() {
-		if(confirm("Are you sure?")) {
-			var play = this.play
-			Meteor.call('unAwardPoints', this._id, play)
-			Meteor.call('modifyQuestionStatus', this._id, "option6");
-		}
-	},
-	'click [data-action=permenantRemove]' : function() {
-		if(confirm("Are you sure?")) {
-			Meteor.call('unAwardPointsForDelete', this._id, this.play)
-			Meteor.call('awardInitalCoins', this._id)
-		}
-	}
-});
+// Template.oldQuestions.events({
+// 	'click [data-action=editOption1]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option1");
+// 		}
+// 	},
+// 	'click [data-action=editOption2]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option2");
+// 		}
+// 	},
+// 	'click [data-action=editOption3]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option3");
+// 		}
+// 	},
+// 	'click [data-action=editOption4]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option4");
+// 		}
+// 	},
+// 	'click [data-action=editOption5]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option5");
+// 		}
+// 	},
+// 	'click [data-action=editOption6]': function() {
+// 		if(confirm("Are you sure?")) {
+// 			var play = this.play
+// 			Meteor.call('unAwardPoints', this._id, play)
+// 			Meteor.call('modifyQuestionStatus', this._id, "option6");
+// 		}
+// 	},
+// 	'click [data-action=permenantRemove]' : function() {
+// 		if(confirm("Are you sure?")) {
+// 			Meteor.call('unAwardPointsForDelete', this._id, this.play)
+// 			Meteor.call('awardInitalCoins', this._id)
+// 		}
+// 	}
+// });
 
 // Template._adminPopover.helpers({
 // 	'option': function(){

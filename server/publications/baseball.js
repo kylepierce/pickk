@@ -16,6 +16,12 @@ Meteor.publish('activePlayers', function(gameId) {
   return Players.find({_id: {$in: teams}})
 });
 
+Meteor.publish('singleAtBat', function(gameId) {
+  check(gameId, String);
+
+  return AtBat.find({gameId: gameId, active: true}); 
+});
+
 
 Meteor.publish('atBatPlayer', function(gameId) {
   check(gameId, String);

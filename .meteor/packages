@@ -22,9 +22,9 @@ bdunnette:snapjs
 meteoric:ionic
 service-configuration
 meteorhacks:kadira
+meteortoys:allthings
 fastclick
 alanning:roles
-meteortoys:allthings
 easy:search
 aldeed:autoform
 random
@@ -94,3 +94,4 @@ jamielob:reloader
 reactive-var
 notorii:autoform-datetimepicker
 drewy:pikaday-time
+meteorhacks:aggregate

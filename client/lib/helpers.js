@@ -20,7 +20,10 @@ Template.registerHelper('userObj', function ( userId ) {
 });
 
 Template.registerHelper('messageText', function(item){
-  return item.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
+	var messageExists = item && item.message 
+	if(messageExists) {
+		return item.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
+	}
 });
 
 Template.registerHelper('isMobile', function () {

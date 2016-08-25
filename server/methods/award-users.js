@@ -12,7 +12,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 		
-		var modify = {$set: {active: false, play: answered}}
+		var modify = {$set: {active: false, outcome: answered}}
 		Questions.update({_id: questionId}, modify);
 
 		var list = []
@@ -29,7 +29,7 @@ Meteor.methods({
 			list.push(a.userId)
 			var amount = parseInt(a.wager * a.multiplier);
 			var notifyObj = {
-				type: "score",
+				type: "coins",
 				userId: a.userId,
 				gameId: a.gameId,
 				questionId: a.questionId,

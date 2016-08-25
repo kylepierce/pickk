@@ -6,7 +6,6 @@ Template.notifications.helpers({
 	}, 
 	noNotifications: function () {
 		var numberOfNotifications = this.notifications.length;
-		console.log(numberOfNotifications)
 		if (numberOfNotifications === 0){
 			return true
 		}
@@ -21,7 +20,6 @@ Template.notification.helpers({
 	},
 	noNotifications: function () {
 		var data = Template.instance()
-		console.log(this, data)
 	}
 });
 
@@ -42,10 +40,15 @@ Template.chatNotification.helpers({
 		return UserList.findOne({_id: ref})
 	},
 	groupData: function(groupId) {
-		Meteor.subscribe('singleGroup', groupId);
-		var group = Groups.findOne({_id: groupId})
-		return group
+		if (groupId !== undefined){
+			Meteor.subscribe('singleGroup', groupId);
+			return Groups.findOne({_id: groupId})
+		}
 	},
+	reactions: function(messageId){
+		Meteor.subscribe('singleMessage', messageId);
+		return Chat.findOne({_id: messageId});
+	}
 });
 
 Template.chatReaction.helpers({
@@ -53,42 +56,42 @@ Template.chatReaction.helpers({
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
-  emojiIconSrc: function (reactionName) {
-  switch(reactionName) {
-    case "dead":
-        return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
-      break;
-    case "omg":
-        return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
-      break;
-    case "fire":
-        return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
-      break;
-    case "dying":
-        return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
-      break;
-    case "hell-yeah":
-        return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
-      break;
-    case "what":
-        return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
-      break;
-    case "pirate":
-        return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
-      break;
-    case "love":
-        return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
-      break;
-    case "tounge":
-        return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
-      break;
-    case "oh-no":
-        return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
-      break;
-    case "what-the-hell":
-        return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
-      break;
-  	}
+	emojiIconSrc: function (reactionName) {
+	 switch(reactionName) {
+	   case "dead":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-01.svg';
+	     break;
+	   case "omg":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+	     break;
+	   case "fire":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg';
+	     break;
+	   case "dying":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-13.svg';
+	     break;
+	   case "hell-yeah":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg';
+	     break;
+	   case "what":
+	       return '/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg';
+	     break;
+	   case "pirate":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-24.svg';
+	     break;
+	   case "love":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-58.svg';
+	     break;
+	   case "tounge":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-86.svg';
+	     break;
+	   case "oh-no":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-93.svg';
+	     break;
+	   case "what-the-hell":
+	       return '/emoji/Full-Color/Emoji-Party-Pack-96.svg';
+	     break;
+	 	}
 	}
 });
 
@@ -137,7 +140,7 @@ Template.notification.events({
 		}
 		parms = {
 			insertedTemplate: Template.notificationOptions,
-			containerId: "notification-options",
+			containerId: "options",
 		 	event: e,
 		 	template: t,
 		}
@@ -147,15 +150,21 @@ Template.notification.events({
 
 Template.notificationOptions.events({
 	'click [data-action=reply]': function (e, t) {
-		console.log(t)
+		IonPopover.show('_replyToMessage', t.data, e.currentTarget)
+	  var senderId = t.data.senderId
+    var user = Meteor.users.findOne({_id: senderId});
+    var userName = user.profile.username
+    $('[name=messageBox]').val("@" + userName + " ")
+    $("#messageBox").focus()
+    var container = $('#options')[0]
+    container.remove();
 	}, 
 	'click [data-action=react]': function (e, t) {
-		console.log(t, t.data)
-		IonPopover.show('_reactionToMessage', t.data)
+		IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
 	}, 
 	'click [data-action=share]': function (e, t) {
-		console.log(t)
-		sAlert.success("Followed " + username + "!" , {effect: 'slide', position: 'bottom', html: true});
+		// Popover to choose where to share
+		IonPopover.show('_sharePopover', t.data, e.currentTarget);
 	}, 
 	'click [data-action=group]': function (e, t) {
 		var groupId = t.data.groupId
@@ -173,7 +182,7 @@ Template.notificationOptions.events({
 		Meteor.call('followUser', Meteor.userId(), senderId)
 	}, 
 	'click [data-action=read]': function(e, t){
-		$('#notification-options').remove();
+		$('#options').remove();
 		var notificationId = t.data._id
 		Meteor.call('removeNotification', notificationId);
 		sAlert.success("Maked as read" , {effect: 'slide', position: 'bottom', html: true});
@@ -183,7 +192,7 @@ Template.notificationOptions.events({
 Template.notificationOptions.helpers({
 	options: function(){
 		var note = Template.instance().data.type
-		var twoOption = ["score", "diamonds", "badge", "trophy", "chatReaction"] 
+		var twoOption = ["coins", "diamonds", "badge", "trophy", "chatReaction"] 
 		var threeOption = ["follower", "group"]
 		var fourOption = ["mention"]
 
@@ -207,7 +216,7 @@ Template.notificationOptions.helpers({
 	},
 	award: function () {
 		var note = Template.instance().data.type
-		var types = ["score", "diamonds", "badge", "trophy"] 
+		var types = ["coins", "diamonds", "badge", "trophy"] 
 		if(types.indexOf(note) !== -1){
 			return true
 		}
@@ -247,5 +256,18 @@ Template.notificationOptions.helpers({
 	},
 });
 
-
-
+Template.coinsNotification.helpers({
+	gameName: function (id) {
+		if (id !== undefined){
+			Meteor.subscribe('singleGameData', id)
+			var game = Games.findOne({_id: id})
+			return game
+		}
+	},
+	question: function (id) {
+		console.log("questionId", id, this)
+		Meteor.subscribe('singleQuestion', id)
+		var question = Questions.findOne({_id: id})
+		return question
+	}
+});

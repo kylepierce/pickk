@@ -13,7 +13,7 @@
           {{> heroImage item=item}}
         {{/each}}
       </div>
-
+      <div class="item item-divider" style="border: 0">Today's Games</div>
       <div class="container ten-spacing">
         {{#each game in games}}
           <div class="complete-game-card" data-action="play"> 
@@ -37,21 +37,17 @@
   </a>
 </template>
 
-<template name="singleGameInfo">  
-  {{#if baseball}}
-    {{#if inProgress}}
-      <div class="single-game-shared single-game-info">
+<template name="singleGameInfo">
+  <div class="single-game-shared single-game-info">
+    {{#if baseball}}
+      {{#if inProgress}}
         {{> gameInProgressInfo game=game}}
-      </div>
+      {{/if}}
     {{/if}}
-  {{else}}
-
-  {{/if}}
-  {{#if future}}
-    <div class="single-game-shared single-game-info">
+    {{#if future}}
       {{> futureGameInfo game=game}}
-    </div>
-  {{/if}}
+    {{/if}}
+  </div>
 </template>
 
 <template name="singleGameCTA">
@@ -74,7 +70,7 @@
       {{> playersOnBase base=game.playersOnBase}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> count users=game.users }}
+      {{> count gameId=game._id }}
     </div>
 <!--     <div class="col-md-25 single-game-section">
       {{> down}}
@@ -94,11 +90,9 @@
 </template>
 
 <template name="count">
-  {{#if userPlaying users}}
-    Playing
-  {{else}}
-    <strong>Join</strong>
-  {{/if}} 
+  {{#with count}}
+    <span class="inning">{{ballCount}} - {{strikeCount}}</span>
+  {{/with}}
 </template>
 
 <template name="outDisplay">
@@ -138,9 +132,9 @@
 <template name="singleGameCard">
   <ul class="single-game-card">
 
-    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
-
     {{> teamBlock id=game.away.id abbr=game.away.abbr name=game.away.name runs=game.scoring.away.runs }}
+
+    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
 
   </ul>
 </template>

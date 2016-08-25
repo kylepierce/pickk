@@ -44,19 +44,16 @@ Template.pendingQuestion.helpers({
 // Select correct answer and award points to those who guessed correctly.
 Template.pendingQuestion.events({
 	'click [data-action=removeQuestion]' : function(e, t) {
-		console.log(this, e, t)
 		if(confirm("Are you sure?")) {
 			Meteor.call('removeQuestion', this.q._id)
 		}
 	},
 	'click [data-action=reactivate]' : function(e, t) {
-		console.log(this.q, e, t)
 		if(confirm("Are you sure?")) {
 			Meteor.call('reactivateStatus', this.q._id)
 		}
 	},
 	'click [data-action=playSelection]': function (e, t) {
-		console.log(this, this.q._id, this.o.option)
 		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
 	}
 });
