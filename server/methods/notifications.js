@@ -7,7 +7,6 @@ createPendingNotification = function(o) {
 };
 
 Meteor.methods({
-
   'notifyTrophyAwarded': function(a) {
     check(a, Object);
 
@@ -26,4 +25,9 @@ Meteor.methods({
     check(notifyId, String);
     Notifications.update({_id: notifyId}, {$set: {read: true}})
   },
+  'questionData': function (id) {
+    check(id, String);
+    
+    return question.que
+  }
 })

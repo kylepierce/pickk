@@ -10,7 +10,6 @@ Template.singleGameAwards.onCreated(function () {
 Template.singleGameAwards.rendered = function() {
   let self = this;
 
-  console.log(self)
   // Logic to increment / decrement animate coics
   this.coinsVar.set(parseInt(GamePlayed.findOne().coins));
   this.coinsFinal = 0;
@@ -106,7 +105,7 @@ Template.home.helpers({
     return Games.find({}).fetch();
   },
   notifications: function () {
-    return Notifications.find({}).fetch();
+    return Notifications.find({}, {sort: {dateCreated: -1}, limit: 3}).fetch();
   },
   player: function () {
     return AtBat.findOne()
@@ -446,7 +445,6 @@ Template.submitButton.events({
       // countdown.start(function() {
       //   Meteor.call('playerInactive', c.userId, c.questionId);
       // })
-      console.log(c)
       setTimeout(function() {
         Meteor.call('questionAnswered', c);
       }, 250);

@@ -40,5 +40,5 @@ Meteor.publish('singleGameData', function(id) {
 
 Meteor.publish('singleQuestion', function(id) {
   check(id, String);
-  return Questions.find({_id: id})
+  return Questions.find({_id: id}, {fields: {_id: 1, que: 1}})
 })

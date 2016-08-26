@@ -264,9 +264,9 @@ Template.coinsNotification.helpers({
 			return game
 		}
 	},
-	question: function (id) {
+	questionTitle: function (id) {
 		Meteor.subscribe('singleQuestion', id)
-		var question = Questions.findOne({_id: id})
-		return question
+		var question = Questions.findOne({_id: id});
+		return question.que
 	}
 });
