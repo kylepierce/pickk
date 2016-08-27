@@ -36,3 +36,7 @@ div.hopscotch-bubble .hopscotch-bubble-content{
     height: 50px!important;
     width: 50px!important;
 }
+
+.onboarding-extra-space {
+	margin-bottom: 100px;
+}

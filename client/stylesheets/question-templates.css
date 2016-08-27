@@ -90,7 +90,18 @@
 	margin: 5px 0;
 }
 
-
+.fast {
+	-webkit-animation-fill-mode: both;
+	-moz-animation-fill-mode: both;
+	-ms-animation-fill-mode: both;
+	-o-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-duration: .5s!important;
+	-moz-animation-duration: .5s!important;
+	-ms-animation-duration: .5s!important;
+	-o-animation-duration: .5s!important;
+	animation-duration: .5s!important;
+}
 
 
 

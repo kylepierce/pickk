@@ -23,6 +23,8 @@ Template.singleAnswer.helpers({
 	title: function ( option ){
 		if (option === "Removed" || option === "deleted") {
 			return "Removed"
+		} else if (option === true || option === false) {
+			return option
 		}
 		var options = this.q.options
 		var selected = options[option]

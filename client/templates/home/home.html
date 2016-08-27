@@ -1,12 +1,6 @@
 <template name="home">
 	{{> homeLayoutHeader}}
 	{{#contentFor "headerTitle"}}
-<!-- 		<h1 class="title white-text-header" style="font-size: 1.2em;">
-			<i class="fa fa-diamond"></i>
-		  <strong>{{diamonds}}</strong> 
-		  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
-    <strong>{{gameCoins}}</strong>
-		</h1> -->
 		{{> singleGameAwards}}
 	{{/contentFor}}
 
@@ -101,8 +95,8 @@
 </template>
 
 <template name="binaryQuestion">
-	<div>
-		<div class="question larger-card">
+	<div class="animated fast slideInLeft">
+		<div class="question larger-card ">
 			<h4>Free Pickk: {{q.que}}</h4>
 		</div>
 		<div id="binaryOptions" class="ten-spacing">
@@ -114,7 +108,7 @@
 </template>
 
 <template name="eventQuestion">
-	<ul class="single-question">
+	<ul class="single-question animated fast slideInLeft onboarding-extra-space ">
 		{{#each o in options q}}
 			{{> option o=o q=q t=t}}
 		{{/each}}

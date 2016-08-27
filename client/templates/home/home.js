@@ -436,8 +436,8 @@ Template.submitButton.events({
         backdrop: true
       });
     } else {
-      $(".container-item").removeClass("slideInLeft")
-      $(".container-item").addClass("slideOutRight")
+      $(".single-question").removeClass("slideInLeft")
+      $(".single-question").addClass("slideOutRight")
 
       Session.set('lastId', q._id);
       Session.set('lastAnswer', o.option);

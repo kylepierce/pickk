@@ -40,7 +40,7 @@ Template.newUser.onRendered(function () {
 			},
 			{
 				title: "Submit!",
-				content: "Once you have picked the play and the wager click submit. You must be quick! Options will disappear once the ball is snapped. <br><br><strong>Click Submit!</strong>",
+				content: "Once you have picked the play and the wager click submit.<br><br><strong>Click Submit!</strong>",
 				target: document.querySelector("#triple"),
 				placement: "top",
 				yOffset: "-60",

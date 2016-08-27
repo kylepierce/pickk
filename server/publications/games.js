@@ -12,17 +12,18 @@ Meteor.publish('singleGame', function(_id) {
 Meteor.publish('activeGames', function(days) {
   check(days, Number);
   
-  const today = moment().startOf('day').toDate();
-  const tomorrow = moment().startOf('day').add(days, "days").toDate(); // today and tomorrow
+  var today = moment().startOf('day').toDate();
+  var tomorrow = moment().startOf('day').add(days, "days").toDate(); // today and tomorrow
 
   var selector = {$or: [{live: true}, {scheduled: {$gt: today, $lt: tomorrow}}]};
-  var parms = {sort: {scheduled: 1}, fields: {live: 1, complete: 1, name: 1, ball: 1, strike: 1, tv: 1, gameDate: 1, scheduled: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1, football: 1}}
-  
-  // var tester = isTester();
-  // if ( ! tester) {
-  //   selector.public = true;
-  // }
+  var parms = {sort: {live: -1, scheduled: 1}, fields: {live: 1, complete: 1, name: 1, ball: 1, strike: 1, tv: 1, gameDate: 1, scheduled: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1, football: 1}}
 
+  return Games.find(selector, parms);
+});
+
+Meteor.publish('liveGames', function() {
+  var selector = {live: true}
+  var parms = {sort: {scheduled: 1}, fields: {live: 1, complete: 1, name: 1, ball: 1, strike: 1, tv: 1, gameDate: 1, scheduled: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1, football: 1}}
   return Games.find(selector, parms);
 });
 
