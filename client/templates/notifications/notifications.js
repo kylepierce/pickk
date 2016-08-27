@@ -172,7 +172,7 @@ Template.notificationOptions.events({
 	}, 
 	'click [data-action=user]': function (e, t) {
 		var userId = t.data.userId
-		Router.go('/user-profile/' + userId);
+		Router.go('/user-profile/' + senderId);
 	}, 
 	'click [data-action=follow]': function (e, t) {
 		var senderId = t.data.senderId
@@ -197,16 +197,16 @@ Template.notificationOptions.helpers({
 		var fourOption = ["mention"]
 
 		numberOfOptions = function (array){
-			if( array.indexOf(note) !== -1 )
-				{return true}
+			if( array.indexOf(note) !== -1 ){return true}
 		}
 
 		if(numberOfOptions(fourOption)){
 			return "col-md-25"
 		} else if (numberOfOptions(threeOption)){
 			return "col-md-33"
-		} else if (numberOfOptions(twoOption)){}
+		} else if (numberOfOptions(twoOption)){
 			return "col-50"
+		}	
 	},
 	mention: function (template) {
 		var note = Template.instance().data.type

@@ -112,6 +112,12 @@ Template.home.helpers({
   player: function () {
     return AtBat.findOne()
   },
+  gameCompleted : function () {
+    var game = Games.findOne();
+    if (game.live === false && game.completed === true) {
+      return true 
+    } 
+  },
   isLive: function () {
     var game = Games.findOne();
     if (game.live === true && game.completed === false) {

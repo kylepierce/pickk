@@ -39,12 +39,12 @@
 						{{#each question in commericalQuestions}}
 							{{> commericalQuestion q=question}}
 						{{/each}}
-					{{/if}}
-
-					{{#if questions}}
-						{{#each question in questions}}
-							{{> singleQuestion q=question}}
-						{{/each}}
+					{{else}}
+						{{#if questions}}
+							{{#each question in questions}}
+								{{> singleQuestion q=question}}
+							{{/each}}
+						{{/if}}
 					{{/if}}
 				
 					{{#if noQuestions}}
