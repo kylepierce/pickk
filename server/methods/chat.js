@@ -99,7 +99,7 @@ Meteor.methods({
 		check(messagePosted, String);
 		check(messageId, String);
 
-		console.log(author, messagePosted, messageIds)
+		console.log(author, messagePosted, messageId)
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
