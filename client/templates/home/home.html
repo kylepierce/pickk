@@ -9,20 +9,21 @@
 	    {{#each game in games}}
 				{{> singleGameInfo game=game}}
 			{{/each}}
+
 			<div id="notification-center" class="ten-spacing">
-				<div class="single-notification">
-					{{#each game in games}}
+				{{#each game in games}}
+					<div class="single-notification">
 						{{> singleGameCard game=game}}
-					{{/each}}
-				</div>
+					</div>
+				{{/each}}
 
 <!-- 				<div class="single-notification">
 					{{#if player}}
-							{{> playerCard}}
+						{{> playerCard}}
 					{{/if}}
-				</div >
+				</div> -->
 
-				{{#each note in notifications}}
+<!-- 				{{#each note in notifications}}
 					<div class="single-notification">
 						{{> notification note=note}}
 					</div>

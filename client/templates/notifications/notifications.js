@@ -171,7 +171,7 @@ Template.notificationOptions.events({
 		Router.go('/groups/' + groupId);
 	}, 
 	'click [data-action=user]': function (e, t) {
-		var userId = t.data.userId
+		var senderId = t.data.senderId
 		Router.go('/user-profile/' + senderId);
 	}, 
 	'click [data-action=follow]': function (e, t) {

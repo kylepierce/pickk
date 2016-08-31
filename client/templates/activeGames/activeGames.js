@@ -88,7 +88,7 @@ Template.teamBlock.helpers({
 
 Template.singleGameInfo.helpers({
   inProgress: function () {
-    if (this.game.status === "inprogress"){
+    if (this.game.live === true){
       return true
     }
   },
@@ -157,7 +157,7 @@ Template.futureGameInfo.helpers({
 
 Template.singleGameCTA.helpers({
   inProgress: function () {
-    if (this.game.status === "inprogress"){
+    if (this.game.live === true){
       return true
     }
   },

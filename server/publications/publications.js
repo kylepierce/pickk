@@ -13,7 +13,16 @@ Meteor.publish("userData", function() {
   if (!this.userId) {
     return this.ready();
   }
-  return UserList.find(this.userId);
+  return UserList.find(this.userId,
+    {
+      fields: {
+        'pendingNotifications': 1
+      }
+    });
+});
+
+Meteor.publish('unreadNotifications', function() {
+  return Notifications.find({_id: this.userId, read: false})  
 });
 
 Meteor.publish('unreadNotifications', function() {
@@ -29,6 +38,7 @@ Meteor.publish('gameNotifications', function(gameId) {
   check(gameId, String);
   return Notifications.find({gameId: gameId, read: false})  
 });
+
 
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
@@ -101,7 +111,7 @@ Meteor.publish('gamesPlayed', function() {
 Meteor.publish('findSingle', function(id) {
   check(id, String);
 
-  var fields = {fields: {'profile': 1,'_id': 1}}
+  var fields = {fields: {'profile': 1,'_id': 1, 'pendingNotifications': 1}}
   return UserList.find({_id: id}, fields);
 });
 

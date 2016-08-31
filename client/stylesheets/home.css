@@ -35,6 +35,38 @@
 	font-weight: bold;
 }
 
+.s-alert-info{
+	background-size: cover;
+	background-image: url('coins3.png');
+	background-color: transparent;
+	color: black;
+	height: 100px;
+}
+
+.s-alert-info .s-alert-box-inner {
+	padding: 4px;
+	margin-top: 10px;
+	background-color: rgba(222,148,0,0.75)!important;
+	-webkit-box-shadow: 1px 0px 18px 8px rgba(222,148,0,0.75);
+	-moz-box-shadow:    1px 0px 18px 8px rgba(222,148,0,0.75);
+	box-shadow:         1px 0px 18px 8px rgba(222,148,0,0.75);
+}
+
+.s-alert-warning {
+	padding: 10px!important;
+}
+.s-alert-warning > .s-alert-box-inner > p {
+	padding: 0!important;
+	width: 90%;
+}
+
+.diamond {
+	  float: right;
+    width: 70%;
+    margin-right: 10px!important;
+    padding: 0!important;
+}
+
 /*.next-play{
   max-width: 100%;
   margin-top: 20px;
@@ -117,9 +149,9 @@
 
 .hidden {
 	display: none
-}
+}*/
 
-.binary-option{
+/*.binary-option{
 	width: 50%;
 	float: left;
 	font-size: 1.4em;
@@ -132,9 +164,9 @@
 	border: 1px solid #CCC;
 	border-top-width: 0;
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
-}
+}*/
 
-.binary + input[type=radio]:checked{
+/*.binary + input[type=radio]:checked{
 	position: relative;
 	border-color: #E6B400;
   	background-color: #E6B400;
@@ -144,47 +176,9 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-}
-
-.popup-body {
-	text-align: center;
-}
-
-.s-alert-info{
-	background-size: cover;
-	background-image: url('coins3.png');
-	background-color: transparent;
-	color: black;
-	height: 100px;
-}
-
-.s-alert-info .s-alert-box-inner {
-	padding: 4px;
-	margin-top: 10px;
-	background-color: rgba(222,148,0,0.75)!important;
-	-webkit-box-shadow: 1px 0px 18px 8px rgba(222,148,0,0.75);
-	-moz-box-shadow:    1px 0px 18px 8px rgba(222,148,0,0.75);
-	box-shadow:         1px 0px 18px 8px rgba(222,148,0,0.75);
-}
-
-.s-alert-warning {
-	padding: 10px!important;
-}
-.s-alert-warning > .s-alert-box-inner > p {
-	padding: 0!important;
-	width: 90%;
-}
-
-.diamond {
-	  float: right;
-    width: 70%;
-    margin-right: 10px!important;
-    padding: 0!important;
-}
-
-
-.border {
-	border-width: 10px;
-	-moz-border-image:url(http://i.imgur.com/GziKo.gif)   8 0 stretch!important;
-  -webkit-border-image:url(http://i.imgur.com/GziKo.gif)   8 0 stretch!important;
 }*/
+
+/*.popup-body {
+	text-align: center;
+}*/
+

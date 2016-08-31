@@ -100,14 +100,13 @@ Template.home.rendered = function () {
 };
 
 Template.home.helpers({
-  gameInfo: function () {
-    return Games.find({}).fetch();
-  },
   games: function () {
-    return Games.find({}).fetch();
+    var $game = Router.current().params.id
+    return Games.find({_id: $game}).fetch();
   },
   notifications: function () {
-    return Notifications.find({}, {sort: {dateCreated: -1}, limit: 3}).fetch();
+    var $game = Router.current().params.id
+    return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
   },
   player: function () {
     return AtBat.findOne()
@@ -153,6 +152,71 @@ Template.home.helpers({
     if (questions === 0 ){
       return true
     }
+  },
+  scoreMessage: function() {
+    var user = Meteor.user();
+    var notifications = user && user.pendingNotifications || [];
+
+    notifications.forEach(function(post) {
+      var id = post._id
+      var message = post.message
+      var shareMessage = "+!Meow " + post.shareMessage
+      var sharable = post.sharable
+      Session.set("shareMessage", shareMessage);
+      if (post.type === "mention" && post.read === false) {
+        Meteor.call('readNotification', id);
+        sAlert.warning('<em>You were mentioned in chat:</em> <strong>"' + message + '"</strong>', {
+          effect: 'stackslide',
+          html: true
+        });
+      } else if (post.type === "score" && post.read === false) {
+        Meteor.call('readNotification', id);
+        if (sharable == true) {
+          var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'
+
+          sAlert.info(message, {effect: 'stackslide', html: true});
+        } else {
+          sAlert.info(message, {effect: 'stackslide', html: true});
+        }
+      } else if (post.type === "diamonds" && post.tag == null && post.read === false) {
+        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'
+        Meteor.call('readNotification', id);
+
+        sAlert.warning(message, {effect: 'stackslide', html: true});
+
+      } else if (post.tag == "leader") {
+        IonPopup.show({
+          title: 'Leaderboard Winnings!',
+          template: message,
+          buttons: [{
+            text: 'Got It!',
+            type: 'button-positive',
+            onTap: function() {
+              Meteor.call('readNotification', id);
+              $('body').removeClass('popup-open');
+              $('.backdrop').remove();
+              Blaze.remove(this.view);
+            }
+          }]
+        });
+      } else if (post.tag == "exchange") {
+        message = '<img style="max-width:100%;" src="/storeowner.png">' + message
+        IonPopup.show({
+          title: 'Diamond Exchange',
+          template: message,
+          buttons: [{
+            text: 'Got It!',
+            type: 'button-positive',
+            onTap: function() {
+              Meteor.call('readNotification', id);
+              $('body').removeClass('popup-open');
+              $('.backdrop').remove();
+              Blaze.remove(this.view);
+            }
+          }]
+        });
+      }
+    });
   }
 });
 
@@ -435,7 +499,7 @@ Template.submitButton.events({
       wager: w,
     });
 
-    if (!hasEnoughCoins) {
+    if (!hasEnoughCoins && t !== "free-pickk") {
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,
