@@ -256,6 +256,17 @@ Meteor.methods({
 
 		Answers.find({questionId: questionId}).forEach(awardPointsBack);
 	},
+	'readNotification': function(notifyId) {
+    check(notifyId, String);
+
+    var userId = Meteor.userId();
+    UserList.update({_id: userId},
+      {
+        $pull: {
+          pendingNotifications: {_id: notifyId}
+        }
+    })
+  },
 });
 
 // Remove Coins from the people who answered it "correctly", the answer changed.
