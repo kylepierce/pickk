@@ -56,6 +56,27 @@ Template.mainLayout.events({
 });
 
 Template.sideMenuContent.helpers({
+  diamonds: function () {
+
+    var thisWeek = moment().week()
+    var thisWeek = thisWeek - 1
+    var day = moment().day()
+    if (day < 2){
+      var thisWeek = thisWeek - 1
+    }
+    var userId = Meteor.userId();
+
+    Meteor.call("thisWeeksDiamonds", userId, thisWeek, function (error, result) {
+      Session.set('weekDiamonds', result);
+    })
+    var thisWeeksDiamonds = Session.get('weekDiamonds');
+
+    if (!thisWeeksDiamonds){
+      return 0
+    } else {
+      return thisWeeksDiamonds
+    }
+  },
   pendingNotifications: function(){
     var user = Meteor.userId();
     var number = Notifications.find({userId: user, read: false})

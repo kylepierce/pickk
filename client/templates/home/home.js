@@ -155,32 +155,17 @@ Template.home.helpers({
   },
   scoreMessage: function() {
     var user = Meteor.user();
-    var notifications = user && user.pendingNotifications || [];
+    var notifications = Notifications.find({read: false});
 
     notifications.forEach(function(post) {
       var id = post._id
-      var message = post.message
-      var shareMessage = "+!Meow " + post.shareMessage
-      var sharable = post.sharable
-      Session.set("shareMessage", shareMessage);
-      if (post.type === "mention" && post.read === false) {
-        Meteor.call('readNotification', id);
-        sAlert.warning('<em>You were mentioned in chat:</em> <strong>"' + message + '"</strong>', {
-          effect: 'stackslide',
-          html: true
-        });
-      } else if (post.type === "score" && post.read === false) {
-        Meteor.call('readNotification', id);
-        if (sharable == true) {
-          var message = '<div style="width: 60%; float: left;">' + message + '</div><button data-action="shareResult" class="button button-balanced">Share</button>'
-
-          sAlert.info(message, {effect: 'stackslide', html: true});
-        } else {
-          sAlert.info(message, {effect: 'stackslide', html: true});
-        }
-      } else if (post.type === "diamonds" && post.tag == null && post.read === false) {
-        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + message + '</p>'
-        Meteor.call('readNotification', id);
+      var message = post._id
+      if (post.type === "coins" && post.read === false) {
+        Meteor.call('removeNotification', id);
+        sAlert.info("You Won " + post.value + " coins!", {effect: 'stackslide', html: true});
+      } else if (post.type === "diamonds" && post.read === false) {
+        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
+        Meteor.call('removeNotification', id);
 
         sAlert.warning(message, {effect: 'stackslide', html: true});
 
@@ -192,7 +177,7 @@ Template.home.helpers({
             text: 'Got It!',
             type: 'button-positive',
             onTap: function() {
-              Meteor.call('readNotification', id);
+              Meteor.call('removeNotification', id);
               $('body').removeClass('popup-open');
               $('.backdrop').remove();
               Blaze.remove(this.view);
@@ -208,7 +193,7 @@ Template.home.helpers({
             text: 'Got It!',
             type: 'button-positive',
             onTap: function() {
-              Meteor.call('readNotification', id);
+              Meteor.call('removeNotification', id);
               $('body').removeClass('popup-open');
               $('.backdrop').remove();
               Blaze.remove(this.view);
@@ -312,8 +297,9 @@ Template.singleGameAwards.helpers({
   },
   diamonds: function () {
     // return Template.instance().diamondsVar.get();
-    var user = Meteor.user()
-    return user.profile.diamonds;
+    // var user = Meteor.userId();
+    // return user.profile.diamonds;
+    return GamePlayed.findOne().diamonds;
   },
 });
 

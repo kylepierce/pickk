@@ -17,17 +17,21 @@
 					</div>
 				{{/each}}
 
-<!-- 				<div class="single-notification">
-					{{#if player}}
+				<div class="single-notification">
+					{{#with player}}
 						{{> playerCard}}
-					{{/if}}
-				</div> -->
+					{{/with}}
+				</div>
 
 <!-- 				{{#each note in notifications}}
 					<div class="single-notification">
 						{{> notification note=note}}
 					</div>
 			  {{/each}} -->
+			  <div class="single-notification">
+					<button class="button" style="width: 100%" data-action="game-leaderboard">Leaderboard</button>
+  				<button class="button" style="width: 100%; margin-top: -4px;" data-action="previous-answers">Previous Answers</button>
+			  </div>
 
 			</div>
 			<div class="container ten-spacing">

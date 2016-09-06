@@ -18,14 +18,16 @@ Meteor.methods({
 		}
 	},
 
-	'loadWeekLeaderboard': function(beta) {
+	'loadWeekLeaderboard': function() {
 		check(beta, Boolean);
+		// Find all the games during this week
 		
-		if(beta === true){
-			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$eq: "beta"}}
-		} else {
-			var selector = {"profile.diamonds": {$gt: 0}, "profile.role": {$ne: "beta"}}
-		}
+		// Find all of the users from each game
+
+		// Find how many diamonds each user recieved
+
+		// Sort and display
+
 		var fields = {fields: {'profile.username': 1, 'profile.diamonds': 1, 'profile.avatar': 1, '_id': 1}}
 		return UserList.find(selector, fields).fetch();
 	},

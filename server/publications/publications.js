@@ -21,19 +21,6 @@ Meteor.publish("userData", function() {
     });
 });
 
-Meteor.publish('oldPendingNotifications', function () {
-  return UserList.find(this.userId,
-    {
-      fields: {
-        'pendingNotifications': 1
-      }
-    });
-});
-
-Meteor.publish('unreadNotifications', function() {
-  return Notifications.find({_id: this.userId, read: false})  
-});
-
 Meteor.publish('unreadNotifications', function() {
   return Notifications.find({userId: this.userId, read: false})  
 });
