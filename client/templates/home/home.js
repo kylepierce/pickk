@@ -184,7 +184,7 @@ Template.home.helpers({
             }
           }]
         });
-      } else if (post.tag == "exchange") {
+      } else if (post.source == "Exchange") {
         message = '<img style="max-width:100%;" src="/storeowner.png">' + message
         IonPopup.show({
           title: 'Diamond Exchange',

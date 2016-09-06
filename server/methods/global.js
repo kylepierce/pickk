@@ -10,7 +10,6 @@ Meteor.methods({
       	total: {$sum: '$diamonds'}} }
     );
     var obj = diamonds.filter(function ( obj ) {
-      console.log(obj, week)
     	return obj._id === week;
 		})[0];
 		
