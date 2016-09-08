@@ -1,17 +1,29 @@
 Template.weekLeaderboard.helpers({
-	'player': function(){
-		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", false)
+	'players': function(){
+		var thisWeek = moment().week()
+	  var day = moment().day()
+	  if (day < 2){
+	    var thisWeek = thisWeek - 1
+	  }
+		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", thisWeek)
 		var leaderboard = Fetcher.get("weekLeaderboard")
-		var fixed = _.sortBy(leaderboard, function(obj){return obj.profile.diamonds})
-		var list = fixed.reverse()
-		return _.first(list, 25)
+		return leaderboard
 	},
-	'diamonds': function(diamonds){
-		if(diamonds == undefined){
-			return 0
-		}
+	'date': function() {
+		var thisWeek = moment().week()
+	  var day = moment().day()
+	  if (day < 2){
+	    var thisWeek = thisWeek - 1
+	  }
+	  var startDay = moment().day("Tuesday").week(thisWeek)._d;
+		var endDay = moment().day("Monday").week(thisWeek+1)._d;
+		var startDay = moment(startDay).format("MMM Do")
+		var endDay = moment(endDay).format("MMM Do")
+	  
+	  return startDay + " - " + endDay 
 	},
-	'username': function(){
-   	 return this.profile.username
+	'username': function(userId){
+		var user = UserList.findOne({_id: userId})
+   	return user.profile.username
 	}
 }); 

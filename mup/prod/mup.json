@@ -11,9 +11,9 @@
       // server specific environment variables
     }
   ],
-  "buildOptions": { // optional
-    "debug": true
-  },
+  // "buildOptions": { // optional
+  //   "debug": true
+  // },
 
   // Install MongoDB on the server. Does not destroy the local MongoDB on future setups
   // "setupMongo": true,
