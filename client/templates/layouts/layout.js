@@ -59,7 +59,6 @@ Template.sideMenuContent.helpers({
   diamonds: function () {
 
     var thisWeek = moment().week()
-    var thisWeek = thisWeek - 1
     var day = moment().day()
     if (day < 2){
       var thisWeek = thisWeek - 1
