@@ -4,5 +4,9 @@
       "clientId": "1590919307873865",
       "secret": "8338d170ffd388e16a4d348c209de6fa"
     }
+  },
+  "intercom": {
+    "secret": "t5Pu7OBMf62gw4PWnBlwoVGaMT5bvz1sc58R4PU7",
+    "apikey": "2625df90eee0d3ef7c96a18d79f09831d76cbfb1"
   }
 }

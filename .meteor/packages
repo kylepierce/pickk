@@ -95,4 +95,4 @@ reactive-var
 notorii:autoform-datetimepicker
 drewy:pikaday-time
 meteorhacks:aggregate
-dispatch:intercom
+verso:intercom@1.4.1

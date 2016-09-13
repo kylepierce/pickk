@@ -52,3 +52,8 @@ App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
+
+App.configurePlugin("branch-cordova-sdk", {
+    URI_SCHEME : "pickk",
+    BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
+});
