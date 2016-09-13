@@ -1,9 +1,30 @@
-// IntercomSettings.userInfo = function (user, info) {
-//   if (!user.intercomHash) {
-//     return false; // the hash isn't loaded to the users collection yet. come back later.
-//   }
+document.addEventListener('deviceready', function () {
+  Meteor.startup(function () {
+    Accounts.onLogin(function() {
+      initIntercom();
+      enableIntercomNotifications();
+    });
+  });
+}, false);
 
-//   info.name = user.profile.firstName + " " + user.profile.lastName;
+initIntercom = function () {
+  var user = Meteor.user();
 
-//   return true;
-// };
+  var data = {};
+  data.userId = user._id;
+  if (user.emails && user.emails[0] && user.emails[0].address) {
+    data.email = user.emails[0].address;
+  }
+  if (user.profile && user.profile.firstName && user.profile.lastName) {
+    data.name = user.profile.firstName + " " + user.profile.lastName;
+  }
+
+  intercom.registerIdentifiedUser(data);
+  intercom.updateUser(data);
+  console.log("Connections with Intercom has been established", data);
+};
+
+enableIntercomNotifications = function () {
+  intercom.registerForPush();
+  console.log("Intercom notifications is allowed");
+};
