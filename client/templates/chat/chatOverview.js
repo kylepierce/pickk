@@ -2,12 +2,13 @@ Template.chatRoom.created = function() {
   this.autorun(function() {
     var userId = Meteor.userId()
     var groupId = Router.current().params._id || Session.get('chatGroup') || null;
-    Meteor.subscribe("chatMessages", groupId, Session.get('chatLimit'));
-    Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+    var chatLimit = Session.get('chatLimit');
+    Meteor.subscribe("chatMessages", groupId, chatLimit);
+    // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
     Meteor.subscribe("chatMessagesCount", groupId);
-    Meteor.subscribe('findUsersInGroup', groupId);
-    Meteor.subscribe('usersGroups', userId)
-    Meteor.subscribe('chatUsersList', groupId);
+    // Meteor.subscribe('findUsersInGroup', groupId);
+    // Meteor.subscribe('usersGroups', userId)
+    Meteor.subscribe('chatUsersList', chatLimit, groupId);
   }.bind(this));
 };
 
@@ -323,20 +324,20 @@ Template.chatRoom.helpers({
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
 
     // Find the chat messages from this group.
-    var chatArray = [];
+    // var chatArray = [];
 
     // Loop over all the messages and grab the user id. 
     // This is so we can limit the number of users we need to return. 
-    for (var i = 0; i < chat.length; i++) {
-      var user = chat[i];
-      var userId = user.user;
-      var userExists = chatArray.indexOf(userId);
-      if (userExists == -1) {
-        chatArray.push(userId);
-      }
-    }
+    // for (var i = 0; i < chat.length; i++) {
+    //   var user = chat[i];
+    //   var userId = user.user;
+    //   var userExists = chatArray.indexOf(userId);
+    //   if (userExists == -1) {
+    //     chatArray.push(userId);
+    //   }
+    // }
 
-    Meteor.subscribe('chatUsers', chatArray);
+    // Meteor.subscribe('chatUsers', chatArray);
 
     return chat
     

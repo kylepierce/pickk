@@ -15,33 +15,38 @@ Meteor.publish("chatMessagesCount", function(groupId) {
 });
 
 // Hacky way to load chat users
-Meteor.publish('chatUsers', function(id) {
-  check(id, Array);
+// Meteor.publish('chatUsers', function(id) {
+//   check(id, Array);
 
-  var fields = { fields: {
-    'profile.username': 1,
-    'profile.avatar': 1,
-    'services': 1,
-    '_id': 1
-  }}
-  return UserList.find({_id: {$in: id}}, fields)
-});
+//   var fields = { fields: {
+//     'profile.username': 1,
+//     'profile.avatar': 1,
+//     'services': 1,
+//     '_id': 1
+//   }}
+//   return UserList.find({_id: {$in: id}}, fields)
+// });
 
 // "Improved way"
-Meteor.publish('chatUsersList', function(groupId) {
+Meteor.publish('chatUsersList', function(limit, groupId) {
+  check( limit, Match.Maybe(Number) );
   check( groupId, Match.Maybe(String) );
 
   groupId = groupId || null;
+  limit = limit + 10
 
-  var messages = Chat.find({group: groupId}, {fields: {user: 1}},{ limit: 10}).fetch();
+  var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
+  console.log(messages)
   var userIds = _.chain(messages).pluck("user").uniq().value();
 
-  var users = UserList.find({_id: {$in: userIds}}, {
+  var users = UserList.find({_id: {$in: userIds}}, { 
+    limit: limit,
     fields: {
       'profile.username': 1,
       'profile.avatar': 1,
+      'services': 1,
       '_id': 1
-    }
+    }, 
   });
   return users;
 });
