@@ -9,5 +9,11 @@
   },
   "dependencies": {
     "mupx": "^1.5.3"
+  },
+  "devDependencies": {
+    "mkpath": "^1.0.0",
+    "node-version-compare": "^1.0.1",
+    "plist": "^2.0.1",
+    "xml2js": "^0.4.17"
   }
 }
