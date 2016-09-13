@@ -13,6 +13,7 @@
 			{{> otherQuestions}}
 			{{> activeQuestions}}
 			{{> pendingQuestions}}
+<!-- 			{{> oldQuestions}} -->
 		{{/ionContent}}
 	{{/ionView}}
 </template>
@@ -75,12 +76,14 @@
 </template>
 
 <template name="pendingQuestions">
-	<h3>Pending Questions</h3>
-	<ul class="pending-questions">
-	{{#each q in questions}}
-		{{> pendingQuestion q=q}}
-	{{/each}}
-	</ul>
+	<div class="panel">
+		<h3>Pending Questions</h3>
+		<ul class="pending-questions">
+			{{#each q in questions}}
+				{{> pendingQuestion q=q}}
+			{{/each}}
+		</ul>
+	</div>
 </template>
 
 <template name="pendingQuestion">
@@ -96,6 +99,27 @@
 	</li>
 </template>
 
+<template name="oldQuestions">
+	<h3>Old Questions</h3>
+	<ul class="pending-questions">
+		{{#each q in questions}}
+			{{> oldQuestion q=q}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="oldQuestion">
+	<li class="panel"> 
+		<h4>{{q.que}}</h4>
+		<div>
+			<button data-action="removeQuestion" class="col-md-50 button button-assertive">Remove question</button>
+			<button data-action="reactivate" class="col-md-50 button button-balanced">Reactivate question</button>
+		</div>
+		{{#each o in questionOptions q}}
+			{{> selectOption o=o q=q}}
+		{{/each}}
+	</li>
+</template>
 
 <template name="selectOption">
 	<button data-action="playSelection" class="col-md-50" value="{{o.option}}">

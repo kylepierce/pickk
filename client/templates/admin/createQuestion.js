@@ -21,9 +21,7 @@ Template.createQuestion.events({
 			commercial: true
 		}
 
-		console.log(this, e, t, q)
-
-		// Meteor.call("questionPush", gameId, question)
+		// Meteor.call("questionPush", q.gameId, )
 		// Meteor.call("emptyInactive", gameId, question)
 		Meteor.call('insertQuestion', q);
  
@@ -58,7 +56,7 @@ Template.createQuestion.events({
 		Meteor.call('insertQuestion', q);
 	},
 'click [data-action=loop]': function () {
-		var down = 4
+		var down = 6
 		var downCounter = 1
 		var yards = 6
 		var yardsCounter = 1
@@ -396,7 +394,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+							2.9, 3.61, 
 							2.9, 3.61, 
 							2.2, 4.81, 
 							12.9, 15.61)
@@ -405,7 +403,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(2.2 * 2), (4.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							6.9, 12.61)
@@ -414,7 +412,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(5.2 * 2), (9.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							4.9, 7.61)
@@ -423,7 +421,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(8.9 * 2), (13.61 * 2), 
+							2.9, 4.61, 
 							2.9, 4.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -432,7 +430,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (15.61 * 2), 
+							3.9, 5.61, 
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -446,7 +444,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+							2.9, 3.61, 
 							2.9, 3.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -455,7 +453,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(3.2 * 2), (5.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							6.9, 8.61)
@@ -464,7 +462,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(5.2 * 2), (9.81 * 2), 
+							2.2, 4.81, 
 							2.2, 4.81, 
 							2.2, 4.81, 
 							4.9, 7.61)
@@ -473,7 +471,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(9.9 * 2), (14.61 * 2), 
+							2.9, 4.61, 
 							2.9, 4.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -482,7 +480,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (18.61 * 2), 
+							3.9, 5.61,
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -496,7 +494,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+							2.9, 3.61,
 							2.9, 3.61, 
 							2.2, 4.81, 
 							12.9, 15.61)
@@ -505,7 +503,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(2.2 * 2), (4.81 * 2), 
+							2.2, 4.81, 
 							2.2, 4.81, 
 							2.2, 4.81, 
 							8.9, 12.61)
@@ -514,7 +512,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(4.2 * 2), (8.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							6.9, 9.61)
@@ -523,7 +521,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(9.9 * 2), (12.61 * 2), 
+							2.9, 4.61,
 							2.9, 4.61, 
 							2.2, 4.81, 
 							3.9, 4.61)
@@ -532,7 +530,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (15.61 * 2), 
+							3.9, 5.61,
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -546,7 +544,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+						  2.9, 3.61,
 							2.9, 3.61, 
 							2.2, 4.81, 
 							12.9, 15.61)
@@ -555,7 +553,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(2.2 * 2), (4.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							8.9, 12.61)
@@ -564,7 +562,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(4.2 * 2), (8.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							4.9, 7.61)
@@ -573,7 +571,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(8.9 * 2), (12.61 * 2), 
+							2.9, 4.61, 
 							2.9, 4.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -582,7 +580,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (15.61 * 2), 
+							3.9, 5.61,
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -596,7 +594,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+							2.9, 3.61,
 							2.9, 3.61, 
 							2.2, 4.81, 
 							12.9, 15.61)
@@ -605,7 +603,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(2.2 * 2), (4.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							6.9, 12.61)
@@ -614,7 +612,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(6.2 * 2), (8.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							4.9, 7.61)
@@ -623,7 +621,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(9.9 * 2), (12.61 * 2), 
+							2.9, 4.61,
 							2.9, 4.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -632,7 +630,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (15.61 * 2), 
+							3.9, 5.61,
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -646,7 +644,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 2.42, 
-							(2.9 * 2), (3.61 * 2), 
+							2.9, 3.61, 
 							2.9, 3.61, 
 							2.2, 4.81, 
 							12.9, 15.61)
@@ -655,7 +653,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.02, 
-							(2.2 * 2), (4.81 * 2), 
+							2.2, 4.81,
 							2.2, 4.81, 
 							2.2, 4.81, 
 							8.9, 12.61)
@@ -664,7 +662,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(5.2 * 2), (8.81 * 2), 
+							2.2, 4.81, 
 							2.2, 4.81, 
 							2.2, 4.81, 
 							4.9, 7.61)
@@ -673,7 +671,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.5, 1.7, 
 							1.6, 1.92, 
-							(8.9 * 2), (12.61 * 2), 
+							2.9, 4.61, 
 							2.9, 4.61, 
 							2.2, 4.81, 
 							2.9, 3.61)
@@ -682,7 +680,7 @@ Template.createQuestion.events({
 						return multiplier(
 							1.7, 1.9, 
 							1.6, 2.42, 
-							(13.9 * 2), (15.61 * 2), 
+							3.9, 5.61,
 							3.9, 5.61, 
 							2.2, 4.81, 
 							1.9, 2.61)
@@ -1035,7 +1033,7 @@ Template.createQuestion.events({
 
 			// Kickoff
 			else if (down == 6){
-				if(time < 5){
+				// if(time < 5){
 					return multiplier(
 						1.5, 1.5, 
 						2.4, 3.42, 
@@ -1043,15 +1041,15 @@ Template.createQuestion.events({
 						8.9, 15.61, 
 						12.2, 24.81, 
 						29.9, 42.61)
-				} else if (time == 5) {
-					return multiplier(
-						1.5, 1.5, 
-						2.4, 3.42, 
-						5.2, 9.81, 
-						2.9, 4.61,  
-						2.2, 4.81, 
-						9.9, 12.61)
-				} 
+				// } else if (time == 5) {
+				// 	return multiplier(
+				// 		1.5, 1.5, 
+				// 		2.4, 3.42, 
+				// 		5.2, 9.81, 
+				// 		2.9, 4.61,  
+				// 		2.2, 4.81, 
+				// 		9.9, 12.61)
+				// } 
 			}
 		}
 		
@@ -1059,10 +1057,10 @@ Template.createQuestion.events({
 			var areaCounter = 1
 			for (var i = 1; i <= input; i++) {
 				counter += 1
-				// console.log("Down", downCounter, "Yards", yardsCounter, "Area", areaCounter)
+
 				var inputs = {"down": downCounter, "yards": yardsCounter, "area": areaCounter} 
 				var multiplier = multipliers(downCounter, yardsCounter, areaCounter)
-				// console.log(inputs, multiplier)
+				
 				Meteor.call('createMultipliers', inputs, multiplier)
 				areaCounter += 1
 			}			
@@ -1070,14 +1068,14 @@ Template.createQuestion.events({
 		var loop = function (input, inputText) {
 			yardsCounter = 1
 			for (var i = 1; i <= input; i++) {
-				console.log(inputText + " " + i)
+				
 				arealoop(area, "Area")
 				yardsCounter += 1
 			}			
 		}
 		var allPlays = function (){
 			for (var i = 1; i <= down; i++) {
-				console.log("---------------- Down" + " " + i + "--------------------")
+				// console.log("---------------- Down" + " " + i + "--------------------")
 				loop(yards, "Yards")
 				downCounter += 1
 			}

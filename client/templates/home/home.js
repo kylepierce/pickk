@@ -154,15 +154,27 @@ Template.home.helpers({
     }
   },
   scoreMessage: function() {
-    var user = Meteor.user();
-    var notifications = Notifications.find({read: false});
+    var user = Meteor.userId();
+    var notifications = Notifications.find({userId: user, read: false});
 
     notifications.forEach(function(post) {
+      console.log(post)
       var id = post._id
       var message = post._id
-      if (post.type === "coins" && post.read === false) {
+      var questionId = post.questionId
+      if (post.source === "removed"){
+        Meteor.subscribe('singleQuestion', questionId)
+        var question = Questions.findOne({_id: questionId});
+        var title = question.que
         Meteor.call('removeNotification', id);
-        sAlert.info("You Won " + post.value + " coins!", {effect: 'stackslide', html: true});
+        sAlert.info('Play: "' + title + '" was removed here are your ' + post.value + " coins!", {effect: 'stackslide', html: true});
+      } else if (post.type === "coins" && post.read === false) {
+        Meteor.subscribe('singleQuestion', questionId)
+        var question = Questions.findOne({_id: questionId});
+        var title = question.que
+        console.log(question)
+        Meteor.call('removeNotification', id);
+        sAlert.info("You Won " + post.value + " coins! " + title, {effect: 'stackslide', html: true});
       } else if (post.type === "diamonds" && post.read === false) {
         message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
         Meteor.call('removeNotification', id);
@@ -500,10 +512,10 @@ Template.submitButton.events({
       Session.set('lastWager', w);
       Session.set('lastDescription', o.title);
 
-      // var countdown = new ReactiveCountdown(360);
-      // countdown.start(function() {
-      //   Meteor.call('playerInactive', c.userId, c.questionId);
-      // })
+      var countdown = new ReactiveCountdown(250);
+      countdown.start(function() {
+        Meteor.call('playerInactive', c.userId, c.questionId);
+      })
       setTimeout(function() {
         Meteor.call('questionAnswered', c);
       }, 250);

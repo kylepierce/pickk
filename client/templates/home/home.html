@@ -113,11 +113,16 @@
 </template>
 
 <template name="eventQuestion">
-	<ul class="single-question animated fast slideInLeft onboarding-extra-space ">
+	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
+		<div class="question">
+			<h4>{{q.que}}</h4>
+		</div>
+		<div id="binaryOptions" class="ten-spacing">
 		{{#each o in options q}}
 			{{> option o=o q=q t=t}}
 		{{/each}}
-	</ul>
+		</div>
+	</div>
 </template>
 
 <template name="binaryOption">

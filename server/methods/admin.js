@@ -117,7 +117,6 @@ Meteor.methods({
 	},
 	'createHero': function (o) {
 		check(o, Object);
-		console.log(o)
 		Hero.insert({
 			startDate: o.startDate,
 			endDate: o.endDate,
@@ -131,5 +130,8 @@ Meteor.methods({
 			url: o.url,
 			important: o.important,
 		});
+	},
+	'deleteCollection': function() {
+		Multipliers.remove({})
 	}
 })

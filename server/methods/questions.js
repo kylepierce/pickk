@@ -35,7 +35,6 @@ Meteor.methods({
 		check(inputs, Object);
 		check(type, String);
 
-		console.log(inputs, inputs.down, type)
 		var down = parseInt(inputs.down)
 		if ( type === "drive") {
 			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
@@ -60,7 +59,7 @@ Meteor.methods({
 		// Create the options of the play
 		var options = {}
 		var optionNum = 1
-		console.log(optionArray)
+
 		optionArray.map(function (option){
 			var optionNumber = "option" + optionNum
 			options[optionNumber] = {"option": optionNumber, "title": option, multiplier: 3}
@@ -76,20 +75,23 @@ Meteor.methods({
 		var down = parseInt(inputs.down)
 		var yards = parseInt(inputs.yards)
 		var area = parseInt(inputs.area)
-		var multiplier = Multipliers.findOne({down: down, yards: yards, area: area}).options
-		return multiplier
+		var multiplier = Multipliers.findOne({down: down, yards: yards, area: area})
+		return multiplier.options
 	},
 
 	'createMultipliers': function (inputs, existing){
 		check(inputs, Object);
 		check(existing, Object);
 
-		Multipliers.insert({
+		Multipliers.update({
 			down: inputs.down,
   		area: inputs.area,
-  		yards: inputs.yards,
-  		options: existing,
-		});
+  		yards: inputs.yards
+		}, {
+			$set: {options: existing}
+		},
+		{upsert: true}
+		);
 
 	},
 
@@ -139,7 +141,8 @@ Meteor.methods({
 		}
 
 		function randomizer(min, max){
-			return (Math.random() * (max-min) + min).toFixed(2)
+			var multi = (Math.random() * (max-min) + min).toFixed(2)
+			return multi
 		}
 
 		q["que"] = Meteor.call('questionText', q.inputs, q.type )
@@ -147,9 +150,9 @@ Meteor.methods({
 		var multiplier = Meteor.call('addMultipliers', q.inputs, options )
 
 		var newObject = Object.keys(multiplier).map(function(value, index) {
-		   var low = multiplier[value].low
-		   var high = multiplier[value].high
-		   return randomizer(low, high)
+				var low = multiplier[value].low
+				var high = multiplier[value].high
+				return randomizer(low, high)
 		});
 
 		var counter = 0
@@ -168,6 +171,7 @@ Meteor.methods({
 			gameId: q.gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
+			manual: true,
 			active: true,
 			commercial: q.commercial,
 			options: options,
@@ -197,6 +201,7 @@ Meteor.methods({
 			dateCreated: timeCreated,
 			type: "freePickk",
 			active: true,
+			manual: true,
 			commercial: true,
 			binaryChoice: true,
 			options: {
