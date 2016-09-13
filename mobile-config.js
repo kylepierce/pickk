@@ -53,10 +53,11 @@ App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
 
-App.setPreference('intercom-app-id', 'xxsxj7up');
-App.setPreference('intercom-ios-api-key', 'ios_sdk-e581161de335f43ca272e683b3f33bc62253d26d');
-App.setPreference('intercom-android-api-key', 'android_sdk-583fffc521613d8045869dac756c926f379f3a84');
-App.setPreference('intercom-android-sender-id', '259263435947');
+// Configuration is provided by Astronomer
+// App.setPreference('intercom-app-id', '');
+// App.setPreference('intercom-ios-api-key', '');
+// App.setPreference('intercom-android-api-key', '');
+// App.setPreference('intercom-android-sender-id', '');
 
 // App.configurePlugin("branch-cordova-sdk", {
 //     URI_SCHEME : "pickk",
