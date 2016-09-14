@@ -1,5 +1,7 @@
-Meteor.publish('weekLeaderboard', function(){
-	var thisWeek = moment().week()
+Meteor.publish('weekLeaderboard', function(thisWeek){
+	check(thisWeek, Number);
+
+	// var thisWeek = moment().week()
   var day = moment().day()
   if (day < 2){
     var thisWeek = thisWeek - 1

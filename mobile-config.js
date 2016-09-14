@@ -59,7 +59,7 @@ App.accessRule('*://fonts.gstatic.com/*');
 // App.setPreference('intercom-android-api-key', '');
 // App.setPreference('intercom-android-sender-id', '');
 
-// App.configurePlugin("branch-cordova-sdk", {
-//     URI_SCHEME : "pickk",
-//     BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
-// });
+App.configurePlugin("branch-cordova-sdk", {
+    URI_SCHEME : "pickk",
+    BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
+});

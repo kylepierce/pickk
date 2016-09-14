@@ -59,11 +59,11 @@ Meteor.methods({
 		var fixed = _.sortBy(userDiamonds, function(obj){return obj.diamonds})
 		var list = fixed.reverse()
 		var rank = _.first(list, 25)
-		return rank
 
 		var end = new Date();
 		var duration = (end - start);
 		console.log("Duration: ", duration)
+		return rank
 
 	},
 })

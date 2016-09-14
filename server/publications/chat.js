@@ -36,7 +36,6 @@ Meteor.publish('chatUsersList', function(limit, groupId) {
   limit = limit + 10
 
   var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
-  console.log(messages)
   var userIds = _.chain(messages).pluck("user").uniq().value();
 
   var users = UserList.find({_id: {$in: userIds}}, { 
