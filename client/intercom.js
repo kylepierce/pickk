@@ -28,7 +28,7 @@ if (Meteor.isCordova) {
 
     intercom.registerIdentifiedUser(data);
     intercom.updateUser(data);
-    console.log("Connections with Intercom has been established", data);
+    console.log("Connection with Intercom has been established (userId=" + data.userId + "), email(" + data.email + "), name(" + data.name + ")");
 
     enableIntercomNotifications();
   };
