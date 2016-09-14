@@ -53,9 +53,9 @@ App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
 
-App.setPreference('intercom-app-id', 'xxsxj7up');
-App.setPreference('intercom-ios-api-key', 'ios_sdk-e581161de335f43ca272e683b3f33bc62253d26d');
-App.setPreference('intercom-android-api-key', 'android_sdk-583fffc521613d8045869dac756c926f379f3a84');
+App.setPreference('intercom-app-id', 'k1la9xfh');
+App.setPreference('intercom-ios-api-key', 'ios_sdk-e5fc0fe6291b80f1d3026a54f46ba811ca1ca6bf');
+App.setPreference('intercom-android-api-key', 'android_sdk-8817227116e3cb348ce70c90c6713dd36d19887a');
 App.setPreference('intercom-android-sender-id', '259263435947');
 
 App.configurePlugin("branch-cordova-sdk", {
