@@ -8,6 +8,7 @@ Meteor.methods({
 		const text = "Guess What Happens on " + message;
 		const users = Meteor.users.find({_id: {$in: userIds}}, {"oneSignalToken": 1}).fetch();
 		const tokens = _.without(_.uniq(_.pluck(users, "oneSignalToken")), undefined);
+
 		if (tokens.length) {
 			if (Meteor.settings.oneSignal.isEnabled) {
 				OneSignal.Notifications.create(tokens, {
@@ -37,11 +38,13 @@ Meteor.methods({
 
 		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
-		var game = Games.find(
-			{
+		var selector = {
 				_id: gameId,
 				nonActive: {$nin: [userId]}
-			}, {fields: {'nonActive': 1}}).fetch();
+			}
+		var fields = {fields: {'nonActive': 1}}
+		
+		var game = Games.find(selector, fields).fetch();
 		if (game.length == 1) {
 			Games.update(gameId, {$push: {nonActive: userId}});
 			console.log("added " + userId + " to the inactive list")

@@ -51,9 +51,14 @@ Template.createQuestion.events({
 		}
 
 		// These need to be moved to a call back
-		// Meteor.call("questionPush", gameId, question)
-		// Meteor.call("emptyInactive", gameId, question)
-		Meteor.call('insertQuestion', q);
+		
+		Meteor.call('insertQuestion', q, function(e, r){
+			console.log(e, r)
+			if(!e){
+				Meteor.call("questionPush", q.gameId, r)
+				Meteor.call("emptyInactive", q.gameId)
+			}
+		});
 	},
 'click [data-action=loop]': function () {
 		var down = 6

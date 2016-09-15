@@ -177,6 +177,8 @@ Meteor.methods({
 			options: options,
 			usersAnswered: []
 		});
+
+		return q.que
 	},
 
 	'createTrueFalse': function(que, gameId) {
