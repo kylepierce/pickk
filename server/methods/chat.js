@@ -66,13 +66,17 @@ Meteor.methods({
 			var messagePosted = o.message.replace(/<\/?[^>]+(>|$)/g, "").trim();
 			if (messagePosted == "" || messagePosted == null) {
 				messageData['message'] = "<i>Removed</i>"
-			} else {
+			} 
+
+			else {
 				messageData['message'] = messagePosted
 				var usernames = messagePosted.match(/\@[\w\d_]+/g);
+
 				if (usernames) {
 					for (var i = 0; i < usernames.length; i++) {
 						var username = usernames[i].slice(1); // remove @
 						var user = Meteor.users.findOne({"profile.username": username}, {fields: {_id: 1}});
+
 						if (user) {
 							// Push notifications don't support HTML, so we'll have to use plainMessagePosted
 							var notifyObj = {
@@ -83,8 +87,13 @@ Meteor.methods({
 								message: o.message,
 								groupId: o.groupId
 							}
+							var sender = Meteor.users.findOne({_id: o.user})
+							var senderUsername = sender.profile.username
+							var pushMessage = "[@" + senderUsername + "] " + o.message
+
+							console.log(pushMessage)
 							
-							Meteor.call('pushInvite', o.message, user._id)
+							Meteor.call('pushInvite', pushMessage, user._id)
 		 					createPendingNotification(notifyObj)
 						}
 					}
