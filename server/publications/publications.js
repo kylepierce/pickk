@@ -75,11 +75,11 @@ Meteor.publish('activeQuestions', function(gameId) {
   }, {limit: 3});
 });
 
-Meteor.publish('adminActiveQuestions', function(gameId) {
-  check(gameId, String);
-  var selector = {gameId: gameId, active: {$ne: false}}
-  return Questions.find(selector);
-});
+// Meteor.publish('adminActiveQuestions', function(gameId) {
+//   check(gameId, String);
+//   var selector = {gameId: gameId, active: {$ne: false}}
+//   return Questions.find(selector);
+// });
 
 Meteor.publish('gameQuestions', function() {
   var allQuestions = Questions.find({gameId: 'prediction'});

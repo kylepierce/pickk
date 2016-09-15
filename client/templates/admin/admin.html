@@ -1,73 +1,30 @@
 <template name="admin">
 	<div class="container">	
 	  {{#ionView}}
-   		 {{#ionContent}}	
+   		{{#ionContent}}	
 
-   		 {{#contentFor "headerButtonLeft"}}
-		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-		      {{#if isAndroid}}
-		        {{> ionIcon icon='android-more-vertical'}}
-		      {{else}}
-		        {{> ionIcon icon='navicon'}}
-		      {{/if}}
-		    </button>
-		  {{/contentFor}}
-   		 
-   		 {{#contentFor "headerTitle"}}
-					<h1 class="title white-text-header">FootballAdmin Panel</h1>
-   		 {{/contentFor}}
+	   		{{#contentFor "headerButtonLeft"}}
+			    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+			      {{#if isAndroid}}
+			        {{> ionIcon icon='android-more-vertical'}}
+			      {{else}}
+			        {{> ionIcon icon='navicon'}}
+			      {{/if}}
+			    </button>
+			  {{/contentFor}}
+	   		 
+				{{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Football Admin Panel</h1>
+				{{/contentFor}}
 
-		{{> createQuestion}}
-		{{> otherQuestions}}
-		{{> activeQuestions}}
-		{{> pendingQuestions}}
-<!-- 		{{> oldQuestions}} -->
+				{{> createQuestion}}
+				{{> otherQuestions}}
+				{{> activeQuestions}}
+				{{> pendingQuestions}}
 
 		  {{/ionContent}}
 	  {{/ionView}}
   </div>
 </template>
 
-<template name="otherQuestions">
-	{{#if commercial}}
-		<button class='col col-33 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">End Commercial Break </button>
-	{{else}}
-		<button class='col col-33 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">Start of Commercial Break </button>
-	{{/if}}
 
-	<button class='col col-33 wager-box button button-royal' style="float: left;" data-action="thisDrive">Create "This Drive" Question </button>
-	
-	<button class='col col-33 wager-box button button-energized' style="float: left;" data-action="situationalQuestion"> Situational Question </button>
-	<button class='col col-33 wager-box button button-calm' style="float: left;"  data-ion-modal="_situational">Custom Question!</button>
-	<button class='col col-33 wager-box button button-calm' style="float: left;"  data-ion-modal="_twoOption">Two Options</button>
-	<button class='col col-33 wager-box button button-calm' style="float: left;"  data-action="createCommericalQuestion">Create Commerical Question</button>
-</template>
-
-<!-- <template name="oldQuestions">
-	<div class=" panel">
-		<h3>Old Questions</h3>
-		<ul class="old-questions">
-		{{#each questions}}
-			<div class="item">
-				<li class="{{_id}}"> {{que}} <br>{{dateCreated}} <br> {{play}}</li> 
-
-		    <div style="margin-bottom: 10px;">
-			    <div class="row">
-				    <button class="col col-50 button " data-action="editOption1">{{options.option1.title}}</button>
-				    <button class="col col-50 button" data-action="editOption2">{{options.option2.title}}</button>
-					</div>
-			    <div class="row">
-				    <button class="col col-50 button" data-action="editOption3">{{options.option3.title}}</button>
-				    <button class="col col-50 button" data-action="editOption4">{{options.option4.title}}</button>
-					</div>
-			    <div class="row">
-			    	<button class="col col-50 button" data-action="editOption5">{{options.option5.title}}</button>
-				    <button class="col col-50 button" data-action="editOption6">{{options.option6.title}}</button>
-					</div>
-		    </div>
-		    <button data-action="permenantRemove" class="yes full button button-assertive">Remove question</button>
-	   	</div>
-		{{/each}}
-		</ul>
-	</div>	
-</template> -->

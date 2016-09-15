@@ -158,7 +158,6 @@ Template.home.helpers({
     var notifications = Notifications.find({userId: user, read: false});
 
     notifications.forEach(function(post) {
-      console.log(post)
       var id = post._id
       var message = post._id
       var questionId = post.questionId
@@ -168,6 +167,12 @@ Template.home.helpers({
         var title = question.que
         Meteor.call('removeNotification', id);
         sAlert.info('Play: "' + title + '" was removed here are your ' + post.value + " coins!", {effect: 'stackslide', html: true});
+      } else if (post.source === "overturned"){
+        Meteor.subscribe('singleQuestion', questionId)
+        var question = Questions.findOne({_id: questionId});
+        var title = question.que
+        Meteor.call('removeNotification', id);
+        sAlert.info('"' + title + '" was overturned. ' + post.value + " coins were removed", {effect: 'stackslide', html: true});
       } else if (post.type === "coins" && post.read === false) {
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});

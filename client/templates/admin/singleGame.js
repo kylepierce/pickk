@@ -17,14 +17,22 @@ Template.activeQuestions.helpers({
 	}
 });
 
+Template.otherQuestions.helpers({
+	'commercial': function(){
+		var game = Games.findOne({live: true});
+		var commercialBreak = game.commercial
+		return commercialBreak
+	}
+});
+
 Template.pendingQuestions.helpers({
 	questions: function () {
-		return Questions.find({active: null}, {sort: {dateCreated: -1}})
+		return Questions.find({active: null}, {sort: {dateCreated: -1}}).fetch()
 	},
 });
 
 Template.pendingQuestion.helpers({
-	questionOptions: function (q) {
+	options: function (q) {
 	  var imported = q
 	  var data = q.options
 	  var keys = _.keys(data)
@@ -62,47 +70,50 @@ Template.pendingQuestion.events({
 	}
 });
 
-// Template.oldQuestions.helpers({
-// 	questions: function () {
-// 		return Questions.find({active: false}, {sort: {dateCreated: -1}, {limit: 3}})
-// 	}
-// });
+Template.oldQuestions.helpers({
+	questions: function () {
+		var question = Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 3}).fetch()
+		return question
+	}
+});
 
-// Template.oldQuestion.helpers({
-// 	questionOptions: function (q) {
-// 	  var imported = q
-// 	  var data = q.options
-// 	  var keys = _.keys(data)
-// 	  var values = _.values(data)
-// 	  var optionsArray = []
+Template.oldQuestion.helpers({
+	options: function (q) {
+	  var imported = q
+	  var data = q.options
+	  var keys = _.keys(data)
+	  var values = _.values(data)
+	  var optionsArray = []
 
-// 	  // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+	  // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+	  for (var i = 0; i < keys.length; i++) {
+	    var obj = values[i]
+	    var number = keys[i]
+	    obj["option"] = number 
+	    optionsArray.push(obj)
+	  }
 
-// 	  for (var i = 0; i < keys.length; i++) {
-// 	    var obj = values[i]
-// 	    var number = keys[i]
-// 	    obj["option"] = number 
-// 	    optionsArray.push(obj)
-// 	  }
-
-// 	  return optionsArray
-// 	}
-// });
+	  return optionsArray
+	}
+});
 
 
-// // Select correct answer and award points to those who guessed correctly.
-// Template.oldQuestion.events({
-// 	'click [data-action=removeQuestion]' : function(e, t) {
-// 		if(confirm("Are you sure?")) {
-// 			Meteor.call('removeQuestion', this.q._id)
-// 		}
-// 	},
-// 	'click [data-action=reactivate]' : function(e, t) {
-// 		if(confirm("Are you sure?")) {
-// 			Meteor.call('reactivateStatus', this.q._id)
-// 		}
-// 	},
-// 	'click [data-action=playSelection]': function (e, t) {
-// 		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
-// 	}
-// });
+// Select correct answer and award points to those who guessed correctly.
+Template.oldQuestion.events({
+	'click [data-action=removeQuestion]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
+			Meteor.call('removeQuestion', this.q._id)
+		}
+	},
+	'click [data-action=reactivate]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this.q._id)
+		}
+	},
+	'click [data-action=playSelection]': function (e, t) {
+		Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
+		console.log(this.o.option)
+		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
+	}
+});

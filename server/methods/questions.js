@@ -145,7 +145,6 @@ Meteor.methods({
 		var options = Meteor.call('createOptions', q.inputs, q.type )
 		var multiplier = Meteor.call('addMultipliers', q.inputs, options )
 		
-
 		if ( q.type === "drive" ){
 			var multiplier = { 
 				option1: { low: 2.15, high: 2.37 }, // Punt
@@ -284,41 +283,49 @@ Meteor.methods({
         }
     })
   },
+	// Remove Coins from the people who answered it "correctly", the answer changed.
+	'unAwardPoints': function(questionId, oldAnswered) {
+		check(questionId, String);
+		check(oldAnswered, String);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		var question = Questions.findOne({"_id": questionId});
+
+		function unAwardPoints(a) {
+			// Adjust multiplier based on when selected.
+			var amount = parseInt(a.wager * a.multiplier);
+
+			// Update users coins
+			var user = a.userId
+			var game = a.gameId
+
+			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
+
+			var scoreMessage = "Play was overturned. " + amount + " coins were changed"
+
+			var notifyObj = {
+		  	userId: a.userId,
+				type: "coins",
+				source: "overturned",
+				questionId: questionId,
+				message: scoreMessage,
+				value: amount,
+				gameId: a.gameId,
+		  }
+
+		  createPendingNotification(notifyObj)
+		}
+
+		Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
+	},
 });
-
-// Remove Coins from the people who answered it "correctly", the answer changed.
-
-
-
-
-	// 'unAwardPoints': function(questionId, oldAnswered) {
-	// 	check(questionId, String);
-	// 	check(oldAnswered, String);
-
-	// 	if (!Meteor.userId()) {
- //      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-	// 	}
-
-	// 	if (Meteor.user().profile.role !== "admin") {
- //      throw new Meteor.Error(403, "Unauthorized");
-	// 	}
-
-	// 	var question = Questions.findOne({"_id": questionId});
-
-	// 	function unAwardPoints(answer) {
-	// 		// Adjust multiplier based on when selected.
-
-	// 		var amount = parseInt(answer.wager * answer.multiplier);
-
-	// 		// Update users coins
-	// 		var user = answer.userId
-	// 		var game = answer.gameId
-	// 		GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
-	// 	}
-
-	// 	Answers.find({questionId: questionId, answered: oldAnswered}).forEach(unAwardPoints);
-	// },
-
 
 	// 'unAwardPointsForDelete': function(questionId, oldAnswered) {
 	// 	check(questionId, String);

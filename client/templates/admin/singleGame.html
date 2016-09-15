@@ -13,7 +13,7 @@
 			{{> otherQuestions}}
 			{{> activeQuestions}}
 			{{> pendingQuestions}}
-<!-- 			{{> oldQuestions}} -->
+			{{> oldQuestions}}
 		{{/ionContent}}
 	{{/ionView}}
 </template>
@@ -53,12 +53,28 @@
       <option class="slider-5-options" value="4" label="4th Quarter"></option>
       <option class="slider-5-options" value="5" label="Overtime"></option>
 
-		<button class='full' style="margin-top: 25px;" data-action="createQuestion">Create Question</button>
+		<button class='button button-calm col col-50' style="margin-top: 25px; float: left;" data-action="createQuestion">Create Question</button>
 
-		<button class='full' style="margin-top: 25px;" data-action="thisDrive">This Drive</button>
+		<button class='button col col-50' style="margin-top: 25px; float: left;" data-action="thisDrive">This Drive</button>
 
-		<button class='full' style="margin-top: 25px;" data-action="loop">Loop</button>
+		<!-- <button class='full' style="margin-top: 25px;" data-action="loop">Loop</button> -->
 	</div>
+</template>
+
+<template name="otherQuestions">
+	{{#if commercial}}
+		<button class='col col-50 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">
+			End Commercial Break 
+		</button>
+	{{else}}
+		<button class='col col-50 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">
+			Start of Commercial Break 
+		</button>
+	{{/if}}
+	
+	<button class='col col-50 wager-box button button-energized' style="float: left;" data-action="situationalQuestion"> 
+		Situational Question 
+	</button>
 </template>
 
 <template name="activeQuestions">
@@ -87,35 +103,37 @@
 </template>
 
 <template name="pendingQuestion">
-	<li class="panel"> 
+	<li> 
 		<h4>{{q.que}}</h4>
 		<div>
 			<button data-action="removeQuestion" class="col-md-50 button button-assertive">Remove question</button>
 			<button data-action="reactivate" class="col-md-50 button button-balanced">Reactivate question</button>
 		</div>
-		{{#each o in questionOptions q}}
+		{{#each o in options q}}
 			{{> selectOption o=o q=q}}
-		{{/each}}
+		{{/each}}`
 	</li>
 </template>
 
 <template name="oldQuestions">
-	<h3>Old Questions</h3>
-	<ul class="pending-questions">
-		{{#each q in questions}}
-			{{> oldQuestion q=q}}
-		{{/each}}
-	</ul>
+	<div class="panel"> 
+		<h3>Old Questions</h3>
+		<ul class="pending-questions">
+			{{#each q in questions}}
+				{{> oldQuestion q=q}}
+			{{/each}}
+		</ul>
+	</div>
 </template>
 
 <template name="oldQuestion">
-	<li class="panel"> 
-		<h4>{{q.que}}</h4>
+	<li class="clear-fix"> 
+		<h4>{{q.que}} -- {{q.outcome}}</h4>
 		<div>
 			<button data-action="removeQuestion" class="col-md-50 button button-assertive">Remove question</button>
 			<button data-action="reactivate" class="col-md-50 button button-balanced">Reactivate question</button>
 		</div>
-		{{#each o in questionOptions q}}
+		{{#each o in options q}}
 			{{> selectOption o=o q=q}}
 		{{/each}}
 	</li>

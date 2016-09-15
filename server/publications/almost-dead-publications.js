@@ -37,13 +37,13 @@ Meteor.publish('questions', function() {
   return this.ready();
 });
 
-Meteor.publish('oldQuestions', function() {
-  var oldQuestions = Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
-  if (oldQuestions) {
-    return oldQuestions
-  }
-  return this.ready();
-});
+// Meteor.publish('oldQuestions', function() {
+//   var oldQuestions = Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 3});
+//   if (oldQuestions) {
+//     return oldQuestions
+//   }
+//   return this.ready();
+// });
 
 Meteor.publish('SportRadarGames', function() {
   const today = moment().toDate();
