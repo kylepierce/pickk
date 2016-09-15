@@ -34,26 +34,32 @@ Meteor.methods({
 	'createOptions': function(inputs, type){
 		check(inputs, Object);
 		check(type, String);
-
+		
 		var down = parseInt(inputs.down)
+		var area = parseInt(inputs.area)
+		var time = parseInt(inputs.time)
+		var yards = parseInt(inputs.yards)
+
 		if ( type === "drive") {
 			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Safety", "Turnover on Downs"]
 		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
 		} else if (down === 2) {
 			var optionArray = ["Negative Yards", "0-5 Yard Run", "6-20 Yard Run", "0-5 Yard Pass/Incomplete", "6-20 Yard Pass", "21+ Gain (Run or Pass)"]
-		} else if (down === 3 && inputs.area === 6) {
+		} else if (down === 3 && area === 6) {
 			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
 		} else if (down === 3) {
 			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
-		} else if (down === 4 && inputs.area >= 4 ) {
+		} else if (down === 4 && area >= 4 ) {
 			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
 		} else if (down === 4) {
-			var optionArray = ["Fair Catch", "0-20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble",  "Touchdown"]
+			var optionArray = ["Fair Catch/No Return", "Neg to 20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble", "Touchdown"]
 		} else if (down === 5) {
 			var optionArray = ["Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good"]
+		} else if (down === 6 && time === 5)  {
+			var optionArray = ["Touchback/No Return", "Neg to 25 Yard Return",  "26+ Return", "Failed Onside", "Successful Onside", "Touchdown"]
 		} else if (down === 6)  {
-			var optionArray = ["Touchback", "0-25 Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
+			var optionArray = ["Touchback/No Return", "Neg to 25 Yard Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
 		}
 
 		// Create the options of the play
@@ -75,7 +81,9 @@ Meteor.methods({
 		var down = parseInt(inputs.down)
 		var yards = parseInt(inputs.yards)
 		var area = parseInt(inputs.area)
+
 		var multiplier = Multipliers.findOne({down: down, yards: yards, area: area})
+
 		return multiplier.options
 	},
 
@@ -86,8 +94,9 @@ Meteor.methods({
 		Multipliers.update({
 			down: inputs.down,
   		area: inputs.area,
-  		yards: inputs.yards
-		}, {$set: {options: existing}},{upsert: true}
+  		yards: inputs.yards,
+  		time: inputs.time
+		}, {$set: {options: existing}}, {upsert: true}
 		);
 
 	},
@@ -156,6 +165,8 @@ Meteor.methods({
 				option7: { low: 5.4, high: 6.7 } // Safety
 			}
 		}
+
+		console.log(multiplier)
 
 		var newObject = Object.keys(multiplier).map(function(value, index) {
 				var low = multiplier[value].low
