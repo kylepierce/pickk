@@ -26,14 +26,14 @@
       <div class="item item-divider">{{date}} Leaderboard</div>
         <ol type="1" class="list">      
           {{#each player in players}}
-            {{#ionItem path="user.show" avatar=true}}
+            {{#ionItem class="single-user" id=player.user avatar=true}}
               {{> userAvatar userId=player.user}}
-              <li class="list-font">
-              <h2 class="center-username">
-                {{username player.user}} 
-                <span class="score">{{player.diamonds}}</span>
-              </h2>
-            </li>
+              <li class="list-font" data-action="single-user">
+                <h2 class="center-username">
+                  {{username player.user}}
+                  <span class="score">{{player.diamonds}}</span>
+                </h2>
+              </li>
             {{/ionItem}}
           {{/each}}
         </ol>

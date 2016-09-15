@@ -19,6 +19,9 @@ Template.weekLeaderboard.helpers({
 		var leaderboard = Fetcher.get("weekLeaderboard")
 		return leaderboard
 	},
+	'single': function(player){
+		return player
+	},
 	'date': function() {
 		var thisWeek = Session.get('leaderboardWeek');
 	  var day = moment().day()
@@ -44,9 +47,11 @@ Template.weekLeaderboard.helpers({
 Template.weekLeaderboard.events({
 	'click [data-action=lastWeek]': function () {
 		var thisWeek = Session.get('leaderboardWeek');
-		console.log(thisWeek)
 		var lastWeekNumber = thisWeek - 1
 		var lastWeek = '/week-leaderboard/' + lastWeekNumber
 		Router.go(lastWeek)
+	},
+	'click .single-user': function (){
+		Router.go('/user-profile/'+ this.id)
 	}
 });
