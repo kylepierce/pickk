@@ -37,7 +37,7 @@ Meteor.methods({
 
 		var down = parseInt(inputs.down)
 		if ( type === "drive") {
-			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Other"]
+			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Safety", "Turnover on Downs"]
 		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
 		} else if (down === 2) {
@@ -87,10 +87,7 @@ Meteor.methods({
 			down: inputs.down,
   		area: inputs.area,
   		yards: inputs.yards
-		}, {
-			$set: {options: existing}
-		},
-		{upsert: true}
+		}, {$set: {options: existing}},{upsert: true}
 		);
 
 	},
@@ -122,7 +119,7 @@ Meteor.methods({
 		}
 
 		if ( type === "drive") {
-			var que = "How will this drive end?"
+			var que = "How Will This Drive End?"
 		}
 
 		return que
@@ -135,7 +132,6 @@ Meteor.methods({
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
-
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
@@ -148,6 +144,19 @@ Meteor.methods({
 		q["que"] = Meteor.call('questionText', q.inputs, q.type )
 		var options = Meteor.call('createOptions', q.inputs, q.type )
 		var multiplier = Meteor.call('addMultipliers', q.inputs, options )
+		
+
+		if ( q.type === "drive" ){
+			var multiplier = { 
+				option1: { low: 2.15, high: 2.37 }, // Punt
+				option2: { low: 4.6, high: 6.42 }, // Interception
+				option3: { low: 3.2, high: 4.81 }, // Fumble
+				option4: { low: 3.4, high: 4.62 }, // Touchdown
+				option5: { low: 2.2, high: 2.81 }, // Field Goal
+				option6: { low: 15.9, high: 21.61 }, // Safety
+				option7: { low: 5.4, high: 6.7 } // Safety
+			}
+		}
 
 		var newObject = Object.keys(multiplier).map(function(value, index) {
 				var low = multiplier[value].low
@@ -171,6 +180,7 @@ Meteor.methods({
 			gameId: q.gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
+			type: q.type,
 			manual: true,
 			active: true,
 			commercial: q.commercial,

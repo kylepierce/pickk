@@ -21,9 +21,12 @@ Template.createQuestion.events({
 			commercial: true
 		}
 
-		// Meteor.call("questionPush", q.gameId, )
-		// Meteor.call("emptyInactive", gameId, question)
-		Meteor.call('insertQuestion', q);
+		Meteor.call('insertQuestion', q, function(e, r){
+			if(!e){
+				Meteor.call("questionPush", q.gameId, r)
+				Meteor.call("emptyInactive", q.gameId)
+			}
+		});
  
 	},
 
@@ -53,7 +56,6 @@ Template.createQuestion.events({
 		// These need to be moved to a call back
 		
 		Meteor.call('insertQuestion', q, function(e, r){
-			console.log(e, r)
 			if(!e){
 				Meteor.call("questionPush", q.gameId, r)
 				Meteor.call("emptyInactive", q.gameId)

@@ -4,7 +4,7 @@ Template.gameLeaderboard.helpers({
 		// Users change so much this loads the users once. 
 		Fetcher.retrieve("leaderboard", "loadLeaderboard", $game)
 		var leaderboard = Fetcher.get("leaderboard")
-		return GamePlayed.find({gameId: $game}, {sort: {coins: -1}})
+		return GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: 25})
 	},
 	'username': function(userId) {
 		return UserList.findOne({_id: userId});

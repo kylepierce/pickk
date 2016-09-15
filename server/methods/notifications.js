@@ -29,5 +29,8 @@ Meteor.methods({
     check(id, String);
     
     return question.que
+  },
+  'deleteScore': function (){
+    Notifications.update({type: "score"}, {$set: {read: true}})
   }
 })
