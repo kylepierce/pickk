@@ -17,6 +17,14 @@ body, .ionic-body {
 	height: 100%;
 }
 
+.center-text {
+	text-align: center;
+}
+
+.right-text {
+	text-align: right;
+}
+
 .item-divider {
 	background-color: #37474F!important;
 	color: white;

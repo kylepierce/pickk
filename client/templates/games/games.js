@@ -11,6 +11,12 @@ Template.games.helpers({
     if (status == "inprogress"){
       return true
     }
+  },
+
+  date: function () {
+    var now = moment();
+    var today = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+    return today
   }
 });
 

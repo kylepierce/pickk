@@ -37,17 +37,15 @@
   </a>
 </template>
 
-<template name="singleGameInfo">
-  <div class="single-game-shared single-game-info">
-    {{#if baseball}}
-      {{#if inProgress}}
-        {{> gameInProgressInfo game=game}}
-      {{/if}}
+<template name="singleGameInfo">  
+  {{#if baseball}}
+    {{#if inProgress}}
+      {{> gameInProgressInfo game=game}}
     {{/if}}
-    {{#if future}}
-      {{> futureGameInfo game=game}}
-    {{/if}}
-  </div>
+  {{/if}}
+  {{#if future}}
+    {{> futureGameInfo game=game}}
+  {{/if}}
 </template>
 
 <template name="singleGameCTA">
@@ -59,7 +57,7 @@
 </template>
 
 <template name="gameInProgressInfo">
-  
+  <div class="single-game-shared single-game-info">
     <div class="col-md-25 single-game-section">
       {{> inningDisplay inning=game.inning position=game.topOfInning}}
     </div>
@@ -72,19 +70,11 @@
     <div class="col-md-25 single-game-section">
       {{> count gameId=game._id }}
     </div>
-<!--     <div class="col-md-25 single-game-section">
-      {{> down}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> quarter}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      
-    </div> -->
+  </div>
 </template>
 
 <template name="futureGameInfo">
-  <div>
+  <div class="single-game-shared single-game-info">
     {{ displayDate game.scheduled}} ({{game.tv}})
   </div>
 </template>

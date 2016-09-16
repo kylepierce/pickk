@@ -11,7 +11,7 @@
 {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Weekly Leaderboard</h1>
+    <h1 class="title white-text-header">Week Leaderboard</h1>
  {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
@@ -23,7 +23,18 @@
   {{#ionView}}      
     {{#ionContent}} 
       {{#ionList}}
-      <div class="item item-divider">{{date}} Leaderboard</div>
+        <div class="item item-divider ">
+          <span class="col-md-25">
+            {{>ionIcon icon='chevron-left'}}
+            Prev
+          </span>
+          <span class="col-md-50 center-text">{{date}}</span>
+          <span class="col-md-25 right-text">
+            Next
+            {{>ionIcon icon='chevron-right'}}
+          </span>
+        </div>
+
         <ol type="1" class="list">      
           {{#each player in players}}
             {{#ionItem class="single-user" id=player.user avatar=true}}

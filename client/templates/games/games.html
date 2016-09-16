@@ -15,6 +15,17 @@
 
 	{{#ionView}}
 		{{#ionContent}}
+		  <div class="item item-divider ">
+        <span class="col-md-25">
+          {{>ionIcon icon='chevron-left'}}
+          Prev
+        </span>
+        <span class="col-md-50 center-text">{{date}}</span>
+        <span class="col-md-25 right-text">
+          Next
+          {{>ionIcon icon='chevron-right'}}
+        </span>
+      </div>
 			{{#ionList}}
 				<div class="container ten-spacing">
 	        {{#each game in games}}
