@@ -33,7 +33,7 @@ Template.games.events({
   'click [data-action=previous]': function (e, t){
     // Find the day from router or moment
     var day = Router.current().params.day
-    if (day === null || day === NaN) { 
+    if (day === null || day === undefined) { 
       var day = moment().dayOfYear()
     }
     //One less day
@@ -44,7 +44,7 @@ Template.games.events({
   'click [data-action=next]': function (e, t){
     // Find the day from router or moment
     var day = Router.current().params.day
-    if (day === null || day === NaN) { 
+    if (day === null || day === undefined) { 
       var day = moment().dayOfYear()
     }
     //One less day

@@ -45,13 +45,29 @@ Template.weekLeaderboard.helpers({
 
 
 Template.weekLeaderboard.events({
-	'click [data-action=lastWeek]': function () {
-		var thisWeek = Session.get('leaderboardWeek');
-		var lastWeekNumber = thisWeek - 1
-		var lastWeek = '/week-leaderboard/' + lastWeekNumber
-		Router.go(lastWeek)
-	},
 	'click .single-user': function (){
 		Router.go('/user-profile/'+ this.id)
-	}
+	},
+
+	'click [data-action=previous]': function (e, t){
+    // Find the week from router or session
+    var weekNumber = Router.current().params.id
+    if (weekNumber === null || weekNumber === undefined) { 
+      var weekNumber = moment().week()
+    }
+    //Last week
+    var previousWeek = parseInt(weekNumber) - 1
+    Router.go("/week-leaderboard/" + previousWeek)
+  },
+
+  'click [data-action=next]': function (e, t){
+		// Find the week from router or session
+    var weekNumber = Router.current().params.id
+    if (weekNumber === null || weekNumber === undefined) { 
+      var weekNumber = moment().week()
+    }
+    //Next week
+    var nextWeek = parseInt(weekNumber) + 1
+    Router.go("/week-leaderboard/" + nextWeek)
+  }
 });
