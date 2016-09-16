@@ -143,6 +143,7 @@ Template.futureGameInfo.helpers({
     var now = moment();
     var futureOrToday = compare(now, gameTime)
     var timezone = Meteor.user().profile.timezone
+    // var timezone = jstz.determine();
     if (!timezone) {var timezone = "America/New_York"}
     
     if (futureOrToday == 1){
