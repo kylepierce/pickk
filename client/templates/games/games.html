@@ -33,7 +33,7 @@
 			{{#ionList}}
 				<div class="container ten-spacing">
 	        {{#each game in games}}
-	          <div class="complete-game-card">
+	          <div class="complete-game-card" id="{{game._id}}">
 	            {{> singleGameInfo game=game}}
 	            {{> singleGameCard game=game}}
 	            {{> singleGameCTA game=game}}

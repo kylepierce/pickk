@@ -97,6 +97,11 @@ Template.singleGameInfo.helpers({
       return true
     }
   },
+  past: function () {
+    if (this.game.status === "closed" || this.game.status === "completed"){
+      return true
+    }
+  },
   baseball: function () {
     var football = this.game && this.game.football
     if (!football){
@@ -153,6 +158,17 @@ Template.futureGameInfo.helpers({
     } else {
       return gameTime.tz(timezone).format("MMM Do h:mm a z");
     }
+  }
+});
+
+Template.pastGameInfo.events({
+  'click [data-action=game-leaderboard]': function (e, t) {
+    var gameId = t.data.game._id
+    Router.go('/leaderboard/' + gameId)
+  },
+  'click [data-action=game-predictions]': function (e, t) {
+    var gameId = t.data.game._id
+    Router.go('/history/' + gameId)
   }
 });
 

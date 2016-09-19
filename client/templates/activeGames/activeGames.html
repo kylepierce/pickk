@@ -46,6 +46,9 @@
   {{#if future}}
     {{> futureGameInfo game=game}}
   {{/if}}
+  {{#if past}}
+    {{> pastGameInfo game=game}}
+  {{/if}}
 </template>
 
 <template name="singleGameCTA">
@@ -76,6 +79,18 @@
 <template name="futureGameInfo">
   <div class="single-game-shared single-game-info">
     {{ displayDate game.scheduled}} ({{game.tv}})
+  </div>
+</template>
+
+<template name="pastGameInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-50 past-game" data-action="game-leaderboard">
+      Leadboard
+    </div>  
+    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;
+" data-action="game-predictions">
+      Predictions
+    </div>
   </div>
 </template>
 
