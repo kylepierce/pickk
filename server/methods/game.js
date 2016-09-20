@@ -19,8 +19,40 @@ Meteor.methods({
 		Games.insert({
 			teams: [team1, team2],
 			dateCreated: timeCreated,
+			scheduled: timeCreated,
 			gameDate: gameTime,
 			name: title,
+			football: true,
+			status: "scheduled",
+			manual: true,
+			home: {
+		    name: team1,
+		    market: team1,
+		    abbr: team1,
+		    id: team1
+		  },
+		  away: {
+		    name: team2,
+		    market: team2,
+		    abbr: team2,
+		    id: team2
+		  },
+		  scoring: {
+		    home: {
+			    name: team1,
+			    market: team1,
+			    abbr: team1,
+			    id: team1,
+		      runs: "0"
+		    },
+		    away: {
+			    name: team1,
+			    market: team1,
+			    abbr: team1,
+			    id: team1,
+		      runs: "0"
+		    }
+		  },
 			tv: channel,
 			commercial: false,
 			complete: false,

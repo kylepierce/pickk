@@ -371,33 +371,32 @@ Template.adminSettings.events({
       // Second Down
       else if(down == 2){
 
-        // Inches
         if(yards == 1){
           if(area == 1){
             // Danger zone
             return multiplier(
               1.5, 1.7, 
               1.6, 2.42, 
-              2.9, 3.61, 
-              2.9, 3.61, 
+              3.2, 4.81, 
+              (3.2 * 2), (4.81 * 2), 
               2.2, 4.81, 
-              12.9, 15.61)
+              15.9, 21.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 1.9, 
               1.6, 2.02, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (2.2 * 2), (4.81 * 2), 
               2.2, 4.81, 
-              6.9, 12.61)
+              11.9, 18.61)
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (4.2 * 2), (8.81 * 2), 
               2.2, 4.81, 
               4.9, 7.61)
           } else if (area == 5){
@@ -405,8 +404,8 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.9, 4.61, 
-              2.9, 4.61, 
+              2.2, 4.81, 
+              (4.2 * 2), (8.81 * 2), 
               2.2, 4.81, 
               2.9, 3.61)
           } else if (area == 6) {
@@ -414,8 +413,8 @@ Template.adminSettings.events({
             return multiplier(
               1.7, 1.9, 
               1.6, 2.42, 
-              3.9, 5.61, 
-              3.9, 5.61, 
+              2.2, 3.81, 
+              (8.2 * 2), (10.81 * 2), 
               2.2, 4.81, 
               1.9, 2.61)
           }
@@ -428,35 +427,35 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 2.42, 
-              2.9, 3.61, 
-              2.9, 3.61, 
+              3.2, 4.81, 
+              (3.2 * 2), (4.81 * 2), 
               2.2, 4.81, 
-              2.9, 3.61)
+              12.9, 23.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 1.9, 
               1.6, 2.02, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (8.2 * 2), (10.81 * 2), 
               2.2, 4.81, 
-              6.9, 8.61)
+              16.9, 18.61)
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
               2.2, 4.81, 
+              (10.2 * 2), (14.81 * 2), 
               2.2, 4.81, 
-              2.2, 4.81, 
-              4.9, 7.61)
+              8.9, 12.61)
           } else if (area == 5){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.9, 4.61, 
-              2.9, 4.61, 
+              2.2, 4.81, 
+              (12.2 * 2), (16.81 * 2), 
               2.2, 4.81, 
               2.9, 3.61)
           } else if (area == 6) {
@@ -464,8 +463,8 @@ Template.adminSettings.events({
             return multiplier(
               1.7, 1.9, 
               1.6, 2.42, 
-              3.9, 5.61,
-              3.9, 5.61, 
+              2.2, 3.81, 
+              (12.2 * 2), (23.81 * 2), 
               2.2, 4.81, 
               1.9, 2.61)
           }
@@ -478,76 +477,26 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 2.42, 
-              2.9, 3.61,
-              2.9, 3.61, 
+              3.2, 4.81, 
+              (3.2 * 2), (4.81 * 2), 
               2.2, 4.81, 
-              12.9, 15.61)
+              13.9, 15.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 1.9, 
               1.6, 2.02, 
               2.2, 4.81, 
+              (5.2 * 2), (8.81 * 2), 
               2.2, 4.81, 
-              2.2, 4.81, 
-              8.9, 12.61)
+              10.9, 13.61)
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.2, 4.81,
               2.2, 4.81, 
-              2.2, 4.81, 
-              6.9, 9.61)
-          } else if (area == 5){
-            // Red Zone
-            return multiplier(
-              1.5, 1.7, 
-              1.6, 1.92, 
-              2.9, 4.61,
-              2.9, 4.61, 
-              2.2, 4.81, 
-              3.9, 4.61)
-          } else if (area == 6) {
-            // Goal Line
-            return multiplier(
-              1.7, 1.9, 
-              1.6, 2.42, 
-              3.9, 5.61,
-              3.9, 5.61, 
-              2.2, 4.81, 
-              1.9, 2.61)
-          }
-        } 
-        
-        // 6-9 Yards
-        else if (yards == 4){
-          if(area == 1){
-            // Danger zone
-            return multiplier(
-              1.5, 1.7, 
-              1.6, 2.42, 
-              2.9, 3.61,
-              2.9, 3.61, 
-              2.2, 4.81, 
-              12.9, 15.61)
-          } else if (area == 2){
-            // Most of the field 11 - 80 yard
-            return multiplier(
-              1.7, 1.9, 
-              1.6, 2.02, 
-              2.2, 4.81,
-              2.2, 4.81, 
-              2.2, 4.81, 
-              8.9, 12.61)
-          } else if (area == 3 || area == 4){
-            // Red Zone
-            return multiplier(
-              1.5, 1.7, 
-              1.6, 1.92, 
-              2.2, 4.81,
-              2.2, 4.81, 
+              (6.2 * 2), (8.81 * 2), 
               2.2, 4.81, 
               4.9, 7.61)
           } else if (area == 5){
@@ -555,8 +504,8 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.9, 4.61, 
-              2.9, 4.61, 
+              2.2, 4.81, 
+              (12.2 * 2), (14.81 * 2), 
               2.2, 4.81, 
               2.9, 3.61)
           } else if (area == 6) {
@@ -564,10 +513,60 @@ Template.adminSettings.events({
             return multiplier(
               1.7, 1.9, 
               1.6, 2.42, 
-              3.9, 5.61,
-              3.9, 5.61, 
+              2.2, 3.81, 
+              (22.2 * 2), (23.81 * 2), 
               2.2, 4.81, 
               1.9, 2.61)
+          }
+        } 
+
+        // 6-9 Yards
+        else if (yards == 4){
+          if(area == 1){
+            // Danger zone
+            return multiplier(
+             1.5, 1.7,
+             1.6, 2.42,
+             3.2, 4.81, 
+             (2.9 * 2), (3.61 * 2), 
+             2.9, 3.61, 
+             14.9, 18.61)
+          } else if (area == 2){
+            // Most of the field 11 - 80 yard
+            return multiplier(
+              1.7, 1.9, 
+              1.6, 2.02, 
+              2.2, 4.81, 
+              (4.2 * 2), (4.81 * 2), 
+              2.2, 4.81, 
+              12.9, 15.61)
+          } else if (area == 3 || area == 4){
+            // Red Zone
+            return multiplier(
+              1.5, 1.7, 
+              1.6, 1.92, 
+              2.2, 4.81, 
+              (6.2 * 2), (8.81 * 2), 
+              2.2, 4.81, 
+              4.9, 7.61)
+          } else if (area == 5){
+            // Red Zone
+            return multiplier(
+              1.5, 1.7,
+             1.6, 1.92,
+             2.2, 4.81, 
+             (12.9 * 2), (14.61 * 2), 
+             2.9, 4.61, 
+             2.9, 3.61)
+          } else if (area == 6) {
+            // Goal Line
+            return multiplier(
+              1.7, 1.9,
+             1.6, 2.42,
+             2.2, 3.81, 
+             (13.9 * 2), (15.61 * 2),
+             3.9, 5.61, 
+             1.9, 2.61)
           }
         } 
 
@@ -578,26 +577,26 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 2.42, 
-              2.9, 3.61,
+              3.2, 4.81, 
+              (2.9 * 2), (3.61 * 2),
               2.9, 3.61, 
-              2.2, 4.81, 
-              12.9, 15.61)
+              12.9, 13.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 1.9, 
               1.6, 2.02, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (2.2 * 2), (5.81 * 2), 
               2.2, 4.81, 
-              6.9, 12.61)
+              8.9, 12.61)
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (5.2 * 2), (8.81 * 2), 
               2.2, 4.81, 
               4.9, 7.61)
           } else if (area == 5){
@@ -605,18 +604,18 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.9, 4.61,
-              2.9, 4.61, 
               2.2, 4.81, 
+              (8.9 * 2), (11.61 * 2),
+              2.9, 4.61, 
               2.9, 3.61)
           } else if (area == 6) {
             // Goal Line
             return multiplier(
               1.7, 1.9, 
               1.6, 2.42, 
-              3.9, 5.61,
+              2.2, 3.81, 
+              (13.9 * 2), (15.61 * 2), 
               3.9, 5.61, 
-              2.2, 4.81, 
               1.9, 2.61)
           }
         } 
@@ -628,49 +627,49 @@ Template.adminSettings.events({
             return multiplier(
               1.5, 1.7, 
               1.6, 2.42, 
+              3.2, 4.81, 
+              (2.9 * 2), (3.61 * 2), 
               2.9, 3.61, 
-              2.9, 3.61, 
-              2.2, 4.81, 
-              12.9, 15.61)
+              12.9, 23.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 1.9, 
               1.6, 2.02, 
-              2.2, 4.81,
               2.2, 4.81, 
+              (2.2 * 2), (4.81 * 2), 
               2.2, 4.81, 
-              8.9, 12.61)
+              9.9, 13.61)
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
               2.2, 4.81, 
+              (5.2 * 2), (6.81 * 2), 
               2.2, 4.81, 
-              2.2, 4.81, 
-              4.9, 7.61)
+              4.9, 9.61)
           } else if (area == 5){
             // Red Zone
             return multiplier(
               1.5, 1.7, 
               1.6, 1.92, 
-              2.9, 4.61, 
-              2.9, 4.61, 
               2.2, 4.81, 
-              2.9, 3.61)
+              (8.9 * 2), (13.61 * 2), 
+              2.9, 4.61, 
+              2.9, 4.61)
           } else if (area == 6) {
             // Goal Line
             return multiplier(
               1.7, 1.9, 
               1.6, 2.42, 
-              3.9, 5.61,
+              2.2, 3.81, 
+              (13.9 * 2), (15.61 * 2), 
               3.9, 5.61, 
-              2.2, 4.81, 
               1.9, 2.61)
           }
         }
-      } 
+      }
 
       else if(down == 3 && area == 6){
         return multiplier(
