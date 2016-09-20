@@ -137,4 +137,12 @@ Meteor.methods({
 			}
 		}
 	},
+
+	'endGame': function(game){
+		check(game, String);
+		Games.update({_id: game}, {$set: {"close_processed": true}})
+		Meteor.call('awardLeaders', game);
+		Meteor.call('coinMachine', game);
+
+	}
 })

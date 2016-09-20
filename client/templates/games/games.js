@@ -20,6 +20,25 @@ Template.games.helpers({
     if (day) { var now = moment().dayOfYear(day) }
 
     return moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+  },
+
+  admin: function () {
+    var user = Meteor.user()
+    if (user.profile.role === "admin"){
+      return true
+    }
+  },
+
+  numberOfPlayers: function (array) {
+    var number = array.length
+    return number
+  },
+
+  endOfGame: function (game) {
+    var status = game.close_processed
+    if (status){
+      return true
+    }
   }
 });
 
@@ -50,5 +69,9 @@ Template.games.events({
     //One less day
     var nextDay = parseInt(day) + 1
     Router.go("/games/" + nextDay)
+  },
+  'click [data-action=gameOver]': function (e, t) {
+    var gameId = $(e.currentTarget).attr("data-game-id");
+    Meteor.call('endGame', gameId)
   }
 });
