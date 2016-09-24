@@ -14,3 +14,8 @@
 	width: 33.33%;
 	float: left;
 }
+
+.col-md-100 {
+	width: 100%;
+	float: left;
+}

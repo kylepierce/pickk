@@ -177,7 +177,7 @@ Template.home.helpers({
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
         var title = question.que
-        console.log(question)
+
         Meteor.call('removeNotification', id);
         sAlert.info("You Won " + post.value + " coins! " + title, {effect: 'stackslide', html: true});
       } else if (post.type === "diamonds" && post.read === false) {
@@ -384,8 +384,6 @@ Template.singleQuestion.helpers({
     }
   }
 });
- 
-
 
 Template.eventQuestion.helpers({
   options: function (q) {
@@ -439,7 +437,7 @@ Template.option.helpers({
 });
 
 Template.wagers.rendered = function () {
-  var wagerArray = [50, 100, 250, 500, 1000, 2500]
+  var wagerArray = [50, 500, 2500]
   var lastWager = Session.get('lastWager');
   var position = wagerArray.indexOf(lastWager)
   var wager = $('[value=' + lastWager + ']' ).click();
@@ -448,7 +446,7 @@ Template.wagers.rendered = function () {
 
 Template.wagers.helpers({
   wagers: function () {
-    var wagerArray = [50, 100, 250, 500, 1000, 2500]
+    var wagerArray = [50, 500, 2500]
     return wagerArray
   }
 });
@@ -494,11 +492,23 @@ Template.submitButton.events({
       description: o.title
     }
 
+    if(o.multiplier < 2.5){
+      var multiplierRange = "low"
+    } else if (o.multiplier < 4.5){
+      var multiplierRange = "med"
+    } else if (o.multiplier < 10){
+      var multiplierRange = "high"
+    } else if (o.multiplier < 99){
+      var multiplierRange = "game changer"
+    }
+
     analytics.track("question answered", {
       id: c.userId,
       answered: c.answered,
       type: c.type,
       gameId: c.gameId,
+      multiplier: o.multiplier,
+      multiplierRange: multiplierRange,
       wager: w,
     });
 
