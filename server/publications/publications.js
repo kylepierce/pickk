@@ -119,9 +119,3 @@ Meteor.publish('betaList', function() {
   var selector = {"profile.beta_request": true}
   return UserList.find(selector)
 });
-
-Meteor.publish('leaderboardGamePlayed', function(game) {
-  check(game, String);
-
-  return GamePlayed.find({gameId: game})
-});

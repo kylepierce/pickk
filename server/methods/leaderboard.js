@@ -1,18 +1,16 @@
 Meteor.methods({
 	'loadLeaderboard': function(game) {
 		check(game, String);
-		var liveGame = Games.findOne({_id: game});
-		if (liveGame) {
-			var selector = {_id: {$in: liveGame.users}}
-			return UserList.find(
-				selector,
-				{
-					fields: {
-						'profile.username': 1,
-						'profile.avatar': 1,
-						'_id': 1
-					}
-				}).fetch();
+
+		var singleGame = Games.findOne({_id: game});
+		if (singleGame) {
+			var selector = {_id: {$in: singleGame.users}}
+			var fields = {fields: {
+				'profile.username': 1, 
+				'profile.avatar': 1, 
+				'_id': 1
+			}}
+			return UserList.find(selector, fields).fetch();
 		} else {
 			return [];
 		}

@@ -310,16 +310,16 @@ Template.home.events({
 
 Template.singleGameAwards.helpers({
   gameCoins: function () {
-    return GamePlayed.findOne().coins;
+    var userId = Meteor.userId();
+    var $game = Router.current().params.id
+    return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
   },
   diamonds: function () {
-    // return Template.instance().diamondsVar.get();
-    // var user = Meteor.userId();
-    // return user.profile.diamonds;
-    return GamePlayed.findOne().diamonds;
+    var userId = Meteor.userId();
+    var $game = Router.current().params.id
+    return GamePlayed.findOne({userId: userId, gameId: $game}).diamonds;
   },
 });
-
 
 Template.commericalQuestion.helpers({
   binary: function (q) {
@@ -502,17 +502,18 @@ Template.submitButton.events({
       var multiplierRange = "game changer"
     }
 
-    analytics.track("question answered", {
-      id: c.userId,
-      answered: c.answered,
-      type: c.type,
-      gameId: c.gameId,
-      multiplier: o.multiplier,
-      multiplierRange: multiplierRange,
-      wager: w,
-    });
-
     if (!hasEnoughCoins && t !== "free-pickk") {
+
+      analytics.track("no coins", {
+        id: c.userId,
+        answered: c.answered,
+        type: c.type,
+        gameId: c.gameId,
+        multiplier: o.multiplier,
+        multiplierRange: multiplierRange,
+        wager: w
+      });
+
       IonLoading.show({
         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
         duration: 1500,
@@ -526,6 +527,16 @@ Template.submitButton.events({
       Session.set('lastAnswer', o.option);
       Session.set('lastWager', w);
       Session.set('lastDescription', o.title);
+
+      analytics.track("question answered", {
+        id: c.userId,
+        answered: c.answered,
+        type: c.type,
+        gameId: c.gameId,
+        multiplier: o.multiplier,
+        multiplierRange: multiplierRange,
+        wager: w,
+      });
 
       var countdown = new ReactiveCountdown(250);
       countdown.start(function() {
@@ -546,3 +557,20 @@ Template.playerCard.helpers({
     return player
   }
 });
+
+Template.waitingForNextPlay.events({
+  'click [data-action=game-leaderboard]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/leaderboard/'+ $game)
+  },
+  'click [data-action=previous-answers]': function(event, template){
+    var $game = Router.current().params.id
+    console.log($game)
+    Router.go('/history/'+ $game)
+  }, 
+});
+
+
+
+
