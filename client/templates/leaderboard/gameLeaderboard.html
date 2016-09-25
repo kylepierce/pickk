@@ -23,7 +23,7 @@
 </template>
 
 <template name="miniLeaderboard">
-  <ol type="1" class="list">
+  <ol type="1">
     {{#each player i}}
       {{#ionItem href=pathUrl avatar=true}}
         {{> userAvatar userId=userId}}
@@ -41,12 +41,12 @@
     {{#with userNotInLeaderboard i}}
       {{#ionItem avatar=true}}
         {{> userAvatar userId=userId}}
-        <li class="list-font" value={{spot}}>
-          <h2 class="center-username">
+        <li class="list-font" style="font-weight: bold;" value={{spot}}>
+          <h2 class="center-username" style="font-weight: bold;">
             {{#with username userId}}
               {{profile.username}}
             {{/with}}
-            <span class="score">{{{gameCoins}}}</span>
+            <span class="score" style="font-weight: bold;">{{{gameCoins}}}</span>
           </h2>
         </li>
       {{/ionItem}}

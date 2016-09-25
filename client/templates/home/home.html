@@ -68,16 +68,28 @@
 	</h5>
 
   <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p> -->
-	 {{> miniLeaderboard i=3}}
+  
+	
   <button class="button col-md-50" data-action="game-leaderboard">
 	  <i class="fa fa-trophy waiting-options-icon"></i>
 	  <span>Leaderboard</span>
   </button>
   <button class="button col-md-50" data-action="previous-answers">
-		<i class="fa fa-trophy waiting-options-icon"></i>
+		<i style="margin: 8px 0 0 0;" class="ion-ios-time-outline waiting-options-icon"></i>
 	  <span>History</span>
   </button>
- 
+  <button class="button col-md-50" data-action="notifications">
+	  <i class="fa fa-bell-o waiting-options-icon"></i>
+	  <span>Notifications</span>
+  </button>
+  <button class="button col-md-50" data-action="chat" data-ion-menu-toggle="right">
+  	<i style="margin: 8px 0 0 0;" class="ion-ios-chatboxes waiting-options-icon"></i>
+		<!-- <i class="fa fa-commenting "></i> -->
+	  <span>Chat</span>
+  </button>
+	<div class="clear-fix"></div>
+  <div class="item item-divider ten-spacing">Leaderboard +</div>
+ 	{{> miniLeaderboard i=3}}
 </template>
 
 <template name="singleGameAwards">
