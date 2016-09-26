@@ -73,5 +73,9 @@ Template.games.events({
   'click [data-action=gameOver]': function (e, t) {
     var gameId = $(e.currentTarget).attr("data-game-id");
     Meteor.call('endGame', gameId)
+  },
+  'click [data-action=gameAdmin]': function (e, t) {
+    var gameId = $(e.currentTarget).attr("data-game-id");
+    Router.go('/admin/game/' + gameId)
   }
 });

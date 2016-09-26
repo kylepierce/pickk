@@ -46,16 +46,16 @@ Meteor.methods({
 		      runs: "0"
 		    },
 		    away: {
-			    name: team1,
-			    market: team1,
-			    abbr: team1,
-			    id: team1,
+			    name: team2,
+			    market: team2,
+			    abbr: team2,
+			    id: team2,
 		      runs: "0"
 		    }
 		  },
 			tv: channel,
 			commercial: false,
-			complete: false,
+			completed: false,
 			live: active,
 			nonActive: [],
 			users: []

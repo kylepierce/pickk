@@ -162,7 +162,7 @@ Meteor.methods({
 				option4: { low: 3.4, high: 4.62 }, // Touchdown
 				option5: { low: 2.2, high: 2.81 }, // Field Goal
 				option6: { low: 15.9, high: 21.61 }, // Safety
-				option7: { low: 5.4, high: 6.7 } // Safety
+				option7: { low: 5.4, high: 6.7 } // Turn over on downs
 			}
 		}
 

@@ -28,17 +28,12 @@ Template.settings.helpers({
   }
 });
 
-// Template.settings.onRendered(function(){
-//   console.log("*** rendeing settings - ", UsersProfileSchema);
-// });
-
-// console.log(UsersProfileSchema)
-
 Template.settings.events({
   "change input[name='avatar']": function(event, template) {
     var files = event.currentTarget.files;
     template.$(".loading").show();
     template.$(".avatar").hide();
+    console.log(files)
     Cloudinary.upload(files, {
       folder: "avatars",
       transformation: [
@@ -46,6 +41,7 @@ Template.settings.events({
       ],
       fields: {}
     }, function(error, result) {
+      console.log("Did something")
       template.$(".loading").hide();
       template.$(".avatar").show();
       if (error) {
@@ -64,8 +60,8 @@ Template.settings.events({
         id: currentUser,
         newUser: newOrNah
       });
-      //console.log("Upload Error: ", error);
-      //console.log("Upload Result: ", result);
+      console.log("Upload Error: ", error);
+      console.log("Upload Result: ", result);
     });
   }
 
