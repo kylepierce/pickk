@@ -33,43 +33,43 @@ Template.chatOverview.helpers({
   } 
 });
 
-Template.singleMessage.events({
-  'click .single-message': function (e, t) {
-    var displayOptions = function ( o ) {
-      // The select item dom and data
-      var $selected = $(e.currentTarget)
-      var selectedObj = o.dataPath
-      var templateName = o.insertedTemplate
+// Template.singleMessage.events({
+//   'click .single-message': function (e, t) {
+//     var displayOptions = function ( o ) {
+//       // The select item dom and data
+//       var $selected = $(e.currentTarget)
+//       var selectedObj = o.dataPath
+//       var templateName = o.insertedTemplate
 
-      var addOptions = function ( id, data ){
-        var options = "<div id='" + id + "'></div>"
-        $selected.after(options);
-        var container = $('#' + id + '')[0]
-        Blaze.renderWithData(templateName, data, container)
-      }
+//       var addOptions = function ( id, data ){
+//         var options = "<div id='" + id + "'></div>"
+//         $selected.after(options);
+//         var container = $('#' + id + '')[0]
+//         Blaze.renderWithData(templateName, data, container)
+//       }
 
-      var container = $('#' + o.containerId + '')[0]
-      if ( container ){
-        if ( container.previousSibling !== $selected[0] ){
-          container.remove();
-          addOptions( o.containerId, selectedObj )  
-        } else {
-          container.remove();
-        }
-      } else {
-        addOptions( o.containerId, selectedObj )  
-      }
-    }
-    parms = {
-      insertedTemplate: Template.chatOptions,
-      containerId: "options",
-      event: e,
-      template: t,
-      dataPath: t.data.i
-    }
-    displayOptions( parms )
-  },
-});
+//       var container = $('#' + o.containerId + '')[0]
+//       if ( container ){
+//         if ( container.previousSibling !== $selected[0] ){
+//           container.remove();
+//           addOptions( o.containerId, selectedObj )  
+//         } else {
+//           container.remove();
+//         }
+//       } else {
+//         addOptions( o.containerId, selectedObj )  
+//       }
+//     }
+//     parms = {
+//       insertedTemplate: Template.chatOptions,
+//       containerId: "options",
+//       event: e,
+//       template: t,
+//       dataPath: t.data.i
+//     }
+//     displayOptions( parms )
+//   },
+// });
 
 Template.singleMessage.helpers({
   type: function (type) {
@@ -126,16 +126,25 @@ Template.singleMessage.helpers({
 
 Template.chatOptions.helpers({
   'options': function ( ) {
-    var owner = Template.instance().data.user
-    var currentUser = Meteor.userId()
-    if ( owner === currentUser || currentUser.role === "admin") {
+    var currentUser = Meteor.user()
+    if ( currentUser.profile.role === "admin") {
       return "col-md-25"
     } else {
       return "col-md-33"
     }    
   },
+  'notOwnMessage': function (){
+    var owner = Template.instance().data.i.user
+    var currentUser = Meteor.userId()
+    var userIsAdmin = Meteor.user().profile.role
+    if ( owner !== currentUser || userIsAdmin === "admin") {
+      return true
+    } else {
+      return false
+    }
+  },
   'canDelete': function (){
-    var owner = Template.instance().data.user
+    var owner = Template.instance().data.i.user
     var currentUser = Meteor.userId()
     var userIsAdmin = Meteor.user().profile.role
     if ( owner === currentUser || userIsAdmin === "admin") {
@@ -148,26 +157,22 @@ Template.chatOptions.helpers({
 
 Template.chatOptions.events({
   'click [data-action=reply]': function(event, template) {
-    var userId = Template.instance().data.user
+    var userId = Template.instance().data.i.user
     var user = Meteor.users.findOne({_id: userId});
     var userName = user.profile.username
     $('[name=messageBox]').val("@" + userName + " ")
     $("#messageBox").focus()
-    var container = $('#options')[0]
-    container.remove();
   },
   'click [data-action=react]': function(e, t){
     IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
   },
   'click [data-action=user]': function(event, template) {
-    var userId = Template.instance().data.user
+    var userId = Template.instance().data.i.user
     Router.go('/user-profile/' + userId);
   },
   'click [data-action=delete]': function(event, template) {
     var deletor = Meteor.userId();
-    var messageId = Template.instance().data._id
-    var container = $('#options')[0]
-    container.remove();
+    var messageId = Template.instance().data.i._id
     Meteor.call('deleteMessage', messageId, deletor)
   },
 });
@@ -430,13 +435,15 @@ Template._reactionToMessage.events({
   'click button': function(e, t) {
     var currentUser = Meteor.userId()
     var message = e.currentTarget.value
-    var messageIdExists = this && this.messageId 
-    
-    if(messageIdExists){
-      var messageId = this.messageId
-    } else {
-      var messageId = this._id
-    }
+    var messageId = t.data.i._id
+
+    analytics.track("react to message", {
+      messageId: messageId,
+      userId: currentUser,
+      reaction: message
+    });
+
+    console.log(messageId, currentUser, message)
 
     Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
       if (error) {
@@ -448,8 +455,6 @@ Template._reactionToMessage.events({
       }
     });
     IonPopover.hide();
-    var container = $('#options')[0]
-    container.remove();
     $("#messageBox").val('');
   },
 });

@@ -50,45 +50,50 @@
 
 <template name="singleMessage">
   {{#ionItem avatar=true id=i._id class="single-message"}}
-    {{#with userObj i.user}}
-      {{> userAvatar userId=_id alreadySubscribed=true}}
-      <h2>{{username}}</h2>
-    {{/with}}
     {{#if type "reaction"}}
-      <img class="reaction-message" src="{{emojiIconSrc this}}">
+      <img class="reaction-message avatar user-avatar" src="{{emojiIconSrc this}}">
+      {{#with userObj i.user}}
+        <h2 style="margin-top: 5px;">{{username}}'s Reaction</h2>
+      {{/with}}
+    {{else}}
+      {{#with userObj i.user}}
+        {{> userAvatar userId=_id alreadySubscribed=true}}
+        <h2>{{username}}</h2>
+      {{/with}}
     {{/if}}
     {{#if award}}
       <p><strong>{{{i.message}}}</strong></p>
     {{else}}
       <p>{{{messageText i}}}</p>
     {{/if}}
-    
-    {{> messageReactions reactions=i.reactions}}
-  {{/ionItem}}  
+    <div style="margin-left: -65px; margin-right: -10px; clear: both;">
+      {{> messageReactions reactions=i.reactions}}
+      {{> chatOptions}}
+    </div>
+  {{/ionItem}}
 </template>
 
 <template name="chatOptions">
-  {{#with options}}
-    <div class="{{options}} option-dividers" data-action="reply">
-      {{> ionIcon class="reply-icon" icon='forward'}}<br>
-      Reply
-    </div>
-    <div class="{{options}} option-dividers" data-action="react">
-      <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
-      React
-    </div>
-    <div class="{{options}} option-dividers" data-action="user">
-      {{> ionIcon class="reply-icon" icon='ios-person'}}<br>
-      User
-    </div>
-    {{#if canDelete}}
-      <div class="{{options}} option-dividers" data-action="delete">
-        {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
-        <br>
-        Delete
-      </div>
-    {{/if}}
-  {{/with}}
+  {{#if notOwnMessage}}
+  <button class="{{options}} single-chat-buttons" data-action="reply">
+    {{> ionIcon class="icon-small" icon='forward'}}
+    Reply
+  </button>
+  <button class="{{options}} single-chat-buttons grayscale" data-action="react">
+    <img class="icon-small" src="/emoji/Full-Color/Emoji-Party-Pack-01.svg">
+    React
+  </button>
+  <button class="{{options}} single-chat-buttons" data-action="user">
+    {{> ionIcon class="icon-small" icon='ios-person'}}
+    User
+  </button>
+  {{/if}}
+  {{#if canDelete}}
+    <button class="col-md-25 single-chat-buttons" style="float: right;" data-action="delete">
+      {{> ionIcon class="icon-small" icon='ios-close-outline'}}
+      Delete
+    </button>
+  {{/if}}
 </template>
 
 <template name="_groupChats">
@@ -194,7 +199,7 @@
 </template>
 
 <template name="messageReactions">
-  <div class="row" align="right">
+  <div class="reaction-row" align="right">
     <p>
     {{#each reactionCount}}
       <img class="icon-small" src={{emojiIconSrc reactionName}}>
