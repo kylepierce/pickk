@@ -108,11 +108,12 @@ Meteor.methods({
 		else if (c.type === "prediction") {
 			Meteor.call('userJoinsAGame', c.userId, c.gameId);
 			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
+			var gameName = Games.findOne({_id: c.gameId}).name;
 			var o = {
 				userId: c.userId, 
 				gameId: c.gameId,
 				questionId: c.questionId,
-				gameName: c.gameName,
+				gameName: gameName,
 				value: 5,
 				source: "Daily Pickks"
 			}

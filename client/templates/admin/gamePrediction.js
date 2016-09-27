@@ -8,7 +8,7 @@ Template.gamePrediction.helpers({
 		return list
 	},
 	pendingGameQuestions: function () {
-				var list = Questions.find({type: "prediction", active: "pending"}).fetch();
+		var list = Questions.find({type: "prediction", active: "pending"}).fetch();
 		return list
 	}
 });
@@ -24,8 +24,9 @@ Template.gamePrediction.events({
 		Meteor.call('deactivateGame', gameId);
 	},
 
-	'click [data-ion-popover=_gamePopover]': function(){
-		Session.set("gamePrediction", this._id);
+	'click [data-action=_gamePopover]': function(e,t){
+		// Session.set("gamePrediction", this._id);
+		IonPopover.show('_gamePopover', this, e.currentTarget)
 	},
 
 	'submit': function (event, template) {

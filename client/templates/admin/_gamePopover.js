@@ -1,39 +1,26 @@
 Template._gamePopover.helpers({
-	game: function () {
-		var gameId = Session.get('gamePrediction');
-		return Questions.findOne({_id: gameId})
-	}
+	options: function (q) {
+    var data = q.options
+    var keys = _.keys(data)
+    var values = _.values(data)
+    var optionsArray = []
+
+    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+    for (var i = 0; i < keys.length; i++) {
+      var obj = values[i]
+      var number = keys[i]
+      obj["option"] = number 
+      optionsArray.push(obj)
+    }
+    return optionsArray
+  }
 });
 
 Template._gamePopover.events({
-	'click [data-action=option1]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option1")
+	'click [data-action=selection]': function(e,t) {
+		var option = this.o.option
+		var questionId = this.q._id
+		Meteor.call('modifyGameQuestionStatus', questionId, option)
 		IonPopover.hide();
 	},
-		'click [data-action=option2]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option2")
-		IonPopover.hide();
-	},
-		'click [data-action=option3]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option3")
-		IonPopover.hide();
-	},
-		'click [data-action=option4]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option4")
-		IonPopover.hide();
-	},
-		'click [data-action=option5]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option5")
-		IonPopover.hide();
-	},
-	'click [data-action=option6]': function() {
-		var gameId = Session.get('gamePrediction');
-		Meteor.call('modifyGameQuestionStatus', gameId, "option6")
-		IonPopover.hide();
-	}, 
 })

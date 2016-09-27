@@ -322,7 +322,6 @@ Template.singleQuestion.helpers({
   },
   dailyPickk: function (q) {
     if(q.type === "prediction"){
-      console.log("dailyPickk", q)
       return true
     }
   }
