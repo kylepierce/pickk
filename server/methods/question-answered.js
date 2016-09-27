@@ -107,6 +107,7 @@ Meteor.methods({
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
 			Meteor.call('userJoinsAGame', c.userId, c.gameId);
+			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 			var o = {
 				userId: c.userId, 
 				gameId: c.gameId,
