@@ -1,7 +1,8 @@
 Meteor.startup(function () {
   var config = {
     gcm: {
-      apiKey: 'xxxxxxx'
+      apiKey: 'AIzaSyAgLfoXtW0MQ0gPOYZJxv2J-BqKm0wlc4Q',
+      projectNumber: 259263435947
     }
   };
 
