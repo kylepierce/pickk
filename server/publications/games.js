@@ -62,3 +62,8 @@ Meteor.publish('singleQuestion', function(id) {
   check(id, String);
   return Questions.find({_id: id}, {fields: {_id: 1, que: 1, outcome: 1, options: 1}})
 })
+
+Meteor.publish('userGamesPlayed', function() {
+  var userId = this.userId
+  return GamePlayed.find({userId: userId});
+})

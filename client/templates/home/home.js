@@ -315,7 +315,14 @@ Template.singleQuestion.helpers({
     var isCommerical = Games.findOne().commercial;
     var atBatQuestion = q && q.atBatQuestion
     var binaryChoice = q && q.binaryChoice
-    if(!isCommerical && !atBatQuestion && !binaryChoice){
+    var prediction = q && q.type === "prediction"
+    if(!isCommerical && !atBatQuestion && !binaryChoice && !prediction){
+      return true
+    }
+  },
+  dailyPickk: function (q) {
+    if(q.type === "prediction"){
+      console.log("dailyPickk", q)
       return true
     }
   }
@@ -409,25 +416,23 @@ Template.submitButton.helpers({
 Template.submitButton.events({
   "click [data-action='submit']": function (e, t) {
     e.preventDefault()
-    var w = this.w // wager
+    var userId = Meteor.userId()
     var o = this.o // option
     var q = this.q // question
     var t = this.t // type
-    var userId = Meteor.userId()
-    var userCoins = GamePlayed.find({userId: userId, gameId: q.gameId}).fetch();
-    var hasEnoughCoins = userCoins[0].coins >= w
     
-    var c = {
+    // a is for answer object
+    var a = {
       userId: userId,
       gameId: q.gameId,
       questionId: q._id,
       type: t,
       answered: o.option,
-      wager: w,
       multiplier: o.multiplier,
       description: o.title
     }
 
+    // Track what types of questions people are answering
     if(o.multiplier < 2.5){
       var multiplierRange = "low"
     } else if (o.multiplier < 4.5){
@@ -438,50 +443,70 @@ Template.submitButton.events({
       var multiplierRange = "game changer"
     }
 
-    if (!hasEnoughCoins && t !== "free-pickk") {
+    if ( t === "free-pickk" ){
+      var w = this.w // wager
 
-      analytics.track("no coins", {
-        id: c.userId,
-        answered: c.answered,
-        type: c.type,
-        gameId: c.gameId,
-        multiplier: o.multiplier,
-        multiplierRange: multiplierRange,
-        wager: w
-      });
+    } else if ( t = "prediction" ){
+      var w = "diamonds" // wager
 
-      IonLoading.show({
-        customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
-        duration: 1500,
-        backdrop: true
-      });
     } else {
-      $(".single-question").removeClass("slideInLeft")
-      $(".single-question").addClass("slideOutRight")
+      var w = this.w // wager
 
-      Session.set('lastId', q._id);
-      Session.set('lastAnswer', o.option);
-      Session.set('lastWager', w);
-      Session.set('lastDescription', o.title);
+      // Normal Questions (i.e live, at bat, and drive)
+      var selector = {userId: userId, gameId: q.gameId}
+      var userCoins = GamePlayed.find(selector).fetch();
+      var hasEnoughCoins = userCoins[0].coins >= w
 
-      analytics.track("question answered", {
-        id: c.userId,
-        answered: c.answered,
-        type: c.type,
-        gameId: c.gameId,
-        multiplier: o.multiplier,
-        multiplierRange: multiplierRange,
-        wager: w,
-      });
+      // Make sure the user has enough coins
+      if (!hasEnoughCoins) {
+        analytics.track("no coins", {
+          id: a.userId,
+          answered: a.answered,
+          type: a.type,
+          gameId: a.gameId,
+          multiplier: o.multiplier,
+          multiplierRange: multiplierRange,
+          wager: w,
+          userCoins: userCoins
+        });
 
-      var countdown = new ReactiveCountdown(250);
-      countdown.start(function() {
-        Meteor.call('playerInactive', c.userId, c.questionId);
-      })
-      setTimeout(function() {
-        Meteor.call('questionAnswered', c);
-      }, 250);
+        IonLoading.show({
+          customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
+          duration: 1500,
+          backdrop: true
+        });
+        return
+
+      } else {
+        // If they do add the wager to the answer object and set the last wager to whatever they predicted.
+        a.wager = w
+        Session.set('lastWager', w);
+      }
     }
+
+    // Remove the question from screen
+    $(".single-question").removeClass("slideInLeft")
+    $(".single-question").addClass("slideOutRight")
+
+    analytics.track("question answered", {
+      id: a.userId,
+      answered: a.answered,
+      type: a.type,
+      gameId: a.gameId,
+      multiplier: o.multiplier,
+      multiplierRange: multiplierRange,
+      wager: w,
+    });
+
+    var countdown = new ReactiveCountdown(250);
+    countdown.start(function() {
+      Meteor.call('playerInactive', a.userId, a.questionId);
+    });
+
+    setTimeout(function() {
+      Meteor.call('questionAnswered', a);
+    }, 250);
+
   }
 });
 

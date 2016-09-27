@@ -68,14 +68,7 @@
   {{/ionView}}
 </template>
 
-<template name="waitingForNextPlay">
-<!-- 	<h5 class="no-notifications">
-		Next question coming up soon!
-	</h5>
-
-  <p class="next-play">Have a question?<br> Check out our common questions in our side menu</p> -->
-  
-	
+<template name="waitingForNextPlay">	
   <button class="button col-md-50" data-action="game-leaderboard">
 	  <i class="fa fa-trophy waiting-options-icon"></i>
 	  <span>Leaderboard</span>
@@ -121,6 +114,9 @@
 	{{/if}}
 	{{#if liveQuestion q}}
 		{{> eventQuestion q=q t="live"}}
+	{{/if}}
+	{{#if dailyPickk q}}
+		{{> eventQuestion q=q t="prediction"}}
 	{{/if}}
 </template>
 

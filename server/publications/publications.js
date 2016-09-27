@@ -82,17 +82,7 @@ Meteor.publish('activeQuestions', function(gameId) {
 // });
 
 Meteor.publish('gameQuestions', function() {
-  var allQuestions = Questions.find({gameId: 'prediction'});
-  if (allQuestions) {
-    return allQuestions
-  }
-  return this.ready();
-});
-
-Meteor.publish('pendingGameQuestions', function() {
-  var selector = {active: "pending"}
-  var sort = {sort: {dateCreated: 1}}
-  return Questions.find(selector, sort);
+  return Questions.find({type: 'prediction', active: {$ne: false}});
 });
 
 // All of the games user has played 

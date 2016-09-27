@@ -16,6 +16,5 @@ Meteor.methods({
 				matches: []
 			});
 		}
-		
 	}
 });

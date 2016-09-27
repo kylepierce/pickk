@@ -61,6 +61,29 @@ Meteor.methods({
 			users: []
 		});
 	},	
+
+	'createPredictionGame': function() {
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		var now = moment();
+		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+		var title = dateSpelled + " Predictions"
+		var timeCreated = new Date();
+		var game = Games.insert({
+			dateCreated: timeCreated,
+			scheduled: timeCreated,
+			type: "predictions",
+			name: title,
+			users: []
+		});
+		console.log("server", game)
+		return game
+	},	
 	
 	'deactivateGame': function(questionId) {
 		check(questionId, String);

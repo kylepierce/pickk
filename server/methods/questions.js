@@ -229,7 +229,55 @@ Meteor.methods({
 				option2: {title: "False", multiplier: 4},
 			},
 			usersAnswered: []
-		})
+		});
+	},
+
+	'gamePrediction': function(q){
+		check(q, Object);
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+
+		var now = moment();
+		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+		var title = dateSpelled + " Predictions"
+		var game = Games.findOne({name: title});
+		var currentUserId = Meteor.userId();
+		var timeCreated = new Date();
+		
+		if(!game){
+			var gameId = Meteor.call('createPredictionGame', function(error, result) {
+				return result
+			});
+			console.log(gameId)
+			Questions.insert({
+					que: q.que,
+					gameId: gameId,
+					createdBy: currentUserId,
+					dateCreated: timeCreated,
+					type: "prediction",
+					active: "future",
+					manual: true,
+					options: q.options,
+					usersAnswered: []
+				});
+		} else {
+			var gameId = game._id
+			Questions.insert({
+				que: q.que,
+				gameId: gameId,
+				createdBy: currentUserId,
+				dateCreated: timeCreated,
+				type: "prediction",
+				active: "future",
+				manual: true,
+				options: q.options,
+				usersAnswered: []
+			});
+		}
 	},
 
 	'reactivateStatus': function(questionId) {
