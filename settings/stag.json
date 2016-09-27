@@ -8,8 +8,5 @@
     "isDebug": true,
     "isDevLogin": false,
     "isCronEnabled": false
-  },
-  "oneSignal": {
-    "isEnabled": false
   }
 }

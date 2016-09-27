@@ -6,22 +6,15 @@ Meteor.methods({
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
 		const text = "Guess What Happens on " + message;
-		const users = Meteor.users.find({_id: {$in: userIds}}, {"oneSignalToken": 1}).fetch();
-		const tokens = _.without(_.uniq(_.pluck(users, "oneSignalToken")), undefined);
-
-		if (tokens.length) {
-			if (Meteor.settings.oneSignal.isEnabled) {
-				OneSignal.Notifications.create(tokens, {
-					contents: {
-						en: text
-					},
-					headings: {
-						en: "Pickk question"
-					},
-					ios_badgeType: "Increase",
-					ios_badgeCount: 1
-				});
-			}
+		if (userIds && userIds.length) {
+			Push.send({
+				from: 'Pickk',
+				title: 'Pickk question',
+				text: text,
+				sound: 'default',
+				badge: 1,
+				query: {userId: {$in: userIds}}
+			});
 		}
 	},
 
@@ -62,50 +55,30 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		if (Meteor.settings.oneSignal.isEnabled) {
-			OneSignal.Notifications.create(undefined, {
-				included_segments: ["All"],
-				contents: {
-					en: message
-				},
-				headings: {
-					en: "Pickk notification"
-				},
-				ios_badgeType: "Increase",
-				ios_badgeCount: 1
-			});
-		}
-	},
-
-	'updateOneSignalToken': function (token) {
-		check(token, String);
-		// target device will be able to receive broadcast notifications but we can't send a message to it personally
-		if (Meteor.user()) {
-			Meteor.users.update(Meteor.userId(), {$set: {oneSignalToken: token}});
-		}
+		Push.send({
+			from: 'Pickk',
+			title: 'Pickk notification',
+			text: message,
+			sound: 'default',
+			badge: 1,
+			query: {}
+		});
 	},
 
 	'pushInvite': function(message, userId) {
 		check(message, String);
 		check(userId, String);
 
-		var user = Meteor.users.findOne({_id: userId}, {"oneSignalToken": 1});
+		var user = Meteor.users.findOne({_id: userId});
 		if (user) {
-			const token = user.oneSignalToken;
-			if (token) {
-				if (Meteor.settings.oneSignal.isEnabled) {
-					OneSignal.Notifications.create([token], {
-						contents: {
-							en: message
-						},
-						headings: {
-							en: "Pick invite"
-						},
-						ios_badgeType: "Increase",
-						ios_badgeCount: 1
-					});
-				}
-			}
+			Push.send({
+				from: 'Pickk',
+				title: 'Pick invite',
+				sound: 'default',
+				text: message,
+				badge: 1,
+				query: {userId: userId}
+			});
 		}
 	}
 });

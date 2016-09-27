@@ -62,3 +62,6 @@ App.configurePlugin("branch-cordova-sdk", {
     URI_SCHEME : "pickk",
     BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
 });
+App.configurePlugin('phonegap-plugin-push', {
+    SENDER_ID: 259263435947
+});
