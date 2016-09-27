@@ -23,10 +23,6 @@ var hooksObj = {
       if (error) {
         done(error);
       } else {
-        if (Meteor.isCordova && Meteor.user().OneSignalToken) {
-          // Update OneSignal Tags
-          updateOneSignalTeamTags(Meteor.user());
-        }
         done();
         moveNextStep();
       }
