@@ -40,12 +40,10 @@ Template.gamePrediction.events({
 		var q = {
 			que: team1 + " vs " + team2,
 			options: {
-				option1: {title: team1 + " Wins by 5+ runs", multiplier: 4},
-				option2: {title: team1 + " Wins by 2-4 runs", multiplier: 4},
-				option3: {title: team1 + " Wins by 1 run", multiplier: 4},
-				option4: {title: team2 + " Wins by 1 run", multiplier: 4},
-				option5: {title: team2 + " Wins by 2-4 runs", multiplier: 4},
-				option6: {title: team2 + " Wins by 5+ runs", multiplier: 4}
+				option1: {title: team1 + " by 5+", multiplier: 4},
+				option2: {title: team1 + " by 1-4", multiplier: 4},
+				option3: {title: team2 + " by 1-4", multiplier: 4},
+				option4: {title: team2 + " by 5+", multiplier: 4}
 			}
 		}
 

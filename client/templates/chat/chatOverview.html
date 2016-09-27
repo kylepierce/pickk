@@ -1,5 +1,5 @@
 <template name="chatOverview">
-<div class="bar bar-header bar-dark">
+  <div class="bar bar-header bar-dark">
 <!--   {{#if group}}
    <h1 class="title white-text-header">{{group}} Chat</h1>
 
@@ -53,7 +53,7 @@
     {{#if type "reaction"}}
       <img class="reaction-message avatar user-avatar" src="{{emojiIconSrc this}}">
       {{#with userObj i.user}}
-        <h2 style="margin-top: 5px;">{{username}}'s Reaction</h2>
+        <h2 style="margin-top: 13px;">{{username}}'s Reaction</h2>
       {{/with}}
     {{else}}
       {{#with userObj i.user}}

@@ -1,0 +1,28 @@
+<template name="notificationLayout">
+  {{#ionBody}}
+    {{#ionSideMenuContainer}}
+      {{#ionSideMenus}}
+
+        {{#ionSideMenu}}
+          {{> sideMenuContent}}
+        {{/ionSideMenu}}
+
+        {{#ionSideMenu side="right"}}
+          {{> notificationFilter}}
+        {{/ionSideMenu}}
+
+      {{/ionSideMenus}}
+
+      {{#ionSideMenuContent}}
+      <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+        {{> ionNavBar name="stub"}}
+          {{#ionNavView transition="backward"}}
+            {{> yield "header"}} 
+          {{/ionNavView}}
+
+          {{> yield}}
+
+      {{/ionSideMenuContent}}
+    {{/ionSideMenuContainer}}
+  {{/ionBody}}
+</template>

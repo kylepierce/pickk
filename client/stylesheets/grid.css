@@ -15,6 +15,12 @@
 	float: left;
 }
 
+.col-md-45 {
+	width: 49%;
+	margin: .5%!important;
+	float: left;
+}
+
 .col-md-100 {
 	width: 100%;
 	float: left;
