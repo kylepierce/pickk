@@ -459,9 +459,10 @@ Template.submitButton.events({
     } else if ( t === "prediction" ){
       var w = "diamonds" // wager
       console.log("Daily Pickk")
+
     } else {
       var w = this.w // wager
-
+      Meteor.call('userJoinsAGame', a.userId, a.gameId);
       // Normal Questions (i.e live, at bat, and drive)
       var selector = {userId: userId, gameId: q.gameId}
       var userCoins = GamePlayed.find(selector).fetch();
