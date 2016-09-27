@@ -448,10 +448,11 @@ Template.submitButton.events({
 
     if ( t === "free-pickk" ){
       var w = this.w // wager
-
-    } else if ( t = "prediction" ){
+      console.log("Free Pickk")
+      a.wager = w
+    } else if ( t === "prediction" ){
       var w = "diamonds" // wager
-
+      console.log("Daily Pickk")
     } else {
       var w = this.w // wager
 
