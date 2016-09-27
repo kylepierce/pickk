@@ -1,0 +1,23 @@
+<template name="notificationFilter">
+	<div class="bar bar-header bar-dark">
+    <h1 class="title white-text-header">Filter Notifications</h1>
+  </div>
+  <div style="margin-top:44px;">
+  {{#ionList}}
+  	<form>
+		{{#each option in options}}
+			{{> notificationOption o=option}}
+		{{/each}}
+		</form>
+  {{/ionList}}
+  </div>
+</template>
+
+<template name="notificationOption">
+	{{#ionItem class="item-text-wrap item-checkbox notification-checkbox"}}
+    <label class="checkbox">
+      <input type="checkbox" style="float: left;">
+      <span class="checkbox-text">{{o}}</span>
+    </label>
+  {{/ionItem}}
+</template>
