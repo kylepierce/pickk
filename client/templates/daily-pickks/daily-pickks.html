@@ -16,9 +16,16 @@
 	{{#ionView}}
     {{#ionContent}}
       <div class="container">
-    		{{#each question in dailyPickks}}
-          {{> singleQuestion q=question}}
-    		{{/each}}
+        {{#if questionsExist}}
+      		{{#each question in dailyPickks}}
+            {{> singleQuestion q=question}}
+      		{{/each}}
+        {{else}}
+          <div class="no-notifications">
+            0 Active Daily Pickks
+          </div>
+          View Previous Daily Pickks 
+        {{/if}}
       </div>
     {{/ionContent}}
   {{/ionView}}

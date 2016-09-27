@@ -1,6 +1,13 @@
 Template.dailyPickks.helpers({
+  questionsExist: function () {
+    var currentUserId = Meteor.userId()
+    var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
+    return Questions.find(selector).count()
+  },
 	dailyPickks: function () {
-		return Questions.find().fetch();
+    var currentUserId = Meteor.userId()
+    var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
+		return Questions.find(selector, {limit: 1}).fetch();
 	}
 });
 

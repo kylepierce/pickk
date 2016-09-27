@@ -406,7 +406,11 @@ Template.submitButton.helpers({
     }
   },
   'potential': function (){
-    var wager = this.w
+    if(this.t === "prediction"){
+      var wager = 5
+    } else {
+      var wager = this.w
+    }
     var multiplier = this.o.multiplier
     var winnings = parseInt(wager * multiplier)
     return winnings
