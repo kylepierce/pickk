@@ -136,7 +136,7 @@
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
 		<div class="question">
-			<h4>{{q.que}}</h4>
+			<span class="display-question">{{q.que}}</span>
 		</div>
 		<div id="binaryOptions">
 		{{#each o in options q}}
@@ -155,13 +155,11 @@
 <template name="option">
 	<li class="option" data-action="play-selected">
 		<div class="option-inner">
-			<span class="icon-container">
-				{{#if hasIcon o.title}} 
-					<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
-				{{else}}
-					<i class="fa fa-star"></i>
-				{{/if}}
-			</span>
+			{{#if hasIcon q}} 
+				<span class="icon-container">
+				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
+				</span>
+			{{/if}}
 			<span class="option-title">{{o.title}}</span>
 			<span class="multiplier">x {{o.multiplier}}</span>
 		</div>

@@ -1,3 +1,13 @@
+Template.dailyPickks.rendered = function () {
+  var now = moment();
+  var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+  var title = dateSpelled + " Predictions"
+  var game = Games.findOne({name: title})
+  var gameId = game._id
+  Meteor.subscribe('singleGame', gameId)
+  Meteor.subscribe('gameNotifications', gameId)
+};
+
 Template.dailyPickks.helpers({
   questionsExist: function () {
     var currentUserId = Meteor.userId()
@@ -8,7 +18,23 @@ Template.dailyPickks.helpers({
     var currentUserId = Meteor.userId()
     var selector = {active: true, usersAnswered: {$nin: [currentUserId]}}
 		return Questions.find(selector, {limit: 1}).fetch();
-	}
+	},
+  scoreMessage: function() {
+    
+    var user = Meteor.userId();
+    var notifications = Notifications.find({userId: user, read: false});
+
+    notifications.forEach(function(post) {
+      var id = post._id
+      if (post.type === "diamonds" && post.read === false) {
+        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
+
+        Meteor.call('removeNotification', id);
+
+        sAlert.warning(message, {effect: 'stackslide', html: true});
+      } 
+    });
+  }
 });
 
 Template.dailyPickks.events({

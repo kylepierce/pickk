@@ -370,11 +370,15 @@ Template.binaryQuestion.helpers({
 });
 
 Template.option.helpers({
-  hasIcon: function (title) {
-    var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
-    if (baseball.indexOf(title) !== -1){
+  hasIcon: function (q) {
+    console.log(q)
+    if (q.icons){
       return true
     }
+    // var baseball = ["out", "single", "double", "triple", "homerun", "walk", "strike", "ball", "foul ball", "hit"]
+    // if (baseball.indexOf(title) !== -1){
+    //   return true
+    // }
   }
 });
 
@@ -405,14 +409,16 @@ Template.submitButton.helpers({
     }
   },
   'potential': function (){
+    var multiplier = this.o.multiplier
     if(this.t === "prediction"){
       var wager = 5
+      var winnings = parseInt(wager * multiplier)
+      return winnings + " diamonds"
     } else {
       var wager = this.w
+      var winnings = parseInt(wager * multiplier)
+      return winnings
     }
-    var multiplier = this.o.multiplier
-    var winnings = parseInt(wager * multiplier)
-    return winnings
   }
 });
 

@@ -256,6 +256,7 @@ Meteor.methods({
 			Questions.insert({
 					que: q.que,
 					gameId: gameId,
+					icons: false,
 					createdBy: currentUserId,
 					dateCreated: timeCreated,
 					type: "prediction",
@@ -269,6 +270,7 @@ Meteor.methods({
 			Questions.insert({
 				que: q.que,
 				gameId: gameId,
+				icons: false,
 				createdBy: currentUserId,
 				dateCreated: timeCreated,
 				type: "prediction",

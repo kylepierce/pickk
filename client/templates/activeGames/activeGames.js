@@ -14,29 +14,50 @@ Template.activeGames.helpers({
   hero: function () {
     return Hero.find({}).fetch()
   },
-  games: function ( ) {
-    return Games.find({live: true}, {sort: {}}).fetch();
+  gamePrediction: function () {
+    return Questions.find({}).count()
+  }, 
+  dailyPickkCount: function () {
+    var count = Questions.find({}).count()
+    return count
+  }
+});
+
+Template.activeGames.events({
+  'click [data-action=game-leaderboard]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-leaderboard", {
+      userId: userId,
+    });
+    Router.go('/week-leaderboard/')
   },
-  gameClass: function () {
-    return "game-item-" + this['status'];
-  },  
-  notBeta: function () {
-    var betaUser = Meteor.user().profile.role
-    if(betaUser === "beta" || betaUser === "admin"){
-      return false
-    }
+  'click [data-action=history]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-history", {
+      userId: userId,
+    });
+    Router.go('/history')
+  }, 
+  'click [data-action=notifications]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-notifications", {
+      userId: userId,
+    });
+    Router.go('/notifications')
   },
-  userGroups: function() {
-    var currentUser = Meteor.userId();
-    return Groups.find({members: currentUser}).fetch()
-  },
-  groups: function(){
-    var currentUser = Meteor.user();
-    var groupCount = currentUser.profile.groups.length 
-    if (groupCount){
-      return true
-    }
-  },
+  'click [data-action=chat]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-chat", {
+      userId: userId,
+    });
+  }, 
+  'click [data-action=game-prediction]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-game-pickks", {
+      userId: userId,
+    });
+    Router.go('/daily-pickks')
+  }, 
 });
 
 Template.outDisplay.helpers({
