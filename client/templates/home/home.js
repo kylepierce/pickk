@@ -39,11 +39,15 @@ Template.home.helpers({
     } 
   },
   commericalQuestions: function () {
+    var $game = Router.current().params.id
+    Meteor.subscribe('activeQuestions', $game)
     return Questions.find({commercial: true}, {limit: 1}).fetch();
   },
   questions: function () {
+    var $game = Router.current().params.id
+    Meteor.subscribe('activeQuestions', $game)
     var currentUserId = Meteor.userId()
-    var selector = {active: true, commercial: {$ne: true}, usersAnswered: {$nin: [currentUserId]}}
+    var selector = {active: true, commercial: false, usersAnswered: {$nin: [currentUserId]}}
     var query = Questions.find(selector, {limit: 1}).fetch();
     return query
   },

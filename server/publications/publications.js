@@ -67,11 +67,22 @@ Meteor.publish('singleTeam', function ( teamId ) {
 // Active Questions for one game
 Meteor.publish('activeQuestions', function(gameId) {
   check(gameId, String);
-  
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
     active: true,
+    commercial: false, 
+    usersAnswered: {$nin: [currentUserId]}
+  }, {limit: 3});
+});
+
+Meteor.publish('activeCommQuestions', function(gameId) {
+  check(gameId, String);
+  var currentUserId = this.userId;
+  return Questions.find({
+    gameId: gameId,
+    active: true,
+    commercial: true, 
     usersAnswered: {$nin: [currentUserId]}
   }, {limit: 3});
 });
