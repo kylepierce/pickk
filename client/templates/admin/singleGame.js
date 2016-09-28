@@ -2,6 +2,12 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
+// map multiple combinations to the same callback
+Mousetrap.bind('d', function() {
+	$('[data-action=deactivate]').click()
+	return false;
+}, 'keyup');
+
 // Deactivate question once the play has started.
 Template.activeQuestions.events({
 	'click [data-action=deactivate]': function() {
@@ -23,6 +29,29 @@ Template.otherQuestions.helpers({
 		var commercialBreak = game.commercial
 		return commercialBreak
 	}
+});
+
+// Create question and add to database function
+Template.otherQuestions.events({
+	'click [data-action="startCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var gameId = Router.current().params._id
+		Meteor.call('toggleCommercial', gameId, true);
+	},
+
+	'click [data-action="endCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var gameId = Router.current().params._id
+		Meteor.call('toggleCommercial', gameId, false);
+	},
+
+	'click [data-action="situationalQuestion"]': function(event, template){
+		var que = prompt('Question you would like to ask')
+		var gameId = Router.current().params._id
+		Meteor.call('createTrueFalse', que, gameId)
+	},
 });
 
 Template.pendingQuestions.helpers({
@@ -51,7 +80,6 @@ Template.pendingQuestion.helpers({
 	  return optionsArray
 	}
 });
-
 
 // Select correct answer and award points to those who guessed correctly.
 Template.pendingQuestion.events({
@@ -96,7 +124,6 @@ Template.oldQuestion.helpers({
 	  return optionsArray
 	}
 });
-
 
 // Select correct answer and award points to those who guessed correctly.
 Template.oldQuestion.events({

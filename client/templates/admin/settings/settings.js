@@ -1,28 +1,8 @@
 Template.adminSettings.events({
-	'submit form': function (event, template) {
-		// Get the value of the input box
-		event.preventDefault();
-		var coins = template.find('input[name=coins]').value
-		if(confirm("Are you sure?")) {
-			Meteor.call("updateAllCoins", coins)
-		}
-	},
   'click [data-action=awardLeaders]': function(){
     var user = Meteor.userId()
     if(confirm("Are you sure?")) {
         Meteor.call('awardLeaders', user)
-    }
-  },
-  'click [data-action=resetGameCounter]': function(){
-    var user = Meteor.userId()
-    if(confirm("Are you sure?")) {
-        Meteor.call('updateAllCounters', user)
-    }
-  },
-  'click [data-action=resetDiamonds]': function(){
-    var user = Meteor.userId()
-    if(confirm("Are you sure?")) {
-        Meteor.call('updateAllDiamonds', user)
     }
   },
   'click [data-action=flushQuestions]': function(){

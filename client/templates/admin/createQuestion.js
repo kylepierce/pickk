@@ -27,7 +27,6 @@ Template.createQuestion.events({
 				Meteor.call("emptyInactive", q.gameId)
 			}
 		});
- 
 	},
 
 	'click [data-action=createQuestion]': function(e, t){

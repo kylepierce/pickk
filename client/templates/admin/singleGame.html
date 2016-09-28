@@ -18,49 +18,6 @@
 	{{/ionView}}
 </template>
 
-<template name="createQuestion">
-	<div class="panel">
-		<h3>Create Question</h3>
-
-	  <input type="range" class="play-slider" id="down" name="down" value="1" list="a-values" min="1" max="6" step="1" />
-      <option class="slider-6-options" value="1" label="First Down"></option>
-      <option class="slider-6-options" value="2" label="Second Down"></option>
-      <option class="slider-6-options" value="3" label="Third Down"></option>
-      <option class="slider-6-options" value="4" label="Forth Down"></option>
-      <option class="slider-6-options" value="5" label="PAT"></option>
-      <option class="slider-6-options" value="6" label="Kickoff"></option>
-
-	  <input type="range" class="play-slider" id="yards" name="yards" value="1" list="a-values" min="1" max="6" step="1" />
-      <option class="slider-6-options" value="1" label="Inches"></option>
-      <option class="slider-6-options" value="2" label="1-2 Yards"></option>
-      <option class="slider-6-options" value="3" label="3-5 Yards"></option>
-      <option class="slider-6-options" value="4" label="6-9 Yards"></option>
-      <option class="slider-6-options" value="5" label="10-15 Yards"></option>
-      <option class="slider-6-options" value="6" label="15+ Yards"></option>
-
-	  <input type="range" class="play-slider" id="area" name="area" value="1" list="a-values" min="1" max="6" step="1" />
-      <option class="slider-6-options" value="1" label="Danger Zone 0-10"></option>
-      <option class="slider-6-options" value="2" label="1st Third 11-30"></option>
-      <option class="slider-6-options" value="3" label="2nd Third 30-60"></option>
-      <option class="slider-6-options" value="4" label="Final Third 60-80"></option>
-      <option class="slider-6-options" value="5" label="Red Zone 80-90"></option>
-      <option class="slider-6-options" value="6" label="Goal Line 90-100"></option>
-
-	  <input type="range" class="play-slider" id="time" name="time" value="1" list="a-values" min="1" max="5" step="1" />
-      <option class="slider-5-options" value="1" label="1st Quarter"></option>
-      <option class="slider-5-options" value="2" label="2nd Quarter"></option>
-      <option class="slider-5-options" value="3" label="3rd Quarter"></option>
-      <option class="slider-5-options" value="4" label="4th Quarter"></option>
-      <option class="slider-5-options" value="5" label="Overtime"></option>
-
-		<button class='button button-calm col col-50' style="margin-top: 25px; float: left;" data-action="createQuestion">Create Question</button>
-
-		<button class='button col col-50' style="margin-top: 25px; float: left;" data-action="thisDrive">This Drive</button>
-
-		<!-- <button class='full' style="margin-top: 25px;" data-action="loop">Loop</button> -->
-	</div>
-</template>
-
 <template name="otherQuestions">
 	{{#if commercial}}
 		<button class='col col-50 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">
