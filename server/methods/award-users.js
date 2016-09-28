@@ -11,8 +11,8 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		
-		var modify = {$set: {active: false, outcome: answered}}
+		var updatedAt = new Date();
+		var modify = {$set: {active: false, outcome: answered, lastUpdated: updatedAt}}
 		Questions.update({_id: questionId}, modify);
 
 		var list = []

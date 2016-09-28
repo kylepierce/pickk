@@ -1,48 +1,61 @@
 <template name="createQuestion">
 	<div class="panel">
-		<h3>Create Question</h3>
+    <div>
+      <input type="range" class="play-slider" id="down" name="down" value="1" list="a-values" min="1" max="4" step="1" />
+        <option class="slider-4" value="1" label="First Down">
+        </option>
+        <option class="slider-4" value="2" label="Second Down">
+        </option>
+        <option class="slider-4" value="3" label="Third Down">
+        </option>
+        <option class="slider-4" value="4" label="Forth Down">
+        </option>
 
-	  <input type="range" class="play-slider" id="down" name="down" value="1" list="a-values" min="1" max="4" step="1" />
-      <option class="slider-4" value="1" label="First Down">
-      </option>
-      <option class="slider-4" value="2" label="Second Down">
-      </option>
-      <option class="slider-4" value="3" label="Third Down">
-      </option>
-      <option class="slider-4" value="4" label="Forth Down">
-      </option>
+      <input type="range" class="play-slider" id="yards" name="yards" value="1" list="a-values" min="1" max="6" step="1" />
+        <option class="slider-6" value="1" label="Inches"></option>
+        <option class="slider-6" value="2" label="1-2 Yards">
+        </option>
+        <option class="slider-6" value="3" label="3-5 Yards">
+        </option>
+        <option class="slider-6" value="4" label="6-9 Yards">
+        </option>
+        <option class="slider-6" value="5" label="10-15 Yards">
+        </option>
+        <option class="slider-6" value="6" label="15+ Yards">
+        </option>
 
-	  <input type="range" class="play-slider" id="yards" name="yards" value="1" list="a-values" min="1" max="6" step="1" />
-      <option class="slider-6" value="1" label="Inches"></option>
-      <option class="slider-6" value="2" label="1-2 Yards">
-      </option>
-      <option class="slider-6" value="3" label="3-5 Yards">
-      </option>
-      <option class="slider-6" value="4" label="6-9 Yards">
-      </option>
-      <option class="slider-6" value="5" label="10-15 Yards">
-      </option>
-      <option class="slider-6" value="6" label="15+ Yards">
-      </option>
+      <input type="range" class="play-slider" id="area" name="area" value="1" list="a-values" min="1" max="6" step="1" />
+        <option class="slider-6" value="1" label="0-10"></option>
+        <option class="slider-6" value="2" label="11-30">
+        </option>
+        <option class="slider-6" value="3" label="30-60">
+        </option>
+        <option class="slider-6" value="4" label="60-80"></option>
+        <option class="slider-6" value="5" label="80-90">
+        </option>
+        <option class="slider-6" value="6" label="90-100"></option>
 
-	  <input type="range" class="play-slider" id="area" name="area" value="1" list="a-values" min="1" max="6" step="1" />
-      <option class="slider-6" value="1" label="Danger Zone 0-10"></option>
-      <option class="slider-6" value="2" label="1st Third 11-30">
-      </option>
-      <option class="slider-6" value="3" label="2nd Third 30-60">
-      </option>
-      <option class="slider-6" value="4" label="Final Third 60-80"></option>
-      <option class="slider-6" value="5" label="Red Zone 80-90">
-      </option>
-      <option class="slider-6" value="6" label="Goal Line 90-100"></option>
+      <input type="range" class="play-slider" id="style" name="style" value="2" list="a-values" min="1" max="3" step="1" />
+        <option class="slider-3" value="1" label="Time Wasting">
+        </option>
+        <option class="slider-3" value="2" label="Neutral">
+        </option>
+        <option class="slider-3" value="3" label="Hurry Up">
+        </option>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="ten-spacing">
+      <button class='col-md-50 button button-stable float-left' data-action="thisDrive"> 
+        PAT 
+      </button>
 
-	  <input type="range" class="play-slider" id="style" name="style" value="2" list="a-values" min="1" max="3" step="1" />
-      <option class="slider-3" value="1" label="Time Wasting"></option>
-      <option class="slider-3" value="2" label="Neutral"></option>
-      <option class="slider-3" value="3" label="Hurry Up"></option>
+      <button class='col-md-50 button button-stable float-left' data-action="thisDrive"> 
+        Kickoff 
+      </button>
+    </div>
 
-		<button class='button button-calm col col-50' style="margin-top: 25px; float: left;" data-action="createQuestion">Create Question</button>
-
-		<button class='button col col-50' style="margin-top: 25px; float: left;" data-action="thisDrive">This Drive</button>
+  	<button class='button button-calm col-md-100 float-left ten-spacing' data-action="createQuestion">
+      Create Question
+    </button>
 	</div>
 </template>

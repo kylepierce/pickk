@@ -113,7 +113,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Questions.update({"_id": questionId}, {$set: {'active': null}});
+		Questions.update({"_id": questionId}, {$set: {'active': null, "pending": true}});
 	},
 	'createHero': function (o) {
 		check(o, Object);

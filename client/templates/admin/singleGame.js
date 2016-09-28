@@ -2,6 +2,13 @@
 //     console.log(this.data); // you should see your passage object in the console
 // };
 
+Template.singleGameAdmin.helpers({
+	game: function () {
+		var game = this.game[0]
+		return game
+	}
+});
+
 // map multiple combinations to the same callback
 Mousetrap.bind('d', function() {
 	$('[data-action=deactivate]').click()
@@ -52,6 +59,25 @@ Template.otherQuestions.events({
 		var gameId = Router.current().params._id
 		Meteor.call('createTrueFalse', que, gameId)
 	},
+	'click [data-action="thisDrive"]': function(e, t){
+		event.preventDefault();
+		var gameId = Router.current().params._id
+
+		// One object to be passed to the insertQuestion method.
+		var q = {
+			gameId: gameId,
+			type: "drive",
+			commercial: true,
+			inputs: {}
+		}
+
+		Meteor.call('insertQuestion', q, function(e, r){
+			if(!e){
+				Meteor.call("questionPush", q.gameId, r)
+				Meteor.call("emptyInactive", q.gameId)
+			}
+		});
+	},
 });
 
 Template.pendingQuestions.helpers({
@@ -100,7 +126,7 @@ Template.pendingQuestion.events({
 
 Template.oldQuestions.helpers({
 	questions: function () {
-		var question = Questions.find({active: false}, {sort: {dateCreated: -1}, limit: 3}).fetch()
+		var question = Questions.find({active: false}, {sort: {lastUpdated: -1, dateCreated: -1}, limit: 5}).fetch()
 		return question
 	}
 });

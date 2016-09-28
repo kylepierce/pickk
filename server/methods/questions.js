@@ -152,7 +152,6 @@ Meteor.methods({
 
 		q["que"] = Meteor.call('questionText', q.inputs, q.type )
 		var options = Meteor.call('createOptions', q.inputs, q.type )
-		var multiplier = Meteor.call('addMultipliers', q.inputs, options )
 		
 		if ( q.type === "drive" ){
 			var multiplier = { 
@@ -164,6 +163,8 @@ Meteor.methods({
 				option6: { low: 15.9, high: 21.61 }, // Safety
 				option7: { low: 5.4, high: 6.7 } // Turn over on downs
 			}
+		} else {
+			var multiplier = Meteor.call('addMultipliers', q.inputs, options )
 		}
 
 		var newObject = Object.keys(multiplier).map(function(value, index) {
@@ -252,7 +253,6 @@ Meteor.methods({
 			var gameId = Meteor.call('createPredictionGame', function(error, result) {
 				return result
 			});
-			console.log(gameId)
 			Questions.insert({
 					que: q.que,
 					gameId: gameId,
