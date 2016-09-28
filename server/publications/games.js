@@ -35,7 +35,7 @@ Meteor.publish('liveGames', function() {
 Meteor.publish('singleGameQuestions', function(gameId){
   check(gameId, String);
   var selector = {gameId: gameId}
-  var sort = {sort: {dateCreated: -1}, limit: 20}
+  var sort = {sort: {dateCreated: -1}, limit: 50}
   return Questions.find(selector, sort);
 });
 

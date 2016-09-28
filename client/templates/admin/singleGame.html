@@ -14,11 +14,9 @@
 	 				{{> singleGameInfo game=this}}
 		      {{> singleGameCard game=this}}
 				{{/with}}
-				<div class="ten-spacing"></div>
-				{{> otherQuestions}}
-				<div class="ten-spacing"></div>
-				{{> createQuestion}}
 				
+				{{> otherQuestions}}
+				{{> createQuestion}}
 				{{> activeQuestions}}
 				{{> pendingQuestions}}
 				{{> oldQuestions}}
@@ -28,39 +26,41 @@
 </template>
 
 <template name="otherQuestions">
-	{{#if commercial}}
-		<button class='col col-50 wager-box button button-assertive' style="float: left;" data-action="endCommercialBreak">
-			End Commercial Break 
+	<div class="panel ten-spacing">
+		{{#if commercial}}
+			<button class='col-md-50 button button-assertive float-left' data-action="endCommercialBreak">
+				End Commercial Break 
+			</button>
+		{{else}}
+			<button class='col-md-50 button button-balanced float-left' data-action="startCommercialBreak">
+				Start of Commercial Break 
+			</button>
+		{{/if}}
+		
+		<button class='col-md-50 button button-dark float-left' data-action="situationalQuestion"> 
+			Situational Question 
 		</button>
-	{{else}}
-		<button class='col col-50 wager-box button button-balanced' style="float: left;" data-action="startCommercialBreak">
-			Start of Commercial Break 
+		
+		<button class='col-md-50 button button-royal float-left' data-action="thisDrive"> 
+			This Drive 
 		</button>
-	{{/if}}
-	
-	<button class='col col-50 wager-box button button-dark' style="float: left;" data-action="situationalQuestion"> 
-		Situational Question 
-	</button>
-	
-	<button class='col col-50 wager-box button button-royal' style="float: left;" data-action="thisDrive"> 
-		This Drive 
-	</button>
 
-	<button class='col col-50 wager-box button button-positive' style="float: left;" data-action="thisDrive"> 
-		This Drive 
-	</button>
+		<button class='col-md-50 button button-calm float-left' data-action="thisDrive"> 
+			Change Score
+		</button>
+	</div>
 </template>
 
 <template name="activeQuestions">
 	<div class="panel">
 		<h3>Active Questions</h3>
 		<ul class="active-questions">
-		{{#each questions}}
-			<div>
-			<li style="float:left" class="{{_id}}"> {{que}}</li>
-			<button data-action="deactivate" class="yes full button button-balanced">Deactivate</button>
-			</div>
-		{{/each}}
+			{{#each questions}}
+				<li class="{{_id}} float-left"> {{que}}</li>
+				<button data-action="deactivate" class="col-md-100 button button-balanced">
+					Deactivate
+				</button>
+			{{/each}}
 		</ul>
 	</div>	
 </template>
