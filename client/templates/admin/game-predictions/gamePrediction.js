@@ -25,7 +25,6 @@ Template.gamePrediction.events({
 	},
 
 	'click [data-action=_gamePopover]': function(e,t){
-		// Session.set("gamePrediction", this._id);
 		IonPopover.show('_gamePopover', this, e.currentTarget)
 	},
 
@@ -34,8 +33,15 @@ Template.gamePrediction.events({
 		event.preventDefault();
 		var team1 = template.find('#team1 :selected').text
 		var team2 = template.find('#team2 :selected').text
+		var now = moment();
+		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+		var title = dateSpelled + " Predictions"
+		var game = Games.findOne({name: title});
 
-		// game, que, commercial, op1, m1, op2, m2, op3, m3, op4, m4, op5, m5, op6, m6
+		if(!game){
+			Meteor.call('createPredictionGame');
+			var game = Games.findOne({name: title});
+		}
 
 		var q = {
 			que: team1 + " vs " + team2,

@@ -234,7 +234,7 @@ Meteor.methods({
 
 	'gamePrediction': function(q){
 		check(q, Object);
-		console.log(q)
+
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -248,39 +248,20 @@ Meteor.methods({
 		var game = Games.findOne({name: title});
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
-		
-		if(!game){
-			var gameId = Meteor.call('createPredictionGame', function(error, result) {
-				return result
-			});
-			console.log(gameId)
-			Questions.insert({
-					que: q.que,
-					gameId: gameId,
-					icons: false,
-					createdBy: currentUserId,
-					dateCreated: timeCreated,
-					type: "prediction",
-					active: "future",
-					manual: true,
-					options: q.options,
-					usersAnswered: []
-				});
-		} else {
-			var gameId = game._id
-			Questions.insert({
-				que: q.que,
-				gameId: gameId,
-				icons: false,
-				createdBy: currentUserId,
-				dateCreated: timeCreated,
-				type: "prediction",
-				active: "future",
-				manual: true,
-				options: q.options,
-				usersAnswered: []
-			});
-		}
+
+		var gameId = game._id
+		Questions.insert({
+			que: q.que,
+			gameId: gameId,
+			icons: false,
+			createdBy: currentUserId,
+			dateCreated: timeCreated,
+			type: "prediction",
+			active: "future",
+			manual: true,
+			options: q.options,
+			usersAnswered: []
+		});
 	},
 
 	'reactivateStatus': function(questionId) {
