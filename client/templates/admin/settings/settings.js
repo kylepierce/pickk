@@ -11,24 +11,15 @@ Template.adminSettings.events({
     }
   },
   'click [data-action=loop]': function () {
-    var time = prompt('What Time')
-    if(!time || time > 5){
-      console.log(time)
-      return false
-    } 
-    var down = 6
-    var downCounter = 1
-    var yards = 6
-    var yardsCounter = 1
-    var area = 6
-    var areaCounter = 1
-    var timeCounter = 5
-    var counter = 0
-
-    
-    function randomizer(min, max){
-      return (Math.random() * (max-min) + min).toFixed(2)
-    }
+    // Set area, yards, down, style to 1
+    var area = 1
+    var maxArea = 6
+    var yards = 1
+    var maxYards = 6
+    var down = 1
+    var maxDown = 6
+    var style = 1 
+    var maxStyle = 3
 
     function multiplier(m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
       var options = {
@@ -42,10 +33,7 @@ Template.adminSettings.events({
       return options
     }
 
-    var multipliers = function (down, yards, area) {
-// ------------------------------------------------------------------
-// First Down With Run Option 
-// ------------------------------------------------------------------
+    var multipliers = function (down, yards, area, style) {
       if (down === 1) {
         // Inches
         if(yards == 1){
@@ -975,7 +963,7 @@ Template.adminSettings.events({
           4.2, 8.61)
       } else if (down == 4 && area < 4) {
         return multiplier(
-          1.7, 1.5, 
+          1.7, 2.1, 
           1.7, 2.32, 
           3.2, 4.81, 
           9.9, 15.61, 
@@ -996,7 +984,7 @@ Template.adminSettings.events({
 
       // Kickoff
       else if (down == 6){
-        if(time <= 4){
+        if(style <= 2){
           
           return multiplier(
             1.5, 1.7, 
@@ -1005,7 +993,7 @@ Template.adminSettings.events({
             8.9, 15.61, 
             12.2, 24.81, 
             29.9, 42.61)
-        } else if (time == 5) {
+        } else if (style == 3) {
           // "Touchback/No Return"
           // "Neg to 25 Yard Return" 
           // "26+ Return"
@@ -1022,39 +1010,45 @@ Template.adminSettings.events({
         } 
       }
     }
-    
-    var arealoop = function (input, inputText) {
-      var areaCounter = 1
-      for (var i = 1; i <= input; i++) {
-        counter += 1
 
-        var inputs = {
-          "down": downCounter, 
-          "yards": yardsCounter, 
-          "area": areaCounter,
-          "time": timeCounter
-        } 
-        var multiplier = multipliers(downCounter, yardsCounter, areaCounter, multiplier)
-        
-        Meteor.call('createMultipliers', inputs, multiplier)
-        areaCounter += 1
-      }     
-    }
-    var loop = function (input, inputText) {
-      yardsCounter = 1
-      for (var i = 1; i <= input; i++) {
-        
-        arealoop(area, "Area")
-        yardsCounter += 1
-      }     
-    }
-    var allPlays = function (){
-      for (var i = 1; i <= down; i++) {
-        // console.log("---------------- Down" + " " + i + "--------------------")
-        loop(yards, "Yards")
-        downCounter += 1
+    // Crazy nested while loops to create all the multiplier documents.
+    while (style <= maxStyle){
+      while (yards <= maxYards){
+        while (area <= maxArea){
+          while (down <= maxDown){
+            var inputs = {
+              "down": down, 
+              "yards": yards, 
+              "area": area,
+              "style": style
+            } 
+            var options = multipliers(down, yards, area, style)
+            Meteor.call('createMultipliers', inputs, options)
+            // When max value is reached increase down by one
+            down++
+          }
+          var down = 1
+          // When max value is reached increase area by one
+          area++
+        }
+        var area = 1
+        // When max value is reached increase yards by one
+        yards++
       }
+      var yards = 1
+      // When max value is reached increase style by one
+      style++
     }
-    allPlays()
   }
 });
+
+
+
+
+
+
+
+
+
+
+

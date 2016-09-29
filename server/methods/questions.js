@@ -34,11 +34,20 @@ Meteor.methods({
 	'createOptions': function(inputs, type){
 		check(inputs, Object);
 		check(type, String);
-		
-		var down = parseInt(inputs.down)
-		var area = parseInt(inputs.area)
-		var time = parseInt(inputs.time)
-		var yards = parseInt(inputs.yards)
+
+		var inputType = ["down", "yards", "area", "style"]
+
+		// If input type exists add it to slector
+		var inputsObj = {}
+		inputType.map(function (input){
+			var inputValue = inputs[input]
+			inputsObj[input] = parseInt(inputValue)
+		});
+
+		var down = inputsObj.down
+		var yards = inputsObj.yards
+		var style = inputsObj.style
+		var area = inputsObj.area
 
 		if ( type === "drive") {
 			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Safety", "Turnover on Downs"]
@@ -50,13 +59,17 @@ Meteor.methods({
 			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
 		} else if (down === 3) {
 			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+		} else if (down === 4 && style === 3 && area === 6) {
+			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+		} else if (down === 4 && style === 3) {
+			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"] 
 		} else if (down === 4 && area >= 4 ) {
 			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
 		} else if (down === 4) {
 			var optionArray = ["Fair Catch/No Return", "Neg to 20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble", "Touchdown"]
 		} else if (down === 5) {
 			var optionArray = ["Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good"]
-		} else if (down === 6 && time === 5)  {
+		} else if (down === 6 && style === 3)  {
 			var optionArray = ["Touchback/No Return", "Neg to 25 Yard Return",  "26+ Return", "Failed Onside", "Successful Onside", "Touchdown"]
 		} else if (down === 6)  {
 			var optionArray = ["Touchback/No Return", "Neg to 25 Yard Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
@@ -78,25 +91,32 @@ Meteor.methods({
 	'addMultipliers': function ( inputs, options ) {
 		check(inputs, Object);
 		check(options, Object);
-		var down = parseInt(inputs.down)
-		var yards = parseInt(inputs.yards)
-		var area = parseInt(inputs.area)
+		var inputType = ["down", "yards", "area", "style"]
 
-		var multiplier = Multipliers.findOne({down: down, yards: yards, area: area})
+		// If input type exists add it to slector
+		var inputsObj = {}
+		inputType.map(function (input){
+			var inputValue = inputs[input]
+			inputsObj[input] = parseInt(inputValue)
+		});
+
+		var multiplier = Multipliers.findOne(inputsObj)
+
+		console.log(multiplier)
 
 		return multiplier.options
 	},
 
-	'createMultipliers': function (inputs, existing){
+	'createMultipliers': function (inputs, options){
 		check(inputs, Object);
-		check(existing, Object);
+		check(options, Object);
 
 		Multipliers.update({
 			down: inputs.down,
   		area: inputs.area,
   		yards: inputs.yards,
-  		time: inputs.time
-		}, {$set: {options: existing}}, {upsert: true}
+  		style: inputs.style
+		}, {$set: {options: options}}, {upsert: true}
 		);
 
 	},

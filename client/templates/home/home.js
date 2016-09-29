@@ -371,7 +371,6 @@ Template.binaryQuestion.helpers({
 
 Template.option.helpers({
   hasIcon: function (q) {
-    console.log(q)
     if (q.icons){
       return true
     }
