@@ -13,12 +13,11 @@
 		    </button>
 		  {{/contentFor}}
    		 
-   		 {{#contentFor "headerTitle"}}
-					<h1 class="title white-text-header">Game Panel</h1>
-   		 {{/contentFor}}
+			{{#contentFor "headerTitle"}}
+				<h1 class="title white-text-header">Game Panel</h1>
+			{{/contentFor}}
 
- 
-				<form id="gameInfo">
+			<form id="gameInfo">
 				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">Team 1</span>
 					<select id="team1"> {{> nfl}} </select>
@@ -27,10 +26,6 @@
 					<span class="input-label">Team 2</span>
 					<select id="team2"> {{> nfl}} </select>
 				</label>
-<!-- 				<label type="stacked" class="item item-input item-stacked-label">
-					<span class="input-label">Label</span>
-					<input id="title" type="text">
-				</label> -->
 				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">TV Channel</span>
 					<input id="tv" type="text">
@@ -50,7 +45,7 @@
 				</div>
 				
 				<input class='full' type="submit">
-				</form>
+			</form>
 
 				{{#ionList}}
 					{{#each gameQuestion}}
