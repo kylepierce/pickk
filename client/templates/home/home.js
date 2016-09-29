@@ -429,7 +429,7 @@ Template.submitButton.events({
     var o = this.o // option
     var q = this.q // question
     var t = this.t // type
-    
+
     // a is for answer object
     var a = {
       userId: userId,
@@ -458,7 +458,8 @@ Template.submitButton.events({
       a.wager = w
     } else if ( t === "prediction" ){
       var w = "diamonds" // wager
-      Meteor.call('userJoinsAGame', a.userId, a.gameId);
+      console.log(userId, q.gameId)
+      Meteor.call('userJoinsAGame', userId, q.gameId);
       console.log("Daily Pickk")
     } else {
       var w = this.w // wager

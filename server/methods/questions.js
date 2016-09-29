@@ -234,6 +234,7 @@ Meteor.methods({
 
 	'gamePrediction': function(q){
 		check(q, Object);
+		console.log(q)
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
