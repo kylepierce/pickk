@@ -109,7 +109,6 @@ Template.teamBlock.helpers({
 
 Template.singleGameInfo.helpers({
   inProgress: function () {
-    console.log(this)
     if (this.game.live === true){
       return true
     }
