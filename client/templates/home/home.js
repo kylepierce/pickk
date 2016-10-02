@@ -1,4 +1,5 @@
 Template.home.rendered = function () {
+  intercom.setInAppMessageVisibility(intercom.GONE);
   $('#notification-center').slick({
     arrows: false,
     infinite: false,

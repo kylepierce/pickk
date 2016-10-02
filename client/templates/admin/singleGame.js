@@ -32,7 +32,8 @@ Template.activeQuestions.helpers({
 
 Template.otherQuestions.helpers({
 	'commercial': function(){
-		var game = Games.findOne({live: true});
+		var gameId = Router.current().params._id
+		var game = Games.findOne({_id: gameId});
 		var commercialBreak = game.commercial
 		return commercialBreak
 	}
