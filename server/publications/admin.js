@@ -5,3 +5,7 @@ Meteor.publish('activeHero', function() {
 Meteor.publish('multiplier', function(){
 	return Multipliers.find({})
 });
+
+Meteor.publish('situationalQuestions', function(){
+	return Admin.find({situational: true});
+});
