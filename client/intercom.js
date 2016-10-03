@@ -33,7 +33,7 @@ if (Meteor.isCordova) {
     if (data.email) console.log("Email", data.email);
     if (data.name) console.log("Name", data.name);
 
-    intercom.setLauncherVisibility(intercom.VISIBLE);
+    intercom.setLauncherVisibility(intercom.GONE);
 
     enableIntercomNotifications();
   };
