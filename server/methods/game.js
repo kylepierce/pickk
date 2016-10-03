@@ -112,4 +112,16 @@ Meteor.methods({
 
 		Questions.update(questionId, {$set: {'active': true}});
 	},
+	'updateGameScore': function(gameId, home, away){
+		check(gameId, String);
+		check(home, Number);
+		check(away, Number);
+
+		Games.update({_id: gameId}, 
+			{$set: {
+				"scoring.home.runs": home, 
+				"scoring.away.runs": away
+			}
+		});
+	}
 })

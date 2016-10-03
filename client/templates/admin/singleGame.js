@@ -55,11 +55,6 @@ Template.otherQuestions.events({
 		Meteor.call('toggleCommercial', gameId, false);
 	},
 
-	'click [data-action="situationalQuestion"]': function(event, template){
-		var que = prompt('Question you would like to ask')
-		var gameId = Router.current().params._id
-		Meteor.call('createTrueFalse', que, gameId)
-	},
 	'click [data-action="thisDrive"]': function(e, t){
 		event.preventDefault();
 		var gameId = Router.current().params._id
