@@ -18,3 +18,7 @@
 .float-left {
   float: left;
 }
+
+.option-fix {
+  min-height: 0;
+}
