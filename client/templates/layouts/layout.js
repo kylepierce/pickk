@@ -55,6 +55,10 @@ Template.mainLayout.events({
   }
 });
 
+Template.sideMenuContent.onCreated( function() {
+  this.diamonds = new ReactiveVar( "0" )
+});
+
 Template.sideMenuContent.helpers({
   diamonds: function () {
 
@@ -64,17 +68,18 @@ Template.sideMenuContent.helpers({
       var thisWeek = thisWeek - 1
     }
     var userId = Meteor.userId();
+    var template = Template.instance()
 
     Meteor.call("thisWeeksDiamonds", userId, thisWeek, function (error, result) {
-      Session.set('weekDiamonds', result);
+      if ( error ){
+        console.log(error)
+      } else {
+        var diamondCount = result[0].result
+        template.diamonds.set(diamondCount)
+      }
     })
-    var thisWeeksDiamonds = Session.get('weekDiamonds');
 
-    if (!thisWeeksDiamonds){
-      return 0
-    } else {
-      return thisWeeksDiamonds
-    }
+    return Template.instance().diamonds.get();
   },
   pendingNotifications: function(){
     var user = Meteor.userId();
