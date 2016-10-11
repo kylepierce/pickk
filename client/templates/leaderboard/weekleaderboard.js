@@ -19,9 +19,6 @@ Template.weekLeaderboard.helpers({
 		var leaderboard = Fetcher.get("weekLeaderboard")
 		return leaderboard
 	},
-	'single': function(player){
-		return player
-	},
 	'date': function() {
 		var thisWeek = Session.get('leaderboardWeek');
 	  var day = moment().day()
@@ -37,12 +34,23 @@ Template.weekLeaderboard.helpers({
 	  
 	  return startDay + " - " + endDay 
 	},
-	'username': function(userId){
-		var user = UserList.findOne({_id: userId})
-   	return user.profile.username
-	}
+
 }); 
 
+Template.singlePlayerWeek.onCreated( function() {
+	this.diamonds = new ReactiveVar( "0" )
+})
+
+Template.singlePlayerWeek.helpers({
+	'username': function(userId){
+		var template = Template.instance()
+		var user = UserList.findOne({_id: userId})
+   	return user.profile.username
+	},
+	'diamonds': function(){
+		return this.player.diamonds
+	}
+});
 
 Template.weekLeaderboard.events({
 	'click .single-user': function (){

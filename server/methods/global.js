@@ -3,8 +3,10 @@ Meteor.methods({
 		check(userId, String);
 		check(week, Number);
 
-    var startDay = moment().startOf('day').day("Tuesday").week(week)._d;
-    var endDay = moment().startOf('day').add(3, "hour").day("Monday").week(week+1)._d;
+    var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
+    var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
+
+    console.log(startDay, endDay)
 
     var selector = {
         userId: userId, 

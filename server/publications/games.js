@@ -15,7 +15,7 @@ Meteor.publish('activeGames', function(days, day) {
   
   var specificDay = moment().dayOfYear(day)
 
-  var start = specificDay.startOf('day').toDate();
+  var start = specificDay.startOf('day').add(4, "hour").toDate();
   var finish = specificDay.startOf('day').add(28, "hour").toDate(); // today and tomorrow
   console.log(finish)
 
