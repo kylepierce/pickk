@@ -42,7 +42,9 @@
 			</div>
 			<div class="container ten-spacing">
 				{{#if gameCompleted}}
-					Game completed
+					<div class="clear-fix"></div>
+					<div class="item item-divider ten-spacing">Final Leaderboard +</div>
+					{{> miniLeaderboard i=5}}
 				{{/if}}
 
 				{{#if isLive}}
