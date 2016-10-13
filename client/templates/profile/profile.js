@@ -1,63 +1,59 @@
-Template.myProfile.created = function () {
-  this.autorun(function () {
-    var userId = Router.current().params._id
-    this.subscription = Meteor.subscribe('findSingle', userId);
-  }.bind(this));
-};
-
-Template.myProfile.onRendered( function() {
-  $( "svg" ).delay( 0 ).fadeIn();
-});
-
-Template.myProfile.onCreated( function() {
-  this.subscribe( 'findSingle', function() {
-    $( ".loader" ).delay( 100 ).fadeOut( 'fast', function() {
-      $( ".loading-wrapper" ).fadeIn( 'fast' );
-    });
-  });
-});
-
-
-Template.myProfile.helpers({
-  profile: function () {
-    var userId = Meteor.userId(); 
-    return UserList.findOne({_id: userId});
+Template.userProfile.helpers({
+  trophies: function ( ) {
+    var trophies = this.user.profile.trophies
+    return trophies
   },
-  group: function() {
-    var currentUser = Meteor.user();
-    return currentUser.profile.groups
+  groups: function () {
+    var groups = this.user.profile.groups
+    return groups
   },
-  trophy: function() {
-    return this.profile.trophies
-  },
-  trophyData: function(id){
-    return Trophies.findOne({_id: id})
-  },
-  following: function(){
-    var numFollowing = this.profile.following;
-    var numCount = numFollowing.length
-    if(!numCount){
-      return 0
-    } else {  
-      return numCount
+  notOwnProfile: function ( userId ) {
+    if ( userId !== Meteor.userId() ){
+      return true
     }
+  }
+});
+
+Template.displayTrophy.helpers({
+  trophy: function (t) {
+    Meteor.subscribe('trophy');
+    var trophy = Trophies.findOne({_id: t})
+    return trophy
   },
-  follower: function(){
-    var numFollow = this.profile.followers;
-    var numCount = numFollow.length
-    return numCount
-    // if(numCount > 1){
-    //   return numCount
-    // } else{ 
-    //   return 0
-    // }
+});
+
+Template.displayGroup.helpers({
+  group: function (g) {
+    var group = Groups.findOne({_id: g})
+    return group
+  },
+});
+
+Template.followerCheck.helpers({
+  alreadyFollower: function() {
+    var currentUserId = Meteor.userId();
+    var followers = this.user.profile.followers
+    var alreadyFollower = followers.indexOf(currentUserId)
+    if(alreadyFollower !== -1 ){
+      return true
+    }
   }
 });
 
-Template.profileDisplayGroup.helpers({
-  groupName: function(groupId){
-    // Display the name of the group with the _id as refrence
-    return Groups.findOne({_id: groupId, secret: false});
+Template.followerCheck.events({
+  'click [data-action=followUser]': function() {
+    var currentUserId = Meteor.userId();
+    var accountToFollow = Router.current().params._id
+    
+    // Add this user followers
+    Meteor.call('followUser', currentUserId, accountToFollow);
+
+  },
+  'click [data-action=unfollowUser]': function() {
+    var currentUserId = Meteor.userId();
+    var accountToFollow = Router.current().params._id
+
+    // Remove this user from followers
+    Meteor.call('unfollowUser', currentUserId, accountToFollow);
   }
 });
-

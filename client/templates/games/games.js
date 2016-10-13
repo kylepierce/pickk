@@ -11,13 +11,71 @@ Template.games.helpers({
     if (status == "inprogress"){
       return true
     }
+  },
+
+  date: function () {
+    var now = moment();
+    var day = Router.current().params.day
+
+    if (day) { var now = moment().dayOfYear(day) }
+
+    return moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+  },
+
+  admin: function () {
+    var user = Meteor.user()
+    if (user.profile.role === "admin"){
+      return true
+    }
+  },
+
+  numberOfPlayers: function (array) {
+    var number = array.length
+    return number
+  },
+
+  endOfGame: function (game) {
+    var status = game.close_processed
+    if (status){
+      return true
+    }
   }
 });
 
 Template.games.events({
-  "click .game": function (event, template) {
-    var gameId = $(event.currentTarget).attr("data-game-id");
+  "click .game": function (e, t) {
+    var gameId = $(e.currentTarget).attr("data-game-id");
     Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
     Router.go("game", {id: gameId});
+  },
+
+  'click [data-action=previous]': function (e, t){
+    // Find the day from router or moment
+    var day = Router.current().params.day
+    if (day === null || day === undefined) { 
+      var day = moment().dayOfYear()
+    }
+    //One less day
+    var previousDay = parseInt(day) - 1
+    Router.go("/games/" + previousDay)
+  },
+
+  'click [data-action=next]': function (e, t){
+    // Find the day from router or moment
+    var day = Router.current().params.day
+    if (day === null || day === undefined) { 
+      var day = moment().dayOfYear()
+    }
+    //One less day
+    var nextDay = parseInt(day) + 1
+    Router.go("/games/" + nextDay)
+  },
+  'click [data-action=gameOver]': function (e, t) {
+    var gameId = $(e.currentTarget).attr("data-game-id");
+    Meteor.call('endGame', gameId)
+  },
+  'click [data-action=gameAdmin]': function (e, t) {
+    var gameId = $(e.currentTarget).attr("data-game-id");
+    Router.go('/admin/game/' + gameId)
   }
 });

@@ -1,0 +1,33 @@
+<template name="adminSettings">
+	<div class="container">	
+	  {{#ionView}}
+   		 {{#ionContent}}	
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+   		 {{#contentFor "headerTitle"}}
+					<h1 class="title white-text-header">Admin Settings</h1>
+   		 {{/contentFor}}
+
+<br>
+<a class="button col col-25" href="/admin/trophies">
+<i class="fa fa-trophy"></i>
+Trophies</a>
+
+<button data-action="flushQuestions" class="button button-large button-positive">Flush Questions</button>
+
+<button data-action="loop" class="button button-large button-positive">Loop</button>
+
+
+		  {{/ionContent}}
+	  {{/ionView}}
+    </div>
+</template>

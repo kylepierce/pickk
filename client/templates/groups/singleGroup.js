@@ -1,9 +1,9 @@
-Template.singleGroup.created = function () {
-  this.autorun(function () {
-    var groupId = Router.current().params._id
-    this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
-  }.bind(this));
-};
+// Template.singleGroup.created = function () {
+//   this.autorun(function () {
+//     var groupId = Router.current().params._id
+//     this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
+//   }.bind(this));
+// };
 
 Template.singleGroup.helpers({
   group: function () {
@@ -255,12 +255,12 @@ Template._adminOptions.events({
 })
 
 Template.singleGroupLeaderboard.helpers({
-  players: function(groupId){ 
-    var id = groupId._id
-     
-    return UserList.find({"profile.groups": id},
-      {fields: 
-        {'profile.username': 1, 'profile.avatar': 1, '_id': 1}}
-      ).fetch();
+  players: function(){ 
+    var group = Groups.findOne()
+    var members = group.members
+    return members
+  },
+  userData: function (player) {
+    return Meteor.users.findOne({_id: player});
   }
 });

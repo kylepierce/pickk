@@ -1,0 +1,26 @@
+<template name="_situationalModal">
+  {{#ionModal class="white-text-header" title="Situational Question"}}
+		{{#ionList}}
+		
+			{{#ionItem buttonRight=true}}
+				Post unique
+				<button class="button" data-action="situationalQuestion" > 
+    			{{> ionIcon icon="chevron-right"}}
+  			</button>
+			{{/ionItem}}
+
+			{{#each q in situationalQuestions}}
+				{{> singleSituational q=q}}
+			{{/each}}
+		{{/ionList}}
+  {{/ionModal}}
+</template>
+
+<template name="singleSituational">
+	{{#ionItem buttonRight=true}}
+		{{q.que}}
+		<button class="button" data-action="addSituational" > 
+    	{{> ionIcon icon="chevron-right"}}
+  	</button>
+	{{/ionItem}}
+</template>

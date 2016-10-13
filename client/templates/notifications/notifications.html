@@ -1,5 +1,4 @@
 <template name="notifications">
-
 	<!-- Standard Nav instead of the custom nav design -->
 	{{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
@@ -15,128 +14,214 @@
     <h1 class="title white-text-header">Notifications</h1>
   {{/contentFor}}
 
+<!-- 	Filter notifications by type.     -->
+<!-- 	{{#contentFor "headerButtonRight"}}
+    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+      {{> ionIcon icon="funnel"}}
+    </button>
+  {{/contentFor}} -->
+
   {{#ionView}}
     {{#ionContent}}
-		{{#ionList class="my-class"}} 
-			<div class="item item-divider">Invitations</div>
- 
-			{{#with notification}}
-				{{#each alert}}
-				{{#if type "group"}}	
-					{{#ionItem class="double-button" buttonRight=true avatar=true }}
-						{{#with user referrer}}
-            {{> userAvatar userId=_id}}
-			      <h2>{{profile.username}}</h2>
-			      {{/with}}
-
-			      {{#with groupData notificationId }}
-			      	
-			      <p>wants you to join <strong>{{name}}</strong></p>
-			      <a href="/groups/{{_id}}" class="button"> 
-			        {{> ionIcon icon="more"}}
-			      </a>
-			      {{/with}}
-			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
-			        {{> ionIcon icon="plus-circled"}}
-			      </a>
-			     
-	    	{{/ionItem}}
-				{{/if}}
-				{{/each}}
-
-		<div class="item item-divider">Followers</div>
-		{{#each alert}}
-			{{#if type "follower"}}	
-		    {{#ionItem class="double-button" buttonRight=true avatar=true}}
-		    	{{#with user referrer}}
-            {{> userAvatar userId=_id}}
-			      <h2>{{profile.username}}</h2>
-			    	
-			    	Is now following you
-			      <a href="/user-profile/{{_id}}" class="button"> 
-			        {{> ionIcon icon="more"}}
-			      </a>
-					{{/with}}
-			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
-			        {{> ionIcon icon="ios-close"}}
-			      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}}
-
-	<div class="item item-divider">Trophies</div>
-		{{#each alert}}
-			{{#if type "trophy"}}	
-		    {{#ionItem buttonRight=true class="item-thumbnail-left"}}
-		    	{{#with trophy notificationId}}
-					<img style="width: 66px!important;" src="/{{image}}">
-		      <h2>{{title}}</h2>
-		      <p>{{description}}</p>
-		      {{/with}}
-		      <a data-action="delete" class="button"> 
-	        {{> ionIcon icon="ios-close"}}
-		      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}}
-
-<!--   	<div class="item item-divider">Score</div>
-		{{#each alert}}
-			{{#if type "score"}}	
-		    {{#ionItem buttonRight=true}}
-		      <p>{{message}}</p>
-		      <a data-action="delete" class="button"> 
-	        {{> ionIcon icon="ios-close"}}
-		      </a>
-	    	{{/ionItem}}
-			{{/if}}
-  	{{/each}} -->
-	  {{/with}}
-
-				<br>
-<!-- 
-			<div class="item item-divider">All notifications</div>
-
-			{{#ionItem buttonRight=true avatar=true}}
-				<img src="brad.jpg">
-		    <h2>John Smith</h2>
-		    <p>is now following you!</p>
-		    <button class="button" data-ion-popover="_notificationPopover">
-		      {{> ionIcon icon="more"}}
-		    </button>
-    	{{/ionItem}}
-
-			{{#ionItem buttonRight=true class="item-thumbnail-left"}}
-				<img class="pickk-badge" src="san-fran.png">
-	      <h2>San Fransico Badge</h2>
-	      <p>You watched San Fransico play!</p>
-	      <button class="button" data-ion-popover="_notificationPopover">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}}
-
-	    {{#ionItem buttonRight=true class="item-thumbnail-left"}}
-				<img src="fire.png">
-	      <h2>1% Trophy</h2>
-	      <p>You ranked in the top 1% of all players!</p>
-	      <button class="button" data-ion-popover="_notification">
-	        {{> ionIcon icon="more"}}
-	      </button>
-    	{{/ionItem}} -->
-			
-		{{/ionList}}
+	    {{#if noNotifications}}
+				<div class="no-notifications">
+					No Unread Notifications
+				</div>
+    	{{else}}
+    		{{#ionList class=notificationsList}}
+		    	{{#each note in notifications}}
+						{{> notification note=note}}
+		    	{{/each}}
+    		{{/ionList}}
+    	{{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
+<template name="notification">
+	{{#if notif "group"}}
+		{{> groupNotification}}
+	{{/if}}
+	{{#if notif "mention"}}
+		{{> chatNotification}}
+	{{/if}}
+	{{#if notif "follower"}}
+		{{> newFollower}}
+	{{/if}}
+	{{#if notif "coins"}}
+		{{#ionItem class="notification-has-image"}}
+			{{> coinsNotification}}
+		{{/ionItem}}
+	{{/if}}
+	{{#if notif "diamonds"}}
+		{{#ionItem class="notification-has-image"}}
+			{{> diamondNotification}}
+		{{/ionItem}}	
+	{{/if}}
+	{{#if notif "leaderboard"}}
+		{{> leaderboardNotification}}
+	{{/if}}
+	{{#if notif "badge"}}
+		{{> badgeNotification}}
+	{{/if}}
+	{{#if notif "trophy"}}
+		{{#ionItem class="notification-has-image"}}
+			{{> trophyNotification}}
+		{{/ionItem}}
+	{{/if}}
+	{{#if notif "matchupInvite"}}
+		{{> matchupInvite}}
+	{{/if}}
+	{{#if notif "matchupNotification"}}
+		{{> matchupNotification}}
+	{{/if}}
+	{{#if notif "chatReaction"}}
+		{{> chatReaction}}
+	{{/if}}
+ </template>
+
+<template name="groupNotification">
+	{{#ionItem avatar=true }}
+		{{#with user note.senderId}}
+	    {{> userAvatar userId=_id}}
+	    <h2>{{profile.username}}</h2>
+	  {{/with}}
+	  {{#with groupData note.groupId}}
+	    <p>wants you to join <strong>{{name}}</strong></p>
+	  {{/with}}
+	{{/ionItem}}
+</template>
+
+<template name="chatNotification">
+	{{#ionItem avatar=true }}
+		{{> userAvatar userId=note.senderId}}
+		<h3>
+		{{#with user note.senderId}}
+			@{{profile.username}} Mentioned You
+	  {{/with}}
+	  {{#with groupData note.groupId}}
+			in <strong>{{name}}</strong>
+		{{/with}}
+		</h3>
+
+	  <p>{{note.message}}</p>
+	  {{#with reactions note.messageId}}
+	  	{{> messageReactions reactions=this.reactions}}
+		{{/with}}
+	{{/ionItem}}	
+</template>
+
+<template name="coinsNotification">
+	<span class="notification-image">
+		<div class="outer-coin">
+			<div class="inner-coin"></div>
+		</div>
+	</span>
+	<h2>You earned {{note.value}} coins!</h2> 
+	<p>{{questionTitle note.questionId}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
+</template>
+
+<template name="diamondNotification">
+	<h2>{{note.source}}: {{note.gameName}}</h2>
+	<img class="notification-image" src="/diamonds.png">
+	<p>{{{note.message}}}</p>
+</template>
+
+<template name="newFollower">
+	{{#ionItem avatar=true}}
+		{{#with user note.senderId}}
+	    {{> userAvatar userId=_id}}
+	   	<h2>{{profile.username}}</h2> 
+	   	<p>started following you!</p>
+	  {{/with}}
+	{{/ionItem}}	
+</template>
+
+<template name="chatReaction">
+	{{#ionItem avatar=true }}
+		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
+		{{#with user note.senderId}}
+	    <h3>@{{profile.username}} reacted to your chat message:</h3>
+	  {{/with}}
+	  <p>{{note.message}}</p>
+	{{/ionItem}}	
+</template>
+
+<template name="trophyNotification">
+	{{#with trophy note.trophyId}}
+		<img class="notification-image" src="/{{image}}">
+		<h2>You won {{title}}!</h2>
+		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
+	{{/with}}
+	
+</template>
+
+<template name="leaderboardNotification"></template>
+
+<template name="badgeNotification"></template>
+
+<template name="matchupInvite"></template>
+
+<template name="matchupNotification"></template>
+
+<template name="notificationOptions">
+	{{#with options}}
+		{{#if mention}}
+	    <div class="{{options}} actions-section" data-action="reply">
+	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
+	      Reply
+	    </div>
+	    <div class="{{options}} actions-section" data-action="react">
+	      <img class="reply-emoji" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
+	      React
+	  	</div>
+	  {{/if}}
+	  {{#if award}}
+	    <div class="{{options}} actions-section" data-action="share">
+	      {{> ionIcon class="reply-icon" icon='forward'}}<br>
+	      Share
+	    </div>
+	  {{/if}}
+	  {{#if group}}
+			<div class="{{options}} actions-section" data-action="group">
+	   		{{> ionIcon class="reply-icon" icon='ios-people'}}
+	    	<br>
+	    	View Group
+	  	</div>
+	  {{/if}}
+		{{#if interaction}}
+			<div class="{{options}} actions-section" data-action="user">
+	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
+	    	<br>
+	    	View User
+	  	</div>
+		{{/if}}
+
+		{{#if follower}}
+			{{#if notAlreadyFollowing}}
+				<div class="{{options}} actions-section" data-action="follow">
+	   			{{> ionIcon class="reply-icon" icon='ios-person'}}
+	    		<br>
+	    		Follow 
+	  		</div>
+	  	{{/if}}
+		{{/if}}
+
+	  <div class="{{options}} actions-section" data-action="read">
+	    {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
+	    <br>
+	    Mark Read
+	  </div>
+	{{/with}}
+</template>
+
 <template name="gameNotifications">
 	<div class="item item-divider">Game Notifications</div>
-
-		{{#ionItem}}
-				{{#each question}}
-					<p>You guessed... {{_id}}</p>
-				{{/each}}
-    	{{/ionItem}}
+	{{#ionItem}}
+		{{#each question}}
+			<p>You guessed... {{_id}}</p>
+		{{/each}}
+  {{/ionItem}}
 </template>
 
 <template name="type">

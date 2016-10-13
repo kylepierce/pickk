@@ -1,0 +1,70 @@
+<template name="createQuestion">
+	<div class="panel ten-spacing">
+    <div>
+      <input type="range" class="play-slider" id="down" name="down" value="1" list="a-values" min="1" max="4" step="1" />
+        <option class="option-fix" value="1"></option>
+        <option class="option-fix" value="2"></option>
+        <option class="option-fix" value="3"></option>
+        <option class="option-fix" value="4"></option>
+
+        <span class="slider-4">First Down</span>
+        <span class="slider-4">Second Down</span>
+        <span class="slider-4">Third Down</span>
+        <span class="slider-4">Fourth Down</span>
+
+      <input type="range" class="play-slider" id="yards" name="yards" value="5" list="a-values" min="1" max="6" step="1" />
+        <option class="option-fix" value="1"></option>
+        <option class="option-fix" value="2"></option>
+        <option class="option-fix" value="3"></option>
+        <option class="option-fix" value="4"></option>
+        <option class="option-fix" value="5"></option>
+        <option class="option-fix" value="6"></option>
+
+        <span class="slider-6">Inches</span>
+        <span class="slider-6">1-2 Yards</span>
+        <span class="slider-6">3-5 Yards</span>
+        <span class="slider-6">6-9 Yards</span>
+        <span class="slider-6">10-15 Yards</span>
+        <span class="slider-6">15+ Yards</span>
+
+      <input type="range" class="play-slider" id="area" name="area" value="3" list="a-values" min="1" max="6" step="1" />
+        <option class="option-fix" value="1"></option>
+        <option class="option-fix" value="2"></option>
+        <option class="option-fix" value="3"></option>
+        <option class="option-fix" value="4"></option>
+        <option class="option-fix" value="5"></option>
+        <option class="option-fix" value="6"></option>
+
+        <span class="slider-6">0-10</span>
+        <span class="slider-6">11-30</span>
+        <span class="slider-6">30-60</span>
+        <span class="slider-6">60-80</span>
+        <span class="slider-6">80-90</span>
+        <span class="slider-6">90-100</span>
+
+      <input type="range" class="play-slider" id="style" name="style" value="2" list="a-values" min="1" max="3" step="1" />
+        <option class="option-fix" value="1"></option>
+        <option class="option-fix" value="2"></option>
+        <option class="option-fix" value="3"></option>
+
+        <span class="slider-3">Time Wasting</span>
+        <span class="slider-3">Neutral</span>
+        <span class="slider-3">Hurry Up</span>
+
+    </div>
+  	<button class='button button-balanced col-md-100 float-left ten-spacing' data-action="createQuestion">
+      Create Question
+    </button>
+
+    <div class="clear-fix"></div>
+    <div class="ten-spacing">
+      <button class='col-md-45 button button-stable float-left' data-action="PAT"> 
+        PAT 
+      </button>
+
+      <button class='col-md-45 button button-stable float-left' data-action="kickoff"> 
+        Kickoff 
+      </button>
+    </div>
+	</div>
+</template>

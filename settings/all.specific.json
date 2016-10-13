@@ -25,17 +25,6 @@
       "disableUserTracking": false,
       "disableRouteTracking": false,
       "disableMethodTracking": false
-    },
-    "oneSignal": {
-      "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
-      "android": {
-        "googleProjectNumber": "259263435947"
-      }
     }
-  },
-  "oneSignal": {
-    "_": "This section should stay on the first level of configuration file (required by `astrocoders:one-signal`)",
-    "appId": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
-    "apiKey": "YThmNTYzYjItNWQ4NC0xMWU1LWJiYzYtZTcxNDExZWY5N2Ji"
   }
 }

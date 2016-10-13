@@ -1,0 +1,60 @@
+<template name="gameInfo">
+	<div class="container">	
+	  {{#ionView}}
+   		{{#ionContent}}	 
+
+   		 {{#contentFor "headerButtonLeft"}}
+		    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+		      {{#if isAndroid}}
+		        {{> ionIcon icon='android-more-vertical'}}
+		      {{else}}
+		        {{> ionIcon icon='navicon'}}
+		      {{/if}}
+		    </button>
+		  {{/contentFor}}
+   		 
+			{{#contentFor "headerTitle"}}
+				<h1 class="title white-text-header">Game Panel</h1>
+			{{/contentFor}}
+
+			<form id="gameInfo">
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">Team 1</span>
+					<select id="team1"> {{> nfl}} </select>
+				</label>
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">Team 2</span>
+					<select id="team2"> {{> nfl}} </select>
+				</label>
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">TV Channel</span>
+					<input id="tv" type="text">
+				</label>				
+				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">Game Time Spelled Out</span>
+					<input id="gameTime" type="text">
+				</label>
+				<div class="item item-toggle item-text-wrap">
+				    Active?
+			    <label class="toggle">
+			      <input type="checkbox" id="gameActive" checked name="gameActive">
+			      <div class="track">
+			        <div class="handle"></div>
+			      </div>
+			    </label>
+				</div>
+				
+				<input class='full' type="submit">
+			</form>
+
+				{{#ionList}}
+					{{#each gameQuestion}}
+						{{#ionItem path="game.show"}}
+							{{que}} {{{live}}}
+						{{/ionItem}}
+					{{/each}}
+				{{/ionList}}
+			{{/ionContent}}
+		{{/ionView}}
+	</div>
+</template>

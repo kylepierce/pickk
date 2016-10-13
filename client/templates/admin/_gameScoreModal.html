@@ -1,0 +1,23 @@
+<template name="_gameScoreModal">
+	{{#ionModal class="white-text-header" title="Situational Question"}}
+		{{#with game}}
+			{{#ionItem}}
+				<label>
+					<span class="col-md-50">{{teamOne}}</span>
+					<input id="away" class="col-md-33" value="{{teamOneScore}}">
+				</label>
+			{{/ionItem}}
+ 
+			{{#ionItem}}
+				<label>
+					<span class="col-md-50">{{teamTwo}}</span>
+					<input id="home" class="col-md-33" value="{{teamTwoScore}}">
+				</label>
+			{{/ionItem}}
+
+			<button data-action="submit">
+				Submit
+			</button>
+		{{/with}}
+  {{/ionModal}}
+</template>

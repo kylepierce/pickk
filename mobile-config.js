@@ -3,21 +3,21 @@ App.info({
   name: 'Pickk',
   description: 'Predict sports events in real time',
   author: 'Pickk Corporation',
-  email: 'kyle@pickk.co',
+  email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.10'
+  version: '0.0.2'
 });
 App.icons({
-  "iphone_2x": "resources/icons/iphone_2x.png", // 120x120
-  "iphone_3x": "resources/icons/iphone_3x.png", // 180x180
-  "ipad": "resources/icons/ipad.png", // 76x76
-  "ipad_2x": "resources/icons/ipad_2x.png", // 152x152
-  "ipad_pro": "resources/icons/ipad_pro.png", // 167x167
-  "ios_settings": "resources/icons/ios_settings.png", // 29x29
-  "ios_settings_2x": "resources/icons/ios_settings_2x.png", // 58x58
-  "ios_settings_3x": "resources/icons/ios_settings_3x.png", // 87x87
-  "ios_spotlight": "resources/icons/ios_spotlight.png", // 40x40
-  "ios_spotlight_2x": "resources/icons/ios_spotlight_2x.png", // 80x80
+  "iphone_2x": "resources/icons/icon-60-2x.png", // 120x120
+  "iphone_3x": "resources/icons/icon-60-3x.png", // 180x180
+  "ipad": "resources/icons/icon-76.png", // 76x76
+  "ipad_2x": "resources/icons/icon-76-2x.png", // 152x152
+  "ipad_pro": "resources/icons/icon-83.5-2x.png", // 167x167
+  "ios_settings": "resources/icons/icon-29.png", // 29x29
+  "ios_settings_2x": "resources/icons/icon-29-2x.png", // 58x58
+  "ios_settings_3x": "resources/icons/icon-29-3x.png", // 87x87
+  "ios_spotlight": "resources/icons/icon-40.png", // 40x40
+  "ios_spotlight_2x": "resources/icons/icon-40-2x.png", // 80x80
   "android_mdpi": "resources/icons/android_mdpi.png", // 48x48
   "android_hdpi": "resources/icons/android_hdpi.png", // 72x72
   "android_xhdpi": "resources/icons/android_xhdpi.png", // 96x96
@@ -52,3 +52,16 @@ App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
 App.accessRule('*://fonts.gstatic.com/*');
+
+App.setPreference('intercom-app-id', 'k1la9xfh');
+App.setPreference('intercom-ios-api-key', 'ios_sdk-e5fc0fe6291b80f1d3026a54f46ba811ca1ca6bf');
+App.setPreference('intercom-android-api-key', 'android_sdk-8817227116e3cb348ce70c90c6713dd36d19887a');
+App.setPreference('intercom-android-sender-id', '259263435947');
+
+App.configurePlugin("branch-cordova-sdk", {
+    URI_SCHEME : "pickk",
+    BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
+});
+App.configurePlugin('phonegap-plugin-push', {
+    SENDER_ID: 259263435947
+});

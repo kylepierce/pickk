@@ -1,17 +1,35 @@
-Template.gameLeaderboard.helpers({
-	'player': function(){
+Template.miniLeaderboard.helpers({
+	'userNotInLeaderboard': function(number){
+		check(number, Number);
+		var userId = Meteor.userId()
 		var $game = Router.current().params.id
-		// Users change so much this loads the users once. 
-		Fetcher.retrieve("leaderboard", "loadLeaderboard", $game)
-		var leaderboard = Fetcher.get("leaderboard")
-		return GamePlayed.find({gameId: $game}, {sort: {coins: -1}})
+    var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
+
+    var spot = all.map(function(x) {return x.userId; }).indexOf(userId);
+
+		if(spot > 3){
+			var thisUser = {userId: userId, spot: spot} 
+			return thisUser;
+		}
+		
 	},
-	'username': function(userId) {
-		return UserList.findOne({_id: userId});
-	},
-	'pathUrl': function () {
-		// https://github.com/meteoric/meteor-ionic/issues/66
-		var url = "/user-profile/" + this.userId
-		return url
-	}
+  'player': function(number){
+  	check(number, Number);
+    var $game = Router.current().params.id
+    var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
+    return list
+  },
+  'username': function(userId) {
+    return UserList.findOne({_id: userId});
+  },
+  'pathUrl': function () {
+    // https://github.com/meteoric/meteor-ionic/issues/66
+    var url = "/user-profile/" + this.userId
+    return url
+  },
+  gameCoins: function () {
+    var userId = Meteor.userId();
+    var $game = Router.current().params.id
+    return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
+  },
 });

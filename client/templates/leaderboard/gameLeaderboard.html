@@ -17,21 +17,39 @@
 	
   {{#ionView}}
 	  {{#ionContent}}
-      <ol type="1" class="list">
-			{{#each player}}
-        {{#ionItem href=pathUrl avatar=true}}
-          {{> userAvatar userId=userId}}
-          <li class="list-font">
-	          <h2 class="center-username">
-	            {{#with username userId}}
-                {{profile.username}}
-              {{/with}}
-	            <span class="score">{{coins}}</span>
-	          </h2>
-        	</li>
-        {{/ionItem}}
-      {{/each}}
-      </ol>
+      {{> miniLeaderboard i=10}}
 	  {{/ionContent}}
 	{{/ionView}}
+</template>
+
+<template name="miniLeaderboard">
+  <ol type="1">
+    {{#each player i}}
+      {{#ionItem href=pathUrl avatar=true}}
+        {{> userAvatar userId=userId}}
+        <li class="list-font">
+          <h2 class="center-username">
+            {{#with username userId}}
+              {{profile.username}}
+            {{/with}}
+            <span class="score">{{coins}}</span>
+          </h2>
+        </li>
+      {{/ionItem}}
+    {{/each}}
+
+    {{#with userNotInLeaderboard i}}
+      {{#ionItem avatar=true}}
+        {{> userAvatar userId=userId}}
+        <li class="list-font" style="font-weight: bold;" value={{spot}}>
+          <h2 class="center-username" style="font-weight: bold;">
+            {{#with username userId}}
+              {{profile.username}}
+            {{/with}}
+            <span class="score" style="font-weight: bold;">{{{gameCoins}}}</span>
+          </h2>
+        </li>
+      {{/ionItem}}
+    {{/with}}
+  </ol>
 </template>

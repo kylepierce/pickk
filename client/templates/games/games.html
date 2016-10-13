@@ -13,23 +13,53 @@
 		<h1 class="title white-text-header">Game Schedule</h1>
   {{/contentFor}}
 
-
 	{{#ionView}}
 		{{#ionContent}}
+		  <div class="item item-divider ">
+
+        <span class="col-md-25" data-action="previous">
+          {{>ionIcon icon='chevron-left'}}
+          Prev
+        </span>
+
+        <span class="col-md-50 center-text">{{date}}</span>
+
+        <span class="col-md-25 right-text" data-action="next">
+          Next
+          {{>ionIcon icon='chevron-right'}}
+        </span>
+
+      </div>
 			{{#ionList}}
-			<div class="item item-divider">Upcoming Games</div>
-				{{#each games}}
-					{{#ionItem class=gameClass buttonRight=true}}
-            <div class="game-item-outer" data-game-id="{{_id}}">
-              <h2>{{name}}</h2>{{userTimeZone scheduled}} on {{tv}}
-            </div>
-							{{#if inprogress status}}
-                <button class="button game" data-game-id="{{_id}}">
-                  {{> ionIcon icon="ios-arrow-right"}}
-                </button>
-              {{/if}}
-        	{{/ionItem}}
-				{{/each}}
+				<div class="container ten-spacing">
+	        {{#each game in games}}
+	          <div class="complete-game-card" id="{{game._id}}">
+	          	{{#if admin}}
+	          		<div style="background-color: #b2b2b2; height: 40px;">
+		            	<div class="col-md-33 past-game">
+			            	Game Completed?: 
+			            	{{#if endOfGame game}}
+			            		Already closed
+			            	{{else}}
+			            		<button data-action="gameOver" data-game-id="{{game._id}}">Not closed</button>
+			            	{{/if}}
+			            </div>
+			            <div class="col-md-33 past-game">
+		            		# of users: {{{numberOfPlayers game.users}}}
+	            		</div>
+	            		<div class="col-md-33 past-game">
+										<button data-action="gameAdmin" data-game-id="{{game._id}}">Admin Page</button>
+	            		</div>
+	            	</div>
+	            {{/if}}
+
+	            {{> singleGameInfo game=game}}
+	            {{> singleGameCard game=game}}
+	            {{> singleGameCTA game=game}}
+
+	          </div>
+	        {{/each}}
+	      </div>
 			{{/ionList}}
 		{{/ionContent}}
 	{{/ionView}}

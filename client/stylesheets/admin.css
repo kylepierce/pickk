@@ -5,17 +5,24 @@
 	margin-left: 7.5%;
 }
 
-.slider-6-options {
+.slider-6 {
 	border: 1px solid black;
 	float: left;
   width: 16.66%;
   text-align: center;
 }
 
-.slider-5-options {
+.slider-3 {
 	border: 1px solid black;
 	float: left;
-  width: 20%;
+  width: 33%;
+  text-align: center;
+}
+
+.slider-4 {
+	border: 1px solid black;
+	float: left;
+  width: 25%;
   text-align: center;
 }
 
@@ -26,52 +33,3 @@
 #gameInfo {
 	background-color: white;
 }
-
-#gameList {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin: 30px 0;
-}
-
-.float-left {
-	float: left;
-}
-
-.option-boxes {
-    display: block;
-    padding: 0 0 10px 0;
-    overflow: scroll;
-}
-
-.option-boxes label{
-	background-color: rgba(0, 0, 0, 0);
-	padding: 7px 15px;
-}
-
-.option-boxes input {
-	padding: 10px!important;
-	border-radius: 10px;
-	border: 1px #888 solid!important;
-}
-
-li.option-boxes:nth-child(even) {
-	background: #fff;
-}
-
-.option-boxes:nth-child(odd) {
-	background: #E8E8E8;
-}
-
-.option-range {
-	margin-left: 5px;
-}
-
-@media (min-width: 600px) {
-	.col-md-50 {
-		width: 48%;
-		padding: 1%;
-		float: left;
-	}
-}
-

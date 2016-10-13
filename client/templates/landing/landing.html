@@ -1,41 +1,39 @@
 <template name="landing">
   {{#ionView}}
     {{#ionContent}}
-    <div id="landing" class="slider-box">
-    {{#ionSlideBox}}
-        {{#ionSlide class="inner-slide-box landing-bg"}}
-          <h1>Guess on each play</h1>
-          <img class="landing-image" src="/predict.png">
-          <p>Every play has options and real time multipliers.</p>
-        {{/ionSlide}}
-        {{#ionSlide class="inner-slide-box landing-bg"}}
-          <h1>Watch the game</h1>
-          <img class="landing-image" src="watch.svg">
-          <p>Play while watching. No need to plan ahead. </p>
-        {{/ionSlide}}
-        {{#ionSlide class="inner-slide-box landing-bg"}}
-          <h1>Prove your skills</h1>
-          <img class="landing-image" height="280" src="/trophy.svg">
-          <p>Play against your friends, family, and the entire world.</p>
-        {{/ionSlide}}
-      {{/ionSlideBox}}
+      <div class="full-landing">
+        <div id="landing" class="slider-box">
+          {{#ionSlideBox}}
+            {{#ionSlide class="inner-slide-box landing-bg"}}
+              <h1>Guess on each play</h1>
+              <img class="landing-image" src="/predict.png">
+              <p>Every play has options and real time multipliers.</p>
+            {{/ionSlide}}
+            {{#ionSlide class="inner-slide-box landing-bg"}}
+              <h1>Watch the game</h1>
+              <img class="landing-image" src="watch.svg">
+              <p>Play while watching. No need to plan ahead. </p>
+            {{/ionSlide}}
+            {{#ionSlide class="inner-slide-box landing-bg"}}
+              <h1>Prove your skills</h1>
+              <img class="landing-image" height="280" src="/trophy.svg">
+              <p>Play against your friends, family, and the entire world.</p>
+            {{/ionSlide}}
+          {{/ionSlideBox}}
+        </div>
+        {{> loginBox}}
       </div>
-      {{> loginBox}}
   {{/ionContent}}
 {{/ionView}}
 </template> 
 
 <template name="loginBox">
-	<div class="intro">		
-		<a href="/login">
-			<button class="button button-outline button-large button-positive">
-				Login
-			</button>
-		</a>
-		<a href="/register">
-			<button class="button button-large button-positive">
-				Register
-			</button>
-		</a>
+	<div class="container intro">		
+		<button data-action="login" class="button button-large cta">
+			Login
+		</button>
+		<button data-action="register" class="button button-large register cta cta-{{ctaButton}}">
+			{{registerText}}
+		</button>
 	</div>
 </template>

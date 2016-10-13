@@ -14,10 +14,6 @@ Template.inviteToGroup.helpers({
   // }
 });
 
-Template.inviteToGroup.onCreated(function() {
-  this.subscribe('groups', this.data._id)
-})
-
 Template.inviteButton.events({
 	'click [data-action=invite]': function(event, template){
 		Meteor.call("inviteToGroup", this.__originalId, Meteor.userId(), Router.current().params._id)

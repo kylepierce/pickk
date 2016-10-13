@@ -13,7 +13,7 @@ Fixtures.push(Meteor.users, {
       firstName: "Knox",
       lastName: "Overstreet",
       birthday: new Date("1996-05-01"),
-      coins: 10000
+      coins: 10000,
     }
   }
 });

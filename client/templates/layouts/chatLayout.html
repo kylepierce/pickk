@@ -11,28 +11,18 @@
 
 <template name="chatLayout">
 {{#ionBody}}
-
   {{#ionSideMenuContainer}}
-
       {{#ionSideMenuContent}}
-
         <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
-
         {{#ionNavView transition="backward"}}
           {{> chatHeader}}
         {{/ionNavView}}
-
         {{> yield}}
-
       {{/ionSideMenuContent}}
-
     {{/ionSideMenuContainer}}
-
   {{/ionBody}}
 </template>
-
-
 
 <template name="chatHeader">
 	  {{#contentFor "headerTitle"}}

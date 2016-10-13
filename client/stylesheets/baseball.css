@@ -3,7 +3,7 @@
 	width: 13px;
 	margin: 0px; 
 	background-color: white;
-	border: 1px solid #a2a2a2;
+	border: 1px solid #455A64;
 	margin: 1px;
 	-ms-transform: rotate(7deg); /* IE 9 */
   -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
@@ -14,7 +14,6 @@
 
 .base-empty { 
 	background-color: #E6B400!important;
-	border: 1px solid #E6B400;
 }
 
 .admin-base-empty {
@@ -49,6 +48,10 @@
 	margin-left: -5px;
 }
 
+.second-base {
+	margin-top: -9px;
+}
+
 .third-base {
   margin-right: -5px;
 }
@@ -57,8 +60,7 @@
 	width: 13px;
 	height: 13px;
 	border-radius: 100%;
-	background-color: #383838;
-  float: left;
+	background-color: #E6B400;
   margin: 3px;
 }
 
@@ -68,18 +70,25 @@
 	border-radius: 100%;
 	background-color: white;
 	border: 1px #fcfcfc solid;
-  float: left;
   margin: 3px;
+}
+
+.inning-position {
+	font-size: 1.5rem;
+	font-family: lato;
+	padding-right: 10px;
+}
+
+.inning {
+	font-size: 1.25em;
+	font-family: lato;
+	font-weight: bold;
 }
 
 .player-slider {
 	text-align: center;
-	overflow-x: hidden;
-  padding: 15px;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #00695C;
+  background-color: #263238;
+  font-family: lato;
   color: #fff;
 }
 
@@ -89,6 +98,10 @@
 
 .player-slider thead td {
 
+}
+
+.slide-inside {
+	padding: 15px;
 }
 
 .player-name {

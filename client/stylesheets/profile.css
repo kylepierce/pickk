@@ -1,19 +1,39 @@
 .pickk-badge {
-    width: 24% !important;
-    max-width: 139px;
+  width: 24% !important;
+  max-width: 139px;
 }
 
 .profile-background {
-    background-color: white;
-    border: 1px solid #979797;
-    text-align: center;
-    padding-bottom: 20px;
+  background-color: white;
+  border: 1px solid #979797;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
 .profile-wrapper .avatar {
-    float: left;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    width: 75px;
-    height: 75px;
+  float: left;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.profile-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.profile-image .avatar, .profile-image .avatar .avatar-image{
+  width: 75px!important;
+  height: 75px!important;
+}
+
+.trophy-list li{
+  float: left;
+  width: 25%;
+}
+
+.trophy-image img{
+  width: 70px;
 }

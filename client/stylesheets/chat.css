@@ -6,9 +6,19 @@
 
 #messageBox {
 	padding: 10px;
+  word-break: break-word;
+  height: 75px;
+  white-space:pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+#chat-message-area {
+  margin-bottom: 47px;
 }
 
 #chat-button{
+  background-color: #222c31;
   padding: 5px!important;
 	line-height: 25px!important;
 	min-width: 0!important;
@@ -20,13 +30,12 @@
 	opacity: 1;
 }
 
-.chat-options {
+#options {
   width:100%;
   float: left;
-  background-color: #009688;
+  background-color: #303E46;
   padding: 10px 0;
   text-align:center;
-  opacity:0;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -47,18 +56,34 @@
 	font-size: 2.2rem;
 }
 
-#single-message p img {
-	width: 50%;
+.single-message {
+  padding-bottom: 0px!important;
+  padding-top: 5px!important;
+}
+
+.single-message .user-avatar {
+  top: 5px!important;
+}
+
+.single-message p img, .reaction-message {
+	width: 30%;
+  height: 40%;
 }
 
 .preview {
 	width: 45px;
-
 }
 
 .icon-small {
   max-width: 20px;
   min-width: 20px;
+  font-size: 1.5rem;
+  margin: 0 7px;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .space-between-icon {
@@ -66,6 +91,9 @@
 }
 
 .chat-buttons {
+  background-color: #222c31;
+  color: white;
+  font-family: lato;
 	height: 47px;
 	padding-top: 15px;
 	text-align: center;
@@ -83,6 +111,18 @@
   border-left-width: 0px;
 }
 
+.single-chat-buttons {
+  border: 0px solid blue;
+  background-color: white;
+  height: 35px;
+  text-align:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color: #565555;
+  font-size: .8rem 
+}
+
 div.content.overflow-scroll.has-header {
 	bottom: 0px!important;
 }
@@ -95,7 +135,27 @@ div.content.overflow-scroll.has-header {
     width: 100%;
 }
 
+.reaction-row {
+  padding: 0 20px;
+}
+
 .reaction-count {
   font-size: 10px;
   margin-left: -5px;
+}
+
+#chat-submit {
+  background-color: #B2B2B2;
+}
+
+.allow-chats {
+  background-color: #F1C40F!important;
+}
+
+.option-dividers {
+  border-left: 1px solid white;
+}
+
+.option-dividers:first-child {
+  border: 0px;
 }

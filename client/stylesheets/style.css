@@ -17,6 +17,30 @@ body, .ionic-body {
 	height: 100%;
 }
 
+.center-text {
+	text-align: center;
+}
+
+.right-text {
+	text-align: right;
+}
+
+.item-divider {
+	background-color: #37474F!important;
+	color: white;
+}
+
+.bar-subheader {
+	background-color: #455A64!important;
+	color: white;
+	font-family: lato;
+	font-size: 16px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .clear-fix{
 	clear: both;
 }
@@ -25,8 +49,8 @@ body, .ionic-body {
 	background-color: #f2f2f2;
 }
 
-.loader {
-  display: none;
+.ten-spacing {
+	margin-top: 10px;
 }
 
 .loader-holder {
@@ -97,7 +121,7 @@ input, textarea {
 }
 
 .bar.bar-stable {
-	background-color: #00695C!important;
+	background-color: #222C31!important;
 	color:white!important;
 }
 
@@ -237,7 +261,7 @@ a.option {
 	background-color: white;
 	border: #eee;
 	padding: 10px 25px;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 	overflow: auto;
 }
 
@@ -325,12 +349,14 @@ input[type=submit] {
 
 .profile-container {
 	height: 170px;
-	background-color: #16A085;
+	background-color: #222C31;
 	color:white;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
 }
+
+
 
 /*.scrollable {
 	overflow-y: auto;
@@ -399,4 +425,8 @@ input[type=submit] {
 /* Makes the label not take 100% of the available area */
 .af-fav-teams .checkbox  {
 	max-width: 50px;		
+}
+
+.hidden {
+	display: none
 }

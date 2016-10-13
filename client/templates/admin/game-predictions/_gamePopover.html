@@ -1,0 +1,16 @@
+<template name="_gamePopover">
+  {{#ionPopover}}
+    {{#ionList}}
+      {{#each option in options this}}
+        {{> selectedPrediction q=this o=option}}
+      {{/each}}
+    {{/ionList}}
+  {{/ionPopover}}
+</template>
+
+<template name="selectedPrediction">
+  <a class="item item-icon-right" data-action='selection' value='{{o.option}}' >
+    {{o.title}}
+    {{> ionIcon icon="ios-arrow-right"}}
+  </a>
+</template>

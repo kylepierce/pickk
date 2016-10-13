@@ -33,7 +33,9 @@
             {{> memberCheck}} 
             {{> groupData}}
           {{else}}
-            <h4 style="text-align:center;">This group is private and can only be seen by members</h4>
+            <div class="no-notifications">
+              This group is private and can only be seen by members
+            </div>
           {{/if}}
         {{/if}}       
 
@@ -118,20 +120,16 @@
 
 <template name="singleGroupLeaderboard">
   {{#ionList}}
-  <div style="clear:both" class="item item-divider">Group Leaderboard</div>
-    <ol type="1" class="list" style="clear:both">
-      
-      {{#each players groupId}}
+    <div style="clear:both" class="item item-divider">Group Members</div>
+    {{#each player in players}}
+      {{#with userData player}}
         {{#ionItem path="user.show" avatar=true}}
-        {{> userAvatar userId=_id}}
-        <li class="list-font">
-          
-          <h2 class="center-username">{{profile.username}}</h2>
-        </li>
-
+          {{> userAvatar userId=_id}}
+          <h2 class="center-username">
+            {{profile.username}}
+          </h2>
         {{/ionItem}}
-      {{/each}}
-      
-    </ol>
-    {{/ionList}}
+      {{/with}}
+    {{/each}}
+  {{/ionList}}
 </template>

@@ -1,40 +1,120 @@
-<template name="singleGame">
-	<div class="container">	
-	  {{#ionView}}
-   		{{#ionContent}}	
+<template name="singleGameAdmin">	
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
 
-	  {{#contentFor "headerButtonLeft"}}
-	    {{>ionNavBackButton path="index"}}
-	  {{/contentFor}}
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">Single Game</h1>
+	{{/contentFor}}
 
-		{{#with game}}   		 
-   		 {{#contentFor "headerTitle"}}
-					<h1 class="title white-text-header">Single Game</h1>
-   		 {{/contentFor}}
-			
-			{{#ionItem}}
-				<strong>{{this.name}}</strong>
-			{{/ionItem}}
-				<div class="item item-toggle item-text-wrap">
-		    Active?
-		    <label class="toggle">
-		      <input type="checkbox" id="gameActive" {{liveGame}} name="gameActive">
-		      <div class="track">
-		        <div class="handle"></div>
-		      </div>
-		    </label>
-		  </div>
+  {{#ionView}}
+ 		{{#ionContent}}	
+ 			<div class="container ten-spacing"> 
+ 				{{#with game}}
+	 				{{> singleGameInfo game=this}}
+		      {{> singleGameCard game=this}}
+				{{/with}}
+				
+				{{> otherQuestions}}
+				{{> createQuestion}}
+				{{> activeQuestions}}
+				{{> pendingQuestions}}
+				{{> oldQuestions}}
+			</div>
+		{{/ionContent}}
+	{{/ionView}}
+</template>
 
-			{{#ionList}}	<textarea>
-			{{#each numberOfQuestions}}
+<template name="otherQuestions">
+	<div class="panel ten-spacing">
+		{{#if commercial}}
+			<button class='col-md-50 button button-assertive float-left' data-action="endCommercialBreak">
+				End Commercial Break 
+			</button>
+		{{else}}
+			<button class='col-md-50 button button-balanced float-left' data-action="startCommercialBreak">
+				Start of Commercial Break 
+			</button>
+		{{/if}}
 		
-					{{que}}, {{dateCreated}}, {{usersAnswered.length}}
-			
-			{{/each}}</textarea>
-			{{/ionList}}
-		{{/with}}
+		<button class='col-md-50 button button-dark float-left' data-ion-modal="_situationalModal"> 
+			Situational Question 
+		</button>
+		
+		<button class='col-md-50 button button-royal float-left' data-action="thisDrive"> 
+			This Drive 
+		</button>
 
-			{{/ionContent}}
-		{{/ionView}}
+		<button class='col-md-50 button button-calm float-left' data-ion-modal="_gameScoreModal"> 
+			Change Score
+		</button>
 	</div>
+</template>
+
+<template name="activeQuestions">
+	<div class="panel">
+		<h3>Active Questions</h3>
+		<ul class="active-questions">
+			{{#each questions}}
+				<li class="{{_id}} float-left"> {{que}}</li>
+				<button data-action="deactivate" class="col-md-100 button button-balanced">
+					Deactivate
+				</button>
+			{{/each}}
+		</ul>
+	</div>	
+</template>
+
+<template name="pendingQuestions">
+	<div class="panel">
+		<h3>Pending Questions</h3>
+		<ul class="pending-questions">
+			{{#each q in questions}}
+				{{> pendingQuestion q=q}}
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="pendingQuestion">
+	<li class="clear-fix"> 
+		<h4>{{q.que}}</h4>
+		<div>
+			<button data-action="removeQuestion" class="col-md-50 button button-assertive">Remove question</button>
+			<button data-action="reactivate" class="col-md-50 button button-balanced">Reactivate question</button>
+		</div>
+		{{#each o in options q}}
+			{{> selectOption o=o q=q}}
+		{{/each}}`
+	</li>
+</template>
+
+<template name="oldQuestions">
+	<div class="panel"> 
+		<h3>Old Questions</h3>
+		<ul class="pending-questions">
+			{{#each q in questions}}
+				{{> oldQuestion q=q}}
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="oldQuestion">
+	<li class="clear-fix"> 
+		<h4>{{q.que}} -- {{q.outcome}}</h4>
+		<div>
+			<button data-action="removeQuestion" class="col-md-50 button button-assertive">Remove question</button>
+			<button data-action="reactivate" class="col-md-50 button button-balanced">Reactivate question</button>
+		</div>
+		{{#each o in options q}}
+			{{> selectOption o=o q=q}}
+		{{/each}}
+	</li>
+</template>
+
+<template name="selectOption">
+	<button data-action="playSelection" class="button col-md-50" value="{{o.option}}">
+		{{o.title}}
+	</button>
 </template>

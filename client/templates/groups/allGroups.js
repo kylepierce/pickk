@@ -1,8 +1,8 @@
-Template.allGroups.created = function () {
-  this.autorun(function () {
-    this.subscription = Meteor.subscribe('groups', Router.current().params._id);
-  }.bind(this));
-};
+// Template.allGroups.created = function () {
+//   this.autorun(function () {
+//     this.subscription = Meteor.subscribe('groups', Router.current().params._id);
+//   }.bind(this));
+// };
 
 // Template.allGroups.onCreated( function() {
 //   this.subscribe( 'groups', function() {

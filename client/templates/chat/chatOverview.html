@@ -1,18 +1,18 @@
 <template name="chatOverview">
-<div class="bar bar-header bar-dark">
-  {{#if group}}
+  <div class="bar bar-header bar-dark">
+<!--   {{#if group}}
    <h1 class="title white-text-header">{{group}} Chat</h1>
 
    <button id="all-chats" class="button button-clear">
       {{> ionIcon icon="ios-arrow-back" }}
     </button>
-  {{else}}
+  {{else}} -->
     <h1 class="title white-text-header">Global Chat</h1>
-  {{/if}}
+<!--   {{/if}} -->
 
-    <button class="button button-clear pull-right" data-ion-popover="_groupChats">
+<!--     <button class="button button-clear pull-right" data-ion-popover="_groupChats">
       {{> ionIcon icon="ios-people" }}
-    </button>
+    </button> -->
   </div>
 
   {{> chatRoom}}
@@ -21,55 +21,79 @@
 <template name="chatRoom">
   {{#ionView }}
     {{#ionContent}}
-    <form id="" style="margin-bottom: 50px">
-      {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage}}
-      <!-- <div class="col-md-5 chat-buttons" data-action="mention">Mention</div> -->
-      <div class="col-md-33 chat-buttons" data-ion-popover="_reaction" style="width: 50%">React</div>
-      <button class="button" style="float:right; width: 50%; border: none;" type="submit">Send</button>
-    </form>
-    {{#ionList}}
-      {{#with groupMessages}}
-        {{#each messages this}}
-          <div data-action="message" class="message">
-            {{#ionItem avatar=true id="single-message"}}
-              {{#with user this.user}}
-                {{> userAvatar userId=_id alreadySubscribed=true}}
-                <h2>{{chatUser this._id}}</h2>
-              {{/with}}
-              <p>{{{message}}}</p>
-              {{> messageReactions reactions=this.reactions}}
-            {{/ionItem}}
-            <div class="chat-options" style="display: none">
-              <div class="col-md-25" data-action="reply">
-                {{> ionIcon class="reply-icon" icon='forward'}}<br>
-                Reply
-              </div>
-              <div class="col-md-25" data-action="react">
-                <img class="reply-emoji" data-ion-popover="_reactionToMessage" src="/emoji/Line/Emoji-Party-Pack_Line-01.svg"><br>
-                React
-              </div>
-              <div class="col-md-25" data-action="user">
-                {{> ionIcon class="reply-icon" icon='ios-person'}}
-                <br>
-                User
-              </div>
-              <div class="col-md-25" data-action="close">
-                {{> ionIcon class="reply-icon" icon='ios-close-outline'}}
-                <br>
-                Cancel
-              </div>
-            </div>
-          </div>
-          {{/each}}
-        {{/with}}
+      {{> messageBox}}
+
+      {{#ionList}}
+        {{#each item in groupMessages}}
+          {{> singleMessage i=item}}
+        {{/each}}
+
         {{#if showLoadMore}}
           <div class="load-more-wrapper text-center">
             <button class="button load-more" type="button">Load more</button>
           </div>
         {{/if}}
       {{/ionList}} 
+
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="messageBox">
+  <form id="chat-message-area">
+    {{> textareaAutocomplete settings=settings name="messageBox" id="messageBox" rows="3" maxlength="150" placeholder=randomMessage tabindex=1}}
+    <div class="col-md-33 chat-buttons option-dividers" data-action="mention">Mention</div>
+    <div class="col-md-33 chat-buttons option-dividers" data-ion-popover="_reaction">React</div>
+    <button tabindex=2 id="chat-submit" class="col-md-33 button option-dividers" type="submit">Send</button>
+  </form>
+</template>
+
+<template name="singleMessage">
+  {{#ionItem avatar=true id=i._id class="single-message"}}
+    {{#if type "reaction"}}
+      <img class="reaction-message avatar user-avatar" src="{{emojiIconSrc this}}">
+      {{#with userObj i.user}}
+        <h2 style="margin-top: 13px;">{{username}}'s Reaction</h2>
+      {{/with}}
+    {{else}}
+      {{#with userObj i.user}}
+        {{> userAvatar userId=_id alreadySubscribed=true}}
+        <h2>{{username}}</h2>
+      {{/with}}
+    {{/if}}
+    {{#if award}}
+      <p><strong>{{{i.message}}}</strong></p>
+    {{else}}
+      <p>{{{messageText i}}}</p>
+    {{/if}}
+    <div style="margin-left: -65px; margin-right: -10px; clear: both;">
+      {{> messageReactions reactions=i.reactions}}
+      {{> chatOptions}}
+    </div>
+  {{/ionItem}}
+</template>
+
+<template name="chatOptions">
+  {{#if notOwnMessage}}
+  <button class="{{options}} single-chat-buttons" data-action="reply">
+    {{> ionIcon class="icon-small" icon='forward'}}
+    Reply
+  </button>
+  <button class="{{options}} single-chat-buttons grayscale" data-action="react">
+    <img class="icon-small" src="/emoji/Full-Color/Emoji-Party-Pack-01.svg">
+    React
+  </button>
+  <button class="{{options}} single-chat-buttons" data-action="user">
+    {{> ionIcon class="icon-small" icon='ios-person'}}
+    User
+  </button>
+  {{/if}}
+  {{#if canDelete}}
+    <button class="col-md-25 single-chat-buttons" style="float: right;" data-action="delete">
+      {{> ionIcon class="icon-small" icon='ios-close-outline'}}
+      Delete
+    </button>
+  {{/if}}
 </template>
 
 <template name="_groupChats">
@@ -96,37 +120,36 @@
 </template>
 
 <template name="_reaction">
-
     <div class="emoji-layer">
       {{#ionPopover}}
-        <button value="[dead]" >
+        <button value="dead" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
         </button>
-        <button value="[fire]" >
+        <button value="fire" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
         </button>
-        <button value="[dying]" >
+        <button value="dying" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
         </button>
-        <button value="[hell-yeah]" >
+        <button value="hell-yeah" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
         </button>
-        <button value="[what]" >
+        <button value="what" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
         </button>
-        <button value="[pirate]" >
+        <button value="pirate" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
         </button>
-        <button value="[love]" >
+        <button value="love" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
         </button>
-        <button value="[tounge]" >
+        <button value="tounge" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
         </button>
-        <button value="[oh-no]" >
+        <button value="oh-no" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
         </button>
-        <button value="[what-the-hell]" >
+        <button value="what-the-hell" >
           <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
         </button>
       {{/ionPopover}}
@@ -136,53 +159,51 @@
 
 
 <template name="_reactionToMessage">
-
-    <div class="emoji-layer">
-      {{#ionPopover}}
-        <button value="[dead]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
-        </button>
-        <button value="[fire]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
-        </button>
-        <button value="[dying]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
-        </button>
-        <button value="[hell-yeah]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
-        </button>
-        <button value="[what]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
-        </button>
-        <button value="[pirate]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
-        </button>
-        <button value="[love]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
-        </button>
-        <button value="[tounge]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
-        </button>
-        <button value="[oh-no]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
-        </button>
-        <button value="[what-the-hell]" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
-        </button>
-        <button value="[none]" >
-          <img class="preview" src='/close-white.svg'>
-        </button>
-      {{/ionPopover}}
-    </div>
-
+  <div class="emoji-layer">
+    {{#ionPopover}}
+      <button value="dead" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
+      </button>
+      <button value="fire" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
+      </button>
+      <button value="dying" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
+      </button>
+      <button value="hell-yeah" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
+      </button>
+      <button value="what" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
+      </button>
+      <button value="pirate" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
+      </button>
+      <button value="love" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
+      </button>
+      <button value="tounge" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
+      </button>
+      <button value="oh-no" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
+      </button>
+      <button value="what-the-hell" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
+      </button>
+      <button value="none" >
+        <img class="preview" src='/close-white.svg'>
+      </button>
+    {{/ionPopover}}
+  </div>
 </template>
 
 <template name="messageReactions">
-  <div class="row" align="right">
+  <div class="reaction-row" align="right">
     <p>
     {{#each reactionCount}}
-        <img class="icon-small" src={{emojiIconSrc reactionName}}>
-        <strong class="reaction-count">{{count}}</strong>
+      <img class="icon-small" src={{emojiIconSrc reactionName}}>
+      <strong class="reaction-count">{{count}}</strong>
     {{/each}}
     </p>
   </div>

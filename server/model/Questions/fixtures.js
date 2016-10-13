@@ -117,6 +117,20 @@ Fixtures.push(Questions, {
     },
     usersAnswered: []
   },
+  TwoOptionQuestion: {
+    dateCreated: new Date(dateCreatedTime += 60000),
+    playerId: "ErikSmith",
+    gameId: "ActiveGame",
+    active: true,
+    commercial: false,
+    binaryChoice: true,
+    que: "Will Erik Smith Hit a Home Run in the 6th inning?",
+    options: {
+      option1: {title: "True", multiplier: 1.5},
+      option2: {title: "False", multiplier: 1.5}
+    },
+    usersAnswered: []
+  },
   BinaryQuestion: {
     dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",

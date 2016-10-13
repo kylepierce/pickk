@@ -1,39 +1,29 @@
 <template name="homeLayout">
+  {{#ionBody}}
+    {{#ionSideMenuContainer}}
+      {{#ionSideMenus}}
 
-{{#ionBody}}
+        {{#ionSideMenu}}
+          {{> sideMenuContent}}
+        {{/ionSideMenu}}
 
-  {{#ionSideMenuContainer}}
+        {{#ionSideMenu side="right"}}
+          {{> chatOverview}}
+        {{/ionSideMenu}}
 
-    {{#ionSideMenus}}
-
-      {{#ionSideMenu}}
-        {{> sideMenuContent}}
-      {{/ionSideMenu}}
-
-      {{#ionSideMenu side="right"}}
-      
-      {{> chatOverview}}
-
-      {{/ionSideMenu}}
-
-    {{/ionSideMenus}}
+      {{/ionSideMenus}}
 
       {{#ionSideMenuContent}}
-
-        <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
+      <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
-
-
           {{#ionNavView transition="backward"}}
-          {{> homeLayoutHeader}}
-        {{/ionNavView}}
+            {{> yield "header"}} 
+          {{/ionNavView}}
 
-        {{> yield}}
+          {{> yield}}
 
       {{/ionSideMenuContent}}
-
     {{/ionSideMenuContainer}}
-
   {{/ionBody}}
 </template>
 

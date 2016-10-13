@@ -1,37 +1,168 @@
-Template.singleGame.created = function () {
-  this.autorun(function () {
-    this.subscription = Meteor.subscribe('games', Router.current().params._id);
-  }.bind(this));
-};
+// Template.singleGameAdmin.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
 
-// Template.home.onRendered( function() {
-//   var w = 600;
-//   var h = 500;
-//   var padding = {top: 40, right: 40, bottom: 40, left: 40};
-//   var dataset;
-//   var stack = d3.layout.stack();
+Template.singleGameAdmin.helpers({
+	game: function () {
+		var game = this.game[0]
+		return game
+	}
+});
 
-// }
+// map multiple combinations to the same callback
+Mousetrap.bind('d', function() {
+	$('[data-action=deactivate]').click()
+	return false;
+}, 'keyup');
 
-Template.singleGame.helpers({
-  
-  game: function () {
-    var game = Router.current().params._id
-    return Games.findOne({_id: Router.current().params._id});
-  },
-  question: function(){
-  	return Questions.find({gameId: Router.current().params._id}).fetch()
-  },
-  'numberOfQuestions': function(){
-    var game = Router.current().params._id
-    Meteor.subscribe('allQuestions', game)
-    var gameData = Questions.find({gameId: game}, {sort: {dateCreated: -1}}).fetch()    
-    return gameData
-  },
-  liveGame: function(){
-  	var gameData = Games.findOne({_id: Router.current().params._id}); 
-  	if(gameData.live === true){
-  		return "checked"
-  	}
-  }
-}); 
+// Deactivate question once the play has started.
+Template.activeQuestions.events({
+	'click [data-action=deactivate]': function() {
+		var questionId = this._id;
+		Meteor.call('deactivateStatus', questionId);
+	}
+});
+
+// Show all active questions
+Template.activeQuestions.helpers({
+	'questions': function(){
+		return Questions.find({active: true}, {sort: {dateCreated: -1}});
+	}
+});
+
+Template.otherQuestions.helpers({
+	'commercial': function(){
+		var gameId = Router.current().params._id
+		var game = Games.findOne({_id: gameId});
+		var commercialBreak = game.commercial
+		return commercialBreak
+	}
+});
+
+// Create question and add to database function
+Template.otherQuestions.events({
+	'click [data-action="startCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var gameId = Router.current().params._id
+		Meteor.call('toggleCommercial', gameId, true);
+	},
+
+	'click [data-action="endCommercialBreak"]': function(event, template){
+		// Turn off reload
+		event.preventDefault();
+		var gameId = Router.current().params._id
+		Meteor.call('toggleCommercial', gameId, false);
+	},
+
+	'click [data-action="thisDrive"]': function(e, t){
+		event.preventDefault();
+		var gameId = Router.current().params._id
+
+		// One object to be passed to the insertQuestion method.
+		var q = {
+			gameId: gameId,
+			type: "drive",
+			commercial: true,
+			inputs: {}
+		}
+
+		Meteor.call('insertQuestion', q, function(e, r){
+			if(!e){
+				Meteor.call("questionPush", q.gameId, r)
+				Meteor.call("emptyInactive", q.gameId)
+			}
+		});
+	},
+});
+
+Template.pendingQuestions.helpers({
+	questions: function () {
+		return Questions.find({active: null}, {sort: {dateCreated: -1}}).fetch()
+	},
+});
+
+Template.pendingQuestion.helpers({
+	options: function (q) {
+	  var imported = q
+	  var data = q.options
+	  var keys = _.keys(data)
+	  var values = _.values(data)
+	  var optionsArray = []
+
+	  // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+
+	  for (var i = 0; i < keys.length; i++) {
+	    var obj = values[i]
+	    var number = keys[i]
+	    obj["option"] = number 
+	    optionsArray.push(obj)
+	  }
+
+	  return optionsArray
+	}
+});
+
+// Select correct answer and award points to those who guessed correctly.
+Template.pendingQuestion.events({
+	'click [data-action=removeQuestion]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('removeQuestion', this.q._id)
+		}
+	},
+	'click [data-action=reactivate]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this.q._id)
+		}
+	},
+	'click [data-action=playSelection]': function (e, t) {
+		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
+	}
+});
+
+Template.oldQuestions.helpers({
+	questions: function () {
+		var question = Questions.find({active: false}, {sort: {lastUpdated: -1, dateCreated: -1}, limit: 5}).fetch()
+		return question
+	}
+});
+
+Template.oldQuestion.helpers({
+	options: function (q) {
+	  var imported = q
+	  var data = q.options
+	  var keys = _.keys(data)
+	  var values = _.values(data)
+	  var optionsArray = []
+
+	  // [{number: option1}, {title: Run}, {multiplier: 2.43}]
+	  for (var i = 0; i < keys.length; i++) {
+	    var obj = values[i]
+	    var number = keys[i]
+	    obj["option"] = number 
+	    optionsArray.push(obj)
+	  }
+
+	  return optionsArray
+	}
+});
+
+// Select correct answer and award points to those who guessed correctly.
+Template.oldQuestion.events({
+	'click [data-action=removeQuestion]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
+			Meteor.call('removeQuestion', this.q._id)
+		}
+	},
+	'click [data-action=reactivate]' : function(e, t) {
+		if(confirm("Are you sure?")) {
+			Meteor.call('reactivateStatus', this.q._id)
+		}
+	},
+	'click [data-action=playSelection]': function (e, t) {
+		Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
+		console.log(this.o.option)
+		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
+	}
+});

@@ -48,7 +48,3 @@ Template.groups.events({
     Router.go('/allGroups')
   }
 });
- 
-
-
-

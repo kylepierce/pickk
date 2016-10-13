@@ -1,15 +1,21 @@
 <template name="favoriteTeams">
   {{#ionView}}
     {{#ionContent}}
-      <div class="container">
-        {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id="favoriteTeamsForm"}}
-          <div class="af-fav-teams">
-            {{> afQuickField name='favoriteTeams' type='select-checkbox'}}
-          </div>
-          
-          <input name="saveTeam" type="submit" class="button button-large button-positive" value="Save Teams">
-        {{/autoForm}}
-      </div>
+
+      {{#each step in allSteps}}
+        <div class="container {{hide step}}">
+          {{#with step}}
+            {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}                     
+              <div class="af-fav-teams">
+                {{> afQuickField name=this type='select-checkbox'}}
+              </div>
+              
+              <input name="saveTeam" type="submit" class="button button-large button-positive" value="Save Teams">
+            {{/autoForm}}
+          {{/with}}
+        </div>
+      {{/each}}
+      
 
     {{/ionContent}}
   {{/ionView}}
@@ -18,7 +24,7 @@
 <template name="favoriteTeamsHeader">
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">
-      {{#with profile}} {{this.profile.username}} {{/with}} Choose your Favorite MLB Team
+      {{#with profile}} {{this.profile.username}} {{/with}} Choose your Favorite <span class="header-text">Sports</span>
     </h1>
   {{/contentFor}}
 </template>
