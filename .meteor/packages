@@ -24,7 +24,6 @@ service-configuration@1.0.10
 meteorhacks:kadira
 meteortoys:allthings
 fastclick@1.0.12
-alanning:roles
 easy:search
 aldeed:autoform
 random@1.0.10
