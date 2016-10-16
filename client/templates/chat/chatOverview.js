@@ -5,7 +5,7 @@ Template.chatRoom.created = function() {
     var chatLimit = Session.get('chatLimit');
     Meteor.subscribe("chatMessages", groupId, chatLimit);
     // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
-    Meteor.subscribe("chatMessagesCount", groupId);
+    Meteor.subscribe("chatMessagesCount", null);
     // Meteor.subscribe('findUsersInGroup', groupId);
     // Meteor.subscribe('usersGroups', userId)
     Meteor.subscribe('chatUsersList', chatLimit, groupId);
