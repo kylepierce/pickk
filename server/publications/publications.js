@@ -33,6 +33,7 @@ Meteor.publish('userNotifications', function(userId) {
 
 Meteor.publish('gameNotifications', function(gameId) {
   check(gameId, String);
+  this.unblock()
   return Notifications.find({gameId: gameId, read: false})  
 });
 
@@ -55,6 +56,7 @@ Meteor.publish('gamePlayed', function (user, game) {
 
 // Teams
 Meteor.publish('teams', function() {
+  this.unblock()
   return Teams.find({})
 });
 
@@ -108,7 +110,7 @@ Meteor.publish('gamesPlayed', function() {
 
 Meteor.publish('findSingle', function(id) {
   check(id, String);
-
+  this.unblock()
   var fields = {fields: {'profile': 1,'_id': 1, 'pendingNotifications': 1}}
   return UserList.find({_id: id}, fields);
 });

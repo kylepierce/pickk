@@ -2,7 +2,7 @@
 Meteor.publish('chatMessages', function(groupId, limit) {
   check(groupId, Match.Maybe(String));
   check(limit, Match.Maybe(Number));
-  
+  this.unblock()
   limit = limit || 10;
   return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
 });
@@ -31,7 +31,7 @@ Meteor.publish("chatMessagesCount", function(groupId) {
 Meteor.publish('chatUsersList', function(limit, groupId) {
   check( limit, Match.Maybe(Number) );
   check( groupId, Match.Maybe(String) );
-
+  this.unblock()
   groupId = groupId || null;
   limit = limit + 10
 
@@ -69,6 +69,7 @@ Meteor.publish("chatUsersAutocomplete", function(selector, options, collection) 
 
 Meteor.publish('singleMessage', function(messageId){
   check(messageId, String);
+  this.unblock()
   return Chat.find({_id: messageId})
 });
 
