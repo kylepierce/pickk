@@ -1,7 +1,7 @@
 Meteor.methods({
 	'activityForDiamonds': function(d){
 		check(d, Object);
-
+		this.unblock()
 		var o = {
 			userId: d.userId, 
 			gameId: d.gameId,

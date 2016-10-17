@@ -23,6 +23,7 @@ Meteor.methods({
 
   'removeNotification': function(notifyId) {
     check(notifyId, String);
+    this.unblock()
     Notifications.update({_id: notifyId}, {$set: {read: true}})
   },
   'questionData': function (id) {

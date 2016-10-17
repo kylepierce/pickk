@@ -10,7 +10,7 @@ Meteor.publish('chatMessages', function(groupId, limit) {
 // Lets "Load more chats work"
 Meteor.publish("chatMessagesCount", function(groupId) {
   check(groupId, Match.Maybe(String));
-
+  this.unblock()
   Counts.publish(this, "chatMessagesCount", Chat.find({group: groupId}));
 });
 

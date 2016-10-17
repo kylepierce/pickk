@@ -1,4 +1,5 @@
 Meteor.publish('activeHero', function() {
+	this.unblock()
   return Hero.find({active: true})  
 });
 

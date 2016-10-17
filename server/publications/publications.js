@@ -23,11 +23,13 @@ Meteor.publish("userData", function() {
 });
 
 Meteor.publish('unreadNotifications', function() {
+  this.unblock()
   return Notifications.find({userId: this.userId, read: false})  
 });
 
 Meteor.publish('userNotifications', function(userId) {
   check(userId, String);
+  this.unblock()
   return Notifications.find({userId: userId, read: false})  
 });
 
@@ -40,7 +42,7 @@ Meteor.publish('gameNotifications', function(gameId) {
 
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
-
+  this.unblock()
   var selector = {members: {$in: [user]}};
   // Find this user id in any group 
   return Groups.find(selector)
@@ -62,6 +64,7 @@ Meteor.publish('teams', function() {
 
 Meteor.publish('singleTeam', function ( teamId ) {
   check(teamId, String);
+  this.unblock()
   return Teams.find({_id: teamId})
 });
 
@@ -69,6 +72,7 @@ Meteor.publish('singleTeam', function ( teamId ) {
 // Active Questions for one game
 Meteor.publish('activeQuestions', function(gameId) {
   check(gameId, String);
+  this.unblock()
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
@@ -80,6 +84,7 @@ Meteor.publish('activeQuestions', function(gameId) {
 
 Meteor.publish('activeCommQuestions', function(gameId) {
   check(gameId, String);
+  this.unblock()
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
@@ -116,6 +121,7 @@ Meteor.publish('findSingle', function(id) {
 });
 
 Meteor.publish('trophy', function() {
+  this.unblock()
   return Trophies.find({});
 });
 

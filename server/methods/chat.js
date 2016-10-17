@@ -1,6 +1,7 @@
 Meteor.methods({
 	'addChatMessage': function(o) {
 		check(o, Object);
+		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -107,6 +108,7 @@ Meteor.methods({
 		check(author, String);
 		check(messagePosted, String);
 		check(messageId, String);
+		this.unblock()
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -186,7 +188,7 @@ Meteor.methods({
 	'deleteMessage': function(messageId, deletor){
 		check(messageId, String);
 		check(deletor, String);
-		
+		this.unblock()
 		var message = Chat.findOne({_id: messageId})
 		var userId = message.user
 		var deletorProfile = Meteor.users.findOne({_id: deletor})

@@ -1,7 +1,7 @@
 Meteor.methods({
 	'loadLeaderboard': function(game) {
 		check(game, String);
-
+		this.unblock()
 		var singleGame = Games.findOne({_id: game});
 		if (singleGame) {
 			var selector = {_id: {$in: singleGame.users}}
@@ -19,7 +19,7 @@ Meteor.methods({
 	'loadWeekLeaderboard': function(week) {
 		check(week, Number);
 		var start = new Date(); 
-
+		this.unblock()
 		// Week starts on Tuesday and ends monday night
 		var startDay = moment().day("Tuesday").startOf('day').add(4, "hour").week(week)._d;
 		var endDay = moment().day("Monday").startOf('day').add(28, "hour").week(week+1)._d;

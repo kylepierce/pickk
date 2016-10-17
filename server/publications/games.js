@@ -12,7 +12,8 @@ Meteor.publish('singleGame', function(_id) {
 Meteor.publish('activeGames', function(days, day) {
   check(days, Number);
   check(day, Number);
-  
+  this.unblock()
+
   var specificDay = moment().dayOfYear(day)
 
   var start = specificDay.startOf('day').add(4, "hour").toDate();
@@ -61,5 +62,6 @@ Meteor.publish('singleGameData', function(id) {
 
 Meteor.publish('singleQuestion', function(id) {
   check(id, String);
+  this.unblock()
   return Questions.find({_id: id}, {fields: {_id: 1, que: 1, outcome: 1, options: 1}})
 })
