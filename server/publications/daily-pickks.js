@@ -1,6 +1,6 @@
 Meteor.publish('dailyPickks', function() {
-	var userId = this.userId
 	this.unblock()
+	var userId = this.userId
   return Questions.find({active: true, type: "prediction", usersAnswered: {$nin: [userId]}})  
 });
 
