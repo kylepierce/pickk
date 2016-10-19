@@ -211,6 +211,7 @@ Template.home.events({
   'click [data-action=wager-selected]': function (e, t) {  
     $('.wager-selected').removeClass('wager-selected')
     $(e.currentTarget).addClass('wager-selected')
+    console.log(this)
     Session.set('lastWager', this.w);
     var displayOptions = function ( o ) {
       // The select item dom and data
