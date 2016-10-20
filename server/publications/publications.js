@@ -33,10 +33,11 @@ Meteor.publish('userNotifications', function(userId) {
   return Notifications.find({userId: userId, read: false})  
 });
 
-Meteor.publish('gameNotifications', function(gameId) {
+Meteor.publish('gameNotifications', function(gameId, userId) {
   check(gameId, String);
+  check(userId, String);
   this.unblock()
-  return Notifications.find({gameId: gameId, read: false})  
+  return Notifications.find({gameId: gameId, userId: userId, read: false})  
 });
 
 

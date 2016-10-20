@@ -136,7 +136,7 @@ Template.chatOptions.helpers({
   'notOwnMessage': function (){
     var owner = Template.instance().data.i.user
     var currentUser = Meteor.userId()
-    var userIsAdmin = Meteor.user().profile.role
+    var userIsAdmin = Meteor.user().profile && Meteor.user().profile.role
     if ( owner !== currentUser || userIsAdmin === "admin") {
       return true
     } else {
