@@ -29,7 +29,7 @@ Template.settings.helpers({
 });
 
 Template.settings.events({
-  "change input[name='avatar']": function(event, template) {
+  "click #new-icon": function(event, template) {
     var files = event.currentTarget.files;
     template.$(".loading").show();
     template.$(".avatar").hide();
