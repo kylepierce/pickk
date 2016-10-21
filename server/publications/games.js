@@ -57,6 +57,7 @@ Meteor.publish('singleGameQuestions', function(gameId){
 
 Meteor.publish('singleGameData', function(id) {
   check(id, String);
+  this.unblock()
   return Games.find({_id: id}, {fields: {name: 1}});
 });
 
