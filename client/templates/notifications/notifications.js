@@ -28,10 +28,10 @@ Template.groupNotification.helpers({
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
-	groupData: function(groupId) {
-		Meteor.subscribe('singleGroup', groupId);
-		return Groups.findOne({_id: groupId})
-	},
+	// groupData: function(groupId) {
+	// 	Meteor.subscribe('singleGroup', groupId);
+	// 	return Groups.findOne({_id: groupId})
+	// },
 });
 
 Template.chatNotification.helpers({
@@ -39,12 +39,12 @@ Template.chatNotification.helpers({
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
-	groupData: function(groupId) {
-		if (groupId !== undefined){
-			Meteor.subscribe('singleGroup', groupId);
-			return Groups.findOne({_id: groupId})
-		}
-	},
+	// groupData: function(groupId) {
+	// 	if (groupId !== undefined){
+	// 		Meteor.subscribe('singleGroup', groupId);
+	// 		return Groups.findOne({_id: groupId})
+	// 	}
+	// },
 	reactions: function(messageId){
 		Meteor.subscribe('singleMessage', messageId);
 		return Chat.findOne({_id: messageId});
