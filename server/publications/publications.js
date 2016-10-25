@@ -79,7 +79,7 @@ Meteor.publish('activeQuestions', function(gameId) {
     active: true,
     commercial: false, 
     usersAnswered: {$nin: [currentUserId]}
-  }, {limit: 1});
+  }, {sort: {dateCreated: -1}, limit: 1});
 });
 
 Meteor.publish('activeCommQuestions', function(gameId) {
