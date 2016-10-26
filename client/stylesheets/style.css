@@ -94,6 +94,10 @@ input, textarea {
 	float: left;
 }
 
+.float-right {
+	float: right;
+}
+
 .popover {
 	height:auto!important;
 }
