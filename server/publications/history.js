@@ -4,7 +4,6 @@ Meteor.publish('questionsByGameId', function(gameId, number) {
   check(number, Number);
   this.unblock()
 
-  console.log(number)
   if (number === -1){
     var sort = {sort: {dateCreated: -1}}
   } else {

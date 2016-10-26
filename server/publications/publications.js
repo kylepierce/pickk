@@ -36,7 +36,8 @@ Meteor.publish('userNotifications', function(userId) {
 Meteor.publish('gameNotifications', function(gameId) {
   check(gameId, String);
   this.unblock()
-  return Notifications.find({gameId: gameId, read: false})  
+  var userId = this.userId;
+  return Notifications.find({gameId: gameId, userId: userId, read: false})  
 });
 
 
