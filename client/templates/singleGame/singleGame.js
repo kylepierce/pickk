@@ -39,17 +39,24 @@ Template.singleGame.helpers({
     } 
   },
   commericalQuestions: function () {
-    var $game = Router.current().params.id
-    Meteor.subscribe('activeQuestions', $game)
-    return Questions.find({commercial: true}, {limit: 1}).fetch();
+    var currentUserId = Meteor.userId()
+    var selector = {
+      active: true, 
+      commercial: true, 
+      usersAnswered: {$nin: [currentUserId]}
+    }
+    var sort = {sort: {dateCreated: -1}, limit: 1}
+    return Questions.find(selector, sort).fetch();
   },
   questions: function () {
-    var $game = Router.current().params.id
-    Meteor.subscribe('activeQuestions', $game)
     var currentUserId = Meteor.userId()
-    var selector = {active: true, commercial: false, usersAnswered: {$nin: [currentUserId]}}
-    var query = Questions.find(selector, {limit: 1}).fetch();
-    return query
+    var selector = {
+      active: true, 
+      commercial: false, 
+      usersAnswered: {$nin: [currentUserId]}
+    }
+    var sort = {sort: {dateCreated: -1}, limit: 1}
+    return Questions.find(selector, sort).fetch();
   },
   noQuestions: function () {
     var currentUserId = Meteor.userId()
@@ -249,6 +256,7 @@ Template.singleGame.events({
   },
 });
 
+
 Template.singleGameAwards.helpers({
   gameCoins: function () {
     var userId = Meteor.userId();
@@ -261,6 +269,7 @@ Template.singleGameAwards.helpers({
     return GamePlayed.findOne({userId: userId, gameId: $game}).diamonds;
   },
 });
+
 
 Template.commericalQuestion.helpers({
   binary: function (q) {
@@ -310,6 +319,7 @@ Template.commericalQuestion.events({
   }
 });
 
+
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
     if(q.atBatQuestion || q.event){
@@ -332,6 +342,7 @@ Template.singleQuestion.helpers({
   }
 });
 
+
 Template.eventQuestion.helpers({
   options: function (q) {
     var imported = q
@@ -352,6 +363,7 @@ Template.eventQuestion.helpers({
     return optionsArray
   }
 });
+
 
 Template.binaryQuestion.helpers({
   options: function (q) {
@@ -374,6 +386,7 @@ Template.binaryQuestion.helpers({
   }
 });
 
+
 Template.option.helpers({
   hasIcon: function (q) {
     if (q.icons){
@@ -386,6 +399,7 @@ Template.option.helpers({
   }
 });
 
+
 Template.wagers.rendered = function () {
   var wagerArray = [50, 500, 2500]
   var lastWager = Session.get('lastWager');
@@ -393,13 +407,13 @@ Template.wagers.rendered = function () {
   var wager = $('[value=' + lastWager + ']' ).click();
 };
 
-
 Template.wagers.helpers({
   wagers: function () {
     var wagerArray = [50, 500, 2500]
     return wagerArray
   }
 });
+
 
 Template.submitButton.helpers({
   'live': function() {
@@ -526,6 +540,7 @@ Template.submitButton.events({
   }
 });
 
+
 Template.playerCard.helpers({
   playerInfo: function () {
     var playerAtBat = AtBat.findOne({active: true})
@@ -626,23 +641,3 @@ Template.playerCard.helpers({
 //     });
 //   }
 // };
-
-
-
-
-// Template.waitingForNextPlay.events({
-//   'click [data-action=game-leaderboard]': function(event, template){
-//     var $game = Router.current().params.id
-//     console.log($game)
-//     Router.go('/leaderboard/'+ $game)
-//   },
-//   'click [data-action=previous-answers]': function(event, template){
-//     var $game = Router.current().params.id
-//     console.log($game)
-//     Router.go('/history/'+ $game)
-//   }, 
-// });
-
-
-
-

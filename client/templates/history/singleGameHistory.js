@@ -2,8 +2,7 @@ Template.gameHistory.helpers({
 	questions: function (number){
 		var $gameId = Router.current().params.id
 		Meteor.subscribe('questionsByGameId', $gameId, number)
-		Meteor.subscribe('answersByGameId', $gameId, number)
-		return Questions.find({}, {sort: {dateCreated: -1}, limit: number}).fetch()
+		return Questions.find({}).fetch()
 	},
 	answers: function (id) {
 		var answer = Answers.findOne({"questionId": id})
@@ -12,10 +11,6 @@ Template.gameHistory.helpers({
 });
 
 Template.singleAnswer.helpers({
-	// answer: function () {
-	// 	console.log(this, this.q)
-	// 	return Answers.findOne({"questionId": this.q._id})
-	// },
 	active: function (status){
 		if(status === true){
 			return 'still-active'

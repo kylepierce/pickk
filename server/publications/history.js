@@ -1,20 +1,22 @@
 // History
-
 Meteor.publish('questionsByGameId', function(gameId, number) {
   check(gameId, String);
   check(number, Number);
   this.unblock()
 
+  console.log(number)
+  if (number === -1){
+    var sort = {sort: {dateCreated: -1}}
+  } else {
+    var sort = {sort: {dateCreated: -1}, limit: number}
+  }
+
   var user = this.userId
+
   var selector = {gameId: gameId, usersAnswered: {$in: [user]}}
-  return Questions.find(selector, {limit: number});
-});
-
-Meteor.publish('answersByGameId', function(gameId, number) {
-  check(gameId, String);
-  check(number, Number);
-	this.unblock()
-
-	var selector = {userId: this.userId, gameId: gameId}
-  return Answers.find(selector, {limit: number});
+  var answerSelector = {userId: this.userId, gameId: gameId}
+  return [
+    Questions.find(selector, sort),
+    Answers.find(answerSelector, sort)
+  ]
 });
