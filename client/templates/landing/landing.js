@@ -1,5 +1,5 @@
 Template.landing.rendered = function() {
-	var options = ["26ad68"]
+	var options = ["2b1d4d", "fed33e", "26ad68"]
 	var existing = Session.get('ctaButton');
 	if (!existing) {
 		var min = Math.ceil(0);
@@ -8,7 +8,7 @@ Template.landing.rendered = function() {
 	  Session.set('ctaButton', options[optionSelected]);
 	}
 
-	var textOptions = ["Register", "Register!", "Play Now", "Play Now!"]
+	var textOptions = ["Register", "Join", "Play Now", "Join!", "Play Now!", "Sign Up", "Sign Up!"]
 	var existingText = Session.get('registerText');
 	if (!existingText) {
 		var min = Math.ceil(0);

@@ -1,6 +1,6 @@
 Meteor.publish('weekLeaderboard', function(thisWeek){
 	check(thisWeek, Number);
-
+	this.unblock()
 	// var thisWeek = moment().week()
   var day = moment().day()
   if (day < 2){
@@ -18,5 +18,6 @@ Meteor.publish('weekLeaderboard', function(thisWeek){
 
 Meteor.publish('leaderboardGamePlayed', function(game) {
   check(game, String);
+  this.unblock()
   return GamePlayed.find({gameId: game}, {fields: {userId: 1, gameId: 1, coins: 1}}, {sort: {coins: -1}})
 });

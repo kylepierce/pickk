@@ -18,7 +18,7 @@ Meteor.methods({
 	'toggleCommercial': function(gameId, toggle) {
 		check(gameId, String);
 		check(toggle, Boolean);
-
+		
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -301,7 +301,7 @@ Meteor.methods({
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
 	'removeQuestion': function(questionId) {
 		check(questionId, String);
-
+		
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}

@@ -51,6 +51,7 @@ Meteor.methods({
 
 	'coinMachine': function(game) {
 		check(game, String)
+		this.unblock()
 		var usersThatPlayed = GamePlayed.find({gameId: game});
 		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
 
@@ -84,7 +85,7 @@ Meteor.methods({
 
 	'awardLeaders': function(game) {
 		check(game, String);
-
+		this.unblock()
 		var usersThatPlayed = GamePlayed.find({gameId: game}, {sort: {coins: -1}, limit: 10}).fetch();
 		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
 
@@ -140,6 +141,7 @@ Meteor.methods({
 
 	'endGame': function(game){
 		check(game, String);
+		this.unblock()
 		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
 		Meteor.call('awardLeaders', game);
 		Meteor.call('coinMachine', game);

@@ -1,216 +1,192 @@
 <template name="home">
-	{{> homeLayoutHeader}}
-	{{#contentFor "headerTitle"}}
-		{{> singleGameAwards}}
-	{{/contentFor}}
+  {{> homeLayoutHeader}}
+  
+  {{#contentFor "headerTitle"}}
+      <h1 class="title white-text-header">Home</h1>
+  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-	    {{#each game in games}}
-				{{> singleGameInfo game=game}}
-			{{/each}}
+      <div class="hero-section">
+        {{#each item in hero}}
+          {{> heroImage item=item}}
+        {{/each}}
+      </div>
 
-			<div id="notification-center" class="ten-spacing">
-				{{#each game in games}}
-					<div class="single-notification">
-						{{> singleGameCard game=game}}
-					</div>
-				{{/each}}
+      <div class="item item-divider" style="border: 0">
+        Dashboard
+      </div>
+      <div class="container">
+        {{#if gamePrediction}}
+          <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px;" data-action="game-prediction">
+            <div class="col-md-25">
+              <span class="numberNotification">
+                {{dailyPickkCount}}
+              </span>
+            </div>
+            <div class="col-md-50" style="float: left; margin-left: 20px">
+              <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
+              <span class="daily-pickk-text">
+                Daily Pickks 
+              </span>
+            </div>
+          </button>
+        {{/if}}
 
-<!-- 				{{#each note in notifications}}
-					<div class="single-notification">
-						{{> notification note=note}}
-					</div>
-			  {{/each}} -->
-			  <div class="single-notification">
-					<button class="button col-md-50" data-action="game-leaderboard">
-					  <i class="fa fa-trophy waiting-options-icon"></i>
-					  <span>Leaderboard</span>
-				  </button>
-				  <button class="button col-md-50" data-action="previous-answers">
-						<i style="margin: 8px 0 0 0;" class="ion-ios-time-outline waiting-options-icon"></i>
-					  <span>History</span>
-				  </button>
-			  </div>
+        <div class="">
+          <button class="button col-md-45 dashboard-buttons" data-action="game-leaderboard">
+            <i class="fa fa-diamond waiting-options-icon" style="font-size: 1.3em;"></i>
+            <span>Leaderboard</span>
+          </button>
 
-				<div class="single-notification">
-					{{#with player}}
-						{{> playerCard}}
-					{{/with}}
-				</div>
+          <button class="button col-md-45 dashboard-buttons" data-action="history">
+            <i style="margin: 8px 0 0 0;" class="ion-ios-time-outline waiting-options-icon"></i>
+            <span>History</span>
+          </button>
 
-			</div>
-			<div class="container ten-spacing">
-				{{#if gameCompleted}}
-					<div class="clear-fix"></div>
-					<div class="item item-divider ten-spacing">Final Leaderboard +</div>
-					{{> miniLeaderboard i=5}}
-				{{/if}}
+          <button class="button col-md-45 dashboard-buttons" data-action="notifications">
+            <i style="margin: 8px 0 0 0;" class="ion-ios-bell-outline waiting-options-icon"></i>
+            <span>Notifications</span>
+          </button>
 
-				{{#if isLive}}
-					{{#if commericalBreak}}
-						{{#each question in commericalQuestions}}
-							{{> commericalQuestion q=question}}
-						{{/each}}
-					{{else}}
-						{{#if questions}}
-							{{#each question in questions}}
-								{{> singleQuestion q=question}}
-							{{/each}}
-						{{/if}}
-					{{/if}}
-				
-					{{#if noQuestions}}
-						{{> waitingForNextPlay}}
-					{{/if}}
-				{{/if}}
-			</div>
-			{{scoreMessage}}
+          <button class="button col-md-45 dashboard-buttons" data-action="chat" data-ion-menu-toggle="right">
+            <i style="margin: 8px 0 0 0;" class="ion-ios-chatboxes waiting-options-icon"></i>
+            <span>Chat</span>
+          </button>
+        </div>
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="waitingForNextPlay">	
-  <button class="button col-md-50" data-action="game-leaderboard">
-	  <i class="fa fa-trophy waiting-options-icon"></i>
-	  <span>Leaderboard</span>
-  </button>
-  <button class="button col-md-50" data-action="previous-answers">
-		<i style="margin: 8px 0 0 0;" class="ion-ios-time-outline waiting-options-icon"></i>
-	  <span>History</span>
-  </button>
-  <div class="clear-fix"></div>
-  <button class="button col-md-50" data-action="notifications">
-	  <i class="fa fa-bell-o waiting-options-icon"></i>
-	  <span>Notifications</span>
-  </button>
-  <button class="button col-md-50" data-action="chat" data-ion-menu-toggle="right">
-  	<i style="margin: 8px 0 0 0;" class="ion-ios-chatboxes waiting-options-icon"></i>
-		<!-- <i class="fa fa-commenting "></i> -->
-	  <span>Chat</span>
-  </button>
-<!-- 	<div class="clear-fix"></div>
-  <div class="item item-divider ten-spacing">Leaderboard +</div>
- 	{{> miniLeaderboard i=5}} -->
+<template name="heroImage">
+  <a href="{{item.url}}">
+    <div class="single-slide" style="background-image: url({{item.image}})">
+      <div class="slider-text">
+        {{item.text}}
+      </div>
+    </div>
+  </a>
 </template>
 
-<template name="singleGameAwards">
-	<h1 class="title white-text-header" style="font-size: 1.2em;">
-		<i class="fa fa-diamond"></i>
-	  <strong>{{diamonds}}</strong> 
-	  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
-  <strong>{{gameCoins}}</strong>
-	</h1>	
+<template name="singleGameInfo">  
+  {{#if baseball}}
+    {{#if inProgress}}
+      {{> gameInProgressInfo game=game}}
+    {{/if}}
+  {{/if}}
+  {{#if future}}
+    {{> futureGameInfo game=game}}
+  {{/if}}
+  {{#if past}}
+    {{> pastGameInfo game=game}}
+  {{/if}}
 </template>
 
-<template name="commericalQuestion">
-	{{#if binary q}}
-		{{> binaryQuestion q=q t="free-pickk"}}
-	{{else}}
-		{{> eventQuestion q=q t="drive"}}
-	{{/if}}
+<template name="singleGameCTA">
+  {{#if inProgress}}
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+      Play Now! ({{game.tv}})
+    </div>
+  {{/if}}
 </template>
 
-<template name="singleQuestion">
-	{{#if eventQuestions q}}
-		{{> eventQuestion q=q t="atBat"}}
-	{{/if}}
-	{{#if liveQuestion q}}
-		{{> eventQuestion q=q t="live"}}
-	{{/if}}
-	{{#if dailyPickk q}}
-		{{> eventQuestion q=q t="prediction"}}
-	{{/if}}
+<template name="gameInProgressInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-25 single-game-section">
+      {{> inningDisplay inning=game.inning position=game.topOfInning}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> outDisplay number=game.outs}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> playersOnBase base=game.playersOnBase}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> count gameId=game._id }}
+    </div>
+  </div>
 </template>
 
-<template name="binaryQuestion">
-	<div class="animated fast slideInLeft">
-		<div class="question larger-card ">
-			<h4>Free Pickk: {{q.que}}</h4>
-		</div>
-		<div id="binaryOptions" class="ten-spacing">
-			{{#each o in options q}}
-				{{> binaryOption o=o q=q t=t w=500}}
-			{{/each}}
-		</div>
-	</div>
+<template name="futureGameInfo">
+  <div class="single-game-shared single-game-info">
+    {{ displayDate game.scheduled}} ({{game.tv}})
+  </div>
 </template>
 
-<template name="eventQuestion">
-	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
-		<div class="question">
-			<span class="display-question">{{q.que}}</span>
-		</div>
-		<div id="binaryOptions">
-		{{#each o in options q}}
-			{{> option o=o q=q t=t}}
-		{{/each}}
-		</div>
-	</div>
+<template name="pastGameInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-50 past-game" data-action="game-leaderboard">
+      Leadboard
+    </div>  
+    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;
+" data-action="game-predictions">
+      Predictions
+    </div>
+  </div>
 </template>
 
-<template name="binaryOption">
-	<div data-action="pickk" class="option col-md-50">
-		{{o.title}}
-	</div>	
+<template name="count">
+  {{#with count}}
+    <span class="inning">{{ballCount}} - {{strikeCount}}</span>
+  {{/with}}
 </template>
 
-<template name="option">
-	<li class="option" data-action="play-selected">
-		<div class="option-inner">
-			{{#if hasIcon q}} 
-				<span class="icon-container">
-				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
-				</span>
-			{{/if}}
-			<span class="option-title">{{o.title}}</span>
-			<span class="multiplier">x {{o.multiplier}}</span>
-		</div>
-	</li>
+<template name="outDisplay">
+    {{{outs number}}}
 </template>
 
-<template name="wagers">
-	<ul class="wagers">
-		{{#each w in wagers}}
-			{{> wager w=w q=q o=o t=t}}
-		{{/each}}
-	</ul>
+<template name="inningDisplay">
+  <span class="inning-position">
+    {{#if position}}
+      <i class="fa fa-caret-up"></i>
+    {{else}} 
+      <i class="fa fa-caret-down"></i>
+    {{/if}}
+  </span>
+  <span class="inning">{{grammer inning}}</span> 
 </template>
 
-<template name="wager">
-	<li class="wager" data-action="wager-selected" value="{{w}}">
-		<div class="wager-inner">{{w}}</div>
-	</li>
-</template>
- 
-<template name="submitButton">
-	{{#if live}}
-		<button class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit ({{{potential}}})</button>
-	{{else}}
-		<button class="submit-button button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
-	{{/if}}
+<template name="playersOnBase">
+  <!-- Fix last / clean up -->
+  {{#if base.third}} 
+    <div class="base-empty base-diamond base-fix third-base"></div> 
+  {{else}} 
+    <div class="base-diamond base-fix third-base"></div> 
+  {{/if}}
+  {{#if base.second}} 
+    <div class="base-empty base-diamond second-base"></div> 
+  {{else}} 
+    <div class="base-diamond second-base"></div>
+  {{/if}} 
+  {{#if base.first}} 
+    <div class="base-empty base-diamond base-fix first-base"></div> 
+  {{else}} 
+    <div class="base-diamond base-fix first-base"></div>
+  {{/if}}
 </template>
 
-<template name="playerCard">
-  {{#with playerInfo}}
-  	<div class="player-slider">
-	  	<div class="slide-inside">
-				<span class="player-name">{{name}}</span>
-				<table>
-					<thead>
-						<td>AVG</td>
-						<td>HR</td>
-						<td>RBI</td>
-						<td>OBP</td>
-					</thead>
-					<tr>
-						<td>{{stats.y2016.avg}}</td>
-						<td>{{stats.y2016.hr}}</td>
-						<td>{{stats.y2016.rbi}}</td>
-						<td>{{stats.y2016.obp}}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	{{/with}}
+<template name="singleGameCard">
+  <ul class="single-game-card">
+
+    {{> teamBlock id=game.away.id abbr=game.away.abbr name=game.away.name runs=game.scoring.away.runs }}
+
+    {{> teamBlock id=game.home.id abbr=game.home.abbr name=game.home.name runs=game.scoring.home.runs }}
+
+  </ul>
+</template>
+
+<template name="teamBlock">
+  <li class="team-block">
+    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
+      {{abbr}}
+    </div> 
+    <div class="team-block-border">
+<!--       {{#if whoHasBall}}
+        <i class="fa fa-angle-right"></i>
+      {/if} -->
+      <span class="team-name team-text">{{name}}</span>
+      <span class="team-score team-text">{{runs}}</span>
+    </div>
+  </li>
 </template>

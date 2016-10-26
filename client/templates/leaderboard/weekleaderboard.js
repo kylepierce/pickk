@@ -1,3 +1,7 @@
+// Template.weekLeaderboard.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
+
 Template.weekLeaderboard.helpers({
 	'players': function(){
 		var thisWeek = Router.current().params.id

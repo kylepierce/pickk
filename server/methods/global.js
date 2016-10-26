@@ -2,11 +2,10 @@ Meteor.methods({
 	'thisWeeksDiamonds': function(userId, week){
 		check(userId, String);
 		check(week, Number);
+    this.unblock();
 
     var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
     var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
-
-    console.log(startDay, endDay)
 
     var selector = {
         userId: userId, 

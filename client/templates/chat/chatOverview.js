@@ -5,7 +5,7 @@ Template.chatRoom.created = function() {
     var chatLimit = Session.get('chatLimit');
     Meteor.subscribe("chatMessages", groupId, chatLimit);
     // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
-    Meteor.subscribe("chatMessagesCount", groupId);
+    Meteor.subscribe("chatMessagesCount", null);
     // Meteor.subscribe('findUsersInGroup', groupId);
     // Meteor.subscribe('usersGroups', userId)
     Meteor.subscribe('chatUsersList', chatLimit, groupId);
@@ -136,7 +136,7 @@ Template.chatOptions.helpers({
   'notOwnMessage': function (){
     var owner = Template.instance().data.i.user
     var currentUser = Meteor.userId()
-    var userIsAdmin = Meteor.user().profile.role
+    var userIsAdmin = Meteor.user().profile && Meteor.user().profile.role
     if ( owner !== currentUser || userIsAdmin === "admin") {
       return true
     } else {

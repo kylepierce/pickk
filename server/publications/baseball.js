@@ -25,7 +25,8 @@ Meteor.publish('singleAtBat', function(gameId) {
 
 Meteor.publish('atBatPlayer', function(gameId) {
   check(gameId, String);
-
+  this.unblock()
+  
   var atBat = AtBat.findOne({gameId: gameId, active: true});
   if (atBat) {
     var playerId = atBat.playerId

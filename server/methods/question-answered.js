@@ -1,7 +1,6 @@
 Meteor.methods({
 	'activityForDiamonds': function(d){
 		check(d, Object);
-
 		var o = {
 			userId: d.userId, 
 			gameId: d.gameId,

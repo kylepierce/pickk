@@ -2,7 +2,8 @@ Meteor.methods({
 	'questionPush': function(gameId, message) {
 		check(gameId, String);
 		check(message, String);
-
+		this.unblock()
+		
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
 		const text = "Guess What Happens on " + message;
@@ -20,7 +21,7 @@ Meteor.methods({
 
 	'emptyInactive': function(gameId) {
 		check(gameId, String);
-
+		this.unblock()
 		console.log("removing all users from inactive")
 		return Games.update({_id: gameId}, {$set: {'nonActive': []}}, {multi: true});
 	},
@@ -28,7 +29,7 @@ Meteor.methods({
 	'playerInactive': function(userId, questionId) {
 		check(userId, String);
 		check(questionId, String);
-
+		this.unblock()
 		var gameInfo = Questions.findOne({_id: questionId})
 		var gameId = gameInfo.gameId
 		var selector = {
@@ -46,7 +47,7 @@ Meteor.methods({
 
 	'push': function(message) {
 		check(message, String);
-
+		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -68,7 +69,7 @@ Meteor.methods({
 	'pushInvite': function(message, userId) {
 		check(message, String);
 		check(userId, String);
-
+		this.unblock()
 		var user = Meteor.users.findOne({_id: userId});
 		if (user) {
 			Push.send({

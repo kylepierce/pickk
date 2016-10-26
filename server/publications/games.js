@@ -12,7 +12,8 @@ Meteor.publish('singleGame', function(_id) {
 Meteor.publish('activeGames', function(days, day) {
   check(days, Number);
   check(day, Number);
-  
+  this.unblock()
+
   var specificDay = moment().dayOfYear(day)
 
   var start = specificDay.startOf('day').add(4, "hour").toDate();
@@ -36,7 +37,7 @@ Meteor.publish('liveGames', function() {
 Meteor.publish('singleGameQuestions', function(gameId){
   check(gameId, String);
   var selector = {gameId: gameId}
-  var sort = {sort: {dateCreated: -1}, limit: 50}
+  var sort = {sort: {dateCreated: -1}, limit: 20}
   return Questions.find(selector, sort);
 });
 
@@ -56,10 +57,12 @@ Meteor.publish('singleGameQuestions', function(gameId){
 
 Meteor.publish('singleGameData', function(id) {
   check(id, String);
+  this.unblock()
   return Games.find({_id: id}, {fields: {name: 1}});
 });
 
 Meteor.publish('singleQuestion', function(id) {
   check(id, String);
+  this.unblock()
   return Questions.find({_id: id}, {fields: {_id: 1, que: 1, outcome: 1, options: 1}})
 })

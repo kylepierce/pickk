@@ -4,7 +4,7 @@ Meteor.methods({
 	'followUser': function(user, accountToFollow) {
 		check(user, String);
 		check(accountToFollow, String);
-
+		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -29,7 +29,7 @@ Meteor.methods({
 	'unfollowUser': function(user, accountToFollow) {
 		check(user, String);
 		check(accountToFollow, String);
-
+		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
