@@ -18,15 +18,19 @@
   {{#ionView }}
     {{#ionContent}}
 	    {{#ionList}}
-	    	{{#each q in questions}}
-	    		{{#with answers q._id}}
-	    			{{> singleAnswer q=q a=this}}
-	    		{{/with}}
-	    	{{/each}}
+	    	{{> gameHistory i=3}}
     	{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
 </template> 
+
+<template name="gameHistory">
+	{{#each q in questions i}}
+		{{#with answers q._id}}
+		  {{> singleAnswer q=q a=this}}
+		{{/with}}
+	{{/each}}
+</template>
 
 <template name="singleAnswer">
 	{{#ionItem}}

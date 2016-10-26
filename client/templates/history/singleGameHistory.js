@@ -1,4 +1,10 @@
-Template.singleGameHistory.helpers({
+Template.gameHistory.helpers({
+	questions: function (number){
+		var $gameId = Router.current().params.id
+		Meteor.subscribe('questionsByGameId', $gameId, number)
+		Meteor.subscribe('answersByGameId', $gameId, number)
+		return Questions.find({}, {sort: {dateCreated: -1}, limit: number}).fetch()
+	},
 	answers: function (id) {
 		var answer = Answers.findOne({"questionId": id})
 		return answer
@@ -45,5 +51,11 @@ Template.singleAnswer.helpers({
 	},
 	winnings: function ( answered, outcome ){
 		return parseInt(this.a.wager * this.a.multiplier)
+	}
+});
+
+Template.gameHistory.helpers({
+	foo: function () {
+		// ...
 	}
 });

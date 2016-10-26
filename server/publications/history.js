@@ -1,14 +1,20 @@
 // History
 
-Meteor.publish('questionsByGameId', function(gameId) {
+Meteor.publish('questionsByGameId', function(gameId, number) {
   check(gameId, String);
+  check(number, Number);
   this.unblock()
+
   var user = this.userId
-  return Questions.find({gameId: gameId, usersAnswered: {$in: [user]}});
+  var selector = {gameId: gameId, usersAnswered: {$in: [user]}}
+  return Questions.find(selector, {limit: number});
 });
 
-Meteor.publish('answersByGameId', function(gameId) {
+Meteor.publish('answersByGameId', function(gameId, number) {
   check(gameId, String);
+  check(number, Number);
 	this.unblock()
-  return Answers.find({userId: this.userId, gameId: gameId});
+
+	var selector = {userId: this.userId, gameId: gameId}
+  return Answers.find(selector, {limit: number});
 });
