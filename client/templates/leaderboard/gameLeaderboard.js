@@ -1,20 +1,36 @@
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
+    if (!number){
+      var number = Router.current().params.count
+      number = parseInt(number)
+    }
 		check(number, Number);
 		var userId = Meteor.userId()
 		var $game = Router.current().params.id
     var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
 
-    var spot = all.map(function(x) {return x.userId; }).indexOf(userId);
+    var leaderboard = all.map(function(x) {
+      var thisUser = {userId: x.userId, coins: x.coins} 
+      return thisUser; 
+    });
 
-		if(spot > 3){
-			var thisUser = {userId: userId, spot: spot} 
-			return thisUser;
+    var spot = _.indexOf(_.pluck(leaderboard, 'userId'), userId);
+    var userSpot = leaderboard[spot]
+    userSpot.spot = spot + 1
+
+		if(spot > number){
+			return userSpot;
 		}
 		
 	},
   'player': function(number){
+    if (!number){
+      var number = Router.current().params.count
+      number = parseInt(number)
+    }
+
   	check(number, Number);
+
     var $game = Router.current().params.id
     var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
     return list

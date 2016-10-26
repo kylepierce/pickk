@@ -17,7 +17,7 @@
 	
   {{#ionView}}
 	  {{#ionContent}}
-      {{> miniLeaderboard i=10}}
+      {{> miniLeaderboard}}
 	  {{/ionContent}}
 	{{/ionView}}
 </template>
@@ -41,12 +41,12 @@
     {{#with userNotInLeaderboard i}}
       {{#ionItem avatar=true}}
         {{> userAvatar userId=userId}}
-        <li class="list-font" style="font-weight: bold;" value={{spot}}>
+        <li class="list-font" style="font-weight: bold;" value={{this.spot}}>
           <h2 class="center-username" style="font-weight: bold;">
             {{#with username userId}}
               {{profile.username}}
             {{/with}}
-            <span class="score" style="font-weight: bold;">{{{gameCoins}}}</span>
+            <span class="score" style="font-weight: bold;">{{{this.coins}}}</span>
           </h2>
         </li>
       {{/ionItem}}

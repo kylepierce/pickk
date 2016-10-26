@@ -16,8 +16,17 @@ Meteor.publish('weekLeaderboard', function(thisWeek){
 	return UserList.find({_id: {$in: newArray}}, {fields: {_id: 1, avatar: 1, services: 1, 'profile.username': 1}})
 });
 
-Meteor.publish('leaderboardGamePlayed', function(game) {
+Meteor.publish('leaderboardGamePlayed', function(game, count) {
   check(game, String);
   this.unblock()
-  return GamePlayed.find({gameId: game}, {fields: {userId: 1, gameId: 1, coins: 1}}, {sort: {coins: -1}})
+  
+  var selector = {gameId: game}
+  var fields = {fields: {userId: 1, gameId: 1, coins: 1}}
+  
+  if(count === "all"){
+  	var sort = {sort: {coins: -1}}
+  } else {
+  	var sort = {sort: {coins: -1}, limit: count}
+  }
+  return GamePlayed.find(selector, fields, sort)
 });
