@@ -59,13 +59,13 @@
 	<div class="item item-divider ten-spacing">
   	
 		<span>Answers</span>
-  	<span class="float-right">History</span>
+  	<span class="float-right" data-action="previous-answers">All</span>
   </div>
-  {{> gameHistory i=3}}
+  {{> gameHistory i=3 extended=false}}
   
   <div class="item item-divider ten-spacing">
   	<span>Leaderboard +</span>
-  	<span class="float-right">Full</span>
+  	<span class="float-right">All</span>
   </div>
  	{{> miniLeaderboard i=5}}
 </template>

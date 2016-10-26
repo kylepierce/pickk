@@ -1,19 +1,57 @@
-.still-active{
-	color: green!important;
-	font-weight: 800;
+.history-item {
+	padding: 0 0 0 10px!important;
+	margin-left: 1px!important
 }
 
-.winner {
-	color: purple;
-	font-weight: bold;
+.history-inprogress {
+	border-left: 5px solid green!important;
+}
+
+.history-pending {
+	border-left: 5px solid yellow!important;
+}
+
+.history-correct {
+	border-left: 5px solid purple!important;
+}
+
+.history-incorrect {
+	border-left: 5px solid gray!important;
 }
 
 .question-text {
 	white-space: normal;
+	width: 70%;
+	font-weight: bold;
+	float: left;
+	clear: both;
+	font-size: 14px;
+	padding: 3px 0;
+}
+
+.outcome-coins {
+	width: 30%;
+	padding: 3px 10px 3px 0;
+	font-size: 14px;
+	float: right;
+	text-align: right;
 }
 
 .question-attributes {
+	width: 75%;
 	list-style: none;
+	float: left;
 	clear: both;
 	font-size: 14px;
+	padding-left: 3px;
+	padding-bottom: 5px;
+}
+
+.question-attributes > li {
+	clear: both;
+	float: left;
+}
+
+.question-details > li{
+	float: left;
 }

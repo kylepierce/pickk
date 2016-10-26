@@ -18,7 +18,7 @@
   {{#ionView }}
     {{#ionContent}}
 	    {{#ionList}}
-	    	{{> gameHistory i=-1}}
+	    	{{> gameHistory i=-1 extended=true}}
     	{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
@@ -33,16 +33,25 @@
 </template>
 
 <template name="singleAnswer">
-	{{#ionItem}}
-		<span class="{{active q.active}} {{correct a.answered q.outcome}} question-text">
-			{{q.que}}
-		</span><br>
-		<ul class="question-attributes">
-			<li>Selected: {{title a.answered}}</li>
-			<li>Result: {{title q.outcome}}</li>
-			{{#if winner}}
-				<li>Winnings: {{winnings a.answered q.outcome}}</li>
+	<div class="item history-item {{status}}">
+		<span class="question-text">{{q.que}}</span>
+		<span class="outcome-coins">
+			{{#if active q.active}}
+				({{{winnings a.answered q.outcome}}})
 			{{/if}}
+		</span>
+
+		<ul class="question-attributes">
+			<ul class="question-details">
+				<li class="col-md-100">Selected: {{title a.answered}}</li>
+				{{#if active q.active}}
+					<li class="col-md-100">Answer: {{title q.outcome}}</li>
+				{{/if}}
+				{{#if details}}
+					<li class="col-md-50">Multiplier: {{a.multiplier}}x</li>
+					<li class="col-md-50">Wager: {{a.wager}}</li>
+				{{/if}}
+			</ul>
 		</ul> 
-	{{/ionItem}}	
+	</div>
 </template>

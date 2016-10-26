@@ -159,7 +159,7 @@ Template.singleGame.events({
       userId: userId,
       gameId: $game,
     });
-    Router.go('/history/'+ $game)
+    Router.go('/history/' + $game )
   }, 
   'click [data-action=notifications]': function(event, template){
     var $game = Router.current().params.id

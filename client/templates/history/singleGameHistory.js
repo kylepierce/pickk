@@ -12,13 +12,19 @@ Template.gameHistory.helpers({
 
 Template.singleAnswer.helpers({
 	active: function (status){
-		if(status === true){
-			return 'still-active'
+		if (status === false){
+			return true
 		}
 	},
-	correct: function ( answered, outcome ) {
-		if (answered === outcome) {
-			return 'winner'
+	status: function () {
+		if (this.q.active === true){
+			return "history-inprogress" // In progress 
+		} else if (this.q.active === null){
+			return "history-pending" // Pending
+		} else if (this.q.outcome === this.a.answered){
+			return "history-correct" // Correct
+		} else {
+			return "history-incorrect" // Incorrect
 		}
 	},
 	title: function ( option ){
@@ -26,6 +32,8 @@ Template.singleAnswer.helpers({
 			return "Removed"
 		} else if (option === true || option === false) {
 			return option
+		} else if (option === undefined) {
+			return ""
 		}
 		var options = this.q.options
 		var selected = options[option]
@@ -33,24 +41,26 @@ Template.singleAnswer.helpers({
 	},
 	result: function (){
 		if (this.q.outcome){
-			console.log(this.q.outcome)
 			return this.q.outcome
 		} else {
 			return this.q.play
 		}
 	},
-	winner: function ( answered, outcome ) {
+	winnings: function ( answered, outcome ){
 		if (answered === outcome) {
-			true
+			return "+" + parseInt(this.a.wager * this.a.multiplier)
+		} else if (outcome === "Removed" || this.q.type === 'freePickk'){ 
+			return "+" + this.a.wager 
+		} else if (outcome !== undefined && answered !== outcome) {
+			return "-" + this.a.wager 
+		} else {
+			return "Waiting..."
 		}
 	},
-	winnings: function ( answered, outcome ){
-		return parseInt(this.a.wager * this.a.multiplier)
-	}
-});
-
-Template.gameHistory.helpers({
-	foo: function () {
-		// ...
+	details: function() {
+		var extended = Template.parentData(2).extended
+		if (extended){
+			return true
+		}
 	}
 });
