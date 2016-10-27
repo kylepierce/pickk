@@ -10,11 +10,11 @@ Template.singleGame.rendered = function () {
 
 Template.singleGame.helpers({
   games: function () {
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     return Games.find({_id: $game}).fetch();
   },
   notifications: function () {
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
   },
   player: function () {
@@ -144,7 +144,7 @@ Template.singleGame.helpers({
 
 Template.singleGame.events({
   'click [data-action=game-leaderboard]': function(event, template){
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     var userId = Meteor.userId()
     analytics.track("waiting-leaderboard", {
       userId: userId,
@@ -153,7 +153,7 @@ Template.singleGame.events({
     Router.go('/leaderboard/'+ $game)
   },
   'click [data-action=previous-answers]': function(event, template){
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     var userId = Meteor.userId()
     analytics.track("waiting-history", {
       userId: userId,
@@ -162,7 +162,7 @@ Template.singleGame.events({
     Router.go('/history/' + $game )
   }, 
   'click [data-action=notifications]': function(event, template){
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     var userId = Meteor.userId()
     analytics.track("waiting-notifications", {
       userId: userId,
@@ -171,7 +171,7 @@ Template.singleGame.events({
     Router.go('/notifications')
   },
   'click [data-action=chat]': function(event, template){
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     var userId = Meteor.userId()
     analytics.track("waiting-chat", {
       userId: userId,
@@ -260,12 +260,12 @@ Template.singleGame.events({
 Template.singleGameAwards.helpers({
   gameCoins: function () {
     var userId = Meteor.userId();
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
   },
   diamonds: function () {
     var userId = Meteor.userId();
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     return GamePlayed.findOne({userId: userId, gameId: $game}).diamonds;
   },
 });

@@ -10,15 +10,21 @@
 	{{/contentFor}}
 
 	{{#ionSubheaderBar class="subheader"}}
-		{{#each g in game}}
-			{{g.name}}
-		{{/each}}
+		{{> singleGameAwards}}
 	{{/ionSubheaderBar}}
 
   {{#ionView }}
     {{#ionContent}}
+    	<div class="container ten-spacing"> 
+	    	{{#each g in game}}
+	    		{{> singleGameCard game=g}}
+	    	{{/each}}
+			</div>
+	    
 	    {{#ionList}}
-	    	{{> gameHistory i=-1 extended=true}}
+				<div class="container ten-spacing">
+			    {{> gameHistory i=-1 extended=true}}
+				</div>
     	{{/ionList}}
     {{/ionContent}}
   {{/ionView}}

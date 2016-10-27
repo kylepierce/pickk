@@ -6,7 +6,7 @@ Template.miniLeaderboard.helpers({
     }
 		check(number, Number);
 		var userId = Meteor.userId()
-		var $game = Router.current().params.id
+		var $game = Router.current().params._id
     var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
 
     var leaderboard = all.map(function(x) {
@@ -31,7 +31,7 @@ Template.miniLeaderboard.helpers({
 
   	check(number, Number);
 
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
     return list
   },
@@ -45,7 +45,7 @@ Template.miniLeaderboard.helpers({
   },
   gameCoins: function () {
     var userId = Meteor.userId();
-    var $game = Router.current().params.id
+    var $game = Router.current().params._id
     return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
   },
 });
