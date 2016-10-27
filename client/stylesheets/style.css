@@ -98,6 +98,10 @@ input, textarea {
 	float: right;
 }
 
+.underline {
+	text-decoration: underline;
+}
+
 .popover {
 	height:auto!important;
 }

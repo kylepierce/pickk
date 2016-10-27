@@ -43,12 +43,6 @@ Template.games.helpers({
 });
 
 Template.games.events({
-  "click .game": function (e, t) {
-    var gameId = $(e.currentTarget).attr("data-game-id");
-    Meteor.call('userJoinsAGame', Meteor.userId(), gameId)
-    Router.go("game", {id: gameId});
-  },
-
   'click [data-action=previous]': function (e, t){
     // Find the day from router or moment
     var day = Router.current().params.day

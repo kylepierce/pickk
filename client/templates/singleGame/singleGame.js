@@ -472,13 +472,10 @@ Template.submitButton.events({
 
     if ( t === "free-pickk" ){
       var w = this.w // wager
-      console.log("Free Pickk")
       a.wager = w
     } else if ( t === "prediction" ){
       var w = "diamonds" // wager
-      console.log(userId, q.gameId)
       Meteor.call('userJoinsAGame', userId, q.gameId);
-      console.log("Daily Pickk")
 
     } else {
       var w = this.w // wager
