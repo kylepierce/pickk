@@ -1,6 +1,6 @@
 Template.gameHistory.helpers({
 	questions: function (number){
-		var $gameId = Router.current().params.id
+		var $gameId = Router.current().params._id
 		Meteor.subscribe('questionsByGameId', $gameId, number)
 		return Questions.find({}).fetch()
 	},
