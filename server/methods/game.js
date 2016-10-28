@@ -29,28 +29,28 @@ Meteor.methods({
 		    name: team1,
 		    market: team1,
 		    abbr: team1,
-		    id: team1
+		    id: ""
 		  },
 		  away: {
 		    name: team2,
 		    market: team2,
 		    abbr: team2,
-		    id: team2
+		    id: ""
 		  },
 		  scoring: {
 		    home: {
 			    name: team1,
 			    market: team1,
 			    abbr: team1,
-			    id: team1,
-		      runs: "0"
+			    id: "",
+		      runs: null
 		    },
 		    away: {
 			    name: team2,
 			    market: team2,
 			    abbr: team2,
-			    id: team2,
-		      runs: "0"
+			    id: "",
+		      runs: null
 		    }
 		  },
 			tv: channel,
@@ -81,7 +81,6 @@ Meteor.methods({
 			name: title,
 			users: []
 		});
-		console.log("server", game)
 		return game
 	},	
 	

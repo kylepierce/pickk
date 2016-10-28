@@ -1,12 +1,8 @@
 Meteor.methods({
 	'activityForDiamonds': function(d){
 		check(d, Object);
-		var o = {
-			userId: d.userId, 
-			gameId: d.gameId,
-			gameName: d.gameName,
-			source: "Activity"
-		}
+		
+		d.source = "Activity"
 		var stringCounter = d.counter.toString()
 		var activityExchange = {
 			"1": 1, "3": 2, "8": 3, "15": 4, "30": 5, "45": 6, "60": 7, "75": 8, "100": 9, "125": 12, "150": 14,
@@ -14,8 +10,8 @@ Meteor.methods({
 
 		var x = activityExchange.hasOwnProperty(stringCounter);
 		if (x) {
-			o.value = activityExchange[stringCounter]
-			Meteor.call('awardDiamonds', o)
+			d.value = activityExchange[stringCounter]
+			Meteor.call('awardDiamonds', d)
 		}
 	},
 
