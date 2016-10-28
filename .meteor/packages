@@ -80,7 +80,6 @@ miro:mailchimp-lists
 percolate:synced-cron
 tmeasday:publish-counts
 lepozepo:cloudinary
-meteorhacks:fast-render
 ddp-rate-limiter@1.0.5
 mizzao:autocomplete
 percolate:migrations

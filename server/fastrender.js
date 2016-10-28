@@ -1,3 +1,3 @@
-FastRender.onAllRoutes(function(path) {
-  this.subscribe('userData');
-})
+// FastRender.onAllRoutes(function(path) {
+//   this.subscribe('userData');
+// })

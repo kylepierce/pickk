@@ -1,0 +1,28 @@
+<template name="diamondWatcher">
+	<div class="diamondWidget">
+		<div class="progress">
+			<div class="empty-bar">
+				<span class="center col-md-100">
+					{{#if smallPercentage d.percentage true}}
+						<span class="counter-text">{{d.percentage}}%</span>
+					{{/if}}
+				</span>
+				<div class="counter-bar" style="width: {{d.percentage}}%">
+					<span class="center">
+						{{#if smallPercentage d.percentage false}}
+							<span class="counter-text">{{d.percentage}}%</span>
+						{{/if}}
+					</span>
+				</div>
+			</div>
+<!-- 			{{d.bottom}}  
+			<span class="float-right"> {{d.top}}</span> -->
+		</div>
+		<div class="prize-ball">
+			<h5 class="center">
+				<i class="fa fa-diamond"></i>
+				<span>{{d.prize}}</span>
+			</h5>
+		</div>
+	</div>
+</template>
