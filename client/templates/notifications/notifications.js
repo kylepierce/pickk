@@ -23,16 +23,16 @@ Template.notification.helpers({
 	}
 });
 
-Template.groupNotification.helpers({
-	user: function(ref) {
-		Meteor.subscribe('findSingle', ref);
-		return UserList.findOne({_id: ref})
-	},
+// Template.groupNotification.helpers({
+// 	user: function(ref) {
+// 		Meteor.subscribe('findSingle', ref);
+// 		return UserList.findOne({_id: ref})
+// 	},
 	// groupData: function(groupId) {
 	// 	Meteor.subscribe('singleGroup', groupId);
 	// 	return Groups.findOne({_id: groupId})
 	// },
-});
+// });
 
 Template.chatNotification.helpers({
 	user: function(ref) {
@@ -166,10 +166,10 @@ Template.notificationOptions.events({
 		// Popover to choose where to share
 		IonPopover.show('_sharePopover', t.data, e.currentTarget);
 	}, 
-	'click [data-action=group]': function (e, t) {
-		var groupId = t.data.groupId
-		Router.go('/groups/' + groupId);
-	}, 
+	// 'click [data-action=group]': function (e, t) {
+	// 	var groupId = t.data.groupId
+	// 	Router.go('/groups/' + groupId);
+	// }, 
 	'click [data-action=user]': function (e, t) {
 		var senderId = t.data.senderId
 		Router.go('/user-profile/' + senderId);
@@ -246,14 +246,14 @@ Template.notificationOptions.helpers({
       return true
     }		
 	},
-	group: function () {
-		var note = Template.instance().data.type
-		var types = ["group"] 
-		var exists = types.indexOf(note) !== -1
-		if(exists){
-			return true
-		}
-	},
+	// group: function () {
+	// 	var note = Template.instance().data.type
+	// 	var types = ["group"] 
+	// 	var exists = types.indexOf(note) !== -1
+	// 	if(exists){
+	// 		return true
+	// 	}
+	// },
 });
 
 Template.coinsNotification.helpers({

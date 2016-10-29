@@ -39,9 +39,9 @@
 </template>
 
 <template name="notification">
-	{{#if notif "group"}}
+<!-- 	{{#if notif "group"}}
 		{{> groupNotification}}
-	{{/if}}
+	{{/if}} -->
 	{{#if notif "mention"}}
 		{{> chatNotification}}
 	{{/if}}
@@ -80,7 +80,7 @@
 	{{/if}}
  </template>
 
-<template name="groupNotification">
+<!-- <template name="groupNotification">
 	{{#ionItem avatar=true }}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
@@ -90,7 +90,7 @@
 	    <p>wants you to join <strong>{{name}}</strong></p>
 	  {{/with}}
 	{{/ionItem}}
-</template>
+</template> -->
 
 <template name="chatNotification">
 	{{#ionItem avatar=true }}
@@ -99,9 +99,9 @@
 		{{#with user note.senderId}}
 			@{{profile.username}} Mentioned You
 	  {{/with}}
-	  {{#with groupData note.groupId}}
+<!-- 	  {{#with groupData note.groupId}}
 			in <strong>{{name}}</strong>
-		{{/with}}
+		{{/with}} -->
 		</h3>
 
 	  <p>{{note.message}}</p>
@@ -182,13 +182,13 @@
 	      Share
 	    </div>
 	  {{/if}}
-	  {{#if group}}
+<!-- 	  {{#if group}}
 			<div class="{{options}} actions-section" data-action="group">
 	   		{{> ionIcon class="reply-icon" icon='ios-people'}}
 	    	<br>
 	    	View Group
 	  	</div>
-	  {{/if}}
+	  {{/if}} -->
 		{{#if interaction}}
 			<div class="{{options}} actions-section" data-action="user">
 	   		{{> ionIcon class="reply-icon" icon='ios-person'}}
