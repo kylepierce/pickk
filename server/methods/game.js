@@ -77,7 +77,7 @@ Meteor.methods({
 		var game = Games.insert({
 			dateCreated: timeCreated,
 			scheduled: timeCreated,
-			type: "predictions",
+			type: "prediction",
 			name: title,
 			users: []
 		});

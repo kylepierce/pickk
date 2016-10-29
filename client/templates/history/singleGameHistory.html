@@ -16,9 +16,11 @@
   {{#ionView }}
     {{#ionContent}}
     	<div class="container ten-spacing"> 
-	    	{{#each g in game}}
-	    		{{> singleGameCard game=g}}
-	    	{{/each}}
+	    	{{#if notPrediction}}
+		    	{{#each g in game}}
+		    		{{> singleGameCard game=g}}
+		    	{{/each}}
+		    {{/if}}
 			</div>
 	    
 	    {{#ionList}}

@@ -1,3 +1,14 @@
+Template.singleGameHistory.helpers({
+	notPrediction: function () {
+		var game = Games.findOne({});
+		if (game.type === "prediction" || game.type === "predictions"){
+			return false
+		} else {
+			return true
+		}
+	}
+});
+
 Template.gameHistory.helpers({
 	questions: function (number){
 		var $gameId = Router.current().params._id
