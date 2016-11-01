@@ -34,26 +34,26 @@ Meteor.publish('liveGames', function() {
   return Games.find(selector, parms);
 });
 
-Meteor.publish('singleGameQuestions', function(gameId){
+Meteor.publish('singleGameActiveQuestions', function(gameId){
   check(gameId, String);
-  var selector = {gameId: gameId}
-  var sort = {sort: {dateCreated: -1}, limit: 20}
+  var selector = {gameId: gameId, active: true}
+  var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);
 });
 
-// Meteor.publish('pendingQuestions', function(gameId) {
-//   check(gameId, String);
-//   var selector = {gameId: gameId, active: null}
-//   var sort = {sort: {dateCreated: -1}}
-//   return Questions.find(selector, sort);
-// });
+Meteor.publish('singleGamePendingQuestions', function(gameId) {
+  check(gameId, String);
+  var selector = {gameId: gameId, active: null}
+  var sort = {sort: {dateCreated: -1}}
+  return Questions.find(selector, sort);
+});
 
-// Meteor.publish('oldQuestions', function(gameId) {
-//   check(gameId, String);
-//   var selector = {gameId: gameId, active: false}
-//   var sort = {sort: {dateCreated: -1}, limit: 3}
-//   return Questions.find(selector, sort);
-// });
+Meteor.publish('singleGameOldQuestions', function(gameId) {
+  check(gameId, String);
+  var selector = {gameId: gameId, active: false}
+  var sort = {sort: {lastUpdated: -1}, limit: 5}
+  return Questions.find(selector, sort);
+});
 
 Meteor.publish('singleGameData', function(id) {
   check(id, String);
