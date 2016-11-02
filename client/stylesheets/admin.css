@@ -33,3 +33,23 @@
 #gameInfo {
 	background-color: white;
 }
+
+#question-input {
+	height: 2rem;
+	font-size: 2rem;
+	margin-top: 50px;
+}
+
+.option-range {
+	width: 14%;
+	float: left;
+	margin-left: 1%;
+}
+
+.option-boxes .option-range,
+.option-boxes .option-title {
+	border: 1px solid grey!important;
+	height: 2.5rem;
+	padding: 10px;
+	margin-top: 5px;
+}

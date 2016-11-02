@@ -16,7 +16,9 @@
 				{{/with}}
 				
 				{{> otherQuestions}}
-				{{> createQuestion}}
+				{{#if football}}
+					{{> createQuestion}}
+				{{/if}}
 				{{> activeQuestions}}
 				{{> pendingQuestions}}
 				{{> oldQuestions}}
@@ -47,6 +49,9 @@
 
 		<button class='col-md-50 button button-calm float-left' data-ion-modal="_gameScoreModal"> 
 			Change Score
+		</button>
+		<button class='col-md-50 button button-calm float-left' data-ion-modal="_propQuestion"> 
+			Prop
 		</button>
 	</div>
 </template>

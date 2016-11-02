@@ -1,19 +1,15 @@
-// Template.singleGameAdmin.rendered = function() {
-//     console.log(this.data); // you should see your passage object in the console
-// };
-
 Template.singleGameAdmin.helpers({
 	game: function () {
 		var game = this.game[0]
 		return game
+	},
+	football: function () {
+		var game = this.game[0]
+		if (game.football === true){
+			return true
+		}
 	}
 });
-
-// map multiple combinations to the same callback
-Mousetrap.bind('d', function() {
-	$('[data-action=deactivate]').click()
-	return false;
-}, 'keyup');
 
 // Deactivate question once the play has started.
 Template.activeQuestions.events({
@@ -162,7 +158,6 @@ Template.oldQuestion.events({
 	},
 	'click [data-action=playSelection]': function (e, t) {
 		Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
-		console.log(this.o.option)
 		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
 	}
 });

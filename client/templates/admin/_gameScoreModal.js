@@ -28,5 +28,6 @@ Template._gameScoreModal.events({
 		var gameId = Router.current().params._id
 		
 		Meteor.call('updateGameScore', gameId, homeScore, awayScore)
+		IonModal.close();
 	}
 });

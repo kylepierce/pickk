@@ -32,6 +32,7 @@
 }
 
 .option-title{
+	float: left;
 	width: 70%;
 	padding-left: 5%; 
 }

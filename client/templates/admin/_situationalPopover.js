@@ -13,7 +13,7 @@ Template._situationalModal.events({
 		sAlert.success("Posted " + que + "!" , {effect: 'slide', position: 'bottom', html: true});
 	},
 	'click [data-action="situationalQuestion"]': function(event, template){
-		var que = prompt('Question you would like to ask')
+		var que = prompt('Question you would like to ask?')
 		var gameId = Router.current().params._id
 		
 		Meteor.call('createTrueFalse', que, gameId)

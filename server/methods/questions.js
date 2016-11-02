@@ -102,8 +102,6 @@ Meteor.methods({
 
 		var multiplier = Multipliers.findOne(inputsObj)
 
-		console.log(multiplier)
-
 		return multiplier.options
 	},
 
@@ -118,7 +116,6 @@ Meteor.methods({
   		style: inputs.style
 		}, {$set: {options: options}}, {upsert: true}
 		);
-
 	},
 
 	'questionText': function (inputs, type) {
@@ -167,6 +164,7 @@ Meteor.methods({
 
 		function randomizer(min, max){
 			var multi = (Math.random() * (max-min) + min).toFixed(1)
+			console.log(multi)
 			return multi
 		}
 
@@ -218,6 +216,35 @@ Meteor.methods({
 		});
 
 		return q.que
+	},
+
+	'createProp': function(q) {
+		check(q, Object);
+
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+		}
+
+		if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+		}
+		
+		var currentUserId = Meteor.userId();
+		var timeCreated = new Date();
+
+		// Insert the question into the database
+		Questions.insert({
+			que: q.que,
+			gameId: q.gameId,
+			createdBy: currentUserId,
+			dateCreated: timeCreated,
+			type: q.type,
+			manual: true,
+			active: true,
+			commercial: q.commercial,
+			options: q.options,
+			usersAnswered: []
+		});
 	},
 
 	'createTrueFalse': function(que, gameId) {
