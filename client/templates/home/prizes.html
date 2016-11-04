@@ -1,0 +1,18 @@
+<template name="prizes">
+ {{> homeLayoutHeader}}
+
+ {{#contentFor "headerTitle"}}
+     <h1 class="title white-text-header">Prizes</h1>
+ {{/contentFor}}
+
+ {{#ionView}}
+   {{#ionContent}}
+      {{#each prize in prizes}}
+        {{#ionItem}}
+          <h2>{{prize.place}}</h2>
+          {{prize.description}}
+        {{/ionItem}}
+      {{/each}}
+   {{/ionContent}}
+ {{/ionView}}
+</template>
