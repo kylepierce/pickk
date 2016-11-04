@@ -8,17 +8,15 @@ Template.userAvatar.helpers({
       var photo = user.services.twitter.profile_image_url;
       return photo.replace('_normal', '');
     } else if (user.services && user.services.facebook) {
-      return "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=square&height=500&width=500";
+      return "https://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=square&height=500&width=500";
     } else {
       return "/anon.png"
     }
   }
 });
- 
+
 Template.userAvatar.onCreated(function() {
   if (!this.data.alreadySubscribed && !this.data.user) {
     this.subscribe('findSingleUsername', this.data.userId);
   }
 });
-
-

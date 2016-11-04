@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 
@@ -77,7 +77,7 @@ body.keyboard-open .platform-android .content.overflow-scroll {
 .snap-drawer {
     height: 100%;
     overflow-x:hidden;
-		overflow-y: auto; 
+		overflow-y: auto;
 	  -webkit-overflow-scrolling: touch;
 }
 
@@ -89,7 +89,7 @@ a {
 body {
 	font-family: sans-serif;
 	font-size: 16px;
-	background-color:#f2f2f2; 
+	background-color:#f2f2f2;
 }
 
 input, textarea {
@@ -404,7 +404,7 @@ input[type=submit] {
 	margin: 10px 0 0;
 }
 
-.play-option{ 
+.play-option{
 	width: 100%;
 	text-align: left;
 	background-color: white;
@@ -415,7 +415,7 @@ input[type=submit] {
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0)!important;
 }
 
-.score-option{ 
+.score-option{
 	text-align: center!important;
 }
 
@@ -439,7 +439,7 @@ input[type=submit] {
 
 /* Makes the label not take 100% of the available area */
 .af-fav-teams .checkbox  {
-	max-width: 50px;		
+	max-width: 50px;
 }
 
 .hidden {

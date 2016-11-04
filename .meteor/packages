@@ -95,3 +95,5 @@ shell-server@0.2.1
 raix:push
 astronomerio:core
 meteorhacks:unblock
+meteorhacks:kadira-profiler
+force-ssl

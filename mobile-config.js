@@ -4,7 +4,7 @@ App.info({
   description: 'Predict sports events in real time',
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
-  website: 'http://pickk.co',
+  website: 'https://pickk.co',
   version: '0.0.23'
 });
 App.icons({
