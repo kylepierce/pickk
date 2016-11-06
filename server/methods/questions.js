@@ -240,7 +240,7 @@ Meteor.methods({
 			dateCreated: timeCreated,
 			type: q.type,
 			manual: true,
-			active: true,
+			active: q.active,
 			commercial: q.commercial,
 			options: q.options,
 			usersAnswered: []

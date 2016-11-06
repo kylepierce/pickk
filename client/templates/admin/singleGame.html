@@ -19,6 +19,7 @@
 				{{#if football}}
 					{{> createQuestion}}
 				{{/if}}
+				{{> futureQuestions}}
 				{{> activeQuestions}}
 				{{> pendingQuestions}}
 				{{> oldQuestions}}
@@ -54,6 +55,20 @@
 			Prop
 		</button>
 	</div>
+</template>
+
+<template name="futureQuestions">
+	<div class="panel">
+		<h3>Future Questions</h3>
+		<ul class="active-questions">
+			{{#each questions}}
+				<li class="{{_id}} float-left"> {{que}}</li>
+				<button data-action="activate" class="col-md-100 button button-balanced">
+					Activate
+				</button>
+			{{/each}}
+		</ul>
+	</div>	
 </template>
 
 <template name="activeQuestions">

@@ -53,3 +53,7 @@
 	padding: 10px;
 	margin-top: 5px;
 }
+
+.acceptable {
+	border: #2ecc71 solid 1px!important;
+}

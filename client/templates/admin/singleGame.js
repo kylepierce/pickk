@@ -12,6 +12,21 @@ Template.singleGameAdmin.helpers({
 });
 
 // Deactivate question once the play has started.
+Template.futureQuestions.events({
+	'click [data-action=activate]': function() {
+		var questionId = this._id;
+		Meteor.call('reactivateStatus', questionId);
+	}
+});
+
+// Show all active questions
+Template.futureQuestions.helpers({
+	'questions': function(){
+		return Questions.find({active: "future"}, {sort: {dateCreated: -1}});
+	}
+});
+
+// Deactivate question once the play has started.
 Template.activeQuestions.events({
 	'click [data-action=deactivate]': function() {
 		var questionId = this._id;
