@@ -3,7 +3,8 @@
   "servers": [
     {
       "host": "104.236.211.140",
-      "username": "root"
+      "username": "root",
+      "password": ""
       // or pem file (ssh based authentication)
       //"pem": "~/.ssh/id_rsa",
       // Also, for non-standard ssh port use this
