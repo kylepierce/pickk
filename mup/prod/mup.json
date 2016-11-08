@@ -51,7 +51,7 @@
   // your NGINX proxy or Cloudflare. When using just Meteor on SSL without spiderable this is not necessary
   "env": {
     "PORT": 80,
-    "ROOT_URL": "http://pickk.net",
+    "ROOT_URL": "https://pickk.net",
     "MONGO_URL": "mongodb://getpickk:Imonaboat118@candidate.11.mongolayer.com:11179,candidate.43.mongolayer.com:11034/pickk-production?replicaSet=set-55dbc8150df18460e00000cf",
     "MONGO_OPLOG_URL": "mongodb://oplog:Imonaboat118@candidate.11.mongolayer.com:11179,candidate.43.mongolayer.com:11034/local?authSource=pickk-production&replicaSet=set-55dbc8150df18460e00000cf",
     "MAIL_URL": "smtp://postmaster%40mg.pickk.co:2e53ee0dce2deade7b63443c39322243@smtp.mailgun.org:587"
