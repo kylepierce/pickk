@@ -86,7 +86,6 @@ percolate:migrations
 practicalmeteor:mocha
 xolvio:cleaner
 http@1.2.9_1
-jamielob:reloader
 reactive-var@1.0.10
 notorii:autoform-datetimepicker
 drewy:pikaday-time
