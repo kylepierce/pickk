@@ -15,6 +15,12 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
+		if (active === true){
+			var status = "inprogress"
+		} else {
+			var status = "scheduled"
+		}
+
 		var timeCreated = new Date();
 		Games.insert({
 			teams: [team1, team2],
@@ -23,7 +29,7 @@ Meteor.methods({
 			gameDate: gameTime,
 			name: title,
 			football: true,
-			status: "scheduled",
+			status: status,
 			manual: true,
 			home: {
 		    name: team1,

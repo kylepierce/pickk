@@ -73,6 +73,7 @@ Template._propQuestion.events({
 				var multi = randomizer(low, high)
 
 				options[optionNum] = {
+					number: i + 1,
 					option: optionNum,
 					title: title,
 					multiplier: multi

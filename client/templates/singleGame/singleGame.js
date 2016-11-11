@@ -181,11 +181,24 @@ Template.singleGame.events({
   'click [data-action=play-selected]': function (e, t) {
     $('.play-selected').removeClass('play-selected ten-spacing')
     $(e.currentTarget).addClass('play-selected ten-spacing')
+
+    var count = _.keys(this.q.options).length
+    var selectedNumber = this.o.number
+    if (selectedNumber % 2 !== 0){
+      var selectedIsOdd = true
+    } else {
+
+    }
+
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
+
+      if(selectedIsOdd){
+        var $selected = $(e.currentTarget).next()
+      }
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -201,11 +214,13 @@ Template.singleGame.events({
           addOptions( o.containerId, selectedObj )  
         } else {
           container.remove();
+          addOptions( o.containerId, selectedObj ) 
         }
       } else {
         addOptions( o.containerId, selectedObj )  
       }
     }
+
     parms = {
       insertedTemplate: Template.wagers,
       containerId: "wagers",
@@ -213,13 +228,15 @@ Template.singleGame.events({
       template: t,
       dataPath: this,
     }
+
     displayOptions( parms )
   },
   'click [data-action=wager-selected]': function (e, t) {  
     $('.wager-selected').removeClass('wager-selected')
     $(e.currentTarget).addClass('wager-selected')
-    console.log(this)
+
     Session.set('lastWager', this.w);
+
     var displayOptions = function ( o ) {
       // The select item dom and data
       var $selected = $(e.currentTarget)
@@ -392,10 +409,12 @@ Template.option.helpers({
     if (q.icons){
       return true
     }
-    // var baseball = ["out", "single", "double", "triple", "singleGamerun", "walk", "strike", "ball", "foul ball", "hit"]
-    // if (baseball.indexOf(title) !== -1){
-    //   return true
-    // }
+  },
+  binary: function(){
+    var count = _.keys(this.q.options).length
+    if (count === 2 || count === 4){
+      return "col-md-45"
+    }
   }
 });
 

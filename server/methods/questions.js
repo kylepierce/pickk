@@ -54,7 +54,7 @@ Meteor.methods({
 		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
 		} else if (down === 2) {
-			var optionArray = ["Run", "Pass", "Turnover"]
+			var optionArray = ["Run", "Pass", "Turnover", "Touchdown"]
 		} else if (down === 3 && area === 6) {
 			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
 		} else if (down === 3) {
@@ -81,7 +81,11 @@ Meteor.methods({
 
 		optionArray.map(function (option){
 			var optionNumber = "option" + optionNum
-			options[optionNumber] = {"option": optionNumber, "title": option, multiplier: 3}
+			options[optionNumber] = {
+				"number": optionNum, 
+				"option": optionNumber, 
+				"title": option
+			}
 			optionNum += 1
 		});
 

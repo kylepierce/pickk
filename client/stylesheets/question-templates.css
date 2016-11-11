@@ -31,6 +31,19 @@
 	width: 20%;
 }
 
+.col-md-45 .option-inner .option-title {
+	width: 100%;
+	text-align: center;
+	padding-left: 0%; 
+}
+
+.col-md-45 .option-inner .multiplier {
+	width: 100%;
+	text-align: center;
+	float: left;
+	clear: both;
+}
+
 .option-title{
 	float: left;
 	width: 70%;
