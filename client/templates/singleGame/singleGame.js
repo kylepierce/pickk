@@ -182,13 +182,13 @@ Template.singleGame.events({
     $('.play-selected').removeClass('play-selected ten-spacing')
     $(e.currentTarget).addClass('play-selected ten-spacing')
 
-    var count = _.keys(this.q.options).length
-    var selectedNumber = this.o.number
-    if (selectedNumber % 2 !== 0){
-      var selectedIsOdd = true
-    } else {
+    // var count = _.keys(this.q.options).length
+    // var selectedNumber = this.o.number
+    // if (selectedNumber % 2 !== 0){
+    //   var selectedIsOdd = true
+    // } else {
 
-    }
+    // }
 
     var displayOptions = function ( o ) {
       // The select item dom and data
@@ -196,9 +196,11 @@ Template.singleGame.events({
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
 
-      if(selectedIsOdd){
-        var $selected = $(e.currentTarget).next()
-      }
+      // if(selectedIsOdd){
+      //   var $selected = $(e.currentTarget).next()
+      // } else {
+      //   var $selected = $(e.currentTarget)
+      // }
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -410,12 +412,12 @@ Template.option.helpers({
       return true
     }
   },
-  binary: function(){
-    var count = _.keys(this.q.options).length
-    if (count === 2 || count === 4){
-      return "col-md-45"
-    }
-  }
+  // binary: function(){
+  //   var count = _.keys(this.q.options).length
+  //   if (count === 2 || count === 4){
+  //     return "col-md-45"
+  //   }
+  // }
 });
 
 

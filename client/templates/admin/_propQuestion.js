@@ -98,7 +98,8 @@ Template._propQuestion.events({
 					return false
 				}
 				if (low > high){
-					inputError("Min value cannot be larger than the max!")
+					console.log()
+					inputError("Min value cannot be larger than the max! " + low + " " + high)
 					return false
 				} 
 				if (isNotANumber) {
