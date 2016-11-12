@@ -63,12 +63,12 @@
 		<ul class="active-questions">
 			{{#each questions}}
 				<li id="{{_id}}">
-					<div class="col-md-80 activate-questions-inner float-left">
+					<div class="col-md-70 activate-questions-inner float-left">
 						[{{this.type}}] {{que}}
-						<button data-action="edit" class="float-right">
-							{{> ionIcon icon='edit'}}
-						</button>
 					</div>
+					<button data-action="edit" class="button button-stable col-md-10">
+							{{> ionIcon icon='edit'}}
+					</button>
 					<button data-action="activate" class="active-button col-md-20 button button-balanced">
 						Activate
 					</button>
@@ -84,12 +84,12 @@
 		<ul class="active-questions">
 			{{#each questions}}
 				<li id="{{_id}}">
-					<div class="col-md-80 activate-questions-inner float-left">
+					<div class="col-md-70 activate-questions-inner float-left">
 						[{{this.type}}] {{que}}
-						<button data-action="edit" class="float-right">
-							{{> ionIcon icon='edit'}}
-						</button>
 					</div>
+					<button data-action="edit" class="button button-stable col-md-10">
+							{{> ionIcon icon='edit'}}
+					</button>
 					<button data-action="deactivate" class="active-button col-md-20 button button-balanced">
 						Deactivate
 					</button>
@@ -112,14 +112,17 @@
 
 <template name="pendingQuestion">
 	<li class="clear-fix old"> 
-		<h4 class="float-left col-md-80">
+		<h4 class="float-left col-md-80 padding-20">
 			{{q.que}}
 		</h4>
-		<div class="float-right col-md-20">
-			<button data-action="removeQuestion" class="col-md-50 pending-options button button-assertive">
+		<div class="float-right col-md-20 padding-20">
+			<button data-action="edit" class="col-md-33 pending-options button button-stable">
+				{{> ionIcon icon='edit'}}
+			</button>
+			<button data-action="removeQuestion" class="col-md-33 pending-options button button-assertive">
 				{{> ionIcon icon='close-circled'}}
 			</button>
-			<button data-action="reactivate" class="col-md-50 pending-options button button-balanced">
+			<button data-action="reactivate" class="col-md-33 pending-options button button-balanced">
 				{{> ionIcon icon='checkmark-circled'}}
 			</button>
 		</div>
@@ -148,7 +151,7 @@
 		<h4 class="float-left col-md-80">
 			{{q.que}} -- {{q.outcome}}
 		</h4>
-		<div class="float-right col-md-20">
+		<div class="float-right col-md-20 padding-20">
 			<button data-action="removeQuestion" class="col-md-50 pending-options button button-assertive">
 				{{> ionIcon icon='close-circled'}}
 			</button>

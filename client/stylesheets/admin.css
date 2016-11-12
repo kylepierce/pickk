@@ -74,16 +74,22 @@
 	overflow: auto;
 }
 
-.pending-questions li,
 .active-questions li{
 	text-decoration: none;
 	list-style: none;
 	font-size: 1.25em;
 	width: 100%;
 	color: black;
-	border-style: solid;
-	border-width: 1px;
 	margin: 5px 0;
+	border: solid #2ecc71 1px;
+}
+
+.padding-20 {
+	padding: 20px 0;
+}
+
+.active-que {
+	
 }
 
 .pending-que {

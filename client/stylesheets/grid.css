@@ -1,5 +1,8 @@
 .col-md-10 {
-	width: 10%;
+	width: 10%!important;
+	min-width: 10%!important;
+	max-width: 10%!important;
+	float: left;
 }
 
 .col-md-20 {
@@ -10,6 +13,7 @@
 	width: 25%;
 	float: left;
 }
+
 .col-md-33 {
 	width: 33.33%!important;
 	min-width: 33.33%!important;
@@ -25,6 +29,13 @@
 
 .col-md-50 {
 	width: 50%;
+	float: left;
+}
+
+.col-md-70 {
+	width: 70%!important;
+	min-width: 70%!important;
+	max-width: 70%!important;
 	float: left;
 }
 
