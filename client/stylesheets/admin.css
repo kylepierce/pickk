@@ -54,6 +54,63 @@
 	margin-top: 5px;
 }
 
+.remove-option {
+	width: 14%;
+	background-color: red;
+	color: white;
+	height: 40px;
+	margin: 5px 0 0;
+}
+
 .acceptable {
 	border: #2ecc71 solid 1px!important;
+}
+
+.panel {
+	background-color: white;
+	border: #eee;
+	padding: 10px 25px;
+	margin-bottom: 10px;
+	overflow: auto;
+}
+
+.pending-questions li,
+.active-questions li{
+	text-decoration: none;
+	list-style: none;
+	font-size: 1.25em;
+	width: 100%;
+	color: black;
+	border-style: solid;
+	border-width: 1px;
+	margin: 5px 0;
+}
+
+.pending-que {
+	border-color: #2ecc71;
+}
+
+.old-que {
+	border-color: #2ecc71;
+}
+
+.activate-questions-inner {
+	padding: 10px;
+}
+
+.old-questions li{
+	text-decoration: none;
+	list-style: none;
+	font-size: 1.25em;
+	padding: 10px;
+	width: 80%;
+	float:left;
+	color: #000;
+	margin: 5px 0;
+}
+
+.pending-options {
+	min-height: 41px!important;
+	height: 41px!important;
+	font-size: 1.4rem;
 }

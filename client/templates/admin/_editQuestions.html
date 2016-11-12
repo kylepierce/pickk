@@ -1,0 +1,25 @@
+<template name="_editQuestion">
+	{{#ionModal class="white-text-header" title="Edit Question"}}
+		<div class="container ten-spacing">
+			<div class="clear-fix ten-spacing"></div>
+			<input id="question-input" class="ten-spacing" type="text" value="{{que}}">
+			<ul class="ten-spacing">
+				{{#each option in choices this}}
+					{{> editOption o=option q=this}}
+				{{/each}}
+			</ul>
+			<button id="prop" class='full button button-balanced ten-spacing' data-action="editQuestion">Edit Question</button>
+			
+		</div>
+  {{/ionModal}}
+</template>
+
+<template name="editOption">
+	<li class="option-boxes">
+		<input type="text" class="option-title" value="{{o.title}}">
+		<input type="text" class="option-range" value="{{o.multiplier}}">
+		<!-- <button class="remove-option {{optionProtector}}" data-action="remove-option">
+			{{> ionIcon icon='edit'}}
+		</button> -->
+	</li>
+</template>

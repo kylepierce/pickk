@@ -15,13 +15,8 @@ Template._propQuestion.helpers({
 Template._propQuestion.events({
 	'change .option-range': function(e, t){
 		var isNotANumber = isNaN(e.currentTarget.value) 
-		console.log(isNotANumber)
 		if (isNotANumber === true){
 			alert("That is not a number");
-		} else if (isNotANumber === false){
-			var box = e.currentTarget.classList
-			console.log(box)
-			box[1] = 'acceptable'
 		}
 	},
 	'click [data-action=teamOne]': function () {
@@ -67,7 +62,6 @@ Template._propQuestion.events({
 		}
 
 		function inputError(reason){
-			console.log(reason)
 			sAlert.error("Error: " + reason , {effect: 'slide', position: 'bottom', html: true});
 		}
 
@@ -92,13 +86,12 @@ Template._propQuestion.events({
 				var high = optionBoxes[i].children[2].value
 				var multi = randomizer(low, high)
 				var isNotANumber = isNaN(multi)
-				console.log(low, high, multi, isNotANumber)
+
 				if (!low) {
 					inputError("Missing Multipliers!")
 					return false
 				}
 				if (low > high){
-					console.log()
 					inputError("Min value cannot be larger than the max! " + low + " " + high)
 					return false
 				} 
@@ -115,7 +108,6 @@ Template._propQuestion.events({
 				}
 			}
 		}
-		console.log(options)
 		var q = {
 			que: question,
 			gameId: gameId,
@@ -127,5 +119,6 @@ Template._propQuestion.events({
 
 		Meteor.call('createProp', q);
 		sAlert.success("Posted " + question + "!" , {effect: 'slide', position: 'bottom', html: true});
+		IonModal.close();
 	}
 });

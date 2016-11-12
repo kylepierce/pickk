@@ -78,7 +78,6 @@ Template.sideMenuContent.helpers({
         if (result[0] === "undefined"){
           template.diamonds.set(0)
         }
-        console.log(result[0])
         var diamondCount = result[0].result
         template.diamonds.set(diamondCount)
       }

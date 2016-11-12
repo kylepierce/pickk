@@ -272,7 +272,7 @@ Meteor.methods({
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			type: "freePickk",
-			active: true,
+			active: "future",
 			manual: true,
 			commercial: true,
 			binaryChoice: true,
@@ -314,6 +314,14 @@ Meteor.methods({
 			options: q.options,
 			usersAnswered: []
 		});
+	},
+
+	'editQuestion': function(q){
+		Questions.update({_id: q.questionId}, {$set: {
+				active: true, 
+				que: q.que,
+				options: q.options,
+			}});
 	},
 
 	'reactivateStatus': function(questionId) {

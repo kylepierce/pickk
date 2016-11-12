@@ -272,39 +272,6 @@ a.option {
 	text-align: center;
 }
 
-.panel {
-	background-color: white;
-	border: #eee;
-	padding: 10px 25px;
-	margin-bottom: 10px;
-	overflow: auto;
-}
-
-.active-questions li{
-	text-decoration: none;
-	list-style: none;
-	font-size: 1.25em;
-	padding: 10px;
-	width: 100%;
-	color: black;
-	border-color: #2ecc71;
-	border-style: solid;
-	border-width: 1px;
-	margin: 5px 0;
-}
-
-.old-questions li{
-	text-decoration: none;
-	list-style: none;
-	font-size: 1.25em;
-	padding: 10px;
-	width: 80%;
-	float:left;
-	color: #000;
-
-	margin: 5px 0;
-}
-
 .fourth {
 	width: 25%;
 	float: left;

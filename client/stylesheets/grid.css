@@ -11,7 +11,9 @@
 	float: left;
 }
 .col-md-33 {
-	width: 33.33%;
+	width: 33.33%!important;
+	min-width: 33.33%!important;
+	max-width: 33.33%!important;
 	float: left;
 }
 
@@ -23,6 +25,11 @@
 
 .col-md-50 {
 	width: 50%;
+	float: left;
+}
+
+.col-md-80 {
+	width: 80%;
 	float: left;
 }
 
