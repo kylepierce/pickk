@@ -93,6 +93,7 @@ Template.count.helpers({
 
 Template.teamBlock.helpers({
   teamColors: function (id) {
+    Meteor.subscribe('singleTeam', id)
     var team = Teams.findOne({_id: id})
     var hex = team && team.hex
     if(hex){
