@@ -20,6 +20,11 @@ Template.home.helpers({
   dailyPickkCount: function () {
     var count = Questions.find({}).count()
     return count
+  },
+  liveGames: function(){
+    var count = Games.find({}).count()
+    console.log(count)
+    return count
   }
 });
 

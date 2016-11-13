@@ -45,6 +45,22 @@
           </button>
         </div>
       </div>
+
+      {{#if liveGames}}
+        <div class="item item-divider clear-fix" style="border: 0">
+          Live Games
+        </div>
+      {{/if}}
+      <div class="container">
+        {{#each game in games}}
+          <div class="ten-spacing">
+            {{> singleGameInfo game=game}}
+            {{> singleGameCard game=game}}
+            {{> singleGameCTA game=game}}
+          </div>
+        {{/each}}
+      </div>
+
     {{/ionContent}}
   {{/ionView}}
 </template>
