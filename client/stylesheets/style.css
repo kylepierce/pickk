@@ -56,6 +56,10 @@ body, .ionic-body {
 	background-color: #f2f2f2;
 }
 
+.five-spacing {
+	margin-top: 5px;
+}
+
 .ten-spacing {
 	margin-top: 10px;
 }

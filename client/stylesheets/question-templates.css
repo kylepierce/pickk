@@ -14,14 +14,25 @@
 	margin-top: -1px;
 }
 
+.col-md-45 .option-inner {
+	width: 100%;
+	display: block;
+	height: 95%;
+	margin: 3px;
+}
+
 .option-inner {
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: white;
-	height: 38px;
+	height: 95%;
 	margin: 3px;
+}
+
+.square-options {
+	height: 90px;
 }
 
 .icon-container {
@@ -31,13 +42,16 @@
 	width: 20%;
 }
 
-.col-md-45 .option-inner .option-title {
+.col-md-45 .option-title {
 	width: 100%;
+	padding-top: 20px;
 	text-align: center;
 	padding-left: 0%; 
+	float: left;
+	clear: both;
 }
 
-.col-md-45 .option-inner .multiplier {
+.col-md-45 .multiplier {
 	width: 100%;
 	text-align: center;
 	float: left;

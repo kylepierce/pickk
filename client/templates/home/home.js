@@ -18,13 +18,10 @@ Template.home.helpers({
     return Questions.find({}).count()
   }, 
   dailyPickkCount: function () {
-    var count = Questions.find({}).count()
-    return count
+    return Questions.find({}).count()
   },
   liveGames: function(){
-    var count = Games.find({}).count()
-    console.log(count)
-    return count
+    return Games.find({}).count()
   }
 });
 

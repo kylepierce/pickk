@@ -161,34 +161,18 @@ Template.singleGame.events({
     });
     Router.go('/history/' + $game )
   }, 
-  'click [data-action=notifications]': function(event, template){
-    var $game = Router.current().params._id
-    var userId = Meteor.userId()
-    analytics.track("waiting-notifications", {
-      userId: userId,
-      gameId: $game,
-    });
-    Router.go('/notifications')
-  },
-  'click [data-action=chat]': function(event, template){
-    var $game = Router.current().params._id
-    var userId = Meteor.userId()
-    analytics.track("waiting-chat", {
-      userId: userId,
-      gameId: $game,
-    });
-  }, 
   'click [data-action=play-selected]': function (e, t) {
-    $('.play-selected').removeClass('play-selected ten-spacing')
-    $(e.currentTarget).addClass('play-selected ten-spacing')
+    $('.play-selected').removeClass('play-selected five-spacing')
+    $(e.currentTarget).addClass('play-selected five-spacing')
 
-    // var count = _.keys(this.q.options).length
-    // var selectedNumber = this.o.number
-    // if (selectedNumber % 2 !== 0){
-    //   var selectedIsOdd = true
-    // } else {
-
-    // }
+    var count = _.keys(this.q.options).length
+    var selectedNumber = this.o.number
+    var squareOptions = count === 2 || count === 4
+    if (selectedNumber % 2 !== 0 && squareOptions){
+      var selectedIsOdd = true
+    } else {
+      var selectedIsOdd = false
+    }
 
     var displayOptions = function ( o ) {
       // The select item dom and data
@@ -196,11 +180,13 @@ Template.singleGame.events({
       var selectedObj = o.dataPath
       var templateName = o.insertedTemplate
 
-      // if(selectedIsOdd){
-      //   var $selected = $(e.currentTarget).next()
-      // } else {
-      //   var $selected = $(e.currentTarget)
-      // }
+      if(selectedIsOdd){
+        var $selected = $(e.currentTarget).next()
+      } else {
+        var $selected = $(e.currentTarget)
+      }
+
+      console.log(squareOptions, selectedIsOdd, $selected)
 
       var addOptions = function ( id, data ){
         var options = "<div id='" + id + "'></div>"
@@ -412,12 +398,12 @@ Template.option.helpers({
       return true
     }
   },
-  // binary: function(){
-  //   var count = _.keys(this.q.options).length
-  //   if (count === 2 || count === 4){
-  //     return "col-md-45"
-  //   }
-  // }
+  binary: function(){
+    var count = _.keys(this.q.options).length
+    if (count === 2 || count === 4){
+      return "col-md-45 square-options"
+    }
+  }
 });
 
 
@@ -554,10 +540,8 @@ Template.submitButton.events({
     setTimeout(function() {
       Meteor.call('questionAnswered', a);
     }, 250);
-
   }
 });
-
 
 Template.playerCard.helpers({
   playerInfo: function () {
