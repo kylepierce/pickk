@@ -24,7 +24,7 @@ Meteor.publish("userData", function() {
 
 Meteor.publish('unreadNotifications', function() {
   this.unblock()
-  return Notifications.find({userId: this.userId, read: false})  
+  return Notifications.find({userId: this.userId, read: false}, {sort: {dateCreated: -1}})  
 });
 
 Meteor.publish('userNotifications', function(userId) {
