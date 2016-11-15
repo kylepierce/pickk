@@ -4,7 +4,7 @@ App.info({
   description: 'Predict sports events in real time',
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
-  website: 'https://pickk.co',
+  website: 'http://pickk.co',
   version: '0.0.25'
 });
 App.icons({
@@ -63,6 +63,14 @@ App.appendToConfig(`
     <ios-team-id value="Q768H4GZH4" />
     <host name="pickk.app.link" scheme="https" />
   </branch-config>
+  <platform name="ios">
+    <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+      <string>Add Photos</string>
+    </config-file>
+    <config-file platform="ios" target="*-Info.plist" parent="NSCameraUsageDescription">
+      <string>Add Photos</string>
+    </config-file>
+  </platform>
 `);
 
 App.configurePlugin("branch-cordova-sdk", {

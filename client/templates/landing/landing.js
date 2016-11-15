@@ -38,6 +38,8 @@ Template.loginBox.events({
 	'click [data-action=register]': function () {
 		var buttonColor = Session.get('ctaButton');
 		var text = Session.get('registerText');
+		var latest = Branch.initSession();
+		console.log(latest)
     analytics.track("clicked register button", {
       color: buttonColor,
       registerText: text

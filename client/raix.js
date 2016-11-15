@@ -9,7 +9,8 @@ Meteor.startup(function () {
         badge: true,
         sound: true,
         vibrate: true,
-        clearNotifications: true
+        clearNotifications: true,
+        sendInterval: 250
         // icon: '',
         // iconColor: ''
       },
@@ -17,7 +18,8 @@ Meteor.startup(function () {
         alert: true,
         clearBadge: true,
         badge: true,
-        sound: true
+        sound: true,
+        sendInterval: 250
       }
     });
   });
