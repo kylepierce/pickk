@@ -1,15 +1,13 @@
-Template.chatRoom.created = function() {
-  this.autorun(function() {
-    var userId = Meteor.userId()
-    var groupId = Router.current().params._id || Session.get('chatGroup') || null;
-    var chatLimit = Session.get('chatLimit');
-    Meteor.subscribe("chatMessages", null, chatLimit);
-    // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
-    Meteor.subscribe("chatMessagesCount", null);
-    // Meteor.subscribe('findUsersInGroup', groupId);
-    // Meteor.subscribe('usersGroups', userId)
-    Meteor.subscribe('chatUsersList', chatLimit, null);
-  }.bind(this));
+Template.chatRoom.rendered = function() {
+  var userId = Meteor.userId()
+  // var groupId = Router.current().params._id || Session.get('chatGroup') || null;
+  var chatLimit = Session.get('chatLimit');
+  Meteor.subscribe("chatMessages", null, chatLimit);
+  // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+  Meteor.subscribe("chatMessagesCount", null);
+  // Meteor.subscribe('findUsersInGroup', groupId);
+  // Meteor.subscribe('usersGroups', userId)
+  Meteor.subscribe('chatUsersList', chatLimit, null);
 };
 
 

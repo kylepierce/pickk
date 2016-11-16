@@ -3,7 +3,7 @@ if (Meteor.isCordova) {
 
   document.addEventListener('deviceready', function () {
     deviceReady = true;
-    Branch.setDebug(true);
+    
     Branch.initSession();
     var data = Session.get("deepLinked");
     console.log("device ready command", data)

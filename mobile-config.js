@@ -48,10 +48,14 @@ App.launchScreens({
 
 App.accessRule('*');
 App.accessRule("blob:*");
+App.accessRule('*://fonts.gstatic.com/*');
+App.accessRule('https://pickk.net/*', { type: 'navigation' });
+
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');
-App.accessRule('*://fonts.gstatic.com/*');
+App.setPreference('allow-navigation', '*')
+App.setPreference('allow-navigation', 'https://pickk.net/*')
 
 App.setPreference('intercom-app-id', 'k1la9xfh');
 App.setPreference('intercom-ios-api-key', 'ios_sdk-e5fc0fe6291b80f1d3026a54f46ba811ca1ca6bf');

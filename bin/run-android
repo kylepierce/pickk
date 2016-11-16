@@ -14,4 +14,4 @@ echo $ENV
 
 $DIRNAME/merge-settings $ENV android > /tmp/$ENV.json
 
-meteor run android-device --settings /tmp/$ENV.json "$@"
+meteor run android-device --mobile-server https://pickk.net --settings /tmp/$ENV.json "$@"
