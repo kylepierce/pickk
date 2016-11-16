@@ -1,10 +1,51 @@
 .full-landing {
-	height: 100%;
-	background-color: #37474f; 
+	height: 85%;
+	background: 
+	linear-gradient(
+    rgba(34, 44, 49, .65), 
+    rgba(34, 44, 49, 1)
+  ),
+	url('/landing-background.png');
+	background-position-y: bottom;
+  background-position-x: center;
+  background-size: cover;
+}
+
+#landing h1 {
+	font-family: 'open sans';
+	font-size: 2rem;
+	font-weight: 600;
+	text-shadow: 2px 2px #222c31;
+	color: #fff;
+	margin-bottom: 30px;
+}
+
+#landing p {
+	font-family: 'lato';
+	color: #fff;
+	text-shadow: 1px 1px #222c31;
+	font-size: 1.25rem;
+	padding: 5%;
+	line-height: 2.5rem
+}
+
+.full-landing .slider-pager .slider-pager-page {
+	color: white!important;
+}
+
+.full-landing .slick-active {
+	color: white!important;
 }
 
 .intro {
-	margin-top: 25px;
+	background-color: rgba(34, 44, 49, 1);
+	height: 15%;
+	padding-top: 10px;
+}
+
+.tv-stroke {
+	stroke: white,
+	stroke-width: 1;
 }
 
 .cta {
@@ -25,7 +66,7 @@
 .cta-2b1d4d {
 	background-color: #2b1d4d;
 	color: white;
-	border: 1px solid #2b1d4d;	
+	border: 1px solid #fff;	
 }
 
 .cta-26ad68 {
@@ -40,9 +81,9 @@ button.at-social-btn i {
   padding-top: 2px;
 }
 
-.landing-bg {
+/*.landing-bg {
 	background-color: #F5F5F5;
-}
+}*/
 
 .landing-image {
 	margin-left: auto;
@@ -68,7 +109,7 @@ button.at-social-btn i {
 }
  
 .slider-box {
-	height:80%;
+	height: 100%;
 	text-align: center;
 	overflow-x: hidden;
 }
@@ -82,21 +123,6 @@ button.at-social-btn i {
 	color: white;
 }
 
-#landing h1 {
-	font-family: 'open sans';
-	font-size: 1.8rem;
-	font-weight: 600;
-	color: #212121;
-}
-
-#landing p {
-	font-family: 'lato';
-	color: #212121;
-	font-size: 1.25rem;
-	padding: 0 10%;
-	line-height: 2.5rem
-}
-
 .login {
 	clear:both;
 }
@@ -106,7 +132,6 @@ button.at-social-btn i {
 }
 
 .social-button {
-	
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;

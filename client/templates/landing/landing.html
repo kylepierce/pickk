@@ -5,35 +5,37 @@
         <div id="landing" class="slider-box">
           {{#ionSlideBox}}
             {{#ionSlide class="inner-slide-box landing-bg"}}
-              <h1>Guess on each play</h1>
-              <img class="landing-image" src="/predict.png">
-              <p>Every play has options and real time multipliers.</p>
+              <h1>Watch</h1>
+              <img class="landing-image tv-stroke" src="watch.svg">
+              <p>Play While Watching. No Injury Reports or Player Lineups! </p>
             {{/ionSlide}}
             {{#ionSlide class="inner-slide-box landing-bg"}}
-              <h1>Watch the game</h1>
-              <img class="landing-image" src="watch.svg">
-              <p>Play while watching. No need to plan ahead. </p>
+              <h1>Pickk</h1>
+              <img class="landing-image" src="predict.png">
+              <p>Predict What Happens Next!</p>
             {{/ionSlide}}
             {{#ionSlide class="inner-slide-box landing-bg"}}
-              <h1>Prove your skills</h1>
-              <img class="landing-image" height="280" src="/trophy.svg">
-              <p>Play against your friends, family, and the entire world.</p>
+              <h1>Brag</h1>
+              <img class="landing-image ten-spacing" height="180" src="/1st.svg">
+              <p class="ten-spacing">Compete Against Your Friends, Family, and the Entire World!</p>
             {{/ionSlide}}
           {{/ionSlideBox}}
         </div>
-        {{> loginBox}}
       </div>
+      {{> loginBox}}
   {{/ionContent}}
 {{/ionView}}
 </template> 
 
 <template name="loginBox">
-	<div class="container intro">		
-		<button data-action="login" class="button button-large cta">
-			Login
-		</button>
-		<button data-action="register" class="button button-large register cta cta-{{ctaButton}}">
-			{{registerText}}
-		</button>
+	<div class="intro">
+    <div class="container">
+  		<button data-action="login" class="button button-large cta">
+  			Login
+  		</button>
+  		<button data-action="register" class="button button-large register cta cta-{{ctaButton}}">
+  			{{registerText}}
+  		</button>
+    </div>
 	</div>
 </template>

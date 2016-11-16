@@ -41,24 +41,32 @@ Template.loginBox.events({
 		var data = Session.get("deepLinked");
 
 		console.log(data)
-		console.log(data["~referring_link"])
+
+		if (!data) {
+			var analyticObject = {
+				color: buttonColor,
+	      registerText: text
+    	}
+		} else {
+			data['color'] = buttonColor
+			data['registerText'] = text
+			var analyticObject = data
+		}
 		
-		var analyticObject = {
-			color: buttonColor,
-      registerText: text,
-      utm_campaign: data.utm_campaign,
-      utm_source: data.utm_source,
-      utm_medium: data.utm_medium,
-      utm_content: data.utm_content,
-      utm_term: data.utm_term,
-      ref_link: data["~referring_link"],
-      clicked_branch_link: data["+clicked_branch_link"],
-      is_first_session: data["+is_first_session"],
-		} 
+		// var analyticObject = {
+  //     utm_campaign: data.utm_campaign,
+  //     utm_source: data.utm_source,
+  //     utm_medium: data.utm_medium,
+  //     utm_content: data.utm_content,
+  //     utm_term: data.utm_term,
+  //     ref_link: data["~referring_link"],
+  //     clicked_branch_link: data["+clicked_branch_link"],
+  //     is_first_session: data["+is_first_session"],
+		// } 
 		console.log(analyticObject)
 
 		
-  //   analytics.track("clicked register button", analyticObject);
+    analytics.track("clicked register button", analyticObject);
 
 		Router.go('/register')
 	},
