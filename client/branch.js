@@ -1,32 +1,12 @@
-
-
 if (Meteor.isCordova) {
   var deviceReady = false;
-
-  DeepLinkHandler = function (data) {
-    if (data) {
-      console.log('Data from deep link: ' + JSON.stringify(data));
-    } else {
-      console.log('No data found');
-    }
-  } 
 
   document.addEventListener('deviceready', function () {
     deviceReady = true;
     Branch.setDebug(true);
-    console.log("Device is Purple");
-
-    var latest = Branch.initSession();
-    console.log("latest", latest)
-    Branch.getFirstReferringParams().then(function (res) {
-      // Success Callback
-      console.log("tried", res);
-    }, function (err) {
-      // Error Callback
-      console.error("failed", err);
-    });
-    // if (Meteor.user()) initIntercom();
-  }, false);
+    var data = Session.get("deepLinked");
+    console.log("device ready command", data)
+  })
 }
   // Accounts.onLogin(function () {
   //   console.log("User is logged in");

@@ -12,7 +12,7 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.4.1.2');
-  api.mainModule('lib/modules/deeplinkhandler.js', ['client', 'server']);
+  api.addFiles('deeplinkhandler.js', ['client', 'server']);
 
   api.export("DeepLinkHandler", ['client', 'server']);
 });

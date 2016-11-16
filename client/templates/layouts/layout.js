@@ -10,6 +10,7 @@ Template.mainLayout.rendered = function() {
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
+    Branch.logout();
     Router.go("/landing")
 	},
   'click .item-icon-left': function (){
