@@ -43,11 +43,6 @@
 	padding-top: 10px;
 }
 
-.tv-stroke {
-	stroke: white,
-	stroke-width: 1;
-}
-
 .cta {
 	width: 48%;
 }
@@ -88,8 +83,7 @@ button.at-social-btn i {
 .landing-image {
 	margin-left: auto;
 	margin-right: auto;
-	width:14rem;
-	max-height: 50%;
+	width:80%;
 }
 
 .first-screen {

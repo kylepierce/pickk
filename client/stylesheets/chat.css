@@ -39,8 +39,8 @@
   display:flex;
   justify-content:center;
   align-items:center;
-  -webkit-transition: all 1s ease-in-out;;
-  transition: all 1s ease-in-out;;
+  -webkit-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
 	color: white;
 	font-family: 'lato'
 }

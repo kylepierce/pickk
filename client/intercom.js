@@ -16,8 +16,11 @@ if (Meteor.isCordova) {
 
   initIntercom = function () {
     var user = Meteor.user();
-
-    var data = {};
+    // Grab deep link data if available
+    var data = Session.get("deepLinked");
+    if (!data){
+      var data = {};
+    }
     data.userId = user._id;
     if (user.emails && user.emails[0] && user.emails[0].address) {
       data.email = user.emails[0].address;

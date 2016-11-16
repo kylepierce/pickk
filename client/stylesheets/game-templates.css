@@ -40,7 +40,7 @@
 .single-game-section {
 	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-direction: row 
+	-webkit-flex-direction: row;
 	flex-direction: row;
 	-webkit-align-items: center;
 	align-items: center;
