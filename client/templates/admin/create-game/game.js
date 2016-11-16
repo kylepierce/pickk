@@ -1,15 +1,20 @@
 Template.gameInfo.events({
-	'submit form': function (event, template) {
+	'submit form': function (e, t) {
 		// Get the value of the input box
-		event.preventDefault();
-		var team1 = template.find('#team1 :selected').text
-		var team2 = template.find('#team2 :selected').text
-		var active = template.find('#gameActive').checked
-		var title = team1 + " vs " + team2
-		var tv = template.find('#tv').value
-		var gameTime = template.find('#gameTime').value
-		var timeOfGame = "now"
-		Meteor.call('createGame', team1, team2, title, active, tv, gameTime);
+		e.preventDefault();
+		var away = t.find('#away :selected').text
+		var home = t.find('#home :selected').text
+		var active = t.find('#gameActive').checked
+		var channel = t.find('#tv').value
+		var game = {
+			away: away,
+			home: home,
+			active: active,
+			channel: channel
+		}
+
+		Meteor.call('createGame', game);
+		sAlert.success("Game Created!!" , {effect: 'slide', position: 'bottom', html: true});
 	}
 }); 
 

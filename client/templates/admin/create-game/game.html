@@ -19,25 +19,21 @@
 
 			<form id="gameInfo">
 				<label type="stacked" class="item item-input item-stacked-label">
-					<span class="input-label">Team 1</span>
-					<select id="team1"> {{> nfl}} </select>
+					<span class="input-label">Away</span>
+					<select id="away"> {{> nfl}} </select>
 				</label>
 				<label type="stacked" class="item item-input item-stacked-label">
-					<span class="input-label">Team 2</span>
-					<select id="team2"> {{> nfl}} </select>
+					<span class="input-label">Home</span>
+					<select id="home"> {{> nfl}} </select>
 				</label>
 				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">TV Channel</span>
 					<input id="tv" type="text">
 				</label>				
-				<label type="stacked" class="item item-input item-stacked-label">
-					<span class="input-label">Game Time Spelled Out</span>
-					<input id="gameTime" type="text">
-				</label>
 				<div class="item item-toggle item-text-wrap">
 				    Active?
 			    <label class="toggle">
-			      <input type="checkbox" id="gameActive" checked name="gameActive">
+			      <input type="checkbox" id="gameActive" name="gameActive">
 			      <div class="track">
 			        <div class="handle"></div>
 			      </div>

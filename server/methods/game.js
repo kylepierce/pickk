@@ -1,11 +1,6 @@
 Meteor.methods({
-	'createGame': function(team1, team2, title, active, channel, gameTime) {
-		check(team1, String);
-		check(team2, String);
-		check(title, String);
-		check(active, Boolean);		// CHECK - Boolean or String?
-		check(channel, String);
-		check(gameTime, String);
+	'createGame': function(g) {
+		check(g, Object);
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -15,54 +10,49 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		if (active === true){
+		if (g.active === true){
 			var status = "inprogress"
 		} else {
 			var status = "scheduled"
 		}
 
+		var home = Teams.findOne({"fullName": g.home}); 
+		var away = Teams.findOne({"fullName": g.away});
+
+		var homeAbbr = home.computerName
+		var awayAbbr = away.computerName
+
+		var title = g.away + " vs " + g.home
 		var timeCreated = new Date();
 		Games.insert({
-			teams: [team1, team2],
+			teams: [g.home, g.away],
+			teamAbbr: ["nfl-" + homeAbbr.toLowerCase(), "nfl-" + awayAbbr.toLowerCase()],
 			dateCreated: timeCreated,
 			scheduled: timeCreated,
-			gameDate: gameTime,
 			name: title,
 			football: true,
 			status: status,
 			manual: true,
-			home: {
-		    name: team1,
-		    market: team1,
-		    abbr: team1,
-		    id: ""
-		  },
-		  away: {
-		    name: team2,
-		    market: team2,
-		    abbr: team2,
-		    id: ""
-		  },
 		  scoring: {
 		    home: {
-			    name: team1,
-			    market: team1,
-			    abbr: team1,
-			    id: "",
+			    name: g.home,
+			    market: g.home,
+			    abbr: homeAbbr.toUpperCase(),
+			    id: home._id,
 		      runs: null
 		    },
 		    away: {
-			    name: team2,
-			    market: team2,
-			    abbr: team2,
-			    id: "",
+			    name: g.away,
+			    market: g.away,
+			    abbr: awayAbbr.toUpperCase(),
+			    id: away._id,
 		      runs: null
 		    }
 		  },
-			tv: channel,
+			tv: g.channel,
 			commercial: false,
 			completed: false,
-			live: active,
+			live: g.active,
 			nonActive: [],
 			users: []
 		});

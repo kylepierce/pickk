@@ -28,18 +28,6 @@ Template.games.helpers({
       return true
     }
   },
-
-  numberOfPlayers: function (array) {
-    var number = array.length
-    return number
-  },
-
-  endOfGame: function (game) {
-    var status = game.close_processed
-    if (status){
-      return true
-    }
-  }
 });
 
 Template.games.events({

@@ -1,0 +1,18 @@
+<template name="adminControls">
+	<div style="background-color: #b2b2b2; height: 40px;">
+<!-- 		<div class="col-md-33 past-game">
+	  	Game Completed?: 
+	  	{{#if endOfGame game}}
+	  		Already closed
+	  	{{else}}
+	  		<button data-action="gameOver" data-game-id="{{game._id}}">Not closed</button>
+	  	{{/if}}
+	  </div> -->
+	  <div class="col-md-50 past-game">
+			# of users: {{{numberOfPlayers game.users}}}
+		</div>
+		<div class="col-md-50 past-game">
+			<button data-action="gameAdmin" data-game-id="{{game._id}}">Admin Page</button>
+		</div>
+	</div>	
+</template>
