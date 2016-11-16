@@ -11,7 +11,7 @@ AutoForm.hooks({
         } else {
           done();
           if (Meteor.user().profile.isOnboarded) {
-            Router.go('/');
+            Router.go('/home');
           } else {
             Router.go('/newUserFavoriteTeams');
           }
