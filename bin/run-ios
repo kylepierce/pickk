@@ -16,5 +16,6 @@ $DIRNAME/merge-settings $ENV ios > /tmp/$ENV.json
 
 # reset all IOS simulators
 xcrun simctl erase all
+# --mobile-server https://pickk.net
 
-meteor run ios-device --settings --mobile-server https://pickk.net /tmp/$ENV.json "$@"
+meteor run ios-device --settings /tmp/$ENV.json "$@"
