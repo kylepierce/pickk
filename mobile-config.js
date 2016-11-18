@@ -59,6 +59,9 @@ App.setPreference('intercom-ios-api-key', 'ios_sdk-e5fc0fe6291b80f1d3026a54f46ba
 App.setPreference('intercom-android-api-key', 'android_sdk-8817227116e3cb348ce70c90c6713dd36d19887a');
 App.setPreference('intercom-android-sender-id', '259263435947');
 
+App.setPreference('android-targetSdkVersion', '23');
+App.setPreference('android-minSdkVersion', '15');
+
 App.appendToConfig(`
   <branch-config>
     <ios-team-id value="Q768H4GZH4" />

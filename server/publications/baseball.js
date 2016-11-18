@@ -7,7 +7,7 @@ Meteor.publish('activeAtBat', function(gameId) {
 
 Meteor.publish('activePlayers', function(gameId) {
   check(gameId, String);
-  
+  this.unblock()
   // Fix Next
   // var fields = {
   //   name: 
