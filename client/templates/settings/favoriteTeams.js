@@ -62,9 +62,9 @@ var moveNextStep = function () {
   } else {
     // End of steps
     if (Meteor.user().profile.isOnboarded) {
-      Router.go('/home');
+      Router.go('/');
     } else {
-      Router.go('/home');
+      Router.go('/');
     }
   }
 }
