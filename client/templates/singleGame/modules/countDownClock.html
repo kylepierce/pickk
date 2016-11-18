@@ -1,0 +1,8 @@
+<template name="countDownClock">
+	<svg class="count-down" height="40" width="40" viewBox="4 4 60 60">
+		<g id="test">
+	    <circle id="Oval" stroke="{{alert date}}" stroke-width="2" fill="white" cx="30" cy="30" r="25" stroke-dashoffset="{{reduce date}}" stroke-dasharray="157.0796"></circle>
+	    <text x="50%" y="67%" font-size="30" font-family="Lato, Verdana" text-anchor="middle" fill="black">{{countdown date}}</text>
+	  </g>
+  </svg>
+</template>

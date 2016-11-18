@@ -26,6 +26,7 @@
 
 .question {
 	width: 100%;
+	display: flex;
 	text-align: center;
 	background-color: white;
 	padding: 10px;

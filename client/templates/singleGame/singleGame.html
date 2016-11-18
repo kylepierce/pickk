@@ -69,7 +69,10 @@
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
 		<div class="question">
-			<span class="display-question">{{q.que}}</span>
+			<div class="display-question center">
+				{{q.que}}
+				{{>countDownClock date=q.dateCreated}}
+			</div>
 		</div>
 		<div id="binaryOptions">
 		{{#each o in options q}}

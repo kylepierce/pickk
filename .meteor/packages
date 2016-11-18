@@ -96,3 +96,6 @@ astronomerio:core
 meteorhacks:unblock
 pickk:branch-io
 themeteorchef:grindage
+peerlibrary:reactive-publish
+peerlibrary:subscription-data
+remcoder:chronos

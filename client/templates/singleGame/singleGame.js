@@ -36,6 +36,7 @@ Template.singleGame.helpers({
   },
   commericalQuestions: function () {
     var currentUserId = Meteor.userId()
+    
     var selector = {
       active: true, 
       commercial: true, 
@@ -45,12 +46,17 @@ Template.singleGame.helpers({
     return Questions.find(selector, sort).fetch();
   },
   questions: function () {
+    // Only show questions that are 'gamePlayed.time' old
     var currentUserId = Meteor.userId()
+    var timeLimit = GamePlayed.findOne({}).timeLimit
+    var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+
     var selector = {
       active: true, 
-      commercial: false, 
-      usersAnswered: {$nin: [currentUserId]}
-    }
+      commercial: false,
+      dateCreated: {$gt: finish},
+      usersAnswered: {$nin: [currentUserId]},
+    };
     var sort = {sort: {dateCreated: 1}, limit: 1}
     return Questions.find(selector, sort).fetch();
   },
@@ -58,10 +64,17 @@ Template.singleGame.helpers({
     var currentUserId = Meteor.userId()
     var game = Games.findOne();
     // Checking the game commerical status and seeing if there are any questions that are avaiable for that status.
+    
     var selector = {
       active: true, 
       commercial: {$eq: game.commercial}, 
       usersAnswered: {$nin: [currentUserId]}
+    }
+
+    if (!game.commercial){
+      var timeLimit = GamePlayed.findOne({}).timeLimit
+      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+      selector["dateCreated"] = {$gt: finish}
     }
 
     var questions = Questions.find(selector).count();

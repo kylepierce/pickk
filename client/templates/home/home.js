@@ -61,3 +61,37 @@ Template.home.events({
     Router.go('/daily-pickks')
   }, 
 });
+
+
+// else if (post.tag == "leader") {
+//         IonPopup.show({
+//           title: 'Leaderboard Winnings!',
+//           template: message,
+//           buttons: [{
+//             text: 'Got It!',
+//             type: 'button-positive',
+//             onTap: function() {
+//               Meteor.call('removeNotification', id);
+//               $('body').removeClass('popup-open');
+//               $('.backdrop').remove();
+//               Blaze.remove(this.view);
+//             }
+//           }]
+//         });
+//       } else if (post.source == "Exchange") {
+//         message = '<img style="max-width:100%;" src="/storeowner.png">' + message
+//         IonPopup.show({
+//           title: 'Diamond Exchange',
+//           template: message,
+//           buttons: [{
+//             text: 'Got It!',
+//             type: 'button-positive',
+//             onTap: function() {
+//               Meteor.call('removeNotification', id);
+//               $('body').removeClass('popup-open');
+//               $('.backdrop').remove();
+//               Blaze.remove(this.view);
+//             }
+//           }]
+//         });
+//       }

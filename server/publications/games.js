@@ -5,14 +5,14 @@ Meteor.publish('singleGame', function(_id) {
 });
 
 // Only live games
-Meteor.publish('activeGames', function(days, day) {
-  check(days, Number);
+Meteor.publish('activeGames', function(day) {
   check(day, Number);
   this.unblock()
 
   var specificDay = moment().dayOfYear(day)
   var start = specificDay.startOf('day').add(4, "hour").toDate();
   var finish = specificDay.startOf('day').add(28, "hour").toDate(); // today and tomorrow
+  console.log(start, finish)
   var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "predictions"}};
   var parms = {
     sort: {live: -1, scheduled: 1}, fields: {inning: 0}

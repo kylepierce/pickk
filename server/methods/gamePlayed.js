@@ -12,6 +12,7 @@ Meteor.methods({
 				userId: userId,
 				gameId: gameId,
 				coins: 10000,
+				timeLimit: 30,
 				diamonds: 0,
 				matches: []
 			});

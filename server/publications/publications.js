@@ -73,14 +73,14 @@ Meteor.publish('singleTeam', function ( teamId ) {
 // Active Questions for one game
 Meteor.publish('activeQuestions', function(gameId) {
   check(gameId, String);
-  this.unblock()
+  // this.unblock()
   var currentUserId = this.userId;
-  return Questions.find({
-    gameId: gameId,
-    active: true,
-    commercial: false, 
-    usersAnswered: {$nin: [currentUserId]}
-  }, {sort: {dateCreated: -1}, limit: 1});
+    return Questions.find({
+      gameId: gameId,
+      active: true,
+      commercial: false, 
+      usersAnswered: {$nin: [currentUserId]}
+    }, {sort: {dateCreated: -1}, limit: 1});
 });
 
 Meteor.publish('activeCommQuestions', function(gameId) {
@@ -92,7 +92,7 @@ Meteor.publish('activeCommQuestions', function(gameId) {
     active: true,
     commercial: true, 
     usersAnswered: {$nin: [currentUserId]}
-  }, {sort: {dateCreated: -1}, limit: 1});
+  }, {sort: {dateCreated: 1}, limit: 1});
 });
 
 // Meteor.publish('adminActiveQuestions', function(gameId) {

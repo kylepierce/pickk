@@ -4,6 +4,17 @@
 	font-family: lato;
 }
 
+.display-question {
+	float: left;
+	text-align: left;
+	font-size: 1.2rem;
+	width: 100%;
+}
+
+.count-down {
+	margin-left: 20px;
+}
+
 .option {
 	border: 1px solid #DDDDDD;
 	display: flex;
