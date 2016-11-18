@@ -1,0 +1,23 @@
+<template name="playerCard">
+  {{#with playerInfo}}
+  	<div class="player-slider">
+	  	<div class="slide-inside">
+				<span class="player-name">{{name}}</span>
+				<table>
+					<thead>
+						<td>AVG</td>
+						<td>HR</td>
+						<td>RBI</td>
+						<td>OBP</td>
+					</thead>
+					<tr>
+						<td>{{stats.y2016.avg}}</td>
+						<td>{{stats.y2016.hr}}</td>
+						<td>{{stats.y2016.rbi}}</td>
+						<td>{{stats.y2016.obp}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	{{/with}}
+</template>

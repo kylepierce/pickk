@@ -9,17 +9,13 @@ Template.singleGame.rendered = function () {
 };
 
 Template.singleGame.helpers({
-  games: function () {
-    var $game = Router.current().params._id
-    return Games.find({_id: $game}).fetch();
+  game: function () {
+    return Games.findOne();
   },
-  notifications: function () {
-    var $game = Router.current().params._id
-    return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
-  },
-  player: function () {
-    return AtBat.findOne()
-  },
+  // notifications: function () {
+  //   var $game = Router.current().params._id
+  //   return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
+  // },
   gameCompleted : function () {
     var game = Games.findOne();
     if (game.live === false && game.completed === true) {
@@ -45,7 +41,7 @@ Template.singleGame.helpers({
       commercial: true, 
       usersAnswered: {$nin: [currentUserId]}
     }
-    var sort = {sort: {dateCreated: -1}, limit: 1}
+    var sort = {sort: {dateCreated: 1}, limit: 1}
     return Questions.find(selector, sort).fetch();
   },
   questions: function () {
@@ -55,7 +51,7 @@ Template.singleGame.helpers({
       commercial: false, 
       usersAnswered: {$nin: [currentUserId]}
     }
-    var sort = {sort: {dateCreated: -1}, limit: 1}
+    var sort = {sort: {dateCreated: 1}, limit: 1}
     return Questions.find(selector, sort).fetch();
   },
   noQuestions: function () {
@@ -74,70 +70,47 @@ Template.singleGame.helpers({
     }
   },
   scoreMessage: function() {
-    var user = Meteor.userId();
-    var notifications = Notifications.find({userId: user, read: false});
+    var userId = Meteor.userId();
+    var $game = Router.current().params._id
+    var selector = {
+      userId: userId, 
+      read: false,
+      gameId: $game
+    }
+    var sort = {sort: {dateCreated: 1}, limit: 1}
+    var notifications = Notifications.find(selector, sort);
 
     notifications.forEach(function(post) {
       var id = post._id
-      var message = post._id
-      var questionId = post.questionId
-      if (post.source === "removed"){
+      var questionId = post && post.questionId
+      var sAlertSettings = {effect: 'stackslide', html: true}
+      
+      if (questionId){
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
         var title = question.que
-        Meteor.call('removeNotification', id);
-        sAlert.info('Play: "' + title + '" was removed here are your ' + post.value + " coins!", {effect: 'stackslide', html: true});
-      } else if (post.source === "overturned"){
-        Meteor.subscribe('singleQuestion', questionId)
-        var question = Questions.findOne({_id: questionId});
-        var title = question.que
-        Meteor.call('removeNotification', id);
-        sAlert.info('"' + title + '" was overturned. ' + post.value + " coins were removed", {effect: 'stackslide', html: true});
-      } else if (post.type === "coins" && post.read === false) {
-        Meteor.subscribe('singleQuestion', questionId)
-        var question = Questions.findOne({_id: questionId});
-        var title = question.que
-
-        Meteor.call('removeNotification', id);
-        sAlert.info("You Won " + post.value + " coins! " + title, {effect: 'stackslide', html: true});
-      } else if (post.type === "diamonds" && post.read === false) {
-        message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
-        Meteor.call('removeNotification', id);
-
-        sAlert.warning(message, {effect: 'stackslide', html: true});
-
-      } else if (post.tag == "leader") {
-        IonPopup.show({
-          title: 'Leaderboard Winnings!',
-          template: message,
-          buttons: [{
-            text: 'Got It!',
-            type: 'button-positive',
-            onTap: function() {
-              Meteor.call('removeNotification', id);
-              $('body').removeClass('popup-open');
-              $('.backdrop').remove();
-              Blaze.remove(this.view);
-            }
-          }]
-        });
-      } else if (post.source == "Exchange") {
-        message = '<img style="max-width:100%;" src="/storeowner.png">' + message
-        IonPopup.show({
-          title: 'Diamond Exchange',
-          template: message,
-          buttons: [{
-            text: 'Got It!',
-            type: 'button-positive',
-            onTap: function() {
-              Meteor.call('removeNotification', id);
-              $('body').removeClass('popup-open');
-              $('.backdrop').remove();
-              Blaze.remove(this.view);
-            }
-          }]
-        });
       }
+
+      if (post.source === "removed"){
+        var message = 'Play: "' + title + '" was removed here are your ' + post.value + " coins!"
+
+        sAlert.info(message, sAlertSettings);
+
+      } else if (post.source === "overturned"){
+        var message = '"' + title + '" was overturned. ' + post.value + " coins were removed"
+
+        sAlert.info(message, sAlertSettings);
+      } else if (post.type === "coins" && post.read === false) {
+
+        var message = "You Won " + post.value + " coins! " + title
+        sAlert.info(message, sAlertSettings);
+
+      } else if (post.type === "diamonds" && post.read === false) {
+        var message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
+
+        sAlert.warning(message, sAlertSettings);
+      } 
+      Meteor.call('removeNotification', id);
     });
   }
 });
@@ -167,52 +140,20 @@ Template.singleGame.events({
 
     var count = _.keys(this.q.options).length
     var selectedNumber = this.o.number
-    var squareOptions = count === 2 || count === 4
+    var squareOptions = count === 2 || count === 4 || count === 6
     if (selectedNumber % 2 !== 0 && squareOptions){
       var selectedIsOdd = true
+      var $selected = $(e.currentTarget).next()
     } else {
       var selectedIsOdd = false
-    }
-
-    var displayOptions = function ( o ) {
-      // The select item dom and data
       var $selected = $(e.currentTarget)
-      var selectedObj = o.dataPath
-      var templateName = o.insertedTemplate
-
-      if(selectedIsOdd){
-        var $selected = $(e.currentTarget).next()
-      } else {
-        var $selected = $(e.currentTarget)
-      }
-
-      console.log(squareOptions, selectedIsOdd, $selected)
-
-      var addOptions = function ( id, data ){
-        var options = "<div id='" + id + "'></div>"
-        $selected.after(options);
-        var container = $('#' + id + '')[0]
-        Blaze.renderWithData(templateName, data, container)
-      }
-
-      var container = $('#' + o.containerId + '')[0]
-      if ( container ){
-        if ( container.previousSibling !== $selected[0] ){
-          container.remove();
-          addOptions( o.containerId, selectedObj )  
-        } else {
-          container.remove();
-          addOptions( o.containerId, selectedObj ) 
-        }
-      } else {
-        addOptions( o.containerId, selectedObj )  
-      }
     }
 
     parms = {
       insertedTemplate: Template.wagers,
       containerId: "wagers",
       event: e,
+      selected: $selected,
       template: t,
       dataPath: this,
     }
@@ -224,36 +165,13 @@ Template.singleGame.events({
     $(e.currentTarget).addClass('wager-selected')
 
     Session.set('lastWager', this.w);
+    var $selected = $('.wagers')
 
-    var displayOptions = function ( o ) {
-      // The select item dom and data
-      var $selected = $(e.currentTarget)
-      var selectedObj = o.dataPath
-      var templateName = o.insertedTemplate
-
-      var addOptions = function ( id, data ){
-        var options = "<div id='" + id + "'></div>"
-        $('.wagers').after(options);
-        var container = $('#' + id + '')[0]
-        Blaze.renderWithData(templateName, data, container)
-      }
-
-      var container = $('#' + o.containerId + '')[0]
-      if ( container ){
-        if ( container.previousSibling !== $selected[0] ){
-          container.remove();
-          addOptions( o.containerId, selectedObj )  
-        } else {
-          container.remove();
-        }
-      } else {
-        addOptions( o.containerId, selectedObj )  
-      }
-    }
     parms = {
       insertedTemplate: Template.submitButton,
       containerId: "submit",
       event: e,
+      selected: $selected,
       template: t,
       dataPath: this,
     }
@@ -261,23 +179,8 @@ Template.singleGame.events({
   },
 });
 
-
-Template.singleGameAwards.helpers({
-  gameCoins: function () {
-    var userId = Meteor.userId();
-    var $game = Router.current().params._id
-    return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
-  },
-  diamonds: function () {
-    var userId = Meteor.userId();
-    var $game = Router.current().params._id
-    return GamePlayed.findOne({userId: userId, gameId: $game}).diamonds;
-  },
-});
-
-
 Template.commericalQuestion.helpers({
-  binary: function (q) {
+  freePickk: function (q) {
     if(q.binaryChoice === true){
       return true
     }
@@ -288,42 +191,20 @@ Template.commericalQuestion.events({
   'click [data-action=pickk]': function (e, t) { 
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
-    var displayOptions = function ( o ) {
-      // The select item dom and data
-      var $selected = $(e.currentTarget)
-      var selectedObj = o.dataPath
-      var templateName = o.insertedTemplate
+    var $selected = $(e.currentTarget)
 
-      var addOptions = function ( id, data ){
-        var options = "<div id='" + id + "'></div>"
-        $('#binaryOptions').after(options);
-        var container = $('#' + id + '')[0]
-        Blaze.renderWithData(templateName, data, container)
-      }
-
-      var container = $('#' + o.containerId + '')[0]
-      if ( container ){
-        if ( container.previousSibling !== $selected[0] ){
-          container.remove();
-          addOptions( o.containerId, selectedObj )  
-        } else {
-          container.remove();
-        }
-      } else {
-        addOptions( o.containerId, selectedObj )  
-      }
-    }
     parms = {
       insertedTemplate: Template.submitButton,
       containerId: "submit",
       event: e,
+      selected: $selected,
       template: t,
       dataPath: this,
     }
+
     displayOptions( parms )
   }
 });
-
 
 Template.singleQuestion.helpers({
   eventQuestions: function (q) {
@@ -347,7 +228,6 @@ Template.singleQuestion.helpers({
   }
 });
 
-
 Template.eventQuestion.helpers({
   options: function (q) {
     var imported = q
@@ -369,29 +249,6 @@ Template.eventQuestion.helpers({
   }
 });
 
-
-Template.binaryQuestion.helpers({
-  options: function (q) {
-    var imported = q
-    var data = this.q.options
-    var keys = _.keys(data)
-    var values = _.values(data)
-    var optionsArray = []
-
-    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
-
-    for (var i = 0; i < keys.length; i++) {
-      var obj = values[i]
-      var number = keys[i]
-      obj["option"] = number 
-      optionsArray.push(obj)
-    }
-
-    return optionsArray
-  }
-});
-
-
 Template.option.helpers({
   hasIcon: function (q) {
     if (q.icons){
@@ -400,246 +257,30 @@ Template.option.helpers({
   },
   binary: function(){
     var count = _.keys(this.q.options).length
-    if (count === 2 || count === 4){
+    if (count === 2 || count === 4 || count === 6){
       return "col-md-45 square-options"
     }
   }
 });
 
+displayOptions = function ( o ) {
+  // The select item dom and data
+  var $selected = o.selected
+  var selectedObj = o.dataPath
+  var templateName = o.insertedTemplate
 
-Template.wagers.rendered = function () {
-  var wagerArray = [50, 500, 2500]
-  var lastWager = Session.get('lastWager');
-  var position = wagerArray.indexOf(lastWager)
-  var wager = $('[value=' + lastWager + ']' ).click();
-};
-
-Template.wagers.helpers({
-  wagers: function () {
-    var wagerArray = [50, 500, 2500]
-    return wagerArray
+  var addOptions = function ( id, data ){
+    var options = "<div id='" + id + "'></div>"
+    $selected.after(options);
+    var container = $('#' + id + '')[0]
+    Blaze.renderWithData(templateName, data, container)
   }
-});
 
-
-Template.submitButton.helpers({
-  'live': function() {
-    var connection = Meteor.status()
-    var status = connection.status
-
-    if (status == "connected") {
-      return true
-    } else {
-      return false
-    }
-  },
-  'potential': function (){
-    var multiplier = this.o.multiplier
-    if(this.t === "prediction"){
-      var wager = 5
-      var winnings = parseInt(wager * multiplier)
-      return winnings + " diamonds"
-    } else {
-      var wager = this.w
-      var winnings = parseInt(wager * multiplier)
-      return winnings
-    }
+  var container = $('#' + o.containerId + '')[0]
+  if ( container ){
+    container.remove();
+    addOptions( o.containerId, selectedObj )  
+  } else {
+    addOptions( o.containerId, selectedObj )  
   }
-});
-
-Template.submitButton.events({
-  "click [data-action='submit']": function (e, t) {
-    e.preventDefault()
-    var userId = Meteor.userId()
-    var o = this.o // option
-    var q = this.q // question
-    var t = this.t // type
-
-    // a is for answer object
-    var a = {
-      userId: userId,
-      gameId: q.gameId,
-      questionId: q._id,
-      type: t,
-      answered: o.option,
-      multiplier: o.multiplier,
-      description: o.title
-    }
-
-    // Track what types of questions people are answering
-    if(o.multiplier < 2.5){
-      var multiplierRange = "low"
-    } else if (o.multiplier < 4.5){
-      var multiplierRange = "med"
-    } else if (o.multiplier < 10){
-      var multiplierRange = "high"
-    } else if (o.multiplier < 99){
-      var multiplierRange = "game changer"
-    }
-
-    if ( t === "free-pickk" ){
-      var w = this.w // wager
-      a.wager = w
-    } else if ( t === "prediction" ){
-      var w = "diamonds" // wager
-      Meteor.call('userJoinsAGame', userId, q.gameId);
-
-    } else {
-      var w = this.w // wager
-      // Normal Questions (i.e live, at bat, and drive)
-      var selector = {userId: userId, gameId: q.gameId}
-      var userCoins = GamePlayed.find(selector).fetch();
-      var hasEnoughCoins = userCoins[0].coins >= w
-
-      // Make sure the user has enough coins
-      if (!hasEnoughCoins) {
-        analytics.track("no coins", {
-          id: a.userId,
-          answered: a.answered,
-          type: a.type,
-          gameId: a.gameId,
-          multiplier: o.multiplier,
-          multiplierRange: multiplierRange,
-          wager: w,
-          userCoins: userCoins
-        });
-
-        IonLoading.show({
-          customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
-          duration: 1500,
-          backdrop: true
-        });
-        return
-
-      } else {
-        // If they do add the wager to the answer object and set the last wager to whatever they predicted.
-        a.wager = w
-        Session.set('lastWager', w);
-      }
-    }
-
-    // Remove the question from screen
-    $(".single-question").removeClass("slideInLeft")
-    $(".single-question").addClass("slideOutRight")
-
-    analytics.track("question answered", {
-      id: a.userId,
-      answered: a.answered,
-      type: a.type,
-      gameId: a.gameId,
-      multiplier: o.multiplier,
-      multiplierRange: multiplierRange,
-      wager: w,
-    });
-
-    var countdown = new ReactiveCountdown(250);
-    countdown.start(function() {
-      Meteor.call('playerInactive', a.userId, a.questionId);
-    });
-
-    setTimeout(function() {
-      Meteor.call('questionAnswered', a);
-    }, 250);
-  }
-});
-
-Template.playerCard.helpers({
-  playerInfo: function () {
-    var playerAtBat = AtBat.findOne({active: true})
-    var playerId = playerAtBat.playerId
-    var player = Players.findOne({_id: playerId})
-    return player
-  }
-});
-
-
-// Template.singleGame.rendered = function() {
-//     console.log(this.data); // you should see your passage object in the console
-// };
-
-// Template.singleGameAwards.onCreated(function () {
-//   this.coinsVar = new ReactiveVar(0);
-//   this.diamondsVar = new ReactiveVar(0);
-// });
-
-// Template.singleGameAwards.rendered = function() {
-//   var self = this;
-
-//   // Logic to increment / decrement animate coics
-//   this.coinsVar.set(parseInt(GamePlayed.findOne().coins));
-//   this.coinsFinal = 0;
-//   this.coinsCurrent = 0;
-//   this.coinsDifference = 0;
-
-
-//   self.autorun(function() {
-//     self.coinsFinal = parseInt(GamePlayed.findOne().coins);
-//     var startCount;
-
-//     // If coinsVar is read inside Autorun and then changes, it would go in an infinite loop. Hence, 'nonreactive'
-//     Tracker.nonreactive(function(){
-//       self.coinsCurrent = self.coinsVar.get();
-//       startCount = self.coinsVar.get();
-//     }); 
-
-//     self.coinsDifference = self.coinsFinal - self.coinsCurrent;
-
-//     if (self.coinsDifference !== 0) {
-//       // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
-//       var interval = Meteor.setInterval(function () {
-//           if (self.coinsDifference < 0) {
-//             // if (startCount - self.coinsCurrent === 1000 && Math.abs(self.coinsDifference) > 500 ) {
-//             //   self.coinsCurrent = self.coinsFinal+1000;
-//             // }
-
-//             self.coinsVar.set(--self.coinsFinal);
-//             Meteor.clearInterval(interval)
-//           } else {
-//             if (self.coinsCurrent - startCount === 1000 && Math.abs(self.coinsDifference) > 5000 ) {
-//               self.coinsCurrent = self.coinsFinal-1000;
-//             }
-
-//             self.coinsVar.set(++self.coinsCurrent);
-//           }
-
-//           if (self.coinsCurrent === self.coinsFinal) {
-//             Meteor.clearInterval(interval); // Stop the interval
-//           }
-//         }, 1);
-//     }
-//   });
-
-//   // Logic to increment / decrement animate diamonds
-//   if (Meteor.user()) {
-//     self.diamondsVar.set(parseInt(Meteor.user().profile.diamonds));
-
-//     self.diamondsFinal = 0;
-//     self.diamondsCurrent = 0;
-//     self.diamondsDifference = 0;
-
-//     self.autorun(function() {
-//       self.diamondsFinal = parseInt(Meteor.user().profile.diamonds);
-
-//       Tracker.nonreactive(function(){
-//         self.diamondsCurrent = self.diamondsVar.get();
-//       }); 
-
-//       self.diamondsDifference = self.diamondsFinal - self.diamondsCurrent;
-
-//       if (self.diamondsDifference !== 0) {
-//         // Start interval which changes the numbers with some delay (currently set to 20 miliseconds)
-//         var interval = Meteor.setInterval(function () {
-//             if (self.diamondsDifference < 0) {
-//               self.diamondsVar.set(--self.diamondsCurrent);
-//             } else {
-//               self.diamondsVar.set(++self.diamondsCurrent);
-//             }
-
-//             if (self.diamondsCurrent === self.diamondsFinal) {
-//               Meteor.clearInterval(interval); // Stop the interval
-//             }
-//           }, 1);
-//       }
-//     });
-//   }
-// };
+}

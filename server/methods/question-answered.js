@@ -21,7 +21,7 @@ Meteor.methods({
 		// Validate a few things 
 		var timeCreated = new Date();
 		var question = Questions.findOne(c.questionId);
-		description = c.description || "";
+		var description = c.description || "";
 		
 		// See if they already answered the question
 		if (~question.usersAnswered.indexOf(c.userId)) {
@@ -58,10 +58,10 @@ Meteor.methods({
 		// Update question with the user who have answered.
 		Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
 
-		// Live game questions remove coins and give activity diamonds
-		if (c.type === "live" || c.type === "atBat"){
-			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
+		Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
+		// Live game questions remove coins and give activity diamonds
+		if (c.type === "live" || c.type === "drive"){
 			var selector = {userId: c.userId, gameId: c.gameId}
 			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
@@ -82,10 +82,11 @@ Meteor.methods({
 
 		// Free pickks give coins and adds a notification
 		else if (c.type === "free-pickk"){
-			var scoreMessage = "Thanks for Guessing! Here Are " + c.wager + " Free Coins!"
+			var scoreMessage = "Thanks for Pickking! Here Are " + c.wager + " Free Coins!"
 
 			var selector = {userId: c.userId, gameId: c.gameId}
 			var modify = {$inc: {coins: +c.wager}}
+			
 			GamePlayed.update(selector, modify);
 
 		  var notifyObj = {
@@ -101,7 +102,6 @@ Meteor.methods({
 
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
-			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 			var gameName = Games.findOne({_id: c.gameId}).name;
 			var o = {
 				userId: c.userId, 

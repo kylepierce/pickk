@@ -6,21 +6,11 @@
 
   {{#ionView}}
     {{#ionContent}}
-	    {{#each game in games}}
-				{{> singleGameInfo game=game}}
-			{{/each}}
+			{{> singleGameInfo game=game}}
 
 			<div id="notification-center" class="ten-spacing">
-				{{#each game in games}}
-					<div class="single-notification">
-						{{> singleGameCard game=game}}
-					</div>
-				{{/each}}
-
 				<div class="single-notification">
-					{{#with player}}
-						{{> playerCard}}
-					{{/with}}
+					{{> singleGameCard game=game}}
 				</div>
 			</div>
 
@@ -30,7 +20,6 @@
 				{{/if}}
 
 				{{#if isLive}}
-				
 					{{#if commericalBreak}}
 						{{#each question in commericalQuestions}}
 							{{> commericalQuestion q=question}}
@@ -52,39 +41,14 @@
 					{{/if}}
 				{{/if}}
 			</div>
-			{{scoreMessage}}
+			{{ scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="waitingForNextPlay">	
-	<div class="clear-fix"></div>
-	<div class="item item-divider ten-spacing">
-  	
-		<span>Answers</span>
-  	<span class="float-right underline" data-action="previous-answers">(All)</span>
-  </div>
-  {{> gameHistory i=3 extended=false}}
-  
-  <div class="item item-divider ten-spacing">
-  	<span>Leaderboard +</span>
-  	<span class="float-right underline" data-action="game-leaderboard">(All)</span>
-  </div>
- 	{{> miniLeaderboard i=5}}
-</template>
-
-<template name="singleGameAwards">
-	<h1 class="title white-text-header" style="font-size: 1.2em;">
-		<i class="fa fa-diamond"></i>
-	  <strong>{{diamonds}}</strong> 
-	  <span class="coin-icon"><i class="fa fa-circle"></i></span> 
-  <strong>{{gameCoins}}</strong>
-	</h1>	
-</template>
-
 <template name="commericalQuestion">
-	{{#if binary q}}
-		{{> binaryQuestion q=q t="free-pickk"}}
+	{{#if freePickk q}}
+		{{> freePickkQuestion q=q t="free-pickk"}}
 	{{else}}
 		{{> eventQuestion q=q t="drive"}}
 	{{/if}}
@@ -100,19 +64,6 @@
 	{{#if dailyPickk q}}
 		{{> eventQuestion q=q t="prediction"}}
 	{{/if}}
-</template>
-
-<template name="binaryQuestion">
-	<div class="animated fast slideInLeft">
-		<div class="question larger-card ">
-			<h4>Free Pickk: {{q.que}}</h4>
-		</div>
-		<div id="binaryOptions" class="ten-spacing">
-			{{#each o in options q}}
-				{{> binaryOption o=o q=q t=t w=500}}
-			{{/each}}
-		</div>
-	</div>
 </template>
 
 <template name="eventQuestion">
@@ -146,50 +97,4 @@
 			<span class="multiplier">x {{o.multiplier}}</span>
 		</div>
 	</li>
-</template>
-
-<template name="wagers">
-	<ul class="wagers">
-		{{#each w in wagers}}
-			{{> wager w=w q=q o=o t=t}}
-		{{/each}}
-	</ul>
-</template>
-
-<template name="wager">
-	<li class="wager" data-action="wager-selected" value="{{w}}">
-		<div class="wager-inner">{{w}}</div>
-	</li>
-</template>
- 
-<template name="submitButton">
-	{{#if live}}
-		<button class="submit-button button button-balanced center ten-spacing" data-action="submit">Submit ({{{potential}}})</button>
-	{{else}}
-		<button class="submit-button button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
-	{{/if}}
-</template>
-
-<template name="playerCard">
-  {{#with playerInfo}}
-  	<div class="player-slider">
-	  	<div class="slide-inside">
-				<span class="player-name">{{name}}</span>
-				<table>
-					<thead>
-						<td>AVG</td>
-						<td>HR</td>
-						<td>RBI</td>
-						<td>OBP</td>
-					</thead>
-					<tr>
-						<td>{{stats.y2016.avg}}</td>
-						<td>{{stats.y2016.hr}}</td>
-						<td>{{stats.y2016.rbi}}</td>
-						<td>{{stats.y2016.obp}}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	{{/with}}
 </template>

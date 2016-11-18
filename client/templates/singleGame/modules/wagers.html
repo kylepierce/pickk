@@ -1,0 +1,13 @@
+<template name="wagers">
+	<ul class="wagers">
+		{{#each w in wagers}}
+			{{> wager w=w q=q o=o t=t}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="wager">
+	<li class="wager" data-action="wager-selected" value="{{w}}">
+		<div class="wager-inner">{{w}}</div>
+	</li>
+</template>

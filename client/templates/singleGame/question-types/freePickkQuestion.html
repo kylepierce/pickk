@@ -1,0 +1,12 @@
+<template name="freePickkQuestion">
+	<div class="animated fast slideInLeft">
+		<div class="question larger-card ">
+			<h4>Free Pickk: {{q.que}}</h4>
+		</div>
+		<div id="binaryOptions" class="ten-spacing">
+			{{#each o in options q}}
+				{{> binaryOption o=o q=q t=t w=500}}
+			{{/each}}
+		</div>
+	</div>
+</template>
