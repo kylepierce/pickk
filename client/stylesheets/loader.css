@@ -1,0 +1,120 @@
+.loader-holder {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width:40px;
+}
+
+@keyframes offset {
+  0%, 20%, 80%, 100% {
+    stroke-dasharray: 309.1542053222656;
+    stroke-dashoffset: 0; 
+  }
+  35%, 65% {
+    stroke-dasharray: 309.1542053222656;
+    stroke-dashoffset: 309.1542053222656;
+    
+  }
+}
+
+@keyframes fill-it {
+  35%, 65% {
+    fill: transparent;
+  }
+  0%, 20%, 80%, 100% {
+    fill: #FFE633;
+  }
+}
+
+@keyframes eye-offset {
+  45%, 55% {
+    stroke-dasharray: 112.63058471679688;
+    stroke-dashoffset: 112.63058471679688;
+  }
+  0%, 20%, 80%, 100%  {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-eye {
+  0%, 20%, 80%, 100%  {
+    fill: white;
+  }
+  45%, 55%  {
+    fill: transparent;
+  }
+}
+
+@keyframes band-offset {
+  30%, 75% {
+    stroke-opacity: 0;
+    stroke-dasharray: 73.50;
+    stroke-dashoffset: 225.50;
+  }
+
+  0%, 25%, 85%, 100% {
+    stroke-opacity: 1;
+    stroke-dasharray: 73.5;
+    stroke-dashoffset: 225.5;
+  }
+}
+
+@keyframes fill-band {
+  0%, 20%, 80%, 100% {
+    fill: #FDCF2D;
+  }
+  35%, 70% {
+    fill: transparent;
+  }
+}
+
+@keyframes fill-inner-coin {
+  35%, 65% {
+    fill: transparent;
+  }
+  0%, 20%, 80%, 100% {
+    fill: #FF8E34;
+  }
+}
+
+@keyframes fill-outer-coin {
+  35%, 65% {
+    fill: transparent;
+  }
+  0%, 20%, 80%, 100% {
+    fill: #FFD527;
+  }
+}
+
+.eye {
+  stroke: white;
+  stroke-width: 1;
+  stroke-dasharray: 115;
+  stroke-dashoffset: 115;
+  animation: eye-offset 4s ease-in-out alternate infinite, fill-eye 4s ease-in alternate infinite;
+}
+
+.crown {
+  stroke: #22183D;
+  stroke-width: 2;
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: offset 4s ease-in-out alternate infinite, fill-it 4s ease-in alternate infinite;
+}
+  
+.bottom-band { 
+  stroke-width: 2.25;
+  stroke: #22183D;
+  stroke-dasharray: 73.5;
+  stroke-dashoffset: 225.5;
+  animation: band-offset 4s ease-in-out alternate infinite, fill-band 4s ease-in alternate infinite;
+}
+
+.outer-coin {
+  stroke-width: 1;
+  animation: fill-outer-coin 4s ease-in alternate infinite;
+}
+.inner-coin {
+  stroke-width: 1;
+  animation: fill-inner-coin 4s ease-in alternate infinite;
+}

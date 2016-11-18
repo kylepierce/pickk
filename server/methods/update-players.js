@@ -85,7 +85,15 @@ Meteor.methods({
 
 	'awardLeaders': function(game) {
 		check(game, String);
-		this.unblock()
+		this.unblock();
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+    }
+
+    if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+    }
+
 		var usersThatPlayed = GamePlayed.find({gameId: game}, {sort: {coins: -1}, limit: 10}).fetch();
 		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
 
@@ -142,6 +150,13 @@ Meteor.methods({
 	'endGame': function(game){
 		check(game, String);
 		this.unblock()
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+    }
+
+    if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+    }
 		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
 		Meteor.call('awardLeaders', game);
 		Meteor.call('coinMachine', game);

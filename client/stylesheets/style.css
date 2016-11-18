@@ -64,12 +64,6 @@ body, .ionic-body {
 	margin-top: 10px;
 }
 
-.loader-holder {
-  margin-left: auto;
-  margin-right: auto;
-  width:40px;
-}
-
 .loading-wrapper {
   display: none;
 }
