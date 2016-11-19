@@ -112,7 +112,7 @@ Template._propQuestion.events({
 			que: question,
 			gameId: gameId,
 			type: "prop",
-			commercial: false,
+			commercial: true,
 			options: options,
 			active: "future"
 		}

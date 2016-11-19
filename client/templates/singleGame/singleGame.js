@@ -197,6 +197,16 @@ Template.commericalQuestion.helpers({
     if(q.binaryChoice === true){
       return true
     }
+  },
+  propQuestion: function (q) {
+    if (q.type === "prop"){
+      return true
+    }
+  },
+  driveQuestion: function (q) {
+    if (q.type === "drive"){
+      return true
+    }
   }
 });
 
@@ -242,6 +252,11 @@ Template.singleQuestion.helpers({
 });
 
 Template.eventQuestion.helpers({
+  liveQuestion: function (q) {
+    if (q.type === "live"){
+      return true
+    }
+  },
   options: function (q) {
     var imported = q
     var data = this.q.options

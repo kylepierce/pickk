@@ -47,9 +47,13 @@
 </template>
 
 <template name="commericalQuestion">
+	{{#if propQuestion q}}
+		{{> eventQuestion q=q t="prop"}}
+	{{/if}}
 	{{#if freePickk q}}
 		{{> freePickkQuestion q=q t="free-pickk"}}
-	{{else}}
+	{{/if}}
+	{{#if driveQuestion q}}
 		{{> eventQuestion q=q t="drive"}}
 	{{/if}}
 </template>
@@ -71,7 +75,9 @@
 		<div class="question">
 			<div class="display-question center">
 				{{q.que}}
-				{{>countDownClock date=q.dateCreated}}
+				{{#if liveQuestion q}}
+					{{>countDownClock date=q.dateCreated}}
+				{{/if}}
 			</div>
 		</div>
 		<div id="binaryOptions">
