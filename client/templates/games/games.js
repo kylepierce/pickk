@@ -22,6 +22,30 @@ Template.games.helpers({
     return moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
   },
 
+  next: function () {
+    var day = parseInt(Router.current().params.day) + 1
+    if (day) { 
+      var now = moment().dayOfYear(day)
+    } else {
+      var day = moment().dayOfYear()
+      var now = moment().dayOfYear(day + 1)
+    }
+    
+    return moment(now,"MM/DD/YYYY", true).format("MMM Do");
+  },
+
+  prev: function () {
+    var day = parseInt(Router.current().params.day) - 1
+    if (day) { 
+      var now = moment().dayOfYear(day) 
+    } else {
+      var day = moment().dayOfYear()
+      var now = moment().dayOfYear(day - 1)
+    }
+
+    return moment(now,"MM/DD/YYYY", true).format("MMM Do");
+  },
+
   admin: function () {
     var user = Meteor.user()
     if (user.profile.role === "admin"){

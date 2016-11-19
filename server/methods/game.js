@@ -53,6 +53,7 @@ Meteor.methods({
 			commercial: false,
 			completed: false,
 			live: g.active,
+			registered: [],
 			nonActive: [],
 			users: []
 		});

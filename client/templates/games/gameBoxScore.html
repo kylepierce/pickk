@@ -1,3 +1,53 @@
+<template name="singleGameCard">
+  <div class="single-game-card">
+    {{#if scheduled}}
+      {{#if registered}} 
+        <div data-action="unregister" class="game-unregister center">
+          <i class="fa fa-bell"></i>
+        </div>
+      {{else}}
+        <div data-action="register" class="game-register center">
+          <i class="fa fa-bell"></i>
+        </div>
+      {{/if}}
+      {{> scheduledTeamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name runs=game.scoring.away.runs }}
+
+      {{> scheduledTeamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name runs=game.scoring.home.runs }}
+    {{else}}
+      {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name runs=game.scoring.away.runs }}
+
+      {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name runs=game.scoring.home.runs }}
+    {{/if}}
+    
+    
+
+  </div>
+</template>
+
+<template name="teamBlock">
+  <div class="team-block">
+    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
+      {{abbr}}
+    </div>
+    <div class="team-block-border">
+      <span class="team-name team-text">{{name}}</span>
+      <span class="team-score team-text">{{runs}}</span>
+    </div>
+  </div>
+</template>
+
+<template name="scheduledTeamBlock">
+  <div class="scheduled-team-block">
+    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
+        {{abbr}}
+      </div>
+      <div class="team-block-border">
+        <span class="team-name team-text">{{name}}</span>
+        <span class="team-score team-text">{{runs}}</span>
+    </div>
+  </div>
+</template>
+
 <template name="singleGameInfo">
   {{#if baseball}}
     {{#if inProgress}}
@@ -93,29 +143,4 @@
   {{else}}
     <div class="base-diamond base-fix first-base"></div>
   {{/if}}
-</template>
-
-<template name="singleGameCard">
-  <ul class="single-game-card">
-
-    {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name runs=game.scoring.away.runs }}
-
-    {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name runs=game.scoring.home.runs }}
-
-  </ul>
-</template>
-
-<template name="teamBlock">
-  <li class="team-block">
-    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
-      {{abbr}}
-    </div>
-    <div class="team-block-border">
-<!--       {{#if whoHasBall}}
-        <i class="fa fa-angle-right"></i>
-      {/if} -->
-      <span class="team-name team-text">{{name}}</span>
-      <span class="team-score team-text">{{runs}}</span>
-    </div>
-  </li>
 </template>

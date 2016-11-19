@@ -1,3 +1,35 @@
+Template.singleGameCard.helpers({
+  scheduled: function () {
+    if (this.game.status === "scheduled"){
+      return true
+    }
+  },
+  registered: function (){
+    var userId = Meteor.userId()
+    var list = this.game.registered
+    var alreadyRegistered = _.indexOf(list, userId)
+    if(alreadyRegistered !== -1) {
+      return true
+    } 
+  }
+});
+
+Template.singleGameCard.events({
+  'click [data-action=register]': function () {
+    var userId = Meteor.userId()
+    var gameName = this.game.name
+    var gameId = this.game._id
+    Meteor.call('registerForGame', userId, gameId);
+    sAlert.success("Registered for " + gameName + " !" , {effect: 'slide', position: 'bottom', html: true});
+  },
+  'click [data-action=unregister]': function () {
+    var userId = Meteor.userId()
+    var gameName = this.game.name
+    var gameId = this.game._id
+    Meteor.call('unregisterForGame', userId, gameId);
+    sAlert.success("Removed Registration for " + gameName + "." , {effect: 'slide', position: 'bottom', html: true});
+  }
+});
 
 Template.outDisplay.helpers({
   outs: function (number) {
@@ -30,7 +62,7 @@ Template.count.helpers({
   }
 });
 
-Template.teamBlock.helpers({
+Template.scheduledTeamBlock.helpers({
   teamColors: function (id) {
     Meteor.subscribe('singleTeam', id)
     var team = Teams.findOne({_id: id})
@@ -42,8 +74,19 @@ Template.teamBlock.helpers({
     }
     return color
   },
-  whoHasBall: function () {
-    return false
+});
+
+Template.teamBlock.helpers({
+  teamColors: function (id) {
+    Meteor.subscribe('singleTeam', id)
+    var team = Teams.findOne({_id: id})
+    var hex = team && team.hex
+    if(hex){
+      var color = "#" + team.hex[0]
+    } else {
+      var color = "#134A8E"
+    }
+    return color
   },
 });
 

@@ -1,4 +1,14 @@
 Meteor.methods({
+	'registerForGame': function (userId, gameId){
+		check(userId, String);
+		check(gameId, String);
+		Games.update({_id: gameId}, {$addToSet: {registered: userId}});
+	},
+	'unregisterForGame': function (userId, gameId){
+		check(userId, String);
+		check(gameId, String);
+		Games.update({_id: gameId}, {$pull: {registered: userId}});
+	},
 	'userJoinsAGame': function (userId, gameId) {
 		check(userId, String)
 		check(gameId, String)
