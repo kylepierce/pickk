@@ -148,8 +148,8 @@ Template.singleGame.events({
     Router.go('/history/' + $game )
   }, 
   'click [data-action=play-selected]': function (e, t) {
-    $('.play-selected').removeClass('play-selected five-spacing')
-    $(e.currentTarget).addClass('play-selected five-spacing')
+    $('.play-selected').removeClass('play-selected')
+    $(e.currentTarget).addClass('play-selected')
 
     var count = _.keys(this.q.options).length
     var selectedNumber = this.o.number
@@ -253,7 +253,7 @@ Template.singleQuestion.helpers({
 
 Template.eventQuestion.helpers({
   liveQuestion: function (q) {
-    if (q.type === "live"){
+    if (q.type === "play"){
       return true
     }
   },
@@ -286,7 +286,7 @@ Template.option.helpers({
   binary: function(){
     var count = _.keys(this.q.options).length
     if (count === 2 || count === 4 || count === 6){
-      return "col-md-45 square-options"
+      return "square-options"
     }
   }
 });
