@@ -41,6 +41,7 @@ Template.otherQuestions.events({
 
 		Meteor.call('insertQuestion', q, function(e, r){
 			if(!e){
+				Meteor.call("allInactive", q.gameId)
 				Meteor.call("questionPush", q.gameId, r)
 				Meteor.call("emptyInactive", q.gameId)
 			}

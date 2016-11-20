@@ -34,10 +34,12 @@
 					{{/if}}
 				
 					{{#if noQuestions}}
-						<div class="clear-fix"></div>
-							<h5>Progress Till Next Diamond Prize</h5>
-							{{>diamondWatcher}}
-						{{> waitingForNextPlay}}
+						<div class="animated fast fadeInUp">
+							<div class="clear-fix"></div>
+								<h5>Progress Till Next Diamond Prize</h5>
+								{{>diamondWatcher}}
+							{{> waitingForNextPlay}}
+						</div>
 					{{/if}}
 				{{/if}}
 			</div>
@@ -72,9 +74,9 @@
 
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
-		<div class="question">
+		<div class="question" style="background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('{{q.background}}')" >
 			<div class="display-question center">
-				{{q.que}}
+				<span class="live-question-text">{{q.que}}</span>
 				{{#if liveQuestion q}}
 					{{>countDownClock date=q.dateCreated}}
 				{{/if}}

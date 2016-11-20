@@ -53,6 +53,9 @@ Template.mainLayout.events({
       backdrop: true
     })
     Fetcher.refresh('weekLeaderboard')
+  },
+  'click [data-action="gameEdit"]': function (e, t) {
+    IonModal.open('_editGame', this);
   }
 });
 

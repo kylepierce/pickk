@@ -19,6 +19,15 @@ Meteor.methods({
 		}
 	},
 
+	'allInactive': function(gameId) {
+		check(gameId, String);
+		this.unblock()
+		console.log("Adding all users to inactive")
+		var users = Games.findOne({_id: gameId}).users
+		
+		return Games.update({_id: gameId}, {$set: {'nonActive': users}}, {multi: true});
+	},
+
 	'emptyInactive': function(gameId) {
 		check(gameId, String);
 		this.unblock()

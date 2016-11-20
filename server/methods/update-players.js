@@ -146,6 +146,19 @@ Meteor.methods({
 			}
 		}
 	},
+	'openGame': function(game){
+		check(game, String);
+		this.unblock()
+		console.log(game)
+		if (!Meteor.userId()) {
+      throw new Meteor.Error("not-signed-in", "Must be the logged in");
+    }
+
+    if (Meteor.user().profile.role !== "admin") {
+      throw new Meteor.Error(403, "Unauthorized");
+    }
+		Games.update({_id: game}, {$set: {"status": "inprogress", "live": true}})
+	},
 
 	'endGame': function(game){
 		check(game, String);

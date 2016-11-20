@@ -72,8 +72,6 @@ Template._editQuestion.events({
 			options: options,
 		}
 
-		console.log(q)
-
 		Meteor.call('editQuestion', q);
 		sAlert.success("Posted " + question + "!" , {effect: 'slide', position: 'bottom', html: true});
 		IonModal.close();

@@ -7,6 +7,12 @@
 		<h1 class="title white-text-header">Single Game</h1>
 	{{/contentFor}}
 
+	{{#contentFor "headerButtonRight"}}
+		<button data-action="gameEdit" class="button button-clear pull-right">
+	    {{> ionIcon icon='gear-a'}}
+	  </button>
+  {{/contentFor}}
+
   {{#ionView}}
  		{{#ionContent}}	
  			<div class="container ten-spacing"> 
@@ -32,26 +38,27 @@
 	<div class="panel ten-spacing">
 		{{#if commercial}}
 			<button class='col-md-50 button button-assertive float-left' data-action="endCommercialBreak">
-				End Commercial Break 
+				Commercial: <strong>ON</strong>
 			</button>
 		{{else}}
 			<button class='col-md-50 button button-balanced float-left' data-action="startCommercialBreak">
-				Start of Commercial Break 
+				Commercial: <strong>OFF</strong>
 			</button>
 		{{/if}}
-		
-		<button class='col-md-50 button button-dark float-left' data-ion-modal="_situationalModal"> 
-			Situational Question 
-		</button>
-		
-		<button class='col-md-50 button button-royal float-left' data-action="thisDrive"> 
-			This Drive 
-		</button>
 
-		<button class='col-md-50 button button-calm float-left' data-ion-modal="_gameScoreModal"> 
+		<button class='col-md-50 button button-dark float-left' data-ion-modal="_gameScoreModal"> 
 			Change Score
 		</button>
-		<button class='col-md-50 button button-calm float-left' data-ion-modal="_propQuestion"> 
+		
+		<button class='col-md-33 button button-dark float-left' data-ion-modal="_situationalModal"> 
+			Situational
+		</button>
+		
+		<button class='col-md-33 button button-royal float-left' data-action="thisDrive"> 
+			Drive 
+		</button>
+		
+		<button class='col-md-33 button button-calm float-left' data-ion-modal="_propQuestion"> 
 			Prop
 		</button>
 	</div>

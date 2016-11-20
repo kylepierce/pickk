@@ -26,12 +26,18 @@
 
 .question {
 	width: 100%;
+	min-height: 50px;
+	color: white; 
 	display: flex;
 	text-align: center;
 	background-color: white;
 	padding: 10px;
 	border: 1px solid #CCC;
 	font-weight: bold;
+}
+
+.live-question-text {
+	text-shadow: 2px 2px #222c31;
 }
 
 .s-alert-info{

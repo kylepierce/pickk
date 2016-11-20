@@ -5,10 +5,10 @@ Template._propQuestion.helpers({
 		return game
 	},
 	teamOne: function () {
-		return this.away.name
+		return this.scoring.away.name
 	},
 	teamTwo: function () {
-		return this.home.name
+		return this.scoring.home.name
 	}
 });
 
@@ -20,7 +20,7 @@ Template._propQuestion.events({
 		}
 	},
 	'click [data-action=teamOne]': function () {
-		var team = this.away.name
+		var team = this.scoring.away.name
 		var old = $('#question-input').val()
 		if (old !== "") {
 			var question = $('#question-input').val(old + " " + team + " ")
@@ -30,7 +30,7 @@ Template._propQuestion.events({
 		$("#question-input").focus()
 	},
 	'click [data-action=teamTwo]': function () {
-		var team = this.home.name
+		var team = this.scoring.home.name
 		var old = $('#question-input').val()
 		if (old !== "") {
 			var question = $('#question-input').val(old + " " + team + " ")

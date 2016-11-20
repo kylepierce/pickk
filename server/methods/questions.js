@@ -50,7 +50,7 @@ Meteor.methods({
 		var area = inputsObj.area
 
 		if ( type === "drive") {
-			var optionArray = ["Punt", "Interception", "Fumble", "Touchdown", "Field Goal", "Safety", "Turnover on Downs"]
+			var optionArray = ["Punt", "Interception", "Turnover", "Field Goal", "Safety", "Turnover on Downs"]
 		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
 		} else if (down === 2) {
@@ -168,7 +168,6 @@ Meteor.methods({
 
 		function randomizer(min, max){
 			var multi = (Math.random() * (max-min) + min).toFixed(1)
-			console.log(multi)
 			return multi
 		}
 
@@ -178,12 +177,11 @@ Meteor.methods({
 		if ( q.type === "drive" ){
 			var multiplier = { 
 				option1: { low: 2.15, high: 2.37 }, // Punt
-				option2: { low: 4.6, high: 6.42 }, // Interception
-				option3: { low: 3.2, high: 4.81 }, // Fumble
-				option4: { low: 3.4, high: 4.62 }, // Touchdown
-				option5: { low: 2.2, high: 2.81 }, // Field Goal
-				option6: { low: 15.9, high: 21.61 }, // Safety
-				option7: { low: 5.4, high: 6.7 } // Turn over on downs
+				option2: { low: 2.5, high: 2.91 }, // Field Goal
+				option3: { low: 4.6, high: 6.42 }, // Turnover
+				option4: { low: 3.4, high: 5.62 }, // Touchdown
+				option5: { low: 5.4, high: 6.7 }, // Turn over on downs
+				option6: { low: 15.9, high: 21.61 } // Safety
 			}
 		} else {
 			var multiplier = Meteor.call('addMultipliers', q.inputs, options )
@@ -211,6 +209,7 @@ Meteor.methods({
 			gameId: q.gameId,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
+			background: "/question-background.png",
 			type: q.type,
 			manual: true,
 			active: true,
@@ -317,7 +316,9 @@ Meteor.methods({
 	},
 
 	'editQuestion': function(q){
+		var timeCreated = new Date();
 		Questions.update({_id: q.questionId}, {$set: {
+				dateCreated: timeCreated,
 				active: true, 
 				que: q.que,
 				options: q.options,
