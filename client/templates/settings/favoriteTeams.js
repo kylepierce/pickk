@@ -18,8 +18,14 @@ var hooksObj = {
     if (currentStep.get() === 'favoriteSports') {
       stepsToDo = selectionArray;   // Used to move to next step
     }
+    var type = currentStep.get()
+    var data = {}
+    data[type] = selectionArray
+    var userId = Meteor.userId()
 
-    Meteor.call('updateFavorites', selectionArray, currentStep.get(), function(error) {
+    analytics.identify(userId, data)
+
+    Meteor.call('updateFavorites', selectionArray, type, function(error) {
       if (error) {
         done(error);
       } else {
@@ -64,6 +70,7 @@ var moveNextStep = function () {
     if (Meteor.user().profile.isOnboarded) {
       Router.go('/');
     } else {
+      Meteor.user().isOnboarded === true
       Router.go('/');
     }
   }

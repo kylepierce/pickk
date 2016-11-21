@@ -50,7 +50,7 @@ Meteor.methods({
 		var area = inputsObj.area
 
 		if ( type === "drive") {
-			var optionArray = ["Punt", "Interception", "Turnover", "Field Goal", "Safety", "Turnover on Downs"]
+			var optionArray = ["Punt", "Field Goal", "Turnover", "Touchdown","Turnover on Downs", "Safety"]
 		} else if (down === 1) {
 			var optionArray = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
 		} else if (down === 2) {

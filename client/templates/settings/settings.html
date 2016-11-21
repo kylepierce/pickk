@@ -8,14 +8,13 @@
             {{> afQuickField name='firstName'}}
             {{> afQuickField name='lastName'}}
             {{> afQuickField name='birthday'}}
-            <label id="new-icon" class="item item-input item-stack-label">
-              <span class="input-label">
+            <label  class="item item-input item-stack-label">
+              <span  class="input-label">
                 {{> userAvatar userId=currentUser._id}}
                 <i class="fa fa-spinner fa-spin loading" style="display: none;"></i></span>
               <br>
               <label style="display: inline-block; vertical-align: top">
-                <span>Click to change avatar</span>
-                <input type="file" name="avatar" style="display: none">
+                <input id="new-icon" type="file" name="avatar" placeholder="Change">
               </label>
             </label>
 

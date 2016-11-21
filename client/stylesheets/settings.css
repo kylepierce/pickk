@@ -40,3 +40,7 @@ div.hopscotch-bubble .hopscotch-bubble-content{
 .onboarding-extra-space {
 	margin-bottom: 100px;
 }
+
+#new-icon input[type="button"] {
+	background-color: blue!important;
+}

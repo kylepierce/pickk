@@ -20,8 +20,6 @@ Meteor.methods({
 					'profile.timezone': timezone
 				}
 			});
-    var user = UserList.findOne(this.userId);
-    mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
 	// Update users Favorite teams info from the Favorite Teams page
@@ -37,7 +35,6 @@ Meteor.methods({
 				$set: {'profile.favoriteTeams': teamsArr}
 			});
 		var user = UserList.findOne(this.userId);
-		mailChimpLists.subscribeUser(user, {double_optin: false}); // already sent double optin email upon sign up
 	},
 
 	'updateFavorites': function (selectionArray, type) {
@@ -47,8 +44,6 @@ Meteor.methods({
 		if (!this.userId) {
 			return;
 		}
-
-		console.log("updating - ", type, selectionArray);
 
 		switch(type) {
 			case 'favoriteSports':

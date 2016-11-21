@@ -50,6 +50,7 @@ Template.loginBox.events({
 			data["registerText"] = text
 			var analyticObject = data
 		}
+		var identify = Session.set("identify", analyticObject);
 
     analytics.track("clicked register button", analyticObject);
 

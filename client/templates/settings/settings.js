@@ -29,11 +29,17 @@ Template.settings.helpers({
 });
 
 Template.settings.events({
-  "click #new-icon": function(event, template) {
-    var files = event.currentTarget.files;
-    template.$(".loading").show();
-    template.$(".avatar").hide();
+  "change #new-icon": function(e, t) {
+    console.log(e, t)
+    var files = e.currentTarget.files;
+    t.$(".loading").show();
+    t.$(".avatar").hide();
     console.log(files)
+    IonLoading.show({
+      customTemplate: "Uploading...",
+      duration: 5000,
+      backdrop: true
+    });
     Cloudinary.upload(files, {
       folder: "avatars",
       transformation: [
@@ -42,8 +48,8 @@ Template.settings.events({
       fields: {}
     }, function(error, result) {
       console.log("Did something")
-      template.$(".loading").hide();
-      template.$(".avatar").show();
+      t.$(".loading").hide();
+      t.$(".avatar").show();
       if (error) {
         throw error;
       }
