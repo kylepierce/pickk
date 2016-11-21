@@ -38,7 +38,6 @@ if (Meteor.isCordova) {
 
     intercom.setLauncherVisibility(intercom.GONE);
 
-    enableIntercomNotifications();
   };
 
   enableIntercomNotifications = function () {

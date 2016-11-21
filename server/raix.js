@@ -2,7 +2,8 @@ Meteor.startup(function () {
   var config = {
     gcm: {
       apiKey: 'AIzaSyAgLfoXtW0MQ0gPOYZJxv2J-BqKm0wlc4Q',
-      projectNumber: 259263435947
+      projectNumber: 259263435947,
+      sendInterval: 250
     }
   };
 
@@ -13,7 +14,8 @@ Meteor.startup(function () {
       apn: {
         certData: Assets.getText('cert/apnDevCert.pem'),
         keyData: Assets.getText('cert/apnDevKey.pem'),
-        production: false
+        production: false,
+        sendInterval: 250
         //passphrase: 'xxxxxxxxx',
         //gateway: 'gateway.push.apple.com',
       }
@@ -23,7 +25,8 @@ Meteor.startup(function () {
       apn: {
         certData: Assets.getText('cert/apnCert.pem'),
         keyData: Assets.getText('cert/apnKey.pem'),
-        production: true
+        production: true,
+        sendInterval: 250
         //passphrase: 'xxxxxxxxx',
         //gateway: 'gateway.push.apple.com',
       }

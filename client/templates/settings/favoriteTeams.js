@@ -24,7 +24,9 @@ var hooksObj = {
     var userId = Meteor.userId()
 
     analytics.identify(userId, data)
-
+    if (Meteor.isCordova) {
+      intercom.updateUser(data);
+    }
     Meteor.call('updateFavorites', selectionArray, type, function(error) {
       if (error) {
         done(error);
@@ -70,8 +72,8 @@ var moveNextStep = function () {
     if (Meteor.user().profile.isOnboarded) {
       Router.go('/');
     } else {
-      Meteor.user().isOnboarded === true
-      Router.go('/');
+      Meteor.call('onBoarded')
+      Router.go('/push-active');
     }
   }
 }

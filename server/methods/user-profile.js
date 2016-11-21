@@ -22,6 +22,15 @@ Meteor.methods({
 			});
 	},
 
+	'onBoarded': function () {
+		if (!this.userId) {
+			return;
+		}
+		UserList.update(this.userId, 
+			{$set: {'profile.isOnboarded': true}}
+		);
+	},
+
 	// Update users Favorite teams info from the Favorite Teams page
 	'updateFavoriteTeams': function(teamsArr) {
 		check(teamsArr, Array);
