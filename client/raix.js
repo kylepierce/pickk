@@ -1,15 +1,11 @@
 Meteor.startup(function () {
   Accounts.onLogin(function () {
-
-    var pushId = Push.id(); // Unified application id - not a token
-    var pushStatus = Push.enabled()
-    // Push.debug = true;
-    var user = Meteor.user()
-    console.log(pushId, pushStatus, user)
     if (Meteor.isCordova) {
-      if(user.profile.isOnboarded){
-        Router.go('/push-active');
-      } 
+      PushNotification.hasPermission(function(data) {
+        if(user.profile.isOnboarded && !data.isEnabled){
+          Router.go('/push-active');
+        } 
+      }) 
     }
   });
 });
