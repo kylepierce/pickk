@@ -48,6 +48,21 @@
   {{/ionView}}
 </template>
 
+<template name="gameTypePrompt">
+	<div class="col-md-50"> 
+		<h5>Drive</h5> 
+		15 questions / quarter
+	</div>
+	<div class="col-md-50">
+		<h5>Live</h5> 
+		Play by Play. Earn More Diamonds.	
+	</div>
+	<br>
+	<div class="col-md-100">
+		Note: You can switch to different type each quarter.
+	</div>
+</template>
+
 <template name="commericalQuestion">
 	{{#if propQuestion q}}
 		{{> eventQuestion q=q t="prop"}}

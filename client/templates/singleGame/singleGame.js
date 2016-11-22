@@ -6,6 +6,28 @@ Template.singleGame.rendered = function () {
     centerMode: true,
     centerPadding: '4.5%'
   });
+
+  var userId = Meteor.userId();
+  var gameId = this.data.game[0]._id
+  var currentGame = GamePlayed.find({
+    gameId: gameId, 
+    userId: userId
+  }).fetch();
+
+  if (currentGame.length === 0){
+    IonPopup.confirm({
+      title: 'Two Ways to Play.',
+      templateName: 'gameTypePrompt',
+      cancelText: "Drive",
+      okText: "Live",
+      onOk: function() {
+        Meteor.call('userJoinsAGame', userId, gameId, "live");
+      },
+      onCancel: function() {
+        Meteor.call('userJoinsAGame', userId, gameId, "drive");
+      } 
+    });
+  }
 };
 
 Template.singleGame.helpers({
@@ -214,7 +236,17 @@ Template.commericalQuestion.events({
   'click [data-action=pickk]': function (e, t) { 
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
-    var $selected = $(e.currentTarget)
+
+    var count = _.keys(this.q.options).length
+    var selectedNumber = this.o.number
+    var squareOptions = count === 2 || count === 4 || count === 6
+    if (selectedNumber % 2 !== 0 && squareOptions){
+      var selectedIsOdd = true
+      var $selected = $(e.currentTarget).next()
+    } else {
+      var selectedIsOdd = false
+      var $selected = $(e.currentTarget)
+    }
 
     parms = {
       insertedTemplate: Template.submitButton,

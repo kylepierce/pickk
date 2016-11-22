@@ -240,6 +240,7 @@ Meteor.methods({
 			que: q.que,
 			gameId: q.gameId,
 			createdBy: currentUserId,
+			background: "/question-background.png",
 			dateCreated: timeCreated,
 			type: q.type,
 			manual: true,

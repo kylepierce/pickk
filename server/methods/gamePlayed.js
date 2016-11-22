@@ -9,7 +9,7 @@ Meteor.methods({
 		check(gameId, String);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
-	'userJoinsAGame': function (userId, gameId) {
+	'userJoinsAGame': function (userId, gameId, type) {
 		check(userId, String)
 		check(gameId, String)
 
@@ -22,8 +22,8 @@ Meteor.methods({
 				userId: userId,
 				gameId: gameId,
 				coins: 10000,
-				type: "drive",
-				timeLimit: 30,
+				type: type,
+				timeLimit: 20,
 				diamonds: 0,
 				matches: []
 			});
