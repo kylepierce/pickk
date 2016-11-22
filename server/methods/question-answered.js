@@ -60,6 +60,7 @@ Meteor.methods({
 
 		Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
+		console.log(c.type)
 		// Live game questions remove coins and give activity diamonds
 		if (c.type === "live" || c.type === "prop" || c.type === "drive"){
 			var selector = {userId: c.userId, gameId: c.gameId}

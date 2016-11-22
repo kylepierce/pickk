@@ -83,6 +83,18 @@ Meteor.publish('activeQuestions', function(gameId) {
     }, {sort: {dateCreated: -1}, limit: 1});
 });
 
+Meteor.publish('activePropQuestions', function(gameId) {
+  check(gameId, String);
+  this.unblock()
+  var currentUserId = this.userId;
+  return Questions.find({
+    gameId: gameId,
+    active: true,
+    type: "prop",
+    usersAnswered: {$nin: [currentUserId]}
+  }, {sort: {dateCreated: -1}, limit: 1});
+});
+
 Meteor.publish('activeCommQuestions', function(gameId) {
   check(gameId, String);
   this.unblock()

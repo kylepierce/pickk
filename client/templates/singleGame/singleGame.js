@@ -38,6 +38,11 @@ Template.singleGame.helpers({
   //   var $game = Router.current().params._id
   //   return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
   // },
+  gameType: function () {
+    var game = GamePlayed.findOne();
+    var type = game.type
+    return type
+  },
   gameCompleted : function () {
     var game = Games.findOne();
     if (game.live === false && game.completed === true) {
@@ -56,6 +61,17 @@ Template.singleGame.helpers({
       return true
     } 
   },
+  prop: function () {
+    var currentUserId = Meteor.userId()
+    
+    var selector = {
+      type: "prop",
+      active: true,  
+      usersAnswered: {$nin: [currentUserId]}
+    }
+    var sort = {sort: {dateCreated: -1}, limit: 1}
+    return Questions.find(selector, sort).fetch();
+  },
   commericalQuestions: function () {
     var currentUserId = Meteor.userId()
     
@@ -70,35 +86,50 @@ Template.singleGame.helpers({
   questions: function () {
     // Only show questions that are 'gamePlayed.time' old
     var currentUserId = Meteor.userId()
-    var timeLimit = GamePlayed.findOne({}).timeLimit
-    var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+    var gamePlayed = GamePlayed.findOne({}) 
+    var timeLimit = gamePlayed.timeLimit
+    var gameType = gamePlayed.type
+    if (gameType === "live"){
+      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
 
-    var selector = {
-      active: true, 
-      commercial: false,
-      dateCreated: {$gt: finish},
-      usersAnswered: {$nin: [currentUserId]},
-    };
-    var sort = {sort: {dateCreated: 1}, limit: 1}
-    return Questions.find(selector, sort).fetch();
+      var selector = {
+        active: true, 
+        commercial: false,
+        dateCreated: {$gt: finish},
+        usersAnswered: {$nin: [currentUserId]},
+      };
+      var sort = {sort: {dateCreated: 1}, limit: 1}
+      return Questions.find(selector, sort).fetch();
+    } else {
+      console.log(gameType)
+    }
   },
   noQuestions: function () {
     var currentUserId = Meteor.userId()
     var game = Games.findOne();
     // Checking the game commerical status and seeing if there are any questions that are avaiable for that status.
+    var gamePlayed = GamePlayed.findOne({}) 
+    var timeLimit = gamePlayed.timeLimit
+    var gameType = gamePlayed.type
+    if (gameType === "live"){
+
+      var selector = {
+        active: true, 
+        commercial: {$eq: game.commercial}, 
+        usersAnswered: {$nin: [currentUserId]}
+      }
+      if (!game.commercial){
+        var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+        selector["dateCreated"] = {$gt: finish}
+      }
+    } else {
+      var selector = {
+        active: true, 
+        commercial: true, 
+        usersAnswered: {$nin: [currentUserId]}
+      }
+    }
     
-    var selector = {
-      active: true, 
-      commercial: {$eq: game.commercial}, 
-      usersAnswered: {$nin: [currentUserId]}
-    }
-
-    if (!game.commercial){
-      var timeLimit = GamePlayed.findOne({}).timeLimit
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      selector["dateCreated"] = {$gt: finish}
-    }
-
     var questions = Questions.find(selector).count();
     if (questions === 0 ){
       return true
@@ -239,7 +270,7 @@ Template.commericalQuestion.events({
 
     var count = _.keys(this.q.options).length
     var selectedNumber = this.o.number
-    var squareOptions = count === 2 || count === 4 || count === 6
+    var squareOptions = count === 2 
     if (selectedNumber % 2 !== 0 && squareOptions){
       var selectedIsOdd = true
       var $selected = $(e.currentTarget).next()
@@ -262,17 +293,20 @@ Template.commericalQuestion.events({
 });
 
 Template.singleQuestion.helpers({
+  propQuestions: function (q) {
+    if(q.type === "prop"){
+      return true
+    }
+  },
   eventQuestions: function (q) {
     if(q.atBatQuestion || q.event){
       return true
     }
   },
   liveQuestion: function (q) {
-    var isCommerical = Games.findOne().commercial;
-    var atBatQuestion = q && q.atBatQuestion
-    var binaryChoice = q && q.binaryChoice
-    var prediction = q && q.type === "prediction"
-    if(!isCommerical && !atBatQuestion && !binaryChoice && !prediction){
+    var live = q && q.type === "live"
+    var play = q && q.type === "play"
+    if(live || play){
       return true
     }
   },
