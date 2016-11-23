@@ -65,7 +65,7 @@
 <template name="singleGameCTA">
   {{#if inProgress}}
     <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-      Play Now! ({{game.tv}})
+      Play Now! ({{{quarter game.period}}} - {{game.tv}})
     </div>
   {{/if}}
 </template>

@@ -186,6 +186,25 @@ Template.singleGameCTA.helpers({
     if (this.game.status === "scheduled"){
       return true
     }
+  },
+  quarter: function (num) {
+    switch(num){
+      case 1:
+        return "1st Quarter"
+        break;
+      case 2:
+        return "2nd Quarter"
+        break;
+      case 3:
+        return "3rd Quarter"
+        break;
+      case 4:
+        return "4th Quarter"
+        break;
+      case 5:
+        return "Overtime"
+        break;
+    }
   }
 });
 

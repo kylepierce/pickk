@@ -4,8 +4,6 @@ Template._editGame.events({
 		var selected = e.target.id
 		var gameId = t.data.game[0]._id
 		Router.go('/admin/game/' + gameId + "/" + selected)
-	},
-	'click [data-action="2"]': function (e, t) {
-		console.log(2)
-	},
+		IonPopover.hide();
+	}
 });

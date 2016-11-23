@@ -82,6 +82,6 @@ Template.games.events({
   },
   'click [data-action=gameAdmin]': function (e, t) {
     var gameId = $(e.currentTarget).attr("data-game-id");
-    Router.go('/admin/game/' + gameId)
+    Router.go('/admin/game/' + gameId + "/1")
   }
 });

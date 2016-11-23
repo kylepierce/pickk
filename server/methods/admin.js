@@ -37,6 +37,10 @@ Meteor.methods({
 		UserList.update({_id: user}, {$push: {"profile.trophies": trophyId}})
 	},
 
+	'nextPeriod': function (game, period){
+		return Games.update({_id: game}, {$set: {period: period + 1}})
+	},
+
 	// Way for Admin to manually update users coins
 	// 'updateCoins': function(user, coins) {
 	// 	check(user, String);

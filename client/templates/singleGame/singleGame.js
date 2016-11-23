@@ -54,10 +54,12 @@ Template.singleGame.helpers({
           okText: "Live",
           onOk: function() {
             gamePlayed["type"] = "live"
+            analytics.track("joined game", gamePlayed);
             Meteor.call('userJoinsAGame', gamePlayed);
           },
           onCancel: function() {
             gamePlayed["type"] = "drive"
+            analytics.track("joined game", gamePlayed);
             Meteor.call('userJoinsAGame', gamePlayed);
           } 
         });

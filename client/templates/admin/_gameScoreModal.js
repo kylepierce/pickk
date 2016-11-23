@@ -43,9 +43,21 @@ Template._gameScoreModal.events({
 		IonModal.close();
 	},	
 	'click [data-action="endQuarter"]': function () {
-		var period = parseInt(Router.current().params.period)
-		Meteor.call('awardLeaders', game, period);
-		Meteor.call('coinMachine', game, period);
+		var gameId = Router.current().params._id
+		var game = Games.findOne({_id: gameId});
+		var active = parseInt(game.period)
+		var current = parseInt(Router.current().params.period)
+		if (current === active){
+			if(confirm("Are you sure?")) {
+				Meteor.call('nextPeriod', gameId, period)
+				Meteor.call('awardLeaders', gameId, period);
+				Meteor.call('coinMachine', gameId, period);
+				sAlert.success("On to the next one!!" , {effect: 'slide', position: 'bottom', html: true});
+			}
+		} else {
+			alert('Not active.')
+		}
+		
 	},
 	'click [data-action="open"]': function (e, t) {
 		var gameId = Router.current().params._id
