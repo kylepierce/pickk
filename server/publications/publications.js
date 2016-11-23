@@ -40,7 +40,6 @@ Meteor.publish('gameNotifications', function(gameId) {
   return Notifications.find({gameId: gameId, userId: userId, read: false})  
 });
 
-
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
   this.unblock()
@@ -71,37 +70,40 @@ Meteor.publish('singleTeam', function ( teamId ) {
 
 // Questions and Answers
 // Active Questions for one game
-Meteor.publish('activeQuestions', function(gameId) {
+Meteor.publish('activeQuestions', function(gameId, period) {
   check(gameId, String);
   // this.unblock()
   var currentUserId = this.userId;
     return Questions.find({
       gameId: gameId,
       active: true,
+      period: period,
       commercial: false, 
       usersAnswered: {$nin: [currentUserId]}
     }, {sort: {dateCreated: -1}, limit: 1});
 });
 
-Meteor.publish('activePropQuestions', function(gameId) {
+Meteor.publish('activePropQuestions', function(gameId, period) {
   check(gameId, String);
   this.unblock()
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
     active: true,
+    period: period,
     type: "prop",
     usersAnswered: {$nin: [currentUserId]}
   }, {sort: {dateCreated: -1}, limit: 1});
 });
 
-Meteor.publish('activeCommQuestions', function(gameId) {
+Meteor.publish('activeCommQuestions', function(gameId, period) {
   check(gameId, String);
   this.unblock()
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
     active: true,
+    period: period,
     commercial: true, 
     usersAnswered: {$nin: [currentUserId]}
   }, {sort: {dateCreated: 1}, limit: 1});

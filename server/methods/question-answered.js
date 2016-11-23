@@ -44,6 +44,7 @@ Meteor.methods({
     Answers.insert({
 			userId: c.userId,
 			gameId: c.gameId,
+			period: c.period,
 			questionId: c.questionId,
 			type: c.type,
 			dateCreated: timeCreated,
@@ -60,10 +61,9 @@ Meteor.methods({
 
 		Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
-		console.log(c.type)
 		// Live game questions remove coins and give activity diamonds
 		if (c.type === "live" || c.type === "prop" || c.type === "drive"){
-			var selector = {userId: c.userId, gameId: c.gameId}
+			var selector = {userId: c.userId, gameId: c.gameId, period: c.period}
 			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
 
@@ -85,7 +85,7 @@ Meteor.methods({
 		else if (c.type === "free-pickk"){
 			var scoreMessage = "Thanks for Pickking! Here Are " + c.wager + " Free Coins!"
 
-			var selector = {userId: c.userId, gameId: c.gameId}
+			var selector = {userId: c.userId, gameId: c.gameId, period: c.period}
 			var modify = {$inc: {coins: +c.wager}}
 			
 			GamePlayed.update(selector, modify);

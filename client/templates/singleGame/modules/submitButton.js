@@ -36,6 +36,7 @@ Template.submitButton.events({
       userId: userId,
       gameId: q.gameId,
       questionId: q._id,
+      period: q.period,
       type: t,
       answered: o.option,
       multiplier: o.multiplier,
@@ -106,6 +107,7 @@ Template.submitButton.events({
     analytics.track("question answered", {
       id: a.userId,
       answered: a.answered,
+      period: a.period,
       type: a.type,
       gameId: a.gameId,
       multiplier: o.multiplier,

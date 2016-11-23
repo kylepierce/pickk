@@ -3,6 +3,8 @@ Template.createQuestion.events({
 		// Turn off reload
 		event.preventDefault();
 		var gameId = Router.current().params._id
+		var game = Games.findOne({});
+		var period = game.period
 
 		// Capture the current situation in the game
 		var inputsObj = {}
@@ -17,6 +19,7 @@ Template.createQuestion.events({
 		// One object to be passed to the insertQuestion method.
 		var q = {
 			gameId: gameId,
+			period: period,
 			commercial: false,
 			type: "play",
 			inputs: inputsObj
@@ -35,6 +38,8 @@ Template.createQuestion.events({
 		// Turn off reload
 		event.preventDefault();
 		var gameId = Router.current().params._id
+		var game = Games.findOne({});
+		var period = game.period
 		var style = t.find("input[name=style]").value
 		var inputsObj = {
 			down: 6,
@@ -45,6 +50,7 @@ Template.createQuestion.events({
 		// One object to be passed to the insertQuestion method.
 		var q = {
 			gameId: gameId,
+			period: period,
 			commercial: false,
 			type: "play",
 			inputs: inputsObj
@@ -61,6 +67,8 @@ Template.createQuestion.events({
 		// Turn off reload
 		event.preventDefault();
 		var gameId = Router.current().params._id
+		var game = Games.findOne({});
+		var period = game.period
 		var style = t.find("input[name=style]").value
 		var inputsObj = {
 			down: 5,
@@ -71,6 +79,7 @@ Template.createQuestion.events({
 		// One object to be passed to the insertQuestion method.
 		var q = {
 			gameId: gameId,
+			period: period,
 			commercial: false,
 			type: "play",
 			inputs: inputsObj

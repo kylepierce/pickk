@@ -207,6 +207,7 @@ Meteor.methods({
 		Questions.insert({
 			que: q.que,
 			gameId: q.gameId,
+			period: q.period,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			background: "/question-background.png",
@@ -239,6 +240,7 @@ Meteor.methods({
 		Questions.insert({
 			que: q.que,
 			gameId: q.gameId,
+			period: q.period,
 			createdBy: currentUserId,
 			background: "/question-background.png",
 			dateCreated: timeCreated,
@@ -250,9 +252,8 @@ Meteor.methods({
 		});
 	},
 
-	'createTrueFalse': function(que, gameId) {
-		check(que, String);
-		check(gameId, String);
+	'createTrueFalse': function(q) {
+		check(q, Object);
 
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -266,8 +267,9 @@ Meteor.methods({
 		var timeCreated = new Date();
 
 		Questions.insert({
-			que: que,
-			gameId: gameId,
+			que: q.que,
+			gameId: q.gameId,
+			period: q.period,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			type: "freePickk",
@@ -357,7 +359,7 @@ Meteor.methods({
 			var amount = parseInt(a.wager)
 			var scoreMessage = "Play was removed. Here are your " + amount + " coins"
 
-			GamePlayed.update({userId: a.userId, gameId: a.gameId}, {$inc: {coins: amount}});
+			GamePlayed.update({userId: a.userId, gameId: a.gameId,  period: a.period}, {$inc: {coins: amount}});
 
 		  var notifyObj = {
 		  	userId: a.userId,
@@ -407,8 +409,9 @@ Meteor.methods({
 			// Update users coins
 			var user = a.userId
 			var game = a.gameId
+			var period = a.period
 
-			GamePlayed.update({userId: user, gameId: game}, {$inc: {coins: -amount}});
+			GamePlayed.update({userId: user, gameId: game, period: period,}, {$inc: {coins: -amount}});
 
 			var scoreMessage = "Play was overturned. " + amount + " coins were changed"
 

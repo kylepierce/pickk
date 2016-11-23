@@ -30,10 +30,13 @@ Template.otherQuestions.events({
 	'click [data-action="thisDrive"]': function(e, t){
 		event.preventDefault();
 		var gameId = Router.current().params._id
+		var game = Games.findOne({});
+		var period = game.period
 
 		// One object to be passed to the insertQuestion method.
 		var q = {
 			gameId: gameId,
+			period: period,
 			type: "drive",
 			commercial: true,
 			inputs: {}

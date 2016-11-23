@@ -36,10 +36,10 @@ Meteor.methods({
 				value: amount,
 			}
 
-			var game = GamePlayed.findOne({userId: a.userId, gameId: a.gameId});
+			var game = GamePlayed.findOne({userId: a.userId, gameId: a.gameId, period: a.period});
 
 			// Update users coins
-			GamePlayed.update({userId: a.userId, gameId: a.gameId}, {$inc: {coins: amount}}, createPendingNotification(notifyObj));
+			GamePlayed.update({userId: a.userId, gameId: a.gameId, period: a.period}, {$inc: {coins: amount}}, createPendingNotification(notifyObj));
 		}
 
 		var selector = {questionId: questionId, answered: answered}

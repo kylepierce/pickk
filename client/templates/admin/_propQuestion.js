@@ -42,6 +42,8 @@ Template._propQuestion.events({
 	'click [data-action=playSelection]': function () {
 		event.preventDefault();
 		var gameId = Router.current().params._id
+		var game = Games.findOne({});
+		var period = game.period
 		var question = $('#question-input').val()
 		var options = {}
 
@@ -111,6 +113,7 @@ Template._propQuestion.events({
 		var q = {
 			que: question,
 			gameId: gameId,
+			period: period,
 			type: "prop",
 			commercial: true,
 			options: options,
