@@ -49,10 +49,12 @@ Template._gameScoreModal.events({
 		var current = parseInt(Router.current().params.period)
 		if (current === active){
 			if(confirm("Are you sure?")) {
-				Meteor.call('nextPeriod', gameId, period)
-				Meteor.call('awardLeaders', gameId, period);
-				Meteor.call('coinMachine', gameId, period);
+				Meteor.call('nextPeriod', gameId, current)
+				Meteor.call('awardLeaders', gameId, current);
+				Meteor.call('coinMachine', gameId, current);
 				sAlert.success("On to the next one!!" , {effect: 'slide', position: 'bottom', html: true});
+				var next = current + 1
+				Router.go("/admin/game/" + gameId + "/" + next);
 			}
 		} else {
 			alert('Not active.')
