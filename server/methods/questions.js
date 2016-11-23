@@ -276,8 +276,8 @@ Meteor.methods({
 			commercial: true,
 			binaryChoice: true,
 			options: {
-				option1: {title: "True", multiplier: 4},
-				option2: {title: "False", multiplier: 4},
+				option1: {title: "True", number: 1, multiplier: 4},
+				option2: {title: "False", number: 2, multiplier: 4},
 			},
 			usersAnswered: []
 		});

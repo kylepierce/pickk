@@ -107,7 +107,6 @@ Template.singleGame.helpers({
   noQuestions: function () {
     var currentUserId = Meteor.userId()
     var game = Games.findOne();
-    // Checking the game commerical status and seeing if there are any questions that are avaiable for that status.
     var gamePlayed = GamePlayed.findOne({}) 
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
@@ -122,11 +121,16 @@ Template.singleGame.helpers({
         var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
         selector["dateCreated"] = {$gt: finish}
       }
-    } else {
+    } else if (gameType === "drive" && game.commercial === true) {
       var selector = {
         active: true, 
         commercial: true, 
         usersAnswered: {$nin: [currentUserId]}
+      }
+    } else {
+      // THis is a catch all for no questions right now
+      var selector = {
+        active: "purple"
       }
     }
     
@@ -271,6 +275,7 @@ Template.commericalQuestion.events({
     var count = _.keys(this.q.options).length
     var selectedNumber = this.o.number
     var squareOptions = count === 2 
+
     if (selectedNumber % 2 !== 0 && squareOptions){
       var selectedIsOdd = true
       var $selected = $(e.currentTarget).next()
