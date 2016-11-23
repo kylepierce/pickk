@@ -72,6 +72,9 @@ Template.otherQuestions.helpers({
 Template.futureQuestions.events({
 	'click [data-action=activate]': function() {
 		var questionId = this._id;
+		Meteor.call("allInactive", q.gameId)
+		Meteor.call("questionPush", q.gameId, r)
+		Meteor.call("emptyInactive", q.gameId)
 		Meteor.call('reactivateStatus', questionId);
 	},
 	'click [data-action=edit]': function(e, t){
