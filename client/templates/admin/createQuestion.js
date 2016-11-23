@@ -4,7 +4,7 @@ Template.createQuestion.events({
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 
 		// Capture the current situation in the game
 		var inputsObj = {}
@@ -39,7 +39,7 @@ Template.createQuestion.events({
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 		var style = t.find("input[name=style]").value
 		var inputsObj = {
 			down: 6,
@@ -68,7 +68,7 @@ Template.createQuestion.events({
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 		var style = t.find("input[name=style]").value
 		var inputsObj = {
 			down: 5,

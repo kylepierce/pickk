@@ -48,7 +48,6 @@ Template.singleGame.helpers({
 
       if (currentGame.length === 0){
         IonPopup.confirm({
-          title: 'Two Ways to Play.',
           templateName: 'gameTypePrompt',
           cancelText: "Drive",
           okText: "Live",
@@ -56,11 +55,21 @@ Template.singleGame.helpers({
             gamePlayed["type"] = "live"
             analytics.track("joined game", gamePlayed);
             Meteor.call('userJoinsAGame', gamePlayed);
+            IonLoading.show({
+              customTemplate: "Providing Coins...",
+              duration: 5000,
+              backdrop: true
+            });
           },
           onCancel: function() {
             gamePlayed["type"] = "drive"
             analytics.track("joined game", gamePlayed);
             Meteor.call('userJoinsAGame', gamePlayed);
+            IonLoading.show({
+              customTemplate: "Providing Coins...",
+              duration: 5000,
+              backdrop: true
+            });          
           } 
         });
       }

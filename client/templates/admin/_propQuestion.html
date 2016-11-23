@@ -15,7 +15,7 @@
 				{{> optionGen}}
 				{{> optionGen}}
 			</ul>
-			<button id="prop" class='full button button-balanced ten-spacing' data-action="playSelection">Create Prop Question</button>
+			<button id="prop" class='full button button-balanced ten-spacing' data-action="propCreation">Create Prop Question</button>
 		</div>
   {{/ionModal}}
 </template>
@@ -23,7 +23,12 @@
 <template name="optionGen">
 	<li class="option-boxes">
 		<input type="text" class="option-title" placeholder="Option">
-		<input type="text" class="option-range" placeholder="Min">
-		<input type="text" class="option-range" placeholder="Max">	
+		<select class="option-range" id="oddSelector"> 
+			<option>Low (1.5-2.5)</option>
+			<option>Mid (2.5-4)</option>
+			<option>High (4-7)</option>
+			<option>Extra High 😎 (10-19)</option>
+			<option>Game Changer (20+)</option>
+		</select>
 	</li>
 </template>

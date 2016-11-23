@@ -143,9 +143,10 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
     }
 		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
-		parseInt(Router.current().params.period)
-		Meteor.call('awardLeaders', game, period);
-		Meteor.call('coinMachine', game, period);
+		var period = Games.find({_id: game}).period
+		console.log(period)
+		// Meteor.call('awardLeaders', game, period);
+		// Meteor.call('coinMachine', game, period);
 
 	}
 })

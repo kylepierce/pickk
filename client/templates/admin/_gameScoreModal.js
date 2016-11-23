@@ -48,7 +48,7 @@ Template._gameScoreModal.events({
 		var active = parseInt(game.period)
 		var current = parseInt(Router.current().params.period)
 		if (current === active){
-			if(confirm("Are you sure?")) {
+			if(confirm("Are you sure? If its the end of the 4th quarter. Make sure to click end of game.")) {
 				Meteor.call('nextPeriod', gameId, current)
 				Meteor.call('awardLeaders', gameId, current);
 				Meteor.call('coinMachine', gameId, current);

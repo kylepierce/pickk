@@ -26,7 +26,7 @@ Meteor.publish('liveGames', function() {
   var selector = {status: "inprogress"};
   var parms = {
     sort: {live: -1, scheduled: 1},
-    fields: {live: 1, complete: 1, name: 1, ball: 1, strike: 1, tv: 1, gameDate: 1, scheduled: 1, dateCreated: 1, scoring: 1, status: 1, home: 1, away: 1, playersOnBase: 1, outs: 1, inning: 1, topOfInning: 1, users: 1, football: 1, close_processed: 1, type: 1}
+    fields: {inning: 0}
   }
 
   return Games.find(selector, parms);

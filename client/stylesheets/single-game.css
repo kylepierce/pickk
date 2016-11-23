@@ -7,3 +7,16 @@
   text-align: center;
   margin: 30px 0 10px 0;
 }
+
+.quarter-prompt-icon {
+	font-size: 2rem;
+	float: left;
+	clear: both;
+	text-align: center;
+}
+
+.quarter-prompt-text{
+	float: left;
+	clear: both;
+	text-align: center;
+}

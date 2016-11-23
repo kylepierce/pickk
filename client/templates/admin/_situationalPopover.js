@@ -22,7 +22,7 @@ Template._situationalModal.events({
 	'click [data-action="situationalQuestion"]': function(event, template){
 		var que = prompt('Question you would like to ask?')
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 		var gameId = Router.current().params._id
 		var q = {
 			que: que,

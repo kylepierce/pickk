@@ -13,12 +13,6 @@ Template._propQuestion.helpers({
 });
 
 Template._propQuestion.events({
-	'change .option-range': function(e, t){
-		var isNotANumber = isNaN(e.currentTarget.value) 
-		if (isNotANumber === true){
-			alert("That is not a number");
-		}
-	},
 	'click [data-action=teamOne]': function () {
 		var team = this.scoring.away.name
 		var old = $('#question-input').val()
@@ -39,11 +33,11 @@ Template._propQuestion.events({
 		}		
 		$("#question-input").focus()
 	},
-	'click [data-action=playSelection]': function () {
+	'click [data-action=propCreation]': function () {
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 		var question = $('#question-input').val()
 		var options = {}
 
@@ -84,22 +78,23 @@ Template._propQuestion.events({
 				title = "No Option"
 			} else {
 				var optionNum = "option" + (i + 1)
-				var low = optionBoxes[i].children[1].value
-				var high = optionBoxes[i].children[2].value
-				var multi = randomizer(low, high)
-				var isNotANumber = isNaN(multi)
-
-				if (!low) {
-					inputError("Missing Multipliers!")
-					return false
-				}
-				if (low > high){
-					inputError("Min value cannot be larger than the max! " + low + " " + high)
-					return false
-				} 
-				if (isNotANumber) {
-					inputError("Not a Number / Missing Multiplier!")
-					return false
+				var dropDown = optionBoxes[i].children[1].value
+				switch(dropDown){
+					case "Low (1.5-2.5)":
+						var multi = randomizer(1.5, 2.5)
+						break
+					case "Mid (2.5-4)":
+						var multi = randomizer(2.5, 4)
+						break
+					case "High (4-7)":
+						var multi = randomizer(4, 7)
+						break
+					case "Extra High 😎 (10-19)":
+						var multi = randomizer(10, 19)
+						break
+					case "Game Changer (20+)":
+						var multi = randomizer(20, 35)
+						break
 				}
 
 				options[optionNum] = {
