@@ -1,38 +1,4 @@
 Meteor.methods({
-	'updateAllCounters': function(user) {
-		check(user, String);
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-    }
-
-    if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-    }
-
-		var user = UserList.findOne({_id: user})
-		var role = user.profile.role
-		if (role === "admin") {
-			UserList.update({}, {$set: {"profile.queCounter": 0}}, {multi: true})
-		}
-	},
-
-	'updateAllDiamonds': function(user) {
-		check(user, String);
-		if (!Meteor.userId()) {
-      throw new Meteor.Error("not-signed-in", "Must be the logged in");
-    }
-
-    if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-    }
-
-		var user = UserList.findOne({_id: user})
-		var role = user.profile.role
-		if (role === "admin") {
-			UserList.update({}, {$set: {"profile.diamonds": 0}}, {multi: true})
-		}
-	},
-
 	'awardDiamonds': function(o) {
 		check(o, Object);
 		
@@ -44,16 +10,18 @@ Meteor.methods({
 	  }
 
 	  // Add coins to gameId or week
-	  GamePlayed.update({userId: o.userId, gameId: o.gameId}, {$inc: {diamonds: + value}})
+	  GamePlayed.update({userId: o.userId, gameId: o.gameId, period: o.period}, {$inc: {diamonds: + value}})
 	  
 	  createPendingNotification(o)
 	},
 
-	'coinMachine': function(game) {
+	'coinMachine': function(game, period) {
 		check(game, String)
+		check(period, Number);
 		this.unblock()
-		var usersThatPlayed = GamePlayed.find({gameId: game});
-		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
+		var usersThatPlayed = GamePlayed.find({gameId: game, period: period});
+		var game = Games.findOne({_id: game})
+		var gameName = game.name // Easier then querying it later
 
 		exchangeRate = function (coins, rate, userId) {
 			var diamondExchange = Math.floor(coins / rate)
@@ -64,6 +32,7 @@ Meteor.methods({
 				gameId: game,
 				gameName: gameName,
 				value: diamondExchange, 
+				period: period,
 				message: message, 
 				source: "Exchange"
 			}
@@ -83,8 +52,9 @@ Meteor.methods({
 		});
 	},
 
-	'awardLeaders': function(game) {
+	'awardLeaders': function(game, period) {
 		check(game, String);
+		check(period, Number);
 		this.unblock();
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -94,7 +64,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
     }
 
-		var usersThatPlayed = GamePlayed.find({gameId: game}, {sort: {coins: -1}, limit: 10}).fetch();
+		var usersThatPlayed = GamePlayed.find({gameId: game, period: period}, {sort: {coins: -1}, limit: 10}).fetch();
 		var gameName = Games.findOne({_id: game}).name // Easier then querying it later
 
 		function awardTrophies(trophyId, user) {
@@ -103,6 +73,7 @@ Meteor.methods({
 	      type: "trophy",
 	      trophyId: trophyId,
 	      gameId: game,
+	      period: period,
 	      gameName: gameName
     	}
 			Meteor.call('awardTrophy', trophyId, user);
@@ -116,6 +87,7 @@ Meteor.methods({
 			var o = {
 				userId: usersThatPlayed[i].userId, 
 				gameId: game,
+				period: period,
 				gameName: gameName,
 				source: "Leaderboard",
 				value: diamondsToAward[i]
@@ -171,8 +143,9 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
     }
 		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
-		Meteor.call('awardLeaders', game);
-		Meteor.call('coinMachine', game);
+		parseInt(Router.current().params.period)
+		Meteor.call('awardLeaders', game, period);
+		Meteor.call('coinMachine', game, period);
 
 	}
 })

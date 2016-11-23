@@ -1,8 +1,9 @@
 Template.diamondWatcher.helpers({
 	d: function() {
 		var $game = Router.current().params._id
+		var period = parseInt(Router.current().params.period)
 		var userId = Meteor.userId()
-		var currentQue = GamePlayed.findOne({userId: userId, gameId: $game}).queCounter
+		var currentQue = GamePlayed.findOne({userId: userId, gameId: $game, period: period}).queCounter
 		var activityExchange = [0, 1, 3, 8, 15, 30, 45, 60, 75, 100, 125, 150]
 		var value = {"0": 0,
 		"1": 1, "3": 2, "8": 3, "15": 4, "30": 5, "45": 6, "60": 7, "75": 8, "100": 9, "125": 12, "150": 14,

@@ -31,19 +31,15 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     var gameId = game._id
     var userId = Meteor.userId();
-    // Does the current period from game equal the route?
-    // No. Then reroute
     var urlPeriod = Router.current().params.period
     var gamePeriod = game.period
-    console.log(urlPeriod, gamePeriod)
+
     if (urlPeriod !== gamePeriod){
-      console.log("Nah fam")
-      console.log('/game/' + gameId + "/" + gamePeriod)
       Router.go('/game/' + gameId + "/" + gamePeriod)
     }
     
     if (game.live === true && game.completed === false) {
-        var gamePlayed = {
+      var gamePlayed = {
         gameId: gameId,
         userId: userId,
         period: gamePeriod

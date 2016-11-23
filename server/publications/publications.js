@@ -49,7 +49,7 @@ Meteor.publish('usersGroups', function ( user ) {
 });
 
 // ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game) 
-Meteor.publish('gamePlayed', function (user, game) {
+Meteor.publish('gamePlayed', function (user, game, period) {
   check(user, String);
   check(game, String);
 

@@ -42,6 +42,11 @@ Template._gameScoreModal.events({
 		Meteor.call('updateGameScore', gameId, homeScore, awayScore)
 		IonModal.close();
 	},	
+	'click [data-action="endQuarter"]': function () {
+		var period = parseInt(Router.current().params.period)
+		Meteor.call('awardLeaders', game, period);
+		Meteor.call('coinMachine', game, period);
+	},
 	'click [data-action="open"]': function (e, t) {
 		var gameId = Router.current().params._id
 		Meteor.call('openGame', gameId)

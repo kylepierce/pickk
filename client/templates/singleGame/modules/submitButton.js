@@ -69,7 +69,7 @@ Template.submitButton.events({
     } else {
       var w = this.w // wager
       // Normal Questions (i.e live, at bat, and drive)
-      var selector = {userId: userId, gameId: q.gameId}
+      var selector = {userId: userId, gameId: q.gameId, period: q.period}
       var userCoins = GamePlayed.find(selector).fetch();
       var hasEnoughCoins = userCoins[0].coins >= w
 

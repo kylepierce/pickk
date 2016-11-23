@@ -7,7 +7,7 @@ Template.miniLeaderboard.helpers({
 		var userId = Meteor.userId()
 		var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
-    var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
+    var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
     var leaderboard = all.map(function(x) {
       var thisUser = {userId: x.userId, coins: x.coins} 
       return thisUser; 
@@ -30,7 +30,6 @@ Template.miniLeaderboard.helpers({
     var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
     var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}, limit: number}).fetch();
-        console.log($game, $period, list)
     return list
   },
   'username': function(userId) {

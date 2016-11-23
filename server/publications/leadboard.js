@@ -31,6 +31,5 @@ Meteor.publish('leaderboardGamePlayed', function(game, period, number) {
   }
   
   var gamesPlayed = GamePlayed.find(selector, fields, sort)
-  console.log(gamesPlayed)
   return gamesPlayed
 });
