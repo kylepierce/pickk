@@ -8,9 +8,10 @@
  {{#ionView}}
    {{#ionContent}}
       {{#each prize in prizes}}
-        {{#ionItem}}
-          <h2>{{prize.place}}</h2>
-          {{prize.description}}
+        {{#ionItem avatar=true}}
+          <h2>{{prize.title}}</h2>
+          <img class="avatar" src="{{prize.photo}}">
+          {{prize.text}}
         {{/ionItem}}
       {{/each}}
    {{/ionContent}}

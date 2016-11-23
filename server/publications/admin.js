@@ -7,6 +7,11 @@ Meteor.publish('activeHero', function() {
 // 	return Multipliers.find({})
 // });
 
+Meteor.publish('prizes', function () {
+  this.unblock();
+  return Admin.find({prizes: true, active: true})
+});
+
 Meteor.publish('situationalQuestions', function(){
 	return Admin.find({situational: true});
 });

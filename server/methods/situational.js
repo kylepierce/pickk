@@ -5,5 +5,14 @@ Meteor.methods({
 			que: que,
 			situational: true
 		});
+	},
+	'addPrize': function (){
+		Admin.insert({
+			title: "",
+			prizes: true,
+			active: true,
+			photo: "",
+			text: "",
+		});
 	}
 })
