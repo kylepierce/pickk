@@ -9,20 +9,20 @@ Meteor.methods({
 		check(gameId, String);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
-	'userJoinsAGame': function (userId, gameId, type) {
-		check(userId, String)
-		check(gameId, String)
+	'userJoinsAGame': function (gamePlayed) {
+		check(gamePlayed, Object)
 
-		var gameExists = GamePlayed.findOne({gameId: gameId, userId: userId}, {fields: {_id: 1, gameId: 1}})
+		var gameExists = GamePlayed.findOne(gamePlayed, {fields: {_id: 1, gameId: 1}})
 
 		if(!gameExists){
 			var date = new Date(); 
 			GamePlayed.insert({
 				dateCreated: date,
-				userId: userId,
-				gameId: gameId,
+				userId: gamePlayed.userId,
+				gameId: gamePlayed.gameId,
+				period: gamePlayed.period,
 				coins: 10000,
-				type: type,
+				type: gamePlayed.type,
 				timeLimit: 20,
 				diamonds: 0,
 				matches: []

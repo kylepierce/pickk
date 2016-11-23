@@ -2,12 +2,14 @@ Template.singleGameAwards.helpers({
   gameCoins: function () {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
-    return GamePlayed.findOne({userId: userId, gameId: $game}).coins;
+    var period = Games.findOne({_id: $game}).period;
+    return GamePlayed.findOne({userId: userId, gameId: $game, period: period}).coins;
   },
   diamonds: function () {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
-    return GamePlayed.findOne({userId: userId, gameId: $game}).diamonds;
+    var period = Games.findOne({_id: $game}).period;
+    return GamePlayed.findOne({userId: userId, gameId: $game, period: period}).diamonds;
   },
 });
 

@@ -6,28 +6,6 @@ Template.singleGame.rendered = function () {
     centerMode: true,
     centerPadding: '4.5%'
   });
-
-  var userId = Meteor.userId();
-  var gameId = this.data.game[0]._id
-  var currentGame = GamePlayed.find({
-    gameId: gameId, 
-    userId: userId
-  }).fetch();
-
-  if (currentGame.length === 0){
-    IonPopup.confirm({
-      title: 'Two Ways to Play.',
-      templateName: 'gameTypePrompt',
-      cancelText: "Drive",
-      okText: "Live",
-      onOk: function() {
-        Meteor.call('userJoinsAGame', userId, gameId, "live");
-      },
-      onCancel: function() {
-        Meteor.call('userJoinsAGame', userId, gameId, "drive");
-      } 
-    });
-  }
 };
 
 Template.singleGame.helpers({
@@ -51,7 +29,43 @@ Template.singleGame.helpers({
   },
   isLive: function () {
     var game = Games.findOne();
+    var gameId = game._id
+    var userId = Meteor.userId();
+    // Does the current period from game equal the route?
+    // No. Then reroute
+    var urlPeriod = Router.current().params.period
+    var gamePeriod = game.period
+    console.log(urlPeriod, gamePeriod)
+    if (urlPeriod !== gamePeriod){
+      console.log("Nah fam")
+      console.log('/game/' + gameId + "/" + gamePeriod)
+      Router.go('/game/' + gameId + "/" + gamePeriod)
+    }
+    
     if (game.live === true && game.completed === false) {
+        var gamePlayed = {
+        gameId: gameId,
+        userId: userId,
+        period: gamePeriod
+      }
+      var currentGame = GamePlayed.find(gamePlayed).fetch();
+
+      if (currentGame.length === 0){
+        IonPopup.confirm({
+          title: 'Two Ways to Play.',
+          templateName: 'gameTypePrompt',
+          cancelText: "Drive",
+          okText: "Live",
+          onOk: function() {
+            gamePlayed["type"] = "live"
+            Meteor.call('userJoinsAGame', gamePlayed);
+          },
+          onCancel: function() {
+            gamePlayed["type"] = "drive"
+            Meteor.call('userJoinsAGame', gamePlayed);
+          } 
+        });
+      }
       return true 
     } 
   },

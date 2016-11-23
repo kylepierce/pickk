@@ -193,6 +193,6 @@ Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
     // Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
-    Router.go('game.show', {_id: gameId});
+    Router.go('game.show', {_id: gameId, period: 1});
   }
 });
