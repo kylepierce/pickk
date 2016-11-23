@@ -213,7 +213,7 @@ Meteor.methods({
 			background: "/question-background.png",
 			type: q.type,
 			manual: true,
-			active: true,
+			active: q.active,
 			commercial: q.commercial,
 			options: options,
 			usersAnswered: []
@@ -317,11 +317,18 @@ Meteor.methods({
 		});
 	},
 
+	'sendToFuture': function (q){
+		check(q, String);
+
+		Questions.update({_id: q}, {$set: {active: "future" 
+			}});
+	},
+
 	'editQuestion': function(q){
 		var timeCreated = new Date();
 		Questions.update({_id: q.questionId}, {$set: {
 				dateCreated: timeCreated,
-				active: true, 
+				active: "future", 
 				que: q.que,
 				options: q.options,
 			}});

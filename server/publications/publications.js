@@ -52,8 +52,9 @@ Meteor.publish('usersGroups', function ( user ) {
 Meteor.publish('gamePlayed', function (user, game, period) {
   check(user, String);
   check(game, String);
+  check(period, Number);
 
-  return GamePlayed.find({userId: user, gameId: game})
+  return GamePlayed.find({userId: user, gameId: game, period: period})
 });
 
 // Teams

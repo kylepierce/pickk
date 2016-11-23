@@ -57,7 +57,7 @@ Template.singleGame.helpers({
             Meteor.call('userJoinsAGame', gamePlayed);
             IonLoading.show({
               customTemplate: "Providing Coins...",
-              duration: 5000,
+              duration: 1000,
               backdrop: true
             });
           },
@@ -67,7 +67,7 @@ Template.singleGame.helpers({
             Meteor.call('userJoinsAGame', gamePlayed);
             IonLoading.show({
               customTemplate: "Providing Coins...",
-              duration: 5000,
+              duration: 1000,
               backdrop: true
             });          
           } 
@@ -121,8 +121,6 @@ Template.singleGame.helpers({
       };
       var sort = {sort: {dateCreated: 1}, limit: 1}
       return Questions.find(selector, sort).fetch();
-    } else {
-      console.log(gameType)
     }
   },
   noQuestions: function () {

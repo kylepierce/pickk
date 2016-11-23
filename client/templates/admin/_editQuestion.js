@@ -73,7 +73,7 @@ Template._editQuestion.events({
 		}
 
 		Meteor.call('editQuestion', q);
-		sAlert.success("Posted " + question + "!" , {effect: 'slide', position: 'bottom', html: true});
+		sAlert.success("Added " + question + " to future!" , {effect: 'slide', position: 'bottom', html: true});
 		IonModal.close();
 	}
 });

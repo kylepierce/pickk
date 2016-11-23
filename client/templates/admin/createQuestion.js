@@ -21,6 +21,7 @@ Template.createQuestion.events({
 			gameId: gameId,
 			period: period,
 			commercial: false,
+			active: true,
 			type: "play",
 			inputs: inputsObj
 		}
@@ -52,6 +53,7 @@ Template.createQuestion.events({
 			gameId: gameId,
 			period: period,
 			commercial: false,
+			active: true,
 			type: "play",
 			inputs: inputsObj
 		}	
@@ -81,6 +83,7 @@ Template.createQuestion.events({
 			gameId: gameId,
 			period: period,
 			commercial: false,
+			active: true,
 			type: "play",
 			inputs: inputsObj
 		}	

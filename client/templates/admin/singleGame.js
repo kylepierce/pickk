@@ -51,16 +51,11 @@ Template.otherQuestions.events({
 			period: period,
 			type: "drive",
 			commercial: true,
+			active: "future",
 			inputs: {}
 		}
 
-		Meteor.call('insertQuestion', q, function(e, r){
-			if(!e){
-				Meteor.call("allInactive", q.gameId)
-				Meteor.call("questionPush", q.gameId, r)
-				Meteor.call("emptyInactive", q.gameId)
-			}
-		});
+		Meteor.call('insertQuestion', q);
 	},
 });
 
@@ -99,7 +94,7 @@ Template.activeQuestions.events({
 	},
 	'click [data-action=edit]': function(e, t){
 		sAlert.success("Deactivated Question For Edit." , {effect: 'slide', position: 'bottom', html: true});
-		Meteor.call('deactivateStatus', this._id);
+		Meteor.call('sendToFuture', this._id);
 		IonModal.open('_editQuestion', this);
 	}
 });
@@ -117,6 +112,7 @@ Template.pendingQuestions.helpers({
 	},
 	'click [data-action=edit]': function(e, t){
 		sAlert.success("Deactivated Question For Edit." , {effect: 'slide', position: 'bottom', html: true});
+		Meteor.call('sendToFuture', this._id)
 		IonModal.open('_editQuestion', this);
 	}
 });
@@ -146,7 +142,7 @@ Template.pendingQuestion.helpers({
 Template.pendingQuestion.events({
 	'click [data-action=edit]': function(e, t){
 		sAlert.success("Deactivated Question For Edit." , {effect: 'slide', position: 'bottom', html: true});
-		Meteor.call('deactivateStatus', this._id);
+		Meteor.call('sendToFuture', this._id);
 		IonModal.open('_editQuestion', this.q);
 	},
 	'click [data-action=removeQuestion]' : function(e, t) {

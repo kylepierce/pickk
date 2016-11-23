@@ -5,21 +5,7 @@ Meteor.publish('chatMessages', function(groupId, limit) {
   this.unblock()
   limit = limit || 10;
 
-  var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
-  var userIds = _.chain(messages).pluck("user").uniq().value();
-
-  return [
-    UserList.find({_id: {$in: userIds}}, { 
-      limit: limit,
-      fields: {
-        'profile.username': 1,
-        'profile.avatar': 1,
-        'services': 1,
-        '_id': 1
-      }
-    }),
-    Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit})
-  ]
+  return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit})
 });
 
 // Lets "Load more chats work"
