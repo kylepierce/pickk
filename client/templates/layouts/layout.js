@@ -55,7 +55,7 @@ Template.mainLayout.events({
     Fetcher.refresh('weekLeaderboard')
   },
   'click [data-action="gameEdit"]': function (e, t) {
-    IonModal.open('_editGame', this);
+    IonPopover.show('_editGame', this, e.currentTarget);
   }
 });
 

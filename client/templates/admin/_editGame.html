@@ -1,18 +1,11 @@
 <template name="_editGame">
-	{{#ionModal class="white-text-header" title="Edit Game"}}
-		<div class="container">
-			{{#if gameOpen}}
-
-				{{#if endOfGame}}
-	  			Already closed
-
-	  		{{else}}
-	  			<button class="full ten-spacing" data-action="end">End Game</button>
-	  		{{/if}}
-
-			{{else}}
-				<button class="full" data-action="open">Open Game</button>
-			{{/if}}
-  	</div>
-  {{/ionModal}}
+	{{#ionPopover}}
+		{{#ionList}}
+			{{#ionItem}} Quarter 1 {{/ionItem}}
+			{{#ionItem}} Quarter 2 {{/ionItem}}
+			{{#ionItem}} Quarter 3 {{/ionItem}}
+			{{#ionItem}} Quarter 4 {{/ionItem}}
+			{{#ionItem}} Overtime {{/ionItem}}
+		{{/ionList}}
+  {{/ionPopover}}
 </template>

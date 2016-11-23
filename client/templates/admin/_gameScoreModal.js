@@ -15,6 +15,18 @@ Template._gameScoreModal.helpers({
 	},
 	teamTwoScore: function () {
 		return this.home.runs
+	},
+	gameOpen: function () {
+		var status = this.status === "inprogress" && this.live === true
+    if (status){
+      return true
+    }
+	},
+	endOfGame: function () {
+		var status = this.status === "completed"
+    if (status){
+      return true
+    }
 	}
 });
 
@@ -29,5 +41,19 @@ Template._gameScoreModal.events({
 		
 		Meteor.call('updateGameScore', gameId, homeScore, awayScore)
 		IonModal.close();
-	}
+	},	
+	'click [data-action="open"]': function (e, t) {
+		var gameId = Router.current().params._id
+		Meteor.call('openGame', gameId)
+		IonModal.close();
+		sAlert.success("Opened Game" , {effect: 'slide', position: 'bottom', html: true});
+	},
+	'click [data-action="end"]': function (e, t) {
+		var gameId = Router.current().params._id
+		if(confirm("Are you sure?")) {
+			Meteor.call('endGame', gameId)
+			IonModal.close();
+			sAlert.success("Closed Game" , {effect: 'slide', position: 'bottom', html: true});
+		}
+	},
 });
