@@ -200,12 +200,13 @@ Template.singleGame.helpers({
 Template.singleGame.events({
   'click [data-action=game-leaderboard]': function(event, template){
     var $game = Router.current().params._id
+    var $period = Router.current().params.period
     var userId = Meteor.userId()
     analytics.track("waiting-leaderboard", {
       userId: userId,
       gameId: $game,
     });
-    Router.go('/leaderboard/'+ $game)
+    Router.go('/leaderboard/'+ $game + "/" + $period)
   },
   'click [data-action=previous-answers]': function(event, template){
     var $game = Router.current().params._id

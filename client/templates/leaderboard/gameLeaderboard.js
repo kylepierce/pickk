@@ -1,3 +1,34 @@
+Template.gameLeaderboard.helpers({
+  'overview': function (){
+    var $period = parseInt(Router.current().params.period)
+    if ($period === -1){
+      return true
+    }
+  },
+  'noPeriods': function (){
+    var $period = parseInt(Router.current().params.period)
+    if ($period === -1){
+      return true
+    }
+  },
+  'periodExists': function (period){
+    var $game = Router.current().params._id
+    var all = GamePlayed.findOne({gameId: $game, period: period}, {sort: {coins: -1}});
+    if (period === -1){
+      var all = GamePlayed.findOne({gameId: $game}, {sort: {coins: -1}});
+    }
+    return all
+  }
+});
+
+Template.gameLeaderboard.events({
+  'click .item.quarter': function (e, t){
+    var selected = e.target.id
+    var gameId = Router.current().params._id
+    Router.go('/leaderboard/' + gameId + "/" + selected)
+  }
+});
+
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
     // if (!number){
@@ -7,7 +38,12 @@ Template.miniLeaderboard.helpers({
 		var userId = Meteor.userId()
 		var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
-    var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
+    if($period === -1){
+      var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
+    } else {
+      var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
+    }
+    
     var leaderboard = all.map(function(x) {
       var thisUser = {userId: x.userId, coins: x.coins} 
       return thisUser; 
@@ -29,7 +65,11 @@ Template.miniLeaderboard.helpers({
 
     var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
-    var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}, limit: number}).fetch();
+    if($period === -1){
+      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
+    } else {
+      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
+    }
     return list
   },
   'username': function(userId) {
@@ -44,6 +84,11 @@ Template.miniLeaderboard.helpers({
     var userId = Meteor.userId();
     var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
-    return GamePlayed.findOne({userId: userId, gameId: $game, period: $period}).coins;
+    if($period === -1){
+      var list = GamePlayed.findOne({userId: userId, gameId: $game}).coins;
+    } else {
+      var list = GamePlayed.findOne({userId: userId, gameId: $game, period: $period}).coins;
+    }
+    return list;
   },
 });

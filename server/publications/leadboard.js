@@ -16,18 +16,31 @@ Meteor.publish('weekLeaderboard', function(thisWeek){
 	return UserList.find({_id: {$in: newArray}}, {fields: {_id: 1, avatar: 1, services: 1, 'profile.username': 1}})
 });
 
+Meteor.publish('singleGamePlayedIn', function (game, userId){
+  check(game, String);
+  check(userId, String);
+  var selector = {gameId: game, userId: userId}
+  return GamePlayed.find(selector);
+});
+
 Meteor.publish('leaderboardGamePlayed', function(game, period, number) {
   check(game, String);
   check(period, Number);
   this.unblock()
   
-  var selector = {gameId: game, period: period}
   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1}}
-  
+  if (period === -1){
+    var selector = {gameId: game}
+  } else {
+    var selector = {gameId: game, period: period}
+  }
+
   if (number === -1){
     var sort = {sort: {dateCreated: -1}}
+    var selector = {gameId: game}
   } else {
     var sort = {sort: {dateCreated: -1}, limit: number}
+    var selector = {gameId: game, period: period}
   }
   
   var gamesPlayed = GamePlayed.find(selector, fields, sort)
