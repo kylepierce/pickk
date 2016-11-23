@@ -8,6 +8,18 @@ Template.singleGameAdmin.helpers({
 		if (game.football === true){
 			return true
 		}
+	},
+	quarter: function () {
+		var gameId = this.game[0]._id
+		var active = parseInt(this.game[0].period)
+		var current = parseInt(Router.current().params.period)
+		if (current !== active) {
+			var text = "<span style='color: red'>Quarter " + current + "</span><a href='/admin/game/" + gameId + "/" + active + "'> (Active:" + active + ")</a>"
+			return text
+		} else {
+			var text = "<span style='color: green'>Quarter " + current + "</span>"
+			return text
+		}
 	}
 });
 

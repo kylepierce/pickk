@@ -11,30 +11,30 @@ Meteor.publish('situationalQuestions', function(){
 	return Admin.find({situational: true});
 });
 
-Meteor.publish('singleGameFutureQuestions', function(gameId){
+Meteor.publish('singleGameFutureQuestions', function(gameId, period){
   check(gameId, String);
-  var selector = {gameId: gameId, active: "future"}
+  var selector = {gameId: gameId, active: "future", period: period}
   var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);
 });
 
-Meteor.publish('singleGameActiveQuestions', function(gameId){
+Meteor.publish('singleGameActiveQuestions', function(gameId, period){
   check(gameId, String);
-  var selector = {gameId: gameId, active: true}
+  var selector = {gameId: gameId, active: true, period: period}
   var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);
 });
 
-Meteor.publish('singleGamePendingQuestions', function(gameId) {
+Meteor.publish('singleGamePendingQuestions', function(gameId, period) {
   check(gameId, String);
-  var selector = {gameId: gameId, active: null}
+  var selector = {gameId: gameId, active: null, period: period}
   var sort = {sort: {dateCreated: -1}}
   return Questions.find(selector, sort);
 });
 
-Meteor.publish('singleGameOldQuestions', function(gameId) {
+Meteor.publish('singleGameOldQuestions', function(gameId, period) {
   check(gameId, String);
-  var selector = {gameId: gameId, active: false}
+  var selector = {gameId: gameId, active: false, period: period}
   var sort = {sort: {lastUpdated: -1}, limit: 5}
   return Questions.find(selector, sort);
 });
