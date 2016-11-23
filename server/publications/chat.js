@@ -4,7 +4,22 @@ Meteor.publish('chatMessages', function(groupId, limit) {
   check(limit, Match.Maybe(Number));
   this.unblock()
   limit = limit || 10;
-  return Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit});
+
+  var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
+  var userIds = _.chain(messages).pluck("user").uniq().value();
+
+  return [
+    UserList.find({_id: {$in: userIds}}, { 
+      limit: limit,
+      fields: {
+        'profile.username': 1,
+        'profile.avatar': 1,
+        'services': 1,
+        '_id': 1
+      }
+    }),
+    Chat.find({group: groupId}, {sort: {dateCreated: -1}, limit: limit})
+  ]
 });
 
 // Lets "Load more chats work"
@@ -28,27 +43,29 @@ Meteor.publish("chatMessagesCount", function(groupId) {
 // });
 
 // "Improved way"
-Meteor.publish('chatUsersList', function(limit, groupId) {
-  check( limit, Match.Maybe(Number) );
-  check( groupId, Match.Maybe(String) );
-  this.unblock()
-  groupId = groupId || null;
-  limit = limit + 10
+// Meteor.publish('chatUsersList', function(limit, groupId) {
+  // check( limit, Match.Maybe(Number) );
+  // check( groupId, Match.Maybe(String) );
+  // this.unblock()
+  // groupId = groupId || null;
+  // limit = limit + 10
 
-  var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
-  var userIds = _.chain(messages).pluck("user").uniq().value();
+  // var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
+  // var userIds = _.chain(messages).pluck("user").uniq().value();
 
-  var users = UserList.find({_id: {$in: userIds}}, { 
-    limit: limit,
-    fields: {
-      'profile.username': 1,
-      'profile.avatar': 1,
-      'services': 1,
-      '_id': 1
-    }, 
-  });
-  return users;
-});
+  // console.log(userIds.length)
+
+  // var users = UserList.find({_id: {$in: userIds}}, { 
+  //   limit: limit,
+  //   fields: {
+  //     'profile.username': 1,
+  //     'profile.avatar': 1,
+  //     'services': 1,
+  //     '_id': 1
+  //   }, 
+  // });
+  // return users;
+// });
 
 // Mention another player. Switch to load latest users first
 Meteor.publish("chatUsersAutocomplete", function(selector, options, collection) {

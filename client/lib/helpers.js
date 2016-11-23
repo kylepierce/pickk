@@ -9,6 +9,7 @@ Template.registerHelper('username', function (user) {
 });
 
 Template.registerHelper('userObj', function ( userId ) {
+	Meteor.subscribe('findSingle', userId)
 	if (userId) {
 		var user = Meteor.users.findOne({_id: userId})
 	} else if (this.userId) {
