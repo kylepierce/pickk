@@ -29,29 +29,29 @@ Meteor.publish("chatMessagesCount", function(groupId) {
 // });
 
 // "Improved way"
-// Meteor.publish('chatUsersList', function(limit, groupId) {
-  // check( limit, Match.Maybe(Number) );
-  // check( groupId, Match.Maybe(String) );
-  // this.unblock()
-  // groupId = groupId || null;
-  // limit = limit + 10
+Meteor.publish('chatUsersList', function(limit, groupId) {
+  check( limit, Match.Maybe(Number) );
+  check( groupId, Match.Maybe(String) );
+  this.unblock()
+  groupId = groupId || null;
+  limit = limit + 10
 
-  // var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
-  // var userIds = _.chain(messages).pluck("user").uniq().value();
+  var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
+  var userIds = _.chain(messages).pluck("user").uniq().value();
 
-  // console.log(userIds.length)
+  console.log(userIds.length)
 
-  // var users = UserList.find({_id: {$in: userIds}}, { 
-  //   limit: limit,
-  //   fields: {
-  //     'profile.username': 1,
-  //     'profile.avatar': 1,
-  //     'services': 1,
-  //     '_id': 1
-  //   }, 
-  // });
-  // return users;
-// });
+  var users = UserList.find({_id: {$in: userIds}}, { 
+    limit: limit,
+    fields: {
+      'profile.username': 1,
+      'profile.avatar': 1,
+      'services': 1,
+      '_id': 1
+    }, 
+  });
+  return users;
+});
 
 // Mention another player. Switch to load latest users first
 Meteor.publish("chatUsersAutocomplete", function(selector, options, collection) {

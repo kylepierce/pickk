@@ -73,6 +73,7 @@ Meteor.methods({
 			var diamondExchange = {
 				userId: c.userId, 
 				counter: counter, 
+				period: c.period,
 				gameId: c.gameId,
 				gameName: gameName
 			}

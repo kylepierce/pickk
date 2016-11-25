@@ -43,7 +43,7 @@ Template.otherQuestions.events({
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 
 		// One object to be passed to the insertQuestion method.
 		var q = {
@@ -72,9 +72,9 @@ Template.otherQuestions.helpers({
 Template.futureQuestions.events({
 	'click [data-action=activate]': function() {
 		var questionId = this._id;
-		Meteor.call("allInactive", q.gameId)
-		Meteor.call("questionPush", q.gameId, r)
-		Meteor.call("emptyInactive", q.gameId)
+		// Meteor.call("allInactive", this.gameId)
+		// Meteor.call("questionPush", this.gameId, this.que)
+		// Meteor.call("emptyInactive", this.gameId)
 		Meteor.call('reactivateStatus', questionId);
 	},
 	'click [data-action=edit]': function(e, t){

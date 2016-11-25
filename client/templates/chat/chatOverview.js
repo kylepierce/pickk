@@ -2,7 +2,7 @@ Template.chatRoom.rendered = function() {
   var userId = Meteor.userId()
   // var groupId = Router.current().params._id || Session.get('chatGroup') || null;
   // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
-  Meteor.subscribe("chatMessagesCount", null);
+  // Meteor.subscribe("chatMessagesCount", null);
   // Meteor.subscribe('findUsersInGroup', groupId);
   // Meteor.subscribe('usersGroups', userId)
   
@@ -19,13 +19,13 @@ Template.chatOverview.events({
 });
 
 Template.chatOverview.helpers({
-  group: function() {
-    var groupId = Session.get('chatGroup')
-    if (groupId) {
-      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
-      return group.name
-    }
-  } 
+  // group: function() {
+  //   var groupId = Session.get('chatGroup')
+  //   if (groupId) {
+  //     var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
+  //     return group.name
+  //   }
+  // } 
 });
 
 Template.singleMessage.helpers({
@@ -291,7 +291,7 @@ Template.chatRoom.helpers({
     var groupId = Session.get('chatGroup');
     var chatLimit = Session.get('chatLimit');
     Meteor.subscribe("chatMessages", null, chatLimit);
-    // Meteor.subscribe('chatUsersList', chatLimit, null);
+    Meteor.subscribe('chatUsersList', chatLimit, null);
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
     return chat
     

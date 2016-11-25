@@ -8,7 +8,7 @@ Template._situationalModal.events({
 	'click [data-action=addSituational]': function (e, t) {
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
-		var period = game.period
+		var period = parseInt(Router.current().params.period)
 		var que = this.q.que
 		var q = {
 			que: que,

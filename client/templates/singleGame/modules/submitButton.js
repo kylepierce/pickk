@@ -62,7 +62,7 @@ Template.submitButton.events({
       var gamePlayed = {
         userId: userId,
         gameId: q.gameId,
-        type: diamonds,
+        type: "diamonds",
       }
       Meteor.call('userJoinsAGame', gamePlayed);
 
