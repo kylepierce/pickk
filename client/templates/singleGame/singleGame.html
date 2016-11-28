@@ -1,7 +1,9 @@
 <template name="singleGame">
 	{{> homeLayoutHeader}}
 	{{#contentFor "headerTitle"}}
-		{{> singleGameAwards}}
+		{{#if joinedGame}}
+			{{> singleGameAwards}}
+		{{/if}}
 	{{/contentFor}}
 
   {{#ionView}}
@@ -21,38 +23,42 @@
 
 				{{#if isLive}}
 					<!-- Always show prop questions -->
-					{{#if prop}} 
-						{{#each question in prop}}
-							{{> singleQuestion q=question}}
-						{{/each}}
-
-					<!-- If no props show other questions -->
+					{{#if notJoinedGame}}
+						{{> gameTypePrompt}}
 					{{else}}
-
-						<!-- If commerical live show commerical que -->
-						{{#if commericalBreak}}
-							{{#each question in commericalQuestions}}
-								{{> commericalQuestion q=question}}
+						{{#if prop}} 
+							{{#each question in prop}}
+								{{> singleQuestion q=question}}
 							{{/each}}
-						
-						<!-- If !commerical show live questions. -->
-						{{else}}
-							{{#if questions}}
-								{{#each question in questions}}
-									{{> singleQuestion q=question}}
-								{{/each}}
-							{{/if}}
-						{{/if}}
 
-						{{#if noQuestions}}
-							<div class="animated fast fadeInUp">
-								<div class="clear-fix"></div>
-									<h5>Game type: {{gameType}}</h5>
-									<h5>Progress Till Next Diamond Prize</h5>
-									{{>diamondWatcher}}
-								{{> waitingForNextPlay}}
-							</div>
-						{{/if}}						
+						<!-- If no props show other questions -->
+						{{else}}
+
+							<!-- If commerical live show commerical que -->
+							{{#if commericalBreak}}
+								{{#each question in commericalQuestions}}
+									{{> commericalQuestion q=question}}
+								{{/each}}
+							
+							<!-- If !commerical show live questions. -->
+							{{else}}
+								{{#if questions}}
+									{{#each question in questions}}
+										{{> singleQuestion q=question}}
+									{{/each}}
+								{{/if}}
+							{{/if}}
+
+							{{#if noQuestions}}
+								<div class="animated fast fadeInUp">
+									<div class="clear-fix"></div>
+										<h5 style="margin-bottom: 0;">Progress To Next Diamond Prize</h5>
+										{{>diamondWatcher}}
+										<h5>Game type: {{gameType}}</h5>
+									{{> waitingForNextPlay}}
+								</div>
+							{{/if}}						
+						{{/if}}
 					{{/if}}
 				{{/if}}
 			</div>
@@ -78,7 +84,15 @@
 		<h5>Live</h5> 
 		<span class=" quarter-prompt-text">Play by Play. Earn More Diamonds.</span>
 	</div>
-	<br>
+	<div class="clear-fix"></div>
+	<div class="button-box">
+		<button class="button col-md-45" data-action="joinDrive">
+			Drive
+		</button>
+		<button class="button col-md-45 button-balanced" data-action="joinLive">
+			<strong>Live</strong>
+		</button>
+	</div>
 	<div class="col-md-100 ten-spacing text-center">
 		Note: You Select Play Type Each Quarter.
 	</div>

@@ -31,10 +31,10 @@ Template.gameLeaderboard.events({
 
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
-    // if (!number){
-    //   var number = Router.current().params.count
-    //   number = parseInt(number)
-    // }
+    if (!number){
+      var number = Router.current().params.count
+      number = parseInt(number)
+    }
 		var userId = Meteor.userId()
 		var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
@@ -59,16 +59,15 @@ Template.miniLeaderboard.helpers({
 	},
   'player': function(number){
     if (!number){
-      var number = Router.current().params.count
-      number = parseInt(number)
+      var number = parseInt(0)
     }
 
     var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
     if($period === -1){
-      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
+      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
     } else {
-      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
+      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}, limit: number}).fetch();
     }
     return list
   },

@@ -288,6 +288,7 @@ Template.messageBox.helpers({
 
 Template.chatRoom.helpers({
   groupMessages: function() {
+    Meteor.subscribe("chatMessagesCount", null);
     var groupId = Session.get('chatGroup');
     var chatLimit = Session.get('chatLimit');
     Meteor.subscribe("chatMessages", null, chatLimit);

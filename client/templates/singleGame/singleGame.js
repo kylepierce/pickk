@@ -6,6 +6,16 @@ Template.singleGame.rendered = function () {
     centerMode: true,
     centerPadding: '4.5%'
   });
+
+  var game = Games.findOne();
+  var gameId = game._id
+  var userId = Meteor.userId();
+  var urlPeriod = Router.current().params.period
+  var gamePeriod = game.period
+
+  if (urlPeriod !== gamePeriod){
+    Router.go('/game/' + gameId + "/" + gamePeriod)
+  }
 };
 
 Template.singleGame.helpers({
@@ -16,6 +26,38 @@ Template.singleGame.helpers({
   //   var $game = Router.current().params._id
   //   return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
   // },
+  joinedGame: function (){
+    var game = Games.findOne();
+    var gameId = game._id
+    var userId = Meteor.userId();
+    var gamePeriod = game.period
+    var gamePlayed = {
+      gameId: gameId,
+      userId: userId,
+      period: gamePeriod
+    }
+    var currentGame = GamePlayed.findOne(gamePlayed);
+    var type = currentGame && currentGame.type
+    if (type){
+      return true
+    }
+  },
+  notJoinedGame: function (){
+    var game = Games.findOne();
+    var gameId = game._id
+    var userId = Meteor.userId();
+    var gamePeriod = game.period
+    var gamePlayed = {
+      gameId: gameId,
+      userId: userId,
+      period: gamePeriod
+    }
+    var currentGame = GamePlayed.findOne(gamePlayed);
+    var type = currentGame && currentGame.type
+    if (type === undefined){
+      return true
+    }
+  },
   gameType: function () {
     var game = GamePlayed.findOne();
     var type = game.type
@@ -31,50 +73,12 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     var gameId = game._id
     var userId = Meteor.userId();
-    var urlPeriod = Router.current().params.period
-    var gamePeriod = game.period
-
-    if (urlPeriod !== gamePeriod){
-      Router.go('/game/' + gameId + "/" + gamePeriod)
+    // if (urlPeriod !== gamePeriod){
+    //   Router.go('/game/' + gameId + "/" + gamePeriod)
+    // }
+    if (game.status === "inprogress"){
+      return true
     }
-    
-    if (game.live === true && game.completed === false) {
-      var gamePlayed = {
-        gameId: gameId,
-        userId: userId,
-        period: gamePeriod
-      }
-      var currentGame = GamePlayed.find(gamePlayed).fetch();
-
-      if (currentGame.length === 0){
-        IonPopup.confirm({
-          templateName: 'gameTypePrompt',
-          cancelText: "Drive",
-          okText: "Live",
-          onOk: function() {
-            gamePlayed["type"] = "live"
-            analytics.track("joined game", gamePlayed);
-            Meteor.call('userJoinsAGame', gamePlayed);
-            IonLoading.show({
-              customTemplate: "Providing Coins...",
-              duration: 1000,
-              backdrop: true
-            });
-          },
-          onCancel: function() {
-            gamePlayed["type"] = "drive"
-            analytics.track("joined game", gamePlayed);
-            Meteor.call('userJoinsAGame', gamePlayed);
-            IonLoading.show({
-              customTemplate: "Providing Coins...",
-              duration: 1000,
-              backdrop: true
-            });          
-          } 
-        });
-      }
-      return true 
-    } 
   },
   commericalBreak: function (){
     var game = Games.findOne();
@@ -266,6 +270,49 @@ Template.singleGame.events({
       dataPath: this,
     }
     displayOptions( parms )
+  },
+});
+
+Template.gameTypePrompt.events({
+  'click [data-action="joinLive"]': function () {
+    var game = Games.findOne();
+    var gameId = game._id
+    var userId = Meteor.userId();
+    var gamePeriod = game.period
+    var gamePlayed = {
+      gameId: gameId,
+      userId: userId,
+      period: gamePeriod
+    }
+    gamePlayed["type"] = "live"
+    analytics.track("joined game", gamePlayed);
+    Meteor.call('userJoinsAGame', gamePlayed);
+    IonLoading.show({
+      customTemplate: "Providing Coins...",
+      duration: 1000,
+      backdrop: true
+    });
+    Router.go('/game/' + gameId + "/" + gamePeriod)
+  },
+  'click [data-action="joinDrive"]': function () {
+    var game = Games.findOne();
+    var gameId = game._id
+    var userId = Meteor.userId();
+    var gamePeriod = game.period
+    var gamePlayed = {
+      gameId: gameId,
+      userId: userId,
+      period: gamePeriod
+    }
+    gamePlayed["type"] = "drive"
+    analytics.track("joined game", gamePlayed);
+    Meteor.call('userJoinsAGame', gamePlayed);
+    IonLoading.show({
+      customTemplate: "Providing Coins...",
+      duration: 1000,
+      backdrop: true
+    });
+    Router.go('/game/' + gameId + "/" + gamePeriod)
   },
 });
 

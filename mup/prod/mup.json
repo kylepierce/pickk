@@ -25,6 +25,12 @@
       "host": "45.55.184.52",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
+    },
+    {
+      // pickk-app-5
+      "host": "159.203.130.194",
+      "username": "root",
+      "pem": "~/.ssh/id_rsa"
     }
   ],
   // "buildOptions": { // optional
