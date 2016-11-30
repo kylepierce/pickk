@@ -34,7 +34,13 @@ Template.sideMenuContent.events({
     if (Meteor.isCordova) {
       window.plugins.socialsharing.shareWithOptions(options);
     }
-  } 
+  },
+  'click .contact-us': function (e, t){
+    e.preventDefault()
+    if (Meteor.isCordova) {
+      intercom.displayMessenger();
+    } 
+  }
 });
 
 Template.mainLayout.events({
@@ -64,6 +70,9 @@ Template.sideMenuContent.onCreated( function() {
 });
 
 Template.sideMenuContent.helpers({
+  messageCount: function (){
+    intercom.unreadConversationCount();
+  },
   diamonds: function () {
 
     var thisWeek = moment().week()

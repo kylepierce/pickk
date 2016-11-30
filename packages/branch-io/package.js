@@ -15,6 +15,8 @@ Package.onUse(function(api) {
   api.addFiles('deeplinkhandler.js', ['client', 'server']);
 
   api.export("DeepLinkHandler", ['client', 'server']);
+  api.export("NonBranchLinkHandler", ['client', 'server']);
+  api.export("handleOpenURL", ['client', 'server']);
 });
 
 Package.onTest(function(api) {

@@ -6,9 +6,16 @@ if (Meteor.isCordova) {
     
     Branch.initSession();
     var data = Session.get("deepLinked");
+    // var nonBranch = Session.get("nonBranch");
+    // console.log("third", nonBranch)
+    // if (nonBranch){
+    //   handleOpenURL(nonBranch);
+    //   Session.set("nonBranch", "");
+    // }
     console.log("device ready command", data)
   })
 }
+
   // Accounts.onLogin(function () {
   //   console.log("User is logged in");
 

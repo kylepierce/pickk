@@ -145,9 +145,8 @@ Meteor.methods({
     }
 		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
 		var period = Games.find({_id: game}).period
-		console.log(period)
-		// Meteor.call('awardLeaders', game, period);
-		// Meteor.call('coinMachine', game, period);
+		Meteor.call('awardLeaders', game, period);
+		Meteor.call('coinMachine', game, period);
 
 	}
 })

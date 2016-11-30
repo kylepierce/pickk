@@ -84,3 +84,5 @@ App.configurePlugin("branch-cordova-sdk", {
 App.configurePlugin('phonegap-plugin-push', {
     SENDER_ID: 259263435947
 });
+
+App.configurePlugin('cordova-plugin-insomnia');

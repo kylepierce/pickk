@@ -41,17 +41,17 @@
       Diamond Leaderboard
     {{/ionItem}}
 
-<!--     {{#ionItem iconLeft=true data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-person-outline'}}
-      Profile
-    {{/ionItem}} -->
-
     {{#ionItem iconLeft=true path="rules" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-medical-outline'}}
       Common Questions
     {{/ionItem}}
 
     {{#if isMobile}}
+      {{#ionItem class="contact-us" iconLeft=true data-ion-menu-toggle="left"}}
+        {{> ionIcon icon='ios-person-outline'}}
+        Contact Us {{messageCount}}
+      {{/ionItem}}
+
       {{#ionItem class="js-share-link" iconLeft=true data-ion-menu-toggle="left"}}
         {{> ionIcon icon='share'}}
         Share
