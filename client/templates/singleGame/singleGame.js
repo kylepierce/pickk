@@ -270,7 +270,17 @@ Template.singleGame.events({
       dataPath: this,
     }
     displayOptions( parms )
-  },
+  }
+});
+
+Template.gameTypePrompt.helpers({
+  notFootball: function (){
+    var game = Games.findOne();
+    var sport = game.sport
+    if (sport !== "football"){
+      return true
+    }
+  }
 });
 
 Template.gameTypePrompt.events({

@@ -34,6 +34,7 @@ Meteor.methods({
 			status: status,
 			manual: true,
 			period: 1,
+			sport: "football",
 		  scoring: {
 		    home: {
 			    name: g.home,
