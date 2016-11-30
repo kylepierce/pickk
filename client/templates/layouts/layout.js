@@ -13,6 +13,10 @@ Template.sideMenuContent.events({
     Branch.logout();
     Router.go("/landing")
 	},
+  'click [data-action=profile]': function () {
+    var userId = Meteor.userId();
+    Router.go("/user-profile/" + userId)
+  },
   'click .item-icon-left': function (){
     IonSideMenu.snapper.close();
   },

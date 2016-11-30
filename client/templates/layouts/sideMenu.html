@@ -1,11 +1,18 @@
 <template name="sideMenuContent">
   <div class="profile-container">
-    {{#if currentUser}}
-    <a href="#" data-ion-menu-toggle="left"> 
-    {{> userAvatar userId=currentUser._id}}
+    <a href="/settings" class="edit-settings">
+      {{> ionIcon icon='gear-a'}}
     </a>
-    <strong class="username">{{currentUser.profile.username}}</strong><br>
-    <i class="fa fa-diamond"></i><strong> {{diamonds}}</strong>
+    <a data-action="profile" class="view-profile">
+      {{> ionIcon icon='ios-person'}}
+    </a>
+    {{#if currentUser}}
+      <a href="#" data-ion-menu-toggle="left"> 
+      {{> userAvatar userId=currentUser._id}}
+      </a>
+      <strong class="username">{{currentUser.profile.username}}</strong><br>
+      <i class="fa fa-diamond"></i>
+      <strong> {{diamonds}}</strong>
     {{/if}}
   </div>
 
@@ -36,8 +43,7 @@
     {{/ionItem}}
 
     {{#ionItem iconLeft=true path="week-leaderboard" data-ion-menu-toggle="left"}}
-      <!-- Fix lastprofile -->
-      <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100; padding: 0 10px 0 0;"></i>
+      <i class="fa fa-diamond diamond-leaderboard"></i>
       Diamond Leaderboard
     {{/ionItem}}
 

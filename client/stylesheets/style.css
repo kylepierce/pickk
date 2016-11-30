@@ -331,17 +331,6 @@ input[type=submit] {
 	margin-top: 10px;
 }
 
-.profile-container {
-	height: 170px;
-	background-color: #222C31;
-	color:white;
-	text-align: center;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-
-
 /*.scrollable {
 	overflow-y: auto;
 	position: fixed;

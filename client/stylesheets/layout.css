@@ -14,7 +14,31 @@
 	height: 100px;
 	width: 100px;
 }
-
 .profile-container {
-	padding-top: 15px;
+	height: 170px;
+	background-color: #222C31;
+	color:white;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 25px;
+}
+
+.edit-settings {
+	font-size: 2.5rem;
+	float: left;
+	margin-left: 20px;
+}
+
+.view-profile {
+	font-size: 2.5rem;
+	float: right;
+	margin-right: 20px;
+}
+
+.diamond-leaderboard {
+	margin-left: -38px; 
+	font-size: 1.3em; 
+	font-weight: 100; 
+	padding: 0 10px 0 0;
 }

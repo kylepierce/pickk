@@ -6,7 +6,7 @@ Meteor.methods({
 		
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
-		const text = "Guess What Happens on " + message;
+		const text = "Pickk What Happens on " + message;
 		if (userIds && userIds.length) {
 			Push.send({
 				from: 'Pickk',
