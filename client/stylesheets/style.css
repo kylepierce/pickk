@@ -64,6 +64,10 @@ body, .ionic-body {
 	margin-top: 10px;
 }
 
+.hundred-bottom {
+	margin-bottom: 100px;
+}
+
 .loading-wrapper {
   display: none;
 }

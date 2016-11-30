@@ -30,18 +30,12 @@
 							{{#each question in prop}}
 								{{> singleQuestion q=question}}
 							{{/each}}
-
-						<!-- If no props show other questions -->
-						{{else}}
-
-							<!-- If commerical live show commerical que -->
-							{{#if commericalBreak}}
+						{{else}} 
+							{{#if commericalBreak}} <!-- game.commerical = true -->
 								{{#each question in commericalQuestions}}
 									{{> commericalQuestion q=question}}
 								{{/each}}
-							
-							<!-- If !commerical show live questions. -->
-							{{else}}
+							{{else}} <!-- !game.commerical -->
 								{{#if questions}}
 									{{#each question in questions}}
 										{{> singleQuestion q=question}}
@@ -50,17 +44,19 @@
 							{{/if}}
 
 							{{#if noQuestions}}
-								<div class="animated fast fadeInUp">
+								<div class="animated fast fadeInUp hundred-bottom">
 									<div class="clear-fix"></div>
-										<h5 style="margin-bottom: 0;">Progress To Next Diamond Prize</h5>
+										<h5 style="margin-bottom: 0;">
+											Progress To Next Diamond Prize
+										</h5>
 										{{>diamondWatcher}}
 										<h5>Game type: {{gameType}}</h5>
 									{{> waitingForNextPlay}}
 								</div>
-							{{/if}}						
-						{{/if}}
-					{{/if}}
-				{{/if}}
+							{{/if}}	<!-- noQuestions -->					
+						{{/if}} <!-- prop -->
+					{{/if}} <!-- notJoinedGame -->
+				{{/if}} <!-- isLive -->
 			</div>
 			{{ scoreMessage}}
     {{/ionContent}}

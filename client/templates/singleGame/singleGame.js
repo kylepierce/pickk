@@ -150,11 +150,6 @@ Template.singleGame.helpers({
         commercial: true, 
         usersAnswered: {$nin: [currentUserId]}
       }
-    } else {
-      // THis is a catch all for no questions right now
-      var selector = {
-        active: "purple"
-      }
     }
     
     var questions = Questions.find(selector).count();
