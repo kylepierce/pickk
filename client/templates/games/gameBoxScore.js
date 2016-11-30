@@ -142,8 +142,8 @@ Template.inningDisplay.helpers({
 Template.futureGameInfo.helpers({
   displayDate: function (date) {
     function compare(today, game) {
-      var momentA = moment(today,"MM/DD/YYYY", true).date();
-      var momentB = moment(game,"MM/DD/YYYY", true).date();
+      var momentA = moment(today,"MM/DD/YYYY", true).dayOfYear();
+      var momentB = moment(game,"MM/DD/YYYY", true).dayOfYear();
       if (momentA > momentB) return 1;
       else if (momentA < momentB) return -1;
       else return 0;
@@ -152,9 +152,8 @@ Template.futureGameInfo.helpers({
     var now = moment();
     var futureOrToday = compare(now, gameTime)
     var timezone = Meteor.user().profile.timezone
-    // var timezone = jstz.determine();
     if (!timezone) {var timezone = "America/New_York"}
-    
+
     if (futureOrToday == 1){
       return "Closed"
     } else if (futureOrToday === 0) {
