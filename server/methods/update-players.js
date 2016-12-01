@@ -9,7 +9,6 @@ Meteor.methods({
 	  	o.message = "You Earned " + value + " Diamonds!"
 	  }
 
-	  console.log(o)
 	  // Add coins to gameId or week
 	  GamePlayed.update({userId: o.userId, gameId: o.gameId, period: o.period}, {$inc: {diamonds: + value}})
 	  

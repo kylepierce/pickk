@@ -16,21 +16,15 @@ Meteor.publish("userData", function() {
   return UserList.find(this.userId,
     {
       fields: {
-        'notifications': 1,
-        'pendingNotifications': 1
+        'createdAt': 1,
       }
     });
-});
-
-Meteor.publish('unreadNotifications', function() {
-  this.unblock()
-  return Notifications.find({userId: this.userId, read: false}, {sort: {dateCreated: -1}})  
 });
 
 Meteor.publish('userNotifications', function(userId) {
   check(userId, String);
   this.unblock()
-  return Notifications.find({userId: userId, read: false})  
+  return Notifications.find({userId: userId})  
 });
 
 Meteor.publish('gameNotifications', function(gameId) {
@@ -132,7 +126,7 @@ Meteor.publish('gamesPlayed', function() {
 Meteor.publish('findSingle', function(id) {
   check(id, String);
   this.unblock()
-  var fields = {fields: {'profile': 1,'_id': 1, 'pendingNotifications': 1}}
+  var fields = {fields: {'createdAt': 1,'profile': 1,'_id': 1, 'pendingNotifications': 1}}
   return UserList.find({_id: id}, fields);
 });
 

@@ -31,6 +31,16 @@ Meteor.methods({
 		);
 	},
 
+	'ratingPrompt': function () {
+		if (!this.userId) {
+			return;
+		}
+		var now = new Date(); 
+		UserList.update(this.userId, 
+			{$set: {'profile.lastAsked': now}}
+		);
+	},
+
 	// Update users Favorite teams info from the Favorite Teams page
 	'updateFavoriteTeams': function(teamsArr) {
 		check(teamsArr, Array);

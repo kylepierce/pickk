@@ -5,6 +5,6 @@ Meteor.publish("userNotificationSettings", function() {
       fields: {
         'notifications': 1,
         'pendingNotifications': 1
-      }
-    });
+      },
+    limit: 25});
 });

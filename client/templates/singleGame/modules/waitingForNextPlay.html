@@ -1,7 +1,7 @@
 <template name="waitingForNextPlay">	
 	<div class="clear-fix"></div>
+  <div id="ratingBox"></div>
 	<div class="item item-divider ten-spacing">
-  	
 		<span>Answers</span>
   	<span class="float-right underline" data-action="previous-answers">(All)</span>
   </div>
@@ -12,4 +12,12 @@
   	<span class="float-right underline" data-action="game-leaderboard">(All)</span>
   </div>
  	{{> miniLeaderboard i=3}}
+</template>
+
+<template name="ratingPrompt">
+  <div id="{{id}}" class="animated fast slideInLeft">
+    <h4>{{title}}</h4>
+    <button class="button button-stable col-md-50" data-action="{{noAction}}">{{noText}}</button>
+    <button class="button button-stable col-md-50" data-action="{{yesAction}}">{{yesText}}</button>
+  </div>
 </template>

@@ -1,3 +1,13 @@
+/* Makes the label not take 100% of the available area */
+.af-fav-teams .checkbox  {
+	max-width: 50px;
+}
+
+/*.af-fav-teams .item-checkbox{
+	width: 50%;
+	float: left;
+}*/
+
 .strong-label {
 	font-weight: bold;
 }

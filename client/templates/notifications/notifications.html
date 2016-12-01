@@ -16,7 +16,7 @@
 
 <!-- 	Filter notifications by type.     -->
 <!-- 	{{#contentFor "headerButtonRight"}}
-    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+    <button style="font-size: 11px;" class="button button-clear" data-ion-menu-toggle="right">
       {{> ionIcon icon="funnel"}}
     </button>
   {{/contentFor}} -->
@@ -149,7 +149,7 @@
 
 <template name="trophyNotification">
 	{{#with trophy note.trophyId}}
-		<img class="notification-image" src="/{{image}}">
+		<img class="notification-image" src="{{image}}">
 		<h2>You won {{title}}!</h2>
 		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
 	{{/with}}

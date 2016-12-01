@@ -146,7 +146,7 @@ Template.loader.helpers({
     var start = parseInt(created);
     var rightNow = parseInt(Chronos.now() / 1000)
     var timeSpent = rightNow - start
-    if(timeSpent > 4 && rendered > created){
+    if(timeSpent > 14 && rendered > created){
       return true
     }
   }
@@ -158,6 +158,7 @@ Template.loader.events({
     Router.go(previous);
   },
   'click [data-action="reload"]': function () {
+    Router.go("/");
     location.reload();
   },
 });

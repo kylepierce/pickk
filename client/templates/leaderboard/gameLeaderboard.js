@@ -12,7 +12,6 @@ Template.gameLeaderboard.helpers({
     }
   },
   'periodExists': function (period){
-    console.log(period)
     var $game = Router.current().params._id
     var all = GamePlayed.findOne({gameId: $game, period: period}, {sort: {coins: -1}});
     if (period === -1){

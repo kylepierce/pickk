@@ -115,6 +115,9 @@ Template.submitButton.events({
       wager: w,
     });
 
+    var obj = {lastQuestion: new Date()}
+    analytics.identify(a.userId, obj)
+
     var countdown = new ReactiveCountdown(250);
     countdown.start(function() {
       Meteor.call('playerInactive', a.userId, a.questionId);
