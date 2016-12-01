@@ -6,6 +6,12 @@ if (Meteor.isCordova) {
     
     Branch.initSession();
     var data = Session.get("deepLinked");
+    // var nonBranch = Session.get("nonBranch");
+    // console.log("third", nonBranch)
+    // if (nonBranch){
+    //   handleOpenURL(nonBranch);
+    //   Session.set("nonBranch", "");
+    // }
     var nonBranch = Session.get("nonBranch");
     console.log("third", nonBranch)
     if (nonBranch){

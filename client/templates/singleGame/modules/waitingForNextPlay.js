@@ -4,18 +4,19 @@ Template.waitingForNextPlay.rendered = function () {
 	var days = 1000 * 60 * 60 * 24
 
 	var tenDays = moment().subtract(10, 'days')._d.getTime();
-	var lastAsked = user && user.profile.lastAsked.getTime()
+	var lastAsked = user && user.profile.lastAsked
 	var accountAge = user.createdAt.getTime()
-	
-	
-	var itsBeenAwhile = (tenDays - lastAsked) > 0
-	
 	var numberOfDays = parseInt((now - accountAge) / days)
 	var lastUpdate = new Date(Meteor.settings.public.appUpdate)
 	var lastUpdateTime = lastUpdate.getTime();
-	var newVersion = parseInt((lastAsked - lastUpdateTime) / days)
 	var queCounter = GamePlayed.findOne().queCounter
 
+	if(lastAsked){
+		lastAsked.getTime()
+		var itsBeenAwhile = (tenDays - lastAsked) > 0
+		var newVersion = parseInt((lastAsked - lastUpdateTime) / days)
+	}
+	
 	if (numberOfDays < 5){
 		console.log("Not Been Playing Long Enough")
 	} else if(!lastAsked && queCounter > 15){
@@ -60,6 +61,7 @@ Template.waitingForNextPlay.events({
 		// Update this code when you submit to the app submit to the app store.
 		// Also Update from .11 to .19
 		// intercom.displayMessageComposerWithInitialMessage("My Suggestion to Improve Pickk: ");
+		// cordova-plugin-insomnia@4.2.0
 		var obj = {feedback: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
@@ -85,13 +87,13 @@ Template.waitingForNextPlay.events({
     analytics.track("answered review", obj);
 
 		var vendor = navigator.vendor 
-		if (Meteor.isCordova){
+		// if (Meteor.isCordova){
 			if(vendor === "Apple Computer, Inc."){
 				window.open('itms-apps://itunes.apple.com/app/viewContentsUserReviews/id995393750', '_system');
 			} else if (vendor === "Google Inc.") {
 				window.open("market://details?id=com.id5oyejxkvm3yq1jfiwr5", '_system');
 			}
-		}
+		// }
 		var data = {removeId: "reviewPrompt"}
 		removePrompt(data)	
 	},
@@ -108,7 +110,7 @@ removePrompt = function (data){
 	setTimeout(function() {
     $("#" + data.removeId).remove();
   }, 350);
-  // Meteor.call('ratingPrompt')
+  Meteor.call('ratingPrompt')
 }
 
 nextStep = function (data){
