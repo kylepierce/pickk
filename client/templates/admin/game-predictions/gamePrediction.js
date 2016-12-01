@@ -33,15 +33,6 @@ Template.gamePrediction.events({
 		event.preventDefault();
 		var team1 = template.find('#team1 :selected').text
 		var team2 = template.find('#team2 :selected').text
-		var now = moment();
-		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
-		var title = dateSpelled + " Predictions"
-		var game = Games.findOne({name: title});
-
-		if(!game){
-			Meteor.call('createPredictionGame');
-			var game = Games.findOne({name: title});
-		}
 
 		var q = {
 			que: team1 + " vs " + team2,
