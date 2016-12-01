@@ -26,6 +26,7 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
 Meteor.publish('leaderboardGamePlayed', function(game, period, number) {
   check(game, String);
   check(period, Number);
+  check(number, Number);
   this.unblock()
   
   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1}}

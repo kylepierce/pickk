@@ -12,6 +12,7 @@ Template.gameLeaderboard.helpers({
     }
   },
   'periodExists': function (period){
+    console.log(period)
     var $game = Router.current().params._id
     var all = GamePlayed.findOne({gameId: $game, period: period}, {sort: {coins: -1}});
     if (period === -1){
@@ -38,10 +39,12 @@ Template.miniLeaderboard.helpers({
 		var userId = Meteor.userId()
 		var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
-    if($period === -1){
-      var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
-    } else {
+    console.log($period)
+    if ($period > 0) {
       var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
+    } else {
+      console.log("Ohhhh hello")
+      var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
     }
     
     var leaderboard = all.map(function(x) {
