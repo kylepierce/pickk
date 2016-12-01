@@ -133,3 +133,31 @@ Template.sideMenuContent.helpers({
     return currentUser && currentUser.profile.role === "beta";    
   }
 });
+
+Template.loader.rendered = function() {
+  var start = parseInt(new Date().getTime() / 1000);
+  Session.set('timeRendered', start);
+};
+
+Template.loader.helpers({
+  takingAwhile: function () {
+    var rendered = parseInt(new Date().getTime() / 1000);
+    var created = Session.get('timeRendered');
+    var start = parseInt(created);
+    var rightNow = parseInt(Chronos.now() / 1000)
+    var timeSpent = rightNow - start
+    if(timeSpent > 4 && rendered > created){
+      return true
+    }
+  }
+});
+
+Template.loader.events({
+  'click [data-action="back"]': function () {
+    var previous = window.history.go(-2);
+    Router.go(previous);
+  },
+  'click [data-action="reload"]': function () {
+    location.reload();
+  },
+});
