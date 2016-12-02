@@ -132,8 +132,8 @@ Meteor.methods({
 		Games.update({_id: game}, {$set: {"status": "inprogress", "live": true}})
 	},
 
-	'endGame': function(game){
-		check(game, String);
+	'endGame': function(gameId){
+		check(gameId, String);
 		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -142,10 +142,11 @@ Meteor.methods({
     if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
     }
-		Games.update({_id: game}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
-		var period = Games.find({_id: game}).period
-		Meteor.call('awardLeaders', game, period);
-		Meteor.call('coinMachine', game, period);
 
+    var period = Games.find({_id: gameId}).period
+		Meteor.call('awardLeaders', gameId, period);
+		Meteor.call('coinMachine', gameId, period);
+
+		Games.update({_id: gameId}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
 	}
 })

@@ -6,5 +6,5 @@ Meteor.publish('dailyPickks', function() {
 
 Meteor.publish('predictionGames', function() {
 	this.unblock()
-	return Games.find({type: "predictions"});
+	return Games.find({type: "prediction"});
 });

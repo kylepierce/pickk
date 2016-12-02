@@ -12,7 +12,7 @@ Template.waitingForNextPlay.rendered = function () {
 	var queCounter = GamePlayed.findOne().queCounter
 
 	if(lastAsked){
-		lastAsked.getTime()
+		var lastAsked = lastAsked.getTime()
 		var itsBeenAwhile = (tenDays - lastAsked) > 0
 		var newVersion = parseInt((lastAsked - lastUpdateTime) / days)
 	}
@@ -20,9 +20,14 @@ Template.waitingForNextPlay.rendered = function () {
 	if (numberOfDays < 5){
 		console.log("Not Been Playing Long Enough")
 	} else if(!lastAsked && queCounter > 15){
+		console.log("First")
 		addPrompt("First Time") // After 5 days.
-	} else if (newVersion >= 0 && queCounter > 15 || itsBeenAwhile && queCounter > 15) {
+	} else if (newVersion < 0 && queCounter > 15){
+		console.log("New version")
 		addPrompt("New Version")
+	} else if (itsBeenAwhile && queCounter > 15) {
+		console.log("Its Been A While")
+		addPrompt("Its Been A While")
 	}
 };
 
@@ -39,6 +44,8 @@ Template.waitingForNextPlay.events({
 		}
 		var obj = {enjoying: false, lastAsked: new Date()}
     var userId = Meteor.userId()
+    analytics.track("answered enjoying", 
+    	{userId: userId, result: true});
     analytics.identify(userId, obj)
 		nextStep(data)
 	},
@@ -55,6 +62,8 @@ Template.waitingForNextPlay.events({
 		var obj = {enjoying: false, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
+    analytics.track("answered enjoying", 
+    	{userId: userId, result: false});
 		nextStep(data)
 	},
 	'click [data-action="yes-feedback"]': function (e,t) {
@@ -65,7 +74,8 @@ Template.waitingForNextPlay.events({
 		var obj = {feedback: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered feedback", obj);
+    analytics.track("answered feedback", 
+    	{userId: userId, result: true});
 
 		intercom.displayMessageComposer();
 		var data = {removeId: "feedbackPrompt"}
@@ -76,7 +86,8 @@ Template.waitingForNextPlay.events({
 		var obj = {feedback: false, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered feedback", obj);
+    analytics.track("answered feedback", 
+    	{userId: userId, result: false});
 		var data = {removeId: "feedbackPrompt"}
 		removePrompt(data)
 	},
@@ -84,7 +95,8 @@ Template.waitingForNextPlay.events({
 		var obj = {review: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered review", obj);
+    analytics.track("answered review", 
+    	{userId: userId, result: true});
 
 		var vendor = navigator.vendor 
 		// if (Meteor.isCordova){
@@ -100,7 +112,9 @@ Template.waitingForNextPlay.events({
 	'click [data-action="no-review"]': function (e,t) {
 		var obj = {review: false, lastAsked: new Date()}
 		var data = {removeId: "reviewPrompt"}
-		analytics.track("answered review", data);
+		analytics.identify(userId, obj)
+		analytics.track("answered review", 
+    	{userId: userId, result: true});
 		removePrompt(data)
 	},
 });
@@ -115,7 +129,7 @@ removePrompt = function (data){
 
 nextStep = function (data){
 	$("#" + data.removeId).addClass("slideOutRight")
-	analytics.track("answered enjoying", data);
+
 	setTimeout(function() {
 		var container = $('#ratingBox')[0]
 		$("#" + data.removeId).remove();
@@ -133,6 +147,8 @@ addPrompt = function (when){
 		yesText: "Yes!",
 		when: when
 	}
+
+	analytics.track("shown enjoying", data);
 
 	var container = $('#ratingBox')[0]
 	Blaze.renderWithData(Template.ratingPrompt, data, container);

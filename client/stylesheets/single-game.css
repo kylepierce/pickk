@@ -27,9 +27,11 @@
 
 #reviewPrompt,
 #feedbackPrompt {
+	height: 120px;
   background-color: #26AD68;
   contain: content;
   padding: 10px;	
+  border-radius: 5px;
 }
 
 #ratingBox h4{

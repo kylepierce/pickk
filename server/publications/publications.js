@@ -24,7 +24,7 @@ Meteor.publish("userData", function() {
 Meteor.publish('userNotifications', function(userId) {
   check(userId, String);
   this.unblock()
-  return Notifications.find({userId: userId})  
+  return Notifications.find({userId: userId}, {sort: {dateCreated: -1}, limit: 25})  
 });
 
 Meteor.publish('gameNotifications', function(gameId) {

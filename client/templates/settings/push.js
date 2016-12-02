@@ -3,6 +3,11 @@ Template.pushPrompt.rendered = function () {
     if (data.isEnabled) {
       Router.go('/');
     } else if (!data.isEnabled){
+    	if(route.includes("newUserFavoriteTeams")) {
+        var newOrNah = true
+      } else {
+        var newOrNah = false
+      }
     	IonPopup.confirm({
 		    title: 'Push Notifications',
 		    template: 'Allow Push Notifications to Get: <ul><li>- Group Invites</li><li>- Game Invites</li><li>- Game Reminders</li><li>- In Game Reminders</li><li>- And More</li></ul> <br><br><strong>Make Sure To Click "Allow" For Push Notifications</strong>',
@@ -16,6 +21,11 @@ Template.pushPrompt.rendered = function () {
 
 			    analytics.identify(userId, data)
 			    if (Meteor.isCordova) {
+			    	analytics.track("accepted push", {
+          		id: userId,
+          		push: true,
+          		new: newOrNah
+        		});
 						enableIntercomNotifications();
 						enablePush();
 			      intercom.updateUser(data);
@@ -29,6 +39,11 @@ Template.pushPrompt.rendered = function () {
 			    var userId = Meteor.userId()
 
 			    analytics.identify(userId, data)
+			    analytics.track("accepted push", {
+          		id: userId,
+          		push: false,
+          		new: newOrNah
+        		});
 			    if (Meteor.isCordova) {
 			      intercom.updateUser(data);
 			    }

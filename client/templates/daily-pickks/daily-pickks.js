@@ -3,7 +3,7 @@ Template.dailyPickks.rendered = function () {
   var user = Meteor.userId();
   var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
   var title = dateSpelled + " Predictions"
-  var game = Games.findOne({name: title})
+  var game = Games.findOne({name: title});
   var gameId = game._id
   Meteor.subscribe('singleGame', gameId)
   Meteor.subscribe('gameNotifications', gameId, user)
@@ -21,9 +21,8 @@ Template.dailyPickks.helpers({
 		return Questions.find(selector, {limit: 1}).fetch();
 	},
   scoreMessage: function() {
-    
-    var user = Meteor.userId();
-    var notifications = Notifications.find({userId: user, read: false});
+    var userId = Meteor.userId();
+    var notifications = Notifications.find({userId: userId, read: false});
 
     notifications.forEach(function(post) {
       var id = post._id
@@ -53,8 +52,6 @@ Template.dailyPickks.events({
       var selectedIsOdd = false
       var $selected = $(e.currentTarget)
     }
-
-    console.log($selected)
 
     parms = {
       insertedTemplate: Template.submitButton,

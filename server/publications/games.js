@@ -8,7 +8,7 @@ Meteor.publish('singleGame', function(_id) {
 Meteor.publish('activeGames', function(day) {
   check(day, Number);
   this.unblock()
-
+ 
   var specificDay = moment().dayOfYear(day)
   var start = specificDay.startOf('day').add(4, "hour").toDate();
   var finish = specificDay.endOf('day').add(4, "hour").toDate(); // today and tomorrow

@@ -301,8 +301,14 @@ Meteor.methods({
 		var game = Games.findOne({name: title});
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
-
-		var gameId = game._id
+		if (!game){
+			var gameId = Meteor.call('createPredictionGame', function(result, error){
+				return result
+			})
+		} else {
+			var gameId = game._id
+		}
+		
 		Questions.insert({
 			que: q.que,
 			gameId: gameId,
