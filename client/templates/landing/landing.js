@@ -50,13 +50,30 @@ Template.loginBox.events({
 			data["registerText"] = text
 			var analyticObject = data
 		}
-		var identify = Session.set("identify", analyticObject);
 
+		var count = Counts.get("liveGamesCount");
+		if (count > 0) {
+			analyticObject["liveGameAtSignUp"] = true
+		} else {
+			analyticObject["liveGameAtSignUp"] = false
+		}
+		console.log(data, "there are ", count, " gamezzzzzz")
+
+		var identify = Session.set("identify", analyticObject);
     analytics.track("clicked register button", analyticObject);
 
 		Router.go('/register')
 	},
 	'click [data-action=login]': function () {
+		var count = Counts.get("liveGamesCount");
+		if (count > 0) {
+			analyticObject["liveGameAtSignUp"] = true
+		} else {
+			analyticObject["liveGameAtSignUp"] = false
+		}
+		console.log(data, "there are ", count, " gamezzzzzz")
+
+		var identify = Session.set("identify", analyticObject);
 		Router.go('/login')
 	},
 });

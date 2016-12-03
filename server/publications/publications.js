@@ -21,28 +21,33 @@ Meteor.publish("userData", function() {
     });
 });
 
+Meteor.publish("liveGamesCount", function() {
+  this.unblock()
+  Counts.publish(this, "liveGamesCount", Games.find({status: "inprogress"}));
+});
+
 Meteor.publish('userNotifications', function(userId) {
   check(userId, String);
   this.unblock()
-  return Notifications.find({userId: userId}, {sort: {dateCreated: -1}, limit: 25})  
+  return Notifications.find({userId: userId}, {sort: {dateCreated: -1}, limit: 25})
 });
 
 Meteor.publish('gameNotifications', function(gameId) {
   check(gameId, String);
   this.unblock()
   var userId = this.userId;
-  return Notifications.find({gameId: gameId, userId: userId, read: false})  
+  return Notifications.find({gameId: gameId, userId: userId, read: false})
 });
 
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
   this.unblock()
   var selector = {members: {$in: [user]}};
-  // Find this user id in any group 
+  // Find this user id in any group
   return Groups.find(selector)
 });
 
-// ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game) 
+// ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game)
 Meteor.publish('gamePlayed', function (user, game, period) {
   check(user, String);
   check(game, String);
@@ -73,7 +78,7 @@ Meteor.publish('activeQuestions', function(gameId, period) {
       gameId: gameId,
       active: true,
       period: period,
-      commercial: false, 
+      commercial: false,
       usersAnswered: {$nin: [currentUserId]}
     }, {sort: {dateCreated: -1}, limit: 1});
 });
@@ -99,7 +104,7 @@ Meteor.publish('activeCommQuestions', function(gameId, period) {
     gameId: gameId,
     active: true,
     period: period,
-    commercial: true, 
+    commercial: true,
     usersAnswered: {$nin: [currentUserId]}
   }, {sort: {dateCreated: 1}, limit: 1});
 });
@@ -114,7 +119,7 @@ Meteor.publish('gameQuestions', function() {
   return Questions.find({type: 'prediction', active: {$ne: false}});
 });
 
-// All of the games user has played 
+// All of the games user has played
 Meteor.publish('gamesPlayed', function() {
   var selector = {users: {$in: [this.userId]}}
   var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1, gameDate: 1, tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}

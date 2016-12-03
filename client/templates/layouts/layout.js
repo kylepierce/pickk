@@ -13,6 +13,7 @@ Template.sideMenuContent.events({
     if (Meteor.isCordova) {
       Branch.logout();
     }
+    analytics.reset();
     Router.go("/landing")
 	},
   'click [data-action=profile]': function () {
