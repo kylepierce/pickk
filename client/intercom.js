@@ -14,6 +14,10 @@ if (Meteor.isCordova) {
     if (deviceReady) initIntercom();
   });
 
+  updateIntercom = function (data) {
+    intercom.updateUser(data);
+  }
+
   initIntercom = function () {
     var user = Meteor.user();
     // Grab deep link data if available

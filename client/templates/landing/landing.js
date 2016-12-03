@@ -57,7 +57,6 @@ Template.loginBox.events({
 		} else {
 			analyticObject["liveGameAtSignUp"] = false
 		}
-		console.log(data, "there are ", count, " gamezzzzzz")
 
 		var identify = Session.set("identify", analyticObject);
     analytics.track("clicked register button", analyticObject);
@@ -71,7 +70,6 @@ Template.loginBox.events({
 		} else {
 			analyticObject["liveGameAtSignUp"] = false
 		}
-		console.log(data, "there are ", count, " gamezzzzzz")
 
 		var identify = Session.set("identify", analyticObject);
 		Router.go('/login')

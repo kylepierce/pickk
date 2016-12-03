@@ -25,9 +25,10 @@ var hooksObj = {
       stepsToDo = selectionArray;   // Used to move to next step
     }
     var type = currentStep.get()
-    var data = {}
-    data[type] = selectionArray
     var userId = Meteor.userId()
+    var data = {}
+    data.type = selectionArray
+    data.userId = userId;
 
     analytics.identify(userId, data)
     if (Meteor.isCordova) {
