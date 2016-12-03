@@ -39,16 +39,14 @@ Meteor.publish('chatUsersList', function(limit, groupId) {
   var messages = Chat.find({group: groupId}, {fields: {user: 1, dateCreated: 1}, limit: limit, sort: {dateCreated: -1}}).fetch();
   var userIds = _.chain(messages).pluck("user").uniq().value();
 
-  console.log(userIds.length)
-
-  var users = UserList.find({_id: {$in: userIds}}, { 
+  var users = UserList.find({_id: {$in: userIds}}, {
     limit: limit,
     fields: {
       'profile.username': 1,
       'profile.avatar': 1,
       'services': 1,
       '_id': 1
-    }, 
+    },
   });
   return users;
 });
@@ -75,4 +73,3 @@ Meteor.publish('singleMessage', function(messageId){
   this.unblock()
   return Chat.find({_id: messageId})
 });
-

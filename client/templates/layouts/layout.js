@@ -3,14 +3,16 @@ Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 
 
 Template.mainLayout.rendered = function() {
-  // IonSideMenu.snapper.settings({disable: 'right'});  
+  // IonSideMenu.snapper.settings({disable: 'right'});
   IonSideMenu.snapper.settings({touchToDrag: false});
 };
 
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {
     AccountsTemplates.logout();
-    Branch.logout();
+    if (Meteor.isCordova) {
+      Branch.logout();
+    }
     Router.go("/landing")
 	},
   'click [data-action=profile]': function () {
@@ -43,7 +45,7 @@ Template.sideMenuContent.events({
     e.preventDefault()
     if (Meteor.isCordova) {
       intercom.displayMessenger();
-    } 
+    }
   }
 });
 
@@ -130,7 +132,7 @@ Template.sideMenuContent.helpers({
   },
   beta: function() {
     var currentUser = Meteor.user();
-    return currentUser && currentUser.profile.role === "beta";    
+    return currentUser && currentUser.profile.role === "beta";
   }
 });
 

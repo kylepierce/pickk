@@ -32,6 +32,11 @@ body, .ionic-body {
 	vertical-align: center;
 }
 
+.bold {
+	font-weight: bold;
+	font-family: lato;
+}
+
 .item-divider {
 	background-color: #37474F!important;
 	color: white;

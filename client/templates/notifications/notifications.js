@@ -3,7 +3,7 @@ Template.notifications.helpers({
 		var userId = Meteor.userId();
 		var notifications = Notifications.find({userId: userId}).fetch()
 		return notifications
-	}, 
+	},
 	noNotifications: function () {
 		var numberOfNotifications = this.notifications.length;
 		if (numberOfNotifications === 0){
@@ -130,12 +130,12 @@ Template.notification.events({
 			if ( container ){
 				if ( container.previousSibling !== $selected[0] ){
 					container.remove();
-					addOptions( o.containerId, selectedObj )	
+					addOptions( o.containerId, selectedObj )
 				} else {
 					container.remove();
 				}
 			} else {
-				addOptions( o.containerId, selectedObj )	
+				addOptions( o.containerId, selectedObj )
 			}
 		}
 		parms = {
@@ -158,29 +158,29 @@ Template.notificationOptions.events({
     $("#messageBox").focus()
     var container = $('#options')[0]
     container.remove();
-	}, 
+	},
 	'click [data-action=react]': function (e, t) {
 		IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
-	}, 
+	},
 	'click [data-action=share]': function (e, t) {
 		// Popover to choose where to share
 		IonPopover.show('_sharePopover', t.data, e.currentTarget);
-	}, 
+	},
 	// 'click [data-action=group]': function (e, t) {
 	// 	var groupId = t.data.groupId
 	// 	Router.go('/groups/' + groupId);
-	// }, 
+	// },
 	'click [data-action=user]': function (e, t) {
 		var senderId = t.data.senderId
 		Router.go('/user-profile/' + senderId);
-	}, 
+	},
 	'click [data-action=follow]': function (e, t) {
 		var senderId = t.data.senderId
 		var sender = Meteor.users.findOne({_id: senderId});
 		var username = sender.profile.username
 		sAlert.success("Followed " + username + "!" , {effect: 'slide', position: 'bottom', html: true});
 		Meteor.call('followUser', Meteor.userId(), senderId)
-	}, 
+	},
 	'click [data-action=read]': function(e, t){
 		$('#options').remove();
 		var notificationId = t.data._id
@@ -192,7 +192,7 @@ Template.notificationOptions.events({
 Template.notificationOptions.helpers({
 	options: function(){
 		var note = Template.instance().data.type
-		var twoOption = ["coins", "diamonds", "badge", "trophy", "chatReaction"] 
+		var twoOption = ["coins", "diamonds", "badge", "trophy", "chatReaction"]
 		var threeOption = ["follower", "group"]
 		var fourOption = ["mention"]
 
@@ -206,7 +206,7 @@ Template.notificationOptions.helpers({
 			return "col-md-33"
 		} else if (numberOfOptions(twoOption)){
 			return "col-50"
-		}	
+		}
 	},
 	mention: function (template) {
 		var note = Template.instance().data.type
@@ -216,14 +216,14 @@ Template.notificationOptions.helpers({
 	},
 	award: function () {
 		var note = Template.instance().data.type
-		var types = ["coins", "diamonds", "badge", "trophy"] 
+		var types = ["coins", "diamonds", "badge", "trophy"]
 		if(types.indexOf(note) !== -1){
 			return true
 		}
 	},
 	interaction: function () {
 		var note = Template.instance().data.type
-		var types = ["follower", "mention", "group", "chatReaction"] 
+		var types = ["follower", "mention", "group", "chatReaction"]
 		var exists = types.indexOf(note) !== -1
 		if(exists){
 			return true
@@ -231,11 +231,11 @@ Template.notificationOptions.helpers({
 	},
 	follower: function () {
 		var note = Template.instance().data.type
-		var types = ["follower"] 
+		var types = ["follower"]
 		var exists = types.indexOf(note) !== -1
 		if(exists){
 			return true
-		}		
+		}
 	},
 	notAlreadyFollowing: function () {
     var t = Template.instance()
@@ -244,11 +244,11 @@ Template.notificationOptions.helpers({
     var alreadyFollowing = following.indexOf(senderId)
     if(alreadyFollowing === -1 ){
       return true
-    }		
+    }
 	},
 	// group: function () {
 	// 	var note = Template.instance().data.type
-	// 	var types = ["group"] 
+	// 	var types = ["group"]
 	// 	var exists = types.indexOf(note) !== -1
 	// 	if(exists){
 	// 		return true
@@ -267,6 +267,9 @@ Template.coinsNotification.helpers({
 	questionTitle: function (id) {
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id});
-		return question.que
+		var que = question && question.que
+		if ( que ){
+			return question.que
+		}
 	}
 });

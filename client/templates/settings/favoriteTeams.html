@@ -3,14 +3,13 @@
     {{#ionContent}}
 
       {{#each step in allSteps}}
-        <div class="container {{hide step}}">
+        <div id="favoriteList" class="container {{hide step}}">
           {{#with step}}
-            {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}                     
-              <div class="af-fav-teams">
+            {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}
+              <div class="af-fav-teams hundred-bottom">
                 {{> afQuickField name=this type='select-checkbox'}}
               </div>
-              
-              <input name="saveTeam" type="submit" class="button button-large button-positive" value="Save Teams">
+                <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
             {{/autoForm}}
           {{/with}}
         </div>

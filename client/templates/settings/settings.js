@@ -30,7 +30,6 @@ Template.settings.helpers({
 
 Template.settings.events({
   "change #new-icon": function(e, t) {
-    console.log(e, t)
     var files = e.currentTarget.files;
     t.$(".loading").show();
     t.$(".avatar").hide();
@@ -47,7 +46,6 @@ Template.settings.events({
       ],
       fields: {}
     }, function(error, result) {
-      console.log("Did something")
       t.$(".loading").hide();
       t.$(".avatar").show();
       if (error) {

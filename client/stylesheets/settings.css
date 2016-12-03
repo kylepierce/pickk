@@ -3,6 +3,20 @@
 	max-width: 50px;
 }
 
+#team-submit-button {
+	bottom: 0;
+  position: fixed;
+  z-index: 100;
+  margin-left: -5%;
+	background: #26ad68;
+}
+
+#favoriteList .checkbox input:checked:before, .checkbox input:checked+.checkbox-icon:before {
+	background-color: #26ad68;
+	background: #26ad68;
+	border-color: #26ad68;
+}
+
 /*.af-fav-teams .item-checkbox{
 	width: 50%;
 	float: left;
