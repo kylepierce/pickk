@@ -1,4 +1,10 @@
 DeepLinkHandler = function (data) {
+  console.log("Yo what up", data)
+  IonLoading.show({
+    customTemplate: "Hold Up...",
+    duration: 2500,
+    backdrop: true
+  });
   if (data) {
     Session.set("deepLinked", data);
     if (data.$deeplink_path){
@@ -13,6 +19,11 @@ DeepLinkHandler = function (data) {
 
 NonBranchLinkHandler = function(link) {
 	console.log("first", link.url)
+  IonLoading.show({
+    customTemplate: "Redirecting...",
+    duration: 2500,
+    backdrop: true
+  });
   if(link.url) {
   	Session.set("nonBranch", link.url);
     //with the leading "/"

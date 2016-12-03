@@ -1,8 +1,59 @@
+Template._propQuestion.rendered = function () {
+	new Clipboard('.player-button')
+	new Clipboard('.team-button')
+	new Clipboard('.action-button')
+};
+
 Template._propQuestion.helpers({
+	propQuestion: function () {
+		return [
+			"How Many Points Will the  Have in the  Quarter?",
+			"Who Will Score First?",
+			"Will  Score Next?",
+			"Who Will Commit the First Foul For The  ?",
+			"Who Scores The Next 3 Point Shot?",
+			"Who Will Score Last in the  Quarter?",
+			"Will Between 10:59 - 9:00?",
+			"Will Between 9:59 - 8:00?",
+			"Will Between 8:59 - 7:00?",
+			"Will Between 7:59 - 6:00?",
+			"Will Between 6:59 - 5:00?",
+			"Will Between 5:59 - 4:00?",
+			"Will Between 4:59 - 3:00?",
+			"Will Between 3:59 - 2:00?",
+			"Will Between 2:59 - 1:00?",
+			"Will Between 1:59 - :00?"
+		]
+	},
+	actionQuestions: function () {
+		return [
+			" Block a Shot ",
+			" Score a Three ",
+			" Get A Steal ",
+			" Make a Free Throw ",
+			" Get The Next Rebound ",
+			" Dunk ",
+			" Get The Next Rebound ", 
+		]
+	},
 	game: function () {
 		var gameId = Router.current().params._id
 		var game = Games.findOne({_id: gameId})
 		return game
+	},
+	teamOnePlayers: function (){
+		var gameId = Router.current().params._id
+		var game = Games.findOne({_id: gameId})
+		var teamId = game.scoring.home.id
+		var team = Teams.findOne({_id: teamId});
+		return team.players
+	},
+	teamTwoPlayers: function (){
+		var gameId = Router.current().params._id
+		var game = Games.findOne({_id: gameId})
+		var teamId = game.scoring.away.id
+		var team = Teams.findOne({_id: teamId});
+		return team.players
 	},
 	teamOne: function () {
 		return this.scoring.away.name
@@ -13,6 +64,16 @@ Template._propQuestion.helpers({
 });
 
 Template._propQuestion.events({
+	'click [data-action="propText"]': function (e,t){
+		var info = $('#propQuestion').val()
+		var old = $('#question-input').val()
+		var question = $('#question-input').val(info)
+		console.log(e,t,this,info,question)
+		$("#question-input").focus()	
+	},
+	'click [data-action="player"]': function (e, t){
+		var info = e.toElement.value
+	},
 	'click [data-action=teamOne]': function () {
 		var team = this.scoring.away.name
 		var old = $('#question-input').val()
@@ -37,6 +98,7 @@ Template._propQuestion.events({
 		event.preventDefault();
 		var gameId = Router.current().params._id
 		var game = Games.findOne({});
+		var sport = game.sport;
 		var period = parseInt(Router.current().params.period)
 		var question = $('#question-input').val()
 		var options = {}
@@ -110,6 +172,7 @@ Template._propQuestion.events({
 			gameId: gameId,
 			period: period,
 			type: "prop",
+			sport: sport,
 			commercial: true,
 			options: options,
 			active: "future"

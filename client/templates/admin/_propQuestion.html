@@ -1,11 +1,12 @@
 <template name="_propQuestion">
 	{{#ionModal class="white-text-header" title="Prop Question"}}
-		<div class="container ten-spacing">
-			{{#with game}}
-				<button data-action="teamOne" class="button col-md-50">{{{teamOne}}}</button>
-				<button data-action="teamTwo" class="button col-md-50">{{{teamTwo}}}</button>
-			{{/with}}
-			<div class="clear-fix ten-spacing"></div>
+		<div class="container">
+			<select id="propQuestion" class="col-md-50">
+				{{#each prop in propQuestion}}
+					<option data-clipboard-text="{{prop}}">{{prop}}</option>
+				{{/each}}
+			</select>
+			<button data-action="propText">Add</button>
 			<input id="question-input" class="ten-spacing" type="text" placeholder="Question">
 			<ul class="ten-spacing">
 				{{> optionGen}}
@@ -16,6 +17,29 @@
 				{{> optionGen}}
 			</ul>
 			<button id="prop" class='full button button-balanced ten-spacing' data-action="propCreation">Create Prop Question</button>
+		</div>
+		<div class="container">
+			<div class="clear-fix ten-spacing"></div>
+			{{#with game}}
+				<button data-clipboard-text="{{teamOne}}" class="button team-button col-md-50">{{{teamOne}}}</button>
+				<button data-clipboard-text="{{teamTwo}}" class="button team-button col-md-50">{{{teamTwo}}}</button>
+			{{/with}}
+			<div class="col-md-50">
+				{{#each player in teamOnePlayers}}
+					<button class="player-button button col-md-100" data-clipboard-text="{{player}}">{{player}}</button>
+				{{/each}}
+			</div>
+			<div class="col-md-50">
+				{{#each player in teamTwoPlayers}}
+					<button class="player-button button col-md-100" data-clipboard-text="{{player}}">{{player}}</button>
+				{{/each}}
+			</div>
+			<div class="clear-fix ten-spacing"></div>
+			<div class="hundred-bottom">
+				{{#each action in actionQuestions}}
+					<button class="action-button button col-md-100" data-clipboard-text="{{action}}">{{action}}</button>
+				{{/each}}
+			</div>
 		</div>
   {{/ionModal}}
 </template>

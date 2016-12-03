@@ -139,7 +139,7 @@
 
 <template name="chatReaction">
 	{{#ionItem avatar=true }}
-		<img class="icon-small" src={{emojiIconSrc note.reaction}}>
+		<img src={{emojiIconSrc note.reaction}}>
 		{{#with user note.senderId}}
 	    <h3>@{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}

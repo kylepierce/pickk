@@ -11,6 +11,6 @@ if (Meteor.isCordova) {
       handleOpenURL(nonBranch);
       Session.set("nonBranch", "");
     }
-    console.log("device ready command", data)
+    console.log("branch.js", data)
   })
 }

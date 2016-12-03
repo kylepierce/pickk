@@ -236,13 +236,19 @@ Meteor.methods({
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
+		if (q.sport === "nba"){
+			var background = "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/bball2.png'); height: 75px; background-position-x: 47%; background-position-y: 87%; "
+		} else {
+			var background = "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/question-background.png')"
+		}
+
 		// Insert the question into the database
 		Questions.insert({
 			que: q.que,
 			gameId: q.gameId,
 			period: q.period,
 			createdBy: currentUserId,
-			background: "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/question-background.png')",
+			background: background,
 			dateCreated: timeCreated,
 			type: q.type,
 			manual: true,

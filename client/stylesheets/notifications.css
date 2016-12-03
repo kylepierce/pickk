@@ -11,6 +11,11 @@
 	float: left;
 }
 
+.item h2 {
+	overflow: initial;
+	white-space: initial;
+}
+
 .item p {
 	overflow: auto;
 	white-space: normal;

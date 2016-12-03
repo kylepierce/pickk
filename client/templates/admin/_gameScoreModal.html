@@ -24,7 +24,7 @@
 			<div style="margin-top: 50px;">
 				<button class="button button-balanced col-md-50 ten-spacing" data-action="endQuarter">End Quarter</button>
 				{{#if gameOpen}}
-			  	<button class="full" data-action="open">Open Game</button>
+			  	
 				{{else}}
 					{{#if endOfGame}}
 						{{#ionItem}}<h2>Already closed</h2>{{/ionItem}}
@@ -33,6 +33,9 @@
 					{{/if}}
 				{{/if}}
 			</div>
+
+			
+			<button style="margin-top: 50px;" class="full" data-action="open">Open Game</button>
 		{{/with}}
   {{/ionModal}}
 </template>
