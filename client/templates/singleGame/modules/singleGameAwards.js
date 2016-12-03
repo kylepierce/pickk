@@ -2,18 +2,20 @@ Template.singleGameAwards.helpers({
   gameCoins: function () {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
-    var period = Games.findOne({_id: $game}).period;
-    var game = GamePlayed.findOne({userId: userId, gameId: $game, period: period})
-    if (game){
-      return game.coins;
+    var game = Games.findOne({_id: $game});
+
+    if (game && game.period){
+      var game = GamePlayed.findOne({userId: userId, gameId: $game, period: game.period})
+      return game.diamonds;
     }
   },
   diamonds: function () {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
-    var period = Games.findOne({_id: $game}).period;
-    var game = GamePlayed.findOne({userId: userId, gameId: $game, period: period})
-    if (game){
+    var game = Games.findOne({_id: $game});
+
+    if (game && game.period){
+      var game = GamePlayed.findOne({userId: userId, gameId: $game, period: game.period})
       return game.diamonds;
     }
   },
@@ -46,7 +48,7 @@ Template.singleGameAwards.helpers({
 //     Tracker.nonreactive(function(){
 //       self.coinsCurrent = self.coinsVar.get();
 //       startCount = self.coinsVar.get();
-//     }); 
+//     });
 
 //     self.coinsDifference = self.coinsFinal - self.coinsCurrent;
 
@@ -88,7 +90,7 @@ Template.singleGameAwards.helpers({
 
 //       Tracker.nonreactive(function(){
 //         self.diamondsCurrent = self.diamondsVar.get();
-//       }); 
+//       });
 
 //       self.diamondsDifference = self.diamondsFinal - self.diamondsCurrent;
 

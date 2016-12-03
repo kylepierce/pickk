@@ -1,39 +1,39 @@
 <template name="gameTypePrompt">
 	<h4 style="font-size: 1.4rem;" class="text-center">Join Quarter Contest</h4>
 	{{#if notFootball}}
-		<div class="col-md-100 text-center ten-spacing"> 
+		<div class="col-md-100 text-center ten-spacing">
 			<div class="center">
 				<i class="fa fa-hourglass-start quarter-prompt-icon"></i>
 			</div>
-			<h5>Drive</h5> 
+			<h5>Drive</h5>
 			<span class="">15 questions each quarter</span>
 			<div class="clear-fix"></div>
-			<button class="ten-spacing button col-md-100 button-balanced" data-action="joinDrive">
+			<button class="ten-spacing button col-md-100 button-balanced" data-action="joinGame">
 				<strong>Proposition</strong>
 			</button>
 		</div>
-	{{else}} 
+	{{else}}
 		<h4 class="text-center">Two Ways to Play</h4>
-		<div class="col-md-50 text-center ten-spacing"> 
+		<div class="col-md-50 text-center ten-spacing">
 			<div class="center">
 				<i class="fa fa-hourglass-start quarter-prompt-icon"></i>
 			</div>
-			<h5>Drive</h5> 
+			<h5>Drive</h5>
 			<span class="quarter-prompt-text">15 questions each quarter</span>
 		</div>
 		<div class="col-md-50 text-center ten-spacing">
 				<div class="center">
 					<i class="fa fa-bolt quarter-prompt-icon"></i>
 				</div>
-			<h5>Live</h5> 
+			<h5>Live</h5>
 			<span class=" quarter-prompt-text">Play by Play. Earn More Diamonds.</span>
 		</div>
 		<div class="clear-fix"></div>
 		<div class="button-box">
-			<button class="button col-md-45" data-action="joinDrive">
+			<button class="button col-md-45" data-action="joinGame">
 				Drive
 			</button>
-			<button class="button col-md-45 button-balanced" data-action="joinLive">
+			<button class="button col-md-45 button-balanced" data-action="joinGame">
 				<strong>Live</strong>
 			</button>
 		</div>

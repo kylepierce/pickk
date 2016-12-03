@@ -26,11 +26,11 @@
 					{{#if notJoinedGame}}
 						{{> gameTypePrompt}}
 					{{else}}
-						{{#if prop}} 
+						{{#if prop}}
 							{{#each question in prop}}
 								{{> singleQuestion q=question}}
 							{{/each}}
-						{{else}} 
+						{{else}}
 							{{#if commericalBreak}} <!-- game.commerical = true -->
 								{{#each question in commericalQuestions}}
 									{{> commericalQuestion q=question}}
@@ -53,7 +53,7 @@
 										<h5>Game type: {{gameType}}</h5>
 									{{> waitingForNextPlay}}
 								</div>
-							{{/if}}	<!-- noQuestions -->					
+							{{/if}}	<!-- noQuestions -->
 						{{/if}} <!-- prop -->
 					{{/if}} <!-- notJoinedGame -->
 				{{/if}} <!-- isLive -->
@@ -62,8 +62,6 @@
     {{/ionContent}}
   {{/ionView}}
 </template>
-
-
 
 <template name="commericalQuestion">
 	{{#if propQuestion q}}
@@ -113,13 +111,13 @@
 <template name="binaryOption">
 	<div data-action="pickk" class="option col-md-50">
 		{{o.title}}
-	</div>	
+	</div>
 </template>
 
 <template name="option">
 	<li class="option {{binary}}" data-action="play-selected">
 		<div class="option-inner">
-			{{#if hasIcon q}} 
+			{{#if hasIcon q}}
 				<span class="icon-container">
 				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
 				</span>

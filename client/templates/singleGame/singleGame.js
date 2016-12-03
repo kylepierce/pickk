@@ -66,8 +66,8 @@ Template.singleGame.helpers({
   gameCompleted : function () {
     var game = Games.findOne();
     if (game.live === false && game.completed === true) {
-      return true 
-    } 
+      return true
+    }
   },
   isLive: function () {
     var game = Games.findOne();
@@ -84,14 +84,14 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     if (game.commercial === true) {
       return true
-    } 
+    }
   },
   prop: function () {
     var currentUserId = Meteor.userId()
-    
+
     var selector = {
       type: "prop",
-      active: true,  
+      active: true,
       usersAnswered: {$nin: [currentUserId]}
     }
     var sort = {sort: {dateCreated: -1}, limit: 1}
@@ -99,10 +99,10 @@ Template.singleGame.helpers({
   },
   commericalQuestions: function () {
     var currentUserId = Meteor.userId()
-    
+
     var selector = {
-      active: true, 
-      commercial: true, 
+      active: true,
+      commercial: true,
       usersAnswered: {$nin: [currentUserId]}
     }
     var sort = {sort: {dateCreated: 1}, limit: 1}
@@ -111,14 +111,14 @@ Template.singleGame.helpers({
   questions: function () {
     // Only show questions that are 'gamePlayed.time' old
     var currentUserId = Meteor.userId()
-    var gamePlayed = GamePlayed.findOne({}) 
+    var gamePlayed = GamePlayed.findOne({})
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
     if (gameType === "live"){
       var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
 
       var selector = {
-        active: true, 
+        active: true,
         commercial: false,
         dateCreated: {$gt: finish},
         usersAnswered: {$nin: [currentUserId]},
@@ -130,28 +130,28 @@ Template.singleGame.helpers({
   noQuestions: function () {
     var currentUserId = Meteor.userId()
     var game = Games.findOne();
-    var gamePlayed = GamePlayed.findOne({}) 
+    var gamePlayed = GamePlayed.findOne({})
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
-    if (gameType === "live"){
+    if (gameType === "Live"){
 
       var selector = {
-        active: true, 
-        commercial: {$eq: game.commercial}, 
+        active: true,
+        commercial: {$eq: game.commercial},
         usersAnswered: {$nin: [currentUserId]}
       }
       if (!game.commercial){
         var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
         selector["dateCreated"] = {$gt: finish}
       }
-    } else if (gameType === "drive" && game.commercial === true) {
+    } else if (gameType === "Drive" && game.commercial === true || gameType === "Proposition" && game.commercial === true) {
       var selector = {
-        active: true, 
-        commercial: true, 
+        active: true,
+        commercial: true,
         usersAnswered: {$nin: [currentUserId]}
       }
     }
-    
+
     var questions = Questions.find(selector).count();
     if (questions === 0 ){
       return true
@@ -161,7 +161,7 @@ Template.singleGame.helpers({
     var userId = Meteor.userId();
     var $game = Router.current().params._id
     var selector = {
-      userId: userId, 
+      userId: userId,
       read: false,
       gameId: $game
     }
@@ -172,7 +172,7 @@ Template.singleGame.helpers({
       var id = post._id
       var questionId = post && post.questionId
       var sAlertSettings = {effect: 'stackslide', html: true}
-      
+
       if (questionId){
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
@@ -197,7 +197,7 @@ Template.singleGame.helpers({
         var message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
 
         sAlert.warning(message, sAlertSettings);
-      } 
+      }
       Meteor.call('removeNotification', id);
     });
   }
@@ -222,7 +222,7 @@ Template.singleGame.events({
       gameId: $game,
     });
     Router.go('/history/' + $game )
-  }, 
+  },
   'click [data-action=play-selected]': function (e, t) {
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
@@ -249,7 +249,7 @@ Template.singleGame.events({
 
     displayOptions( parms )
   },
-  'click [data-action=wager-selected]': function (e, t) {  
+  'click [data-action=wager-selected]': function (e, t) {
     $('.wager-selected').removeClass('wager-selected')
     $(e.currentTarget).addClass('wager-selected')
 
@@ -279,46 +279,32 @@ Template.gameTypePrompt.helpers({
 });
 
 Template.gameTypePrompt.events({
-  'click [data-action="joinLive"]': function () {
+  'click [data-action="joinGame"]': function (e,t) {
+    var user = Meteor.user();
     var game = Games.findOne();
-    var gameId = game._id
-    var userId = Meteor.userId();
-    var gamePeriod = game.period
+
     var gamePlayed = {
-      gameId: gameId,
-      userId: userId,
-      period: gamePeriod
+      gameId: game._id,
+      dateCreated: new Date(),
+      userId: user._id,
+      period: game.period,
+      type: e.target.innerText
     }
-    gamePlayed["type"] = "live"
-    analytics.track("joined game", gamePlayed);
-    Meteor.call('userJoinsAGame', gamePlayed);
+
+    var opinion = checkUsersOpinion(game, user)
+    var data = _.extend(gamePlayed, opinion)
+    analytics.track("joined game", data);
+
+    Meteor.call('userJoinsAGame', data);
+
     IonLoading.show({
       customTemplate: "Providing Coins...",
       duration: 1000,
       backdrop: true
     });
-    Router.go('/game/' + gameId + "/" + gamePeriod)
-  },
-  'click [data-action="joinDrive"]': function () {
-    var game = Games.findOne();
-    var gameId = game._id
-    var userId = Meteor.userId();
-    var gamePeriod = game.period
-    var gamePlayed = {
-      gameId: gameId,
-      userId: userId,
-      period: gamePeriod
-    }
-    gamePlayed["type"] = "drive"
-    analytics.track("joined game", gamePlayed);
-    Meteor.call('userJoinsAGame', gamePlayed);
-    IonLoading.show({
-      customTemplate: "Providing Coins...",
-      duration: 1000,
-      backdrop: true
-    });
-    Router.go('/game/' + gameId + "/" + gamePeriod)
-  },
+
+    Router.go('/game/' + game._id + "/" + game.period);
+  }
 });
 
 Template.commericalQuestion.helpers({
@@ -340,13 +326,13 @@ Template.commericalQuestion.helpers({
 });
 
 Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) { 
+  'click [data-action=pickk]': function (e, t) {
     $('.play-selected').removeClass('play-selected')
     $(e.currentTarget).addClass('play-selected')
 
     var count = _.keys(this.q.options).length
     var selectedNumber = this.o.number
-    var squareOptions = count === 2 
+    var squareOptions = count === 2
 
     if (selectedNumber % 2 !== 0 && squareOptions){
       var selectedIsOdd = true
@@ -412,7 +398,7 @@ Template.eventQuestion.helpers({
     for (var i = 0; i < keys.length; i++) {
       var obj = values[i]
       var number = keys[i]
-      obj["option"] = number 
+      obj["option"] = number
       optionsArray.push(obj)
     }
 
@@ -450,8 +436,50 @@ displayOptions = function ( o ) {
   var container = $('#' + o.containerId + '')[0]
   if ( container ){
     container.remove();
-    addOptions( o.containerId, selectedObj )  
+    addOptions( o.containerId, selectedObj )
   } else {
-    addOptions( o.containerId, selectedObj )  
+    addOptions( o.containerId, selectedObj )
   }
+}
+
+
+checkUsersOpinion = function (game, user){
+  var data = {}
+  var sport = game.sport
+  var teams = game.teamAbbr
+  var favoriteSports = user.profile.favoriteSports
+  if (sport === "football"){ var sport = "NFL"}
+  var lastSport = sport
+  var date = new Date();
+  var playData = {
+    lastSport: lastSport
+  }
+  playData[sport] = {
+    date: date,
+    teams: teams
+  }
+  analytics.identify(user._Id, playData)
+
+  // If the user likes the sport see if they like the team.
+  var likesThisSport = favoriteSports.includes(sport)
+  if (likesThisSport) {
+    data["likesSport"] = true,
+    data["teamLiked"] = sport
+    var userFavoriteSportTeam = user.profile["favorite" + sport + "Teams"]
+    var likesThisTeam = _.intersection(teams, userFavoriteSportTeam)
+    if (likesThisTeam.length > 0){
+      data["likesTeam"] = true
+      data["teamLiked"] = likesThisTeam
+    } else {
+      // Doesnt like this team but still playing. Lets add that to analytics.
+      data["likesTeam"] = false
+    }
+  } else {
+    // Doesnt like the sports but still playing. Lets add that to analytics.
+    data["likesSport"] = false
+  }
+  data.teams = teams
+  data.sport = sport
+  console.log(data)
+  return data
 }
