@@ -20,8 +20,8 @@
   </button>
 {{/contentFor}}
 
-  {{#ionView}}      
-    {{#ionContent}} 
+  {{#ionView}}
+    {{#ionContent}}
       {{#ionList}}
         <div class="item item-divider ">
           <span class="col-md-25" data-action="previous">
@@ -35,23 +35,23 @@
           </span>
         </div>
 
-        <ol type="1" class="list">      
+        <ol type="1" class="list">
           {{#each player in players}}
             {{> singlePlayerWeek player=player}}
           {{/each}}
         </ol>
-      {{/ionList}}    
-    {{/ionContent}} 
+      {{/ionList}}
+    {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="singlePlayerWeek">
-  {{#ionItem class="single-user" id=player.user avatar=true}}
-    {{> userAvatar userId=player.user}}
+  {{#ionItem class="single-user" id=player._id avatar=true}}
+    {{> userAvatar userId=player._id}}
     <li class="list-font" data-action="single-user">
       <h2 class="center-username">
-        {{username this.player.user}}
-        <span class="score">{{diamonds}}</span>
+        {{username player._id}}
+        <span class="score">{{player.diamonds}}</span>
       </h2>
     </li>
   {{/ionItem}}

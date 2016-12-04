@@ -10,7 +10,7 @@ Template.singleGameCard.helpers({
     var alreadyRegistered = _.indexOf(list, userId)
     if(alreadyRegistered !== -1) {
       return true
-    } 
+    }
   }
 });
 
@@ -41,7 +41,7 @@ Template.outDisplay.helpers({
     };
 
     if (number === 0) {
-      return repeat(noOut, 3) 
+      return repeat(noOut, 3)
     } else if (number === 3) {
       return repeat(out, 3)
     } else {
@@ -58,17 +58,19 @@ Template.count.helpers({
     var gameId = this.gameId
     Meteor.subscribe('singleAtBat', gameId)
     return AtBat.findOne({gameId: gameId})
-    
+
   }
 });
 
 Template.scheduledTeamBlock.helpers({
   teamColors: function (id) {
-    Meteor.subscribe('singleTeam', id)
-    var team = Teams.findOne({_id: id})
-    var hex = team && team.hex
-    if(hex){
-      var color = "#" + team.hex[0]
+    if(id){
+      Meteor.subscribe('singleTeam', id)
+      var team = Teams.findOne({_id: id})
+      var hex = team && team.hex
+      if(hex){
+        var color = "#" + team.hex[0]
+      }
     } else {
       var color = "#134A8E"
     }
@@ -78,11 +80,13 @@ Template.scheduledTeamBlock.helpers({
 
 Template.teamBlock.helpers({
   teamColors: function (id) {
-    Meteor.subscribe('singleTeam', id)
-    var team = Teams.findOne({_id: id})
-    var hex = team && team.hex
-    if(hex){
-      var color = "#" + team.hex[0]
+    if(id){
+      Meteor.subscribe('singleTeam', id)
+      var team = Teams.findOne({_id: id})
+      var hex = team && team.hex
+      if(hex){
+        var color = "#" + team.hex[0]
+      }
     } else {
       var color = "#134A8E"
     }
@@ -125,16 +129,16 @@ Template.gameInProgressInfo.helpers({
 
 Template.inningDisplay.helpers({
   grammer: function (inning) {
-    
+
     if([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].indexOf(inning) >= 0) {
       var inningGrammer = inning + "th"
     } else if ([1].indexOf(inning) >= 0) {
       var inningGrammer = inning + "st"
     } else if ([2].indexOf(inning) >= 0) {
-      var inningGrammer = inning + "nd" 
+      var inningGrammer = inning + "nd"
     } else if ([3].indexOf(inning) >= 0) {
       var inningGrammer = inning + "rd"
-    } 
+    }
     return inningGrammer
   }
 });

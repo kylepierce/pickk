@@ -17,8 +17,17 @@
 
   {{#ionView}}
     {{#ionContent}}
-      <h2>Couldnt find that page...</h2>
-      {{> loader}}
+      <div class="no-notifications">
+        Couldnt find that page...
+      </div>
+      <div class="container ten-spacing">
+        <button data-action="back" class="col-md-50 button button-stable">
+          Previous
+        </button>
+          <button data-action="reload" class="col-md-50 button button-balanced">
+            Home
+          </button>
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>

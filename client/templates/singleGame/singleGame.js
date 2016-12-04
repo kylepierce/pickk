@@ -480,6 +480,5 @@ checkUsersOpinion = function (game, user){
   }
   data.teams = teams
   data.sport = sport
-  console.log(data)
   return data
 }

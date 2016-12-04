@@ -65,13 +65,18 @@ Template.loginBox.events({
 	},
 	'click [data-action=login]': function () {
 		var count = Counts.get("liveGamesCount");
+		var data = Session.get("deepLinked");
+		if (!data) {
+			var data = {}
+		} 
+
 		if (count > 0) {
-			analyticObject["liveGameAtSignUp"] = true
+			data["liveGameAtSignUp"] = true
 		} else {
-			analyticObject["liveGameAtSignUp"] = false
+			data["liveGameAtSignUp"] = false
 		}
 
-		var identify = Session.set("identify", analyticObject);
+		var identify = Session.set("identify", data);
 		Router.go('/login')
 	},
 });

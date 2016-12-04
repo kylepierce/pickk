@@ -8,15 +8,15 @@ Meteor.methods({
     var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
 
     var selector = {
-        userId: userId, 
+        userId: userId,
         dateCreated: {
-          $gte : startDay, 
+          $gte : startDay,
           $lt: endDay
         }
       }
 
     var diamonds = GamePlayed.aggregate(
-      { $match: selector }, 
+      { $match: selector },
       { $group: {
         _id: null,
         result: { $sum: '$diamonds'}}
@@ -25,4 +25,4 @@ Meteor.methods({
 
     return diamonds
 	}
-})
+});

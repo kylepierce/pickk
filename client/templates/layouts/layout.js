@@ -149,10 +149,24 @@ Template.loader.helpers({
     var start = parseInt(created);
     var rightNow = parseInt(Chronos.now() / 1000)
     var timeSpent = rightNow - start
-    if(timeSpent > 14 && rendered > created){
+    
+    if(start > rendered){
+      console.log("Wait a second ")
+    } else if(timeSpent > 14){
       return true
     }
   }
+});
+
+Template.pageNotFound.events({
+  'click [data-action="back"]': function () {
+    var previous = window.history.go(-2);
+    Router.go(previous);
+  },
+  'click [data-action="reload"]': function () {
+    Router.go("/");
+    location.reload();
+  },
 });
 
 Template.loader.events({

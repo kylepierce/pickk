@@ -6,7 +6,7 @@ Template.singleGameAwards.helpers({
 
     if (game && game.period){
       var game = GamePlayed.findOne({userId: userId, gameId: $game, period: game.period})
-      return game.diamonds;
+      return game.coins;
     }
   },
   diamonds: function () {

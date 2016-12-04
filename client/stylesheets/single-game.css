@@ -27,10 +27,10 @@
 
 #reviewPrompt,
 #feedbackPrompt {
-	height: 120px;
+  overflow: auto;
   background-color: #26AD68;
   contain: content;
-  padding: 10px;	
+  padding: 10px;
   border-radius: 5px;
 }
 
@@ -61,4 +61,3 @@
 	color: white;
 	background-color: transparent;
 }
-

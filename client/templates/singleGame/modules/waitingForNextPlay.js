@@ -9,25 +9,29 @@ Template.waitingForNextPlay.rendered = function () {
 	var numberOfDays = parseInt((now - accountAge) / days)
 	var lastUpdate = new Date(Meteor.settings.public.appUpdate)
 	var lastUpdateTime = lastUpdate.getTime();
+	var game = Games.findOne()
 	var queCounter = GamePlayed.findOne().queCounter
+	var commercial = game.commercial
 
 	if(lastAsked){
 		var lastAsked = lastAsked.getTime()
 		var itsBeenAwhile = (tenDays - lastAsked) > 0
-		var newVersion = parseInt((lastAsked - lastUpdateTime) / days)
+		var newVersion = parseInt((lastUpdateTime - lastAsked ) / days)
 	}
-	
-	if (numberOfDays < 5){
+
+	if (!commercial){
+		console.log("Keep them in the game.")
+	} else if (numberOfDays < 5){
 		console.log("Not Been Playing Long Enough")
 	} else if(!lastAsked && queCounter > 15){
 		console.log("First")
 		addPrompt("First Time") // After 5 days.
-	} else if (newVersion < 0 && queCounter > 15){
-		console.log("New version")
-		addPrompt("New Version")
 	} else if (itsBeenAwhile && queCounter > 15) {
 		console.log("Its Been A While")
 		addPrompt("Its Been A While")
+	} else if (newVersion >= 0 && queCounter > 15){
+		console.log("New version")
+		addPrompt("New Version")
 	}
 };
 
@@ -44,7 +48,7 @@ Template.waitingForNextPlay.events({
 		}
 		var obj = {enjoying: false, lastAsked: new Date()}
     var userId = Meteor.userId()
-    analytics.track("answered enjoying", 
+    analytics.track("answered enjoying",
     	{userId: userId, result: true});
     analytics.identify(userId, obj)
 		nextStep(data)
@@ -62,7 +66,7 @@ Template.waitingForNextPlay.events({
 		var obj = {enjoying: false, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered enjoying", 
+    analytics.track("answered enjoying",
     	{userId: userId, result: false});
 		nextStep(data)
 	},
@@ -74,7 +78,7 @@ Template.waitingForNextPlay.events({
 		var obj = {feedback: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered feedback", 
+    analytics.track("answered feedback",
     	{userId: userId, result: true});
 
 		intercom.displayMessageComposer();
@@ -86,7 +90,7 @@ Template.waitingForNextPlay.events({
 		var obj = {feedback: false, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered feedback", 
+    analytics.track("answered feedback",
     	{userId: userId, result: false});
 		var data = {removeId: "feedbackPrompt"}
 		removePrompt(data)
@@ -95,10 +99,10 @@ Template.waitingForNextPlay.events({
 		var obj = {review: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered review", 
+    analytics.track("answered review",
     	{userId: userId, result: true});
 
-		var vendor = navigator.vendor 
+		var vendor = navigator.vendor
 		// if (Meteor.isCordova){
 			if(vendor === "Apple Computer, Inc."){
 				window.open('itms-apps://itunes.apple.com/app/viewContentsUserReviews/id995393750', '_system');
@@ -107,13 +111,14 @@ Template.waitingForNextPlay.events({
 			}
 		// }
 		var data = {removeId: "reviewPrompt"}
-		removePrompt(data)	
+		removePrompt(data)
 	},
 	'click [data-action="no-review"]': function (e,t) {
-		var obj = {review: false, lastAsked: new Date()}
+		var obj = {review: false, lastAsked: new Date()};
+		var userId = Meteor.userId();
 		var data = {removeId: "reviewPrompt"}
 		analytics.identify(userId, obj)
-		analytics.track("answered review", 
+		analytics.track("answered review",
     	{userId: userId, result: true});
 		removePrompt(data)
 	},

@@ -22,12 +22,12 @@ Template._sharePopover.events({
 		if(!groupId){
 			groupId = null
 			groupName = "Global"
-		} 
+		}
 
 		var chatObj = {
 			type: t.data.type,
-      user: currentUser._id, 
-      message: message, 
+      user: currentUser._id,
+      message: message,
       groupId: groupId,
     }
 
@@ -39,6 +39,11 @@ Template._sharePopover.events({
             backdrop: true
           })
         } else {
+					var data = {
+						userId: currentUser._id,
+						type: t.data.type,
+					}
+					analytics.track("shared notification",  data)
 		      IonLoading.show({
 				    customTemplate: '<h3>Shared in ' + groupName +' Chat!</h3>',
 				    duration: 1500,
