@@ -1,4 +1,77 @@
+Template.userProfile.onCreated( function() {
+  this.diamonds = new ReactiveVar( "0" );
+  this.coins = new ReactiveVar( "0" );
+  this.queCounter = new ReactiveVar( "0" );
+});
+
 Template.userProfile.helpers({
+  totalDiamonds: function () {
+    var userId = Router.current().params._id
+    if (userId === undefined){
+      var userId = Meteor.userId();
+    }
+    var template = Template.instance()
+
+    Meteor.call("totalDiamonds", userId, function (error, result) {
+      if ( error ){
+        console.log(error)
+      } else {
+        // If there isnt any data set to zero
+        if (result === "undefined"){
+          template.diamonds.set(0)
+        }
+        template.diamonds.set(result)
+      }
+    });
+
+    return Template.instance().diamonds.get();
+  },
+  totalCoins: function () {
+    var userId = Router.current().params._id
+    if (userId === undefined){
+      var userId = Meteor.userId();
+    }
+    var template = Template.instance()
+
+    function insertDecimal(num) {
+      return (num / 10000).toFixed(3);
+    }
+
+    Meteor.call("totalCoins", userId, function (error, result) {
+      if ( error ){
+        console.log(error)
+      } else {
+        // If there isnt any data set to zero
+        if (result === "undefined"){
+          template.coins.set(0)
+        }
+        template.coins.set(result)
+      }
+    });
+
+    return Template.instance().coins.get();
+  },
+  // totalQue: function () {
+  //   var userId = Router.current().params._id
+  //   if (userId === undefined){
+  //     var userId = Meteor.userId();
+  //   }
+  //   var template = Template.instance()
+  //
+  //   Meteor.call("totalQue", userId, function (error, result) {
+  //     if ( error ){
+  //       console.log(error)
+  //     } else {
+  //       // If there isnt any data set to zero
+  //       if (result === "undefined"){
+  //         template.queCounter.set(0)
+  //       }
+  //       template.queCounter.set(result)
+  //     }
+  //   });
+  //
+  //   return Template.instance().queCounter.get();
+  // },
   trophies: function ( ) {
     var trophies = this.user.profile.trophies
     return trophies
@@ -44,7 +117,7 @@ Template.followerCheck.events({
   'click [data-action=followUser]': function() {
     var currentUserId = Meteor.userId();
     var accountToFollow = Router.current().params._id
-    
+
     // Add this user followers
     Meteor.call('followUser', currentUserId, accountToFollow);
 

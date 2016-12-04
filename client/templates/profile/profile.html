@@ -24,12 +24,22 @@
         {{user.profile.following.length}} Following
         {{user.profile.followers.length}} Followers
       </div>
-      
+
       {{#if notOwnProfile user._id}}
         {{> followerCheck }}
       {{/if}}
       <div class="clear-fix"></div>
       {{#ionList}}
+      <div class="item item-divider">Stats</div>
+        {{#ionItem}}
+          Total Diamonds: {{totalDiamonds}}
+        {{/ionItem}}
+        {{#ionItem}}
+          Total Coins: {{totalCoins}}
+        {{/ionItem}}
+        <!-- {{#ionItem}}
+          Total Questions Answered: {{totalQue}}
+        {{/ionItem}} -->
         <div class="item item-divider">Trophies</div>
         <ul class="trophy-list item">
           {{#each trophy in trophies}}

@@ -1,7 +1,52 @@
 Meteor.methods({
+	'totalDiamonds': function(userId){
+		check(userId , String);
+
+	  var selector = {
+	    userId: userId
+	  }
+	  var diamonds = GamePlayed.aggregate(
+	    { $match: selector },
+	    { $group: {
+	      _id: '$userId',
+	      diamonds: { $sum: '$diamonds'}
+	    }});
+
+	    return diamonds[0].diamonds
+	},
+	'totalCoins': function(userId){
+		check(userId , String);
+
+	  var selector = {
+	    userId: userId
+	  }
+	  var diamonds = GamePlayed.aggregate(
+	    { $match: selector },
+	    { $group: {
+	      _id: '$userId',
+	      coins: { $sum: '$coins'}
+	    }});
+
+	    return diamonds[0].coins
+	},
+	'totalQue': function(userId){
+		check(userId , String);
+
+	  var selector = {
+	    userId: userId
+	  }
+	  var diamonds = GamePlayed.aggregate(
+	    { $match: selector },
+	    { $group: {
+	      _id: '$userId',
+	      queCounter: { $sum: '$queCounter'}
+	    }});
+
+	    return diamonds[0].queCounter
+	},
 	// Update users info from the settings page
 	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
-		check(username, String);									
+		check(username, String);
 		check(firstName, Match.Maybe(String));		// Match.Maybe -> used for optional fields.. updateProfile being called only with username in 'at_config,js' file
 		check(lastName, Match.Maybe(String));
 		check(birthday, Match.Maybe(Date));
@@ -26,7 +71,7 @@ Meteor.methods({
 		if (!this.userId) {
 			return;
 		}
-		UserList.update(this.userId, 
+		UserList.update(this.userId,
 			{$set: {'profile.isOnboarded': true}}
 		);
 	},
@@ -35,8 +80,8 @@ Meteor.methods({
 		if (!this.userId) {
 			return;
 		}
-		var now = new Date(); 
-		UserList.update(this.userId, 
+		var now = new Date();
+		UserList.update(this.userId,
 			{$set: {'profile.lastAsked': now}}
 		);
 	},
@@ -82,8 +127,8 @@ Meteor.methods({
 					{
 						$set: {'profile.favoriteNFLTeams': selectionArray}
 					});
-				break;	
+				break;
 		}
-		
+
 	},
 })
