@@ -1,7 +1,7 @@
 Meteor.methods({
 	'awardDiamonds': function(o) {
 		check(o, Object);
-		
+
 		var value = parseInt(o.value)
     o.type = "diamonds"
 
@@ -11,7 +11,7 @@ Meteor.methods({
 
 	  // Add coins to gameId or week
 	  GamePlayed.update({userId: o.userId, gameId: o.gameId, period: o.period}, {$inc: {diamonds: + value}})
-	  
+
 	  createPendingNotification(o)
 	},
 
@@ -28,12 +28,12 @@ Meteor.methods({
 			var message = "You traded " + coins + " coins you earned playing " + gameName + " for " + diamondExchange + ' diamonds!'
 
 			var o = {
-				userId: userId, 
+				userId: userId,
 				gameId: game,
 				gameName: gameName,
-				value: diamondExchange, 
+				value: diamondExchange,
 				period: period,
-				message: message, 
+				message: message,
 				source: "Exchange"
 			}
 
@@ -85,7 +85,7 @@ Meteor.methods({
 		for (var i = 0; i < usersThatPlayed.length ; i++) {
 
 			var o = {
-				userId: usersThatPlayed[i].userId, 
+				userId: usersThatPlayed[i].userId,
 				gameId: game,
 				period: period,
 				gameName: gameName,
@@ -102,14 +102,14 @@ Meteor.methods({
 					break;
 				case 1:
 					awardTrophies('aDJHkmcQKwgnpbnEk', usersThatPlayed[1].userId)
-					 40, 
+					 40,
 					o.message = 'Congrats On Winning Second Place! Here is 40 Diamonds!'
 					o.trophyId = "aDJHkmcQKwgnpbnEk"
 					Meteor.call('awardDiamonds', o)
 					break;
 				case 2:
 					awardTrophies('YxG4SKtrfT9j8Abdk', usersThatPlayed[2].userId)
-					o.message = 'Congrats On Winning Third Place! Here is 30 Diamonds!', 
+					o.message = 'Congrats On Winning Third Place! Here is 30 Diamonds!',
 					o.trophyId = "YxG4SKtrfT9j8Abdk"
 					Meteor.call('awardDiamonds', o)
 					break;
@@ -144,8 +144,6 @@ Meteor.methods({
     }
 
     var period = Games.find({_id: gameId}).period
-		Meteor.call('awardLeaders', gameId, period);
-		Meteor.call('coinMachine', gameId, period);
 
 		Games.update({_id: gameId}, {$set: {"close_processed": true, "status": "completed", live: false, completed: true}})
 	}

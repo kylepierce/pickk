@@ -100,4 +100,3 @@ peerlibrary:reactive-publish
 peerlibrary:subscription-data
 remcoder:chronos
 meteorhacks:cluster
-jcbernack:reactive-aggregate

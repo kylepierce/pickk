@@ -22,40 +22,40 @@
 				{{/if}}
 
 				{{#if isLive}}
-					<!-- Always show prop questions -->
 					{{#if notJoinedGame}}
 						{{> gameTypePrompt}}
 					{{else}}
-						{{#if prop}}
-							{{#each question in prop}}
-								{{> singleQuestion q=question}}
-							{{/each}}
+						{{#if noQuestions}}
+							<div class="animated fast fadeInUp hundred-bottom">
+								<div class="clear-fix"></div>
+									<h5 style="margin-bottom: 0;">
+										Progress To Next Diamond Prize
+									</h5>
+									{{>diamondWatcher}}
+									<h5>Game type: {{gameType}}</h5>
+								{{> waitingForNextPlay}}
+							</div>
 						{{else}}
-							{{#if commericalBreak}} <!-- game.commerical = true -->
-								{{#each question in commericalQuestions}}
-									{{> commericalQuestion q=question}}
+							{{#if prop}} <!-- Prop -->
+								{{#each question in prop}}
+									{{> singleQuestion q=question}}
 								{{/each}}
-							{{else}} <!-- !game.commerical -->
-								{{#if questions}}
-									{{#each question in questions}}
-										{{> singleQuestion q=question}}
+							{{else}} <!-- Not Prop -->
+								{{#if commericalBreak}}
+									<!-- game.commerical = true -->
+									{{#each question in commericalQuestions}}
+										{{> commericalQuestion q=question}}
 									{{/each}}
-								{{/if}}
-							{{/if}}
-
-							{{#if noQuestions}}
-								<div class="animated fast fadeInUp hundred-bottom">
-									<div class="clear-fix"></div>
-										<h5 style="margin-bottom: 0;">
-											Progress To Next Diamond Prize
-										</h5>
-										{{>diamondWatcher}}
-										<h5>Game type: {{gameType}}</h5>
-									{{> waitingForNextPlay}}
-								</div>
-							{{/if}}	<!-- noQuestions -->
-						{{/if}} <!-- prop -->
-					{{/if}} <!-- notJoinedGame -->
+									{{else}}
+									{{#if questions}} <!-- Normal -->
+										{{#each question in questions}}
+											{{> singleQuestion q=question}}
+										{{/each}}
+									{{/if}} <!-- End Normal -->
+								{{/if}} <!-- !game.commerical -->
+						{{/if}}	<!-- noQuestions -->
+						{{/if}}
+					{{/if}}	<!-- notJoinedGame -->
 				{{/if}} <!-- isLive -->
 			</div>
 			{{ scoreMessage}}

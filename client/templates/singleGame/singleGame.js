@@ -61,6 +61,11 @@ Template.singleGame.helpers({
   gameType: function () {
     var game = GamePlayed.findOne();
     var type = game.type
+    var gameId = game._id
+    var gamePeriod = game.period
+    if (type === undefined || !type){
+      location.reload();
+    }
     return type
   },
   gameCompleted : function () {
@@ -133,26 +138,40 @@ Template.singleGame.helpers({
     var gamePlayed = GamePlayed.findOne({})
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
-    if (gameType === "Live"){
-
-      var selector = {
-        active: true,
-        commercial: {$eq: game.commercial},
-        usersAnswered: {$nin: [currentUserId]}
-      }
-      if (!game.commercial){
+    if (gameType == "live"){
+      if (game.commercial === true) {
+        var selector = {
+          active: true,
+          type: {$in: ["prop", "drive", "freePickk"]},
+          usersAnswered: {$nin: [currentUserId]}
+        }
+      } else if (game.commercial === false){
         var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-        selector["dateCreated"] = {$gt: finish}
+        var selector = {
+          active: true,
+          type: {$in: ["prop", "play"]},
+          usersAnswered: {$nin: [currentUserId]},
+          dateCreated: {$gt: finish}
+        }
       }
-    } else if (gameType === "Drive" && game.commercial === true || gameType === "Proposition" && game.commercial === true) {
-      var selector = {
-        active: true,
-        commercial: true,
-        usersAnswered: {$nin: [currentUserId]}
+    } else if (gameType === "drive" || gameType === "proposition") {
+      if (game.commercial === true){
+        var selector = {
+          active: true,
+          type: {$in: ["prop", "drive", "freePickk"]},
+          usersAnswered: {$nin: [currentUserId]}
+        }
+      } else if (game.commercial === true){
+        var selector = {
+          active: true,
+          type: {$in: ["prop"]},
+          usersAnswered: {$nin: [currentUserId]}
+        }
       }
     }
 
     var questions = Questions.find(selector).count();
+    console.log(questions)
     if (questions === 0 ){
       return true
     }
@@ -282,13 +301,16 @@ Template.gameTypePrompt.events({
   'click [data-action="joinGame"]': function (e,t) {
     var user = Meteor.user();
     var game = Games.findOne();
+    var text = e.target.innerText.toLowerCase( )
+
+    console.log(text)
 
     var gamePlayed = {
       gameId: game._id,
       dateCreated: new Date(),
       userId: user._id,
       period: game.period,
-      type: e.target.innerText
+      type: text
     }
 
     var opinion = checkUsersOpinion(game, user)
@@ -461,8 +483,9 @@ checkUsersOpinion = function (game, user){
   analytics.identify(user._Id, playData)
 
   // If the user likes the sport see if they like the team.
-  var likesThisSport = favoriteSports.includes(sport)
-  if (likesThisSport) {
+
+  if (favoriteSports) {
+    var likesThisSport = favoriteSports.includes(sport)
     data["likesSport"] = true,
     data["teamLiked"] = sport
     var userFavoriteSportTeam = user.profile["favorite" + sport + "Teams"]
@@ -477,8 +500,8 @@ checkUsersOpinion = function (game, user){
   } else {
     // Doesnt like the sports but still playing. Lets add that to analytics.
     data["likesSport"] = false
+    data["likesTeam"] = false
   }
-  data.teams = teams
-  data.sport = sport
+
   return data
 }

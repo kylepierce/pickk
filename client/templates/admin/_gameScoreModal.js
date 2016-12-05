@@ -38,10 +38,10 @@ Template._gameScoreModal.events({
 		homeScore = parseInt(homeScore)
 		awayScore = parseInt(awayScore)
 		var gameId = Router.current().params._id
-		
+
 		Meteor.call('updateGameScore', gameId, homeScore, awayScore)
 		IonModal.close();
-	},	
+	},
 	'click [data-action="endQuarter"]': function () {
 		var gameId = Router.current().params._id
 		var game = Games.findOne({_id: gameId});
@@ -59,7 +59,7 @@ Template._gameScoreModal.events({
 		} else {
 			alert('Not active.')
 		}
-		
+
 	},
 	'click [data-action="open"]': function (e, t) {
 		var gameId = Router.current().params._id
@@ -69,7 +69,10 @@ Template._gameScoreModal.events({
 	},
 	'click [data-action="end"]': function (e, t) {
 		var gameId = Router.current().params._id
+		var current = parseInt(Router.current().params.period)
 		if(confirm("Are you sure?")) {
+			Meteor.call('awardLeaders', gameId, current);
+			Meteor.call('coinMachine', gameId, current);
 			Meteor.call('endGame', gameId)
 			IonModal.close();
 			sAlert.success("Closed Game" , {effect: 'slide', position: 'bottom', html: true});
