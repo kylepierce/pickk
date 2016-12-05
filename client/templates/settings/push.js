@@ -21,14 +21,15 @@ Template.pushPrompt.rendered = function () {
 			    var userId = Meteor.userId()
 
 			    analytics.identify(userId, data)
-			    	analytics.track("accepted push", {
-          		id: userId,
-          		push: true,
-          		new: newOrNah
-						enableIntercomNotifications();
-						enablePush();
-			      intercom.updateUser(data);
-			    }
+		    	analytics.track("accepted push", {
+        		id: userId,
+        		push: true,
+        		new: newOrNah
+					});
+
+					enableIntercomNotifications();
+					enablePush();
+		      intercom.updateUser(data);
 		      Router.go('/');
 		    },
 		    onCancel: function() {
@@ -38,7 +39,7 @@ Template.pushPrompt.rendered = function () {
 			    var userId = Meteor.userId()
 
 			    analytics.identify(userId, data)
-			    analytics.track("accepted push", {
+			    analytics.track("did not accepted push", {
           		id: userId,
           		push: false,
           		new: newOrNah
