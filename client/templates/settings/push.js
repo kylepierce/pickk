@@ -1,5 +1,6 @@
 Template.pushPrompt.rendered = function () {
-	PushNotification.hasPermission(function(data) {
+	if (Meteor.isCordova) {
+		PushNotification.hasPermission(function(data) {
     if (data.isEnabled) {
       Router.go('/');
     } else if (!data.isEnabled){
@@ -20,12 +21,10 @@ Template.pushPrompt.rendered = function () {
 			    var userId = Meteor.userId()
 
 			    analytics.identify(userId, data)
-			    if (Meteor.isCordova) {
 			    	analytics.track("accepted push", {
           		id: userId,
           		push: true,
           		new: newOrNah
-        		});
 						enableIntercomNotifications();
 						enablePush();
 			      intercom.updateUser(data);
@@ -44,13 +43,14 @@ Template.pushPrompt.rendered = function () {
           		push: false,
           		new: newOrNah
         		});
-			    if (Meteor.isCordova) {
 			      intercom.updateUser(data);
-			    }
 
 		      Router.go('/');
 		    }
 		  });
     }
 	});
+} else {
+	Router.go('/');
+}
 };
