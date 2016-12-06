@@ -4,6 +4,7 @@ Template.pushPrompt.rendered = function () {
     if (data.isEnabled) {
       Router.go('/');
     } else if (!data.isEnabled){
+			var route = Router.current().originalUrl
     	if(route.includes("newUserFavoriteTeams")) {
         var newOrNah = true
       } else {
