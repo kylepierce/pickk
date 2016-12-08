@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
-    "mupx": "^1.5.3"
+    "i": "^0.3.5",
+    "meteor-ios10-csp-fix": "^0.1.0",
+    "mupx": "^1.5.3",
+    "npm": "^4.0.3"
   },
   "devDependencies": {
     "mkpath": "^1.0.0",

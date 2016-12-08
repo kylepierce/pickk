@@ -1,5 +1,5 @@
-// if (Meteor.isCordova) {
-// 	Meteor.startup(function () {
-// 	  window.plugins.insomnia.keepAwake()
-// 	});
-// }
+if (Meteor.isCordova) {
+	Meteor.startup(function () {
+	  window.plugins.insomnia.keepAwake()
+	});
+}

@@ -1,5 +1,3 @@
-cordova-plugin-wkwebview-engine@https://github.com/apache/cordova-plugin-wkwebview-engine.git#815ed0741b9ae30b343d6429bd8ff2ad37ec5790
-
 ------ Before App Store Submission -------
 
 Settings:
@@ -33,10 +31,10 @@ Random user profile photo
 
 Onboard after login:
 - More info (Step 1)
-	- Username 
+	- Username
 
 User prompts: (Later)
-	- Connect with... ** When would the best time to ask this?** 
+	- Connect with... ** When would the best time to ask this?**
 		- Facebook (optional)
 		- Twitter (optional)
 		- https://atmospherejs.com/mondora/connect-with
@@ -46,7 +44,7 @@ User prompts: (Later)
 		- What sports they watch.
 		- Favorite football team (hold this question until the middle of the first game)
 
-Active: 
+Active:
 	- If no questions are active have a funny picture in the background or some football facts.
 	- Think about a large option for people with glasses.
 
@@ -54,20 +52,20 @@ Navigation:
 - Stop scrolling on the side and top
 
 Login:
-- Sign up page 
-	- Checks 
-		- Username 
+- Sign up page
+	- Checks
+		- Username
 		- Email
 		- Password
   - Send email to confirm
 
 
-Leaderboard: 
+Leaderboard:
 - Highlight the current user if they are on the leaderboard. (30 mins)
 - Tell them what position they are in if they are outside the top 10
 
 Profile page:
-- Badges. Each badge should be clickable for a popover explaination. 
+- Badges. Each badge should be clickable for a popover explaination.
 	- Create a badge collection
 
 Notifications:
@@ -87,14 +85,14 @@ Notifications:
      - Add to log
 
 - What is the most efficent way to generate notifications. Memory should be from the client not on the server.
-	- Create a local collection that keeps data with the user. 
+	- Create a local collection that keeps data with the user.
 	- Group and game requests are fixed until they are accept, denied or end.
 	- Followers are fixed they are highlighted when new.
 
 - Geo Location based on IP (https://atmospherejs.com/peter/geoip)
 
 -------------- Wish list --------------
-- Tweet questions and their answer for 500 points 
+- Tweet questions and their answer for 500 points
 - Purchase more points
 - User edit panel
 - Trophies. Different than badges they are awarded during gameplay. Streaks, % of who guessed it correct.

@@ -79,6 +79,7 @@
 	list-style: none;
 	font-size: 1.25em;
 	width: 100%;
+	overflow: auto;
 	color: black;
 	margin: 5px 0;
 	border: solid #2ecc71 1px;
@@ -89,7 +90,7 @@
 }
 
 .active-que {
-	
+
 }
 
 .pending-que {

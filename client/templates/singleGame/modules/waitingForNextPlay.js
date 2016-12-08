@@ -71,17 +71,13 @@ Template.waitingForNextPlay.events({
 		nextStep(data)
 	},
 	'click [data-action="yes-feedback"]': function (e,t) {
-		// Update this code when you submit to the app submit to the app store.
-		// Also Update from .11 to .19
-		// intercom.displayMessageComposerWithInitialMessage("My Suggestion to Improve Pickk: ");
-		// cordova-plugin-insomnia@4.2.0
 		var obj = {feedback: true, lastAsked: new Date()}
     var userId = Meteor.userId()
     analytics.identify(userId, obj)
-    analytics.track("answered feedback",
+    analytics.track("wants to give feedback",
     	{userId: userId, result: true});
 
-		intercom.displayMessageComposer();
+		intercom.displayMessageComposerWithInitialMessage("My Suggestion to Improve Pickk: ");
 		var data = {removeId: "feedbackPrompt"}
 		removePrompt(data)
 	},

@@ -5,10 +5,10 @@
 # but you can also edit it by hand.
 
 jquery@1.11.9
-accounts-base@1.2.11
-accounts-password@1.3.0
-accounts-facebook@1.0.10
-accounts-twitter@1.1.11
+accounts-base@1.2.12-beta.4
+accounts-password@1.3.1-beta.4
+accounts-facebook@1.0.11-beta.4
+accounts-twitter@1.1.12-beta.4
 useraccounts:ionic
 useraccounts:core
 iron:router
@@ -17,7 +17,7 @@ aldeed:simple-schema
 aldeed:collection2
 meteoric:autoform-ionic
 fortawesome:fontawesome
-email@1.1.17_1
+email@1.1.17
 bdunnette:snapjs
 meteoric:ionic
 service-configuration@1.0.10
@@ -62,11 +62,11 @@ udondan:googlefonts
 yogiben:pretty-email
 meteor-base@1.0.4
 mobile-experience@1.0.4
-mongo@1.1.12_1
+mongo@1.1.12
 blaze-html-templates@1.0.4
 session@1.1.6
 tracker@1.1.0
-logging@1.1.15_1
+logging@1.1.15
 reload@1.1.10
 ejson@1.0.12
 spacebars@1.0.12
@@ -85,7 +85,7 @@ mizzao:autocomplete
 percolate:migrations
 practicalmeteor:mocha
 xolvio:cleaner
-http@1.2.9_1
+http@1.2.9
 reactive-var@1.0.10
 notorii:autoform-datetimepicker
 drewy:pikaday-time
@@ -100,3 +100,5 @@ peerlibrary:reactive-publish
 peerlibrary:subscription-data
 remcoder:chronos
 meteorhacks:cluster
+boilerplate-generator@1.0.10
+browser-policy
