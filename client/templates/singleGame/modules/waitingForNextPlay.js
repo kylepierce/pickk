@@ -17,9 +17,10 @@ Template.waitingForNextPlay.rendered = function () {
 		var lastAsked = lastAsked.getTime()
 		var itsBeenAwhile = (tenDays - lastAsked) > 0
 		var newVersion = parseInt((lastUpdateTime - lastAsked ) / days)
+		console.log(lastAsked, itsBeenAwhile, newVersion)
 	}
 
-	if (!commercial){
+	if (commercial === false){
 		console.log("Keep them in the game.")
 	} else if (numberOfDays < 5){
 		console.log("Not Been Playing Long Enough")
@@ -32,6 +33,8 @@ Template.waitingForNextPlay.rendered = function () {
 	} else if (newVersion >= 0 && queCounter > 15){
 		console.log("New version")
 		addPrompt("New Version")
+	} else {
+		console.log("Didnt match anything")
 	}
 };
 

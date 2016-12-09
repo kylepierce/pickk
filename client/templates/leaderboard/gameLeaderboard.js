@@ -74,6 +74,12 @@ Template.miniLeaderboard.helpers({
   'username': function(userId) {
     return UserList.findOne({_id: userId});
   },
+  'following': function (userId) {
+    var user = Meteor.user();
+    var following = user.profile.following
+    var isFollowing = following.indexOf(userId)
+    if (isFollowing > 0){return true}
+  },
   'pathUrl': function () {
     // https://github.com/meteoric/meteor-ionic/issues/66
     var url = "/user-profile/" + this.userId

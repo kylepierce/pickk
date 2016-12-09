@@ -51,22 +51,6 @@ Template.sideMenuContent.events({
 });
 
 Template.mainLayout.events({
-  'click [data-action=refresh]': function () {
-    IonLoading.show({
-      customTemplate: '<h3>Loading...</h3>',
-      duration: 1500,
-      backdrop: true
-    })
-    Fetcher.refresh('leaderboard')
-  },
-  'click [data-action=refresh-week]': function () {
-    IonLoading.show({
-      customTemplate: '<h3>Loading...</h3>',
-      duration: 1500,
-      backdrop: true
-    })
-    Fetcher.refresh('weekLeaderboard')
-  },
   'click [data-action="gameEdit"]': function (e, t) {
     IonPopover.show('_editGame', this, e.currentTarget);
   }
@@ -149,7 +133,7 @@ Template.loader.helpers({
     var start = parseInt(created);
     var rightNow = parseInt(Chronos.now() / 1000)
     var timeSpent = rightNow - start
-    
+
     if(start > rendered){
       console.log("Wait a second ")
     } else if(timeSpent > 14){

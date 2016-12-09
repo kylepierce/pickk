@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.25'
+  version: '0.0.26'
 });
 
 App.accessRule('*');

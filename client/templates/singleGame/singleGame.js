@@ -8,7 +8,7 @@ Template.singleGame.rendered = function () {
   });
 
   var game = Games.findOne();
-  var gameId = game._id
+  var gameId = Router.current().params._id
   var userId = Meteor.userId();
   var urlPeriod = Router.current().params.period
   var gamePeriod = game.period
@@ -171,7 +171,6 @@ Template.singleGame.helpers({
     }
 
     var questions = Questions.find(selector).count();
-    console.log(questions)
     if (questions === 0 ){
       return true
     }
@@ -302,8 +301,6 @@ Template.gameTypePrompt.events({
     var user = Meteor.user();
     var game = Games.findOne();
     var text = e.target.innerText.toLowerCase( )
-
-    console.log(text)
 
     var gamePlayed = {
       gameId: game._id,

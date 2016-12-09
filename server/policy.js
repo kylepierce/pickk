@@ -21,6 +21,7 @@ var trusted = [
   '*.intercom.io',
   '*.intercomcdn.com',
   '*.facebook.com',
+  'pbs.twimg.com',
   '*.fbcdn.net',
   '*.google-analytics.com',
   '*.mxpnl.com'
