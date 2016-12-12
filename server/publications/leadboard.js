@@ -29,7 +29,7 @@ Meteor.publish('leaderboardGamePlayed', function(gameId, period, number) {
   check(number, Number);
   this.unblock()
 
-  var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1}}
+  var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1}}
   if( period === 0) {
 		var game = Games.find({_id: gameId }).fetch()
 	  var period = game[0].period
