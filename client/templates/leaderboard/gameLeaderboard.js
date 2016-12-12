@@ -38,6 +38,9 @@ Template.miniLeaderboard.helpers({
 		var userId = Meteor.userId()
 		var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
+    if (!$period) {
+        var $period = Games.findOne({_id: $game}).period
+    }
     if ($period > 0) {
       var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
     } else {
@@ -64,6 +67,10 @@ Template.miniLeaderboard.helpers({
 
     var $game = Router.current().params._id
     var $period = parseInt(Router.current().params.period)
+    if (!$period) {
+        var $period = Games.findOne({_id: $game}).period
+    }
+
     if($period === -1){
       var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
     } else {

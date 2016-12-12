@@ -18,7 +18,7 @@ Meteor.methods({
 	'toggleCommercial': function(gameId, toggle) {
 		check(gameId, String);
 		check(toggle, Boolean);
-		
+
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -62,7 +62,7 @@ Meteor.methods({
 		} else if (down === 4 && style === 3 && area === 6) {
 			var optionArray = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
 		} else if (down === 4 && style === 3) {
-			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"] 
+			var optionArray = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
 		} else if (down === 4 && area >= 4 ) {
 			var optionArray = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
 		} else if (down === 4) {
@@ -82,8 +82,8 @@ Meteor.methods({
 		optionArray.map(function (option){
 			var optionNumber = "option" + optionNum
 			options[optionNumber] = {
-				"number": optionNum, 
-				"option": optionNumber, 
+				"number": optionNum,
+				"option": optionNumber,
 				"title": option
 			}
 			optionNum += 1
@@ -128,22 +128,22 @@ Meteor.methods({
 
 		var down = parseInt(inputs.down)
 		switch (down){
-			case 1: 
+			case 1:
 				var que = "First Down..."
 				break;
-			case 2: 
+			case 2:
 				var que = "Second Down..."
 				break;
-			case 3: 
+			case 3:
 				var que = "Third Down..."
 				break;
-			case 4: 
+			case 4:
 				var que = "Fourth Down..."
 				break;
-			case 5: 
+			case 5:
 				var que = "Point After..."
 				break;
-			case 6: 
+			case 6:
 				var que = "Kickoff..."
 				break;
 		}
@@ -158,7 +158,7 @@ Meteor.methods({
 	// Create a question.
 	'insertQuestion': function(q) {
 		check(q, Object);
-			
+
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
@@ -173,9 +173,9 @@ Meteor.methods({
 
 		q["que"] = Meteor.call('questionText', q.inputs, q.type )
 		var options = Meteor.call('createOptions', q.inputs, q.type )
-		
+
 		if ( q.type === "drive" ){
-			var multiplier = { 
+			var multiplier = {
 				option1: { low: 2.15, high: 2.37 }, // Punt
 				option2: { low: 2.5, high: 2.91 }, // Field Goal
 				option3: { low: 4.6, high: 6.42 }, // Turnover
@@ -194,8 +194,8 @@ Meteor.methods({
 		});
 
 		var counter = 0
-		
-		_.each(options, function (value, prop) {  
+
+		_.each(options, function (value, prop) {
 			options[prop].multiplier = newObject[counter]
 		  counter += 1
 		});
@@ -232,7 +232,7 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		
+
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
 
@@ -314,7 +314,7 @@ Meteor.methods({
 		} else {
 			var gameId = game._id
 		}
-		
+
 		Questions.insert({
 			que: q.que,
 			gameId: gameId,
@@ -333,7 +333,7 @@ Meteor.methods({
 	'sendToFuture': function (q){
 		check(q, String);
 
-		Questions.update({_id: q}, {$set: {active: "future" 
+		Questions.update({_id: q}, {$set: {active: "future"
 			}});
 	},
 
@@ -341,7 +341,7 @@ Meteor.methods({
 		var timeCreated = new Date();
 		Questions.update({_id: q.questionId}, {$set: {
 				dateCreated: timeCreated,
-				active: "future", 
+				active: "future",
 				que: q.que,
 				options: q.options,
 			}});
@@ -357,13 +357,15 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		Questions.update({_id: questionId}, {$set: {active: true}});
+
+		var timeCreated = new Date();
+		Questions.update({_id: questionId}, {$set: {dateCreated: timeCreated, active: true}});
 	},
 
 	// If the play is stopped before it starts or needs to be deleted for whatever reason.
 	'removeQuestion': function(questionId) {
 		check(questionId, String);
-		
+
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}

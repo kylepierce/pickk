@@ -7,16 +7,7 @@ Template.singleGame.rendered = function () {
     centerPadding: '4.5%'
   });
 
-  var game = Games.findOne();
-  var gameId = Router.current().params._id
-  var userId = Meteor.userId();
-  var urlPeriod = Router.current().params.period
-  var gamePeriod = game.period
-
-  // var gamePlayed = GamePlayed.findOne();
-  if (urlPeriod !== gamePeriod){
-    Router.go('game.show', {_id: gameId, period: gamePeriod});
-  }
+  intercom.setLauncherVisibility('VISABLE');
 };
 
 Template.singleGame.helpers({
@@ -79,9 +70,6 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     var gameId = game._id
     var userId = Meteor.userId();
-    // if (urlPeriod !== gamePeriod){
-    //   Router.go('/game/' + gameId + "/" + gamePeriod)
-    // }
     if (game.status === "inprogress"){
       return true
     }
@@ -225,7 +213,7 @@ Template.singleGame.helpers({
 Template.singleGame.events({
   'click [data-action=game-leaderboard]': function(event, template){
     var $game = Router.current().params._id
-    var $period = Router.current().params.period
+    var $period = Games.findOne({}).period
     var userId = Meteor.userId()
     analytics.track("waiting-leaderboard", {
       userId: userId,
@@ -316,9 +304,7 @@ Template.gameTypePrompt.events({
     analytics.track("joined game", data);
 
     Meteor.call('userJoinsAGame', data);
-
-    Router.go('game.show', {_id: game._id, period: game.period});
-
+    Meteor.subscribe('gamePlayed', user._id, game._id),
     IonLoading.show({
       customTemplate: "Providing Coins...",
       duration: 1000,

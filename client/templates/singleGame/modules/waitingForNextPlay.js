@@ -17,7 +17,6 @@ Template.waitingForNextPlay.rendered = function () {
 		var lastAsked = lastAsked.getTime()
 		var itsBeenAwhile = (tenDays - lastAsked) > 0
 		var newVersion = parseInt((lastUpdateTime - lastAsked ) / days)
-		console.log(lastAsked, itsBeenAwhile, newVersion)
 	}
 
 	if (commercial === false){

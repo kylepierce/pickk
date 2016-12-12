@@ -4,6 +4,7 @@ Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 Template.mainLayout.rendered = function() {
   // IonSideMenu.snapper.settings({disable: 'right'});
   IonSideMenu.snapper.settings({touchToDrag: false});
+};
 
 Template.sideMenuContent.events({
   'click [data-action=logout]': function () {

@@ -48,12 +48,14 @@ Meteor.publish('usersGroups', function ( user ) {
 });
 
 // ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game)
-Meteor.publish('gamePlayed', function (user, game, period) {
+Meteor.publish('gamePlayed', function (user, gameId) {
   check(user, String);
-  check(game, String);
-  check(period, Number);
+  check(gameId, String);
 
-  return GamePlayed.find({userId: user, gameId: game, period: period})
+  var game = Games.find({_id: gameId }).fetch()
+  var period = game[0].period
+
+  return GamePlayed.find({userId: user, gameId: gameId, period: period})
 });
 
 // Teams
@@ -70,8 +72,11 @@ Meteor.publish('singleTeam', function ( teamId ) {
 
 // Questions and Answers
 // Active Questions for one game
-Meteor.publish('activeQuestions', function(gameId, period) {
+Meteor.publish('activeQuestions', function(gameId) {
   check(gameId, String);
+  var game = Games.find({_id: gameId }).fetch()
+  var period = game[0].period
+
   // this.unblock()
   var currentUserId = this.userId;
     return Questions.find({
@@ -83,9 +88,12 @@ Meteor.publish('activeQuestions', function(gameId, period) {
     }, {sort: {dateCreated: -1}, limit: 1});
 });
 
-Meteor.publish('activePropQuestions', function(gameId, period) {
+Meteor.publish('activePropQuestions', function(gameId) {
   check(gameId, String);
   this.unblock()
+
+  var game = Games.find({_id: gameId }).fetch()
+  var period = game[0].period
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
@@ -96,9 +104,12 @@ Meteor.publish('activePropQuestions', function(gameId, period) {
   }, {sort: {dateCreated: -1}, limit: 1});
 });
 
-Meteor.publish('activeCommQuestions', function(gameId, period) {
+Meteor.publish('activeCommQuestions', function(gameId) {
   check(gameId, String);
   this.unblock()
+
+  var game = Games.find({_id: gameId }).fetch()
+  var period = game[0].period
   var currentUserId = this.userId;
   return Questions.find({
     gameId: gameId,
