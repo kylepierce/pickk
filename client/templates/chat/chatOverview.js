@@ -5,11 +5,11 @@ Template.chatRoom.rendered = function() {
   // Meteor.subscribe("chatMessagesCount", null);
   // Meteor.subscribe('findUsersInGroup', groupId);
   // Meteor.subscribe('usersGroups', userId)
-  
+
 };
 
 Template.chatOverview.events({
-  'click #all-chats': function() { 
+  'click #all-chats': function() {
     Session.set('chatGroup', null)
 
   },
@@ -25,7 +25,7 @@ Template.chatOverview.helpers({
   //     var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
   //     return group.name
   //   }
-  // } 
+  // }
 });
 
 Template.singleMessage.helpers({
@@ -88,7 +88,7 @@ Template.chatOptions.helpers({
       return "col-md-25"
     } else {
       return "col-md-33"
-    }    
+    }
   },
   'notOwnMessage': function (){
     var owner = Template.instance().data.i.user
@@ -109,7 +109,7 @@ Template.chatOptions.helpers({
     } else {
       return false
     }
-  } 
+  }
 });
 
 Template.chatOptions.events({
@@ -117,8 +117,10 @@ Template.chatOptions.events({
     var userId = Template.instance().data.i.user
     var user = Meteor.users.findOne({_id: userId});
     var userName = user.profile.username
-    $('[name=messageBox]').val("@" + userName + " ")
-    $("#messageBox").focus()
+    var messageBox = $("#messageBox")
+    messageBox.focus();
+    messageBox.val('');
+    messageBox.val("@" + userName + " ");
   },
   'click [data-action=react]': function(e, t){
     IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
@@ -136,7 +138,7 @@ Template.chatOptions.events({
 
 Template.messageBox.events({
   'keyup textarea': function(e, t){
-    e.preventDefault();   
+    e.preventDefault();
     // Check if the message is longer than 3 characters
     var length = e.currentTarget.value.length
     if (length < 3){
@@ -158,8 +160,8 @@ Template.messageBox.events({
 
       var message = e.currentTarget.value;
       var chatObj = {
-        user: currentUser, 
-        message: message, 
+        user: currentUser,
+        message: message,
         groupId: groupId
       }
       if (message.length <= 2) {
@@ -183,14 +185,16 @@ Template.messageBox.events({
               backdrop: true
             })
           } else {
+            IonKeyboard.close()
+            IonPopover.hide()
+            $('#chat-submit').removeClass('allow-chats')
+            $("#messageBox").val('');
             IonLoading.show({
               customTemplate: "Posting.",
               duration: 3000,
               backdrop: true
             })
-            IonKeyboard.close()
-            IonPopover.hide()
-            $("#messageBox").val('');
+
           }
         });
       }
@@ -207,8 +211,8 @@ Template.messageBox.events({
     }
     var message = e.target.messageBox.value;
     var chatObj = {
-        user: currentUser, 
-        message: message, 
+        user: currentUser,
+        message: message,
         groupId: groupId
       }
 
@@ -233,14 +237,16 @@ Template.messageBox.events({
             backdrop: true
           })
         } else {
+          IonKeyboard.close()
+          IonPopover.hide()
+          $('#chat-submit').removeClass('allow-chats')
+          $("#messageBox").val('');
           IonLoading.show({
               customTemplate: "Posting.",
               duration: 3000,
               backdrop: true
             })
-            IonKeyboard.close()
-            IonPopover.hide()
-            $("#messageBox").val('');
+
         }
       });
     }
@@ -249,7 +255,7 @@ Template.messageBox.events({
     $("#messageBox").focus()
     var currentMessage = $("#messageBox").val()
     $("#messageBox").val(currentMessage + " @")
-  },  
+  },
 });
 
 Template.messageBox.helpers({
@@ -295,7 +301,7 @@ Template.chatRoom.helpers({
     Meteor.subscribe('chatUsersList', chatLimit, null);
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
     return chat
-    
+
   },
   showLoadMore: function() {
     var groupId = Session.get('chatGroup');
@@ -345,7 +351,7 @@ Template._groupChats.events({
   },
   'click [data-action=no-group]': function(){
     Router.go('/groups')
-  } 
+  }
 });
 
 Template._reaction.events({
@@ -355,8 +361,8 @@ Template._reaction.events({
     var currentUser = Meteor.userId()
     var groupId = Session.get('chatGroup')
     var chatObj = {
-      user: currentUser, 
-      reaction: message, 
+      user: currentUser,
+      reaction: message,
       groupId: groupId,
       type: "reaction"
     }

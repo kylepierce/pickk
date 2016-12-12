@@ -33,7 +33,7 @@
             <button class="button load-more" type="button">Load more</button>
           </div>
         {{/if}}
-      {{/ionList}} 
+      {{/ionList}}
 
     {{/ionContent}}
   {{/ionView}}
@@ -74,25 +74,25 @@
 </template>
 
 <template name="chatOptions">
+  {{#if canDelete}}
+    <button class="col-md-33 single-chat-buttons" style="float: right; padding-top: 3px;" data-action="delete">
+      {{> ionIcon class="icon-small" icon='ios-close-outline'}}
+      <span style='padding-top: 5px;'>Delete</span>
+    </button>
+  {{/if}}
   {{#if notOwnMessage}}
-  <button class="{{options}} single-chat-buttons" data-action="reply">
+  <button style='padding-top: 3px;' class="{{options}} single-chat-buttons" data-action="reply">
     {{> ionIcon class="icon-small" icon='forward'}}
-    Reply
+    <span style='padding-top: 5px;'>Reply</span>
   </button>
   <button class="{{options}} single-chat-buttons grayscale" data-action="react">
     <img class="icon-small" src="/emoji/Full-Color/Emoji-Party-Pack-01.svg">
-    React
+    <span>React</span>
   </button>
-  <button class="{{options}} single-chat-buttons" data-action="user">
+  <button style='padding-top: 3px;' class="{{options}} single-chat-buttons" data-action="user">
     {{> ionIcon class="icon-small" icon='ios-person'}}
-    User
+    <span style='padding-top: 5px;'>User</span>
   </button>
-  {{/if}}
-  {{#if canDelete}}
-    <button class="col-md-25 single-chat-buttons" style="float: right;" data-action="delete">
-      {{> ionIcon class="icon-small" icon='ios-close-outline'}}
-      Delete
-    </button>
   {{/if}}
 </template>
 
@@ -110,7 +110,7 @@
       {{else}}
         {{#ionItem buttonRight=true}}
           <p>No Groups :( Join a Group!</p>
-          <a data-action="no-group" class="button"> 
+          <a data-action="no-group" class="button">
             {{> ionIcon icon="ios-plus"}}
           </a>
         {{/ionItem}}
