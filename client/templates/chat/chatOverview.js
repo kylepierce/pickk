@@ -189,6 +189,14 @@ Template.messageBox.events({
             IonPopover.hide()
             $('#chat-submit').removeClass('allow-chats')
             $("#messageBox").val('');
+            if(Meteor.isCordova){
+              //Intercom needs unix time with '_at' in JSON to work.
+              var intercomData = {
+                "last_chat_post_at": parseInt(Date.now() / 1000),
+                "userId": currentUser,
+              }
+              updateIntercom(intercomData)
+            }
             IonLoading.show({
               customTemplate: "Posting.",
               duration: 3000,
@@ -241,6 +249,14 @@ Template.messageBox.events({
           IonPopover.hide()
           $('#chat-submit').removeClass('allow-chats')
           $("#messageBox").val('');
+          if(Meteor.isCordova){
+            //Intercom needs unix time with '_at' in JSON to work.
+            var intercomData = {
+              "last_chat_post_at": parseInt(Date.now() / 1000),
+              "userId": currentUser,
+            }
+            updateIntercom(intercomData)
+          }
           IonLoading.show({
               customTemplate: "Posting.",
               duration: 3000,
@@ -366,6 +382,7 @@ Template._reaction.events({
       groupId: groupId,
       type: "reaction"
     }
+
     Meteor.call('addChatMessage', chatObj, function(error) {
       if (error) {
         IonLoading.show({
@@ -377,6 +394,15 @@ Template._reaction.events({
     });
     IonPopover.hide();
     $("#messageBox").val('');
+    if(Meteor.isCordova){
+      //Intercom needs unix time with '_at' in JSON to work.
+      var intercomData = {
+        "posted_reaction": true,
+        "last_reaction_at": parseInt(Date.now() / 1000),
+        "userId": currentUser,
+      }
+      updateIntercom(intercomData)
+    }
   },
 });
 
@@ -392,8 +418,6 @@ Template._reactionToMessage.events({
       reaction: message
     });
 
-    console.log(messageId, currentUser, message)
-
     Meteor.call('addReactionToMessage', currentUser, message, messageId,  function(error) {
       if (error) {
         IonLoading.show({
@@ -405,6 +429,15 @@ Template._reactionToMessage.events({
     });
     IonPopover.hide();
     $("#messageBox").val('');
+    if(Meteor.isCordova){
+      //Intercom needs unix time with '_at' in JSON to work.
+      var intercomData = {
+        "reacted_to_post": true,
+        "last_reaction_post_at": parseInt(Date.now() / 1000),
+        "userId": currentUser,
+      }
+      updateIntercom(intercomData)
+    }
   },
 });
 

@@ -117,7 +117,15 @@ Template.followerCheck.events({
   'click [data-action=followUser]': function() {
     var currentUserId = Meteor.userId();
     var accountToFollow = Router.current().params._id
-
+    if(Meteor.isCordova){
+      //Intercom needs unix time with '_at' in JSON to work.
+      var intercomData = {
+        "followed": true,
+        "last_follow_at": parseInt(Date.now() / 1000),
+        "userId": currentUserId,
+      }
+      updateIntercom(intercomData)
+    }
     // Add this user followers
     Meteor.call('followUser', currentUserId, accountToFollow);
 

@@ -17,6 +17,15 @@ AutoForm.hooks({
           }
         }
       });
+      if(Meteor.isCordova){
+        //Intercom needs unix time with '_at' in JSON to work.
+        var intercomData = {
+          "updated_settings": true,
+          "last_settings_update_at": parseInt(Date.now() / 1000),
+          "userId": Meteor.userId(),
+        }
+        updateIntercom(intercomData)
+      }
       return false;
     }
   }
@@ -64,6 +73,15 @@ Template.settings.events({
         id: currentUser,
         newUser: newOrNah
       });
+      if(Meteor.isCordova){
+        //Intercom needs unix time with '_at' in JSON to work.
+        var intercomData = {
+          "added_avatar": true,
+          "last_update_avatar": parseInt(Date.now() / 1000),
+          "userId": a.userId,
+        }
+        updateIntercom(intercomData)
+      }
       console.log("Upload Error: ", error);
       console.log("Upload Result: ", result);
     });

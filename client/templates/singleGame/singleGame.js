@@ -275,44 +275,6 @@ Template.singleGame.events({
   }
 });
 
-Template.gameTypePrompt.helpers({
-  notFootball: function (){
-    var game = Games.findOne();
-    var sport = game.sport
-    if (sport !== "football"){
-      return true
-    }
-  }
-});
-
-Template.gameTypePrompt.events({
-  'click [data-action="joinGame"]': function (e,t) {
-    var user = Meteor.user();
-    var game = Games.findOne();
-    var text = e.target.innerText.toLowerCase( )
-
-    var gamePlayed = {
-      gameId: game._id,
-      dateCreated: new Date(),
-      userId: user._id,
-      period: game.period,
-      type: text
-    }
-
-    var opinion = checkUsersOpinion(game, user)
-    var data = _.extend(gamePlayed, opinion)
-    analytics.track("joined game", data);
-
-    Meteor.call('userJoinsAGame', data);
-    Meteor.subscribe('gamePlayed', user._id, game._id),
-    IonLoading.show({
-      customTemplate: "Providing Coins...",
-      duration: 1000,
-      backdrop: true
-    });
-  }
-});
-
 Template.commericalQuestion.helpers({
   freePickk: function (q) {
     if(q.binaryChoice === true){
@@ -446,46 +408,4 @@ displayOptions = function ( o ) {
   } else {
     addOptions( o.containerId, selectedObj )
   }
-}
-
-
-checkUsersOpinion = function (game, user){
-  var data = {}
-  var sport = game.sport
-  var teams = game.teamAbbr
-  var favoriteSports = user.profile.favoriteSports
-  if (sport === "football"){ var sport = "NFL"}
-  var lastSport = sport
-  var date = new Date();
-  var playData = {
-    lastSport: lastSport
-  }
-  playData[sport] = {
-    date: date,
-    teams: teams
-  }
-  analytics.identify(user._Id, playData)
-
-  // If the user likes the sport see if they like the team.
-
-  if (favoriteSports) {
-    var likesThisSport = favoriteSports.includes(sport)
-    data["likesSport"] = true,
-    data["teamLiked"] = sport
-    var userFavoriteSportTeam = user.profile["favorite" + sport + "Teams"]
-    var likesThisTeam = _.intersection(teams, userFavoriteSportTeam)
-    if (likesThisTeam.length > 0){
-      data["likesTeam"] = true
-      data["teamLiked"] = likesThisTeam
-    } else {
-      // Doesnt like this team but still playing. Lets add that to analytics.
-      data["likesTeam"] = false
-    }
-  } else {
-    // Doesnt like the sports but still playing. Lets add that to analytics.
-    data["likesSport"] = false
-    data["likesTeam"] = false
-  }
-
-  return data
 }

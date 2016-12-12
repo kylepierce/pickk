@@ -101,13 +101,13 @@ Template.waitingForNextPlay.events({
     	{userId: userId, result: true});
 
 		var vendor = navigator.vendor
-		// if (Meteor.isCordova){
+		if (Meteor.isCordova){
 			if(vendor === "Apple Computer, Inc."){
 				window.open('itms-apps://itunes.apple.com/app/viewContentsUserReviews/id995393750', '_system');
 			} else if (vendor === "Google Inc.") {
 				window.open("market://details?id=com.id5oyejxkvm3yq1jfiwr5", '_system');
 			}
-		// }
+		}
 		var data = {removeId: "reviewPrompt"}
 		removePrompt(data)
 	},

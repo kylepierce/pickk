@@ -115,6 +115,15 @@ Template.submitButton.events({
       wager: w,
     });
 
+    if(Meteor.isCordova){
+      //Intercom needs unix time with '_at' in JSON to work.
+      var intercomData = {
+        "last_question_answered_at": parseInt(Date.now() / 1000),
+        "userId": a.userId,
+      }
+      updateIntercom(intercomData)
+    }
+
     var obj = {lastQuestion: new Date()}
     analytics.identify(a.userId, obj)
 

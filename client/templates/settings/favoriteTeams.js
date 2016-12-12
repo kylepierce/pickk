@@ -32,6 +32,7 @@ var hooksObj = {
 
     analytics.identify(userId, data)
     if (Meteor.isCordova) {
+      console.log(data)
       intercom.updateUser(data);
     }
     Meteor.call('updateFavorites', selectionArray, type, function(error) {

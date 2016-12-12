@@ -14,7 +14,16 @@ if (Meteor.isCordova) {
   });
 
   updateIntercom = function (data) {
-    intercom.updateUser(data);
+    var type = typeof data
+    console.log("type", type)
+    console.log("before", data)
+    var data = JSON.stringify(data)
+    console.log("after", data)
+    var objKeysRegex = /({|,)(?:\s*)(?:')?([A-Za-z_$\.][A-Za-z0-9_ \-\.$]*)(?:')?(?:\s*):/g;// look for object names
+    var newQuotedKeysString = data.replace(objKeysRegex, "$1\"$2\":");// all object names should be double quoted
+    var newObject = JSON.parse(newQuotedKeysString);
+    console.log("final", newObject)
+    intercom.updateUser(newObject);
   }
 
   initIntercom = function () {
