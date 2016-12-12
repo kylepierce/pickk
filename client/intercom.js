@@ -4,7 +4,6 @@ if (Meteor.isCordova) {
   document.addEventListener('deviceready', function () {
     deviceReady = true;
     console.log("Device is ready");
-
     if (Meteor.user()) initIntercom();
   }, false);
 
@@ -41,7 +40,6 @@ if (Meteor.isCordova) {
     if (data.name) console.log("Name", data.name);
 
     intercom.setLauncherVisibility(intercom.GONE);
-
   };
 
   enableIntercomNotifications = function () {

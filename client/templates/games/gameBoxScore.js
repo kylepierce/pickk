@@ -214,7 +214,8 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
+    var period = this.game.period
     // Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
-    Router.go('game.show', {_id: gameId, period: 1});
+    Router.go('game.show', {_id: gameId, period: period});
   }
 });

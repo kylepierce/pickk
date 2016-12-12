@@ -16,7 +16,7 @@ Template.home.helpers({
   },
   gamePrediction: function () {
     return Questions.find({}).count()
-  }, 
+  },
   dailyPickkCount: function () {
     return Questions.find({}).count()
   },
@@ -39,7 +39,7 @@ Template.home.events({
       userId: userId,
     });
     Router.go('/history')
-  }, 
+  },
   'click [data-action=notifications]': function(event, template){
     var userId = Meteor.userId()
     analytics.track("home-notifications", {
@@ -52,14 +52,14 @@ Template.home.events({
     analytics.track("home-chat", {
       userId: userId,
     });
-  }, 
+  },
   'click [data-action=game-prediction]': function(event, template){
     var userId = Meteor.userId()
     analytics.track("home-game-pickks", {
       userId: userId,
     });
     Router.go('/daily-pickks')
-  }, 
+  },
 });
 
 

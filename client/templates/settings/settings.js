@@ -20,7 +20,7 @@ AutoForm.hooks({
       return false;
     }
   }
-})
+});
 
 Template.settings.helpers({
   UsersProfileSchema: function() {

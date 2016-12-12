@@ -1,10 +1,9 @@
 Template.homeLayout.rendered = function() {
-  // IonSideMenu.snapper.settings({disable: 'right'});  
+  // IonSideMenu.snapper.settings({disable: 'right'});
   IonSideMenu.snapper.settings({touchToDrag: false});
-};
 
 Template.chatLayout.rendered = function() {
-  // IonSideMenu.snapper.settings({disable: 'right'});  
+  // IonSideMenu.snapper.settings({disable: 'right'});
   IonSideMenu.snapper.settings({touchToDrag: false});
 };
 
@@ -21,4 +20,3 @@ Template.chatHeader.events({
     event.preventDefault();
   }
 })
-

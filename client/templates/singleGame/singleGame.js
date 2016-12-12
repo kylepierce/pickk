@@ -13,8 +13,9 @@ Template.singleGame.rendered = function () {
   var urlPeriod = Router.current().params.period
   var gamePeriod = game.period
 
+  // var gamePlayed = GamePlayed.findOne();
   if (urlPeriod !== gamePeriod){
-    Router.go('/game/' + gameId + "/" + gamePeriod)
+    Router.go('game.show', {_id: gameId, period: gamePeriod});
   }
 };
 
@@ -316,13 +317,13 @@ Template.gameTypePrompt.events({
 
     Meteor.call('userJoinsAGame', data);
 
+    Router.go('game.show', {_id: game._id, period: game.period});
+
     IonLoading.show({
       customTemplate: "Providing Coins...",
       duration: 1000,
       backdrop: true
     });
-
-    Router.go('/game/' + game._id + "/" + game.period);
   }
 });
 

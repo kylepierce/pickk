@@ -68,7 +68,7 @@ Template.loginBox.events({
 		var data = Session.get("deepLinked");
 		if (!data) {
 			var data = {}
-		} 
+		}
 
 		if (count > 0) {
 			data["liveGameAtSignUp"] = true
