@@ -40,6 +40,18 @@ if (Meteor.isCordova) {
     if (user.profile && user.profile.firstName && user.profile.lastName) {
       data.name = user.profile.firstName + " " + user.profile.lastName;
     }
+    if (user.profile && user.profile.favoriteSports) {
+      data["favorite_sports"] = JSON.stringify(user.profile.favoriteSports);
+    }
+    if (user.profile && user.profile.favoriteNFLTeams) {
+      data["favorite_nfl_teams"] = JSON.stringify(user.profile.favoriteNFLTeams);
+    }
+    if (user.profile && user.profile.favoriteMLBTeams) {
+      data["favorite_mlb_teams"] = JSON.stringify(user.profile.favoriteMLBTeams);
+    }
+    if (user.profile && user.profile.favoriteNBATeams) {
+      data["favorite_nba_teams"] = JSON.stringify(user.profile.favoriteNBATeams);
+    }
 
     intercom.registerIdentifiedUser(data);
     intercom.updateUser(data);

@@ -1,3 +1,7 @@
+Template.games.rendered = function () {
+  console.log(this.data); // you should see your passage object in the console
+};
+
 Template.games.helpers({
   gameClass: function () {
     return "game-item-" + this['status'];
@@ -6,7 +10,7 @@ Template.games.helpers({
   hasActiveGames: function () {
 		return Template.instance().data.games.length > 0;
   },
-  
+
   inprogress: function (status) {
     if (status == "inprogress"){
       return true
@@ -24,20 +28,20 @@ Template.games.helpers({
 
   next: function () {
     var day = parseInt(Router.current().params.day) + 1
-    if (day) { 
+    if (day) {
       var now = moment().dayOfYear(day)
     } else {
       var day = moment().dayOfYear()
       var now = moment().dayOfYear(day + 1)
     }
-    
+
     return moment(now,"MM/DD/YYYY", true).format("MMM Do");
   },
 
   prev: function () {
     var day = parseInt(Router.current().params.day) - 1
-    if (day) { 
-      var now = moment().dayOfYear(day) 
+    if (day) {
+      var now = moment().dayOfYear(day)
     } else {
       var day = moment().dayOfYear()
       var now = moment().dayOfYear(day - 1)
@@ -58,7 +62,7 @@ Template.games.events({
   'click [data-action=previous]': function (e, t){
     // Find the day from router or moment
     var day = Router.current().params.day
-    if (day === null || day === undefined) { 
+    if (day === null || day === undefined) {
       var day = moment().dayOfYear()
     }
     //One less day
@@ -69,7 +73,7 @@ Template.games.events({
   'click [data-action=next]': function (e, t){
     // Find the day from router or moment
     var day = Router.current().params.day
-    if (day === null || day === undefined) { 
+    if (day === null || day === undefined) {
       var day = moment().dayOfYear()
     }
     //One less day

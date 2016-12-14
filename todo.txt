@@ -1,3 +1,5 @@
+NSCameraUsageDescription
+
 ------ Before App Store Submission -------
 
 Settings:

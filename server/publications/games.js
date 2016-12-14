@@ -8,7 +8,7 @@ Meteor.publish('singleGame', function(_id) {
 Meteor.publish('activeGames', function(day) {
   check(day, Number);
   this.unblock()
- 
+
   var specificDay = moment().dayOfYear(day)
   var start = specificDay.startOf('day').add(4, "hour").toDate();
   var finish = specificDay.endOf('day').add(4, "hour").toDate(); // today and tomorrow
@@ -17,13 +17,15 @@ Meteor.publish('activeGames', function(day) {
     sort: {live: -1, scheduled: 1}, fields: {inning: 0}
   }
 
-  return Games.find(selector, parms);
+  var games = Games.find(selector, parms);
+  console.log(games.count())
+  return games
 });
 
 Meteor.publish('liveGames', function() {
   this.unblock()
 
-  var selector = {status: "inprogress"};
+  var selector = {status: "inprogress", type: {$ne: "prediction"}};
   var parms = {
     sort: {live: -1, scheduled: 1},
     fields: {inning: 0}

@@ -1,12 +1,25 @@
 Template.dailyPickks.rendered = function () {
   var now = moment();
-  var user = Meteor.userId();
+  var userId = Meteor.userId();
   var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
   var title = dateSpelled + " Predictions"
   var game = Games.findOne({name: title});
   var gameId = game._id
-  Meteor.subscribe('singleGame', gameId)
-  Meteor.subscribe('gameNotifications', gameId, user)
+  console.log(gameId)
+  Meteor.subscribe('singleGame', gameId);
+  Meteor.subscribe('gameNotifications', gameId, userId);
+  Meteor.subscribe('gamePlayed', userId, gameId);
+  var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId});
+
+  if (!gamePlayed){
+    var gamePlayed = {
+      userId: userId,
+      dateCreated: new Date(),
+      gameId: gameId,
+      type: "diamonds",
+    }
+    Meteor.call('userJoinsAGame', gamePlayed);
+  }
 };
 
 Template.dailyPickks.helpers({
@@ -32,7 +45,7 @@ Template.dailyPickks.helpers({
         Meteor.call('removeNotification', id);
 
         sAlert.warning(message, {effect: 'stackslide', html: true});
-      } 
+      }
     });
   }
 });
@@ -63,4 +76,4 @@ Template.dailyPickks.events({
     }
     displayOptions( parms )
   },
-}); 
+});
