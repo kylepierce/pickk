@@ -16,7 +16,7 @@ Meteor.methods({
 			var status = "scheduled"
 		}
 
-		var home = Teams.findOne({"fullName": g.home}); 
+		var home = Teams.findOne({"fullName": g.home});
 		var away = Teams.findOne({"fullName": g.away});
 
 		var homeAbbr = home.computerName
@@ -59,7 +59,7 @@ Meteor.methods({
 			nonActive: [],
 			users: []
 		});
-	},	
+	},
 
 	'createPredictionGame': function() {
 		if (!Meteor.userId()) {
@@ -69,20 +69,10 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		var now = moment();
-		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
-		var title = dateSpelled + " Predictions"
-		var timeCreated = new Date();
-		var game = Games.insert({
-			dateCreated: timeCreated,
-			scheduled: timeCreated,
-			type: "prediction",
-			name: title,
-			users: []
-		});
+		
 		return game
-	},	
-	
+	},
+
 	'deactivateGame': function(questionId) {
 		check(questionId, String);
 
@@ -115,9 +105,9 @@ Meteor.methods({
 		check(home, Number);
 		check(away, Number);
 
-		Games.update({_id: gameId}, 
+		Games.update({_id: gameId},
 			{$set: {
-				"scoring.home.runs": home, 
+				"scoring.home.runs": home,
 				"scoring.away.runs": away
 			}
 		});

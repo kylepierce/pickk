@@ -34,9 +34,9 @@ Meteor.publish('userNotifications', function(userId) {
 
 Meteor.publish('gameNotifications', function(gameId) {
   check(gameId, String);
-  this.unblock()
   var userId = this.userId;
-  return Notifications.find({gameId: gameId, userId: userId, read: false})
+  var notif = Notifications.find({gameId: gameId, userId: userId, read: false});
+  return notif
 });
 
 Meteor.publish('usersGroups', function ( user ) {

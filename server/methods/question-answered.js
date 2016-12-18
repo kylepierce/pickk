@@ -1,12 +1,12 @@
 Meteor.methods({
 	'activityForDiamonds': function(d){
 		check(d, Object);
-		
+
 		d.source = "Activity"
 		var stringCounter = d.counter.toString()
 		var activityExchange = {
 			"1": 1, "3": 2, "8": 3, "15": 4, "30": 5, "45": 6, "60": 7, "75": 8, "100": 9, "125": 12, "150": 14,
-		} 
+		}
 
 		var x = activityExchange.hasOwnProperty(stringCounter);
 		if (x) {
@@ -18,11 +18,11 @@ Meteor.methods({
 	'questionAnswered': function(c) {
 		check(c, Object);
 
-		// Validate a few things 
+		// Validate a few things
 		var timeCreated = new Date();
 		var question = Questions.findOne(c.questionId);
 		var description = c.description || "";
-		
+
 		// See if they already answered the question
 		if (~question.usersAnswered.indexOf(c.userId)) {
 			return
@@ -37,7 +37,7 @@ Meteor.methods({
 		if (c.type === "live" || c.type === "atBat"){
 			wager = parseInt(c.wager || "0", 10);
 			var multiplier = parseFloat(c.multiplier || "0");
-		}		
+		}
 
 		// Then insert into answers.
 
@@ -67,12 +67,13 @@ Meteor.methods({
 			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
 
-			var gameName = Games.findOne({_id: c.gameId}).name;
+			var game = Games.findOne({_id: c.gameId});
+			var gameName = game.name
 			var counter = GamePlayed.findOne(selector).queCounter
 
 			var diamondExchange = {
-				userId: c.userId, 
-				counter: counter, 
+				userId: c.userId,
+				counter: counter,
 				period: c.period,
 				gameId: c.gameId,
 				gameName: gameName
@@ -80,7 +81,7 @@ Meteor.methods({
 
 			// Award diamonds if they have been active
 			Meteor.call('activityForDiamonds', diamondExchange)
-		} 
+		}
 
 		// Free pickks give coins and adds a notification
 		else if (c.type === "free-pickk"){
@@ -88,7 +89,7 @@ Meteor.methods({
 
 			var selector = {userId: c.userId, gameId: c.gameId, period: c.period}
 			var modify = {$inc: {coins: +c.wager}}
-			
+
 			GamePlayed.update(selector, modify);
 
 		  var notifyObj = {
@@ -100,16 +101,15 @@ Meteor.methods({
 		  	userId: c.userId,
 		  }
   		createPendingNotification(notifyObj)
-		} 
+		}
 
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
-			var gameName = Games.findOne({_id: c.gameId}).name;
 			var o = {
-				userId: c.userId, 
+				userId: c.userId,
 				gameId: c.gameId,
 				questionId: c.questionId,
-				gameName: gameName,
+				gameName: c.gameName,
 				value: 5,
 				source: "Daily Pickks"
 			}

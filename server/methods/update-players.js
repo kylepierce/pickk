@@ -8,9 +8,13 @@ Meteor.methods({
 	  if (!o.message) {
 	  	o.message = "You Earned " + value + " Diamonds!"
 	  }
-
+		if(o.type === "prediction"){
+			var selector = {userId: o.userId, gameId: o.gameId}
+		} else {
+			var selector = {userId: o.userId, gameId: o.gameId, period: o.period}
+		}
 	  // Add coins to gameId or week
-	  GamePlayed.update({userId: o.userId, gameId: o.gameId, period: o.period}, {$inc: {diamonds: + value}})
+	  GamePlayed.update(selector, {$inc: {diamonds: + value}})
 
 	  createPendingNotification(o)
 	},
@@ -121,7 +125,6 @@ Meteor.methods({
 	'openGame': function(game){
 		check(game, String);
 		this.unblock()
-		console.log(game)
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
     }

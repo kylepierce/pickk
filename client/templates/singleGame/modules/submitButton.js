@@ -58,8 +58,20 @@ Template.submitButton.events({
       var w = this.w // wager
       a.wager = w
     } else if ( t === "prediction" ){
+      var game = Games.findOne();
+      var gameId = game._id
+      var userId = Meteor.userId();
+      var gamePlayed = {
+        gameId: gameId,
+        userId: userId,
+      }
+      var joinedGame = GamePlayed.findOne(gamePlayed);
+      if(!joinedGame){
+        Meteor.call('userJoinsAGame', gamePlayed);
+        Meteor.subscribe('gamePlayed', userId, game._id);
+      }
       var w = "diamonds" // wager
-
+      a.gameName = q.gameName
     } else {
       var w = this.w // wager
       // Normal Questions (i.e live, at bat, and drive)

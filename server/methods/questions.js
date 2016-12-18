@@ -301,16 +301,18 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		var now = moment();
-		var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
-		var title = dateSpelled + " Predictions"
-		var game = Games.findOne({name: title});
+		var game = Games.findOne({name: q.gameName});
 		var currentUserId = Meteor.userId();
 		var timeCreated = new Date();
-		if (!game){
-			var gameId = Meteor.call('createPredictionGame', function(result, error){
-				return result
-			})
+		if(!game || game === "undefined"){
+			var timeCreated = new Date();
+			var gameId = Games.insert({
+				dateCreated: timeCreated,
+				scheduled: timeCreated,
+				type: "prediction",
+				name: q.gameName,
+				users: []
+			});
 		} else {
 			var gameId = game._id
 		}
@@ -319,6 +321,7 @@ Meteor.methods({
 			que: q.que,
 			gameId: gameId,
 			icons: false,
+			gameName: q.gameName,
 			createdBy: currentUserId,
 			dateCreated: timeCreated,
 			background: "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/daily-diamond.png'); background-position-x: 50%; background-position-y: 78%;",

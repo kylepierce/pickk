@@ -8,27 +8,27 @@
 	    {{/if}}
   	</button>
 	{{/contentFor}}
-   		 
+
  {{#contentFor "headerTitle"}}
 	<h1 class="title white-text-header">Game Prediction </h1>
  {{/contentFor}}
 
 {{#ionView}}
-	{{#ionContent}}	
+	{{#ionContent}}
 
 	<form id="gameInfo">
 		<label type="stacked" class="item item-input item-stacked-label">
 			<span class="input-label">Team 1</span>
 			<select id="team1">
-				{{> nfl}} 
+				{{> nfl}}
 				{{> mlb}}
 			</select>
 		</label>
 		<label type="stacked" class="item item-input item-stacked-label">
 			<span class="input-label">Team 2</span>
-			<select id="team2"> 
-				{{> nfl}} 
-				{{> mlb}} 
+			<select id="team2">
+				{{> nfl}}
+				{{> mlb}}
 			</select>
 		</label>
 		<input class='full' type="submit">
@@ -36,10 +36,10 @@
 
 <div class="item item-divider">Future Questions</div>
 	{{#ionList}}
-		{{#each futureQuestion}}			
+		{{#each futureQuestion}}
 			{{#ionItem buttonRight=true}}
 				{{que}} -- {{active}}
-			  <button class="button" data-action="active" > 
+			  <button class="button" data-action="active" >
 			    {{> ionIcon icon="ios-close"}}
 			  </button>
 			{{/ionItem}}
@@ -48,10 +48,10 @@
 
 <div class="item item-divider">Active Questions</div>
 	{{#ionList}}
-		{{#each gameQuestion}}			
+		{{#each gameQuestion}}
 			{{#ionItem buttonRight=true}}
 				{{que}} -- {{active}}
-			  <button class="button" data-action="pending" > 
+			  <button class="button" data-action="pending" >
 			    {{> ionIcon icon="ios-close"}}
 			  </button>
 			{{/ionItem}}
@@ -60,10 +60,10 @@
 
 <div class="item item-divider">Pending Questions</div>
 	{{#ionList}}
-		{{#each pendingGameQuestions}}			
+		{{#each pendingGameQuestions}}
 			{{#ionItem buttonRight=true}}
 				{{que}} -- {{active}}
-				<button class="button" data-action="_gamePopover"> 
+				<button class="button" data-action="_gamePopover">
 					{{> ionIcon icon="more" }}
 			  </button>
 			{{/ionItem}}
