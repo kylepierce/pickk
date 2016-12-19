@@ -18,7 +18,6 @@ Meteor.publish('activeGames', function(day) {
   }
 
   var games = Games.find(selector, parms);
-  console.log(games.count())
   return games
 });
 
@@ -45,3 +44,9 @@ Meteor.publish('singleQuestion', function(id) {
   this.unblock()
   return Questions.find({_id: id}, {fields: {_id: 1, que: 1, outcome: 1, options: 1}})
 })
+
+Meteor.publish('joinGameCount', function(data){
+  check(data, Object);
+  this.unblock();
+  Counts.publish(this, "joinGameCount", GamePlayed.find(data));
+});

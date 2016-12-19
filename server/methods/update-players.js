@@ -3,7 +3,7 @@ Meteor.methods({
 		check(o, Object);
 
 		var value = parseInt(o.value)
-    o.type = "diamonds"
+
 
 	  if (!o.message) {
 	  	o.message = "You Earned " + value + " Diamonds!"
@@ -11,6 +11,7 @@ Meteor.methods({
 		if(o.type === "prediction"){
 			var selector = {userId: o.userId, gameId: o.gameId}
 		} else {
+			o.type = "diamonds"
 			var selector = {userId: o.userId, gameId: o.gameId, period: o.period}
 		}
 	  // Add coins to gameId or week

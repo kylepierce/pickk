@@ -61,9 +61,11 @@ Template.submitButton.events({
       var game = Games.findOne();
       var gameId = game._id
       var userId = Meteor.userId();
+      var createdAt = new Date();
       var gamePlayed = {
         gameId: gameId,
         userId: userId,
+        dateCreated: createdAt
       }
       var joinedGame = GamePlayed.findOne(gamePlayed);
       if(!joinedGame){

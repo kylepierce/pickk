@@ -25,42 +25,43 @@
 					{{#if notJoinedGame}}
 						{{> gameTypePrompt}}
 					{{else}}
-						{{#if noQuestions}}
-							<div class="animated fast fadeInUp hundred-bottom">
-								<div class="clear-fix"></div>
-									<h5 style="margin-bottom: 0;">
-										Progress To Next Diamond Prize
-									</h5>
-									{{>diamondWatcher}}
-									<h5>Game type: {{gameType}}</h5>
-								{{> waitingForNextPlay}}
-							</div>
-						{{else}}
-							{{#if prop}} <!-- Prop -->
-								{{#each question in prop}}
-									{{> singleQuestion q=question}}
-								{{/each}}
-							{{else}} <!-- Not Prop -->
-								{{#if commericalBreak}}
-									<!-- game.commerical = true -->
-									{{#each question in commericalQuestions}}
-										{{> commericalQuestion q=question}}
-									{{/each}}
-									{{else}}
-									{{#if questions}} <!-- Normal -->
-										{{#each question in questions}}
-											{{> singleQuestion q=question}}
-										{{/each}}
-									{{/if}} <!-- End Normal -->
-								{{/if}} <!-- !game.commerical -->
-						{{/if}}	<!-- noQuestions -->
-						{{/if}}
+						{{> liveGame}}
 					{{/if}}	<!-- notJoinedGame -->
 				{{/if}} <!-- isLive -->
 			</div>
 			{{ scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="liveGame">
+	{{#if noQuestions}}
+		{{> waitingForNextPlay}}
+	{{else}}
+		{{#if props}} <!-- Prop -->
+			{{#each question in prop}}
+				{{> singleQuestion q=question}}
+			{{/each}}
+			{{else}} <!-- Not Prop -->
+				{{#if commericalBreak}} <!-- game.commerical = true -->
+					{{#each question in commericalQuestions}}
+						{{> commericalQuestion q=question}}
+					{{/each}}
+					{{else}}
+					{{#if questions}} <!-- Normal -->
+						{{#each question in questions}}
+							{{> singleQuestion q=question}}
+						{{/each}}
+						{{else}}
+							{{> waitingForNextPlay}}
+					{{/if}} <!-- End Normal -->
+				{{/if}} <!-- !game.commerical -->
+		{{/if}}	<!-- End Prop -->
+	{{/if}} <!-- noQuestions -->
+</template>
+
+<template name="noPlay">
+
 </template>
 
 <template name="commericalQuestion">

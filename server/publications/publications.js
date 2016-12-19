@@ -1,12 +1,5 @@
 // Global
 
-// isTester = function (userId) {
-//   console.log(userId)
-//   var user = Meteor.users.findOne(userId);
-//   var role = user.profile.role;
-//   return role && (role == "admin" || role == "beta");
-// };
-
 // Most Common / Basic layout
 
 Meteor.publish("userData", function() {
@@ -48,9 +41,10 @@ Meteor.publish('usersGroups', function ( user ) {
 });
 
 // ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game)
-Meteor.publish('gamePlayed', function (user, gameId) {
+Meteor.publish('gamePlayed', function (user, gameId, period) {
   check(user, String);
   check(gameId, String);
+  check(period, Number);
 
   var game = Games.find({_id: gameId }).fetch()
   var period = game[0].period
@@ -72,52 +66,67 @@ Meteor.publish('singleTeam', function ( teamId ) {
 
 // Questions and Answers
 // Active Questions for one game
-Meteor.publish('activeQuestions', function(gameId) {
+Meteor.publish('activeQuestions', function(gameId, period) {
   check(gameId, String);
+  check(period, Number);
   var game = Games.find({_id: gameId }).fetch()
-  var period = game[0].period
 
   // this.unblock()
   var currentUserId = this.userId;
-    return Questions.find({
+
+  if(game){
+    var questions = Questions.find({
       gameId: gameId,
       active: true,
       period: period,
       commercial: false,
       usersAnswered: {$nin: [currentUserId]}
     }, {sort: {dateCreated: -1}, limit: 1});
+    return questions
+  }
+
+  return this.ready();
 });
 
-Meteor.publish('activePropQuestions', function(gameId) {
+Meteor.publish('activePropQuestions', function(gameId, period) {
   check(gameId, String);
+  check(period, Number);
   this.unblock()
 
   var game = Games.find({_id: gameId }).fetch()
-  var period = game[0].period
   var currentUserId = this.userId;
-  return Questions.find({
-    gameId: gameId,
-    active: true,
-    period: period,
-    type: "prop",
-    usersAnswered: {$nin: [currentUserId]}
-  }, {sort: {dateCreated: -1}, limit: 1});
+
+  if(game){
+    return Questions.find({
+      gameId: gameId,
+      active: true,
+      period: period,
+      type: "prop",
+      usersAnswered: {$nin: [currentUserId]}
+    }, {sort: {dateCreated: -1}, limit: 1});
+  }
+
+  return this.ready();
 });
 
-Meteor.publish('activeCommQuestions', function(gameId) {
+Meteor.publish('activeCommQuestions', function(gameId, period) {
   check(gameId, String);
+  check(period, Number);
   this.unblock()
 
   var game = Games.find({_id: gameId }).fetch()
-  var period = game[0].period
   var currentUserId = this.userId;
-  return Questions.find({
-    gameId: gameId,
-    active: true,
-    period: period,
-    commercial: true,
-    usersAnswered: {$nin: [currentUserId]}
-  }, {sort: {dateCreated: 1}, limit: 1});
+  if(game){
+    return Questions.find({
+      gameId: gameId,
+      active: true,
+      period: period,
+      commercial: true,
+      usersAnswered: {$nin: [currentUserId]}
+    }, {sort: {dateCreated: 1}, limit: 1});
+  }
+
+  return this.ready();
 });
 
 // Meteor.publish('adminActiveQuestions', function(gameId) {

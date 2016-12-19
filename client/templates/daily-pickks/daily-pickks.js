@@ -40,6 +40,17 @@ Template.dailyPickks.helpers({
   }
 });
 
+Template.dailyPickks.onCreated(function() {
+  var userId = Meteor.userId();
+  var now = moment();
+  var userId = Meteor.userId();
+  var dateSpelled = moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
+  var title = dateSpelled + " Predictions"
+  var game = Games.findOne({name: title});
+  var gameId = game._id
+  this.subscribe('gameNotifications', gameId, userId);
+});
+
 Template.dailyPickks.events({
 	'click [data-action=play-selected]': function (e, t) {
     $('.play-selected').removeClass('play-selected')

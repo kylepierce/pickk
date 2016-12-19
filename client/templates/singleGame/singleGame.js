@@ -6,18 +6,21 @@ Template.singleGame.rendered = function () {
     centerMode: true,
     centerPadding: '4.5%'
   });
-
-  intercom.setLauncherVisibility('VISABLE');
+  if(Meteor.isCordova){
+    intercom.setLauncherVisibility('VISABLE');
+  }
 };
 
+Template.waitingForNextPlay.onCreated(function() {
+  var userId = Meteor.userId()
+  var gameId = Router.current().params._id
+  this.subscribe('leaderboardGamePlayed', gameId, 0, 5)
+});
+
 Template.singleGame.helpers({
-  game: function () {
-    return Games.findOne();
+  game: function(){
+    return Games.findOne()
   },
-  // notifications: function () {
-  //   var $game = Router.current().params._id
-  //   return Notifications.find({gameId: $game}, {sort: {dateCreated: -1}, limit: 3}).fetch();
-  // },
   joinedGame: function (){
     var game = Games.findOne();
     var gameId = game._id
@@ -28,37 +31,17 @@ Template.singleGame.helpers({
       userId: userId,
       period: gamePeriod
     }
-    var currentGame = GamePlayed.findOne(gamePlayed);
-    var type = currentGame && currentGame.type
-    if (type){
+    Meteor.subscribe('joinGameCount', gamePlayed)
+    var count = Counts.get('joinGameCount')
+    if (count === 1){
       return true
     }
   },
   notJoinedGame: function (){
-    var game = Games.findOne();
-    var gameId = game._id
-    var userId = Meteor.userId();
-    var gamePeriod = game.period
-    var gamePlayed = {
-      gameId: gameId,
-      userId: userId,
-      period: gamePeriod
-    }
-    var currentGame = GamePlayed.findOne(gamePlayed);
-    var type = currentGame && currentGame.type
-    if (type === undefined){
+    var count = Counts.get('joinGameCount')
+    if (count === 0){
       return true
     }
-  },
-  gameType: function () {
-    var game = GamePlayed.findOne();
-    var type = game.type
-    var gameId = game._id
-    var gamePeriod = game.period
-    if (type === undefined || !type){
-      location.reload();
-    }
-    return type
   },
   gameCompleted : function () {
     var game = Games.findOne();
@@ -74,11 +57,83 @@ Template.singleGame.helpers({
       return true
     }
   },
+
+  scoreMessage: function() {
+    var userId = Meteor.userId();
+    var $game = Router.current().params._id
+    var selector = {
+      userId: userId,
+      read: false,
+      gameId: $game
+    }
+    var sort = {sort: {dateCreated: 1}, limit: 1}
+    var notifications = Notifications.find(selector, sort);
+
+    notifications.forEach(function(post) {
+      var id = post._id
+      var questionId = post && post.questionId
+      var sAlertSettings = {effect: 'stackslide', html: true}
+
+      if (questionId){
+        // Meteor.subscribe('singleQuestion', questionId)
+        var question = Questions.findOne({_id: questionId});
+        var title = question.que
+      }
+
+      if (post.source === "removed"){
+        var message = 'Play: "' + title + '" was removed here are your ' + post.value + " coins!"
+
+        sAlert.info(message, sAlertSettings);
+
+      } else if (post.source === "overturned"){
+        var message = '"' + title + '" was overturned. ' + post.value + " coins were removed"
+
+        sAlert.info(message, sAlertSettings);
+      } else if (post.type === "coins" && post.read === false) {
+
+        var message = "You Won " + post.value + " coins! " + title
+        sAlert.info(message, sAlertSettings);
+
+      } else if (post.type === "diamonds" && post.read === false) {
+        var message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
+
+        sAlert.warning(message, sAlertSettings);
+      }
+      Meteor.call('removeNotification', id);
+    });
+  }
+});
+
+Template.liveGame.onCreated(function (){
+  var userId = Meteor.userId();
+  var gameId = Router.current().params._id
+  var period = this.data.game[0].period
+  this.subscribe('gamePlayed', userId, gameId, period)
+  this.subscribe('activeQuestions', gameId, period)
+  this.subscribe('activeCommQuestions', gameId, period)
+  this.subscribe('activePropQuestions', gameId, period)
+});
+
+Template.liveGame.helpers({
+
   commericalBreak: function (){
     var game = Games.findOne();
     if (game.commercial === true) {
       return true
     }
+  },
+  props: function () {
+    var currentUserId = Meteor.userId()
+
+    var selector = {
+      type: "prop",
+      active: true,
+      usersAnswered: {$nin: [currentUserId]}
+    }
+
+    var sort = {sort: {dateCreated: -1}}
+    var q = Questions.find(selector, sort).fetch();
+    return q
   },
   prop: function () {
     var currentUserId = Meteor.userId()
@@ -88,8 +143,9 @@ Template.singleGame.helpers({
       active: true,
       usersAnswered: {$nin: [currentUserId]}
     }
-    var sort = {sort: {dateCreated: -1}, limit: 1}
-    return Questions.find(selector, sort).fetch();
+    var sort = {sort: {dateCreated: -1}}
+    var q = Questions.find(selector, sort).fetch();
+    return q
   },
   commericalQuestions: function () {
     var currentUserId = Meteor.userId()
@@ -122,92 +178,17 @@ Template.singleGame.helpers({
     }
   },
   noQuestions: function () {
-    var currentUserId = Meteor.userId()
-    var game = Games.findOne();
-    var gamePlayed = GamePlayed.findOne({})
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
-    if (gameType == "live"){
-      if (game.commercial === true) {
-        var selector = {
-          active: true,
-          type: {$in: ["prop", "drive", "freePickk"]},
-          usersAnswered: {$nin: [currentUserId]}
-        }
-      } else if (game.commercial === false){
-        var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-        var selector = {
-          active: true,
-          type: {$in: ["prop", "play"]},
-          usersAnswered: {$nin: [currentUserId]},
-          dateCreated: {$gt: finish}
-        }
-      }
-    } else if (gameType === "drive" || gameType === "proposition") {
-      if (game.commercial === true){
-        var selector = {
-          active: true,
-          type: {$in: ["prop", "drive", "freePickk"]},
-          usersAnswered: {$nin: [currentUserId]}
-        }
-      } else if (game.commercial === true){
-        var selector = {
-          active: true,
-          type: {$in: ["prop"]},
-          usersAnswered: {$nin: [currentUserId]}
-        }
-      }
-    }
-
-    var questions = Questions.find(selector).count();
-    if (questions === 0 ){
+    var userId = Meteor.userId()
+    var gameId = Games.findOne()._id
+    var game = Games.find({_id: gameId}).fetch();
+    var period = game[0].period
+    var commercial = game[0].commercial
+    Meteor.subscribe('questionCount', userId, gameId, period, commercial)
+    var count = Counts.get('questionCount')
+    if (count === 0){
       return true
     }
   },
-  scoreMessage: function() {
-    var userId = Meteor.userId();
-    var $game = Router.current().params._id
-    var selector = {
-      userId: userId,
-      read: false,
-      gameId: $game
-    }
-    var sort = {sort: {dateCreated: 1}, limit: 1}
-    var notifications = Notifications.find(selector, sort);
-
-    notifications.forEach(function(post) {
-      var id = post._id
-      var questionId = post && post.questionId
-      var sAlertSettings = {effect: 'stackslide', html: true}
-
-      if (questionId){
-        Meteor.subscribe('singleQuestion', questionId)
-        var question = Questions.findOne({_id: questionId});
-        var title = question.que
-      }
-
-      if (post.source === "removed"){
-        var message = 'Play: "' + title + '" was removed here are your ' + post.value + " coins!"
-
-        sAlert.info(message, sAlertSettings);
-
-      } else if (post.source === "overturned"){
-        var message = '"' + title + '" was overturned. ' + post.value + " coins were removed"
-
-        sAlert.info(message, sAlertSettings);
-      } else if (post.type === "coins" && post.read === false) {
-
-        var message = "You Won " + post.value + " coins! " + title
-        sAlert.info(message, sAlertSettings);
-
-      } else if (post.type === "diamonds" && post.read === false) {
-        var message = '<img style="height: 40px;" src="/diamonds.png"> <p class="diamond"> ' + post.message + '</p>'
-
-        sAlert.warning(message, sAlertSettings);
-      }
-      Meteor.call('removeNotification', id);
-    });
-  }
 });
 
 Template.singleGame.events({
@@ -274,6 +255,17 @@ Template.singleGame.events({
     displayOptions( parms )
   }
 });
+
+Template.noPlay.rendered = function(){
+  var userId = Meteor.userId()
+  var gameId = Games.findOne()._id
+  var game = Games.find({_id: gameId}).fetch();
+  var period = game[0].period
+  var commercial = game[0].commercial
+  Meteor.subscribe('questionCount', userId, gameId, period, commercial)
+  var count = Counts.get('questionCount')
+  console.log("count", count);
+};
 
 Template.commericalQuestion.helpers({
   freePickk: function (q) {

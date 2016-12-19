@@ -10,7 +10,10 @@ Template.waitingForNextPlay.rendered = function () {
 	var lastUpdate = new Date(Meteor.settings.public.appUpdate)
 	var lastUpdateTime = lastUpdate.getTime();
 	var game = Games.findOne()
-	var queCounter = GamePlayed.findOne().queCounter
+	var playing = GamePlayed.findOne()
+	if(playing){
+		var queCounter = playing.queCounter
+	}
 	var commercial = game.commercial
 
 	if(lastAsked){
@@ -36,6 +39,21 @@ Template.waitingForNextPlay.rendered = function () {
 		console.log("Didnt match anything")
 	}
 };
+
+Template.waitingForNextPlay.helpers({
+	gameType: function () {
+		var game = GamePlayed.findOne();
+		if(game){
+			var type = game.type
+			var gameId = game._id
+			var gamePeriod = game.period
+			if (type === undefined || !type){
+				location.reload();
+			}
+			return type
+		}
+	},
+});
 
 Template.waitingForNextPlay.events({
 	'click [data-action="yes-enjoy"]': function (e,t) {

@@ -3,7 +3,12 @@ Template.diamondWatcher.helpers({
 		var $game = Router.current().params._id
 		var period = Games.findOne({_id: $game}).period
 		var userId = Meteor.userId()
-		var currentQue = GamePlayed.findOne({userId: userId, gameId: $game, period: period}).queCounter
+		var playing = GamePlayed.findOne({userId: userId, gameId: $game, period: period})
+
+		if (playing){
+			var currentQue = playing.queCounter
+		}
+
 		if (currentQue === undefined){
 			var currentQue = 0
 		}
