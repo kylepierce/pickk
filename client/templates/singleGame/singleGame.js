@@ -75,7 +75,7 @@ Template.singleGame.helpers({
       var sAlertSettings = {effect: 'stackslide', html: true}
 
       if (questionId){
-        // Meteor.subscribe('singleQuestion', questionId)
+        Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
         var title = question.que
       }

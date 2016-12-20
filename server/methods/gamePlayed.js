@@ -11,8 +11,15 @@ Meteor.methods({
 	},
 	'userJoinsAGame': function (gamePlayed) {
 		check(gamePlayed, Object)
-		var gameExists = GamePlayed.findOne(gamePlayed, {fields: {_id: 1, gameId: 1}})
 
+		var selector = {
+			userId: gamePlayed.userId,
+			gameId: gamePlayed.gameId,
+			period: gamePlayed.period
+		}
+
+		var gameExists = GamePlayed.find(selector, {fields: {_id: 1, gameId: 1}}).fetch()
+		console.log(gamePlayed, selector, gameExists);
 		var data = {
 			coins: 10000,
 			timeLimit: 20,
@@ -21,7 +28,8 @@ Meteor.methods({
 		}
 		var gamePlayed = _.extend (data, gamePlayed)
 
-		if(!gameExists){
+		if(gameExists.length === 0){
+			console.log("No bad code");
 			GamePlayed.insert(gamePlayed);
 		}
 	}
