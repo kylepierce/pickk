@@ -108,7 +108,7 @@ Template.liveGame.onCreated(function (){
   var userId = Meteor.userId();
   var gameId = Router.current().params._id
   var period = this.data.game[0].period
-  this.subscribe('gamePlayed', userId, gameId, period)
+  this.subscribe('gamePlayed', userId, gameId)
   this.subscribe('activeQuestions', gameId, period)
   this.subscribe('activeCommQuestions', gameId, period)
   this.subscribe('activePropQuestions', gameId, period)

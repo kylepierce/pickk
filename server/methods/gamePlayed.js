@@ -19,7 +19,7 @@ Meteor.methods({
 		}
 
 		var gameExists = GamePlayed.find(selector, {fields: {_id: 1, gameId: 1}}).fetch()
-		console.log(gamePlayed, selector, gameExists);
+
 		var data = {
 			coins: 10000,
 			timeLimit: 20,

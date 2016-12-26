@@ -105,6 +105,13 @@ Meteor.methods({
 
 		// Game predictions give diamonds and notification.
 		else if (c.type === "prediction") {
+			var selector = {userId: c.userId, gameId: c.gameId}
+			var modify = {
+				$inc: {queCounter: +1},
+				$set: {type: "prediction"}
+			}
+			GamePlayed.update(selector, modify, true);
+
 			var o = {
 				userId: c.userId,
 				gameId: c.gameId,

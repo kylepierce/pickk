@@ -26,7 +26,7 @@ Template.dailyPickks.helpers({
   scoreMessage: function() {
     var userId = Meteor.userId();
     var notifications = Notifications.find().fetch();
-    console.log(notifications)
+
     notifications.forEach(function(post) {
       var id = post._id
       if (post.type === "diamonds" && post.read === false) {
