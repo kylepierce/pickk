@@ -105,14 +105,12 @@ Meteor.methods({
 		});
 
 		var multiplier = Multipliers.findOne(inputsObj)
-
 		return multiplier.options
 	},
 
 	'createMultipliers': function (inputs, options){
 		check(inputs, Object);
 		check(options, Object);
-
 		Multipliers.update({
 			down: inputs.down,
   		area: inputs.area,

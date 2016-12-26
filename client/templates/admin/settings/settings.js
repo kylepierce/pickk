@@ -624,7 +624,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
-              1.7, 2.6, 
+              1.7, 2.6,
               3.9, 4.82,
               (6.9 * 2), (9.61 * 2),
               5.9, 7.61,
@@ -798,7 +798,7 @@ Template.adminSettings.events({
             // Danger zone
             return multiplier(
               1.7, 2.6,
-              2.9, 4.82,
+              2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
               5.9, 8.61,
               2.2, 4.81,
@@ -807,7 +807,7 @@ Template.adminSettings.events({
             // Most of the field 11 - 80 yard
             return multiplier(
               1.7, 2.6,
-              2.9, 3.82,
+              2.2, 3.82,
               (4.2 * 2), (7.81 * 2),
               4.2, 7.81,
               2.2, 4.81,
@@ -816,7 +816,7 @@ Template.adminSettings.events({
             // Mot of the field
             return multiplier(
               1.7, 2.6,
-              2.9, 3.82,
+              2.2, 3.82,
               (4.2 * 2), (7.81 * 2),
               4.2, 7.81,
               2.2, 4.81,
