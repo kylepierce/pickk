@@ -1,3 +1,17 @@
+Template.gameTypePrompt.onCreated( function() {
+  var gameId = Router.current().params._id
+  this.subscribe( 'singleGame', gameId,  function() {
+    $( ".spin-loader" ).delay( 1000 ).fadeOut( 'slow', function() {
+      $( ".loading-wrapper" ).fadeIn( 'slow' );
+    });
+  });
+});
+
+Template.gameTypePrompt.onRendered( function() {
+  $( "svg" ).delay( 750 ).fadeIn();
+});
+
+
 Template.gameTypePrompt.helpers({
   notFootball: function (){
     var game = Games.findOne();

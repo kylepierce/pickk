@@ -8,7 +8,6 @@ Template.home.rendered = function () {
     arrows: false,
     mobileFirst: true,
   });
-  intercom.setLauncherVisibility('VISABLE');
 };
 
 Template.home.helpers({

@@ -6,8 +6,10 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
   this.unblock()
 
   var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch()
-  var timeLimit = gamePlayed[0].timeLimit
-  var gameType = gamePlayed[0].type
+  if(gamePlayed){
+    var timeLimit = gamePlayed[0].timeLimit
+    var gameType = gamePlayed[0].type
+  }
 
   if (gameType === "live"){
     if (commercial === true) {
@@ -46,6 +48,6 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
     }
   }
   var data = Questions.find(selector)
-  
+
   Counts.publish(this, "questionCount", data);
 });

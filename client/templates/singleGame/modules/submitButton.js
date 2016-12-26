@@ -58,7 +58,6 @@ Template.submitButton.events({
       var w = this.w // wager
       a.wager = w
     } else if ( t === "prediction" ){
-      console.log(q.gameId);
       var userId = Meteor.userId();
       var createdAt = new Date();
       var gamePlayed = {
@@ -69,7 +68,6 @@ Template.submitButton.events({
       var joinedGame = GamePlayed.findOne(gamePlayed);
       if(!joinedGame){
         Meteor.call('userJoinsAGame', gamePlayed);
-        Meteor.subscribe('gamePlayed', userId, q.gameId);
       }
       var w = "diamonds" // wager
       a.gameName = q.gameName

@@ -16,7 +16,7 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Run deactivateDailyPickks',
   schedule: function(parser) {
-    return parser.text("at 19:00"); // UTC timezone
+    return parser.text("at 21:00"); // UTC timezone
   },
   job: function() {
     deactivateDailyPickks();

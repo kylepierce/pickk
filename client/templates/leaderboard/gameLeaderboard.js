@@ -52,8 +52,11 @@ Template.miniLeaderboard.helpers({
       return thisUser;
     });
     var spot = _.indexOf(_.pluck(leaderboard, 'userId'), userId);
+
     var userSpot = leaderboard[spot]
-    userSpot.spot = spot + 1
+    if (userSpot){
+      userSpot.spot = spot + 1
+    }
 
 		if(spot > number){
 			return userSpot;

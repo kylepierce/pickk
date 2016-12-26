@@ -32,5 +32,5 @@ activateDailyPickks = function () {
 };
 
 deactivateDailyPickks = function () {
-	Questions.update({active: true}, {$set: {active: 'pending'}}, {multi: true});
+	Questions.update({type: "prediction", active: true}, {$set: {active: 'pending'}}, {multi: true});
 }
