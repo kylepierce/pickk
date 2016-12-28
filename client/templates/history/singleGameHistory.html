@@ -15,14 +15,14 @@
 
   {{#ionView }}
     {{#ionContent}}
-    	<div class="container ten-spacing"> 
+    	<div class="container ten-spacing">
 	    	{{#if notPrediction}}
 		    	{{#each g in game}}
 		    		{{> singleGameCard game=g}}
 		    	{{/each}}
 		    {{/if}}
 			</div>
-	    
+
 	    {{#ionList}}
 				<div class="container ten-spacing">
 			    {{> gameHistory i=-1 extended=true}}
@@ -30,7 +30,7 @@
     	{{/ionList}}
     {{/ionContent}}
   {{/ionView}}
-</template> 
+</template>
 
 <template name="gameHistory">
 	{{#each q in questions i}}
@@ -53,13 +53,13 @@
 			<ul class="question-details">
 				<li class="col-md-100">Selected: {{title a.answered}}</li>
 				{{#if active q.active}}
-					<li class="col-md-100">Answer: {{title q.outcome}}</li>
+					<li class="col-md-100">Answer: {{{title q.outcome}}}</li>
 				{{/if}}
 				{{#if details}}
 					<li class="col-md-50">Multiplier: {{a.multiplier}}x</li>
 					<li class="col-md-50">Wager: {{a.wager}}</li>
 				{{/if}}
 			</ul>
-		</ul> 
+		</ul>
 	</div>
 </template>

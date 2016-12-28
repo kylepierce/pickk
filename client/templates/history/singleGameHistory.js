@@ -28,25 +28,38 @@ Template.singleAnswer.helpers({
 		}
 	},
 	status: function () {
-		if (this.q.active === true){
-			return "history-inprogress" // In progress 
+		if (this.q.outcome){
+			var contains = this.q.outcome.indexOf(this.a.answered)
+		}
+
+		if (contains > -1) {
+			return "history-correct" // Correct
+		} else if (this.q.active === true){
+			return "history-inprogress" // In progress
 		} else if (this.q.active === null){
 			return "history-pending" // Pending
-		} else if (this.q.outcome === this.a.answered){
-			return "history-correct" // Correct
 		} else {
 			return "history-incorrect" // Incorrect
 		}
 	},
 	title: function ( option ){
+		var options = this.q.options
+
 		if (option === "Removed" || option === "deleted") {
 			return "Removed"
+		} else if (Array.isArray(option)) {
+			var list = []
+			_.map(option, function (o) {
+				var selected = options[o]
+				list.push(selected.title)
+			});
+
+			return list
 		} else if (option === true || option === false) {
 			return option
 		} else if (option === undefined) {
 			return ""
 		}
-		var options = this.q.options
 		var selected = options[option]
 		return selected.title
 	},
@@ -58,12 +71,14 @@ Template.singleAnswer.helpers({
 		}
 	},
 	winnings: function ( answered, outcome ){
-		if (answered === outcome) {
+		var contains = outcome.indexOf(answered)
+
+		if (contains > -1) {
 			return "+" + parseInt(this.a.wager * this.a.multiplier)
-		} else if (outcome === "Removed" || this.q.type === 'freePickk'){ 
-			return "+" + this.a.wager 
+		} else if (outcome === "Removed" || this.q.type === 'freePickk'){
+			return "+" + this.a.wager
 		} else if (outcome !== undefined && answered !== outcome) {
-			return "-" + this.a.wager 
+			return "-" + this.a.wager
 		} else {
 			return "Waiting..."
 		}

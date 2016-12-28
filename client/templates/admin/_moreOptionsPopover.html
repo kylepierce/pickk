@@ -1,0 +1,9 @@
+<template name="_moreOptions">
+  {{#ionPopover}}
+    {{#ionList}}
+      {{#each option in options this.q}}
+        {{#ionItem id=option.option}}{{option.title}}{{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+  {{/ionPopover}}
+</template>

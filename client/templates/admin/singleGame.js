@@ -133,7 +133,7 @@ Template.pendingQuestion.helpers({
 	  for (var i = 0; i < keys.length; i++) {
 	    var obj = values[i]
 	    var number = keys[i]
-	    obj["option"] = number 
+	    obj["option"] = number
 	    optionsArray.push(obj)
 	  }
 
@@ -159,7 +159,18 @@ Template.pendingQuestion.events({
 		}
 	},
 	'click [data-action=playSelection]': function (e, t) {
-		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
+		console.log(this.o.title)
+		if(this.o.title === "Touchdown"){
+			console.log("Now what...");
+			IonPopover.show('_moreOptions', this, e.currentTarget);
+		}
+		console.log("also this");
+		var updateQuestion = {
+			questionId: this.q._id,
+			option: this.o.option,
+			type: "normal"
+		}
+		Meteor.call('modifyQuestionStatus', updateQuestion);
 	}
 });
 
@@ -182,7 +193,7 @@ Template.oldQuestion.helpers({
 	  for (var i = 0; i < keys.length; i++) {
 	    var obj = values[i]
 	    var number = keys[i]
-	    obj["option"] = number 
+	    obj["option"] = number
 	    optionsArray.push(obj)
 	  }
 
@@ -205,6 +216,11 @@ Template.oldQuestion.events({
 	},
 	'click [data-action=playSelection]': function (e, t) {
 		Meteor.call('unAwardPoints', this.q._id, this.q.outcome)
-		Meteor.call('modifyQuestionStatus', this.q._id, this.o.option)
+		var updateQuestion = {
+			questionId: this.q._id,
+			option: this.o.option,
+			type: "update"
+		}
+		Meteor.call('modifyQuestionStatus', updateQuestion)
 	}
 });
