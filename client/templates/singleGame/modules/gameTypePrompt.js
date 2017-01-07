@@ -53,14 +53,10 @@ Template.gameTypePrompt.events({
       }
 
       updateIntercom(intercomData)
+      Branch.setIdentity(user._id)
+      var eventName = 'joined_game';
+      Branch.userCompletedAction(eventName)
     }
-    Branch.setIdentity(user._id)
-    var eventName = 'joined_game';
-    Branch.userCompletedAction(eventName).then(function(res) {
-      alert('Response: ' + JSON.stringify(res));
-    }).catch(function(err) {
-      alert('Error: ' + JSON.stringify(err));
-    });
     Meteor.call('userJoinsAGame', data);
     Meteor.subscribe('gamePlayed', user._id, game._id),
     IonLoading.show({

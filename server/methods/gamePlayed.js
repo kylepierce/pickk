@@ -14,8 +14,15 @@ Meteor.methods({
 		check(gameId, String);
 		check(userId, String);
 		// Double check they arent in the invite section before sending push
-		Games.update({_id: gameId}, {$addToSet: {invited: userId}});
-		Meteor.call('pushInviteToGame', gameId, userId)
+		var game = Games.find({_id: gameId}).fetch()
+		var invited = game[0].invited
+		var users = game[0].users
+		if(invited.indexOf(userId) === -1 && users.indexOf(userId) === -1 ){
+			Games.update({_id: gameId}, {$addToSet: {invited: userId}});
+			Meteor.call('pushInviteToGame', gameId, userId)
+		} else {
+			console.log("Looks like they are already invited ;)");
+		}
 	},
 	'userJoinsAGame': function (gamePlayed) {
 		check(gamePlayed, Object)

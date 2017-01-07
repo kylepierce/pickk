@@ -18,9 +18,10 @@ Template.inviteToPlay.helpers({
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
     var invited = game.invited
+    var users = game.users
     // Compare the users in the array against the already invited
     var list = _.reject(followers, function(user){
-      if (invited.indexOf(user) !== -1){
+      if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
         return user
       }
     });
@@ -35,9 +36,10 @@ Template.inviteToPlay.helpers({
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
     var invited = game.invited
+    var users = game.users
     // Compare the users in the array against the already invited
     var list = _.reject(followers, function(user){
-      if (invited.indexOf(user) !== -1){
+      if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
         return user
       }
     });

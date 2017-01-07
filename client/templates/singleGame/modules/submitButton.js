@@ -127,6 +127,9 @@ Template.submitButton.events({
         "userId": a.userId,
       }
       updateIntercom(intercomData)
+      Branch.setIdentity(user._id)
+      var eventName = 'question_answered';
+      Branch.userCompletedAction(eventName)
     }
 
     var obj = {lastQuestion: new Date()}

@@ -100,9 +100,9 @@ Meteor.methods({
 		var username = user.profile.username
 		var game = Games.find({_id: gameId}).fetch()
 		var gameName = game[0].name
-		var message = "[@" + username + "] Challanged You For The " + gameName + " Contest. Play Live!"
+		var message = "[@" + username + "] Challenged You For The " + gameName + " Contest. Play Live!"
 		var path = "game/" + gameId
-		console.log(message, path);
+		
 		if (user) {
 			Push.send({
 				from: 'Pickk',
