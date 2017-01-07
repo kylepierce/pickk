@@ -1,0 +1,14 @@
+.invite-item {
+  padding: 5px;
+}
+
+.invite-item .avatar {
+  float: left;
+  clear: both;
+}
+
+.invite-item h2 {
+  float: left;
+  padding: 15px;
+  font-weight: bold;
+}

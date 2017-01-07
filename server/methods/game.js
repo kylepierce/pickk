@@ -55,6 +55,7 @@ Meteor.methods({
 			commercial: false,
 			completed: false,
 			live: g.active,
+			invited: [],
 			registered: [],
 			nonActive: [],
 			users: []
@@ -69,7 +70,7 @@ Meteor.methods({
 		if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
 		}
-		
+
 		return game
 	},
 

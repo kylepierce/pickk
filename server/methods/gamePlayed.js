@@ -9,6 +9,12 @@ Meteor.methods({
 		check(gameId, String);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
+	'inviteToGame': function(gameId, userId){
+		check(gameId, String);
+		check(userId, String);
+		console.log("Woo Registered!", userId);
+		Games.update({_id: gameId}, {$addToSet: {invited: userId}});
+	},
 	'userJoinsAGame': function (gamePlayed) {
 		check(gamePlayed, Object)
 

@@ -1,0 +1,23 @@
+<template name="inviteToPlay">
+  {{#if listToShare}}
+    <div class="item item-divider ten-spacing">
+      <span>Invite</span>
+    </div>
+
+    {{#ionList}}
+      <div class="item invite-item item-button-right">
+        <h2>Invite All Followers</h2>
+        <button data-action="inviteAll" value="{{follower}}" class="button button-balanced">Invite All</button>
+      </div>
+
+      {{#each follower in followers}}
+        <div class="item invite-item item-button-right">
+          {{> userAvatar userId=follower}}
+          <h2>{{> singleUsername userId=follower}}</h2>
+          <button data-action="invite" value="{{follower}}" class="button button-balanced">Invite</button>
+        </div>
+      {{/each}}
+
+    {{/ionList}}
+  {{/if}}
+</template>

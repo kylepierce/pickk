@@ -27,11 +27,15 @@ Template.gameTypePrompt.events({
     var user = Meteor.user();
     var game = Games.findOne();
     var text = e.target.innerText.toLowerCase( )
+    var location = UserLocation.get();
+
+    console.log(location);
 
     var gamePlayed = {
       gameId: game._id,
       dateCreated: new Date(),
       userId: user._id,
+      location: location,
       period: game.period,
       type: text
     }
