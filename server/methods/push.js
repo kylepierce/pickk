@@ -3,7 +3,7 @@ Meteor.methods({
 		check(gameId, String);
 		check(message, String);
 		this.unblock()
-		
+
 		const game = Games.findOne({_id: gameId});
 		const userIds = game.nonActive;
 		const text = "Pickk What Happens on " + message;
@@ -24,7 +24,7 @@ Meteor.methods({
 		this.unblock()
 		console.log("Adding all users to inactive")
 		var users = Games.findOne({_id: gameId}).users
-		
+
 		return Games.update({_id: gameId}, {$set: {'nonActive': users}}, {multi: true});
 	},
 
@@ -46,7 +46,7 @@ Meteor.methods({
 				nonActive: {$nin: [userId]}
 			}
 		var fields = {fields: {'nonActive': 1}}
-		
+
 		var game = Games.find(selector, fields).fetch();
 		if (game.length == 1) {
 			Games.update(gameId, {$push: {nonActive: userId}});
@@ -87,6 +87,30 @@ Meteor.methods({
 				sound: 'default',
 				text: message,
 				badge: 1,
+				query: {userId: userId}
+			});
+		}
+	},
+
+	'pushInviteToGame': function(gameId, userId) {
+		check(userId, String);
+		check(gameId, String);
+		this.unblock()
+		var user = Meteor.users.findOne({_id: userId});
+		var username = user.profile.username
+		var game = Games.find({_id: gameId}).fetch()
+		var gameName = game[0].name
+		var message = "[@" + username + "] Challanged You For The " + gameName + " Contest. Play Live!"
+		var path = "game/" + gameId
+		console.log(message, path);
+		if (user) {
+			Push.send({
+				from: 'Pickk',
+				title: 'Pick invite',
+				sound: 'default',
+				text: message,
+				badge: 1,
+				payload: { deeplink_path: true, path: path },
 				query: {userId: userId}
 			});
 		}

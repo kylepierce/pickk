@@ -29,8 +29,6 @@ Template.gameTypePrompt.events({
     var text = e.target.innerText.toLowerCase( )
     var location = UserLocation.get();
 
-    console.log(location);
-
     var gamePlayed = {
       gameId: game._id,
       dateCreated: new Date(),
@@ -56,7 +54,13 @@ Template.gameTypePrompt.events({
 
       updateIntercom(intercomData)
     }
-
+    Branch.setIdentity(user._id)
+    var eventName = 'joined_game';
+    Branch.userCompletedAction(eventName).then(function(res) {
+      alert('Response: ' + JSON.stringify(res));
+    }).catch(function(err) {
+      alert('Error: ' + JSON.stringify(err));
+    });
     Meteor.call('userJoinsAGame', data);
     Meteor.subscribe('gamePlayed', user._id, game._id),
     IonLoading.show({

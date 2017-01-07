@@ -3,7 +3,9 @@ if (Meteor.isCordova) {
 
   document.addEventListener('deviceready', function () {
     deviceReady = true;
-    
+    var userId = Meteor.userId()
+    Branch.setIdentity(userId)
+
     Branch.initSession();
     var data = Session.get("deepLinked");
     var nonBranch = Session.get("nonBranch");
@@ -11,6 +13,5 @@ if (Meteor.isCordova) {
       handleOpenURL(nonBranch);
       Session.set("nonBranch", "");
     }
-    console.log("branch.js", data)
   })
 }

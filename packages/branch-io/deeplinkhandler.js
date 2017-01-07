@@ -1,5 +1,4 @@
 DeepLinkHandler = function (data) {
-  console.log("Yo what up", data)
   IonLoading.show({
     customTemplate: "Hold Up...",
     duration: 2500,
@@ -15,10 +14,9 @@ DeepLinkHandler = function (data) {
   } else {
     console.log('No data found');
   }
-} 
+}
 
 NonBranchLinkHandler = function(link) {
-	console.log("first", link.url)
   IonLoading.show({
     customTemplate: "Redirecting...",
     duration: 2500,

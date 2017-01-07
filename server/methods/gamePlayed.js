@@ -9,11 +9,13 @@ Meteor.methods({
 		check(gameId, String);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
+
 	'inviteToGame': function(gameId, userId){
 		check(gameId, String);
 		check(userId, String);
-		console.log("Woo Registered!", userId);
+		// Double check they arent in the invite section before sending push
 		Games.update({_id: gameId}, {$addToSet: {invited: userId}});
+		Meteor.call('pushInviteToGame', gameId, userId)
 	},
 	'userJoinsAGame': function (gamePlayed) {
 		check(gamePlayed, Object)
@@ -35,7 +37,6 @@ Meteor.methods({
 		var gamePlayed = _.extend (data, gamePlayed)
 
 		if(gameExists.length === 0){
-			console.log("No bad code");
 			GamePlayed.insert(gamePlayed);
 		}
 	}
