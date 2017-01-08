@@ -24,22 +24,37 @@ Template.sideMenuContent.events({
   },
   'click .js-share-link': function(event) {
     event.preventDefault();
-    var userId = Meteor.userId()
+    var branchUniversalObj = null;
+    var ref = Meteor.userId()
     var username = Meteor.user().profile.username
-    username = username.toLowerCase()
-    var customUrl = "pickk.co/download/?utm_campaign=menu&utm_content=" + username
-    var options = {
-      message: "Love Sports? Predict What Happens Next With Pickk! " + customUrl
+    var message = "Play Against Me and Predict What Happens Next in Live Sports With Pickk!"
+    if(Meteor.isCordova){
+      Branch.createBranchUniversalObject({
+        canonicalIdentifier: 'user-profile/'+ ref,
+        title: 'Live Game Challenge!',
+        contentDescription: message,
+        contentMetadata: {
+          'userId': ref,
+          'userName': username
+        }
+      }).then(function (newBranchUniversalObj) {
+        branchUniversalObj = newBranchUniversalObj;
+        branchUniversalObj.showShareSheet({
+          // put your link properties here
+          "feature" : "share",
+          "tags": ['menu']
+        }, {
+          // put your control parameters here
+          "$deeplink_path" : "/user-profile/" + ref,
+        }, message);
+      });
     }
+
     // Analytics
     analytics.track("Invite Friend", {
-      userId: userId,
+      userId: ref,
       location: "Menu"
     });
-
-    if (Meteor.isCordova) {
-      window.plugins.socialsharing.shareWithOptions(options);
-    }
   },
   'click .contact-us': function (e, t){
     e.preventDefault()

@@ -15,6 +15,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
     if (commercial === true) {
       var selector = {
         active: true,
+        gameId: gameId,
         period: period,
         type: {$in: ["prop", "drive", "freePickk"]},
         usersAnswered: {$nin: [userId]}
@@ -23,6 +24,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
       var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
       var selector = {
         active: true,
+        gameId: gameId,
         period: period,
         type: {$in: ["prop", "play"]},
         usersAnswered: {$nin: [userId]},
@@ -33,6 +35,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
     if (commercial === true){
       var selector = {
         active: true,
+        gameId: gameId,
         period: period,
         type: {$in: ["prop", "drive", "freePickk"]},
         usersAnswered: {$nin: [userId]}
@@ -41,13 +44,14 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
     else if (commercial === true){
       var selector = {
         active: true,
+        gameId: gameId,
         period: period,
         type: {$in: ["prop"]},
         usersAnswered: {$nin: [userId]}
       }
     }
   }
-  var data = Questions.find(selector)
 
+  var data = Questions.find(selector)
   Counts.publish(this, "questionCount", data);
 });
