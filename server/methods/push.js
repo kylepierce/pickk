@@ -92,17 +92,18 @@ Meteor.methods({
 		}
 	},
 
-	'pushInviteToGame': function(gameId, userId) {
+	'pushInviteToGame': function(gameId, userId, ref) {
 		check(userId, String);
 		check(gameId, String);
+		check(ref, String);
 		this.unblock()
-		var user = Meteor.users.findOne({_id: userId});
+		var user = Meteor.users.findOne({_id: ref});
 		var username = user.profile.username
 		var game = Games.find({_id: gameId}).fetch()
 		var gameName = game[0].name
 		var message = "[@" + username + "] Challenged You For The " + gameName + " Contest. Play Live!"
 		var path = "game/" + gameId
-		
+
 		if (user) {
 			Push.send({
 				from: 'Pickk',

@@ -55,18 +55,34 @@ Template.inviteToPlay.helpers({
 Template.inviteToPlay.events({
   "click [data-action=invite]": function(e, t){
     var gameId = t.data.game[0]._id
+    var ref = Meteor.userId();
     var userId = e.currentTarget.value
-    Meteor.call("inviteToGame", gameId, userId)
+    Meteor.call("inviteToGame", gameId, userId, ref)
   },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){
       var branchUniversalObj = null;
-      var ref = Meteor.userId()
+      var ref = Meteor.userId();
       var username = Meteor.user().profile.username
       var gameId = t.data.game[0]._id
       var game = Games.findOne({_id: gameId})
       var gameName = game.name
       var message = 'Predict the Next Play on Pickk! I Challenge You to Prove Your Sports Knowledge in the ' + gameName + ' game!'
+
+      analytics.track("invited to game", {
+        userId: ref,
+        type: 'share-sheet',
+        location: 'waiting screen',
+        gameId: gameId,
+        dateCreated: new Date()
+      });
+
+      var intercomData = {
+        "last_shared_at": parseInt(Date.now() / 1000),
+        "share_type": "text",
+        "userId": ref,
+      }
+      updateIntercom(intercomData)
 
       Branch.createBranchUniversalObject({
         canonicalIdentifier: 'user-profile/'+ ref,
@@ -91,6 +107,7 @@ Template.inviteToPlay.events({
   },
   "click [data-action=inviteAll]": function(e, t){
     var gameId = t.data.game[0]._id
+    var ref = Meteor.userId();
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
     var invited = game.invited
@@ -100,8 +117,15 @@ Template.inviteToPlay.events({
         return user
       }
     });
+
+    analytics.track("invited all to game", {
+      userId: ref,
+      gameId: gameId,
+      dateCreated: new Date()
+    });
+
     _.each(list, function(userId){
-      Meteor.call("inviteToGame", gameId, userId)
+      Meteor.call("inviteToGame", gameId, userId, ref)
     });
   }
 });

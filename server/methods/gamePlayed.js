@@ -10,16 +10,32 @@ Meteor.methods({
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
 
-	'inviteToGame': function(gameId, userId){
+	'inviteToGame': function(gameId, userId, ref){
 		check(gameId, String);
 		check(userId, String);
+		check(ref, String);
 		// Double check they arent in the invite section before sending push
 		var game = Games.find({_id: gameId}).fetch()
 		var invited = game[0].invited
 		var users = game[0].users
 		if(invited.indexOf(userId) === -1 && users.indexOf(userId) === -1 ){
 			Games.update({_id: gameId}, {$addToSet: {invited: userId}});
-			Meteor.call('pushInviteToGame', gameId, userId)
+			analytics.track("invited to game", {
+        userId: ref,
+        type: 'push',
+        location: 'waiting screen',
+        gameId: gameId,
+        dateCreated: new Date()
+      });
+
+      var intercomData = {
+        "last_shared_at": parseInt(Date.now() / 1000),
+        "share_type": "push",
+        "userId": ref,
+      }
+      updateIntercom(intercomData)
+
+			Meteor.call('pushInviteToGame', gameId, userId, ref)
 		} else {
 			console.log("Looks like they are already invited ;)");
 		}
