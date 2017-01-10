@@ -19,13 +19,13 @@ Template.chatOverview.events({
 });
 
 Template.chatOverview.helpers({
-  // group: function() {
-  //   var groupId = Session.get('chatGroup')
-  //   if (groupId) {
-  //     var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
-  //     return group.name
-  //   }
-  // }
+  group: function() {
+    var groupId = Session.get('chatGroup')
+    if (groupId) {
+      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
+      return group.name
+    }
+  }
 });
 
 Template.singleMessage.helpers({
@@ -313,8 +313,11 @@ Template.chatRoom.helpers({
     Meteor.subscribe("chatMessagesCount", null);
     var groupId = Session.get('chatGroup');
     var chatLimit = Session.get('chatLimit');
-    Meteor.subscribe("chatMessages", null, chatLimit);
-    Meteor.subscribe('chatUsersList', chatLimit, null);
+    if(!groupId){
+      var groupId = null
+    }
+    Meteor.subscribe("chatMessages", groupId, chatLimit);
+    Meteor.subscribe('chatUsersList', chatLimit, groupId);
     var chat = Chat.find({group: groupId}, {sort: {dateCreated: -1}}).fetch();
     return chat
 

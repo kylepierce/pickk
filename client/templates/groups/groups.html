@@ -10,7 +10,7 @@
   {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Groups</h1>
+    <h1 class="title white-text-header">Leagues</h1>
  {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
@@ -23,33 +23,32 @@
     {{#ionContent}}
 
     <!-- {{> loader}}  -->
-<!--     {{#if Template.subscriptionsReady}}  
+<!--     {{#if Template.subscriptionsReady}}
     <div class="loading-wrapper"> -->
-    <div style="width: 100%; height: 200px; background-image:url('/friends.jpg'); background-size: cover; margin-top:-10px;">
-        
-    </div>
+    <!-- <div style="width: 100%; height: 200px; background-image:url('/friends.jpg'); background-size: cover; margin-top:-10px;">
 
-    <div style="margin-bottom: 20px;" class="container">
-      <h4>Pickk Groups</h4>
-      Watching the game with friends? Want to prove to your fantasy league that you know the most about football? Create a group!
+    </div> -->
+
+    <div style="margin: 20px;" class="container">
+      Watching the game with friends? Want to prove to your fantasy league that you know the most about football? Create a league!
       <br>
       <br>
       <a href="/newgroup" class="newGroup">
       <button class="button button-balanced ">
         <i class="fa fa-comments-o"></i>
-        Create Group
+        Create League
       </button>
       </a>
 
       <a style="float: right;" href="/allGroups" class="newGroup">
       <button class="button button-stable ">
           {{> ionIcon icon='ios-people'}}
-        All Groups
+        All League
       </button>
       </a>
     </div>
 
-    <div class="item item-divider">Your Groups</div>
+    <div class="item item-divider">Your Leagues</div>
     {{#if groups}}
       {{#each userGroups}}
         {{#ionItem path="group.show" avatar=true}}
@@ -59,8 +58,8 @@
       {{/each}}
     {{else}}
       {{#ionItem buttonRight=true}}
-        <p>No Groups :( Join a Group!</p>
-        <a data-action="no-group" class="button"> 
+        <p>No Leagues :( Join a League!</p>
+        <a data-action="no-group" class="button">
           {{> ionIcon icon="ios-plus"}}
         </a>
       {{/ionItem}}

@@ -19,8 +19,7 @@ Meteor.methods({
 			user: o.user,
 			message: o.message
 		}
-
-		// if it is an award 
+		// if it is an award
 		var sharableTypes = ["coins", "diamonds", "trophy"]
 		var sharable = sharableTypes.indexOf(o.type)
 		if ( sharable >= 0 ) {
@@ -62,12 +61,12 @@ Meteor.methods({
 				case "[what-the-hell]":
 					var messagePosted = "<img src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>"
 					break;
-			} 
+			}
 		} else {
 			var messagePosted = o.message.replace(/<\/?[^>]+(>|$)/g, "").trim();
 			if (messagePosted == "" || messagePosted == null) {
 				messageData['message'] = "<i>Removed</i>"
-			} 
+			}
 
 			else {
 				messageData['message'] = messagePosted
@@ -82,7 +81,7 @@ Meteor.methods({
 							// Push notifications don't support HTML, so we'll have to use plainMessagePosted
 							var notifyObj = {
 								userId: user._id,
-								messageId: messageData._id, 
+								messageId: messageData._id,
 								type: "mention",
 								senderId: o.user,
 								message: o.message,
@@ -93,7 +92,7 @@ Meteor.methods({
 							var pushMessage = "[@" + senderUsername + "] " + o.message
 
 							console.log(pushMessage)
-							
+
 							Meteor.call('pushInvite', pushMessage, user._id)
 		 					createPendingNotification(notifyObj)
 						}
@@ -126,11 +125,11 @@ Meteor.methods({
 		var checkUser;
 		var lastCheckedKey = null;
 		var lastCheckedIndex = null;
-		
+
 		// Check if the user already has a previous reaction stored in this chat message
 		if (chat && chat.reactions) {
 
-			// This "find" loop will return a valid 'reactedObj' ONLY if a previous rection was found.. Then lastCheckedKey and lastCheckedIndex will contain the values where the last reaction is stored exactly 
+			// This "find" loop will return a valid 'reactedObj' ONLY if a previous rection was found.. Then lastCheckedKey and lastCheckedIndex will contain the values where the last reaction is stored exactly
 			var reactedObj = _.find(chat.reactions, function (reactionArr, key) {
 					lastCheckedKey = key;
 					checkUser = _.find(reactionArr, function (obj, index) {
@@ -142,7 +141,7 @@ Meteor.methods({
 
 			if (reactedObj) {
 				// FOUND! - User already has a reaction - Remove it from the array and update the Chat
-				chat.reactions[lastCheckedKey].splice(lastCheckedIndex, 1); 
+				chat.reactions[lastCheckedKey].splice(lastCheckedIndex, 1);
 			}
 		}
 
@@ -176,7 +175,7 @@ Meteor.methods({
 
 		var notifyObj = {
 			userId: chat.user,
-			messageId: messageId, 
+			messageId: messageId,
 			type: "chatReaction",
 			senderId: author,
 			reaction: reaction,

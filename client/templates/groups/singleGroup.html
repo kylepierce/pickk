@@ -6,7 +6,9 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-
+    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+      {{> ionIcon icon="ios-chatboxes"}}
+    </button>
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -24,26 +26,26 @@
       {{#if private}}
         {{#if member}}
           {{> groupAvatar}}
-          {{> memberCheck}} 
+          {{> memberCheck}}
           {{> groupData}}
           {{> singleGroupLeaderboard groupId=this}}
         {{else}}
           {{#if invite}}
             {{> groupAvatar}}
-            {{> memberCheck}} 
+            {{> memberCheck}}
             {{> groupData}}
           {{else}}
             <div class="no-notifications">
               This group is private and can only be seen by members
             </div>
           {{/if}}
-        {{/if}}       
+        {{/if}}
 
       {{else}}
         {{> groupAvatar}}
-      
-      {{> memberCheck}} 
-      {{> groupData}} 
+
+      {{> memberCheck}}
+      {{> groupData}}
       {{> singleGroupLeaderboard groupId=this}}
 
       {{/if}}
@@ -51,7 +53,7 @@
      </div>
     {{/ionContent}}
   {{/ionView}}
-	
+
 </template>
 
 <template name="memberCheck">
@@ -65,10 +67,10 @@
 
 	{{#if alreadyMember }}
     {{#if commissionerAdmin}}
-    
+
     {{else}}
 		  <button id="join-toggle" data-action="showActionSheet" class="button button-assertive col col-33" style="float:right">Leave</button>
-      
+
     {{/if}}
     <a href="/inviteToGroup/{{_id}}" class="invite">
       <button class="button col col-50 button-balanced" style="float:right; margin-right: 10px;">
@@ -103,7 +105,7 @@
 </template>
 
 <template name="groupData">
-  <div style="clear:both" class="item item-divider">Group Info</div>   
+  <div style="clear:both" class="item item-divider">League Info</div>
   <div style="clear: both; float:left; padding:15px; background-color: white; width: 100%;">
     <span style="font-size: 1.7em; padding-left: 8px; padding-right: 10px;">{{> ionIcon icon='information'}}</span><span style="padding-left: 10px; line-height: 8px; vertical-align: text-top; font-size: 1.2em;">{{this.name}}</span>
       <br>
@@ -120,7 +122,7 @@
 
 <template name="singleGroupLeaderboard">
   {{#ionList}}
-    <div style="clear:both" class="item item-divider">Group Members</div>
+    <div style="clear:both" class="item item-divider">League Members</div>
     {{#each player in players}}
       {{#with userData player}}
         {{#ionItem path="user.show" avatar=true}}

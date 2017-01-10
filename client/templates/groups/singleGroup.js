@@ -5,10 +5,15 @@
 //   }.bind(this));
 // };
 
+Template.singleGroup.rendered = function() {
+    // console.log(this.data); // you should see your passage object in the console
+    Session.set('chatGroup', this.data.group[0]._id)
+};
+
 Template.singleGroup.helpers({
   group: function () {
     return Groups.findOne({_id: Router.current().params._id});
-  }, 
+  },
   commissioner: function() {
     var commissionerId = this.commissioner
     Meteor.subscribe('findSingle', commissionerId)
@@ -17,14 +22,14 @@ Template.singleGroup.helpers({
   },
   memberCount: function(){
     return this.members.length
-  }, 
+  },
   private: function(){
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId})
     if (group.secret == "private") {
       return true
-    } 
+    }
   },
   member: function(){
     var currentUserId = Meteor.userId();
@@ -37,16 +42,16 @@ Template.singleGroup.helpers({
   invite: function(){
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId, 
+    var group = Groups.findOne({_id: groupId,
       invites: {$in: [currentUser]}});
-    return group 
+    return group
   }
 });
- 
+
 Template.groupData.helpers({
   group: function () {
     return Groups.findOne({_id: Router.current().params._id});
-  }, 
+  },
   commissioner: function() {
     var commissionerId = this.commissioner
     Meteor.subscribe('findSingle', commissionerId)
@@ -65,19 +70,19 @@ Template.memberCheck.helpers({
   alreadyMember: function() {
     var currentUserId = Meteor.userId();
     var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
-    
-    // Check to see if user is in the group already. 
+
+    // Check to see if user is in the group already.
     if(groupMembers) {
       return true
-    } 
-  },   
+    }
+  },
 
   // Check to see if the current user is the commissioner.
   commissionerAdmin: function(){
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId});
-    
+
     if (group.commissioner == currentUser) {
       return true
     }
@@ -86,7 +91,7 @@ Template.memberCheck.helpers({
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId});
-    
+
     if (group.secret == "invite") {
       return true
     }
@@ -101,7 +106,7 @@ Template.memberCheck.events({
     // Add this user to the group
     Meteor.call('joinGroup', currentUserId, groupId);
   },
-  
+
   // If a user wants to leave it pops up with an alert to confirm.
   'click [data-action=showActionSheet]': function (event, template) {
     IonActionSheet.show({
@@ -116,14 +121,14 @@ Template.memberCheck.events({
         if (index === 0) {
           var currentUserId = Meteor.userId();
         var groupId = Router.current().params._id
-        
+
         // Remove this user from the group
         Meteor.call('leaveGroup', currentUserId, groupId);
         var group = Groups.findOne({_id: groupId})
         var groupName = group.name
         sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
         return true
-        
+
         }
       }
     });
@@ -134,7 +139,7 @@ Template.requestInvite.helpers({
   alreadyRequested: function () {
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId, 
+    var group = Groups.findOne({_id: groupId,
       requests: {$in: [currentUser]}});
     return group
   }
@@ -144,7 +149,7 @@ Template.inviteOnly.helpers({
   invite: function(){
     var currentUser = Meteor.userId()
     var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId, 
+    var group = Groups.findOne({_id: groupId,
       invites: {$in: [currentUser]}}, {fields: {invites: 1}});
     return group
   }
@@ -188,14 +193,14 @@ Template.requestInvite.events({
         if (index === 0) {
           var currentUserId = Meteor.userId();
           var groupId = Router.current().params._id
-          
+
           // Remove this user from the group
           Meteor.call('leaveGroup', currentUserId, groupId);
           var group = Groups.findOne({_id: groupId})
           var groupName = group.name
           sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
           return true
-        
+
         }
       }
     });
@@ -230,7 +235,7 @@ Template._adminOptions.events({
     var groupId = Router.current().params._id
     Session.set('groupId', groupId);
   },
-  
+
   'click [data-action=deleteGroup]': function(event, template){
     IonPopover.hide();
     IonActionSheet.show({
@@ -255,7 +260,7 @@ Template._adminOptions.events({
 })
 
 Template.singleGroupLeaderboard.helpers({
-  players: function(){ 
+  players: function(){
     var group = Groups.findOne()
     var members = group.members
     return members
