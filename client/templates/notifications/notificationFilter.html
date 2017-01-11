@@ -16,8 +16,12 @@
 <template name="notificationOption">
 	{{#ionItem class="item-text-wrap item-checkbox notification-checkbox"}}
     <label class="checkbox">
-      <input type="checkbox" style="float: left;">
-      <span class="checkbox-text">{{o}}</span>
+			{{#if alreadySelected}}
+				<input type="checkbox" checked style="float: left;">
+			{{else}}
+				<input type="checkbox" style="float: left;">
+			{{/if}}
+			<span class="checkbox-text">{{o}}</span>
     </label>
   {{/ionItem}}
 </template>

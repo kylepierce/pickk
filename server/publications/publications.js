@@ -19,19 +19,6 @@ Meteor.publish("liveGamesCount", function() {
   Counts.publish(this, "liveGamesCount", Games.find({status: "inprogress"}));
 });
 
-Meteor.publish('userNotifications', function(userId) {
-  check(userId, String);
-  this.unblock()
-  return Notifications.find({userId: userId}, {sort: {dateCreated: -1}, limit: 25})
-});
-
-Meteor.publish('gameNotifications', function(gameId) {
-  check(gameId, String);
-  var userId = this.userId;
-  var notif = Notifications.find({gameId: gameId, userId: userId, read: false});
-  return notif
-});
-
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
   this.unblock()

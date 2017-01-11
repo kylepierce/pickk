@@ -1,11 +1,6 @@
 Template.chatRoom.rendered = function() {
   var userId = Meteor.userId()
-  // var groupId = Router.current().params._id || Session.get('chatGroup') || null;
-  // Meteor.subscribe('findThisUsersGroups', Meteor.userId())
-  // Meteor.subscribe("chatMessagesCount", null);
-  // Meteor.subscribe('findUsersInGroup', groupId);
-  // Meteor.subscribe('usersGroups', userId)
-
+  Meteor.subscribe('findThisUsersGroups', Meteor.userId())
 };
 
 Template.chatOverview.events({

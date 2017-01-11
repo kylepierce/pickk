@@ -15,11 +15,11 @@
   {{/contentFor}}
 
 <!-- 	Filter notifications by type.     -->
-<!-- 	{{#contentFor "headerButtonRight"}}
+	{{#contentFor "headerButtonRight"}}
     <button style="font-size: 11px;" class="button button-clear" data-ion-menu-toggle="right">
       {{> ionIcon icon="funnel"}}
     </button>
-  {{/contentFor}} -->
+  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
@@ -56,7 +56,7 @@
 	{{#if notif "diamonds"}}
 		{{#ionItem class="notification-has-image"}}
 			{{> diamondNotification}}
-		{{/ionItem}}	
+		{{/ionItem}}
 	{{/if}}
 	{{#if notif "leaderboard"}}
 		{{> leaderboardNotification}}
@@ -108,7 +108,7 @@
 	  {{#with reactions note.messageId}}
 	  	{{> messageReactions reactions=this.reactions}}
 		{{/with}}
-	{{/ionItem}}	
+	{{/ionItem}}
 </template>
 
 <template name="coinsNotification">
@@ -117,7 +117,7 @@
 			<div class="inner-coin"></div>
 		</div>
 	</span>
-	<h2>You earned {{note.value}} coins!</h2> 
+	<h2>You earned {{note.value}} coins!</h2>
 	<p>{{questionTitle note.questionId}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
 </template>
 
@@ -131,10 +131,10 @@
 	{{#ionItem avatar=true}}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
-	   	<h2>{{profile.username}}</h2> 
+	   	<h2>{{profile.username}}</h2>
 	   	<p>started following you!</p>
 	  {{/with}}
-	{{/ionItem}}	
+	{{/ionItem}}
 </template>
 
 <template name="chatReaction">
@@ -144,7 +144,7 @@
 	    <h3>@{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
-	{{/ionItem}}	
+	{{/ionItem}}
 </template>
 
 <template name="trophyNotification">
@@ -153,7 +153,7 @@
 		<h2>You won {{title}}!</h2>
 		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
 	{{/with}}
-	
+
 </template>
 
 <template name="leaderboardNotification"></template>
@@ -202,7 +202,7 @@
 				<div class="{{options}} actions-section" data-action="follow">
 	   			{{> ionIcon class="reply-icon" icon='ios-person'}}
 	    		<br>
-	    		Follow 
+	    		Follow
 	  		</div>
 	  	{{/if}}
 		{{/if}}

@@ -7,9 +7,9 @@
           {{> sideMenuContent}}
         {{/ionSideMenu}}
 
-       <!--  {{#ionSideMenu side="right"}}
+        {{#ionSideMenu side="right"}}
           {{> notificationFilter}}
-        {{/ionSideMenu}} -->
+        {{/ionSideMenu}}
 
       {{/ionSideMenus}}
 
@@ -17,7 +17,7 @@
       <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
           {{#ionNavView transition="backward"}}
-            {{> yield "header"}} 
+            {{> yield "header"}}
           {{/ionNavView}}
 
           {{> yield}}

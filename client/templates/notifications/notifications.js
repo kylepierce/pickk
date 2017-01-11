@@ -1,7 +1,19 @@
+Template.notifications.onCreated(function() {
+  this.getFilter = () => Meteor.user().profile.notifications
+  this.autorun(() => {
+    this.subscribe( 'userNotifications', this.getFilter());
+  });
+});
+
+Template.notifications.onRendered( function() {
+  $( "svg" ).delay( 750 ).fadeIn();
+});
+
 Template.notifications.helpers({
 	notifications: function () {
 		var userId = Meteor.userId();
-		var notifications = Notifications.find({userId: userId}).fetch()
+    var existing = Template.instance().data.user.profile.notifications
+		var notifications = Notifications.find().fetch()
 		return notifications
 	},
 	noNotifications: function () {
