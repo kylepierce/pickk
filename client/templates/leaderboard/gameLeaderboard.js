@@ -1,12 +1,12 @@
 Template.gameLeaderboard.onCreated(function() {
-var filter = Router.current().params.query.filter
-var groupId = Router.current().params.query.groupId
-if(filter){
-	Session.set('leaderboardFilter', filter);
-}
-if(groupId){
-	Session.set('leaderboardGroupId', groupId);
-}
+	var filter = Router.current().params.query.filter
+	var groupId = Router.current().params.query.groupId
+	if(filter){
+		Session.set('leaderboardFilter', filter);
+	}
+	if(groupId){
+		Session.set('leaderboardGroupId', groupId);
+	}
 });
 
 Template.gameLeaderboard.helpers({
@@ -86,7 +86,7 @@ Template.miniLeaderboard.helpers({
     }
 
 		var leaderboardList = function(list){
-			var fixed = _.sortBy(list, function(obj){return obj.diamonds})
+			var fixed = _.sortBy(list, function(obj){return - obj.coins})
 			var rank = _.first(fixed, number)
 			return rank
 		}

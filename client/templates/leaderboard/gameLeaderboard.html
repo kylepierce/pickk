@@ -87,9 +87,9 @@
               {{/if}}
             {{/with}}
             {{#if following userId}}
-              <strong><span class="score">{{coins}}</span></strong>
+              <strong><span class="score">{{{coins}}} | {{{diamonds}}}</span></strong>
             {{else}}
-              <span class="score">{{coins}}</span>
+              <span class="score">{{{coins}}} | {{{diamonds}}}</span>
             {{/if}}
 
           </h2>
@@ -105,7 +105,7 @@
             {{#with username userId}}
               {{profile.username}}
             {{/with}}
-            <span class="score" style="font-weight: bold;">{{{this.coins}}}</span>
+            <span class="score" style="font-weight: bold;">{{{this.coins}}} | {{{this.diamonds}}}</span>
           </h2>
         </li>
       {{/ionItem}}

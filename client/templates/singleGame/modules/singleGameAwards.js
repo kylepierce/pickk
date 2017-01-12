@@ -24,7 +24,8 @@ Template.singleGameAwards.helpers({
     }
   },
   gameType: function () {
-    var game = GamePlayed.findOne();
+    var userId = Meteor.userId()
+    var game = GamePlayed.findOne({userId: userId});
     if(game){
       var type = game.type.toUpperCase()
       return type
