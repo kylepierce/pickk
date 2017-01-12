@@ -8,7 +8,7 @@ ol {
 }
 
 .center-username {
-	padding-top: 10px; 
+	padding-top: 10px;
 }
 
 .list-font {
@@ -16,7 +16,7 @@ ol {
 }
 
 .slider-pager {
-	
+
 }
 
 a {
@@ -37,4 +37,12 @@ a {
 
 .avatar-fix {
 	padding-left: 0;
+}
+
+.radio-filter .item-content {
+  padding: 16px 16px 16px 49px;
+}
+
+.radio-filter .radio-icon {
+  left: 0!important;
 }

@@ -1,30 +1,76 @@
-// Template.weekLeaderboard.rendered = function() {
-//     console.log(this.data); // you should see your passage object in the console
-// };
+Template.weekLeaderboard.onCreated(function() {
+var filter = Router.current().params.query.filter
+var groupId = Router.current().params.query.groupId
+if(filter){
+	Session.set('leaderboardFilter', filter);
+}
+if(groupId){
+	Session.set('leaderboardGroupId', groupId);
+}
+});
+
 
 Template.weekLeaderboard.helpers({
 	'players': function(){
+		var day = moment().day()
 		var thisWeek = Router.current().params.id
+		if (!thisWeek){ var thisWeek = moment().week() }
+		var thisWeek = parseInt(thisWeek);
+	  if (day <= 1){ var thisWeek = thisWeek - 1 }
+		Session.set('leaderboardWeek', thisWeek);
 
-		if (!thisWeek){
-			var thisWeek = moment().week()
+		var leaderboardList = function(list){
+			var fixed = _.sortBy(list, function(obj){return obj.diamonds})
+			var list = fixed.reverse()
+			var rank = _.first(list, 25)
+			return rank
 		}
 
-		var thisWeek = parseInt(thisWeek);
-		Session.set('leaderboardWeek', thisWeek);
-		var thisWeek = Session.get('leaderboardWeek');
-
-	  var day = moment().day()
-	  if (day <= 1){
-	    var thisWeek = thisWeek - 1
-	  }
+		var shortList = function(all, array){
+			var list = _.filter(all, function(user){
+				var onTheList = array.indexOf(user._id)
+				if (array.indexOf(user._id) !== -1){
+					return user
+				}
+			});
+		return list
+		}
 
 		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", thisWeek)
-		var leaderboard = Fetcher.get("weekLeaderboard")
-		var fixed = _.sortBy(leaderboard, function(obj){return obj.diamonds})
-		var list = fixed.reverse()
-		var rank = _.first(list, 25)
-		return rank
+		var leaderboard = Fetcher.get("weekLeaderboard");
+		var filter = Session.get('leaderboardFilter');
+
+		// Only show the results from the filters
+		switch (filter) {
+			case "All":
+				return leaderboardList(leaderboard)
+				break;
+
+			case "Followers":
+				var followers = Meteor.user().profile.followers
+				var list = shortList(leaderboard, followers)
+				return leaderboardList(list)
+				break;
+
+			case "Following":
+				var following = Meteor.user().profile.following
+				var list = shortList(leaderboard, following)
+				return leaderboardList(list)
+				break;
+
+			case "group":
+				var groupId = Session.get('leaderboardGroupId');
+				var group = Groups.findOne({_id: groupId});
+				var members = group.members
+				var list = shortList(leaderboard, members)
+				return leaderboardList(list)
+				break;
+
+			default:
+				return leaderboardList(leaderboard)
+				break;
+		}
+
 	},
 	'date': function() {
 		var thisWeek = Session.get('leaderboardWeek');

@@ -41,18 +41,7 @@ Template.waitingForNextPlay.rendered = function () {
 };
 
 Template.waitingForNextPlay.helpers({
-	gameType: function () {
-		var game = GamePlayed.findOne();
-		if(game){
-			var type = game.type
-			var gameId = game._id
-			var gamePeriod = game.period
-			// if (type === undefined || !type){
-			// 	location.reload();
-			// }
-			return type
-		}
-	},
+	
 });
 
 Template.waitingForNextPlay.events({

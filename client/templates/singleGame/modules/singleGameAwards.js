@@ -23,6 +23,13 @@ Template.singleGameAwards.helpers({
       }
     }
   },
+  gameType: function () {
+    var game = GamePlayed.findOne();
+    if(game){
+      var type = game.type.toUpperCase()
+      return type
+    }
+  },
 });
 
 // Template.singleGame.rendered = function() {

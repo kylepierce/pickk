@@ -9,5 +9,7 @@ Meteor.methods({
 		Meteor.users.update({_id: user}, {$set: {"profile.role": "beta", "profile.beta_request": "accepted"}});
 		var user = Meteor.users.findOne({_id: user})
 		mailChimpLists.subscribeUser(user, {double_optin: false});
-	}
+	},
+
+	
 });

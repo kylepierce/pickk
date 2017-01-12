@@ -1,0 +1,34 @@
+<template name="weekFilter">
+	<div class="bar bar-header bar-dark">
+    <h1 class="title white-text-header">Filter Leaderboard</h1>
+  </div>
+  <div style="margin-top:44px;">
+  {{#ionList}}
+  	<form>
+		{{#each option in options}}
+			{{> radioOption o=option}}
+		{{/each}}
+    <div class="item item-divider ten-spacing">Groups</div>
+    {{#each option in groups}}
+			{{> radioOption o=option}}
+		{{/each}}
+		</form>
+  {{/ionList}}
+  </div>
+</template>
+
+<template name="radioOption">
+  {{#if filterSelected o}}
+    <div class="radio-filter">
+      {{#ionRadio checked=true value=o.value groupId=o.groupId}}
+        {{o.name}}
+      {{/ionRadio}}
+    </div>
+  {{else}}
+    <div class="radio-filter">
+      {{#ionRadio value=o.value groupId=o.groupId}}
+        {{o.name}}
+      {{/ionRadio}}
+    </div>
+  {{/if}}
+</template>
