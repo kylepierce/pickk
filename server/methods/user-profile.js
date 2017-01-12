@@ -145,5 +145,21 @@ Meteor.methods({
 			var mod = {$pull: {'profile.notifications': type}}
 		}
 		UserList.update(this.userId, mod)
+	},
+	'updateGamesFilter': function(type){
+		check(type, String)
+		var userId = this.userId
+		var user = UserList.find({_id: userId}).fetch()
+		var existing = user[0].profile.gamesFilter
+		if (!existing){
+			var existing = []
+		}
+		var spot = existing.indexOf(type)
+		if (spot === -1){
+			var mod = {$push: {'profile.gamesFilter': type}}
+		} else if (spot >= 0){
+			var mod = {$pull: {'profile.gamesFilter': type}}
+		}
+		UserList.update(this.userId, mod)
 	}
 })

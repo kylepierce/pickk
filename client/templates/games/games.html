@@ -8,22 +8,21 @@
 	    {{/if}}
 	  </button>
 	{{/contentFor}}
-	 
+
 	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header">{{date}}</h1>
+		<h1 class="title white-text-header">Game Schedule</h1>
   {{/contentFor}}
+
+	{{#contentFor "headerButtonRight"}}
+		 <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
+			 {{> ionIcon icon="funnel"}}
+		 </button>
+	 {{/contentFor}}
 
 	{{#ionView}}
 		{{#ionContent}}
 		  <div class="item item-divider ">
-        <span class="col-md-50" data-action="previous">
-          {{>ionIcon icon='chevron-left'}}
-          {{prev}}
-        </span>
-        <span class="col-md-50 float-right right-text" data-action="next">
-          {{next}}
-          {{>ionIcon icon='chevron-right'}}
-        </span>
+				Upcoming Games
       </div>
 			{{#ionList}}
 				<div class="container ten-spacing">

@@ -1,0 +1,50 @@
+<template name="gamesFilter">
+  <div class="bar bar-header bar-dark">
+    <h1 class="title white-text-header">Filter Games</h1>
+  </div>
+  <div style="margin-top:44px;">
+    {{#ionList}}
+    <div class="item item-divider" style="border: 0px!important;">Limit By Time</div>
+    <form>
+      {{#each option in dates}}
+        {{> dateOption o=option}}
+      {{/each}}
+    </form>
+    <div class="item item-divider ten-spacing">Sports</div>
+    <form>
+    {{#each option in options}}
+      {{> gamesOption o=option}}
+    {{/each}}
+    </form>
+  {{/ionList}}
+  </div>
+</template>
+
+<template name="gamesOption">
+	{{#ionItem class="item-text-wrap item-checkbox notification-checkbox"}}
+    <label class="checkbox">
+			{{#if alreadySelected}}
+				<input type="checkbox" checked style="float: left;">
+			{{else}}
+				<input type="checkbox" style="float: left;">
+			{{/if}}
+			<span class="checkbox-text">{{o}}</span>
+    </label>
+  {{/ionItem}}
+</template>
+
+<template name="dateOption">
+  {{#if filterSelected o}}
+    <div class="radio-filter">
+      {{#ionRadio checked=true value=o.value groupId=o.groupId}}
+        {{o.name}}
+      {{/ionRadio}}
+    </div>
+  {{else}}
+    <div class="radio-filter">
+      {{#ionRadio value=o.value groupId=o.groupId}}
+        {{o.name}}
+      {{/ionRadio}}
+    </div>
+  {{/if}}
+</template>

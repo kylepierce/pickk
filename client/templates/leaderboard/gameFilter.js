@@ -25,3 +25,23 @@ Template.gameFilter.events({
 		Session.set('leaderboardGroupId', this.groupId);
 	}
 });
+
+Template.dateOption.helpers({
+  filterSelected: function(o){
+    var filter = Session.get('gamesDate')
+    var lower = o.name.toLowerCase();
+    var filter = filter.toLowerCase();
+    if(filter === "group"){
+      var groupId = Session.get('leaderboardGroupId')
+      var group = Groups.findOne({_id: groupId})
+      var groupName = group.name
+      if ( groupName === lower){
+        return true
+      }
+    } else if(lower === filter){
+      return true
+    } else {
+
+    }
+  }
+});

@@ -1,8 +1,31 @@
-Template.games.rendered = function () {
-  console.log(this.data); // you should see your passage object in the console
-};
+Template.games.onCreated(function() {
+  var dateFilter = Router.current().params.query.filter
+	var sport = Router.current().params.query.sport
+  if(dateFilter){
+    Session.set('gamesDate', dateFilter);
+  } else {
+    Session.set('gamesDate', "week");
+  }
+
+  if(sport) {
+    var sportArray = [sport]
+    Session.set('gamesBySport', sportArray);
+  } else {
+    Session.set('gamesBySport', Meteor.user().profile.gamesFilter);
+  }
+
+  this.getSports = () => Session.get('gamesBySport')
+  this.getFilter = () => Session.get('gamesDate');
+
+  this.autorun(() => {
+    this.subscribe( 'activeGames', this.getFilter(), this.getSports());
+  });
+});
 
 Template.games.helpers({
+  games: function(){
+    return Games.find({}).fetch();
+  },
   gameClass: function () {
     return "game-item-" + this['status'];
   },
@@ -17,39 +40,6 @@ Template.games.helpers({
     }
   },
 
-  date: function () {
-    var now = moment();
-    var day = Router.current().params.day
-
-    if (day) { var now = moment().dayOfYear(day) }
-
-    return moment(now,"MM/DD/YYYY", true).format("MMM Do YYYY");
-  },
-
-  next: function () {
-    var day = parseInt(Router.current().params.day) + 1
-    if (day) {
-      var now = moment().dayOfYear(day)
-    } else {
-      var day = moment().dayOfYear()
-      var now = moment().dayOfYear(day + 1)
-    }
-
-    return moment(now,"MM/DD/YYYY", true).format("MMM Do");
-  },
-
-  prev: function () {
-    var day = parseInt(Router.current().params.day) - 1
-    if (day) {
-      var now = moment().dayOfYear(day)
-    } else {
-      var day = moment().dayOfYear()
-      var now = moment().dayOfYear(day - 1)
-    }
-
-    return moment(now,"MM/DD/YYYY", true).format("MMM Do");
-  },
-
   admin: function () {
     var user = Meteor.user()
     if (user.profile.role === "admin"){
@@ -59,31 +49,6 @@ Template.games.helpers({
 });
 
 Template.games.events({
-  'click [data-action=previous]': function (e, t){
-    // Find the day from router or moment
-    var day = Router.current().params.day
-    if (day === null || day === undefined) {
-      var day = moment().dayOfYear()
-    }
-    //One less day
-    var previousDay = parseInt(day) - 1
-    Router.go("/games/" + previousDay)
-  },
-
-  'click [data-action=next]': function (e, t){
-    // Find the day from router or moment
-    var day = Router.current().params.day
-    if (day === null || day === undefined) {
-      var day = moment().dayOfYear()
-    }
-    //One less day
-    var nextDay = parseInt(day) + 1
-    Router.go("/games/" + nextDay)
-  },
-  'click [data-action=gameOver]': function (e, t) {
-    var gameId = $(e.currentTarget).attr("data-game-id");
-    Meteor.call('endGame', gameId)
-  },
   'click [data-action=gameAdmin]': function (e, t) {
     var gameId = $(e.currentTarget).attr("data-game-id");
     Router.go('/admin/game/' + gameId + "/1")

@@ -3,6 +3,7 @@ Meteor.publish("userNotificationSettings", function() {
   return UserList.find(this.userId,
     {
       fields: {
+				'gameFilter': 1,
         'notifications': 1,
         'pendingNotifications': 1
       },

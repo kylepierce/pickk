@@ -5,14 +5,22 @@ Meteor.publish('singleGame', function(_id) {
 });
 
 // Only live games
-Meteor.publish('activeGames', function(day) {
-  check(day, Number);
+Meteor.publish('activeGames', function(length, sports) {
+  check(length, String);
+  check(sports, Array);
   this.unblock()
 
-  var specificDay = moment().dayOfYear(day)
-  var start = specificDay.startOf('day').add(4, "hour").toDate();
-  var finish = specificDay.endOf('day').add(4, "hour").toDate(); // today and tomorrow
-  var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}};
+  var specificDay = moment()
+  var start = specificDay.startOf('day').toDate();
+  if(length === "Day"){
+    var finish = specificDay.endOf('day').add(4, "hour").toDate();
+  } else if (length === "Month") {
+    var finish = specificDay.endOf('month').add(28, "hour").toDate();
+  } else {
+    var finish = specificDay.endOf('week').add(28, "hour").toDate();
+  }
+
+  var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}, sport: {$in: sports}};
   var parms = {
     sort: {live: -1, scheduled: 1}, fields: {inning: 0}
   }

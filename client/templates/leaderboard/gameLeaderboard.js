@@ -1,12 +1,8 @@
 Template.gameLeaderboard.onCreated(function() {
 	var filter = Router.current().params.query.filter
 	var groupId = Router.current().params.query.groupId
-	if(filter){
-		Session.set('leaderboardFilter', filter);
-	}
-	if(groupId){
-		Session.set('leaderboardGroupId', groupId);
-	}
+	if(filter){ Session.set('leaderboardFilter', filter); }
+	if(groupId){ Session.set('leaderboardGroupId', groupId); }
 });
 
 Template.gameLeaderboard.helpers({
