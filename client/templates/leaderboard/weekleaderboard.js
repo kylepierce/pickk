@@ -29,7 +29,7 @@ Template.weekLeaderboard.helpers({
 		var shortList = function(all, array){
 			var list = _.filter(all, function(user){
 				var onTheList = array.indexOf(user._id)
-				if (array.indexOf(user._id) !== -1){
+				if (onTheList !== -1){
 					return user
 				}
 			});

@@ -1,3 +1,14 @@
+Template.gameLeaderboard.onCreated(function() {
+var filter = Router.current().params.query.filter
+var groupId = Router.current().params.query.groupId
+if(filter){
+	Session.set('leaderboardFilter', filter);
+}
+if(groupId){
+	Session.set('leaderboardGroupId', groupId);
+}
+});
+
 Template.gameLeaderboard.helpers({
   'overview': function (){
     var $period = parseInt(Router.current().params.period)
@@ -65,7 +76,7 @@ Template.miniLeaderboard.helpers({
 	},
   'player': function(number){
     if (!number){
-      var number = parseInt(0)
+      var number = parseInt(-1)
     }
 
     var $game = Router.current().params._id
@@ -74,11 +85,61 @@ Template.miniLeaderboard.helpers({
         var $period = Games.findOne({_id: $game}).period
     }
 
+		var leaderboardList = function(list){
+			var fixed = _.sortBy(list, function(obj){return obj.diamonds})
+			var rank = _.first(fixed, number)
+			return rank
+		}
+
+		var shortList = function(all, array){
+			var list = _.filter(all, function(user){
+				var onTheList = array.indexOf(user.userId)
+				if (onTheList !== -1){
+					return user
+				}
+			});
+			return list
+		}
+
     if($period === -1){
-      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1}, limit: number}).fetch();
+      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1} }).fetch();
     } else {
-      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}, limit: number}).fetch();
+      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
     }
+		var filter = Session.get('leaderboardFilter');
+
+		// Only show the results from the filters
+		switch (filter) {
+			case "All":
+				return leaderboardList(list)
+				break;
+
+			case "Followers":
+				var followers = Meteor.user().profile.followers
+				var list = shortList(list, followers)
+				return leaderboardList(list)
+				break;
+
+			case "Following":
+				var following = Meteor.user().profile.following
+				var list = shortList(list, following)
+				console.log(list, following);
+				return leaderboardList(list)
+				break;
+
+			case "group":
+				var groupId = Session.get('leaderboardGroupId');
+				var group = Groups.findOne({_id: groupId});
+				var members = group.members
+				var list = shortList(list, members)
+				return leaderboardList(list)
+				break;
+
+			default:
+				return leaderboardList(list)
+				break;
+		}
+
     return list
   },
   'username': function(userId) {
