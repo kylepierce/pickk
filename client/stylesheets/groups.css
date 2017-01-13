@@ -1,0 +1,20 @@
+.group-details {
+  padding: 15px;
+  background-color: white;
+  width: 100%;
+  contain: content;
+}
+
+.group-details-list {
+  padding: 10px 0 10px 10px;
+  line-height: 8px;
+  vertical-align: text-top;
+  font-size: 1.2em;
+  float: left;
+}
+
+.group-details-icon {
+  float: left;
+  clear: both;
+  font-size: 1.9em;
+}

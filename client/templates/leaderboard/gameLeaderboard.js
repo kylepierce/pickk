@@ -1,8 +1,10 @@
 Template.gameLeaderboard.onCreated(function() {
 	var filter = Router.current().params.query.filter
 	var groupId = Router.current().params.query.groupId
+	var matchupId = Router.current().params.query.matchupId
 	if(filter){ Session.set('leaderboardFilter', filter); }
 	if(groupId){ Session.set('leaderboardGroupId', groupId); }
+	if(matchupId){ Session.set('leaderboardMatchupId', matchupId); }
 });
 
 Template.gameLeaderboard.helpers({
@@ -119,7 +121,6 @@ Template.miniLeaderboard.helpers({
 			case "Following":
 				var following = Meteor.user().profile.following
 				var list = shortList(list, following)
-				console.log(list, following);
 				return leaderboardList(list)
 				break;
 
@@ -127,6 +128,14 @@ Template.miniLeaderboard.helpers({
 				var groupId = Session.get('leaderboardGroupId');
 				var group = Groups.findOne({_id: groupId});
 				var members = group.members
+				var list = shortList(list, members)
+				return leaderboardList(list)
+				break;
+
+			case "matchup":
+				var matchupId = Session.get('leaderboardMatchupId');
+				var matchup = Matchup.findOne({_id: matchupId});
+				var members = matchup.users
 				var list = shortList(list, members)
 				return leaderboardList(list)
 				break;

@@ -43,7 +43,7 @@ Meteor.publish('liveGames', function() {
 Meteor.publish('singleGameData', function(id) {
   check(id, String);
   this.unblock()
-  return Games.find({_id: id}, {fields: {name: 1}});
+  return Games.find({_id: id}, {fields: {name: 1, scheduled: 1}});
 });
 
 Meteor.publish('singleQuestion', function(id) {

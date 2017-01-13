@@ -1,0 +1,39 @@
+<template name="matchup">
+  <!-- Standard Nav instead of the custom nav design -->
+	{{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Matchups</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button style="font-size: 11px;" class="button button-clear" data-ion-menu-toggle="right">
+      {{> ionIcon icon="funnel"}}
+    </button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each matchup in matchups}}
+          {{> matchupItem m=matchup}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="matchupItem">
+  {{#ionItem}}
+    <h2>{{gameName m.gameId}}</h2>
+    {{username m.creator}} {{users m.users}} of {{m.limitNum}} {{m.skill}}
+  {{/ionItem}}
+</template>

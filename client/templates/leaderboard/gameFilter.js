@@ -15,14 +15,23 @@ Template.gameFilter.helpers({
 		_.each(groups, function(group){
 			list.push({name: group.name, value: "group", groupId: group._id})
 		});
-	return list
-	}
+	  return list
+  },
+  matchups: function(){
+    var matchups = Matchup.find({}).fetch();
+    var list = []
+    _.each(matchups, function(matchup){
+      list.push({name: matchup._id, value: "matchup", groupId: matchup._id})
+    });
+  return list
+  }
 });
 
 Template.gameFilter.events({
 	'change .item-radio': function(e,t){
 		Session.set('leaderboardFilter', this.value);
 		Session.set('leaderboardGroupId', this.groupId);
+    Session.set('leaderboardMatchupId', this.matchupId);
 	}
 });
 

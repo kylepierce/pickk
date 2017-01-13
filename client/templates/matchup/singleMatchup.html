@@ -1,0 +1,65 @@
+<template name="singleMatchup">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Matchup Details</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#with matchup}}
+        <div class="group-details">
+          <!-- <span style="padding: 0 10px" class="group-details-icon">
+            {{> ionIcon icon='information'}}
+          </span> -->
+          <h4>{{gameName this.gameId}}</h4>
+
+          <span class="group-details-icon">
+            {{> ionIcon icon='star'}}
+          </span>
+          <span class="group-details-list">
+            Commissioner: {{username this.creator}}
+          </span>
+
+          <span class="group-details-icon">
+            {{> ionIcon icon='ios-people'}}
+          </span>
+          <span class="group-details-list">
+            {{users this.users}} of {{this.limitNum}}
+          </span>
+
+          <span class="group-details-icon">
+            {{> ionIcon icon='ios-people'}}
+          </span>
+          <span class="group-details-list">
+            {{this.skill}}
+          </span>
+
+          {{this.description}}
+        </div>
+
+        {{#if alreadyJoined this.users}}
+          <button data-action="inviteToMatchup" class="button button-balanced col col-50 float-left">
+            {{> ionIcon icon='ios-upload-outline'}} Invite
+          </button>
+          <button data-action="leaveMatchup" class="button button-assertive col col-50 float-left">
+            Leave
+          </button>
+        {{else}}
+          <button data-action="joinMatchup" class="button button-balanced col col-100">
+            Join
+          </button>
+        {{/if}}
+
+        {{#if alreadyJoined this.users}}
+          <!-- View Game -->
+          <!-- View Leaderboard -->
+          <h1>Ah Whad Up Fam</h1>
+        {{/if}}
+
+      {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
