@@ -17,57 +17,7 @@
 
   {{#ionView}}
 	  {{#ionContent}}
-      {{#if overview}}
-        {{#with periodExists 1}}
-          {{#ionItem class="quarter" id="1"}}
-          Quarter 1 Leaderboard
-          <span class="score">
-            {{{this.coins}}}
-          </span>
-          {{/ionItem}}
-        {{/with}}
-        {{#with periodExists 2}}
-          {{#ionItem class="quarter" id="2"}}
-          Quarter 2 Leaderboard
-          <span class="score">
-            {{{this.coins}}}
-          </span>
-          {{/ionItem}}
-        {{/with}}
-        {{#with periodExists 3}}
-          {{#ionItem class="quarter" id="3"}}
-          Quarter 3 Leaderboard
-          <span class="score">
-            {{{this.coins}}}
-          </span>
-          {{/ionItem}}
-        {{/with}}
-        {{#with periodExists 4}}
-          {{#ionItem class="quarter" id="4"}}
-          Quarter 4 Leaderboard
-          <span class="score">
-            {{{this.coins}}}
-          </span>
-          {{/ionItem}}
-        {{/with}}
-        {{#with periodExists 5}}
-          {{#ionItem class="quarter" id="5"}}
-          Overtime Leaderboard
-          <span class="score">
-            {{{this.coins}}}
-          </span>
-          {{/ionItem}}
-        {{/with}}
-        {{#with periodExists -1}}
-          <div class="item item-divider clear-fix" style="border: 0">
-            All Quarters
-          </div>
-          {{> miniLeaderboard}}
-        {{/with}}
-
-      {{else}}
-        {{> miniLeaderboard}}
-      {{/if}}
+      {{> miniLeaderboard i=25}}
 	  {{/ionContent}}
 	{{/ionView}}
 </template>
@@ -91,7 +41,6 @@
             {{else}}
               <span class="score">{{{coins}}} | {{{diamonds}}}</span>
             {{/if}}
-
           </h2>
         </li>
       {{/ionItem}}

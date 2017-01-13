@@ -23,29 +23,16 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
   return GamePlayed.find(selector);
 });
 
-Meteor.publish('leaderboardGamePlayed', function(gameId, period, number) {
-  check(gameId, String);
-  check(period, Number);
-  check(number, Number);
+Meteor.publish('leaderboardGamePlayed', function(o) {
+  check(o, Object);
   this.unblock()
-
+	var selector = {gameId: o.gameId}
+	var sort = {sort: {coins: -1}, limit: 5}
   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1, type: 1, diamonds: 1}}
-  if( period === 0) {
-		var game = Games.find({_id: gameId }).fetch()
-	  var period = game[0].period
-		var selector = {gameId: gameId, period: period}
-	} else if (period === -1){
-    var selector = {gameId: gameId}
-  } else {
-    var selector = {gameId: gameId, period: period}
-  }
 
-  if (number === -1){
-    var sort = {sort: {coins: -1}}
-    var selector = {gameId: gameId}
-  } else {
-    var sort = {sort: {coins: -1}, limit: number}
-  }
+  if (o.period) { selector.period = parseInt(o.period) }
+  if (o.number) { sort.limit = parseInt(o.number) }
+	
   var gamesPlayed = GamePlayed.find(selector, fields, sort)
   return gamesPlayed
 });

@@ -1,5 +1,4 @@
 Template.notifications.onCreated(function() {
-  console.log(Meteor.user());
   this.getFilter = () => Meteor.user().profile.notifications
   this.autorun(() => {
     this.subscribe( 'userNotifications', this.getFilter());

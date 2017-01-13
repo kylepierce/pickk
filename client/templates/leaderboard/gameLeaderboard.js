@@ -1,60 +1,32 @@
 Template.gameLeaderboard.onCreated(function() {
-	var filter = Router.current().params.query.filter
-	var groupId = Router.current().params.query.groupId
-	var matchupId = Router.current().params.query.matchupId
-	if(filter){ Session.set('leaderboardFilter', filter); }
-	if(groupId){ Session.set('leaderboardGroupId', groupId); }
-	if(matchupId){ Session.set('leaderboardMatchupId', matchupId); }
+	var gameId = Router.current().params._id
+	var query = Router.current().params.query
+	var data = {
+		gameId: gameId,
+		number: query.number,
+		period: query.period,
+		filter: query.filter,
+		groupId: query.groupId,
+		matchupId: query.matchupId
+	}
+	Session.set('leaderboardData', data)
+
+	this.getFilter = () => Session.get('leaderboardData');
+	this.autorun(() => {
+		this.subscribe( 'leaderboardGamePlayed', this.getFilter());
+	});
 });
 
-Template.gameLeaderboard.helpers({
-  'overview': function (){
-    var $period = parseInt(Router.current().params.period)
-    if ($period === -1){
-      return true
-    }
-  },
-  'noPeriods': function (){
-    var $period = parseInt(Router.current().params.period)
-    if ($period === -1){
-      return true
-    }
-  },
-  'periodExists': function (period){
-    var $game = Router.current().params._id
-    var all = GamePlayed.findOne({gameId: $game, period: period}, {sort: {coins: -1}});
-    if (period === -1){
-      var all = GamePlayed.findOne({gameId: $game}, {sort: {coins: -1}});
-    }
-    return all
-  }
-});
+Template.gameLeaderboard.helpers({});
 
-Template.gameLeaderboard.events({
-  'click .item.quarter': function (e, t){
-    var selected = e.target.id
-    var gameId = Router.current().params._id
-    Router.go('/leaderboard/' + gameId + "/" + selected)
-  }
-});
+Template.gameLeaderboard.events({});
 
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
-    if (!number){
-      var number = Router.current().params.count
-      number = parseInt(number)
-    }
 		var userId = Meteor.userId()
-		var $game = Router.current().params._id
-    var $period = parseInt(Router.current().params.period)
-    if (!$period) {
-        var $period = Games.findOne({_id: $game}).period
-    }
-    if ($period > 0) {
-      var all = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
-    } else {
-      var all = GamePlayed.find({gameId: $game}, {sort: {coins: -1}}).fetch();
-    }
+		var data = Session.get('leaderboardData')
+    // var currentPeriod = Games.findOne({_id: data.gameId}).period
+    var all = GamePlayed.find().fetch();
 
     var leaderboard = all.map(function(x) {
       var thisUser = {userId: x.userId, coins: x.coins}
@@ -67,25 +39,25 @@ Template.miniLeaderboard.helpers({
       userSpot.spot = spot + 1
     }
 
-		if(spot > number){
+		if(spot > data.number){
 			return userSpot;
 		}
 
 	},
   'player': function(number){
-    if (!number){
-      var number = parseInt(-1)
-    }
+		var userId = Meteor.userId()
+		var data = Session.get('leaderboardData')
 
-    var $game = Router.current().params._id
-    var $period = parseInt(Router.current().params.period)
-    if (!$period) {
-        var $period = Games.findOne({_id: $game}).period
-    }
+    var list = GamePlayed.find({}, {sort: {coins: -1}}).fetch();
+		var filter = data.filter
+		if (number){
+			data.number = number
+			Session.set('leaderboardData', data)
+		}
 
 		var leaderboardList = function(list){
 			var fixed = _.sortBy(list, function(obj){return - obj.coins})
-			var rank = _.first(fixed, number)
+			var rank = _.first(fixed, data.number)
 			return rank
 		}
 
@@ -98,13 +70,6 @@ Template.miniLeaderboard.helpers({
 			});
 			return list
 		}
-
-    if($period === -1){
-      var list = GamePlayed.find({gameId: $game}, {sort: {coins: -1} }).fetch();
-    } else {
-      var list = GamePlayed.find({gameId: $game, period: $period}, {sort: {coins: -1}}).fetch();
-    }
-		var filter = Session.get('leaderboardFilter');
 
 		// Only show the results from the filters
 		switch (filter) {
@@ -125,7 +90,7 @@ Template.miniLeaderboard.helpers({
 				break;
 
 			case "group":
-				var groupId = Session.get('leaderboardGroupId');
+				var groupId = data.groupId;
 				var group = Groups.findOne({_id: groupId});
 				var members = group.members
 				var list = shortList(list, members)
@@ -133,7 +98,7 @@ Template.miniLeaderboard.helpers({
 				break;
 
 			case "matchup":
-				var matchupId = Session.get('leaderboardMatchupId');
+				var matchupId = data.matchupId;
 				var matchup = Matchup.findOne({_id: matchupId});
 				var members = matchup.users
 				var list = shortList(list, members)
@@ -160,16 +125,5 @@ Template.miniLeaderboard.helpers({
     // https://github.com/meteoric/meteor-ionic/issues/66
     var url = "/user-profile/" + this.userId
     return url
-  },
-  gameCoins: function () {
-    var userId = Meteor.userId();
-    var $game = Router.current().params._id
-    var $period = parseInt(Router.current().params.period)
-    if($period === -1){
-      var list = GamePlayed.findOne({userId: userId, gameId: $game}).coins;
-    } else {
-      var list = GamePlayed.findOne({userId: userId, gameId: $game, period: $period}).coins;
-    }
-    return list;
   },
 });

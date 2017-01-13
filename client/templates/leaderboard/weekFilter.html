@@ -18,17 +18,9 @@
 </template>
 
 <template name="radioOption">
-  {{#if filterSelected o}}
     <div class="radio-filter">
-      {{#ionRadio checked=true value=o.value groupId=o.groupId}}
+      {{#ionRadio checked=o.checked o=o value=o.value}}
         {{o.name}}
       {{/ionRadio}}
     </div>
-  {{else}}
-    <div class="radio-filter">
-      {{#ionRadio value=o.value groupId=o.groupId}}
-        {{o.name}}
-      {{/ionRadio}}
-    </div>
-  {{/if}}
 </template>

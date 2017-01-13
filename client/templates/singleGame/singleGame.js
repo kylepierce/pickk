@@ -200,7 +200,7 @@ Template.singleGame.events({
       userId: userId,
       gameId: $game,
     });
-    Router.go('/leaderboard/'+ $game + "/" + $period)
+    Router.go('/leaderboard/'+ $game + "?period=" + $period)
   },
   'click [data-action=previous-answers]': function(event, template){
     var $game = Router.current().params._id
@@ -264,7 +264,6 @@ Template.noPlay.rendered = function(){
   var commercial = game[0].commercial
   Meteor.subscribe('questionCount', userId, gameId, period, commercial)
   var count = Counts.get('questionCount')
-  console.log("count", count);
 };
 
 Template.commericalQuestion.helpers({
