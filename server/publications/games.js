@@ -9,12 +9,12 @@ Meteor.publish('activeGames', function(length, sports) {
   check(length, String);
   check(sports, Array);
   this.unblock()
-
+  var length = length.toLowerCase()
   var specificDay = moment()
   var start = specificDay.startOf('day').toDate();
-  if(length === "Day"){
+  if(length === "day"){
     var finish = specificDay.endOf('day').add(4, "hour").toDate();
-  } else if (length === "Month") {
+  } else if (length === "month") {
     var finish = specificDay.endOf('month').add(28, "hour").toDate();
   } else {
     var finish = specificDay.endOf('week').add(28, "hour").toDate();
@@ -24,7 +24,6 @@ Meteor.publish('activeGames', function(length, sports) {
   var parms = {
     sort: {live: -1, scheduled: 1}, fields: {inning: 0}
   }
-
   var games = Games.find(selector, parms);
   return games
 });

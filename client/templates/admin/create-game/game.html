@@ -19,19 +19,27 @@
 
 			<form id="gameInfo">
 				<label type="stacked" class="item item-input item-stacked-label">
+					<span class="input-label">Sport</span>
+					<select id="sport">
+						<option>NFL</option>
+						<option>NBA</option>
+						<option>MLB</option>
+					</select>
+				</label>
+				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">Away</span>
 					<select id="away">
 						{{> nfl}}
-						{{> mlb}}
 						{{> nba}}
+						{{> mlb}}
 					</select>
 				</label>
 				<label type="stacked" class="item item-input item-stacked-label">
 					<span class="input-label">Home</span>
 					<select id="home">
 						{{> nfl}}
+						{{> nba}}
 						{{> mlb}}
-						{{> nba}} 
 					</select>
 				</label>
 				<label type="stacked" class="item item-input item-stacked-label">

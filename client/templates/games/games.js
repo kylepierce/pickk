@@ -1,5 +1,5 @@
 Template.games.onCreated(function() {
-  var dateFilter = Router.current().params.query.filter
+  var dateFilter = Router.current().params.query.date
 	var sport = Router.current().params.query.sport
   if(dateFilter){
     Session.set('gamesDate', dateFilter);
