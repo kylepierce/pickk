@@ -10,7 +10,7 @@
   {{#ionView}}
     {{#ionContent}}
     <div class="container ten-spacing">
-      {{#autoForm collection="Groups" schema=CreateLeague type="insert" id="createLeague"}}
+      {{#autoForm collection="Groups" type="insert" id="createLeague"}}
         {{> afQuickField autofocus='' name='name' label-type='stacked'}}
         <br>
         {{> afQuickField type='select-radio' name='secret' }}

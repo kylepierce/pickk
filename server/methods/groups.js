@@ -1,33 +1,4 @@
 Meteor.methods({
-	// Users can create a group
-	'createGroup': function(groupName, secretStatus) {
-		check(groupName, String);
-		check(secretStatus, String);
-		var exists = Meteor.call('isGroupNameUnique', groupName)
-		if (exists) {
-			return false
-		}
-		var currentUserId = Meteor.userId();
-		var timeCreated = new Date();
-
-		Groups.insert({
-			name: groupName,
-			commissioner: currentUserId,
-			dateCreated: timeCreated,
-			members: [currentUserId],
-			secret: secretStatus,
-			avatar: "/twitter_logo.png",
-			invites: []
-		});
-
-		var groupData = Groups.findOne({'name': groupName});
-
-		Meteor.users.update({_id: currentUserId}, {
-			$push: {"profile.groups": groupData._id}
-		})
-
-	},
-
 	'isGroupNameUnique': function(name) {
 		check(name, String);
 		name = name.trim()
@@ -43,7 +14,7 @@ Meteor.methods({
 			return false
 		}
 	},
-	
+
 	'editGroup': function(id, groupName, secretStatus, description) {
 		check(id, String);
 		check(groupName, String);
@@ -91,7 +62,7 @@ Meteor.methods({
 		check(userId, String);
 		check(sender, String);
 		check(groupId, String);
-		Groups.update({_id: groupId}, {$addToSet: {invites: userId}})
+		Groups.update({_id: groupId}, {$push: {invites: userId}}, { validate: false })
 
 	  var notifyObj = {
 	  	type: "group",
@@ -145,7 +116,7 @@ Meteor.methods({
 	'joinGroup': function(user, groupId) {
 		check(user, String);
 		check(groupId, String);
-		Groups.update({_id: groupId}, {$push: {members: user}});
+		Groups.update({_id: groupId}, {$push: {members: user}}, { validate: false });
 		UserList.update({_id: user}, {$push: {'profile.groups': groupId}});
 	},
 
