@@ -2,8 +2,32 @@ ol {
     list-style-position: inside;
     list-style-type: decimal;
 }
+
+#leaderboard .item {
+  padding: 12px 0px 5px 65px!important;
+  width: 100%;
+  min-height: 50px;
+}
+
+.leaderboard-item .avatar {
+  top: 4px!important;
+  left: 10px!important;
+}
+
+.following{
+	border-left: 5px solid purple!important;
+}
+
+.following .username,
+.following .score,
+.following .list-font {
+	color: black!important;
+  font-weight: bold;
+}
+
 .score {
 	float:right;
+  text-align: right;
 	font-size: inherit;
 }
 
@@ -12,6 +36,8 @@ ol {
 }
 
 .list-font {
+  float: left;
+  width: 95%;
 	font-size: 16px;
 }
 

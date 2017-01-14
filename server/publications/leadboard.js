@@ -30,9 +30,42 @@ Meteor.publish('leaderboardGamePlayed', function(o) {
 	var sort = {sort: {coins: -1}, limit: 5}
   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1, type: 1, diamonds: 1}}
 
-  if (o.period) { selector.period = parseInt(o.period) }
+	if (!o.filter){
+		o.filter = "All"
+	} else if (o.filter) {
+		o.filter = o.filter.toLowerCase();
+		switch (o.filter) {
+			case "followers":
+				var user = UserList.find({_id: this.userId}).fetch()
+				var followers = user[0].profile.followers
+				selector.userId = {$in: followers}
+				break;
+
+			case "following":
+				var user = UserList.find({_id: this.userId}).fetch()
+				var following = user[0].profile.following
+				selector.userId = {$in: following}
+				break;
+
+			case "group":
+				var groupId = o.groupId;
+				var group = Groups.findOne({_id: o.groupId});
+				var members = group.members
+				selector.userId = {$in: members}
+				break;
+
+			case "matchup":
+				var matchupId = o.matchupId;
+				var matchup = Matchup.findOne({_id: o.matchupId});
+				var members = matchup.users
+				selector.userId = {$in: members}
+				break;
+		}
+	}
+
+	if (o.period) { selector.period = parseInt(o.period) }
   if (o.number) { sort.limit = parseInt(o.number) }
-	
+
   var gamesPlayed = GamePlayed.find(selector, fields, sort)
   return gamesPlayed
 });

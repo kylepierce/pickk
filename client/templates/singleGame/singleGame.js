@@ -12,9 +12,8 @@ Template.singleGame.rendered = function () {
 };
 
 Template.waitingForNextPlay.onCreated(function() {
-  var userId = Meteor.userId()
-  var gameId = Router.current().params._id
-  this.subscribe('leaderboardGamePlayed', gameId, 0, 5)
+  var data = Session.get('leaderboardData');
+  this.subscribe('leaderboardGamePlayed', data)
 });
 
 Template.singleGame.helpers({

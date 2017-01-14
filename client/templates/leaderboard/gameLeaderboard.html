@@ -17,36 +17,25 @@
 
   {{#ionView}}
 	  {{#ionContent}}
-      {{> miniLeaderboard i=25}}
+      {{> miniLeaderboard i=-1}}
 	  {{/ionContent}}
 	{{/ionView}}
 </template>
 
 <template name="miniLeaderboard">
-  <ol type="1">
+  <ol type="1" id="leaderboard">
     {{#each player i}}
-      {{#ionItem href=pathUrl avatar=true}}
+      <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
         {{> userAvatar userId=userId}}
-        <li class="list-font">
-          <h2 class="center-username">
-            {{#with username userId}}
-              {{#if following _id}}
-                <strong>{{profile.username}}</strong>
-              {{else}}
-                {{profile.username}}
-              {{/if}}
-            {{/with}}
-            {{#if following userId}}
-              <strong><span class="score">{{{coins}}} | {{{diamonds}}}</span></strong>
-            {{else}}
-              <span class="score">{{{coins}}} | {{{diamonds}}}</span>
-            {{/if}}
-          </h2>
+        <li class="list-font" value={{this.rank}}>
+          <span class="username">{{username userId}}</span>
+          <span class="score">
+              {{{coins}}}
+          </span>
         </li>
-      {{/ionItem}}
+      </div>
     {{/each}}
-
-    {{#with userNotInLeaderboard i}}
+    <!-- {{#with userNotInLeaderboard i}}
       {{#ionItem avatar=true}}
         {{> userAvatar userId=userId}}
         <li class="list-font" style="font-weight: bold;" value={{this.spot}}>
@@ -58,6 +47,6 @@
           </h2>
         </li>
       {{/ionItem}}
-    {{/with}}
+    {{/with}} -->
   </ol>
 </template>
