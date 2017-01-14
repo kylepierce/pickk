@@ -85,7 +85,6 @@ Template.miniLeaderboard.helpers({
 		if(this.userId === userId){
 			return "history-inprogress"
 		}
-		console.log(this);
 	},
   'pathUrl': function () {
     // https://github.com/meteoric/meteor-ionic/issues/66

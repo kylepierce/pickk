@@ -123,8 +123,8 @@ Meteor.methods({
 			}
 		}
 	},
-	'openGame': function(game){
-		check(game, String);
+	'openGame': function(gameId){
+		check(gameId, String);
 		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -133,7 +133,10 @@ Meteor.methods({
     if (Meteor.user().profile.role !== "admin") {
       throw new Meteor.Error(403, "Unauthorized");
     }
-		Games.update({_id: game}, {$set: {"status": "inprogress", "live": true}})
+		var game = Games.find({_id: gameId}).fetch()
+		var registered = game[0].registered
+
+		Games.update({_id: gameId}, {$set: {"status": "inprogress", "live": true, "users": registered}})
 	},
 
 	'endGame': function(gameId){

@@ -2,11 +2,9 @@ Template._gameScoreModal.helpers({
 	game: function () {
 		var gameId = Router.current().params._id
 		var game = Games.findOne({_id: gameId})
-		console.log(this);
 		return game.scoring
 	},
 	teamOne: function () {
-		console.log(this);
 		return this.away.name
 	},
 	teamOneScore: function () {

@@ -1,3 +1,17 @@
+Template.singleGame.onCreated(function() {
+	var gameId = Router.current().params._id
+	var query = Router.current().params.query
+	var data = {
+		gameId: gameId
+	}
+	Session.set('leaderboardData', data)
+
+	this.getFilter = () => Session.get('leaderboardData');
+	this.autorun(() => {
+		this.subscribe( 'leaderboardGamePlayed', this.getFilter());
+	});
+});
+
 Template.singleGame.rendered = function () {
   $('#notification-center').slick({
     arrows: false,
