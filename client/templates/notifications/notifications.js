@@ -1,5 +1,11 @@
 Template.notifications.onCreated(function() {
-  this.getFilter = () => Meteor.user().profile.notifications
+  var filter = Router.current().params.query.filter
+  if(filter){
+    Session.set('notificationsFilter', [filter])
+  } else {
+    Session.set('notificationsFilter', Meteor.user().profile.notifications)
+  }
+  this.getFilter = () => Session.get('notificationsFilter');
   this.autorun(() => {
     this.subscribe( 'userNotifications', this.getFilter());
   });
