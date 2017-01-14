@@ -18,3 +18,10 @@
   clear: both;
   font-size: 1.9em;
 }
+
+.af-checkbox-group .item .item-checkbox .checkbox input{
+  float: left;
+}
+.af-checkbox-group .item.item-checkbox label.checkbox {
+  width: 0;
+}
