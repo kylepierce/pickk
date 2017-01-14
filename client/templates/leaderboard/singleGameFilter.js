@@ -26,7 +26,7 @@ Template.singleGameFilter.helpers({
   },
   options: function () {
     var data = Session.get('leaderboardData');
-    var options = ["All", "Followers", "Following"]
+    var options = ["All", "Live", "Drive", "Followers", "Following"]
 		var list = []
 
     _.each(options, function(option){
@@ -78,5 +78,47 @@ Template.singleGameFilter.events({
     var data = Session.get('leaderboardData');
     var data = _.extend(data, this.o)
     Session.set('leaderboardData', data)
+	}
+});
+
+
+Template._leaderboardFilter.helpers({
+  options: function () {
+    var data = Session.get('leaderboardData');
+    var options = ["All", "Live", "Drive", "Followers", "Following"]
+    var list = []
+
+    _.each(options, function(option){
+      var item = {name: option, filter: option}
+      if(!data.filter && option === "All") {
+        item.checked = true
+      } else if(data.filter === option){
+        item.checked = true
+      }
+      list.push(item)
+    });
+    return list
+  },
+  groups: function(){
+    var data = Session.get('leaderboardData');
+    var groups = Groups.find({}).fetch();
+    var list = []
+    _.each(groups, function(group){
+      var item = {name: group.name, filter: "group", groupId: group._id}
+      if (data.filter === "group" && data.groupId === group._id){
+        item.checked = true
+      }
+      list.push(item)
+    });
+    return list
+  },
+});
+
+Template._leaderboardFilter.events({
+  'change #other-filters .item-radio': function(e,t){
+    var data = Session.get('leaderboardData');
+    var data = _.extend(data, this.o)
+    Session.set('leaderboardData', data)
+    IonModal.close();
 	}
 });

@@ -9,11 +9,6 @@ Template.singleGame.onCreated(function() {
 		period: period
 	}
 	Session.set('leaderboardData', data)
-
-	this.getFilter = () => Session.get('leaderboardData');
-	this.autorun(() => {
-		this.subscribe( 'leaderboardGamePlayed', this.getFilter());
-	});
 });
 
 Template.singleGame.rendered = function () {
@@ -28,11 +23,6 @@ Template.singleGame.rendered = function () {
     intercom.setLauncherVisibility('VISABLE');
   }
 };
-
-Template.waitingForNextPlay.onCreated(function() {
-  var data = Session.get('leaderboardData');
-  this.subscribe('leaderboardGamePlayed', data)
-});
 
 Template.singleGame.helpers({
   game: function(){

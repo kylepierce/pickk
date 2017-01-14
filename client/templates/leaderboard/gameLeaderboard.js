@@ -21,28 +21,36 @@ Template.gameLeaderboard.helpers({});
 
 Template.gameLeaderboard.events({});
 
+Template.miniLeaderboard.onCreated(function() {
+	this.getFilter = () => Session.get('leaderboardData');
+	this.autorun(() => {
+		this.subscribe( 'leaderboardGamePlayed', this.getFilter());
+	});
+});
+
 Template.miniLeaderboard.helpers({
-	// 'userNotInLeaderboard': function(number){
-	// 	var userId = Meteor.userId()
-	// 	var data = Session.get('leaderboardData')
-  //   var all = GamePlayed.find().fetch();
-	//
-  //   var leaderboard = all.map(function(x) {
-  //     var thisUser = {userId: x.userId, coins: x.coins}
-  //     return thisUser;
-  //   });
-  //   var spot = _.indexOf(_.pluck(leaderboard, 'userId'), userId);
-	//
-  //   var userSpot = leaderboard[spot]
-  //   if (userSpot){
-  //     userSpot.spot = spot + 1
-  //   }
-	//
-	// 	if(spot > data.number){
-	// 		return userSpot;
-	// 	}
-	//
-	// },
+	'userNotInLeaderboard': function(number){
+		var userId = Meteor.userId()
+		var data = Session.get('leaderboardData')
+    var all = GamePlayed.find().fetch();
+
+    var leaderboard = all.map(function(x) {
+      var thisUser = {userId: x.userId, coins: x.coins}
+      return thisUser;
+    });
+		var leaderboard = _.sortBy(leaderboard, "coins");
+    var spot = _.indexOf(_.pluck(leaderboard, 'userId'), userId);
+
+    var userSpot = leaderboard[spot]
+    if (userSpot){
+      userSpot.spot = spot + 1
+    }
+
+		if(spot > number){
+			return userSpot;
+		}
+
+	},
   'player': function(number){
 		var userId = Meteor.userId()
 		var data = Session.get('leaderboardData')
@@ -73,7 +81,9 @@ Template.miniLeaderboard.helpers({
   },
   'username': function(userId) {
 		var user = UserList.findOne({_id: userId});
-    return user.profile.username
+		if(user){
+			return user.profile.username
+		}
   },
 	'following': function(){
 		if(this.following){

@@ -41,10 +41,13 @@ Template.waitingForNextPlay.rendered = function () {
 };
 
 Template.waitingForNextPlay.helpers({
-	
+
 });
 
 Template.waitingForNextPlay.events({
+	'click [data-action="filter-leaderboard"]': function(e,t){
+		IonModal.open('_leaderboardFilter');
+	},
 	'click [data-action="yes-enjoy"]': function (e,t) {
 		var data = {
 			title: "Would Mind Rating Pickk?",

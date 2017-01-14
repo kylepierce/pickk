@@ -1,32 +1,20 @@
-// Template.inviteToPlay.onCreated(function(){
-//   console.log(this);
-//   this.data.rewards = new ReactiveVar();
-// });
-
 Template.inviteToPlay.helpers({
-  // rewards: function () {
-  //   Branch.loadRewards().then(function (rewards) {
-  //     console.log(rewards);
-  //     Template.instance().data.rewards.set(rewards)
-  //     // Template.data.rewards.set( rewards );
-  //   });
-  //   var number = Template.instance().data.rewards.get();
-  //   console.log(number);
-  //   return number
-  // },
   listToShare: function(){
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
     var invited = game.invited
     var users = game.users
     // Compare the users in the array against the already invited
-    var list = _.reject(followers, function(user){
-      if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
-        return user
-      }
-    });
+    if(invited){
+      var list = _.reject(followers, function(user){
+        if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
+          return user
+        }
+      });
+    }
+
     // Return 3 at a time
-    if (list.length === 0){
+    if (!list || list.length === 0){
       return false
     } else {
       return true
@@ -38,13 +26,15 @@ Template.inviteToPlay.helpers({
     var invited = game.invited
     var users = game.users
     // Compare the users in the array against the already invited
-    var list = _.reject(followers, function(user){
-      if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
-        return user
-      }
-    });
+    if(invited){
+      var list = _.reject(followers, function(user){
+        if (invited.indexOf(user) !== -1 || users.indexOf(user) !== -1){
+          return user
+        }
+      });
+    }
     // Return 3 at a time
-    if (list.length === 0){
+    if (!list || list.length === 0){
       return false
     } else {
       return list

@@ -35,6 +35,14 @@ Meteor.publish('leaderboardGamePlayed', function(o) {
 	} else if (o.filter) {
 		o.filter = o.filter.toLowerCase();
 		switch (o.filter) {
+			case "live":
+				selector.type = "live"
+				break;
+
+			case "drive":
+				selector.type = "drive"
+				break;
+
 			case "followers":
 				var user = UserList.find({_id: this.userId}).fetch()
 				var followers = user[0].profile.followers

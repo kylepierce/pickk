@@ -28,3 +28,18 @@
   {{/ionList}}
   </div>
 </template>
+
+<template name="_leaderboardFilter">
+  {{#ionModal class="white-text-header" title="Filter Leaderboard"}}
+    <form id="other-filters">
+      <div class="item item-divider">Common</div>
+      {{#each option in options}}
+        {{> radioOption o=option}}
+      {{/each}}
+      <div class="item item-divider ten-spacing">Groups</div>
+      {{#each option in groups}}
+        {{> radioOption o=option}}
+      {{/each}}
+    </form>
+  {{/ionModal}}
+</template>
