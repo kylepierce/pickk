@@ -21,7 +21,16 @@ Template.home.helpers({
     return Questions.find({}).count()
   },
   liveGames: function(){
-    return Games.find({}).count()
+    return Games.find({live: true}).count()
+  },
+  listLiveGames: function(){
+    return Games.find({live: true})
+  },
+  upcomingGames: function(){
+    return Games.find({live: false}).count()
+  },
+  listUpcomingGames: function(){
+    return Games.find({live: false})
   }
 });
 

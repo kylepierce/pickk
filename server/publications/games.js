@@ -40,6 +40,21 @@ Meteor.publish('liveGames', function() {
   return Games.find(selector, parms);
 });
 
+Meteor.publish('upcomingGames', function() {
+  this.unblock()
+  var specificDay = moment()
+  var start = specificDay.startOf('day').toDate();
+
+  var selector = {scheduled: {$gt: start}, status: "scheduled", type: {$ne: "prediction"}};
+  var parms = {
+    sort: {scheduled: 1},
+    limit: 3,
+    fields: {inning: 0}
+  }
+
+  return Games.find(selector, parms);
+});
+
 Meteor.publish('singleGameData', function(id) {
   check(id, String);
   this.unblock()
