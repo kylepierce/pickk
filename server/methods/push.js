@@ -54,7 +54,7 @@ Meteor.methods({
 		}
 	},
 
-	'push': function(message) {
+	'push': function(message, userId) {
 		check(message, String);
 		this.unblock()
 		if (!Meteor.userId()) {
@@ -71,7 +71,7 @@ Meteor.methods({
 			text: message,
 			sound: 'default',
 			badge: 1,
-			query: {}
+			query: {userId: userId}
 		});
 	},
 

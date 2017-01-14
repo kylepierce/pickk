@@ -41,7 +41,8 @@ Meteor.methods({
 				message: message,
 				source: "Exchange"
 			}
-
+			var message = "End of the quarter. Open the app to see where you finished!"
+			Meteor.call('push', message, userId)
 			Meteor.call('awardDiamonds', o)
 		};
 

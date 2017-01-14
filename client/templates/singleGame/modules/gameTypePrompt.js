@@ -16,7 +16,7 @@ Template.gameTypePrompt.helpers({
   notFootball: function (){
     var game = Games.findOne();
     var sport = game.sport
-    if (sport !== "football"){
+    if (sport !== "football" && sport !== "NFL"){
       return true
     }
   }
