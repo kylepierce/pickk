@@ -3,7 +3,7 @@ Template.gameLeaderboard.onCreated(function() {
 	var query = Router.current().params.query
 	var data = {
 		gameId: gameId,
-		number: query.number,
+		number: -1,
 		period: query.period,
 		filter: query.filter,
 		groupId: query.groupId,
@@ -45,8 +45,9 @@ Template.miniLeaderboard.helpers({
     if (userSpot){
       userSpot.spot = spot + 1
     }
-
-		if(spot > number){
+		if(data.number === -1){
+			return false
+		} else if(spot > data.number){
 			return userSpot;
 		}
 
@@ -56,14 +57,17 @@ Template.miniLeaderboard.helpers({
 		var data = Session.get('leaderboardData')
     var following = Meteor.user().profile.following
     var list = GamePlayed.find({}).fetch();
-		if (number){
+		if (number !== 0){
 			data.number = number
+			Session.set('leaderboardData', data)
+		} else {
+			data.number = -1
 			Session.set('leaderboardData', data)
 		}
 
 		var leaderboardList = function(list){
 			var fixed = _.sortBy(list, function(obj){return - obj.coins})
-			var rank = _.first(fixed, data.number)
+			// var rank = _.first(fixed, 25)
 			var i = 1
 			var followers = _.map(fixed, function(user){
 				var isFollowingUser = following.indexOf(user.userId)
@@ -73,8 +77,8 @@ Template.miniLeaderboard.helpers({
 				user.rank = i
 				i++
 			});
-
-			return rank
+				console.log(fixed);
+			return fixed
 		}
 
     return leaderboardList(list)
