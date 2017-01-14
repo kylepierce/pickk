@@ -7,11 +7,16 @@ Template.games.onCreated(function() {
     Session.set('gamesDate', "week");
   }
 
+  var usersPref = Meteor.user().profile.gamesFilter
+  var favSports = Meteor.user().profile.favoriteSports
+
   if(sport) {
     var sportArray = [sport]
     Session.set('gamesBySport', sportArray);
+  } else if(usersPref) {
+    Session.set('gamesBySport', usersPref);
   } else {
-    Session.set('gamesBySport', Meteor.user().profile.gamesFilter);
+    Session.set('gamesBySport', favSports);
   }
 
   this.getSports = () => Session.get('gamesBySport')
