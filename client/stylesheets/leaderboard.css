@@ -1,11 +1,11 @@
-ol {
+ol#leaderboard  {
     list-style-position: inside;
     list-style-type: decimal;
+    width: 100%;
 }
 
 #leaderboard .item {
   padding: 12px 0px 5px 65px!important;
-  width: 100%;
   min-height: 50px;
 }
 

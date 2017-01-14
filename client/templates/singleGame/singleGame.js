@@ -1,8 +1,12 @@
 Template.singleGame.onCreated(function() {
+	var game = Games.findOne({})
+	var period = game.period
+
 	var gameId = Router.current().params._id
 	var query = Router.current().params.query
 	var data = {
-		gameId: gameId
+		gameId: gameId,
+		period: period
 	}
 	Session.set('leaderboardData', data)
 

@@ -15,9 +15,9 @@ Meteor.publish('activeGames', function(length, sports) {
   if(length === "day"){
     var finish = specificDay.endOf('day').add(4, "hour").toDate();
   } else if (length === "month") {
-    var finish = specificDay.endOf('month').add(28, "hour").toDate();
+    var finish = specificDay.endOf('day').add(30, "days").toDate();
   } else {
-    var finish = specificDay.endOf('week').add(28, "hour").toDate();
+    var finish = specificDay.endOf('day').add(7, "days").toDate();
   }
 
   var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}, sport: {$in: sports}};
