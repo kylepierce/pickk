@@ -1,5 +1,5 @@
 Template.rules.rendered = function(){
-	var userId = Meteor.userid();
+	var userId = Meteor.userId();
 	if(Meteor.isCordova){
 		//Intercom needs unix time with '_at' in JSON to work.
 		var intercomData = {

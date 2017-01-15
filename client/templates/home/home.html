@@ -18,7 +18,7 @@
       </div> -->
       <div class="container">
         {{#if gamePrediction}}
-          <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px;" data-action="game-prediction">
+          <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
             <div class="col-md-25">
               <span class="numberNotification">
                 {{dailyPickkCount}}
@@ -33,50 +33,24 @@
           </button>
         {{/if}}
 
-        <!-- <div>
-          <button class="button col-md-45 dashboard-buttons" data-action="game-leaderboard">
-            <i class="fa fa-diamond waiting-options-icon" style="font-size: 1.3em;"></i>
-            <span>Leaderboard</span>
-          </button>
+        {{#each game in listLiveGames}}
+          <div class="ten-spacing clear-fix">
+            {{> singleGameInfo game=game}}
+            {{> singleGameCard game=game}}
+            {{> singleGameCTA game=game}}
+          </div>
+        {{/each}}
 
-          <button class="button col-md-45 dashboard-buttons" data-action="history">
-            <i style="margin: 8px 0 0 0;" class="ion-ios-time-outline waiting-options-icon"></i>
-            <span>History</span>
-          </button>
-        </div>-->
-      </div>
-
-      {{#if liveGames}}
-        <div class="item item-divider clear-fix" style="border: 0">
-          Live Games
-        </div>
-
-        <div class="container">
-          {{#each game in listLiveGames}}
-            <div class="ten-spacing">
-              {{> singleGameInfo game=game}}
-              {{> singleGameCard game=game}}
-              {{> singleGameCTA game=game}}
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{#if upcomingGames}}
-        <div class="item item-divider clear-fix ten-spacing" style="border: 0">
-          Upcoming Games
-        </div>
-
-        <div class="container hundred-bottom">
+        <div class="hundred-bottom">
           {{#each game in listUpcomingGames}}
-            <div class="ten-spacing">
+            <div class="ten-spacing clear-fix">
               {{> singleGameInfo game=game}}
               {{> singleGameCard game=game}}
               {{> singleGameCTA game=game}}
             </div>
           {{/each}}
         </div>
-      {{/if}}
+      </div>
 
     {{/ionContent}}
   {{/ionView}}

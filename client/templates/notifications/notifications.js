@@ -1,9 +1,14 @@
 Template.notifications.onCreated(function() {
   var filter = Router.current().params.query.filter
+  var userPref = Meteor.user().profile.notifications
+
   if(filter){
     Session.set('notificationsFilter', [filter])
+  } else if (userPref) {
+    Session.set('notificationsFilter', userPref)
   } else {
-    Session.set('notificationsFilter', Meteor.user().profile.notifications)
+    var all = ["group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
+    Session.set('notificationsFilter', all)
   }
   this.getFilter = () => Session.get('notificationsFilter');
   this.autorun(() => {

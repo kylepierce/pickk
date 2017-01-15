@@ -1,4 +1,6 @@
 <template name="settings">
+  {{> yield 'header'}}
+
   {{#ionView}}
     {{#ionContent}}
       <div class="container">
@@ -32,14 +34,17 @@
 </template>
 
 <template name="submitOld">
-  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile"></template>
+  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile">
+</template>
+
 <template name="newUserHeader">
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">
-      {{#with profile}} {{this.profile.username}} {{/with}} Create Profile
+      Create Profile
     </h1>
   {{/contentFor}}
 </template>
+
 <template name="oldUserHeader">
   {{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">

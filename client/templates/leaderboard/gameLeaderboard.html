@@ -37,12 +37,12 @@
     {{/each}}
 
     {{#with userNotInLeaderboard i}}
-      <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-        {{> userAvatar userId=userId}}
+      <div class="item item-avatar leaderboard-item {{thisUser}}">
+        {{> userAvatar userId=this.userId}}
         <li class="list-font" value={{this.rank}}>
-          <span class="username">{{username userId}}</span>
+          <span class="username">{{username this.userId}}</span>
           <span class="score">
-              {{{coins}}}
+              {{{this.coins}}}
           </span>
         </li>
       </div>

@@ -23,11 +23,67 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
   return GamePlayed.find(selector);
 });
 
+Meteor.publish("userRank", function(o, usersCoins) {
+  check(o, Object);
+	check(usersCoins, Number);
+  this.unblock()
+	var selector = {gameId: o.gameId, period: o.period, coins: {$gte:  usersCoins}}
+
+	var sort = {sort: {coins: -1}}
+	var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1}}
+
+	if (!o.filter){
+		o.filter = "All"
+	} else if (o.filter) {
+		o.filter = o.filter.toLowerCase();
+		switch (o.filter) {
+			case "live":
+				selector.type = "live"
+				break;
+
+			case "drive":
+				selector.type = "drive"
+				break;
+
+			case "followers":
+				var user = UserList.find({_id: this.userId}).fetch()
+				var followers = user[0].profile.followers
+				selector.userId = {$in: followers}
+				break;
+
+			case "following":
+				var user = UserList.find({_id: this.userId}).fetch()
+				var following = user[0].profile.following
+				selector.userId = {$in: following}
+				break;
+
+			case "group":
+				var groupId = o.groupId;
+				var group = Groups.findOne({_id: o.groupId});
+				var members = group.members
+				selector.userId = {$in: members}
+				break;
+
+			case "matchup":
+				var matchupId = o.matchupId;
+				var matchup = Matchup.findOne({_id: o.matchupId});
+				var members = matchup.users
+				selector.userId = {$in: members}
+				break;
+		}
+	}
+
+	if (o.period) { selector.period = parseInt(o.period) }
+	var list = GamePlayed.find(selector, sort, fields).fetch()
+
+  Counts.publish(this, "userRanking", GamePlayed.find(selector, sort, fields));
+});
+
 Meteor.publish('leaderboardGamePlayed', function(o) {
   check(o, Object);
   this.unblock()
 	var selector = {gameId: o.gameId}
-	var sort = {sort: {coins: -1}, limit: 5}
+	var sort = {sort: {coins: -1}}
   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1, type: 1, diamonds: 1}}
 
 	if (!o.filter){
@@ -74,6 +130,6 @@ Meteor.publish('leaderboardGamePlayed', function(o) {
 	if (o.period) { selector.period = parseInt(o.period) }
   if (o.number) { sort.limit = parseInt(o.number) }
 
-  var gamesPlayed = GamePlayed.find(selector, fields, sort)
+  var gamesPlayed = GamePlayed.find(selector, sort, fields )
   return gamesPlayed
 });

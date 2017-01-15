@@ -26,7 +26,7 @@ Template.gamesOption.helpers({
 		if (user){
 			var userSettings = Session.get('gamesBySport')
 			var selected = userSettings.indexOf(this.o)
-			if(selected !== -1){
+			if(userSettings && selected !== -1){
 				return true
 			}
 		}
