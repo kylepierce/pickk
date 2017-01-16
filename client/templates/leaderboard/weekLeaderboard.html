@@ -23,7 +23,7 @@
   {{#ionView}}
     {{#ionContent}}
       {{#ionList}}
-        <div class="item item-divider ">
+        <!-- <div class="item item-divider ">
           <span class="col-md-25" data-action="previous">
             {{>ionIcon icon='chevron-left'}}
             Prev
@@ -33,9 +33,9 @@
             Next
             {{>ionIcon icon='chevron-right'}}
           </span>
-        </div>
+        </div> -->
 
-        <ol type="1" class="list">
+        <ol type="1" id="leaderboard">
           {{#each player in players}}
             {{> singlePlayerWeek player=player}}
           {{/each}}
@@ -46,13 +46,13 @@
 </template>
 
 <template name="singlePlayerWeek">
-  {{#ionItem class="single-user" id=player._id avatar=true}}
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
     {{> userAvatar userId=player._id}}
-    <li class="list-font" data-action="single-user">
-      <h2 class="center-username">
-        {{username player._id}}
-        <span class="score">{{player.diamonds}}</span>
-      </h2>
+    <li class="list-font" value={{player.rank}}>
+      <span class="username">{{username player._id}}</span>
+      <span class="score">
+          {{{player.diamonds}}}
+      </span>
     </li>
-  {{/ionItem}}
+  </div>
 </template>

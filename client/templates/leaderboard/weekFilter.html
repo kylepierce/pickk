@@ -4,14 +4,23 @@
   </div>
   <div style="margin-top:44px;">
   {{#ionList}}
-  	<form>
-		{{#each option in options}}
-			{{> radioOption o=option}}
-		{{/each}}
-    <div class="item item-divider ten-spacing">Groups</div>
-    {{#each option in groups}}
-			{{> radioOption o=option}}
-		{{/each}}
+  	<form id="date">
+			<div class="item item-divider">Date</div>
+			{{#each option in dates}}
+				{{> radioOption o=option}}
+			{{/each}}
+		</form>
+
+		<form id="other-filters">
+			<div class="item item-divider ten-spacing">Common</div>
+			{{#each option in options}}
+				{{> radioOption o=option}}
+			{{/each}}
+
+	    <div class="item item-divider ten-spacing">Leagues</div>
+	    {{#each option in groups}}
+				{{> radioOption o=option}}
+			{{/each}}
 		</form>
   {{/ionList}}
   </div>

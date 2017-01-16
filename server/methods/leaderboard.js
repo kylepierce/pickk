@@ -16,9 +16,10 @@ Meteor.methods({
 		}
 	},
 
-	'loadWeekLeaderboard': function(week){
-		check(week, Number);
+	'loadWeekLeaderboard': function(data){
+		check(data, Object);
 		this.unblock();
+		var week = data.date
 
 		var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
 		var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
@@ -38,7 +39,5 @@ Meteor.methods({
 			}});
 
 		return diamonds
-
-		// return diamonds
 	}
 });

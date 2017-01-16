@@ -1,12 +1,7 @@
-Meteor.publish('weekLeaderboard', function(thisWeek){
-	check(thisWeek, Number);
+Meteor.publish('weekLeaderboard', function(data){
+	check(data, Object);
 	this.unblock()
-	// var thisWeek = moment().week()
-  var day = moment().day()
-  if (day < 2){
-    var thisWeek = thisWeek - 1
-  }
-	var users = Meteor.call('loadWeekLeaderboard', thisWeek);
+	var users = Meteor.call('loadWeekLeaderboard', data);
 
 	var newArray = []
 	users.forEach(function (post) {
