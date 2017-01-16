@@ -171,7 +171,7 @@ Template.futureGameInfo.helpers({
 Template.pastGameInfo.events({
   'click [data-action=game-leaderboard]': function (e, t) {
     var gameId = t.data.game._id
-    Router.go('/leaderboard/' + gameId + "/-1")
+    Router.go('/leaderboard/' + gameId)
   },
   'click [data-action=game-predictions]': function (e, t) {
     var gameId = t.data.game._id

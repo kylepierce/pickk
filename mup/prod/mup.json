@@ -6,20 +6,19 @@
       "host": "45.55.152.119",
       "username": "root",
       "password": "g2EMwbKFMMcL31DHZuEX"
-      // "pem": "~/.ssh/id_rsa"
-    }, 
+    },
     {
-      // pickk-app-2 
+      // pickk-app-2
       "host": "45.55.137.122",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
-    }, 
+    },
     {
-      // pickk-app-3 
+      // pickk-app-3
       "host": "45.55.159.129",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
-    }, 
+    },
     {
       // pickk-app-4
       "host": "45.55.184.52",
@@ -31,7 +30,37 @@
       "host": "159.203.130.194",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
-    }
+    },
+    {
+    // pickk-app-6
+    "host": "104.131.43.210",
+    "username": "root",
+    "pem": "~/.ssh/id_rsa"
+  },
+  {
+    // pickk-app-7
+    "host": "104.131.89.205",
+    "username": "root",
+    "pem": "~/.ssh/id_rsa"
+  },
+  {
+    // pickk-app-8
+    "host": "104.131.105.64",
+    "username": "root",
+    "pem": "~/.ssh/id_rsa"
+  },
+  {
+    // pickk-app-9
+    "host": "104.236.29.155",
+    "username": "root",
+    "pem": "~/.ssh/id_rsa"
+  },
+  {
+    // pickk-app-10
+    "host": "104.236.47.151",
+    "username": "root",
+    "pem": "~/.ssh/id_rsa"
+  }
   ],
   // "buildOptions": { // optional
   //   "debug": true

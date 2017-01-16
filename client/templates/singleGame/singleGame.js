@@ -6,7 +6,8 @@ Template.singleGame.onCreated(function() {
 	var query = Router.current().params.query
 	var data = {
 		gameId: gameId,
-		period: period
+		period: period,
+		number: 3
 	}
 	Session.set('leaderboardData', data)
 });

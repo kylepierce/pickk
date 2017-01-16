@@ -74,7 +74,6 @@ Meteor.publish("userRank", function(o, usersCoins) {
 	}
 
 	if (o.period) { selector.period = parseInt(o.period) }
-	var list = GamePlayed.find(selector, sort, fields).fetch()
 
   Counts.publish(this, "userRanking", GamePlayed.find(selector, sort, fields));
 });

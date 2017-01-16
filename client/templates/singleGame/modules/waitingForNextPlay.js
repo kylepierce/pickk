@@ -1,3 +1,17 @@
+Template.singleGame.onCreated(function() {
+	var game = Games.findOne({})
+	var period = game.period
+
+	var gameId = Router.current().params._id
+	var query = Router.current().params.query
+	var data = {
+		gameId: gameId,
+		period: period,
+		number: 3
+	}
+	Session.set('leaderboardData', data)
+});
+
 Template.waitingForNextPlay.rendered = function () {
 	var user = Meteor.user();
 	var now = new Date().getTime();

@@ -8,6 +8,7 @@ Template.gameLeaderboard.onCreated(function() {
 		groupId: query.groupId,
 		matchupId: query.matchupId
 	}
+	Session.set('leaderboardData', data)
 });
 
 Template.gameLeaderboard.helpers({});

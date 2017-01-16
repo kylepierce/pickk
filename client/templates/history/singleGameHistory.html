@@ -18,6 +18,7 @@
     	<div class="container ten-spacing">
 	    	{{#if notPrediction}}
 		    	{{#each g in game}}
+            {{> singleGameInfo game=g}}
 		    		{{> singleGameCard game=g}}
 		    	{{/each}}
 		    {{/if}}

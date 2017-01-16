@@ -16,8 +16,19 @@ Meteor.publish('activeGames', function(length, sports) {
     var finish = specificDay.endOf('day').add(4, "hour").toDate();
   } else if (length === "month") {
     var finish = specificDay.endOf('day').add(30, "days").toDate();
+  } else if (length === "last-month") {
+    var finish = specificDay.startOf('day').toDate();
+    var start = specificDay.endOf('day').subtract(60, "days").toDate();
+  } else if (length === "last-week") {
+    var finish = specificDay.startOf('day').toDate();
+    var start = specificDay.subtract(7, "days").toDate();
   } else {
     var finish = specificDay.endOf('day').add(7, "days").toDate();
+  }
+
+  // I was using football for a long time instead of NFL this is fix
+  if (sports.indexOf("NFL") >= 0){
+    sports.push("football")
   }
 
   var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}, sport: {$in: sports}};

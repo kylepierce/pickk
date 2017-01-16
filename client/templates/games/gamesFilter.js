@@ -3,7 +3,16 @@ Template.gamesFilter.helpers({
 		return ["NFL", "NBA", "MLB"]
 	},
   dates: function(){
-    var list = [{name: "Day", value: "Day"}, {name: "Week", value: "Week"}, {name: "Month", value: "Month"}]
+		var data = Session.get('gamesDate');
+    var list = [{name: "Today", value: "Day"}, {name: "Week", value: "Week"}, {name: "Month", value: "Month"}, {name: "Last Week", value: "Last-Week"}, {name: "Last Month", value: "Last-Month"}]
+
+		_.forEach(list, function(item){
+			var lower = item.value.toLowerCase()
+			if(lower === data){
+				item.checked = true
+			}
+		});
+		
 		return list
   }
 });
