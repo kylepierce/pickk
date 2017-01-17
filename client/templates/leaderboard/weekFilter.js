@@ -17,6 +17,8 @@ Template.weekFilter.helpers({
     _.forEach(list, function(item){
       if(item.date === data.date){
         item.checked = true
+      } else if (item.value === data.value){
+        item.checked = true
       }
     });
 
@@ -27,18 +29,26 @@ Template.weekFilter.helpers({
 		//Sort by all, followers, following, one group
 		var list = [{name: "All", filter: "All"}, {name: "Followers", filter: "Followers"}, {name: "Following", filter: "Following"}]
     _.forEach(list, function(item){
-      var lower = item.filter.toLowerCase()
-      if(lower === data.filter){
+      var listFilter = item.filter.toLowerCase();
+      var globalFilter = data.filter.toLowerCase();
+      if( listFilter == globalFilter ){
         item.checked = true
       }
     });
 		return list
 	},
 	groups: function(){
+    var data = Session.get('leaderboardFilter');
 		var groups = Groups.find({}).fetch();
 		var list = []
 		_.each(groups, function(group){
-			list.push({name: group.name, filter: "group", groupId: group._id})
+      var item = {name: group.name, filter: "group", groupId: group._id}
+      if(data.filter === "group" ){
+        if(group._id === data.groupId){
+          item.checked = true
+        }
+      }
+      list.push(item)
 		});
 	return list
 	}
