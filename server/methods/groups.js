@@ -58,16 +58,17 @@ Meteor.methods({
 	},
 
 	// Users can add other users to join their group.
-	'inviteToGroup': function(userId, sender, groupId) {
-		check(userId, String);
-		check(sender, String);
+	'inviteToGroup': function(invitee, inviter, groupId) {
+		check(invitee, String);
+		check(inviter, String);
 		check(groupId, String);
-		Groups.update({_id: groupId}, {$push: {invites: userId}}, { validate: false })
+		console.log(invitee, inviter, groupId);
+		Groups.update({_id: groupId}, {$push: {invites: invitee}}, { validate: false })
 
 	  var notifyObj = {
 	  	type: "group",
-	  	senderId: sender,
-	  	userId: userId,
+	  	senderId: inviter,
+	  	userId: invitee,
 	  	groupId: groupId
 	  }
 	  createPendingNotification(notifyObj)

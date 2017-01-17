@@ -46,28 +46,34 @@ Template.notification.helpers({
 	}
 });
 
-// Template.groupNotification.helpers({
-// 	user: function(ref) {
-// 		Meteor.subscribe('findSingle', ref);
-// 		return UserList.findOne({_id: ref})
-// 	},
-	// groupData: function(groupId) {
-	// 	Meteor.subscribe('singleGroup', groupId);
-	// 	return Groups.findOne({_id: groupId})
-	// },
-// });
+Template.groupNotification.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+	groupData: function(groupId) {
+		Meteor.subscribe('singleGroup', groupId);
+		return Groups.findOne({_id: groupId})
+	},
+});
+
+Template.groupNotification.events({
+  // 'click [data-action=viewGroup]': function(e, t){
+  //   Router.go('/groups/' + this.note.groupId);
+  // }
+});
 
 Template.chatNotification.helpers({
 	user: function(ref) {
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
-	// groupData: function(groupId) {
-	// 	if (groupId !== undefined){
-	// 		Meteor.subscribe('singleGroup', groupId);
-	// 		return Groups.findOne({_id: groupId})
-	// 	}
-	// },
+	groupData: function(groupId) {
+		if (groupId !== undefined){
+			Meteor.subscribe('singleGroup', groupId);
+			return Groups.findOne({_id: groupId})
+		}
+	},
 	reactions: function(messageId){
 		Meteor.subscribe('singleMessage', messageId);
 		return Chat.findOne({_id: messageId});
@@ -135,40 +141,52 @@ Template.newFollower.helpers({
 });
 
 Template.notification.events({
-	'click .item': function (e, t) {
-		var displayOptions = function ( o ) {
-			// The select item dom and data
-			var $selected = $(e.currentTarget)
-			var selectedObj = t.data.note
-			var templateName = o.insertedTemplate
-
-			var addOptions = function ( id, data ){
-				var options = "<div id='" + id + "'></div>"
-				$selected.after(options);
-				var container = $('#' + id + '')[0]
-				Blaze.renderWithData(templateName, data, container)
-			}
-
-			var container = $('#' + o.containerId + '')[0]
-			if ( container ){
-				if ( container.previousSibling !== $selected[0] ){
-					container.remove();
-					addOptions( o.containerId, selectedObj )
-				} else {
-					container.remove();
-				}
-			} else {
-				addOptions( o.containerId, selectedObj )
-			}
-		}
-		parms = {
-			insertedTemplate: Template.notificationOptions,
-			containerId: "options",
-		 	event: e,
-		 	template: t,
-		}
-		displayOptions( parms )
-	},
+  'click [data-action=viewGroup]': function(e, t){
+    Router.go('/groups/' + this.note.groupId);
+  },
+  'click [data-action=viewUser]':function(e, t){
+    console.log(this, e, t);
+    var userId = this._id
+    if (userId){
+      Router.go('/user-profile/' + userId);
+    } else {
+      Router.go('/user-profile/' + this.userId);  
+    }
+  }
+	// 'click .item': function (e, t) {
+	// 	var displayOptions = function ( o ) {
+	// 		// The select item dom and data
+	// 		var $selected = $(e.currentTarget)
+	// 		var selectedObj = t.data.note
+	// 		var templateName = o.insertedTemplate
+  //
+	// 		var addOptions = function ( id, data ){
+	// 			var options = "<div id='" + id + "'></div>"
+	// 			$selected.after(options);
+	// 			var container = $('#' + id + '')[0]
+	// 			Blaze.renderWithData(templateName, data, container)
+	// 		}
+  //
+	// 		var container = $('#' + o.containerId + '')[0]
+	// 		if ( container ){
+	// 			if ( container.previousSibling !== $selected[0] ){
+	// 				container.remove();
+	// 				addOptions( o.containerId, selectedObj )
+	// 			} else {
+	// 				container.remove();
+	// 			}
+	// 		} else {
+	// 			addOptions( o.containerId, selectedObj )
+	// 		}
+	// 	}
+	// 	parms = {
+	// 		insertedTemplate: Template.notificationOptions,
+	// 		containerId: "options",
+	// 	 	event: e,
+	// 	 	template: t,
+	// 	}
+	// 	displayOptions( parms )
+	// },
 });
 
 Template.notificationOptions.events({
