@@ -24,7 +24,7 @@ Template.singleGroup.helpers({
     }
     var privacy = group.secret
     if (privacy === "private" || privacy === true) {
-      if (isMember > -1 && userInvited > -1){
+      if (isMember > -1 || userInvited > -1){
         return true
       }
     } else {
