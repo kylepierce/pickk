@@ -6,63 +6,49 @@
 // };
 
 Template.singleGroup.rendered = function() {
-    // console.log(this.data); // you should see your passage object in the console
-    Session.set('chatGroup', this.data.group[0]._id)
+  Session.set('chatGroup', this.data.group[0]._id)
 };
 
 Template.singleGroup.helpers({
-  group: function () {
-    return Groups.findOne({_id: Router.current().params._id});
+  groupName: function(){
+    return this.group[0].name
   },
-  commissioner: function() {
-    var commissionerId = this.commissioner
-    Meteor.subscribe('findSingle', commissionerId)
-    var user = UserList.findOne({_id: commissionerId});
-    return user
-  },
-  memberCount: function(){
-    return this.members.length
-  },
-  private: function(){
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId})
-    if (group.secret == "private") {
-      return true
+  visible: function(){
+    var userId = Meteor.userId();
+    var group = this.group[0]
+    var isMember = group.members.indexOf(userId)
+    var userInvited = group.invites.indexOf(userId)
+    if (group.secret === "private") {
+      if (isMember > -1 || userInvited > -1){
+        return true
+      }
     }
   },
   member: function(){
-    var currentUserId = Meteor.userId();
-    // Meteor.subscribe('profile', commissionerId)
-    var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
-    if(groupMembers) {
+    var userId = Meteor.userId();
+    var group = this.group[0]
+    var isMember = group.members.indexOf(userId)
+    if(isMember > -1) {
       return true
     }
   },
-  invite: function(){
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId,
-      invites: {$in: [currentUser]}});
-    return group
-  }
 });
 
 Template.groupData.helpers({
-  group: function () {
-    return Groups.findOne({_id: Router.current().params._id});
+  name: function(){
+    return this.group[0].name
   },
   commissioner: function() {
-    var commissionerId = this.commissioner
+    var commissionerId = this.group[0].commissioner
     Meteor.subscribe('findSingle', commissionerId)
     var user = UserList.findOne({_id: commissionerId});
-    return user
+    return user.profile.username
   },
   memberCount: function(){
-    return this.members.length
+    return this.group[0].members.length
   },
   description: function(){
-    return this.desc
+    return this.group[0].desc
   }
 });
 
@@ -156,10 +142,10 @@ Template.inviteOnly.helpers({
 });
 
 Template.requestInvite.events({
-  'click [data-action=requestInvite]': function(template, event){
-    var user = Meteor.userId();
-    var group = Router.current().params._id
-    Meteor.call('requestInvite', user, group)
+  'click [data-action=requestInvite]': function(e, t){
+    var userId = Meteor.userId();
+    var groupId = Router.current().params._id
+    Meteor.call('requestInvite', userId, groupId)
   },
   'click [data-action=requestPending]': function(template, event){
     IonActionSheet.show({
@@ -258,14 +244,3 @@ Template._adminOptions.events({
 
   }
 })
-
-Template.singleGroupLeaderboard.helpers({
-  players: function(){
-    var group = Groups.findOne()
-    var members = group.members
-    return members
-  },
-  userData: function (player) {
-    return Meteor.users.findOne({_id: player});
-  }
-});
