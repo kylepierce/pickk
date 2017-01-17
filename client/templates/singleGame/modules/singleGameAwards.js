@@ -26,7 +26,10 @@ Template.singleGameAwards.helpers({
   gameType: function () {
     var userId = Meteor.userId()
     var game = GamePlayed.findOne({userId: userId});
-    if(game){
+    if(game && game.type === "proposition"){
+      var type = "PROP"
+      return type
+    } else if (game) {
       var type = game.type.toUpperCase()
       return type
     }
