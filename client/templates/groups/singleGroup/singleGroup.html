@@ -1,0 +1,68 @@
+<template name="singleGroup">
+<!-- Standard Nav instead of the custom nav design -->
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#if member}}
+    {{#contentFor "headerButtonRight"}}
+      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+        {{> ionIcon icon="ios-chatboxes"}}
+      </button>
+    {{/contentFor}}
+  {{/if}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      {{groupName}}
+    </h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#if visible}}
+        {{#if member}}
+          <div class="group-wrapper">
+            {{> groupAvatar}}
+            {{> groupData}}
+            {{> memberCheck}}
+          </div>
+          {{> groupLinks}}
+          <div class="item item-divider">Upcoming Matchups</div>
+        {{else}}
+          <div class="group-wrapper">
+            {{> groupAvatar}}
+            {{> groupData}}
+            {{> memberCheck}}
+          </div>
+        {{/if}}
+      {{else}}
+        <div class="no-notifications">
+          This group is private and can only be seen by members
+        </div>
+      {{/if}}
+   {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="groupData">
+  <ul class="group-details">
+    <li>
+      <span class="group-details-icon center-text" style="font-size: 1.9em;">
+        {{> ionIcon icon='ios-people'}}
+      </span>
+      <span class="group-details-text">
+        {{memberCount}} Members
+      </span>
+    </li>
+    <li>
+      <span class="group-details-icon center-text">
+        {{> ionIcon icon='star'}}
+      </span>
+      <span class="group-details-text">
+        Commissioner: {{commissioner}}
+      </span>
+    </li>
+    {{description}}
+  </ul>
+</template>

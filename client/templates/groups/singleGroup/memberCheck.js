@@ -1,57 +1,3 @@
-// Template.singleGroup.created = function () {
-//   this.autorun(function () {
-//     var groupId = Router.current().params._id
-//     this.subscription = Meteor.subscribe('groups', groupId) && Meteor.subscribe('findUserGroups', groupId)
-//   }.bind(this));
-// };
-
-Template.singleGroup.rendered = function() {
-  Session.set('chatGroup', this.data.group[0]._id)
-};
-
-Template.singleGroup.helpers({
-  groupName: function(){
-    return this.group[0].name
-  },
-  visible: function(){
-    var userId = Meteor.userId();
-    var group = this.group[0]
-    var isMember = group.members.indexOf(userId)
-    var userInvited = group.invites.indexOf(userId)
-    if (group.secret === "private") {
-      if (isMember > -1 || userInvited > -1){
-        return true
-      }
-    }
-  },
-  member: function(){
-    var userId = Meteor.userId();
-    var group = this.group[0]
-    var isMember = group.members.indexOf(userId)
-    if(isMember > -1) {
-      return true
-    }
-  },
-});
-
-Template.groupData.helpers({
-  name: function(){
-    return this.group[0].name
-  },
-  commissioner: function() {
-    var commissionerId = this.group[0].commissioner
-    Meteor.subscribe('findSingle', commissionerId)
-    var user = UserList.findOne({_id: commissionerId});
-    return user.profile.username
-  },
-  memberCount: function(){
-    return this.group[0].members.length
-  },
-  description: function(){
-    return this.group[0].desc
-  }
-});
-
 Template.memberCheck.helpers({
   alreadyMember: function() {
     var currentUserId = Meteor.userId();
@@ -213,8 +159,7 @@ Template._adminOptions.events({
 
   // Add group id to update group info.
   'click [data-ion-modal=_removeUser]': function(event, template){
-    var groupId = Router.current().params._id
-    Session.set('groupId', groupId);
+    IonModal.open('_leaderboardFilter');
   },
 
   'click [data-ion-modal=_groupRequests]': function(event, template){

@@ -1,0 +1,12 @@
+<template name="groupLinks">
+  {{#ionList}}
+    <div class="item item-divider">Quick Links</div>
+    {{#each link in links}}
+      <a href={{link.url}}>
+        <div class="item">
+          {{link.title}}
+        </div>
+      </a>
+    {{/each}}
+  {{/ionList}}
+</template>

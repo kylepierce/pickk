@@ -2,10 +2,10 @@ Template.weekLeaderboard.onCreated(function() {
 	var filter = Router.current().params.query.filter
 	var query = Router.current().params.query
 	//If there is no new data
-	var noNewData = _.isEmpty(query);
 	var data = Session.get('leaderboardFilter');
-	
-	if(!data) {
+	var noNewData = _.isEmpty(data);
+
+	if(noNewData || !data) {
 		var data = query
 	}
 	if(!data.date){

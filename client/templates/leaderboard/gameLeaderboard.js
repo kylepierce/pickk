@@ -94,7 +94,7 @@ Template.miniLeaderboard.helpers({
     // https://github.com/meteoric/meteor-ionic/issues/66
     var url = "/user-profile/" + this.userId
     return url
-  },
+  }, 
 });
 
 Template.miniLeaderboard.events({
