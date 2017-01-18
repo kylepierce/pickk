@@ -28,6 +28,13 @@ Template.matchupItem.helpers({
   },
   'users': function (userArray){
     return userArray.length
+  },
+  'limitNum': function(number){
+    if(number === -1){
+      return "∞"
+    } else {
+      return number
+    }
   }
 });
 

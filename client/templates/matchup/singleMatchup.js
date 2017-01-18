@@ -2,10 +2,6 @@ Template.singleMatchup.onCreated(function() {
 
 });
 
-Template.singleMatchup.rendered = function() {
-    console.log(this.data); // you should see your passage object in the console
-};
-
 Template.singleMatchup.helpers({
   matchup: function(){
     return Matchup.findOne();
@@ -29,6 +25,13 @@ Template.singleMatchup.helpers({
     var onList = users.indexOf(userId)
     if(onList >= 0){
       return true
+    }
+  },
+  'limitNum': function(){
+    if(this.limitNum === -1){
+      return "∞"
+    } else {
+      return this.limitNum
     }
   }
 });

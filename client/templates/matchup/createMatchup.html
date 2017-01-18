@@ -1,0 +1,30 @@
+<template name="createMatchup">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Create New League</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+    <div class="container ten-spacing">
+      {{#autoForm collection="Matchup" type="insert" id="createMatchup"}}
+        {{> afQuickField type="select-radio" name='gameId'}}
+        <br>
+        {{> afQuickField type="select-radio" name='limit'}}
+        {{#if afFieldValueIs name="limit" value="true"}}
+
+          {{> afQuickField type='select-radio' name="limitNum"}}
+        {{/if}}
+        <br>
+        {{> afQuickField type='select-radio' name='secret' }}
+        <br>
+        {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}}
+        <input name="status" type="submit" class="button button-large button-balanced" value="Create League">
+      {{/autoForm}}
+    </div>
+    {{/ionContent}}
+   {{/ionView}}
+</template>
