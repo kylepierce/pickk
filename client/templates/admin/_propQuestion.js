@@ -1,18 +1,52 @@
-Template._propQuestion.rendered = function () {
-	new Clipboard('.player-button')
-	new Clipboard('.team-button')
-	new Clipboard('.action-button')
-};
-
 Template._propQuestion.helpers({
-	propQuestion: function () {
+	start: function(){
 		return [
-			"How Many Points Will the  Have in the  Quarter?",
-			"Who Will Score First?",
-			"Will  Score Next?",
-			"Who Will Commit the First Foul For The  ?",
+			" ",
+			"Will the",
+			"Who Will",
+			"Will",
+			"How Many Points Will the",
+			"Which"
+		]
+	},
+	who: function () {
+		var game = Games.find({}).fetch()[0];
+		var home = Teams.find({_id: game.scoring.home.id}).fetch()[0];
+		var away = Teams.find({_id: game.scoring.away.id}).fetch()[0];
+		var list = [
+			" ",
+		]
+		list.push(home.fullName)
+		list.push.apply(list, home.players)
+		list.push("------ ------- ------- -------")
+		list.push(away.fullName)
+		list.push.apply(list, away.players)
+
+		return list
+	},
+	what: function () {
+		return [
+			" ",
+			"Block a Shot",
+			"Score a Three",
+			"Get A Steal",
+			"Make a Free Throw",
+			"Get The Next Rebound",
+			"Dunk",
+			"Have",
+			"Score",
+			"Player Commits the First Foul",
 			"Who Scores The Next 3 Point Shot?",
-			"Who Will Score Last in the  Quarter?",
+			"Score Last",
+		]
+	},
+	when: function(){
+		return [
+			" ",
+			"in the 1st Quarter?",
+			"in the 2nd Quarter?",
+			"in the 3rd Quarter?",
+			"in the 4th Quarter?",
 			"Will Between 10:59 - 9:00?",
 			"Will Between 9:59 - 8:00?",
 			"Will Between 8:59 - 7:00?",
@@ -22,18 +56,9 @@ Template._propQuestion.helpers({
 			"Will Between 4:59 - 3:00?",
 			"Will Between 3:59 - 2:00?",
 			"Will Between 2:59 - 1:00?",
-			"Will Between 1:59 - :00?"
-		]
-	},
-	actionQuestions: function () {
-		return [
-			" Block a Shot ",
-			" Score a Three ",
-			" Get A Steal ",
-			" Make a Free Throw ",
-			" Get The Next Rebound ",
-			" Dunk ",
-			" Get The Next Rebound ", 
+			"Will Between 1:59 - :00?",
+			"First?",
+			"Next?"
 		]
 	},
 	game: function () {
@@ -65,34 +90,40 @@ Template._propQuestion.helpers({
 
 Template._propQuestion.events({
 	'click [data-action="propText"]': function (e,t){
-		var info = $('#propQuestion').val()
+		var start = $('#start').val()
+		var who = $('#who').val()
+		var what = $('#what').val()
+		var when = $('#when').val()
 		var old = $('#question-input').val()
-		var question = $('#question-input').val(info)
-		console.log(e,t,this,info,question)
-		$("#question-input").focus()	
-	},
-	'click [data-action="player"]': function (e, t){
-		var info = e.toElement.value
-	},
-	'click [data-action=teamOne]': function () {
-		var team = this.scoring.away.name
-		var old = $('#question-input').val()
-		if (old !== "") {
-			var question = $('#question-input').val(old + " " + team + " ")
-		} else {
-			var question = $('#question-input').val(team + " ")
-		}		
+		var question = $('#question-input').val(start + " " + who + " " + what + " " + when)
 		$("#question-input").focus()
 	},
-	'click [data-action=teamTwo]': function () {
-		var team = this.scoring.home.name
-		var old = $('#question-input').val()
-		if (old !== "") {
-			var question = $('#question-input').val(old + " " + team + " ")
-		} else {
-			var question = $('#question-input').val(team + " ")
-		}		
-		$("#question-input").focus()
+	'click [data-action=trueFalse]': function(){
+		var optionBoxes = $('.option-boxes')
+		optionBoxes[0].children[0].value = "True"
+		optionBoxes[1].children[0].value = "False"
+	},
+	'click [data-action=startingFiveHome]': function(){
+		var optionBoxes = $('.option-boxes')
+		var game = Games.find({}).fetch()[0];
+		var home = Teams.find({_id: game.scoring.home.id}).fetch()[0];
+		var players = home.players
+		var i = 0
+		_.each(players, function(player){
+			optionBoxes[i].children[0].value = player
+			i ++
+		});
+	},
+	'click [data-action=startingFiveAway]': function(){
+		var optionBoxes = $('.option-boxes')
+		var game = Games.find({}).fetch()[0];
+		var away = Teams.find({_id: game.scoring.away.id}).fetch()[0];
+		var players = away.players
+		var i = 0
+		_.each(players, function(player){
+			optionBoxes[i].children[0].value = player
+			i ++
+		});
 	},
 	'click [data-action=propCreation]': function () {
 		event.preventDefault();
@@ -111,7 +142,7 @@ Template._propQuestion.events({
 		function randomizer(min, max){
 			var min = parseFloat(min)
 			if (!max){
-				var max = parseFloat(min) 
+				var max = parseFloat(min)
 			} else {
 				var max = parseFloat(max)
 			}
@@ -135,7 +166,7 @@ Template._propQuestion.events({
 
 		for (i = 0; i < optionBoxes.length; i++) {
 			var title = optionBoxes[i].children[0].value
-			
+
 			if (title === "" || title === undefined){
 				title = "No Option"
 			} else {

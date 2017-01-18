@@ -9,6 +9,12 @@ Template.singleGameAdmin.helpers({
 			return true
 		}
 	},
+	nba: function (){
+		var game = this.game[0]
+		if (game.sport === "NBA"){
+			return true
+		}
+	},
 	quarter: function () {
 		var gameId = this.game[0]._id
 		var active = parseInt(this.game[0].period)
