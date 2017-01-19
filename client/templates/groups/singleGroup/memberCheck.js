@@ -38,6 +38,10 @@ Template.memberCheck.events({
     // Add this user to the group
     Meteor.call('joinGroup', currentUserId, groupId);
   },
+  'click [data-action=invite]': function(){
+    var groupId = Router.current().params._id
+    Router.go('/groups/invite/' + groupId)
+  },
 
   // If a user wants to leave it pops up with an alert to confirm.
   'click [data-action=showActionSheet]': function (event, template) {

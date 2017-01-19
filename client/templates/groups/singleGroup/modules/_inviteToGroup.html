@@ -27,21 +27,33 @@
   <div class="search-bar-fix">
     {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
   </div>
-  {{#ionList}}
-    {{#EasySearch.Each index=UserListIndex}}
-      {{#ionItem buttonRight=true avatar=true}}
-        <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
-          {{> userAvatar user=. alreadySubscribed=true}}
-          {{profile.username}}
-        </a>
-        {{#if isInvited}}
-          <button class="button" disabled="disabled">Invited</button>
-        {{else}}
-          {{> inviteButton}}
-        {{/if}}
-      {{/ionItem}}
-    {{/EasySearch.Each}}
-  {{/ionList}}
+  {{#EasySearch.IfInputEmpty index=UserListIndex}}
+    {{#ionList}}
+      {{#each follower in followers}}
+        {{#ionItem buttonRight=true avatar=true}}
+          <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
+            {{> userAvatar userId=follower}}
+            {{> singleUsername userId= follower}}
+          </a>
+          {{> inviteButton _id=follower }}
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+  {{else}}
+    <div class="list-group">
+      {{#ionList}}
+        {{#EasySearch.Each index=UserListIndex}}
+          {{#ionItem buttonRight=true avatar=true}}
+            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
+              {{> userAvatar user=. alreadySubscribed=true}}
+              {{profile.username}}
+            </a>
+            {{> inviteButton _id=__originalId}}
+          {{/ionItem}}
+        {{/EasySearch.Each}}
+      {{/ionList}}
+    </div>
+  {{/EasySearch.IfInputEmpty}}
 
   {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
     <div class="no-results">No results found!</div>
@@ -49,5 +61,9 @@
 </template>
 
 <template name="inviteButton">
-  <button data-action="invite" id="{{_id}}" class="button">Invite</button>
+  {{#if isInvited}}
+    <button class="button" disabled="disabled">Invited</button>
+  {{else}}
+    <button data-action="invite" id="{{_id}}" class="button">Invite</button>
+  {{/if}}
 </template>

@@ -27,16 +27,13 @@
 // };
 
 Template.groups.helpers({
-  group: function () {
-    return Groups.find({secret: false}).fetch();
-  },
   groups: function() {
     var currentUser = Meteor.user();
     return currentUser.profile.groups
   },
   userGroups: function() {
     var currentUser = Meteor.userId();
-    return Groups.find({members: currentUser}).fetch()
+    return Groups.find().fetch()
   }
 });
 
