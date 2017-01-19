@@ -58,7 +58,7 @@ Template.loginBox.events({
 			analyticObject["liveGameAtSignUp"] = false
 		}
 
-		var identify = Session.set("identify", analyticObject);
+		analytics.identify(analyticObject);
     analytics.track("clicked register button", analyticObject);
 
 		Router.go('/register')
@@ -77,6 +77,7 @@ Template.loginBox.events({
 		}
 
 		var identify = Session.set("identify", data);
+		analytics.identify(data);
 		Router.go('/login')
 	},
 });

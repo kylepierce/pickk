@@ -32,8 +32,12 @@
 		<div class="item leaderboard-item center-text" data-action="game-leaderboard">
 			View All
 		</div>
+			{{#if drive}}
+			<button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="switchToLive">
+				Switch to Live (Play by Play)
+			</button>
+			{{/if}}
 	</div>
-
 </template>
 
 <template name="ratingPrompt">

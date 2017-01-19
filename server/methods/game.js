@@ -112,5 +112,9 @@ Meteor.methods({
 				"scoring.away.runs": away
 			}
 		});
+	},
+	'switchToLive': function(data){
+		check(data, Object);
+		GamePlayed.update(data, {$set: {"type": "live"}});
 	}
 })

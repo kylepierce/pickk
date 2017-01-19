@@ -55,10 +55,26 @@ Template.waitingForNextPlay.rendered = function () {
 };
 
 Template.waitingForNextPlay.helpers({
-
+	drive: function(){
+		var userId = Meteor.userId();
+		var gameId = this.game[0]._id
+		var period = this.game[0].period
+		var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch();
+		if (gamePlayed[0].type === "drive"){
+			return true
+		}
+	}
 });
 
 Template.waitingForNextPlay.events({
+	'click [data-action="switchToLive"]': function(e, t){
+		var data = {
+			userId: Meteor.userId(),
+			gameId: this.game[0]._id,
+			period: this.game[0].period,
+		}
+		Meteor.call('switchToLive', data);
+	},
 	'click [data-action="filter-leaderboard"]': function(e,t){
 		IonModal.open('_leaderboardFilter');
 	},
