@@ -1,17 +1,9 @@
 <template name="inviteToGroup">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
+
+  {{> yield 'header'}}
 
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Invite User to group</h1>
-  {{/contentFor}}
-
-
-  {{#contentFor "headerButtonRight"}}
-    <a href="/searchUsers" class="button button-clear pull-right newGroup">
-      {{> ionIcon icon='ios-search-strong'}}
-    </a>
   {{/contentFor}}
 
   {{#ionView }}
@@ -56,7 +48,10 @@
   {{/EasySearch.IfInputEmpty}}
 
   {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
-    <div class="no-results">No results found!</div>
+  <div class="item invite-item item-button-right">
+    <h2>Invite New Friends</h2>
+    <button data-action="textInvite" class="button button-balanced">Invite</button>
+  </div>
   {{/EasySearch.IfNoResults}}
 </template>
 

@@ -58,10 +58,10 @@ var hooksObj = {
   }
 };
 
-AutoForm.addHooks(['favoriteSports', 'favoriteMLBTeams', 'favoriteNFLTeams', 'favoriteNBATeams',], hooksObj);
+AutoForm.addHooks(['favoriteSports', 'favoriteMLBTeams', 'favoriteNFLTeams', 'favoriteNBATeams'], hooksObj);
 
 Template.favoriteTeams.onCreated(function (){
-  this.allSteps = [ 'favoriteSports', 'favoriteMLBTeams', 'favoriteNFLTeams', 'favoriteNBATeams',];
+  this.allSteps = [ 'favoriteSports', 'favoriteMLBTeams', 'favoriteNFLTeams', 'favoriteNBATeams'];
   currentStep = new ReactiveVar('favoriteSports');
 });
 

@@ -34,6 +34,13 @@
 <template name="matchupItem">
   {{#ionItem}}
     <h2>{{gameName m.gameId}}</h2>
-    {{username m.creator}} {{users m.users}} of {{limitNum m.limitNum}} {{m.skill}}
+		{{#if group}}
+			{{groupName m.groupId}}
+		{{else}}
+			{{{username m.commissioner}}}
+		{{/if}}
+
+		{{users m.users}} of {{limitNum m.limitNum}}
+		{{m.skill}}
   {{/ionItem}}
 </template>

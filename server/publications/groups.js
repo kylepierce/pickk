@@ -13,6 +13,13 @@ Meteor.publish('findThisUsersGroups', function(userId) {
   return Groups.find({members: {$in: [userId]}});
 });
 
+//Find groups that userId belongs to
+Meteor.publish('userIsCommissioner', function(userId) {
+  check(userId, String);
+
+  return Groups.find({commissioner: {$eq: userId}}, {fields: {name: 1}});
+});
+
 // Users of a specific group
 Meteor.publish('groupUsers', function(groupId) {
   check(groupId, String);

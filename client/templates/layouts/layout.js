@@ -67,6 +67,10 @@ Template.sideMenuContent.events({
 Template.mainLayout.events({
   'click [data-action="gameEdit"]': function (e, t) {
     IonPopover.show('_editGame', this, e.currentTarget);
+  },
+  'click [data-action=skip]': function(e, t){
+    var groupId = Router.current().params._id
+    Router.go('/groups/'+groupId)
   }
 });
 

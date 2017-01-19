@@ -1,12 +1,20 @@
 Template.weekLeaderboard.onCreated(function() {
 	var filter = Router.current().params.query.filter
 	var query = Router.current().params.query
+	var groupId = Router.current().params.groupId
 	//If there is no new data
 	var data = Session.get('leaderboardFilter');
 	var noNewData = _.isEmpty(data);
 
 	if(noNewData || !data) {
-		var data = query
+		if (groupId){
+			var data = {
+				filter: "group",
+				groupId: groupId
+			}
+		} else {
+			var data = query
+		}
 	}
 	if(!data.date){
 		var thisWeek = parseInt(moment().week());

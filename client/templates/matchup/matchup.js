@@ -15,9 +15,24 @@ Template.matchup.events({
 });
 
 Template.matchupItem.helpers({
+  'group': function(){
+    if(this.m.secret === "group"){
+      return true
+    }
+  },
+  'groupName': function(groupId){
+    Meteor.subscribe('singleGroup', groupId);
+    var group = Groups.findOne({_id: groupId})
+    if (group){
+      return group.name
+    }
+  },
   'username': function(ref) {
 		Meteor.subscribe('findSingle', ref);
-		return UserList.findOne({_id: ref}).profile.username
+    var user = UserList.findOne({_id: ref})
+    if (user){
+      return user.profile.username
+    }
 	},
   'gameName': function(gameId){
     Meteor.subscribe('singleGameData', gameId);

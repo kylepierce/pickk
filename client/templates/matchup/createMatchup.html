@@ -20,6 +20,9 @@
         {{/if}}
         <br>
         {{> afQuickField type='select-radio' name='secret' }}
+          {{#if afFieldValueIs name="secret" value="group"}}
+            {{> afQuickField type='select-radio' id="fix-check" name='groupId'}}
+          {{/if}}
         <br>
         {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}}
         <input name="status" type="submit" class="button button-large button-balanced" value="Create League">

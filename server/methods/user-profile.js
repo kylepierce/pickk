@@ -122,6 +122,12 @@ Meteor.methods({
 						$set: {'profile.favoriteMLBTeams': selectionArray}
 					});
 				break;
+			case 'favoriteNBATeams':
+				UserList.update(this.userId,
+					{
+						$set: {'profile.favoriteNBATeams': selectionArray}
+					});
+				break;
 			case 'favoriteNFLTeams':
 				UserList.update(this.userId,
 					{

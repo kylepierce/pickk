@@ -60,3 +60,52 @@ Template.inviteToGroupBox.helpers({
     return user
   },
 });
+
+Template.inviteToGroupBox.events({
+  "click [data-action=textInvite]": function(e, t){
+    if(Meteor.isCordova){
+      var branchUniversalObj = null;
+      var ref = Meteor.userId();
+      var username = Meteor.user().profile.username
+      var groupId = Router.current().params._id
+      var group = Groups.findOne(groupId);
+      var groupName = group.name
+      var message = 'Predict the Next Play on Pickk! Click the Link to Join ' + groupName + ' (My League) and Compete Live!'
+
+      analytics.track("invited to group", {
+        userId: ref,
+        type: 'share-sheet',
+        location: "group invite",
+        group: groupId,
+        dateCreated: new Date()
+      });
+
+      var intercomData = {
+        "last_shared_at": parseInt(Date.now() / 1000),
+        "share_type": "text",
+        "userId": ref,
+      }
+      updateIntercom(intercomData)
+
+      Branch.createBranchUniversalObject({
+        canonicalIdentifier: 'user-profile/'+ ref,
+        title: 'League Invite!',
+        contentDescription: message,
+        contentMetadata: {
+          'userId': ref,
+          'userName': username,
+          'groupId': groupId
+        }
+      }).then(function (newBranchUniversalObj) {
+        branchUniversalObj = newBranchUniversalObj;
+        branchUniversalObj.showShareSheet({
+          // put your link properties here
+          "feature" : "share",
+        }, {
+          // put your control parameters here
+          "$deeplink_path" : "/group/" + groupId,
+        }, message);
+      });
+    }
+  }
+});
