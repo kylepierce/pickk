@@ -1,67 +1,11 @@
 <template name="_editGroup">
   {{#ionModal class="white-text-header" title="Edit Group"}}
-    <div class="padding">
-      <div class="content overflow-scroll">
-			<div class="list " >
-				<form>
-				<div class="item item-divider">Name</div>
-				<label type="stacked" style="background-color: white;" class="item item-input item-stacked-label">
-					<span class="input-label">Group Display Name:</span>
-					<input type='text' label-type="stacked" id="groupName" value="{{groupName}}">
-				</label>
-				<label type="stacked" style="background-color: white;" class="item item-input item-stacked-label">
-					<span class="input-label">Group Description:</span>
-					<textarea rows="4" type='text' maxlength="200" label-type="stacked" id="groupDesc" value="{{desc}}"></textarea>
-				</label>
-        <label type="stacked" style="background-clabe: white;" class="item item-input item-stacked-label">
-          <span class="input-label">Group Avatar:</span>
-          <div>
-            {{#with group}}
-              {{> groupAvatar}}
-            {{/with}}
-            <div class="loading" style="display: none;">
-              <i class="fa fa-spinner fa-spin"></i>
-            </div>
-            <label style="display: inline-block; vertical-align: top">
-              <span>Click to change avatar</span>
-              <input type="file" name="avatar" style="display: none">
-            </label>
-          </div>
-        </label>
-
-        <br>
-				<div class="item item-divider">Display Settings</div>
-				
-				<div class="edit-radio" >
-					<input type="radio" name="privacy" id="private" required value="private" checked={{checkPrivacy "private"}}>
-					<label for="private" class="play-option">
-					<i class="fa fa-star"></i> 
-						Private
-					</label>
-				</div>
-
-				<div class="edit-radio">
-					<input type="radio" name="privacy" id="invite" required value="invite" checked={{checkPrivacy "invite"}}>
-					<label for="invite" class="play-option">
-					<i class="fa fa-star"></i> 
-						Invite Only
-					</label>
-				</div>
-
-				<div class="edit-radio">
-					<input type="radio" name="privacy" id="public" required value=false checked={{checkPrivacy false}}>
-					<label for="public" class="play-option">
-					<i class="fa fa-star"></i> 
-						Public
-					</label>
-				</div>
-				
-				<br>
-				<button type="submit" id="submitGroup" style="float: right; width: 100%;" data-action="createGroup" class="button button-assertive button-balanced"> Update Group Info
-				</button>
-				</form>				
-				</div>
-			</div>
-    </div>
+    {{#autoForm collection="Groups" type="update" id="updateLeague" doc=groupData}}
+      {{> afQuickField autofocus='' name='name' label-type='stacked'}}
+      <br>
+      {{> afQuickField type='select-radio' name='secret' }}
+      {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}}
+      <input data-action="update" type="submit" class="button button-large button-balanced" value="Update League">
+    {{/autoForm}}
   {{/ionModal}}
 </template>

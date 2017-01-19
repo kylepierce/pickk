@@ -156,14 +156,15 @@ Template._adminOptions.helpers({
 
 Template._adminOptions.events({
   // Add group id to update group info.
-  'click [data-ion-modal=_editGroup]': function(event, template){
-    var groupId = Router.current().params._id
-    Session.set('groupId', groupId);
+  'click [data-action=_editGroup]': function(e, t){
+    IonModal.open('_editGroup');
   },
 
   // Add group id to update group info.
-  'click [data-ion-modal=_removeUser]': function(event, template){
-    IonModal.open('_leaderboardFilter');
+  'click [data-action=_removeUser]': function(event, template){
+    var groupId = Router.current().params._id
+    IonPopover.hide()
+    Router.go('/groups/members/'+groupId)
   },
 
   'click [data-ion-modal=_groupRequests]': function(event, template){
