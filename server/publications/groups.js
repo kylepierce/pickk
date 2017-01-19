@@ -7,11 +7,11 @@ Meteor.publish('singleGroup', function(groupId) {
 });
 
 // Find groups that userId belongs to
-Meteor.publish('findThisUsersGroups', function(userId) {
-  check(userId, String);
-  
-  return Groups.find({members: {$in: [userId]}});
-});
+// Meteor.publish('findThisUsersGroups', function(userId) {
+//   check(userId, String);
+//
+//   return Groups.find({members: {$in: [userId]}});
+// });
 
 // Users of a specific group
 Meteor.publish('groupUsers', function(groupId) {

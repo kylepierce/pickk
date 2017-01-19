@@ -1,0 +1,34 @@
+<template name="leagueAssociation">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Create New League</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#autoForm collection="Groups" type="update" id="groupTeam"  doc=groupData}}
+        {{> afQuickField name='leagueAssociation' type='select-radio'}}
+
+        {{#if afFieldValueIs name="leagueAssociation" value="true"}}
+          {{> afQuickField type='select-radio' name="association"}}
+          {{> afQuickField name='teamAssociation' type='select-radio'}}
+          {{#if afFieldValueIs name="teamAssociation" value="true"}}
+            {{#if afFieldValueIs name="association" value="NFL"}}
+              {{> afQuickField type='select-radio' name="favoriteNFLTeam"}}
+            {{/if}}
+            {{#if afFieldValueIs name="association" value="NBA"}}
+              {{> afQuickField type='select-radio' name="favoriteNBATeam"}}
+            {{/if}}
+            {{#if afFieldValueIs name="association" value="MLB"}}
+              {{> afQuickField type='select-radio' name="favoriteMLBTeam"}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
+        <input name="status" type="submit" class="button button-large button-balanced" value="Add League Details">
+      {{/autoForm}}
+  {{/ionContent}}
+ {{/ionView}}
+</template>
