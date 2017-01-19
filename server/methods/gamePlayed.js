@@ -9,6 +9,11 @@ Meteor.methods({
 		check(gameId, String);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
+	'dismissInvitePrompt': function(gameId, userId){
+		check(gameId, String);
+		check(userId, String);
+		Games.update({_id: gameId}, {$push: {dismissed: userId}});
+	},
 
 	'inviteToGame': function(gameId, userId, ref){
 		check(gameId, String);

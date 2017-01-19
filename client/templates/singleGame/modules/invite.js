@@ -4,6 +4,12 @@ Template.inviteToPlay.helpers({
     var game = Games.findOne({})
     var invited = game.invited
     var users = game.users
+    var userDimissed = game.dismissed
+    if (userDimissed){
+      var userDimissed = game.dismissed.indexOf(Meteor.userId())
+    } else {
+      var userDimissed = -1
+    }
     // Compare the users in the array against the already invited
     if(invited){
       var list = _.reject(followers, function(user){
@@ -14,7 +20,7 @@ Template.inviteToPlay.helpers({
     }
 
     // Return 3 at a time
-    if (!list || list.length === 0){
+    if (!list || list.length === 0 || userDimissed > -1){
       return false
     } else {
       return true
@@ -22,7 +28,7 @@ Template.inviteToPlay.helpers({
   },
   followers: function(){
     var followers = Meteor.user().profile.followers
-    var game = Games.findOne({})
+    var game = Games.findOne({});
     var invited = game.invited
     var users = game.users
     // Compare the users in the array against the already invited
@@ -43,6 +49,11 @@ Template.inviteToPlay.helpers({
 });
 
 Template.inviteToPlay.events({
+  "click [data-action=dismiss]": function(e, t){
+    var gameId = t.data.game[0]._id
+    var userId = Meteor.userId();
+    Meteor.call('dismissInvitePrompt', gameId, userId);
+  },
   "click [data-action=invite]": function(e, t){
     var gameId = t.data.game[0]._id
     var ref = Meteor.userId();

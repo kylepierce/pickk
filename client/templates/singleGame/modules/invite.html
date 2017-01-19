@@ -4,11 +4,11 @@
     <button data-action="" class="button button-balanced">Redeem</button>
   </div> -->
   <div class="item item-divider ten-spacing">
-    <span>Invite</span>
+    <span>Challenge A Friend!</span>
   </div>
 
   <div class="item invite-item item-button-right">
-    <h2>Invite via Text</h2>
+    <h2>Share With Friends</h2>
     <button data-action="textInvite" class="button button-balanced">Invite</button>
   </div>
 
@@ -27,6 +27,12 @@
         </div>
       {{/each}}
 
+      <div class="item invite-item item-button-right">
+        <h2>Dismiss Invite Box</h2>
+        <button data-action="dismiss"  value="{{follower}}" class="button button-stable">
+          {{> ionIcon icon="ios-close"}}
+        </button>
+      </div>
     {{/ionList}}
   {{/if}}
 </template>
