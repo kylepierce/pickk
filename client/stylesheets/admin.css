@@ -45,7 +45,8 @@
 	float: left;
 	margin-left: 1%;
 }
-
+.edit-option-boxes .option-range,
+.edit-option-boxes .option-title
 .option-boxes .option-range,
 .option-boxes .option-title {
 	border: 1px solid grey!important;

@@ -111,8 +111,9 @@ Template.singleGameInfo.helpers({
     }
   },
   baseball: function () {
-    var football = this.game && this.game.football
-    if (!football){
+    var live = this.game
+    var baseball =  this.sport === "MLB"
+    if (live && baseball){
       return true
     }
   }

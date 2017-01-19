@@ -10,7 +10,7 @@ Template._editQuestion.helpers({
 	  for (var i = 0; i < keys.length; i++) {
 	    var obj = values[i]
 	    var number = keys[i]
-	    obj["option" + i] = number 
+	    obj["option" + i] = number
 	    optionsArray.push(obj)
 	  }
 
@@ -20,14 +20,14 @@ Template._editQuestion.helpers({
 
 Template._editQuestion.events({
 	'change .option-range': function(e, t){
-		var isNotANumber = isNaN(e.currentTarget.value) 
+		var isNotANumber = isNaN(e.currentTarget.value)
 		if (isNotANumber === true){
 			alert("That is not a number");
 		}
 	},
 	'click [data-action=editQuestion]': function (e, t) {
 		event.preventDefault();
-		var question = $('#question-input').val()
+		var question = $('#edit-question-input').val()
 		var options = {}
 
 		if (!question){
@@ -40,7 +40,7 @@ Template._editQuestion.events({
 		}
 
 		// How many option boxes have been filled?
-		var optionBoxes = $('.option-boxes')
+		var optionBoxes = $('.edit')
 
 		for (i = 0; i < optionBoxes.length; i++) {
 			var title = optionBoxes[i].children[0].value
