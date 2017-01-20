@@ -10,6 +10,7 @@ Template._groupMembers.events({
 		Router.go('/user-profile/' + this._id);
 	},
 	'click [data-action=delete]': function (e, t) {
+		var inviter = Meteor.userId();
 		var userId = this.user._id
 		var username = this.user.profile.username
 		var groupId = this.group[0]._id
@@ -25,7 +26,7 @@ Template._groupMembers.events({
       },
       buttonClicked: function(index) {
         if (index === 0) {
-					Meteor.call('removeGroupMember', userId, groupId)
+					Meteor.call('removeGroupMember', userId, groupId, inviter)
         	 sAlert.success("Removed " + username , {effect: 'slide', position: 'bottom', html: true});
         	return true
         }

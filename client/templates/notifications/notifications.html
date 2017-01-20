@@ -90,9 +90,18 @@
 	    {{> userAvatar userId=_id}}
 	    <h2 data-action="viewUser">{{profile.username}}</h2>
 	  {{/with}}
-	  {{#with groupData note.groupId}}
-	    <p>wants you to join <strong>{{name}}</strong></p>
-	  {{/with}}
+
+		{{#if status note.status}}
+			<p>{{note.status}}
+			{{#with groupData note.groupId}}
+				<strong>{{name}}</strong>
+			{{/with}}
+			</p>
+		{{else}}
+			{{#with groupData note.groupId}}
+				<p>wants you to join <strong>{{name}}</strong></p>
+			{{/with}}
+		{{/if}}
 		<button data-action="viewGroup" class="button">View</button>
 	{{/ionItem}}
 </template>

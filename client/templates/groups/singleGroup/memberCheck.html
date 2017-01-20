@@ -1,12 +1,11 @@
 <template name="memberCheck">
-  <div class="container">
 	{{#if alreadyMember }}
-    <button class="button col col-50 button-balanced" data-action="invite" style="margin-right: 10px;">
+    <button class="button col col-33 button-balanced" data-action="invite">
      {{> ionIcon icon='ios-upload-outline'}} Invite
     </button>
 
     {{#if commissionerAdmin}}
-      <button id="settings" data-ion-popover="_adminOptions" class="button col col-10 button-stable" style="margin-left: 10px;">
+      <button id="settings" data-ion-popover="_adminOptions" class="button col col-10 button-stable">
         {{> ionIcon icon='ios-gear'}}
       </button>
     {{else}}
@@ -17,26 +16,29 @@
     {{/if}}
 
 	{{else}}
-    {{#if invite}}
-      {{> inviteOnly}}
-    {{else}}
-		  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-100" >Join</button>
-	  {{/if}}
+		{{#if maxed}}
+	    {{#if invite}}
+	      {{> inviteOnly}}
+	    {{else}}
+			  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33 right" >Join</button>
+		  {{/if}}
+		{{else}}
+			{{> inviteOnly}}
+		{{/if}}
   {{/if}}
-  </div>
 </template>
 
 <template name="requestInvite">
   {{#if alreadyRequested}}
-    <button data-action="requestPending" id="join-toggle" class="button button-stable col col-100" style="float:right">Request Pending</button>
+    <button data-action="requestPending" id="join-toggle" class="button button-stable col col-50" style="float:right">Request Pending</button>
   {{else}}
-    <button data-action="requestInvite" id="join-toggle" class="button button-balanced col col-100" style="float:right">Request Invite</button>
+    <button data-action="requestInvite" id="join-toggle" class="button button-balanced col col-50" style="float:right">Request Invite</button>
   {{/if}}
 </template>
 
 <template name="inviteOnly">
   {{#if invite}}
-    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
+    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33" style="float:right">Join</button>
   {{else}}
     {{> requestInvite}}
   {{/if}}

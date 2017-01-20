@@ -6,7 +6,6 @@ Meteor.methods({
 			return true;
 		}
 		var groupExists = Groups.find({name: name}).count()
-		console.log("group exists", groupExists)
 		if (groupExists > 0){
 			console.log("Group Already Exists")
 			return true
@@ -46,7 +45,19 @@ Meteor.methods({
 		check(groupId, String);
 		Groups.update({_id: groupId},
 			{$push: {requests: userId}}
-		)
+		);
+
+		var group = Groups.find({_id: groupId}).fetch();
+
+		var notifyObj = {
+	  	type: "group",
+			status: "Requested invite from you to",
+	  	senderId: userId,
+	  	userId: group[0].commissioner,
+	  	groupId: groupId
+	  }
+
+	  createPendingNotification(notifyObj)
 	},
 
 	'removeRequest': function(userId, groupId) {
@@ -62,7 +73,6 @@ Meteor.methods({
 		check(invitee, String);
 		check(inviter, String);
 		check(groupId, String);
-		console.log(invitee, inviter, groupId);
 		Groups.update({_id: groupId}, {$push: {invites: invitee}}, { validate: false })
 
 	  var notifyObj = {
@@ -74,17 +84,36 @@ Meteor.methods({
 	  createPendingNotification(notifyObj)
 	},
 
-	'acceptRequest': function(groupId, id) {
-		check(id, String);
+	'acceptRequest': function(groupId, userId, inviter) {
+		check(userId, String);
 		check(groupId, String);
-		Meteor.call('removeRequest', id, groupId)
-		Meteor.call('joinGroup', id, groupId)
+		check(inviter, String);
+		Meteor.call('removeRequest', userId, groupId)
+		Meteor.call('joinGroup', userId, groupId)
+
+		var notifyObj = {
+	  	type: "group",
+			status: "Accepted Your Request to ",
+	  	senderId: inviter,
+	  	userId: userId,
+	  	groupId: groupId
+	  }
+	  createPendingNotification(notifyObj)
 	},
 
-	'denyRequest': function(groupId, id) {
-		check(id, String);
+	'denyRequest': function(groupId, userId, inviter) {
+		check(userId, String);
 		check(groupId, String);
-		Meteor.call('removeRequest', id, groupId)
+		check(inviter, String);
+		Meteor.call('removeRequest', id, groupId);
+		var notifyObj = {
+	  	type: "group",
+			status: "Denied Your Request to ",
+	  	senderId: inviter,
+	  	userId: userId,
+	  	groupId: groupId
+	  }
+	  createPendingNotification(notifyObj)
 	},
 
 	'deleteGroup': function(groupId) {
@@ -103,14 +132,23 @@ Meteor.methods({
 		Groups.remove({_id: groupId});
 	},
 
-	'removeGroupMember': function(user, groupId) {
-		check(user, String);
+	'removeGroupMember': function(userId, groupId, inviter) {
+		check(userId, String);
 		check(groupId, String);
+		check(inviter, String);
 		// Remove user from the group's list
-		Groups.update({_id: groupId}, {$pull: {members: user}});
+		Groups.update({_id: groupId}, {$pull: {members: userId}});
 
 		// Remove group from user's list
-		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});
+		UserList.update({_id: userId}, {$pull: {'profile.groups': groupId}});
+		var notifyObj = {
+			type: "group",
+			status: "removed",
+			senderId: inviter,
+			userId: userId,
+			groupId: groupId
+		}
+		createPendingNotification(notifyObj)
 	},
 
 	// Users can join any group

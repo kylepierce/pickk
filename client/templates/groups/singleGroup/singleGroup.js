@@ -10,6 +10,17 @@ Template.singleGroup.rendered = function() {
 };
 
 Template.singleGroup.helpers({
+  member: function(){
+    var userId = Meteor.userId();
+    var group = this.group[0]
+    var isMember = group.members.indexOf(userId)
+    if(isMember > -1) {
+      return true
+    }
+  },
+  max: function(){
+
+  },
   groupName: function(){
     return this.group[0].name
   },
@@ -31,12 +42,29 @@ Template.singleGroup.helpers({
       return true
     }
   },
+  commissionerAdmin: function(){
+    var currentUser = Meteor.userId()
+    var groupId = Router.current().params._id
+    var group = Groups.findOne({_id: groupId});
+
+    if (group.commissioner == currentUser) {
+      return true
+    }
+  },
+});
+
+Template.chatIcon.helpers({
   member: function(){
     var userId = Meteor.userId();
+    var groupId = Router.current().params._id
     var group = this.group[0]
     var isMember = group.members.indexOf(userId)
     if(isMember > -1) {
+      Session.set('chatGroup', groupId)
       return true
+    } else {
+      Session.set('chatGroup', null)
+      return false
     }
   },
 });
@@ -51,8 +79,43 @@ Template.groupData.helpers({
     var user = UserList.findOne({_id: commissionerId});
     return user.profile.username
   },
+  skill: function(){
+    if (this.group[0].skill) {
+      return this.group[0].skill
+    }
+  },
+  league: function(){
+    if(this.group[0].leagueAssociation){
+      return true
+    }
+  },
+  association: function(){
+    if(this.group[0].association){
+      return this.group[0].association
+    }
+  },
+  team: function(){
+    if(this.group[0].teamAssociation){
+      return true
+    }
+  },
+  favTeam: function(){
+    var group = this.group[0]
+    var league = group.association
+    var selector = "favorite" + league + "Team"
+    var team = group[selector]
+    var team = team.substring(4).toUpperCase();
+    // console.log(group, league, selector, team);
+    return team
+  },
   memberCount: function(){
     return this.group[0].members.length
+  },
+  max: function(){
+    if(this.group[0].limit){
+      var number = this.group[0].limitNum
+      return "/ " + number
+    }
   },
   description: function(){
     return this.group[0].desc

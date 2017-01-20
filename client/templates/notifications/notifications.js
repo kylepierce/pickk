@@ -55,6 +55,12 @@ Template.groupNotification.helpers({
 		Meteor.subscribe('singleGroup', groupId);
 		return Groups.findOne({_id: groupId})
 	},
+  status: function(status){
+    console.log(status);
+    if(status){
+      return status
+    }
+  }
 });
 
 Template.groupNotification.events({
@@ -150,7 +156,7 @@ Template.notification.events({
     if (userId){
       Router.go('/user-profile/' + userId);
     } else {
-      Router.go('/user-profile/' + this.userId);  
+      Router.go('/user-profile/' + this.userId);
     }
   }
 	// 'click .item': function (e, t) {

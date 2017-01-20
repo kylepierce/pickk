@@ -4,7 +4,7 @@ Template._groupRequests.created = function() {
 
 Template._groupRequests.helpers({
 	user: function () {
-    var groupId = Session.get('groupId');
+    var groupId = this.group[0]._id
     var group = Groups.findOne({_id: groupId});
 		return group.requests
 	},
@@ -16,14 +16,16 @@ Template._groupRequests.helpers({
 });
 
 Template._groupRequests.events({
-	'click [data-action=accept]': function(){
-		var groupId = Session.get('groupId');
+	'click [data-action=accept]': function(e, t){
+		var groupId = t.data.group[0]._id
 		var user = this._id
-		Meteor.call('acceptRequest', groupId, user)
-	}, 
-	'click [data-action=delete]': function(){
-		var groupId = Session.get('groupId');
+		var commissionerUserId = Meteor.userId();
+		Meteor.call('acceptRequest', groupId, user, commissionerUserId)
+	},
+	'click [data-action=delete]': function(e, t){
+		var groupId = t.data.group[0]._id
+		console.log(this, e, t);
 		var user = this._id
 		Meteor.call('denyRequest', groupId, user)
 	},
-}); 
+});

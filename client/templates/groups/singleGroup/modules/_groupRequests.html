@@ -4,13 +4,13 @@
 			{{#each user}}
 				{{#with userDetails this}}
 					{{#ionItem buttonRight=true avatar=true}}
-						<img src="{{profile.avatar}}">
+						{{> userAvatar userId=_id}}
 						{{profile.username}}
-						<a class="button" data-action="accept"> 
+						<a class="button" data-action="accept">
 			        {{> ionIcon icon="plus"}}
 			      </a>
-			      
-			      <a style="margin-right: 50px;" data-action="delete" class="button"> 
+
+			      <a style="margin-right: 50px;" data-action="delete" class="button">
 			        {{> ionIcon icon="ios-close"}}
 			      </a>
 					{{/ionItem}}

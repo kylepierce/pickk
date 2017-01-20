@@ -1,16 +1,10 @@
 <template name="singleGroup">
 <!-- Standard Nav instead of the custom nav design -->
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
+    {{>ionNavBackButton path="groups"}}
   {{/contentFor}}
 
-  {{#if member}}
-    {{#contentFor "headerButtonRight"}}
-      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
-        {{> ionIcon icon="ios-chatboxes"}}
-      </button>
-    {{/contentFor}}
-  {{/if}}
+  {{> chatIcon}}
 
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">
@@ -24,16 +18,27 @@
         {{#if member}}
           <div class="group-wrapper">
             {{> groupAvatar}}
-            {{> groupData}}
             {{> memberCheck}}
           </div>
-          {{> groupLinks}}
           <div class="item item-divider">Upcoming Matchups</div>
+          {{#if leagueMatchups}}
+
+          {{else}}
+            <div class="no-notifications container">
+              No Matchups Scheduled
+              {{#if commissionerAdmin}}
+                <button class="ten-spacing button button-stable col col-100">Create Matchup</button>
+              {{/if}}
+            </div>
+          {{/if}}
+          <div class="item item-divider">League Details</div>
+          {{> groupData}}
+          {{> groupLinks}}
         {{else}}
           <div class="group-wrapper">
             {{> groupAvatar}}
-            {{> groupData}}
             {{> memberCheck}}
+            {{> groupData}}
           </div>
         {{/if}}
       {{else}}
@@ -52,7 +57,7 @@
         {{> ionIcon icon='ios-people'}}
       </span>
       <span class="group-details-text">
-        {{memberCount}} Members
+        {{memberCount}} {{max}} Members
       </span>
     </li>
     <li>
@@ -63,6 +68,46 @@
         Commissioner: {{commissioner}}
       </span>
     </li>
+    {{#if skill}}
+      <li>
+        <span class="group-details-icon center-text">
+          {{> ionIcon icon='star'}}
+        </span>
+        <span class="group-details-text">
+          Skill: {{skill}}
+        </span>
+      </li>
+    {{/if}}
+    {{#if league}}
+      <li>
+        <span class="group-details-icon center-text">
+          {{> ionIcon icon='star'}}
+        </span>
+        <span class="group-details-text">
+          League: {{association}}
+        </span>
+      </li>
+      {{#if team}}
+        <li>
+          <span class="group-details-icon center-text">
+            {{> ionIcon icon='star'}}
+          </span>
+          <span class="group-details-text">
+            Team: {{favTeam}}
+          </span>
+        </li>
+      {{/if}}
+    {{/if}}
     {{description}}
   </ul>
+</template>
+
+<template name="chatIcon">
+  {{#if member}}
+    {{#contentFor "headerButtonRight"}}
+      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+        {{> ionIcon icon="ios-chatboxes"}}
+      </button>
+    {{/contentFor}}
+  {{/if}}
 </template>
