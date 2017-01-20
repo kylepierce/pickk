@@ -159,6 +159,11 @@ Template._adminOptions.events({
   'click [data-action=_editGroup]': function(e, t){
     IonModal.open('_editGroup');
   },
+  'click [data-action=assocation]': function(){
+    var groupId = Router.current().params._id
+    IonPopover.hide()
+    Router.go("/groups/association/" + groupId)
+  },
 
   // Add group id to update group info.
   'click [data-action=_removeUser]': function(event, template){
