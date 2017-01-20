@@ -73,10 +73,10 @@
 			{{> trophyNotification}}
 		{{/ionItem}}
 	{{/if}}
-	{{#if notif "matchupInvite"}}
+	<!-- {{#if notif "matchupInvite"}}
 		{{> matchupInvite}}
-	{{/if}}
-	{{#if notif "matchupNotification"}}
+	{{/if}} -->
+	{{#if notif "matchup"}}
 		{{> matchupNotification}}
 	{{/if}}
 	{{#if notif "chatReaction"}}
@@ -167,16 +167,33 @@
 		<h2>You won {{title}}!</h2>
 		<p>Congrats on winning {{title}} in {{../note.gameName}}!</p>
 	{{/with}}
+</template>
 
+<template name="matchupNotification">
+	{{#ionItem avatar=true buttonRight=true}}
+		{{#with user note.senderId}}
+	    {{> userAvatar userId=_id}}
+	    <h2 data-action="viewUser">{{profile.username}}</h2>
+	  {{/with}}
+
+		<!-- {{#if status note.status}}
+			<p>{{note.status}}
+			{{#with groupData note.groupId}}
+				<strong>{{name}}</strong>
+			{{/with}}
+			</p>
+		{{else}}
+			{{#with groupData note.groupId}}
+				<p>wants you to join <strong>{{name}}</strong></p>
+			{{/with}}
+		{{/if}} -->
+		<button data-action="viewMatchup" class="button">View</button>
+	{{/ionItem}}
 </template>
 
 <template name="leaderboardNotification"></template>
 
 <template name="badgeNotification"></template>
-
-<template name="matchupInvite"></template>
-
-<template name="matchupNotification"></template>
 
 <template name="notificationOptions">
 	{{#with options}}

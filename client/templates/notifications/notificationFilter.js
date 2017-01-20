@@ -1,6 +1,6 @@
 Template.notificationFilter.helpers({
 	options: function () {
-		return ["group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
+		return ["matchup", "group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
 		// "matchupInvite", "matchupNotification", "chatReaction"
 	},
 });

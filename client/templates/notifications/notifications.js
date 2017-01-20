@@ -239,7 +239,7 @@ Template.notificationOptions.events({
 Template.notificationOptions.helpers({
 	options: function(){
 		var note = Template.instance().data.type
-		var twoOption = ["coins", "diamonds", "badge", "trophy", "chatReaction"]
+		var twoOption = ["matchup", "coins", "diamonds", "badge", "trophy", "chatReaction"]
 		var threeOption = ["follower", "group"]
 		var fourOption = ["mention"]
 
@@ -319,4 +319,24 @@ Template.coinsNotification.helpers({
 			return question.que
 		}
 	}
+});
+
+Template.matchupNotification.helpers({
+	user: function(ref) {
+		Meteor.subscribe('findSingle', ref);
+		return UserList.findOne({_id: ref})
+	},
+  status: function(status){
+    console.log(status);
+    if(status){
+      return status
+    }
+  }
+});
+
+Template.matchupNotification.events({
+  'click [data-action=viewMatchup]': function(e, t){
+    console.log(e, t, this);
+    Router.go('/matchup/' + this.note.matchupId);
+  }
 });

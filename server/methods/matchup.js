@@ -30,5 +30,20 @@ Meteor.methods({
     check(matchupId, String);
     check(userId, String);
     Matchup.update({_id: matchupId}, {$pull: {requests: userId}});
-  }
+  },
+  // Users can add other users to join their group.
+	'inviteToMatchup': function(invitee, inviter, matchupId) {
+		check(invitee, String);
+		check(inviter, String);
+		check(matchupId, String);
+		Matchup.update({_id: matchupId}, {$push: {invites: invitee}}, { validate: false })
+
+	  var notifyObj = {
+	  	type: "matchup",
+	  	senderId: inviter,
+	  	userId: invitee,
+	  	matchupId: matchupId
+	  }
+	  createPendingNotification(notifyObj)
+	},
 });
