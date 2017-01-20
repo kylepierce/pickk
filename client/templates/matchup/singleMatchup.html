@@ -1,19 +1,26 @@
 <template name="singleMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
+    {{>ionNavBackButton path="matchup"}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Matchup Details</h1>
   {{/contentFor}}
 
+  {{#contentFor "headerButtonRight"}}
+    <button style="font-size: 13px;" class="button button-clear" data-action="editMatchup">
+      {{> ionIcon icon="ios-gear"}}
+    </button>
+  {{/contentFor}}
+
   {{#ionView}}
     {{#ionContent}}
       {{#with matchup}}
-        <div class="group-details">
-          <!-- <span style="padding: 0 10px" class="group-details-icon">
-            {{> ionIcon icon='information'}}
-          </span> -->
+        <div class="container">
+          <div class="item item-divider ten-spacing">
+      			<span>{{matchupName this}}'s Matchup</span>
+      		</div>
+          <div class="matchup-card">
           <h4>{{gameName this.gameId}}</h4>
 
           <span class="group-details-icon">
@@ -39,27 +46,31 @@
 
           {{this.description}}
         </div>
-
         {{#if alreadyJoined this.users}}
-          <button data-action="inviteToMatchup" class="button button-balanced col col-50 float-left">
+          <!-- <button data-action="inviteToMatchup" class="button button-balanced col col-50 float-left">
             {{> ionIcon icon='ios-upload-outline'}} Invite
           </button>
           <button data-action="leaveMatchup" class="button button-assertive col col-50 float-left">
             Leave
-          </button>
+          </button> -->
+          {{> matchupMember}}
         {{else}}
           <button data-action="joinMatchup" class="button button-balanced col col-100">
             Join
           </button>
         {{/if}}
-
-        {{#if alreadyJoined this.users}}
-          <!-- View Game -->
-          <!-- View Leaderboard -->
-          <h1>Ah Whad Up Fam</h1>
-        {{/if}}
-
+        </div>
       {{/with}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="matchupMember">
+  <div class="match-links">
+    {{#ionList}}
+      {{#ionItem}}View Game{{/ionItem}}
+      {{#ionItem}}View Game{{/ionItem}}
+      {{#ionItem}}View Game{{/ionItem}}
+    {{/ionList}}
+  </div>
 </template>

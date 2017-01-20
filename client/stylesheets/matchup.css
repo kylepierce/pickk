@@ -1,0 +1,12 @@
+.matchup-card {
+  margin: 0;
+  padding: 10px 15px 20px;
+  background-color: white;
+  overflow: auto;
+}
+
+.match-links {
+  padding: 0;
+  background-color: white;
+  clear: both;
+}

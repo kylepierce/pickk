@@ -13,6 +13,20 @@ Template.matchup.events({
 });
 
 Template.matchupItem.helpers({
+  'matchupName': function(matchup){
+    var groupId = matchup.groupId
+
+    if(groupId){
+      Meteor.subscribe('singleGroup', groupId);
+      var group = Groups.find({_id: groupId}).fetch();
+      var matchupName = group[0].name
+    } else {
+      var userId = matchup.commissioner
+      var user = UserList.find({_id: userId}).fetch()
+      var matchupName = user[0].profile.username
+    }
+    return matchupName
+  },
   'group': function(){
     if(this.m.secret === "group"){
       return true

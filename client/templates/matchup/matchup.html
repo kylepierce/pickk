@@ -22,25 +22,33 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{#ionList}}
+      <div class="list container">
         {{#each matchup in matchups}}
           {{> matchupItem m=matchup}}
         {{/each}}
-      {{/ionList}}
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="matchupItem">
-  {{#ionItem}}
+	<div class="item item-divider ten-spacing">
+		<span>{{matchupName m}}'s Matchup</span>
+	</div>
+  <div class="item">
     <h2>{{gameName m.gameId}}</h2>
-		{{#if group}}
-			{{groupName m.groupId}}
-		{{else}}
-			{{{username m.commissioner}}}
-		{{/if}}
+		<strong class="col col-md-33">
+			{{m.secret}}
+		</strong>
 
-		{{users m.users}} of {{limitNum m.limitNum}}
-		{{m.skill}}
-  {{/ionItem}}
+		<strong class="col col-md-33">
+			{{users m.users}} of {{limitNum m.limitNum}}
+		</strong>
+
+		<strong class="col col-md-33">
+			{{m.skill}}
+		</strong>
+
+
+  </div>
 </template>

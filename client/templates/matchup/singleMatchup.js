@@ -13,6 +13,20 @@ Template.singleMatchup.helpers({
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref}).profile.username
 	},
+  'matchupName': function(matchup){
+    var groupId = matchup.groupId
+
+    if(groupId){
+      Meteor.subscribe('singleGroup', groupId);
+      var group = Groups.find({_id: groupId}).fetch();
+      var matchupName = group[0].name
+    } else {
+      var userId = matchup.commissioner
+      var user = UserList.find({_id: userId}).fetch()
+      var matchupName = user[0].profile.username
+    }
+    return matchupName
+  },
   'gameName': function(gameId){
     Meteor.subscribe('singleGameData', gameId);
     var game = Games.findOne({_id: gameId})
