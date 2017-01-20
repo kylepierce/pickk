@@ -55,14 +55,28 @@
           </button> -->
           {{> matchupMember}}
         {{else}}
-          <button data-action="joinMatchup" class="button button-balanced col col-100">
-            Join
-          </button>
+          {{> matchupJoin}}
         {{/if}}
         </div>
       {{/with}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="matchupJoin">
+  {{#if allowToJoin}}
+    <button data-action="joinMatchup" class="button button-balanced col col-100">
+      Join
+    </button>
+  {{else}}
+    {{#if request}}
+      <button data-action="joinMatchup" class="button button-balanced col col-100">
+        Join
+      </button>
+    {{else}}
+      Ya Cant Join!
+    {{/if}}
+  {{/if}}
 </template>
 
 <template name="matchupMember">

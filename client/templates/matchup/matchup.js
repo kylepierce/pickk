@@ -1,10 +1,21 @@
 Template.matchup.onCreated(function() {
-
+  Session.set('matchupFilter', {})
+	this.getFilter = () => Session.get('matchupFilter');
+	this.autorun(() => {
+		this.subscribe( 'upcomingMatchups', this.getFilter());
+	});
 });
 
 Template.matchup.helpers({
-  'matchups': function(){
-    return Matchup.find({});
+  'anyMatchups': function(){
+    var amount = Matchup.find().count();
+    console.log(amount);
+    if(amount > 0){
+      return true
+    }
+  },
+  matchups: function(){
+    return Matchup.find({})
   }
 });
 

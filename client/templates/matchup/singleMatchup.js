@@ -62,3 +62,24 @@ Template.singleMatchup.events({
     Meteor.call('leaveMatchup', matchupId, userId);
   }
 });
+
+Template.matchupJoin.helpers({
+  allowToJoin: function(){
+    var userId = Meteor.userId();
+    if(this.groupId){
+      Meteor.subscribe('singleGroup', this.groupId);
+      var group = Groups.find({_id: this.groupId}).fetch()
+      var isMember = group[0].members.indexOf(userId)
+      if(isMember > -1){
+        return true
+      }
+    } else if (this.secret === "invite"){
+      var invited = this.invites.indexOf(userId)
+      if(invited > -1){
+        return true
+      }
+    } else {
+      return true
+    }
+  }
+});

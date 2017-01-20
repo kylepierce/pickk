@@ -23,9 +23,16 @@
   {{#ionView}}
     {{#ionContent}}
       <div class="list container">
-        {{#each matchup in matchups}}
-          {{> matchupItem m=matchup}}
-        {{/each}}
+				{{#if anyMatchups}}
+					{{#each matchup in matchups}}
+						{{> matchupItem m=matchup}}
+					{{/each}}
+				{{else}}
+					<div class="no-notifications">
+						No Matchups Found.
+					</div>
+				{{/if}}
+
       </div>
     {{/ionContent}}
   {{/ionView}}

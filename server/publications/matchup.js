@@ -1,5 +1,7 @@
-Meteor.publish('upcomingMatchups', function (){
-  return Matchup.find({});
+Meteor.publish('upcomingMatchups', function (selector){
+  check(selector, Object);
+  console.log(selector);
+  return Matchup.find(selector);
 });
 
 Meteor.publish('singleMatchup', function(matchupId){

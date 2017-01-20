@@ -10,3 +10,8 @@
   background-color: white;
   clear: both;
 }
+
+#matchup .item-content{
+  width: 100%;
+  white-space: initial;
+}
