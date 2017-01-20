@@ -18,7 +18,6 @@ Template.singleGroup.helpers({
   leagueMatchups: function(){
     var groupId = this.group[0]._id
     var matchups = Matchup.find({groupId: groupId}).fetch();
-    console.log(matchups);
     if(matchups.length > 0){
       return true
     }
@@ -120,7 +119,6 @@ Template.groupData.helpers({
     var selector = "favorite" + league + "Team"
     var team = group[selector]
     var team = team.substring(4).toUpperCase();
-    // console.log(group, league, selector, team);
     return team
   },
   memberCount: function(){

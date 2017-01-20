@@ -129,17 +129,14 @@ Template._leaderboardFilter.helpers({
     var list = []
     _.each(matchups, function(matchup){
       var groupId = matchup.groupId
-      console.log(groupId);
       if(groupId){
         var group = Groups.find({_id: groupId}).fetch();
-        console.log(group);
         var matchupName = group[0].name
       } else {
         var userId = matchup.commissioner
         var user = UserList.find({_id: userId}).fetch()
         var matchupName = user[0].profile.username
       }
-      console.log(matchupName);
       var item = {name: matchupName, filter: "matchup", matchupId: matchup._id}
       if (data.filter === "matchup" && data.matchupId === matchup._id){
         item.checked = true

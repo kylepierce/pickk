@@ -9,7 +9,6 @@ Template.matchup.onCreated(function() {
 Template.matchup.helpers({
   'anyMatchups': function(){
     var amount = Matchup.find().count();
-    console.log(amount);
     if(amount > 0){
       return true
     }
@@ -27,7 +26,6 @@ Template.matchupItem.helpers({
   'joined': function(){
     var userId = Meteor.userId();
     var alreadyJoined = this.m.users.indexOf(userId)
-    console.log(alreadyJoined);
     if(alreadyJoined > -1){
       return "history-inprogress"
     }

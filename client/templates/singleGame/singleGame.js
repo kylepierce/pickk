@@ -204,11 +204,10 @@ Template.singleGame.events({
     var gameId = Router.current().params._id
     var period = Games.findOne({_id: gameId}).period
     var userId = Meteor.userId()
-    // analytics.track("waiting-leaderboard", {
-    //   userId: userId,
-    //   gameId: gameId,
-    // });
-		console.log(this, e, t, gameId);
+    analytics.track("waiting-leaderboard", {
+      userId: userId,
+      gameId: gameId,
+    });
     Router.go('/leaderboard/'+ gameId + "?period=" + period)
   },
   'click [data-action=previous-answers]': function(event, template){

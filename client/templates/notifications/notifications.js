@@ -56,7 +56,6 @@ Template.groupNotification.helpers({
 		return Groups.findOne({_id: groupId})
 	},
   status: function(status){
-    console.log(status);
     if(status){
       return status
     }
@@ -151,7 +150,6 @@ Template.notification.events({
     Router.go('/groups/' + this.note.groupId);
   },
   'click [data-action=viewUser]':function(e, t){
-    console.log(this, e, t);
     var userId = this._id
     if (userId){
       Router.go('/user-profile/' + userId);
@@ -327,7 +325,6 @@ Template.matchupNotification.helpers({
 		return UserList.findOne({_id: ref})
 	},
   status: function(status){
-    console.log(status);
     if(status){
       return status
     }
@@ -336,7 +333,6 @@ Template.matchupNotification.helpers({
 
 Template.matchupNotification.events({
   'click [data-action=viewMatchup]': function(e, t){
-    console.log(e, t, this);
     Router.go('/matchup/' + this.note.matchupId);
   }
 });

@@ -37,23 +37,20 @@
             {{users this.users}} of {{limitNum}}
           </span>
 
-          <span class="group-details-icon">
+          <!-- <span class="group-details-icon">
             {{> ionIcon icon='ios-people'}}
           </span>
           <span class="group-details-list">
             {{this.skill}}
-          </span>
+          </span> -->
 
           {{this.description}}
         </div>
         {{#if alreadyJoined this.users}}
-          <!-- <button data-action="inviteToMatchup" class="button button-balanced col col-50 float-left">
+          {{> matchupMember}}
+          <button data-action="inviteToMatchup" class="button button-balanced col col-100 float-left">
             {{> ionIcon icon='ios-upload-outline'}} Invite
           </button>
-          <button data-action="leaveMatchup" class="button button-assertive col col-50 float-left">
-            Leave
-          </button> -->
-          {{> matchupMember}}
         {{else}}
           {{> matchupJoin}}
         {{/if}}
@@ -84,9 +81,15 @@
 <template name="matchupMember">
   <div class="match-links">
     {{#ionList}}
-      {{#ionItem}}View Game{{/ionItem}}
-      {{#ionItem}}View Members{{/ionItem}}
-      {{#ionItem}}View Leaderboard{{/ionItem}}
+      <div class="item" data-action="viewGame">
+        View Game
+      </div>
+      <div class="item" data-action="viewMembers">
+        View Members
+      </div>
+      <div class="item" data-action="viewLeaderboard">
+        View Leaderboard
+      </div>
     {{/ionList}}
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template name="memberCheck">
 	<div class="groupButtons">
 		{{#if alreadyMember }}
-	    <button class="button col col-33 button-balanced" data-action="invite">
+	    <button class="button col col-50 button-balanced" data-action="invite">
 	     {{> ionIcon icon='ios-upload-outline'}} Invite
 	    </button>
 
@@ -20,7 +20,7 @@
 		    {{#if invite}}
 		      {{> inviteOnly}}
 		    {{else}}
-				  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33 right" >Join</button>
+				  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50 right" >Join</button>
 			  {{/if}}
 			{{else}}
 				{{> inviteOnly}}
@@ -39,7 +39,7 @@
 
 <template name="inviteOnly">
   {{#if invite}}
-    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33" style="float:right">Join</button>
+    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
   {{else}}
     {{> requestInvite}}
   {{/if}}

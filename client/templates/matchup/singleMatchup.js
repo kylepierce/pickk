@@ -51,6 +51,10 @@ Template.singleMatchup.helpers({
 });
 
 Template.singleMatchup.events({
+  'click [data-action=inviteToMatchup]': function(e, t){
+    var matchupId = this._id
+    Router.go('/matchup/invite/' + matchupId)
+  },
   'click [data-action=joinMatchup]': function(e, t){
     var matchupId = this._id
     var userId = Meteor.userId()
@@ -125,4 +129,16 @@ Template.matchupJoin.helpers({
       return true
     }
   }
+});
+
+Template.matchupMember.events({
+  "click [data-action=viewGame]": function(e, t){
+     Router.go('/game/' + this.gameId );
+  },
+  "click [data-action=viewMembers]": function(e, t){
+     Router.go('/matchup/members/' + this._id );
+  },
+  "click [data-action=viewLeaderboard]": function(e, t){
+    Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
+  },
 });
