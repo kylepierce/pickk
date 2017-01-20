@@ -6,6 +6,8 @@
 }
 
 .groupButtons{
+  width: 60%;
+  float: right;
   margin: 0 10px;
 }
 

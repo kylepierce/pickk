@@ -43,7 +43,6 @@ Template.matchupFilter.helpers({
     var options = [{name: "You vs Another", size: 2}, {name: "4 Users", size: 4}, {name: "8 Users", size: 8}, {name: "16 Users", size: 16}, {name: "32 Users", size: 32}, {name: "No Limit", size: -1}]
 
     _.each(options, function(option){
-      console.log(option.size);
       if(!data){
         if(option.size === -1) {
           options.checked = true

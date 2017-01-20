@@ -64,18 +64,20 @@
 </template>
 
 <template name="matchupJoin">
-  {{#if allowToJoin}}
-    <button data-action="joinMatchup" class="button button-balanced col col-100">
-      Join
-    </button>
-  {{else}}
-    {{#if request}}
+  {{#if notMaxed}}
+    {{#if allowToJoin}}
       <button data-action="joinMatchup" class="button button-balanced col col-100">
         Join
       </button>
     {{else}}
-      Ya Cant Join!
+      {{#if request}}
+        {{> requestInvite}}
+      {{else}}
+        Ya Cant Join!
+      {{/if}}
     {{/if}}
+  {{else}}
+
   {{/if}}
 </template>
 
@@ -83,8 +85,8 @@
   <div class="match-links">
     {{#ionList}}
       {{#ionItem}}View Game{{/ionItem}}
-      {{#ionItem}}View Game{{/ionItem}}
-      {{#ionItem}}View Game{{/ionItem}}
+      {{#ionItem}}View Members{{/ionItem}}
+      {{#ionItem}}View Leaderboard{{/ionItem}}
     {{/ionList}}
   </div>
 </template>

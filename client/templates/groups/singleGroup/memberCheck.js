@@ -51,55 +51,6 @@ Template.memberCheck.events({
     var groupId = Router.current().params._id
     Router.go('/groups/invite/' + groupId)
   },
-
-  // If a user wants to leave it pops up with an alert to confirm.
-  'click [data-action=showActionSheet]': function (event, template) {
-    IonActionSheet.show({
-      titleText: 'Are You Sure You Want To Leave?',
-      buttons: [
-        { text: 'Leave Group <i class="icon ion-share"></i>' },
-      ],
-      destructiveText: '',
-      cancelText: 'Cancel',
-      cancel: function() {},
-      buttonClicked: function(index) {
-        if (index === 0) {
-          var currentUserId = Meteor.userId();
-        var groupId = Router.current().params._id
-
-        // Remove this user from the group
-        Meteor.call('leaveGroup', currentUserId, groupId);
-        var group = Groups.findOne({_id: groupId})
-        var groupName = group.name
-        sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
-        return true
-
-        }
-      }
-    });
-  }
-});
-
-Template.requestInvite.helpers({
-  alreadyRequested: function () {
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId,
-      requests: {$in: [currentUser]}});
-    return group
-  }
-});
-
-Template.inviteOnly.helpers({
-  invite: function(){
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId,
-      invites: {$in: [currentUser]}}, {fields: {invites: 1}});
-  }
-});
-
-Template.requestInvite.events({
   'click [data-action=requestInvite]': function(e, t){
     var userId = Meteor.userId();
     var groupId = Router.current().params._id
@@ -148,5 +99,59 @@ Template.requestInvite.events({
         }
       }
     });
+  },
+  // If a user wants to leave it pops up with an alert to confirm.
+  'click [data-action=showActionSheet]': function (event, template) {
+    IonActionSheet.show({
+      titleText: 'Are You Sure You Want To Leave?',
+      buttons: [
+        { text: 'Leave Group <i class="icon ion-share"></i>' },
+      ],
+      destructiveText: '',
+      cancelText: 'Cancel',
+      cancel: function() {},
+      buttonClicked: function(index) {
+        if (index === 0) {
+          var currentUserId = Meteor.userId();
+        var groupId = Router.current().params._id
+
+        // Remove this user from the group
+        Meteor.call('leaveGroup', currentUserId, groupId);
+        var group = Groups.findOne({_id: groupId})
+        var groupName = group.name
+        sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
+        return true
+
+        }
+      }
+    });
   }
+});
+
+Template.requestInvite.helpers({
+  alreadyRequested: function () {
+    var currentUser = Meteor.userId()
+    var groupId = Router.current().params._id
+    var group = Groups.findOne({_id: groupId,
+      requests: {$in: [currentUser]}});
+      // THis is lazy code but I need to finish
+    if(!group) {
+      var group = Matchup.findOne({_id: groupId,
+        requests: {$in: [currentUser]}});
+    }
+    return group
+  }
+});
+
+Template.inviteOnly.helpers({
+  invite: function(){
+    var currentUser = Meteor.userId()
+    var groupId = Router.current().params._id
+    var group = Groups.findOne({_id: groupId,
+      invites: {$in: [currentUser]}}, {fields: {invites: 1}});
+  }
+});
+
+Template.requestInvite.events({
+
 })

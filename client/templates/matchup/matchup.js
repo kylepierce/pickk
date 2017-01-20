@@ -24,6 +24,14 @@ Template.matchup.events({
 });
 
 Template.matchupItem.helpers({
+  'joined': function(){
+    var userId = Meteor.userId();
+    var alreadyJoined = this.m.users.indexOf(userId)
+    console.log(alreadyJoined);
+    if(alreadyJoined > -1){
+      return "history-inprogress"
+    }
+  },
   'matchupName': function(matchup){
     var groupId = matchup.groupId
 

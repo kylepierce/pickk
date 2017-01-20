@@ -20,5 +20,15 @@ Meteor.methods({
     var matchup = Matchup.find({_id: matchupId}).fetch()
     var users = matchup[0].users
     Matchup.update({_id: matchupId}, {$pull: {users: userId}});
+  },
+  'requestMatchInvite': function(matchupId, userId){
+    check(matchupId, String);
+    check(userId, String);
+    Matchup.update({_id: matchupId}, {$push: {requests: userId}});
+  },
+  'removeMatchInvite': function(matchupId, userId){
+    check(matchupId, String);
+    check(userId, String);
+    Matchup.update({_id: matchupId}, {$pull: {requests: userId}});
   }
 });

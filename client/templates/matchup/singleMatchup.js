@@ -60,10 +60,46 @@ Template.singleMatchup.events({
     var matchupId = this._id
     var userId = Meteor.userId()
     Meteor.call('leaveMatchup', matchupId, userId);
-  }
+  },
+  'click [data-action=requestInvite]': function(e, t){
+    var userId = Meteor.userId();
+    var matchupId = Router.current().params._id
+    Meteor.call('requestMatchInvite',matchupId, userId)
+  },
+  'click [data-action=requestPending]': function(template, event){
+    IonActionSheet.show({
+      titleText: 'Are you sure you want to remove your group request?',
+      buttons: [
+        { text: 'Remove Request <i class="icon ion-share"></i>' },
+      ],
+      destructiveText: '',
+      cancelText: 'Cancel',
+      cancel: function() {},
+      buttonClicked: function(index) {
+        if (index === 0) {
+          var user = Meteor.userId();
+          var matchupId = Router.current().params._id
+          Meteor.call('removeMatchInvite', matchupId, user)
+          return true
+        }
+      }
+    });
+  },
 });
 
 Template.matchupJoin.helpers({
+  notMaxed: function(){
+    var matchup = this
+    var numOfUsers = this.users.length
+    var max = this.limitNum
+    if(max === -1){
+      return true
+    } else if(numOfUsers < max){
+      return true
+    } else {
+      return false
+    }
+  },
   allowToJoin: function(){
     var userId = Meteor.userId();
     if(this.groupId){
@@ -79,6 +115,13 @@ Template.matchupJoin.helpers({
         return true
       }
     } else {
+      return true
+    }
+  }, request: function(){
+    var invited = this.secret
+    var userId = Meteor.userId();
+    var onTheList = this.requests.indexOf(userId);
+    if(invited){
       return true
     }
   }
