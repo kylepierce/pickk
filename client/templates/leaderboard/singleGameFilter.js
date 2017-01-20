@@ -58,7 +58,18 @@ Template.singleGameFilter.helpers({
     var matchups = Matchup.find({}).fetch();
     var list = []
     _.each(matchups, function(matchup){
-      var item = {name: matchup._id, filter: "matchup", matchupId: matchup._id}
+      var groupId = matchup.groupId
+
+      if(groupId){
+        var group = Groups.find({_id: groupId}).fetch();
+        var matchupName = group[0].name
+      } else {
+        var userId = matchup.commissioner
+        var user = UserList.find({_id: userId}).fetch()
+        var matchupName = user[0].profile.username
+      }
+      var item = {name: matchupName, filter: "matchup", matchupId: matchup._id}
+
       if (data.filter === "matchup" && data.matchupId === matchup._id){
         item.checked = true
       }
@@ -112,6 +123,31 @@ Template._leaderboardFilter.helpers({
     });
     return list
   },
+  matchups: function(){
+    var data = Session.get('leaderboardData');
+    var matchups = Matchup.find({}).fetch();
+    var list = []
+    _.each(matchups, function(matchup){
+      var groupId = matchup.groupId
+      console.log(groupId);
+      if(groupId){
+        var group = Groups.find({_id: groupId}).fetch();
+        console.log(group);
+        var matchupName = group[0].name
+      } else {
+        var userId = matchup.commissioner
+        var user = UserList.find({_id: userId}).fetch()
+        var matchupName = user[0].profile.username
+      }
+      console.log(matchupName);
+      var item = {name: matchupName, filter: "matchup", matchupId: matchup._id}
+      if (data.filter === "matchup" && data.matchupId === matchup._id){
+        item.checked = true
+      }
+      list.push(item)
+    });
+  return list
+  }
 });
 
 Template._leaderboardFilter.events({

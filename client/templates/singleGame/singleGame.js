@@ -200,15 +200,16 @@ Template.liveGame.helpers({
 });
 
 Template.singleGame.events({
-  'click [data-action=game-leaderboard]': function(event, template){
-    var $game = Router.current().params._id
-    var $period = Games.findOne({}).period
+  'click [data-action=game-leaderboard]': function(e, t){
+    var gameId = Router.current().params._id
+    var period = Games.findOne({_id: gameId}).period
     var userId = Meteor.userId()
-    analytics.track("waiting-leaderboard", {
-      userId: userId,
-      gameId: $game,
-    });
-    Router.go('/leaderboard/'+ $game + "?period=" + $period)
+    // analytics.track("waiting-leaderboard", {
+    //   userId: userId,
+    //   gameId: gameId,
+    // });
+		console.log(this, e, t, gameId);
+    Router.go('/leaderboard/'+ gameId + "?period=" + period)
   },
   'click [data-action=previous-answers]': function(event, template){
     var $game = Router.current().params._id

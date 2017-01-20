@@ -40,6 +40,10 @@
       {{#each option in groups}}
         {{> radioOption o=option}}
       {{/each}}
+      <div class="item item-divider ten-spacing">Matchups</div>
+      {{#each option in matchups}}
+  			{{> radioOption o=option}}
+  		{{/each}}
     </form>
   {{/ionModal}}
 </template>

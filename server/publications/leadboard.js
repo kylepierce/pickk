@@ -124,6 +124,6 @@ Meteor.publish('leaderboardGamePlayed', function(o) {
 	if (o.period) { selector.period = parseInt(o.period) }
   if (o.number) { sort.limit = parseInt(o.number) }
 
-  var gamesPlayed = GamePlayed.find(selector, sort, fields )
-  return gamesPlayed
+	// console.log(selector);
+  var gamesPlayed = GamePlayed.find(selector, sort, fields);  return gamesPlayed
 });

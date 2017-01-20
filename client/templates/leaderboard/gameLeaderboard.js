@@ -58,17 +58,17 @@ Template.miniLeaderboard.helpers({
 
 		var leaderboardList = function(list){
 			var fixed = _.sortBy(list, function(obj){return - obj.coins})
-			var rank = _.first(fixed, number)
 			var i = 1
-			var followers = _.map(rank, function(user){
+
+			var leaderboardList = _.each(fixed, function(user){
 				var isFollowingUser = following.indexOf(user.userId)
 				if(isFollowingUser !== -1){
 					user.following = true
 				}
 				user.rank = i
-				i++
+				i = i + 1
 			});
-			return rank
+			return fixed
 		}
 
     return leaderboardList(list)
@@ -94,7 +94,7 @@ Template.miniLeaderboard.helpers({
     // https://github.com/meteoric/meteor-ionic/issues/66
     var url = "/user-profile/" + this.userId
     return url
-  }, 
+  },
 });
 
 Template.miniLeaderboard.events({
