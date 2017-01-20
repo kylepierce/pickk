@@ -46,4 +46,20 @@ Meteor.methods({
 	  }
 	  createPendingNotification(notifyObj)
 	},
+  'removeMatchupMember': function(userId, matchupId, inviter) {
+    check(userId, String);
+    check(matchupId, String);
+    check(inviter, String);
+    // Remove user from the group's list
+    Matchup.update({_id: matchupId}, {$pull: {users: userId}}, { validate: false });
+
+    var notifyObj = {
+      type: "matchup",
+      status: "removed",
+      senderId: inviter,
+      userId: userId,
+      matchupId: matchupId
+    }
+    createPendingNotification(notifyObj)
+  },
 });
