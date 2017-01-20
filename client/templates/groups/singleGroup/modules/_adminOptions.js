@@ -46,6 +46,7 @@ Template._adminOptions.events({
       buttonClicked: function(index) {
         if (index === 0) {
         var groupId = Router.current().params._id
+        console.log(groupId);
         Meteor.call('deleteGroup', groupId);
         Router.go('/groups');
         return true

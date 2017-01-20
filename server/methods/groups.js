@@ -124,9 +124,10 @@ Meteor.methods({
 		//Remove each user from the list
 		for (var i = members.length - 1; i >= 0; i--) {
 			var member = members[i]
+			console.log(member);
 
 			//Remove From both list and their account
-			Meteor.call('removeGroupMember', member, groupId);
+			Meteor.call('removeGroupMember', member, groupId, member);
 		}
 		;
 		Groups.remove({_id: groupId});

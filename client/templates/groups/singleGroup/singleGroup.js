@@ -8,8 +8,26 @@
 Template.singleGroup.rendered = function() {
   Session.set('chatGroup', this.data.group[0]._id)
 };
+Template.singleGroup.events({
+  "click [data-action=createMatchup]": function(){
+    Router.go('/matchup/create/')
+  }
+});
 
 Template.singleGroup.helpers({
+  leagueMatchups: function(){
+    var groupId = this.group[0]._id
+    var matchups = Matchup.find({groupId: groupId}).fetch();
+    console.log(matchups);
+    if(matchups.length > 0){
+      return true
+    }
+  },
+  matchups: function(){
+    var groupId = this.group[0]._id
+    var matchups = Matchup.find({groupId: groupId});
+    return matchups
+  },
   member: function(){
     var userId = Meteor.userId();
     var group = this.group[0]
@@ -17,9 +35,6 @@ Template.singleGroup.helpers({
     if(isMember > -1) {
       return true
     }
-  },
-  max: function(){
-
   },
   groupName: function(){
     return this.group[0].name

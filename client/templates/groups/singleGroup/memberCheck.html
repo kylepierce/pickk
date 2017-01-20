@@ -1,31 +1,32 @@
 <template name="memberCheck">
-	{{#if alreadyMember }}
-    <button class="button col col-33 button-balanced" data-action="invite">
-     {{> ionIcon icon='ios-upload-outline'}} Invite
-    </button>
+	<div class="groupButtons">
+		{{#if alreadyMember }}
+	    <button class="button col col-33 button-balanced" data-action="invite">
+	     {{> ionIcon icon='ios-upload-outline'}} Invite
+	    </button>
 
-    {{#if commissionerAdmin}}
-      <button id="settings" data-ion-popover="_adminOptions" class="button col col-10 button-stable">
-        {{> ionIcon icon='ios-gear'}}
-      </button>
-    {{else}}
-		  <button id="join-toggle" data-action="showActionSheet" class="button button-stable col col-10" >
-        {{> ionIcon icon='ios-gear'}}
-      </button>
-
-    {{/if}}
-
-	{{else}}
-		{{#if maxed}}
-	    {{#if invite}}
-	      {{> inviteOnly}}
+	    {{#if commissionerAdmin}}
+	      <button id="settings" data-ion-popover="_adminOptions" class="m-check col col-10">
+	        {{> ionIcon icon='ios-gear'}}
+	      </button>
 	    {{else}}
-			  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33 right" >Join</button>
-		  {{/if}}
+			  <button id="join-toggle" data-action="showActionSheet" class="m-check col col-10" >
+	        {{> ionIcon icon='ios-gear'}}
+	      </button>
+	    {{/if}}
+
 		{{else}}
-			{{> inviteOnly}}
-		{{/if}}
-  {{/if}}
+			{{#if maxed}}
+		    {{#if invite}}
+		      {{> inviteOnly}}
+		    {{else}}
+				  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-33 right" >Join</button>
+			  {{/if}}
+			{{else}}
+				{{> inviteOnly}}
+			{{/if}}
+	  {{/if}}
+	</div>
 </template>
 
 <template name="requestInvite">

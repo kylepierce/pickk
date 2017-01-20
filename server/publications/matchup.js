@@ -11,3 +11,8 @@ Meteor.publish('singleGameMatchups', function(gameId){
   var userId = this.userId;
   return Matchup.find({gameId: gameId, users: {$in: [userId]}})
 });
+
+Meteor.publish("singleGroupMatchups", function(groupId){
+  check(groupId, String);
+  return Matchup.find({groupId: groupId});
+});

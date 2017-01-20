@@ -22,12 +22,14 @@
           </div>
           <div class="item item-divider">Upcoming Matchups</div>
           {{#if leagueMatchups}}
-
+            {{#each matchup in matchups}}
+              {{> matchupItem m=matchup}}
+            {{/each}}
           {{else}}
             <div class="no-notifications container">
               No Matchups Scheduled
               {{#if commissionerAdmin}}
-                <button class="ten-spacing button button-stable col col-100">Create Matchup</button>
+                <button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
               {{/if}}
             </div>
           {{/if}}

@@ -9,9 +9,7 @@ Template.matchup.helpers({
 });
 
 Template.matchup.events({
-  'click .item': function(e,t){
-    Router.go('/matchup/'+ this.m._id)
-  }
+
 });
 
 Template.matchupItem.helpers({
@@ -54,5 +52,7 @@ Template.matchupItem.helpers({
 });
 
 Template.matchupItem.events({
-
+  'click .item': function(e,t){
+    Router.go('/matchup/'+ this.m._id)
+  }
 });

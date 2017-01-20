@@ -4,12 +4,12 @@
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Create New League</h1>
+    <h1 class="title white-text-header">Create Matchup</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-    <div class="container ten-spacing">
+    <div class="container ten-spacing hundred-bottom">
       {{#autoForm collection="Matchup" type="insert" id="createMatchup"}}
         {{> afQuickField type="select-radio" name='gameId'}}
         <br>
@@ -25,7 +25,7 @@
           {{/if}}
         <br>
         {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}}
-        <input name="status" type="submit" class="button button-large button-balanced" value="Create League">
+        <input name="status" type="submit" class="button button-large button-balanced" value="Create Matchup">
       {{/autoForm}}
     </div>
     {{/ionContent}}

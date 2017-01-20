@@ -5,6 +5,26 @@
   padding: 10px 0;
 }
 
+.groupButtons{
+  margin: 0 10px;
+}
+
+.groupButtons .button{
+  float: right;
+  margin: 10px;
+}
+
+.groupButtons .m-check{
+  font-size: 2rem;
+}
+
+.groupButtons .button,
+.groupButtons .m-check{
+  float: right;
+  margin: 10px;
+}
+
+
 .group-wrapper .group-avatar {
     float: left;
     clear: both;

@@ -69,6 +69,12 @@ Template.home.events({
     });
     Router.go('/daily-pickks')
   },
+  'click [data-action=viewAllGames]': function(){
+    Session.set('gamesDate', "week");
+    var all = ["NBA", "NFL", "MLB"]
+    Session.set('gamesBySport', all);
+    Router.go('/games')
+  }
 });
 
 
