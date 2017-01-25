@@ -99,7 +99,7 @@ Template.groupData.helpers({
     }
   },
   league: function(){
-    if(this.group[0].leagueAssociation){
+    if(this.group[0].leagueAssociation  === "true"){
       return true
     }
   },
@@ -109,7 +109,7 @@ Template.groupData.helpers({
     }
   },
   team: function(){
-    if(this.group[0].teamAssociation){
+    if(this.group[0].teamAssociation === "true"){
       return true
     }
   },

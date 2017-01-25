@@ -15,7 +15,10 @@ Template.inviteMatchupButton.helpers({
       var invitee = this._id
     }
     var matchup = Matchup.findOne(Router.current().params._id);
-    return ~matchup.invites.indexOf(invitee);
+    var alreadyInvited = matchup.invites.indexOf(invitee)
+    if( alreadyInvited > -1 ){
+      return true
+    }
   }
 });
 
@@ -24,10 +27,12 @@ Template.inviteMatchupButton.events({
     var invitee = this.__originalId
     if (!invitee) {
       var invitee = this._id
-      var username = this.username
+      var user = UserList.findOne({_id: invitee})
+      var username = user.profile.username
     } else {
       var username = this.profile.username
     }
+    console.log(this);
     var inviter = Meteor.userId()
     var matchupId = Router.current().params._id
 

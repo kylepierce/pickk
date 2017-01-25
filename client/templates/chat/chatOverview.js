@@ -181,7 +181,6 @@ Template.messageBox.events({
             })
           } else {
             IonKeyboard.close()
-            IonPopover.hide()
             $('#chat-submit').removeClass('allow-chats')
             $("#messageBox").val('');
             if(Meteor.isCordova){
@@ -241,7 +240,7 @@ Template.messageBox.events({
           })
         } else {
           IonKeyboard.close()
-          IonPopover.hide()
+          // IonPopover.hide()
           $('#chat-submit').removeClass('allow-chats')
           $("#messageBox").val('');
           if(Meteor.isCordova){
@@ -253,11 +252,10 @@ Template.messageBox.events({
             updateIntercom(intercomData)
           }
           IonLoading.show({
-              customTemplate: "Posting.",
-              duration: 3000,
-              backdrop: true
-            })
-
+            customTemplate: "Posting.",
+            duration: 3000,
+            backdrop: true
+          });
         }
       });
     }

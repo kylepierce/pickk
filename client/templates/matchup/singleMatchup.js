@@ -62,7 +62,7 @@ Template.singleMatchup.events({
   },
   'click [data-action=leaveMatchup]': function(e, t){
     var matchupId = this._id
-    var userId = Meteor.userId()
+    var userId = Meteor.userId();
     Meteor.call('leaveMatchup', matchupId, userId);
   },
   'click [data-action=requestInvite]': function(e, t){
@@ -72,7 +72,7 @@ Template.singleMatchup.events({
   },
   'click [data-action=requestPending]': function(template, event){
     IonActionSheet.show({
-      titleText: 'Are you sure you want to remove your group request?',
+      titleText: 'Are you sure you want to remove your matchup request?',
       buttons: [
         { text: 'Remove Request <i class="icon ion-share"></i>' },
       ],

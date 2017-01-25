@@ -149,6 +149,11 @@ Template.inviteOnly.helpers({
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId,
       invites: {$in: [currentUser]}}, {fields: {invites: 1}});
+      console.log(group);
+    var alreadyInvited = group.invites.indexOf(currentUser)
+    if( alreadyInvited > -1 ){
+      return true
+    }
   }
 });
 
