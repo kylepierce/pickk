@@ -106,6 +106,7 @@ Template.matchupJoin.helpers({
   },
   allowToJoin: function(){
     var userId = Meteor.userId();
+    var deepLinked = Session.get('deepLinked')
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
     if(this.groupId){
       Meteor.subscribe('singleGroup', this.groupId);
@@ -115,6 +116,8 @@ Template.matchupJoin.helpers({
         return true
       }
     } else if (deeplinkAllowed === "true"){
+      return true
+    } else if (deepLinked.matchupId === this._id && deepLinked.allowed === 1){
       return true
     } else if (this.secret === "invite"){
       var invited = this.invites.indexOf(userId)

@@ -24,13 +24,12 @@ Template.inviteMatchupButton.helpers({
 
 Template.inviteMatchupButton.events({
 	'click [data-action=invite]': function(e, t){
-    var invitee = this.__originalId
-    if (!invitee) {
-      var invitee = this._id
+    var invitee = this._id
+    if(!"user" in this){
       var user = UserList.findOne({_id: invitee})
       var username = user.profile.username
     } else {
-      var username = this.profile.username
+      var username = this.user
     }
     console.log(this);
     var inviter = Meteor.userId()
@@ -85,13 +84,15 @@ Template.inviteToMatchupBox.events({
         "userId": ref,
       }
       updateIntercom(intercomData)
-
+      var deeplink = '/matchup/' + matchupId + "/?deeplinkAllowed=true"
       Branch.createBranchUniversalObject({
         canonicalIdentifier: 'user-profile/'+ ref,
         title: 'Matchup Invite!',
         contentDescription: message,
         contentMetadata: {
           'userId': ref,
+          '$deeplink_path': deeplink,
+          'allowed': true,
           'userName': username,
           'matchupId': matchupId
         }

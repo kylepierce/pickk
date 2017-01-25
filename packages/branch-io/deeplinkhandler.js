@@ -4,6 +4,7 @@ DeepLinkHandler = function (data) {
     duration: 2500,
     backdrop: true
   });
+  console.log(data);
   if (data) {
     Session.set("deepLinked", data);
     if (data.$deeplink_path){
@@ -32,7 +33,10 @@ NonBranchLinkHandler = function(link) {
 handleOpenURL = function(url){
   var userId = Meteor.userId();
   if (userId){
-    Session.set("deepLinked", {});
+    var data = Session.get("deepLinked")
+    data["$deeplink_path"] = ""
+    Session.set("deepLinked", data);
+    console.log(data);
   	Router.go(url)
   }
 }
