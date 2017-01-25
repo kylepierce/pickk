@@ -145,13 +145,15 @@ Template.requestInvite.helpers({
 
 Template.inviteOnly.helpers({
   invite: function(){
-    var currentUser = Meteor.userId()
+    var currentUser = Meteor.userId();
     var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId,
-      invites: {$in: [currentUser]}}, {fields: {invites: 1}});
-      console.log(group);
-    var alreadyInvited = group.invites.indexOf(currentUser)
-    if( alreadyInvited > -1 ){
+    var group = Groups.findOne({_id: groupId}, {fields: {invites: 1}});
+    var alreadyInvited = group && group.invites.indexOf(currentUser);
+    var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
+
+    if( alreadyInvited > -1){
+      return true
+    } else if (deeplinkAllowed === "true"){
       return true
     }
   }
