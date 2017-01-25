@@ -3,8 +3,8 @@ if (Meteor.isCordova) {
 
   document.addEventListener('deviceready', function () {
     deviceReady = true;
-    var userId = Meteor.userId()
-    Branch.setIdentity(userId)
+    var userId = Meteor.userId();
+    Branch.setIdentity(userId);
 
     Branch.initSession();
     var data = Session.get("deepLinked");

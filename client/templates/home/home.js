@@ -1,4 +1,10 @@
 Template.home.rendered = function () {
+  // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
+  var deeplink = Session.get("deepLinked");
+  if(deeplink && "$deeplink_path" in deeplink){
+    handleOpenURL(deeplink["$deeplink_path"])
+  }
+
   $('.hero-section').slick({
     slidesToShow: 1,
     slidesToScroll: 1,

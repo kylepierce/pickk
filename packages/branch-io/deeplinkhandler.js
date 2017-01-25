@@ -1,6 +1,6 @@
 DeepLinkHandler = function (data) {
   IonLoading.show({
-    customTemplate: "Hold Up...",
+    customTemplate: "Redirecting!..",
     duration: 2500,
     backdrop: true
   });
@@ -10,7 +10,6 @@ DeepLinkHandler = function (data) {
     	handleOpenURL(data.$deeplink_path)
     	return data
     }
-    return data
   } else {
     console.log('No data found');
   }
@@ -26,11 +25,14 @@ NonBranchLinkHandler = function(link) {
   	Session.set("nonBranch", link.url);
     //with the leading "/"
   	var route = link.url.slice(7)
-		console.log(route)
 		handleOpenURL(route);
   }
 }
 
 handleOpenURL = function(url){
-	Router.go(url)
+  var userId = Meteor.userId();
+  if (userId){
+    Session.set("deepLinked", {});
+  	Router.go(url)
+  }
 }
