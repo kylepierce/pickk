@@ -26,10 +26,11 @@ Template.inviteButton.helpers({
 
 Template.inviteButton.events({
 	'click [data-action=invite]': function(e, t){
+    console.log(this);
     var invitee = this.__originalId
     if (!invitee) {
       var invitee = this._id
-      var username = UserList.find({_id: invitee}).fetch()[0].profile.username
+      var username = this.user
     } else {
       var username = this.profile.username
     }
@@ -42,7 +43,7 @@ Template.inviteButton.events({
     var groupName = groupData.name
     var message = Meteor.user().profile.username + " has invited you to join " + groupName
 
-    // Meteor.call('pushInvite', message, this.__originalId);
+    Meteor.call('pushInvite', message, invitee);
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)

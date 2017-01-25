@@ -7,7 +7,7 @@ Template.matchupMembers.helpers({
 
 Template.matchupMembers.events({
 	'click [data-action=viewUser]': function(){
-		Router.go('/user-profile/' + this._id);
+		Router.go('/user-profile/' + this.user._id);
 	},
 	'click [data-action=delete]': function (e, t) {
 		var inviter = Meteor.userId();

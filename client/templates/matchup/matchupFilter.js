@@ -40,7 +40,7 @@ Template.matchupFilter.helpers({
   },
   'size': function(){
     var data = Session.get('upcomingMatchups');
-    var options = [{name: "You vs Another", size: 2}, {name: "4 Users", size: 4}, {name: "8 Users", size: 8}, {name: "16 Users", size: 16}, {name: "32 Users", size: 32}, {name: "No Limit", size: -1}]
+    var options = [{name: "1v1", size: 2}, {name: "4 Users", size: 4}, {name: "8 Users", size: 8}, {name: "16 Users", size: 16}, {name: "32 Users", size: 32}, {name: "No Limit", size: -1}]
 
     _.each(options, function(option){
       if(!data){

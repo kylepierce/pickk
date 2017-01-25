@@ -7,7 +7,7 @@ Template._groupMembers.helpers({
 
 Template._groupMembers.events({
 	'click [data-action=viewUser]': function(){
-		Router.go('/user-profile/' + this._id);
+		Router.go('/user-profile/' + this.user._id);
 	},
 	'click [data-action=delete]': function (e, t) {
 		var inviter = Meteor.userId();

@@ -127,7 +127,11 @@ Template.groupData.helpers({
   max: function(){
     if(this.group[0].limit){
       var number = this.group[0].limitNum
-      return "/ " + number
+      if(number === -1){
+        return "/ ∞"
+      } else {
+        return "/ " + number
+      }
     }
   },
   description: function(){

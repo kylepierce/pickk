@@ -24,7 +24,7 @@ Template.inviteMatchupButton.events({
     var invitee = this.__originalId
     if (!invitee) {
       var invitee = this._id
-      var username = UserList.find({_id: invitee}).fetch()[0].profile.username
+      var username = this.username
     } else {
       var username = this.profile.username
     }
@@ -34,15 +34,14 @@ Template.inviteMatchupButton.events({
     Meteor.call("inviteToMatchup", invitee, inviter, matchupId);
 
     var matchupData = Matchup.findOne(matchupId)
-    // var matchupName = matchupData.name
-    // var message = Meteor.user().profile.username + " has invited you to join " + matchupName
+    var message = Meteor.user().profile.username + " has challenged to a single game matchup!"
 
-    // Meteor.call('pushInvite', message, this.__originalId);
+    Meteor.call('pushInvite', message, invitee);
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)
     $("#" + invitee).append(document.createTextNode("d"));
-    // sAlert.success("Invited " + username + " to " + matchupName , {effect: 'slide', position: 'bottom', html: true});
+    sAlert.success("Invited " + username , {effect: 'slide', position: 'bottom', html: true});
 	}
 });
 

@@ -58,7 +58,12 @@ Template.gameTypePrompt.events({
       Branch.userCompletedAction(eventName)
     }
     Meteor.call('userJoinsAGame', data);
-    Meteor.subscribe('gamePlayed', user._id, game._id),
+    Meteor.subscribe('gamePlayed', user._id, game._id);
+    var leaderData = Session.get('leaderboardData')
+  	leaderData["period"] = game.period,
+
+    console.log(leaderData);
+  	Session.set('leaderboardData', leaderData)
     IonLoading.show({
       customTemplate: "Providing Coins...",
       duration: 1000,

@@ -29,7 +29,7 @@
 </template>
 
 <template name="memberItem">
-  {{#ionItem buttonRight=true avatar=true}}
+  <div data-action="viewUser" class="item item-avatar item-button-right">
     {{> userAvatar userId=user._id}}
     {{user.profile.username}}
     {{#if admin}}
@@ -41,5 +41,5 @@
         View
       </button>
     {{/if}}
-  {{/ionItem}}
+  </div>
 </template>

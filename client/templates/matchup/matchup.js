@@ -1,5 +1,13 @@
 Template.matchup.onCreated(function() {
-  Session.set('matchupFilter', {})
+  var games = Games.find({}).fetch();
+  var list = []
+  _.each(games, function(game){
+    list.push(game._id)
+  });
+  var data = {
+    gameId: {$in: list}
+  }
+  Session.set('matchupFilter', data)
 	this.getFilter = () => Session.get('matchupFilter');
 	this.autorun(() => {
 		this.subscribe( 'upcomingMatchups', this.getFilter());
@@ -39,6 +47,7 @@ Template.matchupItem.helpers({
       var matchupName = group[0].name
     } else {
       var userId = matchup.commissioner
+      Meteor.subscribe('findSingle', userId);
       var user = UserList.find({_id: userId}).fetch()
       var matchupName = user[0].profile.username
     }

@@ -1,3 +1,7 @@
+// Template.userProfile.rendered = function() {
+//     console.log(this.data); // you should see your passage object in the console
+// };
+
 Template.userProfile.onCreated( function() {
   this.diamonds = new ReactiveVar( "0" );
   this.coins = new ReactiveVar( "0" );
@@ -6,7 +10,7 @@ Template.userProfile.onCreated( function() {
 
 Template.userProfile.helpers({
   totalDiamonds: function () {
-    var userId = Router.current().params._id
+    var userId = this.user._id
     if (userId === undefined){
       var userId = Meteor.userId();
     }
@@ -27,7 +31,7 @@ Template.userProfile.helpers({
     return Template.instance().diamonds.get();
   },
   totalCoins: function () {
-    var userId = Router.current().params._id
+    var userId = this.user._id
     if (userId === undefined){
       var userId = Meteor.userId();
     }

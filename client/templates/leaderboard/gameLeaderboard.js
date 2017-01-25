@@ -8,6 +8,11 @@ Template.gameLeaderboard.onCreated(function() {
 		groupId: query.groupId,
 		matchupId: query.matchupId
 	}
+	if (data.period === undefined){
+		var game = Games.find().fetch();
+    var period = game[0].period;
+		data["period"] = period
+	}
 	Session.set('leaderboardData', data)
 });
 

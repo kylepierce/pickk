@@ -1,7 +1,6 @@
 Meteor.methods({
 	'totalDiamonds': function(userId){
 		check(userId , String);
-
 	  var selector = {
 	    userId: userId
 	  }
@@ -10,9 +9,9 @@ Meteor.methods({
 	    { $group: {
 	      _id: '$userId',
 	      diamonds: { $sum: '$diamonds'}
-	    }});
-
-	    return diamonds[0].diamonds
+	  	}}
+		);
+	  return diamonds[0].diamonds
 	},
 	'totalCoins': function(userId){
 		check(userId , String);
@@ -26,7 +25,6 @@ Meteor.methods({
 	      _id: '$userId',
 	      coins: { $sum: '$coins'}
 	    }});
-
 	    return diamonds[0].coins
 	},
 	'totalQue': function(userId){

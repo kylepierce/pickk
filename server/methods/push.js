@@ -83,7 +83,7 @@ Meteor.methods({
 		if (user) {
 			Push.send({
 				from: 'Pickk',
-				title: 'Pick invite',
+				title: 'Pick Invite',
 				sound: 'default',
 				text: message,
 				badge: 1,

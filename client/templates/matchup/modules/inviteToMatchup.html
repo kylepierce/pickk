@@ -46,7 +46,7 @@
               {{> userAvatar user=. alreadySubscribed=true}}
               {{profile.username}}
             </a>
-            {{> inviteMatchupButton _id=__originalId}}
+            {{> inviteMatchupButton _id=__originalId user=profile.username}}
           {{/ionItem}}
         {{/EasySearch.Each}}
       {{/ionList}}

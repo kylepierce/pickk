@@ -22,6 +22,16 @@
 
   {{#ionView}}
     {{#ionContent}}
+		<div style="margin: 20px;" class="container">
+      Challenge a Friend or A Party to a Matchup!
+      <br>
+      <br>
+      <a href="/matchup/create" class="newGroup">
+      <button class="button button-balanced col col-100">
+        Create Matchup
+      </button>
+      </a>
+    </div>
       <div class="list container">
 				{{#if anyMatchups}}
 					{{#each matchup in matchups}}

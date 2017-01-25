@@ -11,6 +11,11 @@
   margin: 0 10px;
 }
 
+.m-check {
+  background-color: white;
+  border: 0;
+}
+
 .groupButtons .button{
   float: right;
   margin: 10px;

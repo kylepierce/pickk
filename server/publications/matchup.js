@@ -1,7 +1,6 @@
 Meteor.publish('upcomingMatchups', function (selector){
   check(selector, Object);
-  console.log(selector);
-  return Matchup.find(selector);
+  return Matchup.find(selector, {limit: 20});
 });
 
 Meteor.publish('singleMatchup', function(matchupId){
