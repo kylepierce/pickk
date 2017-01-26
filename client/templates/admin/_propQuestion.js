@@ -128,6 +128,31 @@ Template._propQuestion.events({
 			i ++
 		});
 	},
+	'click [data-action=teams]': function(){
+		var optionBoxes = $('.option-boxes')
+		var game = Games.find({}).fetch()[0];
+		var i = 0
+		_.each(game.teams, function(team){
+			optionBoxes[i].children[0].value = team
+			i ++
+		});
+	},
+	'click [data-action=score]': function(){
+		var optionBoxes = $('.option-boxes')
+		var scores = [
+			"0-9",
+			"10-15",
+			"16-20",
+			"21-25",
+			"26-34",
+			"35+"
+		]
+		var i = 0
+		_.each(scores, function(score){
+			optionBoxes[i].children[0].value = score
+			i ++
+		});
+	},
 	'click [data-action=propCreation]': function () {
 		event.preventDefault();
 		var gameId = Router.current().params._id
