@@ -64,7 +64,12 @@ Template.notification.helpers({
 	},
 	noNotifications: function () {
 		var data = Template.instance()
-	}
+	},
+  new: function(){
+    if(this.note.read === false){
+      return "history-inprogress"
+    }
+  }
 });
 
 Template.groupNotification.helpers({

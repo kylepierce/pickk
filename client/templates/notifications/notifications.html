@@ -44,48 +44,65 @@
 
 <template name="notification">
 	{{#if notif "group"}}
-		{{> groupNotification}}
+		<div class="item item-avatar item-button-right {{new}}">
+			{{> groupNotification}}
+		</div>
 	{{/if}}
+
 	{{#if notif "mention"}}
-		{{> chatNotification}}
+		<div class="item item-avatar {{new}}">
+			{{> chatNotification}}
+		</div>
 	{{/if}}
+
 	{{#if notif "follower"}}
-		{{> newFollower}}
+		<div class="item item-avatar {{new}}">
+			{{> newFollower}}
+		</div>
 	{{/if}}
+
 	{{#if notif "coins"}}
-		{{#ionItem class="notification-has-image"}}
+		<div class="item history-item notification-has-image {{new}}">
 			{{> coinsNotification}}
-		{{/ionItem}}
+		</div>
 	{{/if}}
+
 	{{#if notif "diamonds"}}
-		{{#ionItem class="notification-has-image"}}
+		<div class="item history-item notification-has-image {{new}}">
 			{{> diamondNotification}}
-		{{/ionItem}}
+		</div>
 	{{/if}}
+
 	{{#if notif "leaderboard"}}
 		{{> leaderboardNotification}}
 	{{/if}}
+
 	{{#if notif "badge"}}
 		{{> badgeNotification}}
 	{{/if}}
+
 	{{#if notif "trophy"}}
-		{{#ionItem class="notification-has-image"}}
+		<div class="item history-item notification-has-image {{new}}">
 			{{> trophyNotification}}
-		{{/ionItem}}
+		</div>
 	{{/if}}
+
 	<!-- {{#if notif "matchupInvite"}}
 		{{> matchupInvite}}
 	{{/if}} -->
+
 	{{#if notif "matchup"}}
-		{{> matchupNotification}}
+		<div class="item item-avatar item-button-right {{new}}">
+			{{> matchupNotification}}
+		</div>
 	{{/if}}
+
 	{{#if notif "chatReaction"}}
 		{{> chatReaction}}
 	{{/if}}
  </template>
 
 <template name="groupNotification">
-	{{#ionItem avatar=true buttonRight=true}}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	    <h2 data-action="viewUser">{{profile.username}}</h2>
@@ -103,17 +120,15 @@
 			{{/with}}
 		{{/if}}
 		<button data-action="viewGroup" class="button">View</button>
-	{{/ionItem}}
 </template>
 
 <template name="chatNotification">
-	{{#ionItem avatar=true }}
 		{{> userAvatar userId=note.senderId}}
 		<h3>
 		{{#with user note.senderId}}
 			@{{profile.username}} Mentioned You
 	  {{/with}}
-<!-- 	  {{#with groupData note.groupId}}
+		<!-- 	  {{#with groupData note.groupId}}
 			in <strong>{{name}}</strong>
 		{{/with}} -->
 		</h3>
@@ -122,7 +137,6 @@
 	  {{#with reactions note.messageId}}
 	  	{{> messageReactions reactions=this.reactions}}
 		{{/with}}
-	{{/ionItem}}
 </template>
 
 <template name="coinsNotification">
@@ -142,23 +156,19 @@
 </template>
 
 <template name="newFollower">
-	{{#ionItem avatar=true}}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	   	<h2>{{profile.username}}</h2>
 	   	<p>started following you!</p>
 	  {{/with}}
-	{{/ionItem}}
 </template>
 
 <template name="chatReaction">
-	{{#ionItem avatar=true }}
 		<img src={{emojiIconSrc note.reaction}}>
 		{{#with user note.senderId}}
 	    <h3>@{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
-	{{/ionItem}}
 </template>
 
 <template name="trophyNotification">
@@ -170,7 +180,6 @@
 </template>
 
 <template name="matchupNotification">
-	{{#ionItem avatar=true buttonRight=true}}
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	    <h2 data-action="viewUser">{{profile.username}}</h2>
@@ -189,7 +198,6 @@
 			{{/with}}
 		{{/if}} -->
 		<button data-action="viewMatchup" class="button">View</button>
-	{{/ionItem}}
 </template>
 
 <template name="leaderboardNotification"></template>

@@ -10,7 +10,7 @@ Template.notificationFilter.helpers({
 			{name: "Read", value: [true]},
 			{name: "Unread", value: [false]}
 		]
-		
+
 		_.each(list, function(item, i){
 			if(item.value.toString() === data.status.toString()){
 				list[i].checked = true
@@ -24,7 +24,10 @@ Template.notificationFilter.events({
 	'change #status .item-radio': function(e,t){
 		var data = Session.get('notificationsFilter');
 		data.status = this.value
-		Session.set('notificationsFilter', data)
+		Meteor.call('updateNotificationFilter', data, function(){
+			var userSettings = Meteor.user().profile.notifications
+			Session.set('notificationsFilter', data);
+		});
 	},
 	'change .checkbox': function(e,t){
 		var data = Session.get('notificationsFilter');
