@@ -17,10 +17,20 @@ Template.notificationFilter.helpers({
 			}
 		});
 		return list
+	},
+	unread: function(){
+		var count = Counts.get('unreadNotificationsCount');
+		if (count > 0){
+			return true
+		}
 	}
 });
 
 Template.notificationFilter.events({
+	'click [data-action=readAll]': function(){
+		Meteor.call('markAllAsRead');
+		sAlert.success("Marked all notifications as read!" , {effect: 'slide', position: 'bottom', html: true});
+	},
 	'change #status .item-radio': function(e,t){
 		var data = Session.get('notificationsFilter');
 		data.status = this.value

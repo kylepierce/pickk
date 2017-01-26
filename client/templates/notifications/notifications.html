@@ -27,16 +27,16 @@
 				<div class="no-notifications">
 					No Unread Notifications
 				</div>
-				<div class="container">
+				<div class="container hundred-bottom">
 					<strong>Pro Tip:</strong>
 					<span>Select Which Notifications You Want to See By Clicking the Filter Button Above.</span>
 				</div>
     	{{else}}
-    		{{#ionList class=notificationsList}}
+    		<div class="hundred-bottom">
 		    	{{#each note in notifications}}
 						{{> notification note=note}}
 		    	{{/each}}
-    		{{/ionList}}
+    		</div>
     	{{/if}}
     {{/ionContent}}
   {{/ionView}}
@@ -62,13 +62,13 @@
 	{{/if}}
 
 	{{#if notif "coins"}}
-		<div class="item history-item notification-has-image {{new}}">
+		<div class="item notification-has-image {{new}}">
 			{{> coinsNotification}}
 		</div>
 	{{/if}}
 
 	{{#if notif "diamonds"}}
-		<div class="item history-item notification-has-image {{new}}">
+		<div class="item notification-has-image {{new}}">
 			{{> diamondNotification}}
 		</div>
 	{{/if}}
@@ -82,7 +82,7 @@
 	{{/if}}
 
 	{{#if notif "trophy"}}
-		<div class="item history-item notification-has-image {{new}}">
+		<div class="item notification-has-image {{new}}">
 			{{> trophyNotification}}
 		</div>
 	{{/if}}

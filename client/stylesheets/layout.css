@@ -1,12 +1,6 @@
-#pendingNotifications {
-	float: right;
-	border-radius: 100%;
-	width: 30px;
-	height: 30px; 
-	background-color: red;
-	text-align: center;
-	color: white;
-	padding: 2.5px 0;
+.unreadNotifications {
+	color: #800080;
+	font-weight: 900;
 }
 
 .profile-container .avatar {
@@ -37,8 +31,8 @@
 }
 
 .diamond-leaderboard {
-	margin-left: -38px; 
-	font-size: 1.3em; 
-	font-weight: 100; 
+	margin-left: -38px;
+	font-size: 1.3em;
+	font-weight: 100;
 	padding: 0 10px 0 0;
 }

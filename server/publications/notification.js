@@ -30,3 +30,9 @@ Meteor.publish('gameNotifications', function(gameId) {
   var notif = Notifications.find({gameId: gameId, userId: userId, read: false});
   return notif
 });
+
+Meteor.publish("unreadNotificationsCount", function() {
+  this.unblock();
+	var userId = this.userId;
+  Counts.publish(this, "unreadNotificationsCount", Notifications.find({userId: userId, read: false}));
+});

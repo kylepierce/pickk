@@ -130,7 +130,6 @@ Template.sideMenuContent.helpers({
     return count
   },
   diamonds: function () {
-
     var thisWeek = moment().week()
     var day = moment().day()
     if (day < 2){
@@ -156,16 +155,17 @@ Template.sideMenuContent.helpers({
     return Template.instance().diamonds.get();
   },
   pendingNotifications: function(){
-    var user = Meteor.userId();
-    var number = Notifications.find({userId: user, read: false})
-    if(number){
+    Meteor.subscribe('unreadNotificationsCount');
+    var count = Counts.get('unreadNotificationsCount');
+    if(count === 0){
+      return false
+    } else if (count > 0){
       return true
     }
   },
   notificationNumber: function() {
-    var user = Meteor.userId();
-    var number = Notifications.find({userId: user, read: false}).count()
-    return number
+    var count = Counts.get('unreadNotificationsCount');
+    return count
   },
   userId: function () {
     return Meteor.userId();

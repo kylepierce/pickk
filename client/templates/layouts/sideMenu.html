@@ -38,8 +38,15 @@
     {{/ionItem}}
 
     {{#ionItem iconLeft=true path="notifications" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-bell-outline'}}
-      Notifications
+      {{#if pendingNotifications}}
+        <div class="unreadNotifications">
+          {{> ionIcon icon='ios-bell-outline'}}
+          {{notificationNumber}} Notifications
+        </div>
+      {{else}}
+        {{> ionIcon icon='ios-bell-outline'}}
+        Notifications
+      {{/if}}
     {{/ionItem}}
 
     {{#ionItem iconLeft=true path="groups" data-ion-menu-toggle="left"}}

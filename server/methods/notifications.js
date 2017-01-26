@@ -24,14 +24,18 @@ Meteor.methods({
   'removeNotification': function(notifyId) {
     check(notifyId, String);
     this.unblock()
-    Notifications.update({_id: notifyId}, {$set: {read: true}})
+    Notifications.update({_id: notifyId}, {$set: {read: true}});
+  },
+  'markAllAsRead': function(){
+    var userId = Meteor.userId();
+    Notifications.update({userId: userId, read: true}, {$set: {read: false}}, {multi: true});
   },
   'questionData': function (id) {
     check(id, String);
-    
+
     return question.que
   },
   'deleteScore': function (){
-    Notifications.update({type: "score"}, {$set: {read: true}})
+    Notifications.update({type: "score"}, {$set: {read: true}});
   }
 })
