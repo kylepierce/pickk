@@ -1,8 +1,7 @@
 Template.home.rendered = function () {
   // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
   var deeplink = Session.get("deepLinked");
-  console.log(deeplink);
-  if(deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
+  if(deeplink && deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
     handleOpenURL(deeplink["$deeplink_path"])
   }
 
