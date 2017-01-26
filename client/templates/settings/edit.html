@@ -1,0 +1,63 @@
+<template name="editProfile">
+  {{> yield 'header'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container">
+        {{#autoForm collection="Meteor.users" schema=UsersProfileSchema doc=currentUser id="settings"}}
+          <div class="list">
+            {{> afQuickField autofocus='' label-type='stacked' name='profile.username'}}
+            {{> afQuickField label-type='stacked' name='emails.0.address'}}
+            {{> afQuickField label-type='stacked' name='profile.firstName'}}
+            {{> afQuickField label-type='stacked' name='profile.lastName'}}
+            {{> afQuickField label-type='stacked' name='profile.birthday'}}
+            <label  class="item item-input item-stack-label">
+              <span  class="input-label">
+                {{> userAvatar userId=currentUser._id}}
+                <i class="fa fa-spinner fa-spin loading" style="display: none;"></i></span>
+              <br>
+              <label style="display: inline-block; vertical-align: top">
+                <input id="new-icon" type="file" name="avatar" placeholder="Change">
+              </label>
+            </label>
+
+            {{> yield 'submitButton'}}
+          </div>
+        {{/autoForm}}
+      </div>
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="submitNew">
+  <input name="status" type="submit" class="button button-large button-positive" value="Finish Profile">
+</template>
+
+<template name="submitOld">
+  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile">
+</template>
+
+<template name="newUserHeader">
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      Create Profile
+    </h1>
+  {{/contentFor}}
+</template>
+
+<template name="oldUserHeader">
+  {{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Update Profile</h1>
+  {{/contentFor}}
+</template>

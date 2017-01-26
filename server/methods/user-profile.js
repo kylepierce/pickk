@@ -43,8 +43,10 @@ Meteor.methods({
 	    return diamonds[0].queCounter
 	},
 	// Update users info from the settings page
-	'updateProfile': function(username, firstName, lastName, birthday, timezone) {
+	'updateProfile': function(username, email, firstName, lastName, birthday, timezone) {
+		console.log(username, email, firstName, lastName, birthday, timezone);
 		check(username, String);
+		check(email, String);
 		check(firstName, Match.Maybe(String));		// Match.Maybe -> used for optional fields.. updateProfile being called only with username in 'at_config,js' file
 		check(lastName, Match.Maybe(String));
 		check(birthday, Match.Maybe(Date));
@@ -53,9 +55,11 @@ Meteor.methods({
 		if (!this.userId) {
 			return;
 		}
+
 		UserList.update(this.userId,
 			{
 				$set: {
+					'emails.0.address': email,
 					'profile.username': username,
 					'profile.firstName': firstName,
 					'profile.lastName': lastName,

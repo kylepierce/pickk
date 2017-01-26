@@ -8,4 +8,13 @@ Meteor.methods({
 		}
 		return !UserList.find({_id: {$ne: this.userId}, "profile.username": new RegExp("^" + escapeRegExp(username) + "$", "i")}).count()
 	},
+	'isEmailUnique': function(email) {
+		check(email, String);
+
+		email = email.trim()
+		if (!email) {
+			return true;
+		}
+		return !UserList.find({_id: {$ne: this.userId}, "emails.0.address": new RegExp("^" + escapeRegExp(email) + "$", "i")}).count()
+	},
 })

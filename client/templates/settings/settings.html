@@ -1,62 +1,21 @@
 <template name="settings">
-  {{> yield 'header'}}
- 
   {{#ionView}}
     {{#ionContent}}
-      <div class="container">
-        {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id="settings"}}
-          <div class="list">
-            {{> afQuickField name='username'}}
-            {{> afQuickField name='firstName'}}
-            {{> afQuickField name='lastName'}}
-            {{> afQuickField name='birthday'}}
-            <label  class="item item-input item-stack-label">
-              <span  class="input-label">
-                {{> userAvatar userId=currentUser._id}}
-                <i class="fa fa-spinner fa-spin loading" style="display: none;"></i></span>
-              <br>
-              <label style="display: inline-block; vertical-align: top">
-                <input id="new-icon" type="file" name="avatar" placeholder="Change">
-              </label>
-            </label>
+      {{#contentFor "headerTitle"}}
+        <h1 class="title white-text-header">
+          Update Settings
+        </h1>
+      {{/contentFor}}
 
-            {{> yield 'submitButton'}}
-          </div>
-        {{/autoForm}}
-      </div>
-
+      {{#ionList}}
+        {{#ionItem path="editProfile"}}
+          Edit Profile
+        {{/ionItem}}
+        {{#ionItem path="newUserFavoriteTeams"}}
+          Favorite Teams
+        {{/ionItem}}
+        <!-- {{#ionItem}}Notification Settings{{/ionItem}} -->
+      {{/ionList}}
     {{/ionContent}}
   {{/ionView}}
-</template>
-
-<template name="submitNew">
-  <input name="status" type="submit" class="button button-large button-positive" value="Finish Profile">
-</template>
-
-<template name="submitOld">
-  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile">
-</template>
-
-<template name="newUserHeader">
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">
-      Create Profile
-    </h1>
-  {{/contentFor}}
-</template>
-
-<template name="oldUserHeader">
-  {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
-  {{/contentFor}}
-
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Update Profile</h1>
-  {{/contentFor}}
 </template>
