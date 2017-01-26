@@ -4,6 +4,12 @@
   </div>
   <div style="margin-top:44px;">
   {{#ionList}}
+		<form id="status">
+			{{#each option in status}}
+				{{> radioOption o=option}}
+			{{/each}}
+		</form>
+		<div class="item item-divider ten-spacing">Type</div>
   	<form>
 		{{#each option in options}}
 			{{> notificationOption o=option}}

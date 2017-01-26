@@ -11,15 +11,17 @@ Meteor.publish("userNotificationSettings", function() {
 });
 
 Meteor.publish('userNotifications', function(filters) {
-	check(filters, Array)
+	check(filters, Object)
   this.unblock()
 	var userId = this.userId
+	var type = filters.type
+	var status = filters.status
 	var user = UserList.find({_id: userId}).fetch()
 	var existing = user[0].profile.notifications
 	if (!existing){
 		var existing = []
 	}
-  return Notifications.find({userId: userId, type: {$in: filters}}, {sort: {dateCreated: -1}, limit: 25})
+  return Notifications.find({userId: userId, read: {$in: status}, type: {$in: type}}, {sort: {dateCreated: -1}, limit: 25})
 });
 
 Meteor.publish('gameNotifications', function(gameId) {

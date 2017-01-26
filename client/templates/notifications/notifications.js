@@ -1,14 +1,35 @@
 Template.notifications.onCreated(function() {
   var filter = Router.current().params.query.filter
+  var read = Router.current().params.query.read
   var userPref = Meteor.user().profile.notifications
+  var all = ["group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
+  var data = {}
+  if(read){
+    var read = read.toLowerCase();
+    if (read === "true"){
+      data.status = [true]
+    } else if (read === "false"){
+      data.status = [false]
+    }
+  } else {
+    data.status = [true, false]
+  }
 
   if(filter){
-    Session.set('notificationsFilter', [filter])
+    var filter = filter.toLowerCase();
+    if(filter === "all"){
+      data.type = all
+      Session.set('notificationsFilter', data);
+    } else if(filter){
+      data.type = [filter]
+      Session.set('notificationsFilter', data);
+    }
   } else if (userPref) {
-    Session.set('notificationsFilter', userPref)
+    data.type = userPref
+    Session.set('notificationsFilter', userPref);
   } else {
-    var all = ["group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
-    Session.set('notificationsFilter', all)
+    data.type = all
+    Session.set('notificationsFilter', all);
   }
   this.getFilter = () => Session.get('notificationsFilter');
   this.autorun(() => {
