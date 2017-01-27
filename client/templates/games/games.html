@@ -29,9 +29,29 @@
 						Upcoming Games
 		      </div>
 					{{#ionList}}
-						<div class="container ten-spacing">
+						<div class="container ten-spacing clear-fix filter-section">
+							<h4 class="float-left ten-spacing">Filters:</h4>
+							{{#each filter in filters}}
+								<div class="filter-box">{{filter}}</div>
+							{{/each}}
+							<div class="filter-box" data-ion-menu-toggle="right">
+								View All
+								{{> ionIcon icon="chevron-right"}}
+							</div>
+						</div>
+
+						{{#if noGames}}
+							<div class="no-notifications">
+								No Matching Games
+							</div>
+							<div class="container hundred-bottom">
+								<span>Adjust game filter by selecting more sports or a longer period of time. Click the {{> ionIcon icon="funnel"}} button above. Must select a sport</span>
+							</div>
+						{{/if}}
+
+						<div class="container ten-spacing clear-fix">
 			        {{#each game in games}}
-			          <div class="complete-game-card game-container fast animated">
+			          <div class="clear-fix complete-game-card game-container fast animated">
 			          	{{#if admin}}
 			          		{{> adminControls game=game}}
 			            {{/if}}

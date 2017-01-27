@@ -43,7 +43,7 @@ Template.inviteToPlay.helpers({
     if (!list || list.length === 0){
       return false
     } else {
-      return list
+      return list.splice(0, 3)
     }
   }
 });

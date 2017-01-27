@@ -23,29 +23,35 @@
 </template>
 
 <template name="miniLeaderboard">
-  <ol type="1" id="leaderboard">
-    {{#each player i}}
-      <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-        {{> userAvatar userId=userId}}
-        <li class="list-font" value={{this.rank}}>
-          <span class="username">{{username userId}}</span>
-          <span class="score">
-              {{{coins}}}
-          </span>
-        </li>
-      </div>
-    {{/each}}
+  {{> spinLoader}}
 
-    {{#with userNotInLeaderboard i}}
-      <div class="item item-avatar leaderboard-item {{thisUser}}">
-        {{> userAvatar userId=this.userId}}
-        <li class="list-font" value={{this.rank}}>
-          <span class="username">{{username this.userId}}</span>
-          <span class="score">
-              {{{this.coins}}}
-          </span>
-        </li>
-      </div>
-    {{/with}}
-  </ol>
+  {{#if Template.subscriptionsReady}}
+    <div class="loading-wrapper">
+    <ol type="1" id="leaderboard">
+      {{#each player i}}
+        <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+          {{> userAvatar userId=userId}}
+          <li class="list-font" value={{this.rank}}>
+            <span class="username">{{username userId}}</span>
+            <span class="score">
+                {{{coins}}}
+            </span>
+          </li>
+        </div>
+      {{/each}}
+
+      {{#with userNotInLeaderboard i}}
+        <div class="item item-avatar leaderboard-item {{thisUser}}">
+          {{> userAvatar userId=this.userId}}
+          <li class="list-font" value={{this.rank}}>
+            <span class="username">{{username this.userId}}</span>
+            <span class="score">
+                {{{this.coins}}}
+            </span>
+          </li>
+        </div>
+      {{/with}}
+    </ol>
+  </div>
+  {{/if}}
 </template>

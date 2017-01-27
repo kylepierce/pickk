@@ -76,8 +76,8 @@ Meteor.methods({
 	},
 
 	'openGamePush': function(message, array) {
-		check(gameId, String);
 		check(message, String);
+		check(array, Array);
 		this.unblock()
 
 		if (array && array.length > 0) {

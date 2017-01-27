@@ -19,7 +19,7 @@ Template.games.onCreated(function() {
     Session.set('gamesBySport', favSports);
   }
 
-  this.getSports = () => Session.get('gamesBySport')
+  this.getSports = () => Session.get('gamesBySport');
   this.getFilter = () => Session.get('gamesDate');
 
   this.autorun(() => {
@@ -42,6 +42,20 @@ Template.games.onRendered( function() {
 });
 
 Template.games.helpers({
+  filters: function(){
+    var list = []
+    var sport = Session.get('gamesBySport');
+    var date = Session.get('gamesDate');
+    list.push.apply(list, sport);
+    list.push(date);
+    return list
+  },
+  noGames: function(){
+    var count = Games.find({}).count();
+    if (count === 0){
+      return true
+    }
+  },
   games: function(){
     return Games.find({}).fetch();
   },

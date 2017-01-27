@@ -56,6 +56,17 @@ Template.notifications.onRendered( function() {
 });
 
 Template.notifications.helpers({
+  filters: function(){
+    var data = Session.get('notificationsFilter');
+    var list = []
+    var types = data.type
+    var status = data.status
+    status.push.apply(status, types);
+    _.each(status, function(type, i){
+      status[i] = type.toString();
+    });
+    return status.slice(0, 4)
+  },
 	notifications: function () {
 		var userId = Meteor.userId();
     var existing = Template.instance().data.user.profile.notifications

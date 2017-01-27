@@ -24,9 +24,17 @@ Template.miniLeaderboard.onCreated(function() {
 	this.getFilter = () => Session.get('leaderboardData');
 	this.userCoins = () => Session.get('userCoins');
 	this.autorun(() => {
-		this.subscribe( 'leaderboardGamePlayed', this.getFilter());
 		this.subscribe( 'userRank', this.getFilter(), this.userCoins());
+		this.subscribe( 'leaderboardGamePlayed', this.getFilter(), function(){
+			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+	      $( ".loading-wrapper" ).fadeIn( 'slow' );
+			});
+		});
 	});
+});
+
+Template.miniLeaderboard.onRendered( function() {
+  $( "svg" ).delay( 250 ).fadeIn();
 });
 
 Template.miniLeaderboard.helpers({
