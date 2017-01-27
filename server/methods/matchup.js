@@ -21,6 +21,21 @@ Meteor.methods({
     var users = matchup[0].users
     Matchup.update({_id: matchupId}, {$pull: {users: userId}});
   },
+  'deleteMatchup': function(matchupId, deletor){
+    check(matchupId, String);
+		check(deletor, String);
+		this.unblock()
+		var matchup = Matchup.findOne({_id: matchupId});
+		var deletorProfile = Meteor.users.findOne({_id: deletor});
+		var isAdmin = deletorProfile.profile.role
+    if (matchup.commissioner === deletor) {
+      Matchup.remove({_id: matchupId});
+    } else if (isAdmin === "admin"){
+			Matchup.remove({_id: matchupId});
+		} else {
+			throw new Meteor.Error("not-authorized", "Cannot delete a matchup of another user");
+		}
+  },
   'requestMatchInvite': function(matchupId, userId){
     check(matchupId, String);
     check(userId, String);

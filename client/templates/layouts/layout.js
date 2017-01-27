@@ -92,11 +92,18 @@ Template.mainLayout.events({
       buttonClicked: function(index) {
         if (index === 0) {
           var currentUserId = Meteor.userId();
-          var matchup = Router.current().params._id
-
-          // Remove this user from the group
-          Meteor.call('leaveMatchup', matchup, currentUserId);
-          return true
+          var matchupId = Router.current().params._id
+          var matchup = Matchup.findOne({_id: matchupId});
+          if(matchup.commissioner === currentUserId){
+            Meteor.call('deleteMatchup', matchupId, currentUserId);
+            Router.go('/matchup');
+            return true
+          } else {
+            // Remove this user from the group
+            Meteor.call('leaveMatchup', matchupId, currentUserId);
+            Router.go('/matchup');
+            return true
+          }
         }
       }
     });

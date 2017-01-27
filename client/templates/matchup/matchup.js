@@ -1,12 +1,23 @@
 Template.matchup.onCreated(function() {
+  var previous = Session.get('matchupFilter');
+  var query = Router.current().params.query
   var games = Games.find({}).fetch();
   var list = []
   _.each(games, function(game){
     list.push(game._id)
   });
-  var data = {
-    gameId: {$in: list}
+  //secret, featured, size,
+  if(query){
+    var data = query
+  } else if (previous) {
+    var data = previous
+  } else {
+    var data = {}
   }
+  if(!query.gameId){
+    data.gameId = {$in: list}
+  }
+
   Session.set('matchupFilter', data)
 	this.getFilter = () => Session.get('matchupFilter');
 	this.autorun(() => {

@@ -1,5 +1,22 @@
 Meteor.publish('upcomingMatchups', function (selector){
   check(selector, Object);
+  if(selector.size){
+    selector.size = parseInt(selector.size);
+  }
+  if (selector.featured){
+    var featured = selector.featured.toLowerCase;
+    if(featured === "true"){
+      selector.featured = true
+    } else if (featured = "false"){
+      selector.featured = false
+    } else {
+      selector.featured = [false, true]
+    }
+  }
+  if (selector.secret){
+    var secret = selector.secret.toLowerCase;
+    selector.secret = secret
+  }
   return Matchup.find(selector, {limit: 20});
 });
 
