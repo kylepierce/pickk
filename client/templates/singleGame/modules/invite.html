@@ -1,8 +1,5 @@
 <template name="inviteToPlay">
-  <!-- <div class="item item-button-right">
-    <h2>Rewards: {{rewards}}</h2>
-    <button data-action="" class="button button-balanced">Redeem</button>
-  </div> -->
+  {{#if active}}
   <div class="item item-divider ten-spacing">
     <span>Challenge A Friend!</span>
   </div>
@@ -12,7 +9,12 @@
     <button data-action="textInvite" class="button button-balanced">Invite</button>
   </div>
 
-  {{#if listToShare}}
+  <div class="item invite-item item-button-right">
+    <h2>Join or Create a Matchup</h2>
+    <button data-action="gameMatchup" class="button button-stable">Go</button>
+  </div>
+
+    {{#if listToShare}}
     {{#ionList}}
       <div class="item invite-item item-button-right">
         <h2>Invite All Followers</h2>
@@ -34,5 +36,6 @@
         </button>
       </div>
     {{/ionList}}
+  {{/if}}
   {{/if}}
 </template>

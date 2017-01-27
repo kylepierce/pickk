@@ -1,4 +1,10 @@
 Template.inviteToPlay.helpers({
+  active: function(){
+    var game = Games.findOne({})
+    if(game && game.status === "inprogress" || game.status === "scheduled"){
+      return true
+    }
+  },
   listToShare: function(){
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
@@ -52,13 +58,22 @@ Template.inviteToPlay.events({
   "click [data-action=dismiss]": function(e, t){
     var gameId = t.data.game[0]._id
     var userId = Meteor.userId();
+    analytics.track("dismiss invite", {
+      userId: userId,
+      gameId: gameId,
+      dateCreated: new Date()
+    });
     Meteor.call('dismissInvitePrompt', gameId, userId);
   },
   "click [data-action=invite]": function(e, t){
     var gameId = t.data.game[0]._id
     var ref = Meteor.userId();
     var userId = e.currentTarget.value
-    Meteor.call("inviteToGame", gameId, userId, ref)
+    Meteor.call("inviteToGame", gameId, userId, ref);
+  },
+  "click [data-action=gameMatchup]": function(e, t){
+    var gameId = t.data.game[0]._id
+    Router.go('/matchup?gameId=' + gameId);
   },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){

@@ -30,8 +30,16 @@ Template.weekLeaderboard.onCreated(function() {
 
 	this.getFilter = () => Session.get('leaderboardFilter');
 	this.autorun(() => {
-		this.subscribe( 'weekLeaderboard', this.getFilter());
+		this.subscribe( 'weekLeaderboard', this.getFilter(), function(){
+			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+	      $( ".loading-wrapper" ).fadeIn( 'slow' );
+			});
+		});
 	});
+});
+
+Template.weekLeaderboard.onRendered( function() {
+  $( "svg" ).delay( 250 ).fadeIn();
 });
 
 Template.weekLeaderboard.helpers({

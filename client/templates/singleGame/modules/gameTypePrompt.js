@@ -61,8 +61,6 @@ Template.gameTypePrompt.events({
     Meteor.subscribe('gamePlayed', user._id, game._id);
     var leaderData = Session.get('leaderboardData')
   	leaderData["period"] = game.period,
-
-    console.log(leaderData);
   	Session.set('leaderboardData', leaderData)
     IonLoading.show({
       customTemplate: "Providing Coins...",

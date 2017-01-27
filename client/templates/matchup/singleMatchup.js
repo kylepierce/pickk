@@ -108,7 +108,9 @@ Template.matchupJoin.helpers({
     var userId = Meteor.userId();
     var deepLinked = Session.get('deepLinked')
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
-    if(this.groupId){
+    if (this.secret === "public"){
+      return true
+    } else if(this.groupId){
       Meteor.subscribe('singleGroup', this.groupId);
       var group = Groups.find({_id: this.groupId}).fetch()
       var isMember = group[0].members.indexOf(userId)
@@ -128,10 +130,9 @@ Template.matchupJoin.helpers({
       return true
     }
   }, request: function(){
-    var invited = this.secret
     var userId = Meteor.userId();
     var onTheList = this.requests.indexOf(userId);
-    if(invited){
+    if(onTheList > -1){
       return true
     }
   }

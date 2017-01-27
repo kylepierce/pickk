@@ -21,25 +21,25 @@
 
 	{{#ionView}}
 		{{#ionContent}}
-			{{> spinLoader}}
 
-			{{#if Template.subscriptionsReady}}
-				<div class="loading-wrapper">
-				  <div class="item item-divider ">
-						Upcoming Games
-		      </div>
-					{{#ionList}}
-						<div class="container ten-spacing clear-fix filter-section">
-							<h4 class="float-left ten-spacing">Filters:</h4>
-							{{#each filter in filters}}
-								<div class="filter-box">{{filter}}</div>
-							{{/each}}
-							<div class="filter-box" data-ion-menu-toggle="right">
-								View All
-								{{> ionIcon icon="chevron-right"}}
-							</div>
-						</div>
+		  <div class="item item-divider ">
+				Upcoming Games
+      </div>
+			{{#ionList}}
+				<div class="container ten-spacing clear-fix filter-section">
+					<h4 class="float-left ten-spacing">Filters:</h4>
+					{{#each filter in filters}}
+						<div class="filter-box">{{filter}}</div>
+					{{/each}}
+					<div class="filter-box" data-ion-menu-toggle="right">
+						View All
+						{{> ionIcon icon="chevron-right"}}
+					</div>
+				</div>
+				{{> spinLoader}}
 
+				{{#if Template.subscriptionsReady}}
+					<div class="loading-wrapper">
 						{{#if noGames}}
 							<div class="no-notifications">
 								No Matching Games
@@ -59,9 +59,9 @@
 			          </div>
 			        {{/each}}
 			      </div>
-					{{/ionList}}
-				</div>
-			{{/if}}
+					</div>
+				{{/if}}
+			{{/ionList}}
 		{{/ionContent}}
 	{{/ionView}}
 </template>

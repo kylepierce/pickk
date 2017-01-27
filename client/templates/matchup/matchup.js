@@ -59,8 +59,10 @@ Template.matchupItem.helpers({
     } else {
       var userId = matchup.commissioner
       Meteor.subscribe('findSingle', userId);
-      var user = UserList.find({_id: userId}).fetch()
-      var matchupName = user[0].profile.username
+      var user = UserList.findOne({_id: userId});
+      if( user ){
+        var matchupName = user.profile.username
+      }
     }
     return matchupName
   },

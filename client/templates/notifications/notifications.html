@@ -23,22 +23,20 @@
 
   {{#ionView}}
     {{#ionContent}}
-			{{> spinLoader}}
+			<div class="container ten-spacing clear-fix filter-section">
+				<h4 class="float-left ten-spacing">Filters:</h4>
+				{{#each filter in filters}}
+					<div class="filter-box">{{{filter}}}</div>
+				{{/each}}
+				<div class="filter-box" data-ion-menu-toggle="right">
+					View All
+					{{> ionIcon icon="chevron-right"}}
+				</div>
+			</div>
 
+			{{> spinLoader}}
 			{{#if Template.subscriptionsReady}}
 				<div class="loading-wrapper">
-					<div>
-						<div class="container ten-spacing clear-fix filter-section">
-							<h4 class="float-left ten-spacing">Filters:</h4>
-							{{#each filter in filters}}
-								<div class="filter-box">{{{filter}}}</div>
-							{{/each}}
-							<div class="filter-box" data-ion-menu-toggle="right">
-								View All
-								{{> ionIcon icon="chevron-right"}}
-							</div>
-						</div>
-					</div>
 			    {{#if noNotifications}}
 						<div class="no-notifications">
 							No Unread Notifications

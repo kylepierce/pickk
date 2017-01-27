@@ -101,8 +101,7 @@ Template.chatOptions.helpers({
     var userIsAdmin = Meteor.user().profile.role
     var groupId = Session.get("chatGroup");
     var group = Groups.findOne({_id: groupId});
-    console.log(group);
-    if (currentUser === group.commissioner){
+    if (group && currentUser === group.commissioner){
       return true
     } else if ( owner === currentUser || userIsAdmin === "admin") {
       return true

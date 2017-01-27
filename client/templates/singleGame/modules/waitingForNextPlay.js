@@ -60,7 +60,7 @@ Template.waitingForNextPlay.helpers({
 		var gameId = this.game[0]._id
 		var period = this.game[0].period
 		var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch();
-		if (gamePlayed[0].type === "drive"){
+		if (gamePlayed && gamePlayed[0].type === "drive"){
 			return true
 		}
 	}

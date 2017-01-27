@@ -12,7 +12,7 @@ Template.gamesFilter.helpers({
 				item.checked = true
 			}
 		});
-		
+
 		return list
   }
 });
@@ -34,8 +34,7 @@ Template.gamesOption.helpers({
 		var user = Meteor.user()
 		if (user){
 			var userSettings = Session.get('gamesBySport')
-			var selected = userSettings.indexOf(this.o)
-			if(userSettings && selected !== -1){
+			if(userSettings && userSettings.indexOf(this.o) > -1){
 				return true
 			}
 		}

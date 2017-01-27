@@ -20,7 +20,6 @@ Template.groupLinks.events({
     Session.set('leaderboardFilter', null);
   },
   "click [data-action=_groupRequests]": function(e, t){
-    console.log(this.group[0], e, t);
     IonModal.open("_groupRequests", this)
   }
 });
