@@ -61,6 +61,14 @@ Template.sideMenuContent.events({
     if (Meteor.isCordova) {
       intercom.displayMessenger();
     }
+  },
+  'click [data-action=notifications]': function(){
+    IonSideMenu.snapper.close();
+    Router.go('/notifications/?read=false');
+  },
+  'click [data-action=allNotifications]': function(){
+    IonSideMenu.snapper.close();
+    Router.go('/notifications');
   }
 });
 

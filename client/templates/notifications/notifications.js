@@ -3,6 +3,13 @@ Template.notifications.onCreated(function() {
   var read = Router.current().params.query.read
   var userPref = Meteor.user().profile.notifications
   var all = ["group", "mention", "follower", "coins", "diamonds", "leaderboard", "badge", "trophy"]
+  // There was existing data saved and it fucks up the status because it only filtered by type. This resets it.
+  if(userPref && !userPref.type){
+    var userPref = {
+      type: all,
+      status: [true, false]
+    }
+  }
   var data = {}
   if(read){
     var read = read.toLowerCase();
@@ -11,7 +18,10 @@ Template.notifications.onCreated(function() {
     } else if (read === "false"){
       data.status = [false]
     }
-  } else {
+  } else if (userPref) {
+    data.status = userPref
+    Session.set('notificationsFilter', userPref);
+  }  else {
     data.status = [true, false]
   }
 

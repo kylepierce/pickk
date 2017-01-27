@@ -37,17 +37,20 @@
       Matchups
     {{/ionItem}}
 
-    {{#ionItem iconLeft=true path="notifications" data-ion-menu-toggle="left"}}
+
       {{#if pendingNotifications}}
-        <div class="unreadNotifications">
-          {{> ionIcon icon='ios-bell-outline'}}
-          {{notificationNumber}} Notifications
+        <div class="item item-icon-left" data-action="notifications">
+          <div class="unreadNotifications">
+            {{> ionIcon icon='ios-bell-outline'}}
+            {{notificationNumber}} Notifications
+          </div>
         </div>
       {{else}}
-        {{> ionIcon icon='ios-bell-outline'}}
-        Notifications
+        <div class="item item-icon-left" data-action="allNotifications">
+          {{> ionIcon icon='ios-bell-outline'}}
+          Notifications
+        </div>
       {{/if}}
-    {{/ionItem}}
 
     {{#ionItem iconLeft=true path="groups" data-ion-menu-toggle="left"}}
       {{> ionIcon icon='ios-people-outline'}}

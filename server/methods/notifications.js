@@ -28,7 +28,7 @@ Meteor.methods({
   },
   'markAllAsRead': function(){
     var userId = Meteor.userId();
-    Notifications.update({userId: userId, read: true}, {$set: {read: false}}, {multi: true});
+    Notifications.update({userId: userId, read: false}, {$set: {read: true}}, {multi: true});
   },
   'questionData': function (id) {
     check(id, String);

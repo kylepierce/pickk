@@ -136,6 +136,9 @@ Meteor.methods({
     }
 		var game = Games.find({_id: gameId}).fetch()
 		var registered = game[0].registered
+		var gameName = game[0].name
+		var message = gameName + " Is Now Open. Challenge A Friend!"
+		Meteor.call('openGamePush', message, registered);
 
 		Games.update({_id: gameId}, {$set: {"status": "inprogress", "live": true, "users": registered}})
 	},

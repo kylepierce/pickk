@@ -75,6 +75,23 @@ Meteor.methods({
 		});
 	},
 
+	'openGamePush': function(message, array) {
+		check(gameId, String);
+		check(message, String);
+		this.unblock()
+
+		if (array && array.length > 0) {
+			Push.send({
+				from: 'Pickk',
+				title: 'Open Game',
+				text: message,
+				sound: 'default',
+				badge: 1,
+				query: {userId: {$in: array}}
+			});
+		}
+	},
+
 	'pushInvite': function(message, userId) {
 		check(message, String);
 		check(userId, String);
