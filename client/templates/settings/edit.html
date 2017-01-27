@@ -7,9 +7,10 @@
         {{#autoForm collection="Meteor.users" schema=UsersProfileSchema doc=currentUser id="settings"}}
           <div class="list">
             {{> afQuickField autofocus='' label-type='stacked' name='profile.username'}}
-            {{> afQuickField label-type='stacked' name='emails.0.address'}}
             {{> afQuickField label-type='stacked' name='profile.firstName'}}
             {{> afQuickField label-type='stacked' name='profile.lastName'}}
+
+            {{> afQuickField label-type='stacked' name='emails.0.address'}}
             {{> afQuickField label-type='stacked' name='profile.birthday'}}
             <label  class="item item-input item-stack-label">
               <span  class="input-label">
@@ -31,11 +32,11 @@
 </template>
 
 <template name="submitNew">
-  <input name="status" type="submit" class="button button-large button-positive" value="Finish Profile">
+  <input name="status" type="submit" class="button button-large button-balanced" value="Finish Profile">
 </template>
 
 <template name="submitOld">
-  <input name="status" type="submit" class="button button-large button-positive" value="Update Profile">
+  <input name="status" type="submit" class="button button-large button-balanced" value="Update Profile">
 </template>
 
 <template name="newUserHeader">

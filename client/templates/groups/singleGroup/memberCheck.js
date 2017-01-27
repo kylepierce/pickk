@@ -20,18 +20,24 @@ Template.memberCheck.helpers({
     }
   },
   invite: function(){
-    var currentUser = Meteor.userId()
+    var currentUser = Meteor.userId();
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId});
-    if (group.secret == "invite" ) {
+    if (group.secret === "invite" ) {
       return true
+    } else {
+      return false
     }
   },
   maxed: function(){
     var group = Groups.findOne({_id: groupId});
     var numberOfUsers = group.members.length
+    var limit = group.limit
     var max = group.limitNum
-    if(max >= numberOfUsers){
+    console.log(limit, max);
+    if(limit === "false"){
+      return true
+    } else if(max >= numberOfUsers){
       return true
     }
   }

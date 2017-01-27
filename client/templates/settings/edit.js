@@ -4,9 +4,15 @@ AutoForm.hooks({
       this.event.preventDefault();
       var done = this.done;
       var timezone = jstz.determine();
-      console.log(insertDoc, updateDoc, currentDoc);
+      var email = insertDoc.emails
+      if(email){
+        var address = email[0].address
+      } else {
+        done("No Email");
+        UsersProfileSchema.namedContext("settings").addInvalidKeys([{name: "emails.$.address", type: "required"}]);
+      }
 
-      Meteor.call('updateProfile', insertDoc.profile.username, insertDoc.emails[0].address, insertDoc.profile.firstName, insertDoc.profile.lastName, insertDoc.profile.birthday, timezone.name(), function(error) {
+      Meteor.call('updateProfile', insertDoc.profile.username, address, insertDoc.profile.firstName, insertDoc.profile.lastName, insertDoc.profile.birthday, timezone.name(), function(error) {
         if (error) {
           done(error);
         } else {
