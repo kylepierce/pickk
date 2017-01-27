@@ -43,12 +43,16 @@ Template.notifications.onCreated(function() {
   }
   this.getFilter = () => Session.get('notificationsFilter');
   this.autorun(() => {
-    this.subscribe( 'userNotifications', this.getFilter());
+    this.subscribe( 'userNotifications', this.getFilter(), function(){
+      $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+        $( ".loading-wrapper" ).fadeIn( 'slow' );
+      });
+    });
   });
 });
 
 Template.notifications.onRendered( function() {
-  $( "svg" ).delay( 750 ).fadeIn();
+  $( "svg" ).delay( 250 ).fadeIn();
 });
 
 Template.notifications.helpers({

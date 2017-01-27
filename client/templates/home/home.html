@@ -2,59 +2,57 @@
   {{> homeLayoutHeader}}
 
   {{#contentFor "headerTitle"}}
-      <h1 class="title white-text-header">Home</h1>
+    <h1 class="title white-text-header">Home</h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
-      <div class="hero-section">
-        {{#each item in hero}}
-          {{> heroImage item=item}}
-        {{/each}}
-      </div>
+      {{> spinLoader}}
 
-      <!-- <div class="item item-divider" style="border: 0">
-        Dashboard
-      </div> -->
-      <div class="container">
-        {{#if gamePrediction}}
-          <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
-            <div class="col-md-25">
-              <span class="numberNotification">
-                {{dailyPickkCount}}
-              </span>
-            </div>
-            <div class="col-md-50" style="float: left; margin-left: 20px">
-              <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
-              <span class="daily-pickk-text">
-                Daily Pickks
-              </span>
-            </div>
-          </button>
-        {{/if}}
-
-        {{#each game in listLiveGames}}
-          <div class="ten-spacing clear-fix">
-            {{> singleGameInfo game=game}}
-            {{> singleGameCard game=game}}
-            {{> singleGameCTA game=game}}
+      {{#if Template.subscriptionsReady}}
+        <div class="loading-wrapper">
+          <div class="hero-section animated fadeInDown">
+            {{#each item in hero}}
+              {{> heroImage item=item}}
+            {{/each}}
           </div>
-        {{/each}}
 
-        <div class="hundred-bottom">
-          {{#each game in listUpcomingGames}}
-            <div class="ten-spacing clear-fix">
-              {{> singleGameInfo game=game}}
-              {{> singleGameCard game=game}}
-              {{> singleGameCTA game=game}}
+          <div class="container">
+            {{#if gamePrediction}}
+              <button class="button col-md-100 ten-spacing daily-pickk-cta game-container" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+                <div class="col-md-25">
+                  <span class="numberNotification">
+                    {{dailyPickkCount}}
+                  </span>
+                </div>
+                <div class="col-md-50" style="float: left; margin-left: 20px">
+                  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
+                  <span class="daily-pickk-text">
+                    Daily Pickks
+                  </span>
+                </div>
+              </button>
+            {{/if}}
+
+            {{#each game in listLiveGames}}
+              <div class="ten-spacing clear-fix game-container animated">
+                {{> entireGameCard game=game}}
+              </div>
+            {{/each}}
+
+            <div class="hundred-bottom">
+              {{#each game in listUpcomingGames}}
+                <div class="ten-spacing clear-fix game-container animated">
+                  {{> entireGameCard game=game}}
+                </div>
+              {{/each}}
+              <button class="ten-spacing button button-stable col col-100" data-action="viewAllGames">
+                <strong>View All Games</strong>
+              </button>
             </div>
-          {{/each}}
-          <button class="ten-spacing button button-stable col col-100" data-action="viewAllGames">
-            <strong>View All Games</strong>
-          </button>
+          </div>
         </div>
-      </div>
-
+      {{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>

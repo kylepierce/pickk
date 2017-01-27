@@ -21,25 +21,27 @@
 
 	{{#ionView}}
 		{{#ionContent}}
-		  <div class="item item-divider ">
-				Upcoming Games
-      </div>
-			{{#ionList}}
-				<div class="container ten-spacing">
-	        {{#each game in games}}
-	          <div class="complete-game-card" id="{{game._id}}">
-	          	{{#if admin}}
-	          		{{> adminControls game=game}}
-	            {{/if}}
+			{{> spinLoader}}
 
-	            {{> singleGameInfo game=game}}
-	            {{> singleGameCard game=game}}
-	            {{> singleGameCTA game=game}}
-
-	          </div>
-	        {{/each}}
-	      </div>
-			{{/ionList}}
+			{{#if Template.subscriptionsReady}}
+				<div class="loading-wrapper">
+				  <div class="item item-divider ">
+						Upcoming Games
+		      </div>
+					{{#ionList}}
+						<div class="container ten-spacing">
+			        {{#each game in games}}
+			          <div class="complete-game-card game-container fast animated">
+			          	{{#if admin}}
+			          		{{> adminControls game=game}}
+			            {{/if}}
+			            {{> entireGameCard game=game}}
+			          </div>
+			        {{/each}}
+			      </div>
+					{{/ionList}}
+				</div>
+			{{/if}}
 		{{/ionContent}}
 	{{/ionView}}
 </template>

@@ -23,8 +23,22 @@ Template.games.onCreated(function() {
   this.getFilter = () => Session.get('gamesDate');
 
   this.autorun(() => {
-    this.subscribe( 'activeGames', this.getFilter(), this.getSports());
+    this.subscribe( 'activeGames', this.getFilter(), this.getSports(), function(){
+      $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+        $( ".loading-wrapper" ).fadeIn( 'slow' );
+        $.each($(".game-container"), function(i, el){
+          setTimeout(function(){
+            $(el).css("opacity","1");
+            $(el).addClass("fadeInRight","200");
+          }, 100 + ( i * 100 ));
+        });
+      });
+    });
   });
+});
+
+Template.games.onRendered( function() {
+  $( "svg" ).delay( 250 ).fadeIn();
 });
 
 Template.games.helpers({

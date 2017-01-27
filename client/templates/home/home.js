@@ -1,3 +1,32 @@
+Template.home.onCreated( function() {
+  this.subscribe( 'activeHero', function() {
+    $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+      $( ".loading-wrapper" ).fadeIn( 'slow' );
+
+      $.each($(".game-container"), function(i, el){
+        setTimeout(function(){
+          $(el).css("opacity","1");
+          $(el).addClass("fadeInRight","400");
+        }, 100 + ( i * 100 ));
+      });
+
+      $('.hero-section').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 20000,
+        accessibility: false,
+        arrows: false,
+        mobileFirst: true,
+      });
+    });
+  });
+});
+
+Template.home.onRendered( function() {
+  $( "svg" ).delay( 250 ).fadeIn();
+});
+
 Template.home.rendered = function () {
   // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
   var deeplink = Session.get("deepLinked");
@@ -41,33 +70,6 @@ Template.home.helpers({
 });
 
 Template.home.events({
-  'click [data-action=game-leaderboard]': function(event, template){
-    var userId = Meteor.userId()
-    analytics.track("home-leaderboard", {
-      userId: userId,
-    });
-    Router.go('/week-leaderboard/')
-  },
-  'click [data-action=history]': function(event, template){
-    var userId = Meteor.userId()
-    analytics.track("home-history", {
-      userId: userId,
-    });
-    Router.go('/history')
-  },
-  'click [data-action=notifications]': function(event, template){
-    var userId = Meteor.userId()
-    analytics.track("home-notifications", {
-      userId: userId,
-    });
-    Router.go('/notifications')
-  },
-  'click [data-action=chat]': function(event, template){
-    var userId = Meteor.userId()
-    analytics.track("home-chat", {
-      userId: userId,
-    });
-  },
   'click [data-action=game-prediction]': function(event, template){
     var userId = Meteor.userId()
     analytics.track("home-game-pickks", {
@@ -76,7 +78,7 @@ Template.home.events({
     Router.go('/daily-pickks')
   },
   'click [data-action=viewAllGames]': function(){
-    Session.set('gamesDate', "week");
+    Session.set('gamesDate', "month");
     var all = ["NBA", "NFL", "MLB"]
     Session.set('gamesBySport', all);
     Router.go('/games')
