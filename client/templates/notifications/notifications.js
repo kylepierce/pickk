@@ -41,11 +41,15 @@ Template.notifications.onCreated(function() {
     data.type = all
     Session.set('notificationsFilter', all);
   }
-  this.getFilter = () => Session.get('notificationsFilter');
-  this.autorun(() => {
-    this.subscribe( 'userNotifications', this.getFilter(), function(){
-      $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
-        $( ".loading-wrapper" ).fadeIn( 'slow' );
+  var self = this;
+
+  self.getFilter = function () {
+    return Session.get('notificationsFilter');
+  };
+  self.autorun(function () {
+    self.subscribe('userNotifications', self.getFilter(), function () {
+      $(".loader-holder").delay(500).fadeOut('slow', function () {
+        $(".loading-wrapper").fadeIn('slow');
       });
     });
   });
@@ -63,7 +67,15 @@ Template.notifications.helpers({
     var status = data.status
     status.push.apply(status, types);
     _.each(status, function(type, i){
-      status[i] = type.toString();
+      var type = type.toString();
+      if (type === "true"){
+        status[i] = "Read"
+      } else if (type === "false"){
+        status[i] = "Unread"
+      } else {
+        var cap = type.charAt(0).toUpperCase() + type.substring(1)
+        status[i] = cap
+      }
     });
     return status.slice(0, 4)
   },

@@ -17,11 +17,13 @@ Template.matchup.onCreated(function() {
   if(!query.gameId){
     data.gameId = {$in: list}
   }
-
+  var self = this;
   Session.set('matchupFilter', data)
-	this.getFilter = () => Session.get('matchupFilter');
-	this.autorun(() => {
-		this.subscribe( 'upcomingMatchups', this.getFilter());
+	self.getFilter = function () {
+    Session.get('matchupFilter');
+  }
+	self.autorun(function() {
+		self.subscribe( 'upcomingMatchups', self.getFilter());
 	});
 });
 

@@ -13,7 +13,7 @@ Template.gameLeaderboard.onCreated(function() {
     var period = game[0].period;
 		data["period"] = period
 	}
-	Session.set('leaderboardData', data)
+	Session.set('leaderboardData', data);
 });
 
 Template.gameLeaderboard.helpers({});
@@ -21,12 +21,19 @@ Template.gameLeaderboard.helpers({});
 Template.gameLeaderboard.events({});
 
 Template.miniLeaderboard.onCreated(function() {
-	this.getFilter = () => Session.get('leaderboardData');
-	this.userCoins = () => Session.get('userCoins');
-	this.autorun(() => {
-		this.subscribe( 'userRank', this.getFilter(), this.userCoins());
-		this.subscribe( 'leaderboardGamePlayed', this.getFilter(), function(){
-			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+	var self = this;
+
+	self.getFilter = function () {
+	  return Session.get('leaderboardData');
+	};
+	self.userCoins = function () {
+	  return Session.get('userCoins');
+	};
+
+	self.autorun(function() {
+		self.subscribe( 'userRank', self.getFilter(), self.userCoins());
+		self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
+			$( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
 	      $( ".loading-wrapper" ).fadeIn( 'slow' );
 			});
 		});
@@ -34,18 +41,18 @@ Template.miniLeaderboard.onCreated(function() {
 });
 
 Template.miniLeaderboard.onRendered( function() {
-  $( "svg" ).delay( 250 ).fadeIn();
+  $( "svg" ).delay( 50 ).fadeIn();
 });
 
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
-		var count = Counts.get('userRanking')
-		var data = Session.get('leaderboardData')
+		var count = Counts.get('userRanking');
+		var data = Session.get('leaderboardData');
 		var selector = {userId: Meteor.userId(), gameId: data.gameId, period: data.period}
-		var game = GamePlayed.findOne(selector)
+		var game = GamePlayed.findOne(selector);
 
 		if( game ){
-			Session.set('userCoins', game.coins)
+			Session.set('userCoins', game.coins);
 			if (number === -1) {
 				return false
 			} else if(count > number){
@@ -54,37 +61,34 @@ Template.miniLeaderboard.helpers({
 			}
 		}
 	},
-	'rank': function(){
-		// We know the users current score. Lets find the number of user with more or equal than us.
-		var count = Counts.get('userRanking')
-		return count
-	},
   'player': function(number){
-		var userId = Meteor.userId()
-		var data = Session.get('leaderboardData')
+		var userId = Meteor.userId();
+		var ranking = Counts.get('userRanking');
+		var data = Session.get('leaderboardData');
     var following = Meteor.user().profile.following
     var list = GamePlayed.find({}).fetch();
-		if (data.number){
-			data.number = number
-			Session.set('leaderboardData', data)
-		}
+		var filter = data.filter && data.filter.toLowerCase();
+		var types = ["live", "drive"]
 
-		var leaderboardList = function(list){
-			var fixed = _.sortBy(list, function(obj){return - obj.coins})
-			var i = 1
+		// Only load number GamePlayed from template.
+		data.number = number
+		Session.set('leaderboardData', data);
 
-			var leaderboardList = _.each(fixed, function(user){
-				var isFollowingUser = following.indexOf(user.userId)
-				if(isFollowingUser !== -1){
-					user.following = true
-				}
-				user.rank = i
-				i = i + 1
-			});
-			return fixed
-		}
+	  return _.sortBy(list, function(u, i){
+			// Are they someone we follow?
+			if(following.indexOf(u.userId) > -1){  u.following = true }
 
-    return leaderboardList(list)
+			// If its the current user show their ranking.
+			if (u.userId === userId){
+				if (types.indexOf(filter) > -1 && filter !== u.type) {
+		      u.rank = 0 // Rank if they are filtering the same type.
+				} else if(ranking > number){ 
+					u.rank = ranking
+		    }
+		  } else { u.rank = i + 1 }
+			return - u.coins // Invert the order of the list.
+		});
+
   },
   'username': function(userId) {
 		var user = UserList.findOne({_id: userId});
@@ -98,7 +102,7 @@ Template.miniLeaderboard.helpers({
 		}
 	},
 	'thisUser': function(){
-		var userId = Meteor.userId()
+		var userId = Meteor.userId();
 		if(this.userId === userId){
 			return "history-inprogress"
 		}

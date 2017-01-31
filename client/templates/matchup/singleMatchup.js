@@ -35,10 +35,12 @@ Template.singleMatchup.helpers({
     }
   },
   'alreadyJoined': function(users){
-    var userId = Meteor.userId();
-    var onList = users.indexOf(userId)
-    if(onList >= 0){
-      return true
+    if(users){
+      var userId = Meteor.userId();
+      var onList = users.indexOf(userId)
+      if(onList >= 0){
+        return true
+      }
     }
   },
   'limitNum': function(){
@@ -60,11 +62,11 @@ Template.singleMatchup.events({
     var userId = Meteor.userId()
     Meteor.call('joinMatchup', matchupId, userId);
   },
-  'click [data-action=leaveMatchup]': function(e, t){
-    var matchupId = this._id
-    var userId = Meteor.userId();
-    Meteor.call('leaveMatchup', matchupId, userId);
-  },
+  // 'click [data-action=leaveMatchup]': function(e, t){
+  //   var matchupId = this._id
+  //   var userId = Meteor.userId();
+  //   Meteor.call('leaveMatchup', matchupId, userId);
+  // },
   'click [data-action=requestInvite]': function(e, t){
     var userId = Meteor.userId();
     var matchupId = Router.current().params._id

@@ -39,18 +39,6 @@
           </li>
         </div>
       {{/each}}
-
-      {{#with userNotInLeaderboard i}}
-        <div class="item item-avatar leaderboard-item {{thisUser}}">
-          {{> userAvatar userId=this.userId}}
-          <li class="list-font" value={{this.rank}}>
-            <span class="username">{{username this.userId}}</span>
-            <span class="score">
-                {{{this.coins}}}
-            </span>
-          </li>
-        </div>
-      {{/with}}
     </ol>
   </div>
   {{/if}}

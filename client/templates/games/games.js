@@ -19,13 +19,18 @@ Template.games.onCreated(function() {
     Session.set('gamesBySport', favSports);
   }
 
-  this.getSports = () => Session.get('gamesBySport');
-  this.getFilter = () => Session.get('gamesDate');
+  var self = this;
 
-  this.autorun(() => {
-    this.subscribe( 'activeGames', this.getFilter(), this.getSports(), function(){
-      $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
-        $( ".loading-wrapper" ).fadeIn( 'slow' );
+  self.getSports = function () {
+    return Session.get('gamesBySport');
+  };
+  self.getFilter = function () {
+    return Session.get('gamesDate');
+  };
+  self.autorun(function () {
+    self.subscribe('activeGames', self.getFilter(), self.getSports(), function () {
+      $(".loader-holder").delay(500).fadeOut('slow', function () {
+        $(".loading-wrapper").fadeIn('slow');
         $.each($(".game-container"), function(i, el){
           setTimeout(function(){
             $(el).css("opacity","1");

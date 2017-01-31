@@ -1,11 +1,13 @@
 Meteor.methods({
   'createMatchup': function(o){
     check(o, Object);
+    this.unblock();
     Matchup.insert(o);
   },
   'joinMatchup': function(matchupId, userId){
     check(matchupId, String);
     check(userId, String);
+    this.unblock();
     var matchup = Matchup.find({_id: matchupId}).fetch()
     var users = matchup[0].users
     var alreadyUser = users.indexOf(userId)
@@ -17,14 +19,15 @@ Meteor.methods({
   'leaveMatchup': function(matchupId, userId){
     check(matchupId, String);
     check(userId, String);
-    var matchup = Matchup.find({_id: matchupId}).fetch()
-    var users = matchup[0].users
-    Matchup.update({_id: matchupId}, {$pull: {users: userId}});
+    this.unblock();
+    var matchup = Matchup.findOne({_id: matchupId});
+    var users = matchup.users
+    Matchup.update({_id: matchupId}, {$pull: {users: userId}}, { validate: false });
   },
   'deleteMatchup': function(matchupId, deletor){
     check(matchupId, String);
 		check(deletor, String);
-		this.unblock()
+		this.unblock();
 		var matchup = Matchup.findOne({_id: matchupId});
 		var deletorProfile = Meteor.users.findOne({_id: deletor});
 		var isAdmin = deletorProfile.profile.role
@@ -39,11 +42,13 @@ Meteor.methods({
   'requestMatchInvite': function(matchupId, userId){
     check(matchupId, String);
     check(userId, String);
+    this.unblock();
     Matchup.update({_id: matchupId}, {$push: {requests: userId}});
   },
   'removeMatchInvite': function(matchupId, userId){
     check(matchupId, String);
     check(userId, String);
+    this.unblock();
     Matchup.update({_id: matchupId}, {$pull: {requests: userId}});
   },
   // Users can add other users to join their group.
@@ -51,6 +56,7 @@ Meteor.methods({
 		check(invitee, String);
 		check(inviter, String);
 		check(matchupId, String);
+    this.unblock();
 		Matchup.update({_id: matchupId}, {$push: {invites: invitee}}, { validate: false })
 
 	  var notifyObj = {
@@ -65,6 +71,7 @@ Meteor.methods({
     check(userId, String);
     check(matchupId, String);
     check(inviter, String);
+    this.unblock();
     // Remove user from the group's list
     Matchup.update({_id: matchupId}, {$pull: {users: userId}}, { validate: false });
 

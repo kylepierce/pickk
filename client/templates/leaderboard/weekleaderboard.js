@@ -7,7 +7,9 @@ Template.weekLeaderboard.onCreated(function() {
 	var noNewData = _.isEmpty(data);
 
 	if(noNewData || !data) {
-		if (groupId){
+		if(!query) {
+			var data = {}
+		} else if (groupId){
 			var data = {
 				filter: "group",
 				groupId: groupId
@@ -25,12 +27,14 @@ Template.weekLeaderboard.onCreated(function() {
 	if (!data.filter){
 		data.filter = "All"
 	}
-
 	Session.set('leaderboardFilter', data);
 
-	this.getFilter = () => Session.get('leaderboardFilter');
-	this.autorun(() => {
-		this.subscribe( 'weekLeaderboard', this.getFilter(), function(){
+	var self = this;
+	self.getFilter = function () {
+		return Session.get('leaderboardFilter');
+	}
+	self.autorun(function() {
+		self.subscribe( 'weekLeaderboard', self.getFilter(), function(){
 			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
 	      $( ".loading-wrapper" ).fadeIn( 'slow' );
 			});

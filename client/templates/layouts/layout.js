@@ -96,12 +96,10 @@ Template.mainLayout.events({
           var matchup = Matchup.findOne({_id: matchupId});
           if(matchup.commissioner === currentUserId){
             Meteor.call('deleteMatchup', matchupId, currentUserId);
-            Router.go('/matchup');
             return true
           } else {
             // Remove this user from the group
             Meteor.call('leaveMatchup', matchupId, currentUserId);
-            Router.go('/matchup');
             return true
           }
         }

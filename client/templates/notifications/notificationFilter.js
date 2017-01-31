@@ -56,7 +56,7 @@ Template.notificationFilter.events({
 
 Template.notificationOption.helpers({
 	alreadySelected: function(){
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (user){
 			var userSettings = Session.get('notificationsFilter');
 			var selected = userSettings.type.indexOf(this.o)

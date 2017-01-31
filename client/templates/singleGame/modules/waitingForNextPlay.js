@@ -59,8 +59,8 @@ Template.waitingForNextPlay.helpers({
 		var userId = Meteor.userId();
 		var gameId = this.game[0]._id
 		var period = this.game[0].period
-		var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch();
-		if (gamePlayed && gamePlayed[0].type === "drive"){
+		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
+		if (gamePlayed && gamePlayed.type === "drive"){
 			return true
 		}
 	}
