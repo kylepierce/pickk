@@ -17,10 +17,11 @@ Template.matchup.onCreated(function() {
   if(!query.gameId){
     data.gameId = {$in: list}
   }
-  var self = this;
   Session.set('matchupFilter', data)
+  var self = this;
+
 	self.getFilter = function () {
-    Session.get('matchupFilter');
+    return Session.get('matchupFilter');
   }
 	self.autorun(function() {
 		self.subscribe( 'upcomingMatchups', self.getFilter());

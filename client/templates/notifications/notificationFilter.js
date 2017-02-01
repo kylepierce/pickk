@@ -41,6 +41,7 @@ Template.notificationFilter.events({
 	},
 	'change .checkbox': function(e,t){
 		var data = Session.get('notificationsFilter');
+		console.log(data);
 		var alreadySelected = data.type.indexOf(this.o);
 		if (alreadySelected === -1){
 			data.type.push(this.o)

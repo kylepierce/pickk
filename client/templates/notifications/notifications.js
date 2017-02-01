@@ -19,7 +19,7 @@ Template.notifications.onCreated(function() {
       data.status = [false]
     }
   } else if (userPref) {
-    data.status = userPref
+    data.status = userPref.status
     Session.set('notificationsFilter', userPref);
   }  else {
     data.status = [true, false]
@@ -35,11 +35,11 @@ Template.notifications.onCreated(function() {
       Session.set('notificationsFilter', data);
     }
   } else if (userPref) {
-    data.type = userPref
-    Session.set('notificationsFilter', userPref);
+    data.type = userPref.type
+    Session.set('notificationsFilter', data);
   } else {
     data.type = all
-    Session.set('notificationsFilter', all);
+    Session.set('notificationsFilter', data);
   }
   var self = this;
 
