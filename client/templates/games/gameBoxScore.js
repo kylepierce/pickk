@@ -55,10 +55,7 @@ Template.outDisplay.helpers({
 
 Template.count.helpers({
   count: function () {
-    var gameId = this.gameId
-    Meteor.subscribe('singleAtBat', gameId)
-    return AtBat.findOne({gameId: gameId})
-
+    return this.game.eventStatus
   }
 });
 
