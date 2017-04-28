@@ -1,6 +1,6 @@
 Template.home.onCreated( function() {
   this.subscribe( 'activeHero', function() {
-    $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+    $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
       $( ".loading-wrapper" ).fadeIn( 'slow' );
 
       $.each($(".game-container"), function(i, el){

@@ -1,14 +1,14 @@
 Template.gameTypePrompt.onCreated( function() {
   var gameId = Router.current().params._id
   this.subscribe( 'singleGame', gameId,  function() {
-    $( ".spin-loader" ).delay( 1000 ).fadeOut( 'slow', function() {
+    $( ".spin-loader" ).delay( 100 ).fadeOut( 'slow', function() {
       $( ".loading-wrapper" ).fadeIn( 'slow' );
     });
   });
 });
 
 Template.gameTypePrompt.onRendered( function() {
-  $( "svg" ).delay( 750 ).fadeIn();
+  $( "svg" ).delay( 50 ).fadeIn();
 });
 
 
@@ -27,13 +27,11 @@ Template.gameTypePrompt.events({
     var user = Meteor.user();
     var game = Games.findOne();
     var text = e.target.innerText.toLowerCase( )
-    var location = UserLocation.get();
 
     var gamePlayed = {
       gameId: game._id,
       dateCreated: new Date(),
       userId: user._id,
-      location: location,
       period: game.period,
       type: text
     }

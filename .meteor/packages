@@ -101,5 +101,4 @@ peerlibrary:subscription-data
 remcoder:chronos
 meteorhacks:cluster
 boilerplate-generator@1.0.10
-flowkey:user-location
 reactive-dict

@@ -16,21 +16,21 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{> scheduledTeamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name runs=game.scoring.away.runs }}
+      {{> scheduledTeamBlock id=game.away_team abbr=game.scoring.away.abbr name=game.away.nickname runs=game.home.linescoreTotals.runs }}
 
-      {{> scheduledTeamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name runs=game.scoring.home.runs }}
+      {{> scheduledTeamBlock id=game.home_team abbr=game.scoring.home.abbr name=game.home.nickname runs=game.home.linescoreTotals.runs }}
     {{else}}
-      {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name runs=game.scoring.away.runs }}
+      {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname runs=game.away.linescoreTotals.runs }}
 
-      {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name runs=game.scoring.home.runs }}
+      {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname  runs=game.home.linescoreTotals.runs }}
     {{/if}}
   </div>
 </template>
 
 <template name="teamBlock">
   <div class="team-block">
-    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
-      {{abbr}}
+    <div class="team-colors team-text" style="background-color:{{teamColors name}}">
+      {{abbr name}}
     </div>
     <div class="team-block-border">
       <span class="team-name team-text">{{name}}</span>
@@ -41,8 +41,8 @@
 
 <template name="scheduledTeamBlock">
   <div class="scheduled-team-block">
-    <div class="team-colors team-text" style="background-color:{{teamColors id}}">
-        {{abbr}}
+    <div class="team-colors team-text" style="background-color:{{teamColors name}}">
+        {{abbr name}}
       </div>
       <div class="team-block-border">
         <span class="team-name team-text">{{name}}</span>
@@ -68,7 +68,10 @@
 <template name="singleGameCTA">
   {{#if inProgress}}
     <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-      Play Now! ({{{quarter game.period}}} - {{game.tv}})
+      Play Now! ({{{quarter game.eventStatus.inning}}} -
+      {{#each station in tv game.tvStations}}
+        ({{station.callLetters}})
+      {{/each}})
     </div>
   {{/if}}
 </template>
@@ -76,16 +79,16 @@
 <template name="gameInProgressInfo">
   <div class="single-game-shared single-game-info">
     <div class="col-md-25 single-game-section">
-      {{> inningDisplay inning=game.inning position=game.topOfInning}}
+      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> outDisplay number=game.outs}}
+      {{> outDisplay number=game.eventStatus.outs}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> playersOnBase base=game.playersOnBase}}
+      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> count gameId=game._id }}
+      {{> count }}
     </div>
   </div>
 </template>
@@ -120,7 +123,7 @@
 
 <template name="inningDisplay">
   <span class="inning-position">
-    {{#if position}}
+    {{#if position data}}
       <i class="fa fa-caret-up"></i>
     {{else}}
       <i class="fa fa-caret-down"></i>
@@ -131,17 +134,17 @@
 
 <template name="playersOnBase">
   <!-- Fix last / clean up -->
-  {{#if base.third}}
+  {{#if baseOccupancy 3 base}}
     <div class="base-empty base-diamond base-fix third-base"></div>
   {{else}}
     <div class="base-diamond base-fix third-base"></div>
   {{/if}}
-  {{#if base.second}}
+  {{#if baseOccupancy 2 base}}
     <div class="base-empty base-diamond second-base"></div>
   {{else}}
     <div class="base-diamond second-base"></div>
   {{/if}}
-  {{#if base.first}}
+  {{#if baseOccupancy 1 base}}
     <div class="base-empty base-diamond base-fix first-base"></div>
   {{else}}
     <div class="base-diamond base-fix first-base"></div>

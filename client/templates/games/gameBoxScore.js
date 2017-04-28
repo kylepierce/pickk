@@ -1,6 +1,6 @@
 Template.singleGameCard.helpers({
   scheduled: function () {
-    if (this.game.status === "scheduled"){
+    if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
       return true
     }
   },
@@ -63,10 +63,10 @@ Template.count.helpers({
 });
 
 Template.scheduledTeamBlock.helpers({
-  teamColors: function (id) {
-    if(id){
-      Meteor.subscribe('singleTeam', id)
-      var team = Teams.findOne({_id: id})
+  teamColors: function (name) {
+    if(name){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({nickname: name})
       var hex = team && team.hex
       if(hex){
         var color = "#" + team.hex[0]
@@ -76,13 +76,21 @@ Template.scheduledTeamBlock.helpers({
     }
     return color
   },
+  abbr: function (name) {
+    if(name){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({nickname: name})
+      var abbr = team.computerName.toUpperCase();
+      return abbr
+    }
+  }
 });
 
 Template.teamBlock.helpers({
-  teamColors: function (id) {
-    if(id){
-      Meteor.subscribe('singleTeam', id)
-      var team = Teams.findOne({_id: id})
+  teamColors: function (name) {
+    if(name){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({nickname: name})
       var hex = team && team.hex
       if(hex){
         var color = "#" + team.hex[0]
@@ -92,6 +100,14 @@ Template.teamBlock.helpers({
     }
     return color
   },
+  abbr: function (name) {
+    if(name){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({nickname: name})
+      var abbr = team.computerName.toUpperCase();
+      return abbr
+    }
+  }
 });
 
 Template.singleGameInfo.helpers({
@@ -101,7 +117,7 @@ Template.singleGameInfo.helpers({
     }
   },
   future: function () {
-    if (this.game.status === "scheduled"){
+    if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
       return true
     }
   },
@@ -112,7 +128,7 @@ Template.singleGameInfo.helpers({
   },
   baseball: function () {
     var live = this.game
-    var baseball =  this.sport === "MLB"
+    var baseball =  this.game.sport === "MLB"
     if (live && baseball){
       return true
     }
@@ -130,7 +146,6 @@ Template.gameInProgressInfo.helpers({
 
 Template.inningDisplay.helpers({
   grammer: function (inning) {
-
     if([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].indexOf(inning) >= 0) {
       var inningGrammer = inning + "th"
     } else if ([1].indexOf(inning) >= 0) {
@@ -141,7 +156,27 @@ Template.inningDisplay.helpers({
       var inningGrammer = inning + "rd"
     }
     return inningGrammer
+  },
+  position: function(data){
+    if(data === "Top"){
+      return true
+    }
   }
+});
+
+
+Template.playersOnBase.helpers({
+  empty: function(base){
+    if(base.length === 0){
+      return true
+    }
+  },
+  baseOccupancy: function (number, base) {
+    var exists = base.length > 0
+    if (exists && base[0].baseNumber === number){
+      return true
+    }
+  },
 });
 
 Template.futureGameInfo.helpers({
@@ -187,28 +222,33 @@ Template.singleGameCTA.helpers({
     }
   },
   future: function () {
-    if (this.game.status === "scheduled"){
+    if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
       return true
     }
   },
+  tv: function(data) {
+    // var numberOfSations = data.length
+    return data
+  },
   quarter: function (num) {
-    switch(num){
-      case 1:
-        return "1st Quarter"
-        break;
-      case 2:
-        return "2nd Quarter"
-        break;
-      case 3:
-        return "3rd Quarter"
-        break;
-      case 4:
-        return "4th Quarter"
-        break;
-      case 5:
-        return "Overtime"
-        break;
-    }
+    return num
+    // switch(num){
+    //   case 1:
+    //     return "1st Quarter"
+    //     break;
+    //   case 2:
+    //     return "2nd Quarter"
+    //     break;
+    //   case 3:
+    //     return "3rd Quarter"
+    //     break;
+    //   case 4:
+    //     return "4th Quarter"
+    //     break;
+    //   case 5:
+    //     return "Overtime"
+    //     break;
+    // }
   }
 });
 

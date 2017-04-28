@@ -1,6 +1,8 @@
 // Upcoming Games
 Meteor.publish('singleGame', function(_id) {
-  check(_id, String);
+  // check(_id, String);
+  console.log(_id);
+
   return Games.find({_id: _id}, {fields: {inning: 0}});
 });
 
@@ -42,7 +44,7 @@ Meteor.publish('activeGames', function(length, sports) {
 Meteor.publish('liveGames', function() {
   this.unblock()
 
-  var selector = {status: "inprogress", type: {$ne: "prediction"}};
+  var selector = {status: {$in: ["inprogress", "In-Progress"]}, type: {$ne: "prediction"}};
   var parms = {
     sort: {live: -1, scheduled: 1},
     fields: {inning: 0}

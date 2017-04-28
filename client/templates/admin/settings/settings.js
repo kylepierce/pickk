@@ -578,14 +578,14 @@ Template.adminSettings.events({
           }
         }
       }
-
+      // "Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"
       else if(down == 3 && area == 6){
         return multiplier(
           1.7, 2.6,
-          3.9, 4.82,
+          1.8, 2.82,
           (5.9 * 2), (8.61 * 2),
           5.9, 8.61,
-          2.2, 4.81,
+          3.2, 4.81,
           2.9, 4.61)
       }
 
@@ -625,7 +625,7 @@ Template.adminSettings.events({
             // Red Zone
             return multiplier(
               1.7, 2.6,
-              3.9, 4.82,
+              2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
               5.9, 7.61,
               2.2, 4.81,
@@ -633,12 +633,12 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
-              1.7, 2.6,
-              1.9, 2.82,
-              (10.9 * 2), (13.61 * 2),
-              3.9, 5.61,
-              2.2, 4.81,
-              2.9, 3.61)
+            1.7, 2.6,
+            1.8, 2.82,
+            (5.9 * 2), (8.61 * 2),
+            5.9, 8.61,
+            3.2, 4.81,
+            2.9, 4.61)
           }
         }
 
@@ -652,7 +652,7 @@ Template.adminSettings.events({
               (3.9 * 2), (6.61 * 2),
               5.9, 8.61,
               2.2, 4.81,
-              15.9, 23.61)
+              11.9, 13.61)
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
@@ -661,7 +661,7 @@ Template.adminSettings.events({
               (4.2 * 2), (7.81 * 2),
               4.2, 7.81,
               2.2, 4.81,
-              10.9, 12.61)
+              9.9, 10.61)
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
@@ -698,7 +698,7 @@ Template.adminSettings.events({
             // Danger zone
             return multiplier(
               1.7, 2.6,
-              2.9, 4.82,
+              2.9, 3.82,
               (5.9 * 2), (6.61 * 2),
               5.9, 8.61,
               2.2, 4.81,
@@ -848,7 +848,7 @@ Template.adminSettings.events({
             // Danger zone
             return multiplier(
               1.7, 2.6,
-              3.9, 4.82,
+              2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
               5.9, 8.61,
               2.2, 4.81,
@@ -909,16 +909,24 @@ Template.adminSettings.events({
           9.9, 15.61,
           5.9, 9.81,
           15.9, 21.61)
+      } else if (down === 4 && style === 3) {
+        return multiplier(
+          1.7, 2.1,
+          2.3, 3.32,
+          3.2, 4.81,
+          9.9, 15.61,
+          5.9, 9.81,
+          15.9, 21.61)
       }
 
       // Point After
       else if (down == 5){
         return multiplier(
           1.7, 1.7,
-          6.4, 12.42,
-          8.2, 14.81,
-          6.9, 10.61,
-          6.2, 10.81,
+          4.4, 6.42,
+          6.2, 8.81,
+          3.9, 6.61,
+          6.2, 8.81,
           2.9, 3.61)
       }
 
@@ -931,8 +939,8 @@ Template.adminSettings.events({
             2.4, 3.42,
             5.2, 9.81,
             8.9, 15.61,
-            12.2, 24.81,
-            29.9, 42.61)
+            4.2, 6.81,
+            19.9, 22.61)
         } else if (style == 3) {
           // "Touchback/No Return"
           // "Neg to 25 Yard Return"
@@ -943,10 +951,10 @@ Template.adminSettings.events({
           return multiplier(
             2.5, 2.7,
             2.4, 3.42,
-            5.2, 9.81,
-            2.9, 4.61,
-            7.2, 12.81,
-            29.9, 42.61)
+            3.2, 4.81,
+            1.9, 3.61,
+            4.2, 6.81,
+            11.9, 15.61)
         }
       }
     }

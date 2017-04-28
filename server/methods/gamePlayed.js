@@ -1,22 +1,22 @@
 Meteor.methods({
 	'registerForGame': function (userId, gameId){
 		check(userId, String);
-		check(gameId, String);
+		check(gameId, Number);
 		Games.update({_id: gameId}, {$addToSet: {registered: userId}});
 	},
 	'unregisterForGame': function (userId, gameId){
 		check(userId, String);
-		check(gameId, String);
+		check(gameId, Number);
 		Games.update({_id: gameId}, {$pull: {registered: userId}});
 	},
 	'dismissInvitePrompt': function(gameId, userId){
-		check(gameId, String);
+		check(gameId, Number);
 		check(userId, String);
 		Games.update({_id: gameId}, {$push: {dismissed: userId}});
 	},
 
 	'inviteToGame': function(gameId, userId, ref){
-		check(gameId, String);
+		check(gameId, Number);
 		check(userId, String);
 		check(ref, String);
 		// Double check they arent in the invite section before sending push

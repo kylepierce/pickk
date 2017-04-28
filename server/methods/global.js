@@ -21,8 +21,12 @@ Meteor.methods({
         _id: null,
         result: { $sum: '$diamonds'}}
       }
-    )
+    );
 
-    return diamonds
+		if(diamonds.length === 0){
+			return 0
+		} else {
+			return diamonds
+		}
 	}
 });
