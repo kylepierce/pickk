@@ -99,9 +99,9 @@ Template.teamBlock.helpers({
   },
   abbr: function (name) {
     if(name){
-      Meteor.subscribe('teams')
-      var team = Teams.findOne({nickname: name})
-      var abbr = team.computerName.toUpperCase();
+      // Meteor.subscribe('teams')
+      // var team = Teams.findOne({nickname: name});
+      var abbr = name.toUpperCase();
       return abbr
     }
   }
@@ -198,7 +198,10 @@ Template.futureGameInfo.helpers({
     } else {
       return gameTime.tz(timezone).format("MMM Do h:mm a z");
     }
-  }
+  },
+  tv: function(data) {
+    return data
+  },
 });
 
 Template.pastGameInfo.events({
@@ -224,7 +227,6 @@ Template.singleGameCTA.helpers({
     }
   },
   tv: function(data) {
-    // var numberOfSations = data.length
     return data
   },
   quarter: function (num) {

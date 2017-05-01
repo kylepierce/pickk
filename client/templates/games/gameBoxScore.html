@@ -4,6 +4,57 @@
   {{> singleGameCTA game=game}}
 </template>
 
+<template name="singleGameInfo">
+  {{#if baseball}}
+    {{#if inProgress}}
+      {{> gameInProgressInfo game=game}}
+    {{/if}}
+  {{/if}}
+  {{#if future}}
+    {{> futureGameInfo game=game}}
+  {{/if}}
+  {{#if past}}
+    {{> pastGameInfo game=game}}
+  {{/if}}
+</template>
+
+<template name="gameInProgressInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-25 single-game-section">
+      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> outDisplay number=game.eventStatus.outs}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> count }}
+    </div>
+  </div>
+</template>
+
+<template name="futureGameInfo">
+  <div class="single-game-shared single-game-info">
+    {{displayDate game.iso}}
+    {{#each station in tv game.tvStations}}
+      ({{station.callLetters}})
+    {{/each}}
+  </div>
+</template>
+
+<template name="pastGameInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-50 past-game" data-action="game-leaderboard">
+      Leaderboard
+    </div>
+    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;" data-action="game-predictions">
+      Predictions
+    </div>
+  </div>
+</template>
+
 <template name="singleGameCard">
   <div class="single-game-card">
     {{#if scheduled}}
@@ -16,9 +67,9 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{> scheduledTeamBlock id=game.away_team abbr=game.scoring.away.abbr name=game.away.nickname runs=game.home.linescoreTotals.runs }}
+      {{> scheduledTeamBlock id=game.away_team abbr=game.scoring.away.abbr name=game.away.nickname}}
 
-      {{> scheduledTeamBlock id=game.home_team abbr=game.scoring.home.abbr name=game.home.nickname runs=game.home.linescoreTotals.runs }}
+      {{> scheduledTeamBlock id=game.home_team abbr=game.scoring.home.abbr name=game.home.nickname}}
     {{else}}
       {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname runs=game.away.linescoreTotals.runs }}
 
@@ -46,23 +97,9 @@
       </div>
       <div class="team-block-border">
         <span class="team-name team-text">{{name}}</span>
-        <span class="team-score team-text">{{runs}}</span>
+        <span class="team-score team-text"></span>
     </div>
   </div>
-</template>
-
-<template name="singleGameInfo">
-  {{#if baseball}}
-    {{#if inProgress}}
-      {{> gameInProgressInfo game=game}}
-    {{/if}}
-  {{/if}}
-  {{#if future}}
-    {{> futureGameInfo game=game}}
-  {{/if}}
-  {{#if past}}
-    {{> pastGameInfo game=game}}
-  {{/if}}
 </template>
 
 <template name="singleGameCTA">
@@ -74,41 +111,6 @@
       {{/each}})
     </div>
   {{/if}}
-</template>
-
-<template name="gameInProgressInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-25 single-game-section">
-      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> outDisplay number=game.eventStatus.outs}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> count }}
-    </div>
-  </div>
-</template>
-
-<template name="futureGameInfo">
-  <div class="single-game-shared single-game-info">
-    {{ displayDate game.scheduled}} ({{game.tv}})
-  </div>
-</template>
-
-<template name="pastGameInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-50 past-game" data-action="game-leaderboard">
-      Leaderboard
-    </div>
-    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;
-" data-action="game-predictions">
-      Predictions
-    </div>
-  </div>
 </template>
 
 <template name="count">

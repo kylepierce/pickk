@@ -1,7 +1,7 @@
 // Upcoming Games
 Meteor.publish('singleGame', function(_id) {
   // check(_id, String);
-  console.log(_id);
+  // console.log(_id);
 
   return Games.find({_id: _id}, {fields: {inning: 0}});
 });
@@ -33,11 +33,14 @@ Meteor.publish('activeGames', function(length, sports) {
     sports.push("football")
   }
 
+
   var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}, sport: {$in: sports}};
   var parms = {
-    sort: {live: -1, scheduled: 1}, fields: {inning: 0}
+    sort: {live: -1, scheduled: 1}, fields: {inning: 0, pbp: 0}
   }
   var games = Games.find(selector, parms);
+  var len = games.count()
+  console.log(length, start, finish, len);
   return games
 });
 
@@ -47,7 +50,7 @@ Meteor.publish('liveGames', function() {
   var selector = {status: {$in: ["inprogress", "In-Progress"]}, type: {$ne: "prediction"}};
   var parms = {
     sort: {live: -1, scheduled: 1},
-    fields: {inning: 0}
+    fields: {inning: 0, pbp: 0}
   }
 
   return Games.find(selector, parms);
@@ -62,7 +65,7 @@ Meteor.publish('upcomingGames', function() {
   var parms = {
     sort: {scheduled: 1},
     limit: 3,
-    fields: {inning: 0}
+    fields: {inning: 0, pbp: 0}
   }
 
   return Games.find(selector, parms);

@@ -4,7 +4,7 @@ Template.gamesFilter.helpers({
 	},
   dates: function(){
 		var data = Session.get('gamesDate');
-    var list = [{name: "Today", value: "Day"}, {name: "Week", value: "Week"}, {name: "Month", value: "Month"}, {name: "Last Week", value: "Last-Week"}, {name: "Last Month", value: "Last-Month"}]
+    var list = [{name: "Today", value: "Day"}, {name: "Week", value: "Week"}, {name: "Month", value: "month"}, {name: "Last Week", value: "Last-Week"}, {name: "Last Month", value: "Last-Month"}]
 
 		_.forEach(list, function(item){
 			var lower = item.value.toLowerCase()

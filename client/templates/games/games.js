@@ -4,7 +4,7 @@ Template.games.onCreated(function() {
   if(dateFilter){
     Session.set('gamesDate', dateFilter);
   } else {
-    Session.set('gamesDate', "week");
+    Session.set('gamesDate', "day");
   }
 
   var usersPref = Meteor.user().profile.gamesFilter
