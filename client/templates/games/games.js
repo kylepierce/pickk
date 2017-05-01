@@ -90,5 +90,23 @@ Template.games.events({
   'click [data-action=gameAdmin]': function (e, t) {
     var gameId = $(e.currentTarget).attr("data-game-id");
     Router.go('/admin/game/' + gameId + "/1")
+  },
+  'click [data-action=removeFilter]': function (e,t) {
+    var sport = Session.get('gamesBySport');
+    var date = Session.get('gamesDate');
+    var itemClicked = e.currentTarget.textContent
+    var sportClicked = sport.indexOf(itemClicked)
+    var dateClicked = date.indexOf(itemClicked)
+
+    console.log(itemClicked);
+
+    if (sportClicked > -1){
+      Meteor.call('updateGamesFilter', itemClicked, function(){
+  			var userSettings = Meteor.user().profile.gamesFilter
+  			Session.set('gamesBySport', userSettings);
+  		});
+    } else {
+      Session.set('gamesDate', "day")
+    }
   }
 });

@@ -160,7 +160,7 @@ Meteor.methods({
 		var spot = existing.indexOf(type)
 		if (spot === -1){
 			var mod = {$push: {'profile.gamesFilter': type}}
-		} else if (spot >= 0){
+		} else if (spot > -1){
 			var mod = {$pull: {'profile.gamesFilter': type}}
 		}
 		UserList.update(this.userId, mod)
