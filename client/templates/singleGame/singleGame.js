@@ -39,6 +39,7 @@ Template.singleGame.helpers({
       userId: userId,
       period: gamePeriod
     }
+
     Meteor.subscribe('joinGameCount', gamePlayed)
     var count = Counts.get('joinGameCount')
     if (count === 1){
@@ -61,7 +62,7 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     var gameId = game._id
     var userId = Meteor.userId();
-    if (game.status === "inprogress"){
+    if (game.status === "In-Progress"){
       return true
     }
   },

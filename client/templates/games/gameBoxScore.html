@@ -67,9 +67,9 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{> scheduledTeamBlock id=game.away_team abbr=game.scoring.away.abbr name=game.away.nickname}}
+      {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
 
-      {{> scheduledTeamBlock id=game.home_team abbr=game.scoring.home.abbr name=game.home.nickname}}
+      {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
     {{else}}
       {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname runs=game.away.linescoreTotals.runs }}
 
@@ -81,7 +81,7 @@
 <template name="teamBlock">
   <div class="team-block">
     <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-      {{abbr name}}
+      {{code abbr}}
     </div>
     <div class="team-block-border">
       <span class="team-name team-text">{{name}}</span>

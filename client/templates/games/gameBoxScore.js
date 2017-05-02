@@ -45,11 +45,14 @@ Template.outDisplay.helpers({
     } else if (number === 3) {
       return repeat(out, 3)
     } else {
-      var diff = Math.abs(number - 3)
-      var outs = repeat(out, number)
-      var noOuts = repeat(noOut, diff)
-      return outs + noOuts
+      return repeat(noOut, 3)
     }
+    // else {
+    //   var diff = Math.abs(number - 3)
+    //   var outs = repeat(out, number)
+    //   var noOuts = repeat(noOut, diff)
+    //   return outs + noOuts
+    // }
   },
 });
 
@@ -97,7 +100,7 @@ Template.teamBlock.helpers({
     }
     return color
   },
-  abbr: function (name) {
+  code: function (name) {
     if(name){
       // Meteor.subscribe('teams')
       // var team = Teams.findOne({nickname: name});
@@ -124,7 +127,7 @@ Template.singleGameInfo.helpers({
     }
   },
   baseball: function () {
-    var live = this.game
+    var live = this.game.live
     var baseball =  this.game.sport === "MLB"
     if (live && baseball){
       return true
@@ -160,7 +163,6 @@ Template.inningDisplay.helpers({
     }
   }
 });
-
 
 Template.playersOnBase.helpers({
   empty: function(base){

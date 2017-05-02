@@ -1,8 +1,6 @@
 // Upcoming Games
 Meteor.publish('singleGame', function(_id) {
-  // check(_id, String);
-  // console.log(_id);
-
+  check(_id, String);
   return Games.find({_id: _id}, {fields: {inning: 0}});
 });
 
@@ -40,7 +38,6 @@ Meteor.publish('activeGames', function(length, sports) {
   }
   var games = Games.find(selector, parms);
   var len = games.count()
-  console.log(length, start, finish, len);
   return games
 });
 
