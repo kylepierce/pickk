@@ -1,7 +1,5 @@
 Template.singleGame.onCreated(function() {
 	var game = Games.findOne({});
-	console.log(game);
-
 	var period = game.period
 
 	var gameId = Router.current().params._id

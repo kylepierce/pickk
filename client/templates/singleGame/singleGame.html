@@ -82,11 +82,11 @@
 	{{#if propQuestions q}}
 		{{> eventQuestion q=q t="prop"}}
 	{{/if}}
-	{{#if eventQuestions q}}
+	<!-- {{#if eventQuestions q}}
 		{{> eventQuestion q=q t="atBat"}}
-	{{/if}}
+	{{/if}} -->
 	{{#if liveQuestion q}}
-		{{> eventQuestion q=q t="live"}}
+		{{> eventQuestion q=q t=q.type}}
 	{{/if}}
 	{{#if dailyPickk q}}
 		{{> eventQuestion q=q t="prediction"}}

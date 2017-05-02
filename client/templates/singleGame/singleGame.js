@@ -329,15 +329,15 @@ Template.singleQuestion.helpers({
       return true
     }
   },
-  eventQuestions: function (q) {
-    if(q.atBatQuestion || q.event){
-      return true
-    }
-  },
+  // eventQuestions: function (q) {
+  //   if(q.atBatQuestion || q.event){
+  //     return true
+  //   }
+  // },
   liveQuestion: function (q) {
-    var live = q && q.type === "live"
-    var play = q && q.type === "play"
-    if(live || play){
+		var list = ["live", "play", "atBat"]
+		var included = list.indexOf(q.type)
+    if(q && included > 0){
       return true
     }
   },
@@ -350,7 +350,9 @@ Template.singleQuestion.helpers({
 
 Template.eventQuestion.helpers({
   liveQuestion: function (q) {
-    if (q.type === "play"){
+		var list = ["live", "play", "atBat"]
+		var included = list.indexOf(q.type)
+    if(q && included > 0){
       return true
     }
   },

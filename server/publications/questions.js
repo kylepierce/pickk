@@ -6,6 +6,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
   this.unblock()
 
   var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch()
+  console.log(gamePlayed);
   if(gamePlayed){
     var timeLimit = gamePlayed[0].timeLimit
     var gameType = gamePlayed[0].type
@@ -26,7 +27,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
         active: true,
         gameId: gameId,
         period: period,
-        type: {$in: ["prop", "play"]},
+        type: {$in: ["prop", "play", "atBat"]},
         usersAnswered: {$nin: [userId]},
         dateCreated: {$gt: finish}
       }

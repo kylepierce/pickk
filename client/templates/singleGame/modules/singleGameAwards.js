@@ -7,22 +7,9 @@ Template.singleGameAwards.helpers({
     var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
 
     if (game && userGamePlayed){
-      console.log(award);
       return userGamePlayed[award];
     }
   },
-  // diamonds: function () {
-  //   var userId = Meteor.userId();
-  //   var $game = Router.current().params._id
-  //   var game = Games.findOne({_id: $game});
-  //
-  //   if (game && game.period){
-  //     var game = GamePlayed.findOne({userId: userId, gameId: $game, period: game.period})
-  //     if(game){
-  //       return game.diamonds;
-  //     }
-  //   }
-  // },
   gameType: function () {
     var userId = Meteor.userId()
     var game = GamePlayed.findOne({userId: userId});
