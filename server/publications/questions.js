@@ -26,7 +26,7 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
         active: true,
         gameId: gameId,
         period: period,
-        type: {$in: ["prop", "play", "atBat"]},
+        type: {$in: ["prop", "play", "atBat", "pitch"]},
         usersAnswered: {$nin: [userId]},
         dateCreated: {$gt: finish}
       }

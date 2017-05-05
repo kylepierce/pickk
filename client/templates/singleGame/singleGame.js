@@ -188,7 +188,7 @@ Template.liveGame.helpers({
   },
   noQuestions: function () {
     var userId = Meteor.userId()
-    var gameId = Games.findOne()._id
+    var gameId = Router.current().params._id
     var game = Games.find({_id: gameId}).fetch();
     var period = game[0].period
     var commercial = game[0].commercial
