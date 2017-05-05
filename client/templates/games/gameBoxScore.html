@@ -67,13 +67,13 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
-
       {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
-    {{else}}
-      {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname runs=game.away.linescoreTotals.runs }}
 
-      {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname  runs=game.home.linescoreTotals.runs }}
+      {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
+    {{else}}
+      {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname runs=game.home.linescoreTotals.runs }}
+
+      {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname  runs=game.away.linescoreTotals.runs }}
     {{/if}}
   </div>
 </template>
@@ -136,17 +136,17 @@
 
 <template name="playersOnBase">
   <!-- Fix last / clean up -->
-  {{#if baseOccupancy 3 base}}
+  {{#if playerOnBase 3 base}}
     <div class="base-empty base-diamond base-fix third-base"></div>
   {{else}}
     <div class="base-diamond base-fix third-base"></div>
   {{/if}}
-  {{#if baseOccupancy 2 base}}
+  {{#if playerOnBase 2 base}}
     <div class="base-empty base-diamond second-base"></div>
   {{else}}
     <div class="base-diamond second-base"></div>
   {{/if}}
-  {{#if baseOccupancy 1 base}}
+  {{#if playerOnBase 1 base}}
     <div class="base-empty base-diamond base-fix first-base"></div>
   {{else}}
     <div class="base-diamond base-fix first-base"></div>

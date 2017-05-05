@@ -55,6 +55,20 @@ Template.waitingForNextPlay.rendered = function () {
 };
 
 Template.waitingForNextPlay.helpers({
+	currentBatter: function (){
+		var currentBatter = this.game[0]['eventStatus']['currentBatter']
+		return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
+	},
+	upNext: function(){
+		var currentPosition = this.game[0]['eventStatus']['inningDivision']
+		if(currentPosition === "Top"){
+			var currentBatter = this.game[0]['home']['liveState']['nextUpBatters'][0]
+			return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
+		} else {
+			var currentBatter = this.game[0]['away']['liveState']['nextUpBatters'][0]
+			return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
+		}
+	},
 	drive: function(){
 		var userId = Meteor.userId();
 		var gameId = this.game[0]._id

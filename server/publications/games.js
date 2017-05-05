@@ -1,7 +1,7 @@
 // Upcoming Games
 Meteor.publish('singleGame', function(_id) {
   check(_id, String);
-  return Games.find({_id: _id}, {fields: {inning: 0}});
+  return Games.find({_id: _id}, {fields: {inning: 0, pbp: 0}});
 });
 
 // Only live games

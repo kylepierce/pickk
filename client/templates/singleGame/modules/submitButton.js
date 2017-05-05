@@ -141,6 +141,7 @@ Template.submitButton.events({
     });
 
     setTimeout(function() {
+      console.log(a);
       Meteor.call('questionAnswered', a);
     }, 250);
   }

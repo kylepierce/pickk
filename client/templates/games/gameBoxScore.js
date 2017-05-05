@@ -44,15 +44,12 @@ Template.outDisplay.helpers({
       return repeat(noOut, 3)
     } else if (number === 3) {
       return repeat(out, 3)
-    } else {
-      return repeat(noOut, 3)
+    }  else {
+      var diff = Math.abs(number - 3)
+      var outs = repeat(out, number)
+      var noOuts = repeat(noOut, diff)
+      return outs + noOuts
     }
-    // else {
-    //   var diff = Math.abs(number - 3)
-    //   var outs = repeat(out, number)
-    //   var noOuts = repeat(noOut, diff)
-    //   return outs + noOuts
-    // }
   },
 });
 
@@ -165,15 +162,18 @@ Template.inningDisplay.helpers({
 });
 
 Template.playersOnBase.helpers({
-  empty: function(base){
-    if(base.length === 0){
+  empty: function(bases){
+    if(bases.length === 0){
       return true
     }
   },
-  baseOccupancy: function (number, base) {
-    var exists = base.length > 0
-    if (exists && base[0].baseNumber === number){
-      return true
+  playerOnBase: function (number, base) {
+    if(base && base.length > 0){
+      for (var i = 0; i < 2; i++) {
+        if (base[i].baseNumber === number){
+          return true
+        }
+      }
     }
   },
 });

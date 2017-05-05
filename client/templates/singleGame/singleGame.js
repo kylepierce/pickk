@@ -335,7 +335,7 @@ Template.singleQuestion.helpers({
   //   }
   // },
   liveQuestion: function (q) {
-		var list = ["live", "play", "atBat"]
+		var list = ["live", "play", "atBat", "pitch"]
 		var included = list.indexOf(q.type)
     if(q && included > 0){
       return true
@@ -350,7 +350,7 @@ Template.singleQuestion.helpers({
 
 Template.eventQuestion.helpers({
   liveQuestion: function (q) {
-		var list = ["live", "play", "atBat"]
+		var list = ["live", "play", "atBat", "pitch"]
 		var included = list.indexOf(q.type)
     if(q && included > 0){
       return true
