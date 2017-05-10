@@ -31,13 +31,12 @@ Meteor.publish('activeGames', function(length, sports) {
     sports.push("football")
   }
 
-
   var selector = {scheduled: {$gt: start, $lt: finish}, type: {$ne: "prediction"}, sport: {$in: sports}};
+  //
   var parms = {
     sort: {live: -1, scheduled: 1}, fields: {inning: 0, pbp: 0}
   }
   var games = Games.find(selector, parms);
-  var len = games.count()
   return games
 });
 
