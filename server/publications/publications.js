@@ -45,10 +45,10 @@ Meteor.publish('teams', function() {
   return Teams.find({})
 });
 
-Meteor.publish('singleTeam', function ( teamId ) {
-  check(teamId, String);
+Meteor.publish('singleTeam', function ( name ) {
+  check(name, String);
   this.unblock()
-  return Teams.find({_id: teamId})
+  return Teams.find({nickname: name})
 });
 
 // Questions and Answers

@@ -74,9 +74,9 @@ Template.scheduledTeamBlock.helpers({
     return color
   },
   abbr: function (name) {
-    if(name){
-      Meteor.subscribe('teams')
-      var team = Teams.findOne({nickname: name})
+    Meteor.subscribe('singleTeam', name);
+    var team = Teams.findOne({nickname: name});
+    if(name && team){
       var abbr = team.computerName.toUpperCase();
       return abbr
     }
@@ -170,7 +170,7 @@ Template.playersOnBase.helpers({
   playerOnBase: function (number, base) {
     if(base && base.length > 0){
       for (var i = 0; i < 2; i++) {
-        if (base[i].baseNumber === number){
+        if (base[i].baseNumber && base[i].baseNumber === number){
           return true
         }
       }

@@ -3,10 +3,11 @@ Template.singleGameAwards.helpers({
     var userId = Meteor.userId();
     var $game = Router.current().params._id
     var game = Games.findOne({_id: $game});
-    var period = game.period
-    var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
 
     if (game && userGamePlayed){
+      var period = game.period
+      var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
+      
       return userGamePlayed[award];
     }
   },

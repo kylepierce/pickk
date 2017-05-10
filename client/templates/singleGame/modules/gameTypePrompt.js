@@ -11,13 +11,76 @@ Template.gameTypePrompt.onRendered( function() {
   $( "svg" ).delay( 50 ).fadeIn();
 });
 
+Template.gameTypeChoice.helpers({
+  numberOfOptions: function(options, shrink){
+    var optionCount = options.length
+    var size = parseInt(100 / optionCount)
+    if (shrink){ var size = size - 5 }
+    if (optionCount === 1){ var size = 100 }
+    return "col-md-" + size
+  },
+  alert: function (featured) {
+    if (featured){
+      return "highlight-option"
+    }
+  }
+});
 
 Template.gameTypePrompt.helpers({
-  notFootball: function (){
+  sportIs: function (sport) {
     var game = Games.findOne();
-    var sport = game.sport
-    if (sport !== "MLB"){
-      return true
+    switch (game.sport) {
+      case "MLB":
+        var playTypes = {
+          title: "Select Contest Type",
+          subTitle: "Join Pickk MLB Contest",
+          desc: "Note: You Select Play Type Every 3 Innings.",
+          options: [{
+              title: "Live",
+              icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
+              desc: "Every Pitch and Batter.",
+              button: "button-balanced",
+              featured: true
+            }, {
+              title: "Batter",
+              icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
+              desc: "End of Every Batter"
+          }]
+        }
+        return playTypes
+        break;
+      case "NFL":
+        var playTypes = {
+          title: "Select Contest Type",
+          subTitle: "Join Pickk MLB Contest",
+          desc: "Note: You Select Play Type Every Quarter.",
+          options: [{
+              title: "Live",
+              icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
+              desc: "Play by Play. Earn More Diamonds. (Chance to Win Quarterly Prizes)",
+              button: "button-balanced"
+            }, {
+              title: "Drives",
+              icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
+              desc: "15 questions each quarter"
+            }]
+        }
+        return playTypes
+        break;
+      case "NBA":
+        var playTypes = {
+          title: "Select Contest Type",
+          subTitle: "Join Pickk NBA Contest",
+          desc: "Note: You Select Play Type Every Quarter.",
+          options: [{
+              title: "Live",
+              icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
+              desc: "Every Pitch and Batter.",
+              button: "button-balanced"
+            }]
+        }
+        return playTypes
+        break;
     }
   }
 });

@@ -329,11 +329,6 @@ Template.singleQuestion.helpers({
       return true
     }
   },
-  // eventQuestions: function (q) {
-  //   if(q.atBatQuestion || q.event){
-  //     return true
-  //   }
-  // },
   liveQuestion: function (q) {
 		var list = ["live", "play", "atBat", "pitch"]
 		var included = list.indexOf(q.type)

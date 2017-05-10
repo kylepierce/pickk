@@ -21,8 +21,14 @@
 	text-align: center;
 }
 
-.button-box {
-	padding-top: 25px;
+.type-option{
+  margin-top: 10px;
+  padding: 25px 5px;
+}
+
+.highlight-option {
+  /*border: 1px solid blue;*/
+  background-color: rgba(191, 213, 222, .5);
 }
 
 #reviewPrompt,
