@@ -1,5 +1,5 @@
 Template.singleGame.onCreated(function() {
-	var game = Games.findOne({})
+	var game = Games.findOne();
 	var period = game.period
 
 	var gameId = Router.current().params._id
@@ -9,7 +9,18 @@ Template.singleGame.onCreated(function() {
 		period: period,
 		number: 3
 	}
-	Session.set('leaderboardData', data)
+	var userId = Meteor.userId();
+	Session.set('leaderboardData', data);
+
+	var self = this
+	self.getPeriod = function(){
+		var gamePeriod = game.period
+		return gamePeriod
+	}
+	self.autorun(function() {
+		// This needs to sync for changes when the period changes.
+		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
+	});
 });
 
 Template.singleGame.rendered = function () {
@@ -33,24 +44,7 @@ Template.singleGame.helpers({
     var game = Games.findOne();
     var gameId = game._id
     var userId = Meteor.userId();
-    var gamePeriod = game.period
-    var gamePlayed = {
-      gameId: gameId,
-      userId: userId,
-      period: gamePeriod
-    }
-
-    Meteor.subscribe('joinGameCount', gamePlayed)
-    var count = Counts.get('joinGameCount')
-    if (count === 1){
-      return true
-    }
-  },
-  notJoinedGame: function (){
-    var count = Counts.get('joinGameCount')
-    if (count === 0){
-      return true
-    }
+		return true
   },
   gameCompleted : function () {
     var game = Games.findOne();
@@ -58,14 +52,29 @@ Template.singleGame.helpers({
       return true
     }
   },
-  isLive: function () {
-    var game = Games.findOne();
-    var gameId = game._id
-    var userId = Meteor.userId();
-    if (game.status === "In-Progress"){
-      return true
-    }
-  },
+  // isLive: function () {
+  //   var game = Games.findOne();
+  //   var gameId = game._id
+  //   var userId = Meteor.userId();
+	// 	var gamePeriod = game.period
+  //   var gamePlayed = {
+  //     gameId: gameId,
+  //     userId: userId,
+  //     period: gamePeriod
+  //   }
+	//
+  //   Meteor.subscribe('joinGameCount', gamePlayed);
+  //   var count = Counts.get('joinGameCount');
+	// 	console.log(count);
+	// 	if (count === 1 && game.status === "In-Progress"){
+  //     return true
+  //   } else if (count === 0){
+	// 		console.log("Have not joined the game...");
+	// 		// Router.go('joinGame.show', {_id: gameId})
+	// 	} else {
+	// 		console.log("Not working correctly");
+	// 	}
+  // },
 
   scoreMessage: function() {
     var userId = Meteor.userId();
@@ -167,21 +176,36 @@ Template.liveGame.helpers({
     var sort = {sort: {dateCreated: 1}, limit: 1}
     return Questions.find(selector, sort).fetch();
   },
-  questions: function () {
-    // Only show questions that are 'gamePlayed.time' old
+	liveQuestions: function () {
     var currentUserId = Meteor.userId()
-    var gamePlayed = GamePlayed.findOne({})
+    var gamePlayed = GamePlayed.findOne({});
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
     if (gameType === "live"){
       var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-
       var selector = {
         active: true,
         commercial: false,
         dateCreated: {$gt: finish},
         usersAnswered: {$nin: [currentUserId]},
-      };
+      }
+      var sort = {sort: {dateCreated: 1}, limit: 1}
+			return Questions.find(selector, sort).fetch();
+    }
+  },
+  questions: function () {
+    var currentUserId = Meteor.userId()
+    var gamePlayed = GamePlayed.findOne({});
+    var timeLimit = gamePlayed.timeLimit
+    var gameType = gamePlayed.type
+    if (gameType === "live"){
+      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+      var selector = {
+        active: true,
+        commercial: false,
+        dateCreated: {$gt: finish},
+        usersAnswered: {$nin: [currentUserId]},
+      }
       var sort = {sort: {dateCreated: 1}, limit: 1}
       return Questions.find(selector, sort).fetch();
     }
@@ -193,9 +217,9 @@ Template.liveGame.helpers({
     var period = game[0].period
     var commercial = game[0].commercial
     Meteor.subscribe('questionCount', userId, gameId, period, commercial)
-    var count = Counts.get('questionCount')
-    if (count === 0){
-      return true
+    var count = Counts.get('questionCount');
+    if (count > 0){
+      return false
     }
   },
 });

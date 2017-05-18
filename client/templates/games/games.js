@@ -98,8 +98,6 @@ Template.games.events({
     var sportClicked = sport.indexOf(itemClicked)
     var dateClicked = date.indexOf(itemClicked)
 
-    console.log(itemClicked);
-
     if (sportClicked > -1){
       Meteor.call('updateGamesFilter', itemClicked, function(){
   			var userSettings = Meteor.user().profile.gamesFilter

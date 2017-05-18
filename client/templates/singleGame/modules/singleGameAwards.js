@@ -4,10 +4,9 @@ Template.singleGameAwards.helpers({
     var $game = Router.current().params._id
     var game = Games.findOne({_id: $game});
 
-    if (game && userGamePlayed){
+    if (game){
       var period = game.period
       var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
-      
       return userGamePlayed[award];
     }
   },

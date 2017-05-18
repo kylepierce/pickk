@@ -170,7 +170,7 @@ Template.playersOnBase.helpers({
   playerOnBase: function (number, base) {
     if(base && base.length > 0){
       for (var i = 0; i < 2; i++) {
-        if (base[i].baseNumber && base[i].baseNumber === number){
+        if (base[i] && base[i].baseNumber === number){
           return true
         }
       }
@@ -256,8 +256,6 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function ( e, t ) {
     var gameId = this.game._id
-    // var period = this.game.period
-    // Meteor.call('userJoinsAGame', Meteor.userId(), gameId);
-    Router.go('game.show', {_id: gameId});
+    Router.go('joinGame.show', {_id: gameId});
   }
 });

@@ -25,7 +25,7 @@
 
 	<div class="button-box">
 		{{#each option in options}}
-				<button class="button {{numberOfOptions options true}} {{option.button}}" data-action="joinGame">
+				<button class="button {{numberOfOptions options true}} {{option.button}}" data-action="joinGame" value="{{option.gameType}}">
 					<strong>{{option.title}}</strong>
 				</button>
 		{{/each}}

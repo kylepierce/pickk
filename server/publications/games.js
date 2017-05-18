@@ -3,7 +3,6 @@ Meteor.publish('singleGame', function(_id) {
   check(_id, String);
   return Games.find({_id: _id}, {fields: {inning: 0, pbp: 0}});
 });
-
 // Only live games
 Meteor.publish('activeGames', function(length, sports) {
   check(length, String);
@@ -79,8 +78,13 @@ Meteor.publish('singleQuestion', function(id) {
   return Questions.find({_id: id}, {fields: {_id: 1, que: 1, outcome: 1, options: 1}})
 })
 
-Meteor.publish('joinGameCount', function(data){
-  check(data, Object);
+Meteor.publish('joinGameCount', function(gameId, userId, period){
+  console.log(gameId, userId, period);
+  check(gameId, String);
+  check(userId, String);
+  check(period, Number);
   this.unblock();
-  Counts.publish(this, "joinGameCount", GamePlayed.find(data));
+  // var game = Games.findOne({_id: gameId});
+  // var period = game.period
+  Counts.publish(this, "joinGameCount", GamePlayed.find({gameId: gameId, userId: userId, period: period}));
 });

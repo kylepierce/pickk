@@ -50,8 +50,9 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
         usersAnswered: {$nin: [userId]}
       }
     }
+  } else {
+    console.log(0);
   }
-
   var data = Questions.find(selector)
   Counts.publish(this, "questionCount", data);
 });

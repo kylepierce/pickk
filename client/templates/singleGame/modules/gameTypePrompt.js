@@ -38,11 +38,13 @@ Template.gameTypePrompt.helpers({
           options: [{
               title: "Live",
               icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
+              gameType: "Live",
               desc: "Every Pitch and Batter.",
               button: "button-balanced",
               featured: true
             }, {
               title: "Batter",
+              gameType: "AtBat",
               icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
               desc: "End of Every Batter"
           }]
@@ -87,16 +89,18 @@ Template.gameTypePrompt.helpers({
 
 Template.gameTypePrompt.events({
   'click [data-action="joinGame"]': function (e,t) {
+    var $gameId = Router.current().params._id
+    var userId = Meteor.userId();
     var user = Meteor.user();
     var game = Games.findOne();
-    var text = e.target.innerText.toLowerCase( )
+    var type = e.target.value.toLowerCase( )
 
     var gamePlayed = {
-      gameId: game._id,
+      gameId: $gameId,
       dateCreated: new Date(),
-      userId: user._id,
+      userId: userId,
       period: game.period,
-      type: text
+      type: type
     }
 
     var opinion = checkUsersOpinion(game, user)
@@ -107,27 +111,30 @@ Template.gameTypePrompt.events({
       //Intercom needs unix time with '_at' in JSON to work.
       var intercomData = {
         "last_game_joined_at": parseInt(Date.now() / 1000),
-        "type": text,
-        "userId": user._id,
+        "type": type,
+        "userId": userId,
         "last_period": game.period,
-        "last_game": game._id
+        "last_game": $gameId
       }
 
       updateIntercom(intercomData)
-      Branch.setIdentity(user._id)
+      Branch.setIdentity(userId)
       var eventName = 'joined_game';
       Branch.userCompletedAction(eventName)
     }
     Meteor.call('userJoinsAGame', data);
-    Meteor.subscribe('gamePlayed', user._id, game._id);
-    var leaderData = Session.get('leaderboardData')
-  	leaderData["period"] = game.period,
-  	Session.set('leaderboardData', leaderData)
+    Meteor.subscribe('gamePlayed', userId, $gameId);
+
+    var leaderData = Session.get('leaderboardData');
+  	// leaderData["period"] = game.period
+
+  	Session.set('leaderboardData', leaderData);
     IonLoading.show({
       customTemplate: "Providing Coins...",
       duration: 1000,
       backdrop: true
     });
+    Router.go('game.show', {_id: $gameId});
   }
 });
 
