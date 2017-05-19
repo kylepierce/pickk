@@ -10,7 +10,7 @@ Meteor.publish('activeGames', function(length, sports) {
   this.unblock()
   var length = length.toLowerCase()
   var specificDay = moment()
-  var start = specificDay.startOf('day').toDate();
+  var start = specificDay.startOf('day').add(4, "hour").toDate();
   if(length === "day"){
     var finish = specificDay.endOf('day').add(4, "hour").toDate();
   } else if (length === "month") {
@@ -54,9 +54,8 @@ Meteor.publish('liveGames', function() {
 Meteor.publish('upcomingGames', function() {
   this.unblock()
   var specificDay = moment()
-  var start = specificDay.startOf('day').toDate();
-
-  var selector = {scheduled: {$gt: start}, status: "scheduled", type: {$ne: "prediction"}};
+  var start = specificDay.startOf('day').add(4, "hour").toDate();
+  var selector = {scheduled: {$gt: start}, status: "Pre-Game", type: {$ne: "prediction"}};
   var parms = {
     sort: {scheduled: 1},
     limit: 3,
@@ -79,7 +78,6 @@ Meteor.publish('singleQuestion', function(id) {
 })
 
 Meteor.publish('joinGameCount', function(gameId, userId, period){
-  console.log(gameId, userId, period);
   check(gameId, String);
   check(userId, String);
   check(period, Number);

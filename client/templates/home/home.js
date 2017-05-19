@@ -65,6 +65,7 @@ Template.home.helpers({
     return Games.find({live: false}).count()
   },
   listUpcomingGames: function(){
+    var liveGame = Games.find({live: false}).count()
     return Games.find({live: false})
   }
 });
