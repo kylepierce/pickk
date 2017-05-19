@@ -213,7 +213,8 @@ Template.notification.events({
     Router.go('/groups/' + this.note.groupId);
   },
   'click [data-action=viewUser]':function(e, t){
-    var userId = this._id
+    console.log(e,t);
+    var userId = t.data.note.senderId
     if (userId){
       Router.go('/user-profile/' + userId);
     } else {

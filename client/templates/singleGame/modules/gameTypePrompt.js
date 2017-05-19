@@ -42,12 +42,14 @@ Template.gameTypePrompt.helpers({
               desc: "Every Pitch and Batter.",
               button: "button-balanced",
               featured: true
-            }, {
-              title: "Batter",
-              gameType: "AtBat",
-              icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
-              desc: "End of Every Batter"
-          }]
+            }
+          //   , {
+          //     title: "Batter",
+          //     gameType: "AtBat",
+          //     icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
+          //     desc: "End of Every Batter"
+          // }
+        ]
         }
         return playTypes
         break;

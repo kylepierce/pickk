@@ -113,7 +113,9 @@
 	{{/if}}
 
 	{{#if notif "chatReaction"}}
-		{{> chatReaction}}
+		<div class="item item-avatar item-button-right {{new}}">
+			{{> chatReaction}}
+		</div>
 	{{/if}}
  </template>
 
@@ -184,6 +186,7 @@
 	    <h3>@{{profile.username}} reacted to your chat message:</h3>
 	  {{/with}}
 	  <p>{{note.message}}</p>
+		<button data-action="viewUser" class="button">View</button>
 </template>
 
 <template name="trophyNotification">

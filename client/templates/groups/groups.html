@@ -29,10 +29,10 @@
 
     </div> -->
 
-    <div style="margin: 20px;" class="container">
-      Watching the game with friends? Want to prove to your fantasy league that you know the most about football? Create a league!
-      <br>
-      <br>
+    <div class="container">
+			<div style="margin: 20px 0;">
+      	Watching the game with friends? Want to prove to your fantasy league that you know the most about football? Create a league!
+			</div>
       <a href="/newgroup" class="newGroup">
       <button class="button button-balanced ">
         <i class="fa fa-comments-o"></i>
@@ -48,7 +48,7 @@
       </a>
     </div>
 
-    <div class="item item-divider">Your Leagues</div>
+    <div class="item item-divider clear-fix" style="margin-top: 20px">Your Leagues</div>
     {{#if groups}}
       {{#each userGroups}}
         {{#ionItem path="group.show" avatar=true}}
