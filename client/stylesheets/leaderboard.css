@@ -73,3 +73,7 @@ a {
 .radio-filter .radio-icon {
   left: 0!important;
 }
+
+.legit {
+  opacity: 0;
+}

@@ -13,13 +13,19 @@ Template.singleGame.onCreated(function() {
 	Session.set('leaderboardData', data);
 
 	var self = this
+	self.getId = function(){
+		var gameId = game._id
+		return gameId
+	}
+
 	self.getPeriod = function(){
 		var gamePeriod = game.period
 		return gamePeriod
 	}
+
 	self.autorun(function() {
 		// This needs to sync for changes when the period changes.
-		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
+		self.subscribe('joinGameCount', self.getId(), userId, self.getPeriod())
 	});
 });
 
@@ -29,7 +35,7 @@ Template.singleGame.rendered = function () {
     infinite: false,
     draggable: true,
     centerMode: true,
-    centerPadding: '4.5%'
+    centerPadding: '2.0%'
   });
   if(Meteor.isCordova){
     intercom.setLauncherVisibility('VISABLE');

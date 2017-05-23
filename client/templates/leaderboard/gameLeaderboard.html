@@ -23,23 +23,41 @@
 </template>
 
 <template name="miniLeaderboard">
-  {{> spinLoader}}
+  <!-- {{> spinLoader}} -->
 
-  {{#if Template.subscriptionsReady}}
-    <div class="loading-wrapper">
+  <!-- {{#if Template.subscriptionsReady}}
+    <div class="loading-wrapper"> -->
     <ol type="1" id="leaderboard">
       {{#each player i}}
-        <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-          {{> userAvatar userId=userId}}
-          <li class="list-font" value={{this.rank}}>
-            <span class="username">{{username userId}}</span>
-            <span class="score">
-                {{{coins}}}
-            </span>
-          </li>
-        </div>
+        {{> singlePlayer}}
       {{/each}}
     </ol>
+  <!-- </div>
+  {{/if}} -->
+</template>
+
+<template name="singlePlayer">
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+    {{> fakePlayer}}
+    {{#if Template.subscriptionsReady}}
+    {{> userAvatar userId=userId}}
+    <li class="list-font legit" value={{rank}}>
+      <span class="username">{{username userId}}</span>
+      <span class="score">
+          {{{coins}}}
+      </span>
+    </li>
+    {{/if}}
   </div>
-  {{/if}}
+
+</template>
+
+<template name="fakePlayer">
+  <div class="avatar user-avatar not-legit">
+    <img class="avatar-image circle-image" style="background-color: black">
+  </div>
+  <li class="list-font not-legit" value={{rank}}>
+    <span class="username">Fake</span>
+    <span class="score">0</span>
+  </li>
 </template>

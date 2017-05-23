@@ -21,23 +21,23 @@ Template.gameLeaderboard.helpers({});
 Template.gameLeaderboard.events({});
 
 Template.miniLeaderboard.onCreated(function() {
-	var self = this;
-
-	self.getFilter = function () {
-	  return Session.get('leaderboardData');
-	};
-	self.userCoins = function () {
-	  return Session.get('userCoins');
-	};
-
-	self.autorun(function() {
-		self.subscribe( 'userRank', self.getFilter(), self.userCoins());
-		self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
-			$( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
-	      $( ".loading-wrapper" ).fadeIn( 'slow' );
-			});
-		});
-	});
+	// var self = this;
+	//
+	// self.getFilter = function () {
+	//   return Session.get('leaderboardData');
+	// };
+	// self.userCoins = function () {
+	//   return Session.get('userCoins');
+	// };
+	//
+	// self.autorun(function() {
+	// 	self.subscribe( 'userRank', self.getFilter(), self.userCoins());
+	// 	self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
+	// 		$( ".player-holder" ).delay( 100 ).fadeOut( 'slow', function() {
+	//       $( ".loading-wrapper" ).fadeIn( 'slow' );
+	// 		});
+	// 	});
+	// });
 });
 
 Template.miniLeaderboard.onRendered( function() {
@@ -46,7 +46,7 @@ Template.miniLeaderboard.onRendered( function() {
 
 Template.miniLeaderboard.helpers({
 	'userNotInLeaderboard': function(number){
-		var count = Counts.get('userRanking');
+		var count = Counts.get('userRank');
 		var data = Session.get('leaderboardData');
 		var selector = {userId: Meteor.userId(), gameId: data.gameId, period: data.period}
 		var game = GamePlayed.findOne(selector);
@@ -63,10 +63,10 @@ Template.miniLeaderboard.helpers({
 	},
   'player': function(number){
 		var userId = Meteor.userId();
-		var ranking = Counts.get('userRanking');
+		var ranking = Counts.get('userRank');
 		var data = Session.get('leaderboardData');
     var following = Meteor.user().profile.following
-    var list = GamePlayed.find({}).fetch();
+    var list = GamePlayed.find().fetch();
 		var filter = data.filter && data.filter.toLowerCase();
 		var types = ["live", "drive"]
 
@@ -75,27 +75,53 @@ Template.miniLeaderboard.helpers({
 		Session.set('leaderboardData', data);
 
 	  return _.sortBy(list, function(u, i){
+			var i = i + 1
 			// Are they someone we follow?
 			if(following.indexOf(u.userId) > -1){  u.following = true }
-
-			// If its the current user show their ranking.
-			if (u.userId === userId){
-				if (types.indexOf(filter) > -1 && filter !== u.type) {
-		      u.rank = 0 // Rank if they are filtering the same type.
-				} else if(ranking > number){ 
-					u.rank = ranking
-		    }
-		  } else { u.rank = i + 1 }
+			if (u.userId === userId && ranking > number){
+				u.rank = ranking
+			}
 			return - u.coins // Invert the order of the list.
 		});
 
-  },
-  'username': function(userId) {
+  }
+});
+
+Template.miniLeaderboard.events({
+	"click .leaderboard-item": function(e, t){
+		 Router.go("/user-profile/" + this.userId)
+	}
+});
+
+Template.singlePlayer.onCreated(function() {
+	var self = this;
+
+	self.getFilter = function () {
+		return Session.get('leaderboardData');
+	};
+	self.userCoins = function () {
+		return Session.get('userCoins');
+	};
+
+	self.autorun(function() {
+		self.subscribe( 'userRank', self.getFilter(), self.userCoins());
+		self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
+			$(".not-legit" ).delay( 500 ).fadeTo( 'slow', 0, function() {
+				$( ".legit" ).fadeTo( 'slow', 1);
+				$(".not-legit").remove();
+			});
+		});
+	});
+});
+
+
+Template.singlePlayer.helpers({
+	'username': function(userId) {
 		var user = UserList.findOne({_id: userId});
 		if(user){
 			return user.profile.username
 		}
-  },
+	},
 	'following': function(){
 		if(this.following){
 			return "following"
@@ -107,15 +133,9 @@ Template.miniLeaderboard.helpers({
 			return "history-inprogress"
 		}
 	},
-  'pathUrl': function () {
-    // https://github.com/meteoric/meteor-ionic/issues/66
-    var url = "/user-profile/" + this.userId
-    return url
-  },
-});
-
-Template.miniLeaderboard.events({
-	"click .leaderboard-item": function(e, t){
-		 Router.go("/user-profile/" + this.userId)
-	}
+	'pathUrl': function () {
+		// https://github.com/meteoric/meteor-ionic/issues/66
+		var url = "/user-profile/" + this.userId
+		return url
+	},
 });
