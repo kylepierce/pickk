@@ -8,6 +8,7 @@
     "production": "echo 'Please execute `./bin/build-ios`'"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "bcrypt": "^0.8.7",
     "i": "^0.3.5",
     "meteor-ios10-csp-fix": "^0.1.0",

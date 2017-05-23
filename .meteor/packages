@@ -7,7 +7,7 @@
 jquery@1.11.9
 accounts-base@1.2.12-beta.4
 accounts-password@1.3.1-beta.4
-accounts-facebook@1.0.11-beta.4
+accounts-facebook@1.1.1
 accounts-twitter@1.1.12-beta.4
 useraccounts:ionic
 useraccounts:core
