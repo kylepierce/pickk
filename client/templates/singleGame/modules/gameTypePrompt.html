@@ -2,7 +2,7 @@
 	{{> spinLoader}}
 
 	{{#if Template.subscriptionsReady}}
-		<div class="loading-wrapper">
+		<div class="container loading-wrapper">
 			{{#with sportIs}}
 				{{>gameTypeChoice this}}
 			{{/with}}
@@ -11,24 +11,16 @@
 </template>
 
 <template name="gameTypeChoice">
-	<h4 class="text-center">{{title}}</h4>
-	<h4 class="text-center">{{subTitle}}</h4>
-
-	{{#each option in options}}
-		<div class="{{numberOfOptions options}} {{alert option.featured}} text-center type-option">
-			<div class="center">{{{option.icon}}}</div>
-			<h5>{{option.title}}</h5>
-			<span class=" quarter-prompt-text">{{option.desc}}</span>
-		</div>
-	{{/each}}
-	<div class="clear-fix"></div>
-
-	<div class="button-box">
+	<h2 class="live-question-text text-center">{{title}}</h2>
+	<h3 class="live-question-text text-center">{{subTitle}}</h3>
+	<ul style="margin-top: 30px;">
 		{{#each option in options}}
-				<button class="button {{numberOfOptions options true}} {{option.button}}" data-action="joinGame" value="{{option.gameType}}">
-					<strong>{{option.title}}</strong>
-				</button>
+			<li class="{{numberOfOptions options}} prompt-option {{alert option.featured}} text-center type-option" style="{{option.style}}" data-action="joinGame" data-value="{{option.gameType}}">
+				<div class="center game-prompt-icon">{{{option.icon}}}</div>
+				<h2>{{option.title}}</h2>
+				<h4 class=" quarter-prompt-text">{{{option.desc}}}</h4>
+			</li>
 		{{/each}}
-	</div>
+	</ul>
 	<div class="col-md-100 ten-spacing text-center">{{desc}}</div>
 </template>
