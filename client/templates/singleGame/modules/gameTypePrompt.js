@@ -40,7 +40,7 @@ Template.gameTypePrompt.helpers({
               icon: '<img src="/baseball-calls/Strike.svg">',
               gameType: "Live",
               style: "background-color: rgba(51, 205, 95, .85);",
-              desc: "Predict Each Pitch and Batter. <br><br> (Most Popular)",
+              desc: "Predict Each Pitch and Batter.",
               button: "button-balanced",
               featured: true
             }
@@ -93,12 +93,11 @@ Template.gameTypePrompt.helpers({
 
 Template.gameTypePrompt.events({
   'click [data-action="joinGame"]': function (e,t) {
-    console.log(e,t);
     var $gameId = Router.current().params._id
     var userId = Meteor.userId();
     var user = Meteor.user();
     var game = Games.findOne();
-    var type = e.target.dataset.value.toLowerCase( )
+    var type = e.currentTarget.dataset.value.toLowerCase( )
 
     var gamePlayed = {
       gameId: $gameId,

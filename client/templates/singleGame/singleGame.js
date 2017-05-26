@@ -1,4 +1,9 @@
 Template.singleGame.onCreated(function() {
+	var t = Template.instance()
+	if (t.data.gamePlayed === 0){
+		var gameId = t.data.game[0]._id
+		Router.go('joinGame.show', {_id: gameId});
+	}
 	var game = Games.findOne();
 	var period = game.period
 
@@ -26,6 +31,9 @@ Template.singleGame.onCreated(function() {
 	self.autorun(function() {
 		// This needs to sync for changes when the period changes.
 		self.subscribe('joinGameCount', self.getId(), userId, self.getPeriod())
+		var count = Counts.get('joinGameCount');
+
+
 	});
 });
 
