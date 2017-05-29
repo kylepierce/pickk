@@ -41,9 +41,9 @@
   color: white!important;
 }
 
-/*.special-background h2, h3, h4{
+.special-header {
   color: white!important;
-}*/
+}
 
 .game-prompt-icon img{
   filter: invert(100%);

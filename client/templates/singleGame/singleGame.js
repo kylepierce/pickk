@@ -109,12 +109,10 @@ Template.singleGame.helpers({
       var id = post._id
       var questionId = post && post.questionId
       var sAlertSettings = {effect: 'stackslide', html: true}
-			console.log(post);
 
       if (questionId){
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
-				console.log(questionId);
         var title = question.que
       }
 
@@ -128,7 +126,6 @@ Template.singleGame.helpers({
 
         sAlert.info(message, sAlertSettings);
       } else if (post.type === "coins" && post.read === false) {
-				console.log(question);
         var message = "You Won " + post.value + " coins! " + title
         sAlert.info(message, sAlertSettings);
 
@@ -320,7 +317,7 @@ Template.noPlay.rendered = function(){
 
 Template.commericalQuestion.helpers({
   freePickk: function (q) {
-    if(q.binaryChoice === true){
+    if(q.type === "freePickk"){
       return true
     }
   },
@@ -361,6 +358,8 @@ Template.commericalQuestion.events({
       template: t,
       dataPath: this,
     }
+
+		console.log(e,t,parms);
 
     displayOptions( parms )
   }

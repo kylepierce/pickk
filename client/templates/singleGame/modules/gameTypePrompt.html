@@ -11,14 +11,14 @@
 </template>
 
 <template name="gameTypeChoice">
-	<h2 class="live-question-text text-center">{{title}}</h2>
-	<h3 class="live-question-text text-center">{{subTitle}}</h3>
+	<h2 class="special-header live-question-text text-center">{{title}}</h2>
+	<h3 class="special-header live-question-text text-center">{{subTitle}}</h3>
 	<div style="margin-top: 30px;">
 		{{#each option in options}}
-			<a class="{{numberOfOptions options}} prompt-option {{alert option.featured}} text-center type-option" style="{{option.style}}" data-action="joinGame" data-value="{{option.gameType}}">
-				<div class="center game-prompt-icon">{{{option.icon}}}</div>
-				<h2>{{option.title}}</h2>
-				<h4 class=" quarter-prompt-text">{{{option.desc}}}</h4>
+			<a class="special-header {{numberOfOptions options}} prompt-option {{alert option.featured}} text-center type-option" style="{{option.style}}" data-action="joinGame" data-value="{{option.gameType}}">
+				<div class="special-header center game-prompt-icon">{{{option.icon}}}</div>
+				<h2 class="special-header">{{option.title}}</h2>
+				<h4 class=" special-header quarter-prompt-text">{{{option.desc}}}</h4>
 			</a>
 		{{/each}}
 	</div>
