@@ -32,8 +32,6 @@ Template.singleGame.onCreated(function() {
 		// This needs to sync for changes when the period changes.
 		self.subscribe('joinGameCount', self.getId(), userId, self.getPeriod())
 		var count = Counts.get('joinGameCount');
-
-
 	});
 });
 
@@ -51,6 +49,12 @@ Template.singleGame.rendered = function () {
 };
 
 Template.singleGame.helpers({
+	commericalStatus: function () {
+		var game = Games.findOne();
+		if(game.commercial === true){
+			return "Commercial BREAK!!!!!"
+		}
+	},
   game: function(){
     return Games.findOne()
   },
@@ -105,10 +109,12 @@ Template.singleGame.helpers({
       var id = post._id
       var questionId = post && post.questionId
       var sAlertSettings = {effect: 'stackslide', html: true}
+			console.log(post);
 
       if (questionId){
         Meteor.subscribe('singleQuestion', questionId)
         var question = Questions.findOne({_id: questionId});
+				console.log(questionId);
         var title = question.que
       }
 
@@ -122,7 +128,7 @@ Template.singleGame.helpers({
 
         sAlert.info(message, sAlertSettings);
       } else if (post.type === "coins" && post.read === false) {
-
+				console.log(question);
         var message = "You Won " + post.value + " coins! " + title
         sAlert.info(message, sAlertSettings);
 
@@ -147,7 +153,6 @@ Template.liveGame.onCreated(function (){
 });
 
 Template.liveGame.helpers({
-
   commericalBreak: function (){
     var game = Games.findOne();
     if (game.commercial === true) {

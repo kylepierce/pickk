@@ -9,7 +9,6 @@
   {{#ionView}}
     {{#ionContent}}
 			{{> singleGameInfo game=game}}
-
 			<div id="notification-center" class="ten-spacing">
 				<div class="single-notification">
 					{{> singleGameCard game=game}}
@@ -17,6 +16,7 @@
 			</div>
 
 			<div class="container ten-spacing">
+
 				{{> liveGame}}
 				<!-- {{#if gameCompleted}}
 					{{> waitingForNextPlay}}

@@ -6,6 +6,11 @@ Template.adminControls.helpers({
 		}
   },
 
+	commercialStatus: function (game){
+		console.log(game);
+		return game.commercial
+	},
+
   endOfGame: function (game) {
     var status = game && game.close_processed
     if (status){
