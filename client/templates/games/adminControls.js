@@ -7,7 +7,6 @@ Template.adminControls.helpers({
   },
 
 	commercialStatus: function (game){
-		console.log(game);
 		return game.commercial
 	},
 
