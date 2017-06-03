@@ -252,6 +252,7 @@ Meteor.methods({
 			manual: true,
 			active: q.active,
 			options: q.options,
+			commercial: true,
 			usersAnswered: []
 		});
 	},

@@ -1,37 +1,25 @@
 Template.singleGame.onCreated(function() {
-	var t = Template.instance()
+	var t = Template.instance();
 	if (t.data.gamePlayed === 0){
 		var gameId = t.data.game[0]._id
 		Router.go('joinGame.show', {_id: gameId});
 	}
+	var userId = Meteor.userId();
 	var game = Games.findOne();
-	var period = game.period
-
-	var gameId = Router.current().params._id
-	var query = Router.current().params.query
 	var data = {
-		gameId: gameId,
-		period: period,
+		gameId: game._id,
+		period: game.period,
 		number: 3
 	}
-	var userId = Meteor.userId();
 	Session.set('leaderboardData', data);
 
 	var self = this
-	self.getId = function(){
-		var gameId = game._id
-		return gameId
-	}
-
-	self.getPeriod = function(){
-		var gamePeriod = game.period
-		return gamePeriod
-	}
+	self.getPeriod = function(){ return game.period }
+	self.getCommercial = function(){ return game.commercial }
 
 	self.autorun(function() {
-		// This needs to sync for changes when the period changes.
-		self.subscribe('joinGameCount', self.getId(), userId, self.getPeriod())
-		var count = Counts.get('joinGameCount');
+		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
+		self.subscribe('userQuestions', game._id, self.getCommercial())
 	});
 });
 
@@ -49,51 +37,31 @@ Template.singleGame.rendered = function () {
 };
 
 Template.singleGame.helpers({
-	commericalStatus: function () {
-		var game = Games.findOne();
-		if(game.commercial === true){
-			return "Commercial BREAK!!!!!"
-		}
-	},
   game: function(){
     return Games.findOne()
   },
-  joinedGame: function (){
-    var game = Games.findOne();
-    var gameId = game._id
-    var userId = Meteor.userId();
-		return true
-  },
-  gameCompleted : function () {
-    var game = Games.findOne();
-    if (game.live === false && game.completed === true) {
-      return true
-    }
-  },
-  // isLive: function () {
-  //   var game = Games.findOne();
-  //   var gameId = game._id
-  //   var userId = Meteor.userId();
-	// 	var gamePeriod = game.period
-  //   var gamePlayed = {
-  //     gameId: gameId,
-  //     userId: userId,
-  //     period: gamePeriod
-  //   }
-	//
-  //   Meteor.subscribe('joinGameCount', gamePlayed);
-  //   var count = Counts.get('joinGameCount');
-	// 	console.log(count);
-	// 	if (count === 1 && game.status === "In-Progress"){
-  //     return true
-  //   } else if (count === 0){
-	// 		console.log("Have not joined the game...");
-	// 		// Router.go('joinGame.show', {_id: gameId})
-	// 	} else {
-	// 		console.log("Not working correctly");
-	// 	}
-  // },
-
+	anyQuestions: function(){
+		var currentUserId = Meteor.userId();
+		var game = Games.findOne();
+		var gamePlayed = GamePlayed.findOne();
+		var gameType = gamePlayed.type
+		var selector = {
+			active: true,
+			usersAnswered: {$nin: [currentUserId]}
+		}
+		if (gameType === "live" && game.commercial === false){
+			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+			selector['dateCreated'] = {$gt: finish}
+		}
+		var count = Questions.find(selector).count()
+		if (count > 0){
+			$('#waiting-for-play').hide();
+			return true
+		} else {
+			$('#waiting-for-play').show();
+			return false
+		}
+	},
   scoreMessage: function() {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
@@ -137,107 +105,6 @@ Template.singleGame.helpers({
       Meteor.call('removeNotification', id);
     });
   }
-});
-
-Template.liveGame.onCreated(function (){
-  var userId = Meteor.userId();
-  var gameId = Router.current().params._id
-  var period = this.data.game[0].period
-  this.subscribe('gamePlayed', userId, gameId)
-  this.subscribe('activeQuestions', gameId, period)
-  this.subscribe('activeCommQuestions', gameId, period)
-  this.subscribe('activePropQuestions', gameId, period)
-});
-
-Template.liveGame.helpers({
-  commericalBreak: function (){
-    var game = Games.findOne();
-    if (game.commercial === true) {
-      return true
-    }
-  },
-  props: function () {
-    var currentUserId = Meteor.userId()
-
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-  prop: function () {
-    var currentUserId = Meteor.userId()
-
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-  commericalQuestions: function () {
-    var currentUserId = Meteor.userId()
-
-    var selector = {
-      active: true,
-      commercial: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-    var sort = {sort: {dateCreated: 1}, limit: 1}
-    return Questions.find(selector, sort).fetch();
-  },
-	liveQuestions: function () {
-    var currentUserId = Meteor.userId()
-    var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
-    if (gameType === "live"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      var selector = {
-        active: true,
-        commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
-      }
-      var sort = {sort: {dateCreated: 1}, limit: 1}
-			return Questions.find(selector, sort).fetch();
-    }
-  },
-  questions: function () {
-    var currentUserId = Meteor.userId()
-    var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
-    if (gameType === "live"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      var selector = {
-        active: true,
-        commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
-      }
-      var sort = {sort: {dateCreated: 1}, limit: 1}
-      return Questions.find(selector, sort).fetch();
-    }
-  },
-  noQuestions: function () {
-    var userId = Meteor.userId()
-    var gameId = Router.current().params._id
-    var game = Games.find({_id: gameId}).fetch();
-    var period = game[0].period
-    var commercial = game[0].commercial
-    Meteor.subscribe('questionCount', userId, gameId, period, commercial)
-    var count = Counts.get('questionCount');
-    if (count > 0){
-      return false
-    }
-  },
 });
 
 Template.singleGame.events({
@@ -305,15 +172,65 @@ Template.singleGame.events({
   }
 });
 
-Template.noPlay.rendered = function(){
-  var userId = Meteor.userId()
-  var gameId = Games.findOne()._id
-  var game = Games.find({_id: gameId}).fetch();
-  var period = game[0].period
-  var commercial = game[0].commercial
-  Meteor.subscribe('questionCount', userId, gameId, period, commercial)
-  var count = Counts.get('questionCount')
-};
+Template.liveGame.helpers({
+  props: function () {
+    var currentUserId = Meteor.userId()
+    var selector = {
+      type: "prop",
+      active: true,
+      usersAnswered: {$nin: [currentUserId]}
+    }
+
+    var sort = {sort: {dateCreated: -1}}
+    var q = Questions.find(selector, sort).fetch();
+    return q
+  },
+  prop: function () {
+    var currentUserId = Meteor.userId()
+    var selector = {
+      type: "prop",
+      active: true,
+      usersAnswered: {$nin: [currentUserId]}
+    }
+    var sort = {sort: {dateCreated: -1}}
+    var q = Questions.find(selector, sort).fetch();
+    return q
+  },
+
+  commericalQuestions: function () {
+		var currentUserId = Meteor.userId();
+		var game = Games.findOne({});
+    var gamePlayed = GamePlayed.findOne({});
+    var timeLimit = gamePlayed.timeLimit
+    var gameType = gamePlayed.type
+		if(game && game.commercial === true){
+			var selector = {
+				active: true,
+				commercial: true,
+				usersAnswered: {$nin: [currentUserId]}
+			}
+			var sort = {sort: {dateCreated: 1}, limit: 1}
+			return Questions.find(selector, sort).fetch();
+		}
+  },
+  questions: function () {
+    var currentUserId = Meteor.userId()
+    var gamePlayed = GamePlayed.findOne({});
+    var timeLimit = gamePlayed.timeLimit
+    var gameType = gamePlayed.type
+    if (gameType === "live"){
+      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+      var selector = {
+        active: true,
+        commercial: false,
+        dateCreated: {$gt: finish},
+        usersAnswered: {$nin: [currentUserId]},
+      }
+      var sort = {sort: {dateCreated: 1}, limit: 1}
+      return Questions.find(selector, sort).fetch();
+    }
+  },
+});
 
 Template.commericalQuestion.helpers({
   freePickk: function (q) {
@@ -358,8 +275,6 @@ Template.commericalQuestion.events({
       template: t,
       dataPath: this,
     }
-
-		console.log(e,t,parms);
 
     displayOptions( parms )
   }
