@@ -27,13 +27,13 @@ Template.waitingForNextPlay.rendered = function () {
 	} else if (numberOfDays < 5){
 		// console.log("Not Been Playing Long Enough")
 	} else if(!lastAsked && queCounter > 15){
-		// console.log("First")
+		console.log("First")
 		addPrompt("First Time") // After 5 days.
 	} else if (itsBeenAwhile && queCounter > 15) {
-		// console.log("Its Been A While")
+		console.log("Its Been A While")
 		addPrompt("Its Been A While")
 	} else if (newVersion >= 0 && queCounter > 15){
-		// console.log("New version")
+		console.log("New version")
 		addPrompt("New Version")
 	} else {
 		// console.log("Didnt match anything")
@@ -48,6 +48,9 @@ Template.waitingForNextPlay.rendered = function () {
 		usersAnswered: {$nin: [currentUserId]}
 	}
 	if (gameType === "live" && game.commercial === false){
+		var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+		selector['dateCreated'] = {$gt: finish}
+	} else if (gameType === "atbat" && game.commercial === false){
 		var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
 		selector['dateCreated'] = {$gt: finish}
 	}

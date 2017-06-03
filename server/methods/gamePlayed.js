@@ -58,7 +58,7 @@ Meteor.methods({
 
 		var data = {
 			coins: 25000,
-			timeLimit: 20,
+			timeLimit: 15,
 			diamonds: 0,
 			matches: []
 		}

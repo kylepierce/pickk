@@ -52,6 +52,9 @@ Template.singleGame.helpers({
 		if (gameType === "live" && game.commercial === false){
 			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
 			selector['dateCreated'] = {$gt: finish}
+		} else if (gameType === "atbat" && game.commercial === false){
+			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+			selector['dateCreated'] = {$gt: finish}
 		}
 		var count = Questions.find(selector).count()
 		if (count > 0){
@@ -219,6 +222,16 @@ Template.liveGame.helpers({
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
     if (gameType === "live"){
+      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+      var selector = {
+        active: true,
+        commercial: false,
+        dateCreated: {$gt: finish},
+        usersAnswered: {$nin: [currentUserId]},
+      }
+      var sort = {sort: {dateCreated: 1}, limit: 1}
+      return Questions.find(selector, sort).fetch();
+    } else if (gameType === "atbat"){
       var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
       var selector = {
         active: true,

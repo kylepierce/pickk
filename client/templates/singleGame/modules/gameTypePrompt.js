@@ -40,17 +40,16 @@ Template.gameTypePrompt.helpers({
               icon: '<img src="/baseball-calls/Strike.svg">',
               gameType: "Live",
               style: "background-color: rgba(51, 205, 95, .85);",
-              desc: "Predict Each Pitch and Batter.",
+              desc: "Predict Outcome of Each Pitch and Each Batter.",
               button: "button-balanced",
               featured: true
-            }
-          //   , {
-          //     title: "Batter",
-          //     style: "background-color: rgba(0, 0, 0, .65);",
-          //     gameType: "AtBat",
-          //     icon: '<img src="/baseball-calls/Hit.svg">',
-          //     desc: "Predict Each At Bat."
-          // }
+            }, {
+              title: "Batter",
+              style: "background-color: rgba(0, 0, 0, .65);",
+              gameType: "AtBat",
+              icon: '<img src="/baseball-calls/Hit.svg">',
+              desc: "Predict Outcome Of Each Batter."
+          }
         ]
         }
         return playTypes

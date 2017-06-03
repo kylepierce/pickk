@@ -82,6 +82,12 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
         selector['dateCreated'] = {$gt: finish}
       }
       selector['type'] = {$in: ["prop", "play", "atBat", "pitch", "drive", "freePickk"]}
+    } else if (gamePlayed.type === "atbat"){
+      if (game.commercial === false){
+        var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+        selector['dateCreated'] = {$gt: finish}
+      }
+      selector['type'] = {$in: ["prop", "atBat", "drive", "freePickk"]}
     } else if (gamePlayed.type === "drive"){
       selector['type'] = {$in: ["prop", "atBat", "drive", "freePickk"]}
     }
