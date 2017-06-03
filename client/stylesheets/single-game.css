@@ -9,7 +9,7 @@
 }
 
 .quarter-prompt-icon {
-	font-size: 2rem;
+	font-size: 4rem;
 	float: left;
 	clear: both;
 	text-align: center;
@@ -26,9 +26,29 @@
   padding: 25px 5px;
 }
 
-.highlight-option {
+.prompt-option {
   /*border: 1px solid blue;*/
-  background-color: rgba(191, 213, 222, .5);
+  border-radius: 15px;
+  /*background-color: rgba(191, 213, 222, .5);*/
+}
+
+
+
+.special-background {
+  background: linear-gradient(rgba(34, 44, 49, .10), rgba(34, 44, 49, .65)), url(/baseball-background.png);
+  background-position-x: 46%;
+  background-position-y: 0%;
+  color: white!important;
+}
+
+.special-header {
+  color: white!important;
+}
+
+.game-prompt-icon img{
+  filter: invert(100%);
+  width: 4rem;
+  font-size: 3rem;
 }
 
 #reviewPrompt,

@@ -21,23 +21,23 @@ Template.gameLeaderboard.helpers({});
 Template.gameLeaderboard.events({});
 
 Template.miniLeaderboard.onCreated(function() {
-	// var self = this;
-	//
-	// self.getFilter = function () {
-	//   return Session.get('leaderboardData');
-	// };
-	// self.userCoins = function () {
-	//   return Session.get('userCoins');
-	// };
-	//
-	// self.autorun(function() {
-	// 	self.subscribe( 'userRank', self.getFilter(), self.userCoins());
-	// 	self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
-	// 		$( ".player-holder" ).delay( 100 ).fadeOut( 'slow', function() {
-	//       $( ".loading-wrapper" ).fadeIn( 'slow' );
-	// 		});
-	// 	});
-	// });
+	var self = this;
+
+	self.getFilter = function () {
+	  return Session.get('leaderboardData');
+	};
+	self.userCoins = function () {
+	  return Session.get('userCoins');
+	};
+
+	self.autorun(function() {
+		self.subscribe( 'userRank', self.getFilter(), self.userCoins());
+		self.subscribe( 'leaderboardGamePlayed', self.getFilter(), function(){
+			$( ".player-holder" ).delay( 100 ).fadeOut( 'slow', function() {
+	      $( ".loading-wrapper" ).fadeIn( 'slow' );
+			});
+		});
+	});
 });
 
 Template.miniLeaderboard.onRendered( function() {

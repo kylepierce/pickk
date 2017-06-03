@@ -1,7 +1,3 @@
-// Global
-
-// Most Common / Basic layout
-
 Meteor.publish("userData", function() {
   if (!this.userId) {
     return this.ready();
@@ -16,27 +12,24 @@ Meteor.publish("userData", function() {
 
 Meteor.publish("liveGamesCount", function() {
   this.unblock()
-  Counts.publish(this, "liveGamesCount", Games.find({status: "inprogress"}));
+  Counts.publish(this, "liveGamesCount", Games.find({status: "In-Progress"}));
 });
 
 Meteor.publish('usersGroups', function ( user ) {
   check(user, Match.Maybe(String));
   this.unblock()
   var selector = {members: {$in: [user]}};
-  // Find this user id in any group
   return Groups.find(selector)
 });
 
-// ???? This might be for quick access to playable games. (i.e. has this user already signed up for this game)
-Meteor.publish('gamePlayed', function (user, gameId) {
-  check(user, String);
+Meteor.publish('gamePlayed', function (gameId) {
   check(gameId, String);
-  // check(period, Number);
 
-  var game = Games.find({_id: gameId }).fetch()
-  var period = game[0].period
+  var userId = this.userId
+  var game = Games.findOne({_id: gameId});
+  var period = game.period
 
-  return GamePlayed.find({userId: user, gameId: gameId, period: period})
+  return GamePlayed.find({userId: userId, gameId: gameId, period: period})
 });
 
 // Teams
@@ -53,74 +46,6 @@ Meteor.publish('singleTeam', function ( name ) {
 
 // Questions and Answers
 // Active Questions for one game
-Meteor.publish('activeQuestions', function(gameId, period) {
-  check(gameId, String);
-  check(period, Number);
-  var game = Games.find({_id: gameId }).fetch()
-
-  // this.unblock()
-  var currentUserId = this.userId;
-
-  if(game){
-    var questions = Questions.find({
-      gameId: gameId,
-      active: true,
-      period: period,
-      commercial: false,
-      usersAnswered: {$nin: [currentUserId]}
-    }, {sort: {dateCreated: -1}, limit: 1});
-    return questions
-  }
-
-  return this.ready();
-});
-
-Meteor.publish('activePropQuestions', function(gameId, period) {
-  check(gameId, String);
-  check(period, Number);
-  this.unblock()
-
-  var game = Games.find({_id: gameId }).fetch()
-  var currentUserId = this.userId;
-
-  if(game){
-    return Questions.find({
-      gameId: gameId,
-      active: true,
-      period: period,
-      type: "prop",
-      usersAnswered: {$nin: [currentUserId]}
-    }, {sort: {dateCreated: -1}, limit: 1});
-  }
-
-  return this.ready();
-});
-
-Meteor.publish('activeCommQuestions', function(gameId, period) {
-  check(gameId, String);
-  check(period, Number);
-  this.unblock()
-
-  var game = Games.find({_id: gameId }).fetch()
-  var currentUserId = this.userId;
-  if(game){
-    return Questions.find({
-      gameId: gameId,
-      active: true,
-      period: period,
-      commercial: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }, {sort: {dateCreated: 1}, limit: 1});
-  }
-
-  return this.ready();
-});
-
-// Meteor.publish('adminActiveQuestions', function(gameId) {
-//   check(gameId, String);
-//   var selector = {gameId: gameId, active: {$ne: false}}
-//   return Questions.find(selector);
-// });
 
 Meteor.publish('gameQuestions', function() {
   return Questions.find({type: 'prediction', active: {$ne: false}});

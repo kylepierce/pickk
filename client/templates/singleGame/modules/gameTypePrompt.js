@@ -37,17 +37,19 @@ Template.gameTypePrompt.helpers({
           desc: "Note: You Select Play Type Every 3 Innings.",
           options: [{
               title: "Live",
-              icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
+              icon: '<img src="/baseball-calls/Strike.svg">',
               gameType: "Live",
-              desc: "Every Pitch and Batter.",
+              style: "background-color: rgba(51, 205, 95, .85);",
+              desc: "Predict Each Pitch and Batter.",
               button: "button-balanced",
               featured: true
             }
           //   , {
           //     title: "Batter",
+          //     style: "background-color: rgba(0, 0, 0, .65);",
           //     gameType: "AtBat",
-          //     icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
-          //     desc: "End of Every Batter"
+          //     icon: '<img src="/baseball-calls/Hit.svg">',
+          //     desc: "Predict Each At Bat."
           // }
         ]
         }
@@ -95,7 +97,7 @@ Template.gameTypePrompt.events({
     var userId = Meteor.userId();
     var user = Meteor.user();
     var game = Games.findOne();
-    var type = e.target.value.toLowerCase( )
+    var type = e.currentTarget.dataset.value.toLowerCase( )
 
     var gamePlayed = {
       gameId: $gameId,

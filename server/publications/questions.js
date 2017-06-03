@@ -1,10 +1,11 @@
-Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
-  check(userId, String);
+Meteor.publish("questionCount", function(gameId) {
   check(gameId, String);
-  check(period, Number);
-  check(commercial, Boolean);
   this.unblock()
 
+  var userId = this.userId
+  var game = Games.findOne({_id: gameId});
+  var period = game.period
+  var commercial = game.commercial
   var gamePlayed = GamePlayed.find({userId: userId, gameId: gameId, period: period}).fetch()
   if(gamePlayed){
     var timeLimit = gamePlayed[0].timeLimit
@@ -55,4 +56,36 @@ Meteor.publish("questionCount", function(userId, gameId, period, commercial) {
   }
   var data = Questions.find(selector)
   Counts.publish(this, "questionCount", data);
+});
+
+Meteor.publish('userQuestions', function(gameId, commercial) {
+  check(gameId, String);
+  check(commercial, Boolean);
+  var userId = this.userId;
+  var game = Games.findOne({_id: gameId});
+  var period = game.period
+  var gamePlayed = GamePlayed.findOne({gameId: gameId, period: period});
+
+  if(game){
+    var selector = {
+      gameId: gameId,
+      active: true,
+      period: period,
+      commercial: commercial,
+      usersAnswered: {$nin: [userId]}
+    }
+    var sort = {sort: {dateCreated: -1}, limit: 1}
+
+    if (gamePlayed.type === "live"){
+      if (game.commercial === false){
+        var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+        selector['dateCreated'] = {$gt: finish}
+      }
+      selector['type'] = {$in: ["prop", "play", "atBat", "pitch", "drive", "freePickk"]}
+    } else if (gamePlayed.type === "drive"){
+      selector['type'] = {$in: ["prop", "atBat", "drive", "freePickk"]}
+    }
+    var count = Questions.find(selector, sort).count();
+    return Questions.find(selector, sort);
+  }
 });

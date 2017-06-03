@@ -1,12 +1,15 @@
 <template name="adminControls">
 	<div style="background-color: #b2b2b2; height: 40px;">
-	  <div class="col-md-33 past-game">
+	  <div class="col-md-25 past-game">
 			# registered: {{{numberOfPlayers game.registered}}}
 		</div>
-	  <div class="col-md-33 past-game">
+	  <div class="col-md-25 past-game">
 			# of users: {{{numberOfPlayers game.users}}}
 		</div>
-		<div class="col-md-33 past-game">
+		<div class="col-md-25 past-game">
+			Commercial: {{{game.commercial}}}
+		</div>
+		<div class="col-md-25 past-game">
 			<button data-action="gameAdmin" data-game-id="{{game._id}}">Admin Page</button>
 		</div>
 	</div>

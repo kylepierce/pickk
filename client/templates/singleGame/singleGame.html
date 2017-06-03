@@ -1,9 +1,7 @@
 <template name="singleGame">
 	{{> homeLayoutHeader}}
 	{{#contentFor "headerTitle"}}
-		{{#if joinedGame}}
-			{{> singleGameAwards}}
-		{{/if}}
+		{{> singleGameAwards}}
 	{{/contentFor}}
 
   {{#ionView}}
@@ -17,20 +15,12 @@
 			</div>
 
 			<div class="container ten-spacing">
-				{{> liveGame}}
-				<!-- {{#if gameCompleted}}
-					{{> waitingForNextPlay}}
-				{{/if}} -->
-
-				<!-- {{#if isLive}} -->
-					<!-- {{#if joinedGame}} -->
-						<!-- {{> gameTypePrompt}} -->
-					<!-- {{else}} -->
-
-					<!-- {{/if}} notJoinedGame -->
-				<!-- {{else}}
-					{{> inviteToPlay}} -->
-				<!-- {{/if}} -->
+				{{> waitingForNextPlay}}
+				{{#if anyQuestions}}
+					{{> liveGame game=game}}
+				{{/if}}
+				<!-- {{> waitingForNextPlay}} -->
+					<!-- {{> inviteToPlay}} -->
 			</div>
 			{{ scoreMessage}}
     {{/ionContent}}
@@ -38,33 +28,21 @@
 </template>
 
 <template name="liveGame">
-	{{#if noQuestions}}
-		{{> waitingForNextPlay}}
-	{{else}}
-		{{#if props}}
+		<!-- {{#if props}}
 			{{#each question in prop}}
 				{{> singleQuestion q=question}}
 			{{/each}}
+		{{/if}} -->
+
+		{{#if game.commercial}}
+			{{#each question in commericalQuestions}}
+				{{> commericalQuestion q=question}}
+			{{/each}}
 		{{else}}
-			{{#if commericalBreak}}
-				{{#each question in commericalQuestions}}
-					{{> commericalQuestion q=question}}
-				{{/each}}
-			{{else}}
-				{{#if liveQuestions}}
-					{{#each question in questions}}
-						{{> singleQuestion q=question}}
-					{{/each}}
-				{{else}}
-					{{> waitingForNextPlay}}
-				{{/if}}
-			{{/if}}
+			{{#each question in questions}}
+				{{> singleQuestion q=question}}
+			{{/each}}
 		{{/if}}
-	{{/if}}
-</template>
-
-<template name="noPlay">
-
 </template>
 
 <template name="commericalQuestion">

@@ -1,17 +1,3 @@
-Template.singleGame.onCreated(function() {
-	var game = Games.findOne({});
-	var period = game.period
-
-	var gameId = Router.current().params._id
-	var query = Router.current().params.query
-	var data = {
-		gameId: gameId,
-		period: period,
-		number: 3
-	}
-	Session.set('leaderboardData', data)
-});
-
 Template.waitingForNextPlay.rendered = function () {
 	var user = Meteor.user();
 	var now = new Date().getTime();
@@ -37,20 +23,41 @@ Template.waitingForNextPlay.rendered = function () {
 	}
 
 	if (commercial === false){
-		console.log("Keep them in the game.")
+		// console.log("Keep them in the game.")
 	} else if (numberOfDays < 5){
-		console.log("Not Been Playing Long Enough")
+		// console.log("Not Been Playing Long Enough")
 	} else if(!lastAsked && queCounter > 15){
-		console.log("First")
+		// console.log("First")
 		addPrompt("First Time") // After 5 days.
 	} else if (itsBeenAwhile && queCounter > 15) {
-		console.log("Its Been A While")
+		// console.log("Its Been A While")
 		addPrompt("Its Been A While")
 	} else if (newVersion >= 0 && queCounter > 15){
-		console.log("New version")
+		// console.log("New version")
 		addPrompt("New Version")
 	} else {
-		console.log("Didnt match anything")
+		// console.log("Didnt match anything")
+	}
+
+	var currentUserId = Meteor.userId();
+	var game = Games.findOne();
+	var gamePlayed = GamePlayed.findOne();
+	var gameType = gamePlayed.type
+	var selector = {
+		active: true,
+		usersAnswered: {$nin: [currentUserId]}
+	}
+	if (gameType === "live" && game.commercial === false){
+		var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
+		selector['dateCreated'] = {$gt: finish}
+	}
+	var count = Questions.find(selector).count()
+	if (count > 0){
+		$('#waiting-for-play').hide();
+		return true
+	} else {
+		$('#waiting-for-play').show();
+		return false
 	}
 };
 

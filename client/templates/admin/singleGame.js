@@ -179,12 +179,10 @@ Template.pendingQuestion.events({
 		}
 	},
 	'click [data-action=playSelection]': function (e, t) {
-		console.log(this.o.title)
 		if(this.o.title === "Touchdown"){
 			console.log("Now what...");
 			IonPopover.show('_moreOptions', this, e.currentTarget);
 		}
-		console.log("also this");
 		var updateQuestion = {
 			questionId: this.q._id,
 			option: this.o.option,
