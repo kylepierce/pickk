@@ -67,23 +67,38 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
-
-      {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
+      {{#if football}}
+        {{> scheduledTeamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  }}
+        {{> scheduledTeamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name }}
+      {{else}}
+        {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
+        {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
+      {{/if}}
 
     {{else}}
-      {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname  runs=game.away.linescoreTotals.runs }}
-
-      {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname runs=game.home.linescoreTotals.runs }}
+      {{#if football}}
+        {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  runs=game.scoring.away.runs }}
+        {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name  runs=game.scoring.home.runs }}
+      {{else}}
+        {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname  runs=game.away.linescoreTotals.runs }}
+        {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname runs=game.home.linescoreTotals.runs }}
+      {{/if}}
     {{/if}}
   </div>
 </template>
 
 <template name="teamBlock">
   <div class="team-block">
-    <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-      {{code abbr}}
+    {{#if baseball}}
+      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
+        {{abbr name}}
+      </div>
+    {{/if}}
+    {{#if football}}
+    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
+      {{idAbbr id}}
     </div>
+    {{/if}}
     <div class="team-block-border">
       <span class="team-name team-text">{{name}}</span>
       <span class="team-score team-text">{{runs}}</span>
@@ -93,9 +108,16 @@
 
 <template name="scheduledTeamBlock">
   <div class="scheduled-team-block">
-    <div class="team-colors team-text" style="background-color:{{teamColors name}}">
+    {{#if baseball}}
+      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
         {{abbr name}}
       </div>
+    {{/if}}
+    {{#if football}}
+    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
+      {{idAbbr id}}
+    </div>
+    {{/if}}
       <div class="team-block-border">
         <span class="team-name team-text">{{name}}</span>
         <span class="team-score team-text"></span>
@@ -105,12 +127,20 @@
 
 <template name="singleGameCTA">
   {{#if inProgress}}
-    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-      Play Now! ({{{quarter game.eventStatus.inning}}} -
-      {{#each station in tv game.tvStations}}
-        ({{station.callLetters}})
-      {{/each}})
-    </div>
+    {{#if baseball}}
+      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+        Play Now! ({{{quarter game.eventStatus.inning}}} -
+        {{#each station in tv game.tvStations}}
+          ({{station.callLetters}})
+        {{/each}})
+      </div>
+    {{/if}}
+    {{#if football}}
+      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+        Play Now! ({{{quarter game.period}}} -
+          ({{game.tv}}))
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 

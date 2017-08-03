@@ -119,6 +119,7 @@ Meteor.methods({
 
 		Questions.update({"_id": questionId}, {$set: {'active': null, "pending": true}});
 	},
+
 	'createHero': function (o) {
 		check(o, Object);
 		Hero.insert({
@@ -135,4 +136,4 @@ Meteor.methods({
 			important: o.important,
 		});
 	}
-})
+});

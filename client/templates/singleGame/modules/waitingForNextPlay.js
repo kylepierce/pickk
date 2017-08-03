@@ -87,10 +87,24 @@ Template.waitingForNextPlay.helpers({
 		if (gamePlayed && gamePlayed.type === "drive"){
 			return true
 		}
+	},
+	periodDiff: function(){
+		var userId = Meteor.userId();
+		var gameId = this.game[0]._id
+		var period = this.game[0].period
+		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
+		console.log(gamePlayed);
+		if(gamePlayed === 0){
+			return true
+		}
 	}
 });
 
 Template.waitingForNextPlay.events({
+	'click [data-action="nextPeriod"]': function(e,t){
+		var gameId = t.data.game[0]._id
+		Router.go('joinGame.show', {_id: gameId});
+	},
 	'click [data-action="switchToLive"]': function(e, t){
 		var data = {
 			userId: Meteor.userId(),

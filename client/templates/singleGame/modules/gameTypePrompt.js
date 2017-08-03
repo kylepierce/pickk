@@ -57,15 +57,19 @@ Template.gameTypePrompt.helpers({
       case "NFL":
         var playTypes = {
           title: "Select Contest Type",
-          subTitle: "Join Pickk MLB Contest",
+          subTitle: "Join Pickk NFL Contest",
           desc: "Note: You Select Play Type Every Quarter.",
           options: [{
               title: "Live",
+              gameType: "Live",
+              style: "background-color: rgba(51, 205, 95, .85);",
               icon: '<i class="fa fa-bolt quarter-prompt-icon"></i>',
-              desc: "Play by Play. Earn More Diamonds. (Chance to Win Quarterly Prizes)",
+              desc: "Play by Play. Earn More Diamonds.",
               button: "button-balanced"
             }, {
               title: "Drives",
+              gameType: "Drive",
+              style: "background-color: rgba(0, 0, 0, .65);",
               icon: '<i class="fa fa-hourglass-start quarter-prompt-icon"></i>',
               desc: "15 questions each quarter"
             }]

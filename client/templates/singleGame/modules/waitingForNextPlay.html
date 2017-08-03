@@ -1,13 +1,19 @@
 <template name="waitingForNextPlay">
 	<div id="waiting-for-play" class="animated fast fadeInUp hundred-bottom">
-		Current Batter: {{currentBatter}} <br>
-		Up Next: {{upNext}}
-		<div class="clear-fix"></div>
-			<h5 style="margin-bottom: 0;">
-				Progress To Next Diamond Reward
-			</h5>
-			{{>diamondWatcher}}
-		<div class="clear-fix"></div>
+		{{#if baseball}}
+			Current Batter: {{currentBatter}} <br>
+			Up Next: {{upNext}}
+		{{/if}}
+		{{#if periodDiff}}
+			<button data-action="nextPeriod">Join Next Quarter</button>
+		{{else}}
+			<div class="clear-fix"></div>
+				<h5 style="margin-bottom: 0;">
+					Progress To Next Diamond Reward
+				</h5>
+				{{>diamondWatcher}}
+			<div class="clear-fix"></div>
+		{{/if}}
 		<div id="ratingBox"></div>
 
 		{{> inviteToPlay}}

@@ -11,6 +11,11 @@ Template.singleGameCard.helpers({
     if(alreadyRegistered !== -1) {
       return true
     }
+  },
+  football: function (){
+    if (this.game.football === true){
+      return true
+    }
   }
 });
 
@@ -60,6 +65,16 @@ Template.count.helpers({
 });
 
 Template.scheduledTeamBlock.helpers({
+  baseball: function(){
+    if(this.id > 0){
+      return true
+    }
+  },
+  football: function(){
+    if(this.id.length > 3){
+      return true
+    }
+  },
   teamColors: function (name) {
     if(name){
       Meteor.subscribe('teams')
@@ -80,10 +95,41 @@ Template.scheduledTeamBlock.helpers({
       var abbr = team.computerName.toUpperCase();
       return abbr
     }
+  },
+  teamIdColors: function (id) {
+    if(id){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({_id: id})
+      var hex = team && team.hex
+      if(hex){
+        var color = "#" + team.hex[0]
+      }
+    } else {
+      var color = "#134A8E"
+    }
+    return color
+  },
+  idAbbr: function (id) {
+    Meteor.subscribe('singleTeam', id);
+    var team = Teams.findOne({_id: id});
+    if(id && team){
+      var abbr = team.computerName.toUpperCase();
+      return abbr
+    }
   }
 });
 
 Template.teamBlock.helpers({
+  baseball: function(){
+    if(this.id > 0){
+      return true
+    }
+  },
+  football: function(){
+    if(this.id.length > 3){
+      return true
+    }
+  },
   teamColors: function (name) {
     if(name){
       Meteor.subscribe('teams')
@@ -97,11 +143,32 @@ Template.teamBlock.helpers({
     }
     return color
   },
-  code: function (name) {
-    if(name){
-      // Meteor.subscribe('teams')
-      // var team = Teams.findOne({nickname: name});
-      var abbr = name.toUpperCase();
+  abbr: function (name) {
+    Meteor.subscribe('singleTeam', name);
+    var team = Teams.findOne({nickname: name});
+    if(name && team){
+      var abbr = team.computerName.toUpperCase();
+      return abbr
+    }
+  },
+  teamIdColors: function (id) {
+    if(id){
+      Meteor.subscribe('teams')
+      var team = Teams.findOne({_id: id})
+      var hex = team && team.hex
+      if(hex){
+        var color = "#" + team.hex[0]
+      }
+    } else {
+      var color = "#134A8E"
+    }
+    return color
+  },
+  idAbbr: function (id) {
+    Meteor.subscribe('singleTeam', id);
+    var team = Teams.findOne({_id: id});
+    if(id && team){
+      var abbr = team.computerName.toUpperCase();
       return abbr
     }
   }
@@ -232,24 +299,38 @@ Template.singleGameCTA.helpers({
     return data
   },
   quarter: function (num) {
-    return num
-    // switch(num){
-    //   case 1:
-    //     return "1st Quarter"
-    //     break;
-    //   case 2:
-    //     return "2nd Quarter"
-    //     break;
-    //   case 3:
-    //     return "3rd Quarter"
-    //     break;
-    //   case 4:
-    //     return "4th Quarter"
-    //     break;
-    //   case 5:
-    //     return "Overtime"
-    //     break;
-    // }
+    // return num
+    if(this.game.sport === "NFL"){
+      switch(num){
+        case 1:
+          return "1st Quarter"
+          break;
+        case 2:
+          return "2nd Quarter"
+          break;
+        case 3:
+          return "3rd Quarter"
+          break;
+        case 4:
+          return "4th Quarter"
+          break;
+        case 5:
+          return "Overtime"
+          break;
+      }
+    } else {
+      return num
+    }
+  },
+  football: function(){
+    if(this.game.sport === "NFL"){
+      return true
+    }
+  },
+  baseball: function(){
+    if(this.game.sport === "MLB"){
+      return true
+    }
   }
 });
 

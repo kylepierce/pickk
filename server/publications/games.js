@@ -83,4 +83,5 @@ Meteor.publish('joinGameCount', function(gameId, userId, period){
   check(period, Number);
   this.unblock();
   Counts.publish(this, "joinGameCount", GamePlayed.find({gameId: gameId, userId: userId, period: period}));
+
 });

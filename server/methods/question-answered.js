@@ -17,6 +17,7 @@ Meteor.methods({
 
 	'questionAnswered': function(c) {
 		check(c, Object);
+		// userId, answered, type, wager, multiplier, gameId, period, questionId, description,
 
 		// Validate a few things
 		var timeCreated = new Date();
@@ -62,7 +63,7 @@ Meteor.methods({
 		Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 
 		// Live game questions remove coins and give activity diamonds
-		if (c.type === "live" || c.type === "prop" || c.type === "drive" || c.type === "atBat" || c.type === "pitch"){
+		if (c.type === "live" || c.type === "prop" || c.type === "drive" || c.type === "atBat" || c.type === "pitch" || c.type === "play"){
 			var selector = {userId: c.userId, gameId: c.gameId, period: c.period}
 			var modify = {$inc: {coins: -c.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);

@@ -55,10 +55,6 @@ Meteor.methods({
 		Answers.find(selector).forEach(awardPoints);
 	},
 
-
-
-
-
 	'modifyGameQuestionStatus': function(questionId, answered) {
 		check(questionId, String);
 		check(answered, String);

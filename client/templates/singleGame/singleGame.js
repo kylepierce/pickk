@@ -1,5 +1,6 @@
 Template.singleGame.onCreated(function() {
 	var t = Template.instance();
+	console.log(t);
 	if (t.data.gamePlayed === 0){
 		var gameId = t.data.game[0]._id
 		Router.go('joinGame.show', {_id: gameId});
