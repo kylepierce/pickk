@@ -19,8 +19,8 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
 });
 
 Meteor.publish("userRank", function(o, usersCoins) {
-  check(o, Object);
-	check(usersCoins, Number);
+  check(o, Match.Maybe(Object));
+	check(usersCoins, Match.Maybe(Number));
   this.unblock()
 	var selector = {gameId: o.gameId, period: o.period, coins: {$gte:  usersCoins}}
 

@@ -93,7 +93,6 @@ Template.waitingForNextPlay.helpers({
 		var gameId = this.game[0]._id
 		var period = this.game[0].period
 		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
-		console.log(gamePlayed);
 		if(gamePlayed === 0){
 			return true
 		}
