@@ -137,6 +137,11 @@ Template.singleGame.events({
 });
 
 Template.liveGame.helpers({
+	questionTypeIs: function(typeLooking, questionType) {
+		if(typeLooking === questionType){
+			return true
+		}
+	},
   commericalQuestions: function () {
 		var game = Games.findOne({});
     var gamePlayed = GamePlayed.findOne({});
@@ -151,60 +156,19 @@ Template.liveGame.helpers({
 		}
   },
   questions: function () {
-    var currentUserId = Meteor.userId()
+		var game = Games.findOne({});
     var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
-    if (gameType === "live" || gameType === "atBat"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
+		if (gameType === "live" || gameType === "atBat"){
       var selector = {
         active: true,
         commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
+        usersAnswered: {$nin: [Meteor.userId()]}
       }
       var sort = {sort: {dateCreated: 1}, limit: 1}
       return Questions.find(selector, sort).fetch();
     }
   },
-});
-
-Template.commericalQuestion.helpers({
-	questionTypeIs: function(typeLooking, questionType) {
-		if(typeLooking === questionType){
-      return true
-    }
-	}
-});
-
-Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) {
-    $('.play-selected').removeClass('play-selected')
-    $(e.currentTarget).addClass('play-selected')
-
-    var count = _.keys(this.q.options).length
-    var selectedNumber = this.o.number
-    var squareOptions = count === 2
-
-    if (selectedNumber % 2 !== 0 && squareOptions){
-      var selectedIsOdd = true
-      var $selected = $(e.currentTarget).next()
-    } else {
-      var selectedIsOdd = false
-      var $selected = $(e.currentTarget)
-    }
-
-    parms = {
-      insertedTemplate: Template.submitButton,
-      containerId: "submit",
-      event: e,
-      selected: $selected,
-      template: t,
-      dataPath: this,
-    }
-
-    // displayOptions( parms )
-  }
 });
 
 Template.eventQuestion.helpers({
@@ -223,7 +187,6 @@ Template.eventQuestion.helpers({
     var optionsArray = []
 
     // [{number: option1}, {title: Run}, {multiplier: 2.43}]
-
     for (var i = 0; i < keys.length; i++) {
       var obj = values[i]
       var number = keys[i]
@@ -239,15 +202,13 @@ Template.eventQuestion.events({
 	'click [data-action=play-selected]': function (e, t) {
 		$('.play-selected').removeClass('play-selected');
 		$(e.currentTarget).addClass('play-selected');
-		t.data.o = this.o;
-		var container = $('.single-question')[0];
+		Template.currentData().o = this.o;
 		$('#wagers').show();
 	},
 	'click [data-action=wager-selected]': function (e, t) {
 		$('.wager-selected').removeClass('wager-selected');
 		$(e.currentTarget).addClass('wager-selected');
 
-		Session.set('lastWager', this.w);
 		t.data.w = $('.wager-selected')[0].value;
 
 		$('#submitButton').show();

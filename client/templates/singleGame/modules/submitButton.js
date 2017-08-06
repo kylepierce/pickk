@@ -27,9 +27,13 @@ Template.submitButton.helpers({
 });
 
 Template.submitButton.events({
-  "click [data-action='submit']": function (e, t) {
+  "click [data-action=submit]": function (e, t) {
     e.preventDefault();
     var userId = Meteor.userId()
+    var parent = Template.parentData(1)
+    console.log(parent);
+    console.log(this, t, t.data);
+
     var o = this.o // option
     var q = this.q // question
     var t = this.t // type

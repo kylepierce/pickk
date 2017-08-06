@@ -30,26 +30,24 @@
 <template name="liveGame">
 		{{#if game.commercial}}
 			{{#each question in commericalQuestions}}
-				{{> commericalQuestion q=question}}
+				{{#if questionTypeIs "freePickk" question.type}}
+					{{> freePickkQuestion q=question t=question.type}}
+				{{else}}
+					{{> eventQuestion q=question t=question.type}}
+				{{/if}}
 			{{/each}}
+
 		{{else}}
 			{{#each question in questions}}
-				{{> eventQuestion q=question t=question.type}}
+				{{#if questionTypeIs "play" question.type}}
+					{{> eventQuestion q=question t=question.type}}
+				{{/if}}
 			{{/each}}
 		{{/if}}
 </template>
 
-<template name="commericalQuestion">
-	{{#if questionTypeIs "freePickk" q.type}}
-		{{> freePickkQuestion q=q t=q.type}}
-	{{else}}
-		{{> eventQuestion q=q t=q.type}}
-	{{/if}}
-</template>
-
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft">
-		<!-- This background should be taken from mongodb admin collection -->
 		<div class="question" style="{{q.background}}">
 			<div class="display-question center">
 				<span class="live-question-text center-text">{{q.que}}</span>
@@ -77,11 +75,6 @@
 <template name="option">
 	<li class="option {{binary}}" data-action="play-selected">
 		<div class="option-inner">
-			{{#if hasIcon q}}
-				<span class="icon-container">
-				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
-				</span>
-			{{/if}}
 			<span class="option-title">{{o.title}}</span>
 			<span class="multiplier">x {{o.multiplier}}</span>
 		</div>

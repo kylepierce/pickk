@@ -1,9 +1,7 @@
 <template name="submitButton">
-	<div id="submitButton">
-		{{#if live}}
-			<button class="submit-button button button-balanced center-text ten-spacing" data-action="submit">Submit</button>
-		{{else}}
-			<button class="submit-button button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
-		{{/if}}
-	</div>
+	{{#if live}}
+		<button id="submitButton" class="submit-button button button-balanced center-text ten-spacing" data-action="submit">Submit</button>
+	{{else}}
+		<button id="submitButton" class="submit-button button play-option button-assertive center ten-spacing" disabled >No Connection To Server</button>
+	{{/if}}
 </template>
