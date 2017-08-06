@@ -362,11 +362,6 @@ input[type=submit] {
 }
 
 @media (max-width: 600px) {
-
-.question {
-	margin: 10px 0 0;
-}
-
 .play-option{
 	width: 100%;
 	text-align: left;

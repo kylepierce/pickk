@@ -1,7 +1,29 @@
 .single-question {
-	width: 100%;
+	border-radius: 10px;
+	border: 0px solid;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 10px;
+	background-color: #263238;
 	font-size: .9rem;
 	font-family: lato;
+}
+
+.question {
+	width: 100%;
+	min-height: 50px;
+	color: white;
+	display: flex;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #CCC;
+	font-weight: bold;
+	border-radius: 10px;
+	border: 0px solid;
+}
+
+.live-question-text {
+	text-shadow: 2px 2px #222c31;
 }
 
 .display-question {
@@ -15,6 +37,11 @@
 	margin-left: 20px;
 }
 
+.option-container {
+	margin-top: 10px;
+	display: flow-root;
+}
+
 .option {
 	border: 1px solid #DDDDDD;
 	display: flex;
@@ -25,15 +52,54 @@
 	margin-top: -1px;
 }
 
-.square-options:nth-of-type(2n+1) {
+.square-options {
 	width: 49%;
+	height: 90px;
+	float: left;
+}
+
+.square-options:nth-of-type(2n+1) {
 	margin-right: 2%!important;
 	float: left;
 }
 
-.square-options:nth-last-child(1){
-	margin-bottom: 100px;
+.square-options:nth-child(1){
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
+
+.square-options:nth-child(2){
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.square-options:nth-child(3){
+	margin-top: 2%!important;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.square-options:nth-child(4){
+	margin-top: 2%!important;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.square-options:nth-child(5){
+	margin-top: 2%!important;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.square-options:nth-child(6){
+	margin-top: 2%!important;
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+/*.square-options:nth-last-child(1){
+	margin-bottom: 100px;
+}*/
 
 .square-options .option-inner {
 	width: 100%;
@@ -52,13 +118,6 @@
 	margin: 3px;
 }
 
-.square-options {
-	margin-top: .25rem;
-	width: 49%;
-	height: 90px;
-	float: left;
-}
-
 .icon-container {
 	display: flex;
 	align-items: center;
@@ -70,7 +129,7 @@
 	width: 100%;
 	padding-top: 20px;
 	text-align: center;
-	padding-left: 0%; 
+	padding-left: 0%;
 	float: left;
 	clear: both;
 }
@@ -85,14 +144,14 @@
 .option-title{
 	float: left;
 	width: 70%;
-	padding-left: 5%; 
+	padding-left: 5%;
 }
 
 .multiplier {
 	width: 20%;
 	float: right;
 	text-align: right;
-	padding-right: 2.5%; 
+	padding-right: 2.5%;
 }
 
 .baseball-call-icon {

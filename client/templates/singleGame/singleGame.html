@@ -34,7 +34,7 @@
 			{{/each}}
 		{{else}}
 			{{#each question in questions}}
-				{{> eventQuestion q=q t=q.type}}
+				{{> eventQuestion q=question t=question.type}}
 			{{/each}}
 		{{/if}}
 </template>
@@ -48,7 +48,7 @@
 </template>
 
 <template name="eventQuestion">
-	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
+	<div class="single-question animated fast slideInLeft">
 		<!-- This background should be taken from mongodb admin collection -->
 		<div class="question" style="{{q.background}}">
 			<div class="display-question center">
@@ -58,10 +58,10 @@
 				{{/if}}
 			</div>
 		</div>
-		<div class="binaryOptions">
-		{{#each o in options q}}
-			{{> option o=o q=q t=t}}
-		{{/each}}
+		<div class="option-container">
+			{{#each o in options q}}
+				{{> option o=o q=q t=t}}
+			{{/each}}
 		</div>
 	</div>
 </template>
