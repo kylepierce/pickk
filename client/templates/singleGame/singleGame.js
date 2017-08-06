@@ -250,21 +250,6 @@ Template.commericalQuestion.events({
   }
 });
 
-// Template.singleQuestion.helpers({
-// 	questionTypeIs: function(typeLooking, questionType) {
-// 		if(typeLooking === questionType){
-//       return true
-//     }
-// 	},
-//   liveQuestion: function (q) {
-// 		var list = ["live", "play", "atBat", "pitch"]
-// 		var included = list.indexOf(q.type)
-//     if(q && included > 0){
-//       return true
-//     }
-//   }
-// });
-
 Template.eventQuestion.helpers({
   liveQuestion: function (q) {
 		var list = ["live", "play", "atBat", "pitch"]

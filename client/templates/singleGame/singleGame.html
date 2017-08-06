@@ -47,19 +47,6 @@
 	{{/if}}
 </template>
 
-<!-- <template name="singleQuestion">
-	{{> eventQuestion q=q t=q.type}}
-	{{#if questionTypeIs "prop" q.type}}
-		{{> eventQuestion q=q t=q.type}}
-	{{/if}}
-	{{#if questionTypeIs "prediction" q.type}}
-		{{> eventQuestion q=q t=q.type}}
-	{{/if}}
-	{{#if liveQuestion q}}
-		{{> eventQuestion q=q t=q.type}}
-	{{/if}}
-</template> -->
-
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
 		<!-- This background should be taken from mongodb admin collection -->
