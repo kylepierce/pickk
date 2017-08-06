@@ -9,23 +9,26 @@ Template.submitButton.helpers({
       return false
     }
   },
-  'potential': function (){
-    var multiplier = this.o.multiplier
-    if(this.t === "prediction"){
-      var wager = 5
-      var winnings = parseInt(wager * multiplier)
-      return winnings + " diamonds"
-    } else {
-      var wager = this.w
-      var winnings = parseInt(wager * multiplier)
-      return winnings
-    }
-  }
+  // 'potential': function (e, t){
+    // var multiplier = this.o.multiplier;
+    // console.log(this, e, t);
+  //   if (!multiplier){
+  //     return false
+  //   } else if(this.t === "prediction"){
+  //     var wager = 5
+  //     var winnings = parseInt(wager * multiplier)
+  //     return winnings + " diamonds"
+  //   } else {
+  //     var wager = this.w
+  //     var winnings = parseInt(wager * multiplier)
+  //     return winnings
+  //   }
+  // }
 });
 
 Template.submitButton.events({
   "click [data-action='submit']": function (e, t) {
-    e.preventDefault()
+    e.preventDefault();
     var userId = Meteor.userId()
     var o = this.o // option
     var q = this.q // question
@@ -144,4 +147,5 @@ Template.submitButton.events({
       Meteor.call('questionAnswered', a);
     }, 250);
   }
+
 });

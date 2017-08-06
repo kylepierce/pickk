@@ -134,51 +134,6 @@ Template.singleGame.events({
     });
     Router.go('/history/' + $game )
   },
-  'click [data-action=play-selected]': function (e, t) {
-    $('.play-selected').removeClass('play-selected')
-    $(e.currentTarget).addClass('play-selected')
-		$('#wagers').show()
-		//
-    // var count = _.keys(this.q.options).length
-    // var selectedNumber = this.o.number
-    // var squareOptions = count === 2 || count === 4 || count === 6
-    // if (selectedNumber % 2 !== 0 && squareOptions){
-    //   var selectedIsOdd = true
-    //   var $selected = $(e.currentTarget).next()
-    // } else {
-    //   var selectedIsOdd = false
-    //   var $selected = $(e.currentTarget)
-    // }
-		//
-    // parms = {
-    //   insertedTemplate: Template.wagers,
-    //   containerId: "wagers",
-    //   event: e,
-    //   selected: $selected,
-    //   template: t,
-    //   dataPath: this,
-    // }
-		//
-    // displayOptions( parms )
-  },
-
-  'click [data-action=wager-selected]': function (e, t) {
-    $('.wager-selected').removeClass('wager-selected')
-    $(e.currentTarget).addClass('wager-selected')
-
-    Session.set('lastWager', this.w);
-    var $selected = $('.wagers')
-
-    parms = {
-      insertedTemplate: Template.submitButton,
-      containerId: "submit",
-      event: e,
-      selected: $selected,
-      template: t,
-      dataPath: this,
-    }
-    displayOptions( parms )
-  }
 });
 
 Template.liveGame.helpers({
@@ -248,7 +203,7 @@ Template.commericalQuestion.events({
       dataPath: this,
     }
 
-    displayOptions( parms )
+    // displayOptions( parms )
   }
 });
 
@@ -278,6 +233,25 @@ Template.eventQuestion.helpers({
 
     return optionsArray
   }
+});
+
+Template.eventQuestion.events({
+	'click [data-action=play-selected]': function (e, t) {
+		$('.play-selected').removeClass('play-selected');
+		$(e.currentTarget).addClass('play-selected');
+		t.data.o = this.o;
+		var container = $('.single-question')[0];
+		$('#wagers').show();
+	},
+	'click [data-action=wager-selected]': function (e, t) {
+		$('.wager-selected').removeClass('wager-selected');
+		$(e.currentTarget).addClass('wager-selected');
+
+		Session.set('lastWager', this.w);
+		t.data.w = $('.wager-selected')[0].value;
+
+		$('#submitButton').show();
+	}
 });
 
 Template.option.helpers({

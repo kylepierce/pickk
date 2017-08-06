@@ -161,6 +161,7 @@
 }
 
 #wagers {
+	display: none;
 	margin-top: 10px;
 }
 
@@ -203,6 +204,10 @@
 
 .wager-selected .wager-inner, .play-selected .option-inner {
   /*background: #F1C40F;*/
+}
+
+#submitButton{
+	display: none;
 }
 
 .submit-button {
