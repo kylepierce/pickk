@@ -16,10 +16,10 @@
 
 			<div class="container ten-spacing">
 				{{> waitingForNextPlay}}
+
 				{{#if anyQuestions}}
 					{{> liveGame game=game}}
 				{{/if}}
-				<!-- {{> waitingForNextPlay}} -->
 					<!-- {{> inviteToPlay}} -->
 			</div>
 			{{ scoreMessage}}
@@ -28,49 +28,41 @@
 </template>
 
 <template name="liveGame">
-		<!-- {{#if props}}
-			{{#each question in prop}}
-				{{> singleQuestion q=question}}
-			{{/each}}
-		{{/if}} -->
-
 		{{#if game.commercial}}
 			{{#each question in commericalQuestions}}
 				{{> commericalQuestion q=question}}
 			{{/each}}
 		{{else}}
 			{{#each question in questions}}
-				{{> singleQuestion q=question}}
+				{{> eventQuestion q=q t=q.type}}
 			{{/each}}
 		{{/if}}
 </template>
 
 <template name="commericalQuestion">
-	{{#if propQuestion q}}
-		{{> eventQuestion q=q t="prop"}}
-	{{/if}}
-	{{#if freePickk q}}
-		{{> freePickkQuestion q=q t="free-pickk"}}
-	{{/if}}
-	{{#if driveQuestion q}}
-		{{> eventQuestion q=q t="drive"}}
+	{{#if questionTypeIs "freePickk" q.type}}
+		{{> freePickkQuestion q=q t=q.type}}
+	{{else}}
+		{{> eventQuestion q=q t=q.type}}
 	{{/if}}
 </template>
 
-<template name="singleQuestion">
-	{{#if propQuestions q}}
-		{{> eventQuestion q=q t="prop"}}
+<!-- <template name="singleQuestion">
+	{{> eventQuestion q=q t=q.type}}
+	{{#if questionTypeIs "prop" q.type}}
+		{{> eventQuestion q=q t=q.type}}
+	{{/if}}
+	{{#if questionTypeIs "prediction" q.type}}
+		{{> eventQuestion q=q t=q.type}}
 	{{/if}}
 	{{#if liveQuestion q}}
 		{{> eventQuestion q=q t=q.type}}
 	{{/if}}
-	{{#if dailyPickk q}}
-		{{> eventQuestion q=q t="prediction"}}
-	{{/if}}
-</template>
+</template> -->
 
 <template name="eventQuestion">
 	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
+		<!-- This background should be taken from mongodb admin collection -->
 		<div class="question" style="{{q.background}}">
 			<div class="display-question center">
 				<span class="live-question-text center-text">{{q.que}}</span>

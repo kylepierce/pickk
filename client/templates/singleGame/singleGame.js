@@ -49,14 +49,18 @@ Template.singleGame.helpers({
 			active: true,
 			usersAnswered: {$nin: [currentUserId]}
 		}
-		if (gameType === "live" && game.commercial === false){
+
+		if (gameType == "live" && game.commercial === false){
 			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector['dateCreated'] = {$gt: finish}
+			selector.dateCreated = {$gt: finish}
+
 		} else if (gameType === "atbat" && game.commercial === false){
 			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector['dateCreated'] = {$gt: finish}
+			selector.dateCreated = {$gt: finish}
 		}
+
 		var count = Questions.find(selector).count()
+
 		if (count > 0){
 			$('#waiting-for-play').hide();
 			return true
@@ -176,41 +180,14 @@ Template.singleGame.events({
 });
 
 Template.liveGame.helpers({
-  props: function () {
-    var currentUserId = Meteor.userId()
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-  prop: function () {
-    var currentUserId = Meteor.userId()
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-
   commericalQuestions: function () {
-		var currentUserId = Meteor.userId();
 		var game = Games.findOne({});
     var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
 		if(game && game.commercial === true){
 			var selector = {
 				active: true,
 				commercial: true,
-				usersAnswered: {$nin: [currentUserId]}
+				usersAnswered: {$nin: [Meteor.userId()]}
 			}
 			var sort = {sort: {dateCreated: 1}, limit: 1}
 			return Questions.find(selector, sort).fetch();
@@ -221,17 +198,7 @@ Template.liveGame.helpers({
     var gamePlayed = GamePlayed.findOne({});
     var timeLimit = gamePlayed.timeLimit
     var gameType = gamePlayed.type
-    if (gameType === "live"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      var selector = {
-        active: true,
-        commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
-      }
-      var sort = {sort: {dateCreated: 1}, limit: 1}
-      return Questions.find(selector, sort).fetch();
-    } else if (gameType === "atbat"){
+    if (gameType === "live" || gameType === "atBat"){
       var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
       var selector = {
         active: true,
@@ -246,21 +213,11 @@ Template.liveGame.helpers({
 });
 
 Template.commericalQuestion.helpers({
-  freePickk: function (q) {
-    if(q.type === "freePickk"){
+	questionTypeIs: function(typeLooking, questionType) {
+		if(typeLooking === questionType){
       return true
     }
-  },
-  propQuestion: function (q) {
-    if (q.type === "prop"){
-      return true
-    }
-  },
-  driveQuestion: function (q) {
-    if (q.type === "drive"){
-      return true
-    }
-  }
+	}
 });
 
 Template.commericalQuestion.events({
@@ -293,25 +250,20 @@ Template.commericalQuestion.events({
   }
 });
 
-Template.singleQuestion.helpers({
-  propQuestions: function (q) {
-    if(q.type === "prop"){
-      return true
-    }
-  },
-  liveQuestion: function (q) {
-		var list = ["live", "play", "atBat", "pitch"]
-		var included = list.indexOf(q.type)
-    if(q && included > 0){
-      return true
-    }
-  },
-  dailyPickk: function (q) {
-    if(q.type === "prediction"){
-      return true
-    }
-  }
-});
+// Template.singleQuestion.helpers({
+// 	questionTypeIs: function(typeLooking, questionType) {
+// 		if(typeLooking === questionType){
+//       return true
+//     }
+// 	},
+//   liveQuestion: function (q) {
+// 		var list = ["live", "play", "atBat", "pitch"]
+// 		var included = list.indexOf(q.type)
+//     if(q && included > 0){
+//       return true
+//     }
+//   }
+// });
 
 Template.eventQuestion.helpers({
   liveQuestion: function (q) {
