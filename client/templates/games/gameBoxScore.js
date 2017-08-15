@@ -21,18 +21,14 @@ Template.singleGameCard.helpers({
 
 Template.singleGameCard.events({
   'click [data-action=register]': function () {
-    var userId = Meteor.userId()
-    var gameName = this.game.name
-    var gameId = this.game._id
-    Meteor.call('registerForGame', userId, gameId);
-    sAlert.success("Registered for " + gameName + " !" , {effect: 'slide', position: 'bottom', html: true});
+    var userId = Meteor.userId();
+    Meteor.call('registerForGame', userId, this.game.name);
+    sAlert.success("Registered for " + this.game.name + " !" , {effect: 'slide', position: 'bottom', html: true});
   },
   'click [data-action=unregister]': function () {
-    var userId = Meteor.userId()
-    var gameName = this.game.name
-    var gameId = this.game._id
-    Meteor.call('unregisterForGame', userId, gameId);
-    sAlert.success("Removed Registration for " + gameName + "." , {effect: 'slide', position: 'bottom', html: true});
+    var userId = Meteor.userId();
+    Meteor.call('unregisterForGame', userId, this.game._id);
+    sAlert.success("Removed Registration for " + this.game.name + "." , {effect: 'slide', position: 'bottom', html: true});
   }
 });
 
@@ -56,12 +52,6 @@ Template.outDisplay.helpers({
       return outs + noOuts
     }
   },
-});
-
-Template.count.helpers({
-  count: function () {
-    return this.game.eventStatus
-  }
 });
 
 Template.scheduledTeamBlock.helpers({
@@ -132,8 +122,8 @@ Template.teamBlock.helpers({
   },
   teamColors: function (name) {
     if(name){
-      Meteor.subscribe('teams')
-      var team = Teams.findOne({nickname: name})
+      Meteor.subscribe('singleTeam', name);
+      var team = Teams.findOne({nickname: name});
       var hex = team && team.hex
       if(hex){
         var color = "#" + team.hex[0]
@@ -153,7 +143,7 @@ Template.teamBlock.helpers({
   },
   teamIdColors: function (id) {
     if(id){
-      Meteor.subscribe('teams')
+      Meteor.subscribe('singleTeam', name);
       var team = Teams.findOne({_id: id})
       var hex = team && team.hex
       if(hex){

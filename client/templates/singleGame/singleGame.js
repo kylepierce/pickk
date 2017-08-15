@@ -202,8 +202,6 @@ Template.eventQuestion.events({
 		$('.play-selected').removeClass('play-selected');
 		$(e.currentTarget).addClass('play-selected');
 		t.data.o = this.o;
-		console.log(t.data);
-
 		$('#wagers').show();
 	},
 	'click [data-action=wager-selected]': function (e, t) {
@@ -211,15 +209,11 @@ Template.eventQuestion.events({
 		$(e.currentTarget).addClass('wager-selected');
 
 		t.data.w = $('.wager-selected')[0].value;
-		console.log(t.data);
-
 		$('#submitButton').show();
 	},
 	"click [data-action=submit]": function (e, t) {
 		e.preventDefault();
 		var userId = Meteor.userId()
-		console.log("Template", t.data);
-		console.log("This", this);
 		var o = this.o // option
 		var q = this.q // question
 		var t = this.t // type
@@ -270,11 +264,9 @@ Template.eventQuestion.events({
 			var selector = {userId: userId, gameId: q.gameId, period: q.period}
 			var userCoins = GamePlayed.find(selector).fetch();
 			var hasEnoughCoins = userCoins[0].coins >= w
-			console.log(userCoins[0].coins, w);
 
 			// Make sure the user has enough coins
 			if (!hasEnoughCoins) {
-				console.log(userCoins[0].coins, w);
 				analytics.track("no coins", {
 					id: a.userId,
 					answered: a.answered,

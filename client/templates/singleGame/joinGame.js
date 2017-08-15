@@ -9,10 +9,12 @@ Template.joinGame.rendered = function () {
 Template.joinGame.helpers({
   gameAbbr: function(){
     var game = Games.findOne();
-    var team1 = game.home.abbreviation.toUpperCase()
-    var team2 = game.away.abbreviation.toUpperCase()
-    var output = team1 + " vs " + team2
-    return output
+    if (game) {
+      var team1 = game.home.abbreviation.toUpperCase()
+      var team2 = game.away.abbreviation.toUpperCase()
+      var output = team1 + " vs " + team2
+      return output
+    }
   },
   notAlreadyJoined: function (){
     var $gameId = Router.current().params._id

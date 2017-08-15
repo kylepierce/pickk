@@ -30,7 +30,9 @@
       {{> playersOnBase base=game.eventStatus.runnersOnBase}}
     </div>
     <div class="col-md-25 single-game-section">
-      {{> count }}
+      {{#with game.eventStatus}}
+        <span class="inning">{{balls}} - {{strikes}}</span>
+      {{/with}}
     </div>
   </div>
 </template>
@@ -114,9 +116,9 @@
       </div>
     {{/if}}
     {{#if football}}
-    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
-      {{idAbbr id}}
-    </div>
+      <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
+        {{idAbbr id}}
+      </div>
     {{/if}}
       <div class="team-block-border">
         <span class="team-name team-text">{{name}}</span>
@@ -142,12 +144,6 @@
       </div>
     {{/if}}
   {{/if}}
-</template>
-
-<template name="count">
-  {{#with count}}
-    <span class="inning">{{balls}} - {{strikes}}</span>
-  {{/with}}
 </template>
 
 <template name="outDisplay">
