@@ -21,6 +21,10 @@ Template.singleGameCard.helpers({
       return true
     }
   },
+  teams: function () {
+    var teams = _.values(this.game.scoring);
+    return teams
+  }
 });
 
 Template.singleGameCard.events({
@@ -33,6 +37,20 @@ Template.singleGameCard.events({
     var userId = Meteor.userId();
     Meteor.call('unregisterForGame', userId, this.game._id);
     sAlert.success("Removed Registration for " + this.game.name + "." , {effect: 'slide', position: 'bottom', html: true});
+  }
+});
+
+Template.teamBlock.helpers({
+  team: function (statsTeamId) {
+    Meteor.subscribe('singleTeam', statsTeamId);
+    return Teams.findOne({"statsTeamId": statsTeamId});
+  },
+  hex: function () {
+    if (this.hex){
+      return "#" + this.hex[0]
+    } else {
+      return "#134A8E"
+    }
   }
 });
 
@@ -54,32 +72,6 @@ Template.outDisplay.helpers({
       var outs = repeat(out, number)
       var noOuts = repeat(noOut, diff)
       return outs + noOuts
-    }
-  },
-});
-
-Template.teamBlock.helpers({
-  team: function (statsTeamId) {
-    Meteor.subscribe('singleTeam', statsTeamId);
-    return Teams.findOne({"statsTeamId": statsTeamId});
-  },
-  score: function () {
-    var template= Template.parentData();
-    var statsTeamId = this.statsTeamId
-    if (template.game && template.game.status !== "Pre-game") {
-      _.map (template.game.scoring, function(team) {
-        if (team.id === statsTeamId){
-          console.log(team.runs);
-          return team
-        }
-      });
-    }
-  },
-  hex: function () {
-    if (this.hex){
-      return "#" + this.hex[0]
-    } else {
-      return "#134A8E"
     }
   },
 });

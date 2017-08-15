@@ -131,11 +131,7 @@
 }
 
 .team-block-border {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-left: none;
-	height: 45px;
+
 }
 
 .team-text{
@@ -150,12 +146,22 @@
 	color: white;
 }
 
+.team-inner {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: none;
+	height: 45px;
+}
+
 .team-name {
-	width: 70%;
+	width: 80%;
+	padding: 0 0 0 10px;
 }
 
 .team-score {
-	text-align: center;
+	text-align: left;
 	width: 20%;
 }
 
