@@ -11,10 +11,19 @@ Template.freePickkQuestion.helpers({
     for (var i = 0; i < keys.length; i++) {
       var obj = values[i]
       var number = keys[i]
-      obj["option"] = number 
+      obj["option"] = number
       optionsArray.push(obj)
     }
 
     return optionsArray
   }
+});
+
+Template.freePickkQuestion.events({
+	'click [data-action=play-selected]': function (e, t) {
+		$('.play-selected').removeClass('play-selected');
+		$(e.currentTarget).addClass('play-selected');
+		Template.currentData().o = this.o;
+		$('#submitButton').show();
+	},
 });

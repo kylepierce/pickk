@@ -20,7 +20,6 @@ Meteor.methods({
 		// userId, answered, type, wager, multiplier, gameId, period, questionId, description,
 
 		// Validate a few things
-		var timeCreated = new Date();
 		var question = Questions.findOne(c.questionId);
 		var description = c.description || "";
 
@@ -41,14 +40,13 @@ Meteor.methods({
 		}
 
 		// Then insert into answers.
-
     Answers.insert({
-			userId: c.userId,
+			userId: Meteor.userId(),
 			gameId: c.gameId,
 			period: c.period,
 			questionId: c.questionId,
 			type: c.type,
-			dateCreated: timeCreated,
+			dateCreated: new Date(),
 			answered: c.answered,
 			wager: c.wager,
 			multiplier: c.multiplier,
