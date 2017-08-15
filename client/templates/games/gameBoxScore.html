@@ -1,7 +1,9 @@
 <template name="entireGameCard">
-  {{> singleGameInfo game=game}}
-  {{> singleGameCard game=game}}
-  {{> singleGameCTA game=game}}
+  <div id="game-card">
+      {{> singleGameInfo game=game}}
+      {{> singleGameCard game=game}}
+      {{> singleGameCTA game=game}}
+  </div>
 </template>
 
 <template name="singleGameInfo">
@@ -59,71 +61,43 @@
 
 <template name="singleGameCard">
   <div class="single-game-card">
-    {{#if scheduled}}
-      {{#if registered}}
-        <div data-action="unregister" class="game-unregister center">
-          <i class="fa fa-bell-slash"></i>
-        </div>
-      {{else}}
-        <div data-action="register" class="game-register center">
-          <i class="fa fa-bell"></i>
-        </div>
-      {{/if}}
-      {{#if football}}
-        {{> scheduledTeamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  }}
-        {{> scheduledTeamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name }}
-      {{else}}
-        {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
-        {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
-      {{/if}}
+      <div class="{{status}}">
+        {{#each team in this.game.teams}}
+          {{> teamBlock statsTeamId=team.teamId }}
+        {{/each}}
+      </div>
 
-    {{else}}
-      {{#if football}}
-        {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  runs=game.scoring.away.runs }}
-        {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name  runs=game.scoring.home.runs }}
-      {{else}}
-        {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname  runs=game.away.linescoreTotals.runs }}
-        {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname runs=game.home.linescoreTotals.runs }}
-      {{/if}}
-    {{/if}}
+      <div class="additional-game-details">
+        <!-- Register -->
+        <!-- {{#if registered}}
+          <div data-action="unregister" class="game-unregister center">
+            <i class="fa fa-bell-slash"></i>
+          </div>
+        {{else}}
+          <div data-action="register" class="game-register center">
+            <i class="fa fa-bell"></i>
+          </div>
+        {{/if}} -->
+
+        <div class="game-time-container center-text game-card-right-side-border">
+          <span class="quarter">1st</span>
+          <span class="time-remaining">9:47</span>
+          <span class="tv-station">FOX</span>
+        </div>
+      </div>
   </div>
 </template>
 
 <template name="teamBlock">
   <div class="team-block">
-    {{#if baseball}}
-      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-        {{abbr name}}
+    {{#with team statsTeamId}}
+      <div class="team-colors team-text" style="background-color:{{hex}}">
+        {{computerName}}
       </div>
-    {{/if}}
-    {{#if football}}
-    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
-      {{idAbbr id}}
-    </div>
-    {{/if}}
-    <div class="team-block-border">
-      <span class="team-name team-text">{{name}}</span>
-      <span class="team-score team-text">{{runs}}</span>
-    </div>
-  </div>
-</template>
+      <span class="team-name team-text">{{nickname}}</span>
+    {{/with}}
 
-<template name="scheduledTeamBlock">
-  <div class="scheduled-team-block">
-    {{#if baseball}}
-      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-        {{abbr name}}
-      </div>
-    {{/if}}
-    {{#if football}}
-      <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
-        {{idAbbr id}}
-      </div>
-    {{/if}}
-      <div class="team-block-border">
-        <span class="team-name team-text">{{name}}</span>
-        <span class="team-score team-text"></span>
-    </div>
+    <span class="team-score team-text">{{#with score}}{{{runs}}}{{/with}}</span>
   </div>
 </template>
 

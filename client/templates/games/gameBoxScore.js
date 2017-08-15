@@ -1,4 +1,13 @@
 Template.singleGameCard.helpers({
+  status: function() {
+    if(this.game.status === "In-Progress") {
+      return "left-side-team-block "
+    } else if (this.game.status === "Pre-Game"){
+      return "left-side-team-block "
+    } else {
+      return "full-width-team-block"
+    }
+  },
   scheduled: function () {
     if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
       return true
@@ -12,11 +21,6 @@ Template.singleGameCard.helpers({
       return true
     }
   },
-  football: function (){
-    if (this.game.football === true){
-      return true
-    }
-  }
 });
 
 Template.singleGameCard.events({
@@ -54,114 +58,30 @@ Template.outDisplay.helpers({
   },
 });
 
-Template.scheduledTeamBlock.helpers({
-  baseball: function(){
-    if(this.id > 0){
-      return true
-    }
-  },
-  football: function(){
-    if(this.id.length > 3){
-      return true
-    }
-  },
-  teamColors: function (name) {
-    if(name){
-      Meteor.subscribe('teams')
-      var team = Teams.findOne({nickname: name})
-      var hex = team && team.hex
-      if(hex){
-        var color = "#" + team.hex[0]
-      }
-    } else {
-      var color = "#134A8E"
-    }
-    return color
-  },
-  abbr: function (name) {
-    Meteor.subscribe('singleTeam', name);
-    var team = Teams.findOne({nickname: name});
-    if(name && team){
-      var abbr = team.computerName.toUpperCase();
-      return abbr
-    }
-  },
-  teamIdColors: function (id) {
-    if(id){
-      Meteor.subscribe('teams')
-      var team = Teams.findOne({_id: id})
-      var hex = team && team.hex
-      if(hex){
-        var color = "#" + team.hex[0]
-      }
-    } else {
-      var color = "#134A8E"
-    }
-    return color
-  },
-  idAbbr: function (id) {
-    Meteor.subscribe('singleTeam', id);
-    var team = Teams.findOne({_id: id});
-    if(id && team){
-      var abbr = team.computerName.toUpperCase();
-      return abbr
-    }
-  }
-});
-
 Template.teamBlock.helpers({
-  baseball: function(){
-    if(this.id > 0){
-      return true
+  team: function (statsTeamId) {
+    Meteor.subscribe('singleTeam', statsTeamId);
+    return Teams.findOne({"statsTeamId": statsTeamId});
+  },
+  score: function () {
+    var template= Template.parentData();
+    var statsTeamId = this.statsTeamId
+    if (template.game && template.game.status !== "Pre-game") {
+      _.map (template.game.scoring, function(team) {
+        if (team.id === statsTeamId){
+          console.log(team.runs);
+          return team
+        }
+      });
     }
   },
-  football: function(){
-    if(this.id.length > 3){
-      return true
-    }
-  },
-  teamColors: function (name) {
-    if(name){
-      Meteor.subscribe('singleTeam', name);
-      var team = Teams.findOne({nickname: name});
-      var hex = team && team.hex
-      if(hex){
-        var color = "#" + team.hex[0]
-      }
+  hex: function () {
+    if (this.hex){
+      return "#" + this.hex[0]
     } else {
-      var color = "#134A8E"
-    }
-    return color
-  },
-  abbr: function (name) {
-    Meteor.subscribe('singleTeam', name);
-    var team = Teams.findOne({nickname: name});
-    if(name && team){
-      var abbr = team.computerName.toUpperCase();
-      return abbr
+      return "#134A8E"
     }
   },
-  teamIdColors: function (id) {
-    if(id){
-      Meteor.subscribe('singleTeam', name);
-      var team = Teams.findOne({_id: id})
-      var hex = team && team.hex
-      if(hex){
-        var color = "#" + team.hex[0]
-      }
-    } else {
-      var color = "#134A8E"
-    }
-    return color
-  },
-  idAbbr: function (id) {
-    Meteor.subscribe('singleTeam', id);
-    var team = Teams.findOne({_id: id});
-    if(id && team){
-      var abbr = team.computerName.toUpperCase();
-      return abbr
-    }
-  }
 });
 
 Template.singleGameInfo.helpers({

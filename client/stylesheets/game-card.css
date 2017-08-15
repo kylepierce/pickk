@@ -8,6 +8,50 @@
 	font-family: lato;
 	font-weight: bold;
 	font-size: 18px;
+	border-radius: 10px;
+	display: inline-block;
+}
+
+.full-width-team-block {
+	width: 100%;
+}
+
+.left-side-team-block {
+	width: 80%;
+	float: left;
+}
+
+.additional-game-details {
+	border-radius: 0 10px 10px 0;
+	width: 20%;
+	float: left;
+}
+
+.game-card-right-side-border {
+	border-radius: 0 10px 10px 0;
+}
+
+.game-time-container {
+	width: 100%;
+	background-color: #202A2F;
+	color: white;
+	float: left;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 0;
+}
+
+.game-time-container span {
+	padding-top: 4px;
+}
+
+.quarter {
+	font-size: 1.32rem;
+}
+
+.time-remaining {
+
 }
 
 .single-game-shared {
@@ -28,12 +72,12 @@
 	height: 34px;
 	background-color: #F1C40F;
 	font-weight: bold;
-	font-family: lato; 
+	font-family: lato;
 }
 
 .future-game-cta {
 	height: 34px;
-	background-color: green;	
+	background-color: green;
 	color: white;
 }
 
@@ -74,33 +118,22 @@
 	display: table;
 }
 
-.scheduled-team-block{
-	width: 80%;
-	height: 44px;
-	display: table;
-}
-
-.scheduled-team-block .team-name {
-	font-size: .9rem;
-}
-
-.scheduled-team-block .team-colors {
-	width: 25%;
+.team-block:first-child .team-colors {
+	border-radius: 10px 0 0 0;
 }
 
 .team-block:last-child {
-	margin-top: -1px;
+	border-top: 1px solid #545454;
 }
 
 .team-block:last-child .team-colors {
-	border-top: 1px solid #979797;
+	border-radius: 0 0 0 10px;
 }
 
 .team-block-border {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid #DDDDDD;
 	border-left: none;
 	height: 45px;
 }
@@ -113,7 +146,7 @@
 .team-colors {
 	width: 20%;
 	text-align: center;
-	font-weight: bold; 
+	font-weight: bold;
 	color: white;
 }
 
@@ -143,7 +176,7 @@
   text-align: center;
   font-weight: bold;
   font-family: lato;
-}	
+}
 
 .single-notification .notification-image{
 	max-width: 66px;

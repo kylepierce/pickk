@@ -38,10 +38,10 @@ Meteor.publish('teams', function() {
   return Teams.find({})
 });
 
-Meteor.publish('singleTeam', function ( name ) {
-  check(name, String);
+Meteor.publish('singleTeam', function ( id ) {
+  check(id, Number);
   this.unblock()
-  return Teams.find({nickname: name})
+  return Teams.find({statsTeamId: id})
 });
 
 // Questions and Answers
