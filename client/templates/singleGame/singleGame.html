@@ -8,10 +8,11 @@
     {{#ionContent}}
 			{{> singleGameInfo game=game}}
 
-			<div id="notification-center" class="ten-spacing">
-				<div class="single-notification">
+			<div id="notification-center" class="animated fadeInRight">
+				<div class="single-notification complete-game-card ">
 					{{> singleGameCard game=game}}
 				</div>
+				{{> infoCard}}
 			</div>
 
 			<div class="container ten-spacing">
@@ -85,4 +86,33 @@
 			<span class="multiplier">x {{o.multiplier}}</span>
 		</div>
 	</li>
+</template>
+
+<template name="infoCard">
+	<div class="single-notification complete-game-card info-card">
+		<div class="football-inner">
+			<div class="down">
+				<span class="title">Down & Distance</span>
+				<span class="detail">2nd and 17</span>
+			</div>
+			<div class="vertical-divider"></div>
+			<div class="location">
+				<span class="title">Location</span>
+				<span class="detail">@SEA47</span>
+			</div>
+			<div class="vertical-divider"></div>
+			<div class="time">
+				<span class="title">1st</span>
+				<span class="detail">6:15</span>
+			</div>
+		</div>
+		<div class="football-field">
+			<div class="endzone team-colors team-text" style="background-color: #024">SD</div>
+			<div class="field">
+				<div class="distance-marker marker" style="margin-left: 53%"></div>
+				<div class="down-marker marker" style="margin-left: 17%;"></div>
+			</div>
+			<div class="endzone team-colors team-text" style="background-color: #69BE28">SEA</div>
+		</div>
+	</div>
 </template>

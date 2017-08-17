@@ -29,8 +29,14 @@ Template.singleGame.rendered = function () {
     infinite: false,
     draggable: true,
     centerMode: true,
-    centerPadding: '2.0%'
+    centerPadding: '3.5%'
   });
+	$.each($(".complete-game-card"), function(i, el){
+		setTimeout(function(){
+			$(el).css("opacity","1");
+			$(el).addClass("fadeInRight","400");
+		}, 100 + ( i * 100 ));
+	});
   if(Meteor.isCordova){
     intercom.setLauncherVisibility('VISABLE');
   }

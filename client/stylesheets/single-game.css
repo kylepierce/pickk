@@ -1,3 +1,103 @@
+#notification-center {
+	height: 110px;
+  margin: 0 0 10px 0;
+}
+
+.single-notification {
+  height: 91px;
+  margin-top: 10px;
+}
+
+.info-card {
+	background: white;
+}
+
+.football-inner {
+	font-family: "lato";
+	padding: 5px 10px;
+}
+
+.football-inner .title {
+	font-size: 1rem;
+}
+
+.football-inner .detail {
+	font-size: 1.3rem;
+}
+
+.down {
+	width: 45%;
+	float: left;
+}
+
+.vertical-divider {
+	height: 40px;
+	width: 1px;
+	background-color: black;
+	display: block;
+	float: left;
+	margin: 0 2.5%;
+}
+
+.location {
+	width: 29%;
+	float: left;
+}
+
+.time {
+	width: 15%;
+	float: left;
+}
+
+.football-field {
+	clear: both;
+	float: left;
+	height: 35px;
+	margin-top: 7px;
+	width: 100%;
+}
+
+.field {
+	width: 60%;
+	background: url('/field.svg');
+	background-size: contain;
+	height: 35px;
+	float: left;
+}
+
+.endzone {
+	width: 20%;
+	float: left;
+	height: 35px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	display: grid;
+	align-items: center;
+}
+
+.endzone:first-of-type {
+	border-radius: 0 0 0 10px;
+}
+
+.endzone:last-of-type {
+	border-radius: 0 0 10px 0;
+}
+
+.marker {
+	height: 35px;
+	width: 1px;
+	float: left;
+}
+
+.down-marker {
+	background-color: red;
+}
+
+.distance-marker {
+	background-color: black;
+}
+
 .waiting-options-icon {
   font-size: 2rem;
   line-height: 0;
@@ -31,8 +131,6 @@
   border-radius: 15px;
   /*background-color: rgba(191, 213, 222, .5);*/
 }
-
-
 
 .special-background {
   background: linear-gradient(rgba(34, 44, 49, .10), rgba(34, 44, 49, .65)), url(/baseball-background.png);

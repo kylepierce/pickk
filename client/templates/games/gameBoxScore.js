@@ -55,8 +55,6 @@ Template.singleGameCard.helpers({
     }
   },
   teams: function () {
-    console.log(this.game.scoring);
-    console.log(this.game);
     var teams = _.values(this.game.teams);
     if (this.game.scoring){
       teams[1].runs = this.game.scoring.home.runs;

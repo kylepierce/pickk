@@ -205,14 +205,6 @@
 	width: 20%;
 }
 
-#notification-center {
-	height: 90px;
-}
-
-.single-notification {
-	padding: 0 2px;
-}
-
 .single-notification > .notification-has-image {
 	height: 90px;
 }
