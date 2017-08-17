@@ -3,7 +3,7 @@ Template.home.onCreated( function() {
     $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
       $( ".loading-wrapper" ).fadeIn( 'slow' );
 
-      $.each($(".game-container"), function(i, el){
+      $.each($(".complete-game-card"), function(i, el){
         setTimeout(function(){
           $(el).css("opacity","1");
           $(el).addClass("fadeInRight","400");
@@ -47,27 +47,17 @@ Template.home.rendered = function () {
 
 Template.home.helpers({
   hero: function () {
-    return Hero.find({}).fetch()
+    return Hero.find({}).fetch();
   },
   gamePrediction: function () {
-    return Questions.find({}).count()
+    return Questions.find({}).count();
   },
   dailyPickkCount: function () {
-    return Questions.find({}).count()
+    return Questions.find({}).count();
   },
-  liveGames: function(){
-    return Games.find({live: true}).count()
+  listGames: function(){
+    return Games.find({}, {sort: {"status": 1}});
   },
-  listLiveGames: function(){
-    return Games.find({live: true})
-  },
-  upcomingGames: function(){
-    return Games.find({live: false}).count()
-  },
-  listUpcomingGames: function(){
-    var liveGame = Games.find({live: false}).count()
-    return Games.find({live: false})
-  }
 });
 
 Template.home.events({

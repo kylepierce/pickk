@@ -1,90 +1,51 @@
 <template name="entireGameCard">
-  <div id="game-card">
-      {{> singleGameInfo game=game}}
-      {{> singleGameCard game=game}}
-      {{> singleGameCTA game=game}}
+  <div class="complete-game-card ten-spacing clear-fix animated {{status}}">
+    {{> singleGameInfo game=game}}
+    {{> singleGameCard game=game}}
+    {{> singleGameCTA game=game}}
   </div>
 </template>
 
 <template name="singleGameInfo">
-  {{#if baseball}}
+  {{#if sport "MLB"}}
     {{#if inProgress}}
       {{> gameInProgressInfo game=game}}
     {{/if}}
   {{/if}}
   {{#if future}}
-    {{> futureGameInfo game=game}}
+    {{> futureGameInfo}}
   {{/if}}
-  {{#if past}}
-    {{> pastGameInfo game=game}}
-  {{/if}}
-</template>
-
-<template name="gameInProgressInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-25 single-game-section">
-      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> outDisplay number=game.eventStatus.outs}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{#with game.eventStatus}}
-        <span class="inning">{{balls}} - {{strikes}}</span>
-      {{/with}}
-    </div>
-  </div>
-</template>
-
-<template name="futureGameInfo">
-  <div class="single-game-shared single-game-info">
-    {{displayDate game.iso}}
-    {{#each station in tv game.tvStations}}
-      ({{station.callLetters}})
-    {{/each}}
-  </div>
-</template>
-
-<template name="pastGameInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-50 past-game" data-action="game-leaderboard">
-      Leaderboard
-    </div>
-    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;" data-action="game-predictions">
-      Predictions
-    </div>
-  </div>
 </template>
 
 <template name="singleGameCard">
   <div class="single-game-card">
       <div class="{{status}}">
         {{#each team in teams }}
-          {{> teamBlock statsTeamId=team.id runs=team.runs}}
+          {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
         {{/each}}
       </div>
+      {{#if showRight}}
+        {{> rightSection}}
+      {{/if}}
+  </div>
+</template>
 
-      <div class="additional-game-details">
-        <!-- Register -->
-        <!-- {{#if registered}}
-          <div data-action="unregister" class="game-unregister center">
-            <i class="fa fa-bell-slash"></i>
-          </div>
-        {{else}}
-          <div data-action="register" class="game-register center">
-            <i class="fa fa-bell"></i>
-          </div>
-        {{/if}} -->
+<template name="singleGameCTA">
+  {{#if inProgress}}
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+      Play Now!
+    </div>
+  {{/if}}
+</template>
 
-        <div class="game-time-container center-text game-card-right-side-border">
-          <span class="quarter">1st</span>
-          <span class="time-remaining">9:47</span>
-          <span class="tv-station">FOX</span>
-        </div>
-      </div>
+<template name="futureGameInfo">
+  <div class="single-game-shared single-game-info future-game-info">
+    <strong class="game-time">{{displayDate game.iso}}</strong>
+    <span class="game-tv">
+      {{#each station in tv game.tvStations}}
+        ({{station.callLetters}})
+      {{/each}}
+    </span>
   </div>
 </template>
 
@@ -92,65 +53,44 @@
   <div class="team-block">
     {{#with team statsTeamId}}
       <div class="team-colors team-text" style="background-color:{{hex}}">
-        {{computerName}}
+        {{upper computerName}}
       </div>
     {{/with}}
     <div class="team-inner">
-      <span class="team-name team-text">{{#with team statsTeamId}} {{nickname}}{{/with}}</span>
+      <span class="team-name team-text">
+        {{#with team statsTeamId}} {{nickname}}{{/with}}
+      </span>
       <span class="team-score team-text">{{runs}}</span>
     </div>
   </div>
 </template>
 
-<template name="singleGameCTA">
-  {{#if inProgress}}
-    {{#if baseball}}
-      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-        Play Now! ({{{quarter game.eventStatus.inning}}} -
-        {{#each station in tv game.tvStations}}
-          ({{station.callLetters}})
-        {{/each}})
+<template name="rightSection">
+  <div class="additional-game-details">
+    {{#if completed}}
+      <span>View Game</span>
+    {{/if}}
+    {{#if live}}
+      <div class="game-time-container center-text game-card-right-side-border">
+        <span class="period">
+          {{periodGrammer this.game.period}}
+        </span>
+        <span class="time-remaining">{{time}}</span>
+        <span class="tv-station">
+          {{tvStation this.game.tvStations}}
+        </span>
       </div>
     {{/if}}
-    {{#if football}}
-      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-        Play Now! ({{{quarter game.period}}} -
-          ({{game.tv}}))
-      </div>
+    {{#if scheduled}}
+      {{#if registered}}
+        <div data-action="unregister" class="game-unregister center">
+          <i class="fa fa-bell-slash"></i>
+        </div>
+      {{else}}
+        <div data-action="register" class="game-register center">
+          <i class="fa fa-bell"></i>
+        </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
-</template>
-
-<template name="outDisplay">
-    {{{outs number}}}
-</template>
-
-<template name="inningDisplay">
-  <span class="inning-position">
-    {{#if position data}}
-      <i class="fa fa-caret-up"></i>
-    {{else}}
-      <i class="fa fa-caret-down"></i>
-    {{/if}}
-  </span>
-  <span class="inning">{{grammer inning}}</span>
-</template>
-
-<template name="playersOnBase">
-  <!-- Fix last / clean up -->
-  {{#if playerOnBase 3 base}}
-    <div class="base-empty base-diamond base-fix third-base"></div>
-  {{else}}
-    <div class="base-diamond base-fix third-base"></div>
-  {{/if}}
-  {{#if playerOnBase 2 base}}
-    <div class="base-empty base-diamond second-base"></div>
-  {{else}}
-    <div class="base-diamond second-base"></div>
-  {{/if}}
-  {{#if playerOnBase 1 base}}
-    <div class="base-empty base-diamond base-fix first-base"></div>
-  {{else}}
-    <div class="base-diamond base-fix first-base"></div>
-  {{/if}}
+  </div>
 </template>

@@ -1,79 +1,13 @@
-Template.singleGameCard.helpers({
-  status: function() {
-    if(this.game.status === "In-Progress") {
-      return "left-side-team-block "
+Template.entireGameCard.helpers({
+  status: function () {
+    if(this.game.sport === "MLB" && this.game.status === "In-Progress") {
+      return "baseball-game-card"
     } else if (this.game.status === "Pre-Game"){
-      return "left-side-team-block "
-    } else {
-      return "full-width-team-block"
-    }
-  },
-  scheduled: function () {
-    if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
-      return true
-    }
-  },
-  registered: function (){
-    var userId = Meteor.userId()
-    var list = this.game.registered
-    var alreadyRegistered = _.indexOf(list, userId)
-    if(alreadyRegistered !== -1) {
-      return true
-    }
-  },
-  teams: function () {
-    var teams = _.values(this.game.scoring);
-    return teams
-  }
-});
-
-Template.singleGameCard.events({
-  'click [data-action=register]': function () {
-    var userId = Meteor.userId();
-    Meteor.call('registerForGame', userId, this.game.name);
-    sAlert.success("Registered for " + this.game.name + " !" , {effect: 'slide', position: 'bottom', html: true});
-  },
-  'click [data-action=unregister]': function () {
-    var userId = Meteor.userId();
-    Meteor.call('unregisterForGame', userId, this.game._id);
-    sAlert.success("Removed Registration for " + this.game.name + "." , {effect: 'slide', position: 'bottom', html: true});
-  }
-});
-
-Template.teamBlock.helpers({
-  team: function (statsTeamId) {
-    Meteor.subscribe('singleTeam', statsTeamId);
-    return Teams.findOne({"statsTeamId": statsTeamId});
-  },
-  hex: function () {
-    if (this.hex){
-      return "#" + this.hex[0]
-    } else {
-      return "#134A8E"
+      return "pre-game-card"
+    } else if (this.game.status === "In-Progress"){
+      return "live-game-card"
     }
   }
-});
-
-Template.outDisplay.helpers({
-  outs: function (number) {
-    var out = "<div class='out'></div>"
-    var noOut = "<div class='no-out'></div>"
-
-    var repeat = function (s, n) {
-      return --n ? s + ("") + repeat(s, n) : "" + s;
-    };
-
-    if (number === 0) {
-      return repeat(noOut, 3)
-    } else if (number === 3) {
-      return repeat(out, 3)
-    }  else {
-      var diff = Math.abs(number - 3)
-      var outs = repeat(out, number)
-      var noOuts = repeat(noOut, diff)
-      return outs + noOuts
-    }
-  },
 });
 
 Template.singleGameInfo.helpers({
@@ -92,59 +26,79 @@ Template.singleGameInfo.helpers({
       return true
     }
   },
-  baseball: function () {
-    var live = this.game.live
-    var baseball =  this.game.sport === "MLB"
-    if (live && baseball){
+  sport: function (sport) {
+    if (this.game.live && this.game.sport === sport){
       return true
     }
   }
 });
 
-Template.gameInProgressInfo.helpers({
-  baseball: function () {
-    var football = this.game && this.game.football
-    if (!football){
+Template.singleGameCard.helpers({
+  status: function() {
+    if(this.game.status === "In-Progress") {
+      return "left-side-team-block "
+    } else if (this.game.status === "Pre-Game"){
+      return "left-side-team-block "
+    } else {
+      return "full-width-team-block"
+    }
+  },
+  showRight: function() {
+    if(this.game.status === "In-Progress") {
+      return true
+    } else if (this.game.status === "Pre-Game"){
+      return true
+    } else if (this.game.status === "closed" || this.game.status === "completed"){
+      return true
+    } else {
+      return false
+    }
+  },
+  teams: function () {
+    return _.values(this.game.teams);
+  }
+});
+
+Template.singleGameCard.events({
+  'click [data-action=register]': function () {
+    var userId = Meteor.userId();
+    Meteor.call('registerForGame', userId, this.game.name);
+    sAlert.success("Registered for " + this.game.name + " !" , {effect: 'slide', position: 'bottom', html: true});
+  },
+  'click [data-action=unregister]': function () {
+    var userId = Meteor.userId();
+    Meteor.call('unregisterForGame', userId, this.game._id);
+    sAlert.success("Removed Registration for " + this.game.name + "." , {effect: 'slide', position: 'bottom', html: true});
+  }
+});
+
+Template.singleGameCTA.helpers({
+  inProgress: function () {
+    if (this.game.live === true){
+      return true
+    }
+  },
+  future: function () {
+    if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
+      return true
+    }
+  },
+  football: function(){
+    if(this.game.sport === "NFL"){
+      return true
+    }
+  },
+  baseball: function(){
+    if(this.game.sport === "MLB"){
       return true
     }
   }
 });
 
-Template.inningDisplay.helpers({
-  grammer: function (inning) {
-    if([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].indexOf(inning) >= 0) {
-      var inningGrammer = inning + "th"
-    } else if ([1].indexOf(inning) >= 0) {
-      var inningGrammer = inning + "st"
-    } else if ([2].indexOf(inning) >= 0) {
-      var inningGrammer = inning + "nd"
-    } else if ([3].indexOf(inning) >= 0) {
-      var inningGrammer = inning + "rd"
-    }
-    return inningGrammer
-  },
-  position: function(data){
-    if(data === "Top"){
-      return true
-    }
+Template.singleGameCTA.events({
+  'click [data-action=play]': function (e, t) {
+    Router.go('joinGame.show', {_id: this.game._id});
   }
-});
-
-Template.playersOnBase.helpers({
-  empty: function(bases){
-    if(bases.length === 0){
-      return true
-    }
-  },
-  playerOnBase: function (number, base) {
-    if(base && base.length > 0){
-      for (var i = 0; i < 2; i++) {
-        if (base[i] && base[i].baseNumber === number){
-          return true
-        }
-      }
-    }
-  },
 });
 
 Template.futureGameInfo.helpers({
@@ -175,70 +129,75 @@ Template.futureGameInfo.helpers({
   },
 });
 
-Template.pastGameInfo.events({
-  'click [data-action=game-leaderboard]': function (e, t) {
-    var gameId = t.data.game._id
-    Router.go('/leaderboard/' + gameId)
+Template.teamBlock.helpers({
+  team: function (statsTeamId) {
+    Meteor.subscribe('singleTeam', statsTeamId);
+    return Teams.findOne({"statsTeamId": statsTeamId});
   },
-  'click [data-action=game-predictions]': function (e, t) {
-    var gameId = t.data.game._id
-    Router.go('/history/' + gameId)
+  upper: function (name) {
+    return name.toUpperCase()
+  },
+  hex: function () {
+    if (this.hex){
+      return "#" + this.hex[0]
+    } else {
+      return "#134A8E"
+    }
   }
 });
 
-Template.singleGameCTA.helpers({
-  inProgress: function () {
-    if (this.game.live === true){
+Template.rightSection.helpers({
+  completed: function () {
+    if (this.game.status === "closed" || this.game.status === "completed"){
       return true
     }
   },
-  future: function () {
+  live: function() {
+    if (this.game.status === "In-Progress") {
+      return true
+    }
+  },
+  scheduled: function () {
     if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
       return true
     }
   },
-  tv: function(data) {
-    return data
-  },
-  quarter: function (num) {
-    // return num
-    if(this.game.sport === "NFL"){
-      switch(num){
-        case 1:
-          return "1st Quarter"
-          break;
-        case 2:
-          return "2nd Quarter"
-          break;
-        case 3:
-          return "3rd Quarter"
-          break;
-        case 4:
-          return "4th Quarter"
-          break;
-        case 5:
-          return "Overtime"
-          break;
-      }
-    } else {
-      return num
-    }
-  },
-  football: function(){
-    if(this.game.sport === "NFL"){
+  registered: function (){
+    var userId = Meteor.userId();
+    var list = this.game.registered
+    var alreadyRegistered = _.indexOf(list, userId)
+    if(alreadyRegistered !== -1) {
       return true
     }
   },
-  baseball: function(){
-    if(this.game.sport === "MLB"){
-      return true
+  periodGrammer: function (period) {
+    if ( this.game.sport === "MLB" ){
+      var period = this.game.eventStatus.inning
     }
-  }
-});
-
-Template.singleGameCTA.events({
-  'click [data-action=play]': function ( e, t ) {
-    var gameId = this.game._id
-    Router.go('joinGame.show', {_id: gameId});
-  }
+    switch (period) {
+      case 1:
+        var period = period + "st"
+        break;
+      case 2:
+        var period = period + "nd"
+        break;
+      case 3:
+        var period = period + "rd"
+        break;
+      default:
+        var period = period + "th"
+        break;
+    }
+    return period
+  },
+  time: function () {
+    if ( this.game.sport === "NFL" ) {
+      var path = this.game.eventStatus
+      var string = path.minutes + ":" + path.seconds
+      return string
+    }
+  },
+  tvStation: function (tvStations) {
+    return tvStations[0].callLetters
+  },
 });

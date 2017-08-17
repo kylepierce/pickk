@@ -1,0 +1,52 @@
+<template name="gameInProgressInfo">
+  <div class="single-game-shared single-game-info">
+    <div class="col-md-25 single-game-section">
+      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> outDisplay number=game.eventStatus.outs}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
+    </div>
+    <div class="col-md-25 single-game-section">
+      {{#with game.eventStatus}}
+        <span class="inning">{{balls}} - {{strikes}}</span>
+      {{/with}}
+    </div>
+  </div>
+</template>
+
+<template name="outDisplay">
+  {{{outs number}}}
+</template>
+
+<template name="inningDisplay">
+  <span class="inning-position">
+    {{#if position data}}
+      <i class="fa fa-caret-up"></i>
+    {{else}}
+      <i class="fa fa-caret-down"></i>
+    {{/if}}
+  </span>
+  <span class="inning">{{grammer inning}}</span>
+</template>
+
+<template name="playersOnBase">
+  <!-- Fix last / clean up -->
+  {{#if playerOnBase 3 base}}
+    <div class="base-empty base-diamond base-fix third-base"></div>
+  {{else}}
+    <div class="base-diamond base-fix third-base"></div>
+  {{/if}}
+  {{#if playerOnBase 2 base}}
+    <div class="base-empty base-diamond second-base"></div>
+  {{else}}
+    <div class="base-diamond second-base"></div>
+  {{/if}}
+  {{#if playerOnBase 1 base}}
+    <div class="base-empty base-diamond base-fix first-base"></div>
+  {{else}}
+    <div class="base-diamond base-fix first-base"></div>
+  {{/if}}
+</template>

@@ -18,34 +18,14 @@
           </div>
 
           <div class="container">
-            {{#if gamePrediction}}
-              <button class="button col-md-100 ten-spacing daily-pickk-cta game-container" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
-                <div class="col-md-25">
-                  <span class="numberNotification">
-                    {{dailyPickkCount}}
-                  </span>
-                </div>
-                <div class="col-md-50" style="float: left; margin-left: 20px">
-                  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
-                  <span class="daily-pickk-text">
-                    Daily Pickks
-                  </span>
-                </div>
-              </button>
-            {{/if}}
-
-            {{#each game in listLiveGames}}
-              <div class="ten-spacing clear-fix game-container animated">
-                {{> entireGameCard game=game}}
-              </div>
-            {{/each}}
-
+            <!-- {{#if gamePrediction}}
+              {{> dailyPickkButton}}
+            {{/if}} -->
             <div class="hundred-bottom">
-              {{#each game in listUpcomingGames}}
-                <div class="ten-spacing clear-fix game-container animated">
-                  {{> entireGameCard game=game}}
-                </div>
+              {{#each game in listGames}}
+                {{> entireGameCard game=game}}
               {{/each}}
+
               <button class="ten-spacing button button-stable col col-100" data-action="viewAllGames">
                 <strong>View All Games</strong>
               </button>
@@ -65,4 +45,20 @@
       </div>
     </div>
   </a>
+</template>
+
+<template name="dailyPickkButton">
+  <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+    <div class="col-md-25">
+      <span class="numberNotification">
+        {{dailyPickkCount}}
+      </span>
+    </div>
+    <div class="col-md-50" style="float: left; margin-left: 20px">
+      <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
+      <span class="daily-pickk-text">
+        Daily Pickks
+      </span>
+    </div>
+  </button>
 </template>

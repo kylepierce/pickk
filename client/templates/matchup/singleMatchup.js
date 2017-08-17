@@ -108,7 +108,7 @@ Template.matchupJoin.helpers({
   },
   allowToJoin: function(){
     var userId = Meteor.userId();
-    var deepLinked = Session.get('deepLinked')
+    var deepLinked = Session.get('deepLinked');
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
     if (this.secret === "public"){
       return true

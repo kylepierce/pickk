@@ -1,5 +1,8 @@
 .complete-game-card {
 	margin-bottom: 10px;
+  opacity: 0;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px 0px;
+	border-radius: 10px;
 }
 
 .single-game-card {
@@ -8,8 +11,8 @@
 	font-family: lato;
 	font-weight: bold;
 	font-size: 18px;
-	border-radius: 10px;
 	display: inline-block;
+	border-radius: 10px;
 }
 
 .full-width-team-block {
@@ -24,7 +27,33 @@
 .additional-game-details {
 	border-radius: 0 10px 10px 0;
 	width: 20%;
+	display: flex;
+	flex-direction: column;
 	float: left;
+}
+
+.baseball-game-card .game-card-right-side-border {
+	border-radius: 0;
+}
+
+.baseball-game-card .team-colors {
+	border-radius: 0!important;
+}
+
+.live-game-card .game-card-right-side-border {
+	border-radius: 0 10px 0 0;
+}
+
+.live-game-card .team-block:last-child .team-colors{
+	border-radius: 0!important;
+}
+
+.pre-game-card {
+	height: 131px
+}
+
+.pre-game-card .team-block:first-child .team-colors{
+	border-radius: 0!important;
 }
 
 .game-card-right-side-border {
@@ -33,13 +62,14 @@
 
 .game-time-container {
 	width: 100%;
-	background-color: #202A2F;
+	background: linear-gradient(to bottom right, #202A2F 0%, #455A64 100%);
 	color: white;
 	float: left;
 	display: grid;
 	align-items: center;
 	justify-content: center;
 	padding: 10px 0;
+	height: 91px;
 }
 
 .game-time-container span {
@@ -66,6 +96,12 @@
 	height: 40px;
 	background-color: #455A64;
 	color: white;
+	border-radius: 10px 10px 0 0;
+}
+
+.future-game-info {
+	width: 100%;
+	padding: 0 5%
 }
 
 .single-game-cta {
@@ -73,6 +109,8 @@
 	background-color: #F1C40F;
 	font-weight: bold;
 	font-family: lato;
+	margin-top: -5px;
+	border-radius: 0 0 10px 10px
 }
 
 .future-game-cta {
@@ -83,17 +121,19 @@
 
 .game-register {
 	background-color: #329E64;
-	width: 20%;
+	width: 100%;
 	float:right;
-	height: 89px;
+	height: 91px;
+	    border-radius: 0 0 10px 0;
 }
 
 .game-unregister {
 	color: white;
 	background-color: #E58686;
-	width: 20%;
+	width: 100%;
 	float:right;
-	height: 89px;
+	height: 91px;
+	border-radius: 0 0 10px 0;
 }
 
 .single-game-section {
@@ -140,7 +180,7 @@
 }
 
 .team-colors {
-	width: 20%;
+	width: 25%;
 	text-align: center;
 	font-weight: bold;
 	color: white;
@@ -242,4 +282,16 @@
 .counter-text {
 	padding: 3px 0 0 0;
 	font-weight: bold;
+}
+
+.game-time {
+	width: 60%;
+	float: left;
+	text-align: left!important;
+}
+
+.game-tv {
+	width: 40%;
+	float: right;
+	text-align: right!important;
 }

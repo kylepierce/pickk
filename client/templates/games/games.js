@@ -31,7 +31,7 @@ Template.games.onCreated(function() {
     self.subscribe('activeGames', self.getFilter(), self.getSports(), function () {
       $(".loader-holder").delay(500).fadeOut('slow', function () {
         $(".loading-wrapper").fadeIn('slow');
-        $.each($(".game-container"), function(i, el){
+        $.each($("#complete-game-card"), function(i, el){
           setTimeout(function(){
             $(el).css("opacity","1");
             $(el).addClass("fadeInRight","200");
