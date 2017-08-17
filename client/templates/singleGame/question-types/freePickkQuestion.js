@@ -20,10 +20,11 @@ Template.freePickkQuestion.helpers({
 });
 
 Template.freePickkQuestion.events({
-	'click [data-action=play-selected]': function (e, t) {
+	'click [data-action=free-pickk]': function (e, t) {
 		$('.play-selected').removeClass('play-selected');
 		$(e.currentTarget).addClass('play-selected');
 		Template.currentData().o = this.o;
-		$('#submitButton').show();
+
+    Meteor.call('answerFreePickk', this.q.gameId, this.q.period, this.q._id, this.o.option, this.w)
 	},
 });
