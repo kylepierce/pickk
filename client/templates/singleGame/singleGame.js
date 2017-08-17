@@ -221,7 +221,6 @@ Template.eventQuestion.events({
 	},
 	"click [data-action=submit]": function (e, t) {
 		e.preventDefault();
-		console.log(this);
 		var multiplier = parseFloat(this.o.multiplier);
 		var userId = Meteor.userId();
 		var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}

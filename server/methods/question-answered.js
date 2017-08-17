@@ -52,28 +52,27 @@ Meteor.methods({
 	},
 
 	'questionAnsweredAnalytics': function(gameId, period, questionId, type, answer, multiplier, wager) {
-		// gameId, period, questionId, type, answer, multiplier, wager
-			if(multiplier < 2.5){
-				var multiplierRange = "low"
-			} else if (multiplier < 4.5){
-				var multiplierRange = "med"
-			} else if (multiplier < 10){
-				var multiplierRange = "high"
-			} else if (multiplier < 99){
-				var multiplierRange = "game changer"
-			}
+		if(multiplier < 2.5){
+			var multiplierRange = "low"
+		} else if (multiplier < 4.5){
+			var multiplierRange = "med"
+		} else if (multiplier < 10){
+			var multiplierRange = "high"
+		} else if (multiplier < 99){
+			var multiplierRange = "game changer"
+		}
 
-			analytics.track("question answered", {
-				id: Meteor.userId(),
-				gameId: gameId,
-				questionId: questionId,
-				answered: answer,
-				period: period,
-				type: type,
-				multiplier: multiplier,
-				multiplierRange: multiplierRange,
-				wager: wager
-			});
+		analytics.track("question answered", {
+			id: Meteor.userId(),
+			gameId: gameId,
+			questionId: questionId,
+			answered: answer,
+			period: period,
+			type: type,
+			multiplier: multiplier,
+			multiplierRange: multiplierRange,
+			wager: wager
+		});
 	},
 
 	'insertAnswer': function (gameId, questionId, type, answer, period, wager, multiplier, description){
@@ -179,6 +178,7 @@ Meteor.methods({
 		check(gameId, String);
 		check(period, Number);
 		check(questionId, String);
+		check(type, String);
 		check(answer, String);
 		check(multiplier, Number);
 		check(wager, Number);
