@@ -55,7 +55,17 @@ Template.singleGameCard.helpers({
     }
   },
   teams: function () {
-    return _.values(this.game.teams);
+    console.log(this.game.scoring);
+    console.log(this.game);
+    var teams = _.values(this.game.teams);
+    if (this.game.scoring){
+      teams[1].runs = this.game.scoring.home.runs;
+      teams[0].runs = this.game.scoring.away.runs;
+    } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
+      teams[0].runs = this.game.teams[0].linescoreTotals.hits
+      teams[1].runs = this.game.teams[1].linescoreTotals.hits
+    }
+    return teams
   }
 });
 

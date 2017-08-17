@@ -19,14 +19,14 @@
 
 <template name="singleGameCard">
   <div class="single-game-card">
-      <div class="{{status}}">
-        {{#each team in teams }}
-          {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
-        {{/each}}
-      </div>
-      {{#if showRight}}
-        {{> rightSection}}
-      {{/if}}
+    <div class="{{status}}">
+      {{#each team in teams }}
+        {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
+      {{/each}}
+    </div>
+    {{#if showRight}}
+      {{> rightSection}}
+    {{/if}}
   </div>
 </template>
 
@@ -58,7 +58,7 @@
     {{/with}}
     <div class="team-inner">
       <span class="team-name team-text">
-        {{#with team statsTeamId}} {{nickname}}{{/with}}
+        {{#with team statsTeamId}} {{nickname}} {{/with}}
       </span>
       <span class="team-score team-text">{{runs}}</span>
     </div>
