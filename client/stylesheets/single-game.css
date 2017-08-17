@@ -22,11 +22,13 @@
 }
 
 .football-inner .detail {
+	float: left;
+	clear: both;
 	font-size: 1.3rem;
 }
 
 .down {
-	width: 45%;
+	width: 40%;
 	float: left;
 }
 
@@ -53,7 +55,7 @@
 	clear: both;
 	float: left;
 	height: 35px;
-	margin-top: 7px;
+	margin-top: 10px;
 	width: 100%;
 }
 
@@ -86,7 +88,7 @@
 
 .marker {
 	height: 35px;
-	width: 1px;
+	width: 3px;
 	float: left;
 }
 

@@ -8,11 +8,11 @@
     {{#ionContent}}
 			{{> singleGameInfo game=game}}
 
-			<div id="notification-center" class="animated fadeInRight">
+			<div id="notification-center" class="animated fadeInLeft">
 				<div class="single-notification complete-game-card ">
 					{{> singleGameCard game=game}}
 				</div>
-				{{> infoCard}}
+				{{> footballInfoCard}}
 			</div>
 
 			<div class="container ten-spacing">
@@ -88,11 +88,11 @@
 	</li>
 </template>
 
-<template name="infoCard">
+<template name="footballInfoCard">
 	<div class="single-notification complete-game-card info-card">
 		<div class="football-inner">
 			<div class="down">
-				<span class="title">Down & Distance</span>
+				<span class="title">Down</span>
 				<span class="detail">2nd and 17</span>
 			</div>
 			<div class="vertical-divider"></div>
@@ -102,8 +102,8 @@
 			</div>
 			<div class="vertical-divider"></div>
 			<div class="time">
-				<span class="title">1st</span>
-				<span class="detail">6:15</span>
+				<span class="title">2nd</span>
+				<span class="detail">15:00</span>
 			</div>
 		</div>
 		<div class="football-field">

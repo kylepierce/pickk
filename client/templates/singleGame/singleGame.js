@@ -34,7 +34,7 @@ Template.singleGame.rendered = function () {
 	$.each($(".complete-game-card"), function(i, el){
 		setTimeout(function(){
 			$(el).css("opacity","1");
-			$(el).addClass("fadeInRight","400");
+			$(el).addClass("fadeInLeft","400");
 		}, 100 + ( i * 100 ));
 	});
   if(Meteor.isCordova){
