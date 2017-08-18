@@ -6,34 +6,6 @@ Template.singleMatchup.helpers({
   matchup: function(){
     return Matchup.findOne();
   },
-  'users': function (userArray){
-    return userArray.length
-  },
-  'username': function(ref) {
-		Meteor.subscribe('findSingle', ref);
-		return UserList.findOne({_id: ref}).profile.username
-	},
-  'matchupName': function(matchup){
-    var groupId = matchup.groupId
-
-    if(groupId){
-      Meteor.subscribe('singleGroup', groupId);
-      var group = Groups.find({_id: groupId}).fetch();
-      var matchupName = group[0].name
-    } else {
-      var userId = matchup.commissioner
-      var user = UserList.find({_id: userId}).fetch()
-      var matchupName = user[0].profile.username
-    }
-    return matchupName
-  },
-  'gameName': function(gameId){
-    Meteor.subscribe('singleGameData', gameId);
-    var game = Games.findOne({_id: gameId})
-    if (game){
-      return game.name
-    }
-  },
   'game': function(gameId) {
     Meteor.subscribe('singleGame', gameId);
     var game = Games.findOne({_id: gameId})
@@ -48,13 +20,6 @@ Template.singleMatchup.helpers({
       if(onList >= 0){
         return true
       }
-    }
-  },
-  'limitNum': function(){
-    if(this.limitNum === -1){
-      return "∞"
-    } else {
-      return this.limitNum
     }
   }
 });
@@ -113,7 +78,7 @@ Template.matchupJoin.helpers({
       return false
     }
   },
-  allowToJoin: function(){
+  allowToView: function(){
     var userId = Meteor.userId();
     var deepLinked = Session.get('deepLinked');
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
@@ -138,11 +103,30 @@ Template.matchupJoin.helpers({
     } else {
       return true
     }
-  }, request: function(){
+  },
+  request: function(){
     var userId = Meteor.userId();
     var onTheList = this.requests.indexOf(userId);
     if(onTheList > -1){
       return true
+    }
+  },
+  league: function () {
+    if(this.groupId) {
+      console.log(this);
+      return true
+    }
+  }
+});
+
+Template.matchupMember.helpers({
+  "ifPlayer": function(){
+    console.log(this);
+    var userId = Meteor.userId();
+    var list = this.users
+    var onList = list.indexOf(userId);
+    if (onList > 0){
+      return "cta-button"
     }
   }
 });
@@ -157,4 +141,7 @@ Template.matchupMember.events({
   "click [data-action=viewLeaderboard]": function(e, t){
     Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
   },
+  "click [data-action=viewLeague]": function(e, t) {
+    Router.go('/groups/' + this.groupId );
+  }
 });

@@ -34,6 +34,9 @@
   font-size: 2rem;
   width: 10%;
   float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #single-matchup {
