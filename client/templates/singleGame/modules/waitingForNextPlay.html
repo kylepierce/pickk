@@ -17,17 +17,17 @@
 		<div id="ratingBox"></div>
 
 		{{> inviteToPlay}}
+		<div class="card-list">
+			<div class="card-list-header ten-spacing">Answers</div>
+			{{> gameHistory i=3 extended=false}}
 
-		<div class="item item-divider ten-spacing">
-			<span>Answers</span>
+			<div class="card-list-footer" data-action="previous-answers">
+				View All
+			</div>
 		</div>
-		{{> gameHistory i=3 extended=false}}
 
-		<div class="item leaderboard-item center-text" data-action="previous-answers">
-			View All
-		</div>
-
-		<div class="item item-divider ten-spacing">
+		<div class="card-list">
+		<div class="card-list-header ten-spacing">
 			<span>Leaderboard +</span>
 			<span>
 				<button style="font-size: 11px; min-height: 20px; max-height: 20px;" class="button button-clear float-right" data-action="filter-leaderboard">
@@ -38,7 +38,7 @@
 
 		{{> miniLeaderboard i=3}}
 
-		<div class="item leaderboard-item center-text" data-action="game-leaderboard">
+		<div class="card-list-footer" data-action="game-leaderboard">
 			View All
 		</div>
 			{{#if drive}}
@@ -46,6 +46,7 @@
 				Switch to Live (Play by Play)
 			</button>
 			{{/if}}
+		</div>
 	</div>
 </template>
 
