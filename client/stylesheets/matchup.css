@@ -3,10 +3,20 @@
   font-size: 1rem;
   color: white;
   background-color: #4F656F;
-  display: grid;
+  display: flex;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px 10px 20px;
+  border-radius: 10px 10px 0 0;
+}
+
+.history-inprogress .matchup-card-header {
   border-radius: 0 10px 0 0;
+  padding: 10px;
+}
+
+.detail-container {
+  width: 90%;
+  float: left;
 }
 
 .matchup-card-header .game {
@@ -20,11 +30,29 @@
   float: left;
 }
 
+.matchup-card-header .arrow {
+  font-size: 2rem;
+  width: 10%;
+  float: left;
+}
+
+#single-matchup {
+  display: grid;
+}
+
+#single-matchup .matchup-card-header .arrow {
+  display: none;
+}
+
 .matchup-body {
   padding: 10px 0;
-  border-radius: 0 0 10px 0;
+  border-radius: 0 0 10px 10px;
   background-color: white;
   display: flex;
+}
+
+.history-inprogress .matchup-body {
+  border-radius: 0 10px 10px 0;
 }
 
 .matchup-body .section {

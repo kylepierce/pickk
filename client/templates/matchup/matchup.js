@@ -108,7 +108,7 @@ Template.matchupItem.helpers({
 });
 
 Template.matchupItem.events({
-  'click .item': function(e,t){
+  'click [data-action=viewMatchup]': function(e,t){
     Router.go('/matchup/'+ this.m._id)
   }
 });

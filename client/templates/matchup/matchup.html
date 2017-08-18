@@ -50,10 +50,13 @@
 </template>
 
 <template name="matchupItem">
-	<div class="{{joined}} card-list ten-spacing">
+	<div class="{{joined}} card-list ten-spacing" data-action="viewMatchup">
 		<div class="matchup-card-header ">
-			<span class="game">{{gameName m.gameId}}</span>
-			<span class="commissioner">Commissioner: {{commissioner m}}</span>
+			<div class="detail-container">
+				<span class="game">{{gameName m.gameId}}</span>
+				<span class="commissioner">Commissioner: {{commissioner m}}</span>
+			</div>
+			<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
 		</div>
 		<div class="matchup-body">
 			<div class="section">

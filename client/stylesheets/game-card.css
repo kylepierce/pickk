@@ -1,8 +1,12 @@
 .complete-game-card {
 	margin-bottom: 10px;
-  opacity: 0;
+  /*opacity: 0;*/
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px 0px;
 	border-radius: 10px;
+}
+
+#animateGames .complete-game-card {
+	opacity: 0!important;
 }
 
 .single-game-card {

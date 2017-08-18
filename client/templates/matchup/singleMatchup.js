@@ -34,6 +34,13 @@ Template.singleMatchup.helpers({
       return game.name
     }
   },
+  'game': function(gameId) {
+    Meteor.subscribe('singleGame', gameId);
+    var game = Games.findOne({_id: gameId})
+    if (game) {
+      return game
+    }
+  },
   'alreadyJoined': function(users){
     if(users){
       var userId = Meteor.userId();

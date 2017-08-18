@@ -66,3 +66,71 @@
   border-radius: 0 0 10px 10px;
   font-family: "lato";
 }
+
+.button-card {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px 0px;
+  border-radius: 5px;
+  font-family: 'lato';
+  border: 0px;
+}
+
+.button-card .icon {
+  font-size: 1.3rem;
+  width: 20%;
+  float: left;
+}
+
+.button-card .text {
+  width: 70%;
+  float: left;
+  font-weight: bold;
+}
+
+.button-card .arrow {
+  width: 10%;
+  float: left;
+}
+
+.button-card .full {
+  float: left;
+  font-weight: bold;
+  padding: 15px 10px;
+  width: 100%;
+}
+
+.half {
+  float: left;
+  background-color: white;
+  padding: 15px 10px;
+  width: 48.75%;
+}
+
+.half:nth-of-type(2n) {
+  margin-left: 2.5%;
+}
+
+.half:nth-of-type(2n + 1) {
+  margin-top: 10px;
+}
+
+.half:nth-of-type(2n + 2) {
+  margin-top: 10px;
+}
+
+.cta-button {
+  color: white!important;
+  background: linear-gradient(to bottom right, #9EE800 0%, #4A9200 100%)
+}
+
+.line-divider {
+  margin: 10px 5% 0 ;
+  width: 90%;
+  height: 1px;
+  background-color: #CACCCD;
+  display: inherit;
+}
+
+#button-section {
+  width: 95%;
+  margin: 0 2.5% 
+}
