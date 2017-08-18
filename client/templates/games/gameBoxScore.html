@@ -1,5 +1,5 @@
 <template name="entireGameCard">
-  <div class="complete-game-card ten-spacing clear-fix animated {{status}}">
+  <div class="complete-game-card ten-spacing clear-fix animated {{status}}" data-action="viewGame">
     {{> singleGameInfo game=game}}
     {{> singleGameCard game=game}}
     {{> singleGameCTA game=game}}
@@ -87,7 +87,7 @@
           <i class="fa fa-bell-slash"></i>
         </div>
       {{else}}
-        <div data-action="register" class="game-register center">
+        <div data-action="register" class="game-register cta-button center">
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}

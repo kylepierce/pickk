@@ -10,6 +10,12 @@ Template.entireGameCard.helpers({
   }
 });
 
+Template.entireGameCard.events({
+  'click [data-action=viewGame]': function(){
+    console.log(this);
+  }
+});
+
 Template.singleGameInfo.helpers({
   inProgress: function () {
     if (this.game.live === true){
@@ -70,7 +76,7 @@ Template.singleGameCard.helpers({
 Template.singleGameCard.events({
   'click [data-action=register]': function () {
     var userId = Meteor.userId();
-    Meteor.call('registerForGame', userId, this.game.name);
+    Meteor.call('registerForGame', userId, this.game._id);
     sAlert.success("Registered for " + this.game.name + " !" , {effect: 'slide', position: 'bottom', html: true});
   },
   'click [data-action=unregister]': function () {
