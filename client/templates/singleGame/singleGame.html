@@ -107,12 +107,16 @@
 			</div>
 		</div>
 		<div class="football-field">
-			<div class="endzone team-colors team-text" style="background-color: #024">SD</div>
+			{{#with away}}
+				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
+			{{/with}}
 			<div class="field">
-				<div class="distance-marker marker" style="margin-left: 53%"></div>
-				<div class="down-marker marker" style="margin-left: 17%;"></div>
+				<div class="distance-marker marker" style="margin-left: {{ballLocation}}"></div>
+				<div class="down-marker marker" style="margin-left: {{yardsToGo}};"></div>
 			</div>
-			<div class="endzone team-colors team-text" style="background-color: #69BE28">SEA</div>
+			{{#with home}}
+				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
+			{{/with}}
 		</div>
 	</div>
 </template>

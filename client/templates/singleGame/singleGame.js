@@ -325,6 +325,28 @@ Template.footballInfoCard.helpers({
 	},
 	time: function(){
 		return this.game[0].eventStatus.minutes + ":" + this.game[0].eventStatus.seconds
+	},
+	ballLocation: function(){
+		return "70%"
+	},
+	yardsToGo: function(){
+		return "10%"
+	},
+	away: function (){
+		statsTeamId = this.game[0].teams[0].teamId
+		Meteor.subscribe('singleTeam', statsTeamId);
+		return Teams.findOne({"statsTeamId": statsTeamId});
+	},
+	home: function() {
+		statsTeamId = this.game[0].teams[1].teamId
+		Meteor.subscribe('singleTeam', statsTeamId);
+		return Teams.findOne({"statsTeamId": statsTeamId});
+	},
+	shortCode: function() {
+		return this.computerName.toUpperCase()
+	},
+	hexColor: function(){
+		return "#" + this.hex[0]
 	}
 });
 
