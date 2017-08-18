@@ -17,6 +17,7 @@
 }
 
 .football-inner .title {
+	float: left;
 	font-size: 1rem;
 }
 
