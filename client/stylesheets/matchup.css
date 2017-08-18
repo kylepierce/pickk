@@ -1,8 +1,61 @@
-.matchup-card {
-  margin: 0;
-  padding: 10px 15px 20px;
+.matchup-card-header {
+  font-family: "lato";
+  font-size: 1rem;
+  color: white;
+  background-color: #4F656F;
+  display: grid;
+  width: 100%;
+  padding: 10px;
+  border-radius: 0 10px 0 0;
+}
+
+.matchup-card-header .game {
+  font-family: "lato";
+  font-weight: 900;
+  float: left;
+  font-size: 1.2rem;
+}
+
+.matchup-card-header .commissioner {
+  float: left;
+}
+
+.matchup-body {
+  padding: 10px 0;
+  border-radius: 0 0 10px 0;
   background-color: white;
-  overflow: auto;
+  display: flex;
+}
+
+.matchup-body .section {
+  width: 25%;
+  float: left;
+  border-right: 1px solid #CACCCD;
+}
+
+.matchup-body .section:last-child {
+  border: none!important;
+}
+
+.matchup-body .section .icon {
+  width: 100%;
+  clear: both;
+  float: left;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.matchup-body .section div {
+  width: 100%;
+  float: left;
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .match-links {

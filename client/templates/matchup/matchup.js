@@ -52,22 +52,22 @@ Template.matchupItem.helpers({
       return "history-inprogress"
     }
   },
-  'matchupName': function(matchup){
+  'commissioner': function(matchup){
     var groupId = matchup.groupId
 
     if(groupId){
       Meteor.subscribe('singleGroup', groupId);
       var group = Groups.find({_id: groupId}).fetch();
-      var matchupName = group[0].name
+      var commissioner = group[0].name
     } else {
       var userId = matchup.commissioner
       Meteor.subscribe('findSingle', userId);
       var user = UserList.findOne({_id: userId});
       if( user ){
-        var matchupName = user.profile.username
+        var commissioner = user.profile.username
       }
     }
-    return matchupName
+    return commissioner
   },
   'group': function(){
     if(this.m.secret === "group"){

@@ -22,7 +22,7 @@
 
   {{#ionView}}
     {{#ionContent}}
-		<div class="container">
+		<!-- <div class="container">
 			<div style="margin-top:20px;">
 				Watching a game with friends or at a party? Create a matchup to prove your knowledge!
 			</div>
@@ -33,7 +33,7 @@
         Challenge a Friend
       </button>
       </a>
-    </div>
+    </div> -->
       <div class="list container">
 				{{#if anyMatchups}}
 					{{#each matchup in matchups}}
@@ -43,7 +43,6 @@
 					<div class="no-notifications">
 						No Matchups Found.
 					</div>
-
 				{{/if}}
       </div>
     {{/ionContent}}
@@ -51,23 +50,28 @@
 </template>
 
 <template name="matchupItem">
-	<div class="item item-divider ten-spacing ">
-		<span>{{matchupName m}}'s Matchup</span>
+	<div class="{{joined}} card-list ten-spacing">
+		<div class="matchup-card-header ">
+			<span class="game">{{gameName m.gameId}}</span>
+			<span class="commissioner">Commissioner: {{commissioner m}}</span>
+		</div>
+		<div class="matchup-body">
+			<div class="section">
+				<div>{{> ionIcon icon='ios-people'}}</div>
+				<div>{{users m.users}} of {{limitNum m.limitNum}}</div>
+			</div>
+			<div class="section">
+				<div>{{> ionIcon icon='ios-people'}}</div>
+				<div>{{m.secret}}</div>
+			</div>
+			<div class="section">
+				<div>{{> ionIcon icon='ios-people'}}</div>
+				<div>{{m.skill}}</div>
+			</div>
+			<div class="section">
+				<div>{{> ionIcon icon='ios-people'}}</div>
+				<div>1 game</div>
+			</div>
+		</div>
 	</div>
-  <div class="item {{joined}}">
-    <h2>{{gameName m.gameId}}</h2>
-		<strong class="col col-md-33">
-			{{m.secret}}
-		</strong>
-
-		<strong class="col col-md-33">
-			{{users m.users}} of {{limitNum m.limitNum}}
-		</strong>
-
-		<strong class="col col-md-33">
-			{{m.skill}}
-		</strong>
-
-
-  </div>
 </template>
