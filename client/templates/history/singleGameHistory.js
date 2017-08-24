@@ -42,6 +42,18 @@ Template.singleAnswer.helpers({
 			return "history-incorrect" // Incorrect
 		}
 	},
+	location: function(){
+		var extended = Template.parentData(2).extended
+		if (extended) {
+			return "single-question-history-card"
+		}
+	},
+	questionTitle: function (){
+		console.log(this);
+		if(this.q.que.length > 20){
+			return "small-question-text"
+		}
+	},
 	title: function ( option ){
 		var options = this.q.options
 
@@ -114,6 +126,5 @@ Template.singleAnswer.helpers({
 			var timeNumber = timeConverter(diff, 86400000)
 			return timeNumber + " Days Ago"
 		}
-		console.log(now, answerCreated, diff);
 	}
 });

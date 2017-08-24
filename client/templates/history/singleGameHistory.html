@@ -42,27 +42,23 @@
 </template>
 
 <template name="singleAnswer">
-	<div class="item history-item {{status}}">
+	<div class="history-item {{status}} {{location}}">
     <div class="question-inner">
       <div class="single-question-history-top">
-        <span class="question-text">{{q.que}}</span>
-        <span class="outcome-coins">
-          {{#if active q.active}}
-            {{{winnings a.answered q.outcome}}}
-          {{/if}}
-        </span>
-      </div>  
-      {{#if details}}
-        <div class="time-ago">{{timeAgo}}</div>
-        <div class="single-question-history-bottom">
-          <ul class="question-details">
-            <li class="col-md-50">
-              <strong>Multiplier:</strong> {{a.multiplier}}x</li>
-            <li class="col-md-50">
-              <strong>Wager:</strong> {{a.wager}}</li>
-          </ul>
+        <div class="question-text {{questionTitle}}">
+          {{q.que}}
         </div>
-      {{/if}}
+        {{#if active q.active}}
+          <div class="outcome-coins">
+            {{{winnings a.answered q.outcome}}}
+          </div>
+        {{/if}}
+        {{#if details}}
+          <div class="time-ago">{{timeAgo}}</div>
+          <div class="history-card-divider"></div>
+        {{/if}}
+      </div>
+
       <div class="single-question-history-bottom">
         <ul class="question-attributes">
           <ul class="question-details">
@@ -79,7 +75,18 @@
           </ul>
         </ul>
       </div>
+      {{#if details}}
+        <div class="single-question-history-bottom">
+          <ul class="question-details">
+            <li class="col-md-50">
+              <strong>Wager:</strong> {{a.wager}}</li>
+            <li class="col-md-50">
+              <strong>Multiplier:</strong> {{a.multiplier}}x</li>
+          </ul>
+        </div>
+      {{/if}}
     </div>
+
     <div class="arrow">{{> ionIcon icon="ios-arrow-right"}}</div>
 	</div>
 </template>

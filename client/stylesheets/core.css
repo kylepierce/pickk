@@ -42,12 +42,12 @@
 }
 
 .card-list {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px 0px;
-  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
+  border-radius: 5px;
 }
 
 .card-list-header {
-  border-radius: 10px 10px 0 0;
+  border-radius: 5px 5px 0 0;
   background-color: #37474F!important;
   color: white;
   font-family: "lato";
@@ -63,7 +63,11 @@
   padding: 10px;
   text-align: center;
   background-color: #EFEFEF;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
+  border-top: 0;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   font-family: "lato";
 }
 
