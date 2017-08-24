@@ -101,3 +101,4 @@ remcoder:chronos
 meteorhacks:cluster
 boilerplate-generator@1.0.10
 reactive-dict
+mdg:meteor-apm-agent

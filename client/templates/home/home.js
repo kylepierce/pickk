@@ -2,28 +2,18 @@ Template.home.onCreated( function() {
   this.subscribe( 'activeHero', function() {
     $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
       $( ".loading-wrapper" ).fadeIn( 'slow' );
-
-      $.each($(".complete-game-card"), function(i, el){
-        setTimeout(function(){
-          $(el).css("opacity","1");
-          $(el).addClass("fadeInRight","400");
-        }, 100 + ( i * 100 ));
-      });
-
-      $('.hero-section').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 20000,
-        accessibility: false,
-        arrows: false,
-        mobileFirst: true,
-      });
     });
   });
 });
 
 Template.home.onRendered( function() {
+  // $.each($(".complete-game-card"), function(i, el){
+  //   console.log(this);
+  //   setTimeout(function(){
+  //     $(el).css("opacity","1");
+  //     $(el).addClass("fadeInRight","400");
+  //   }, 100 + ( i * 100 ));
+  // });
   $( "svg" ).delay( 250 ).fadeIn();
 });
 

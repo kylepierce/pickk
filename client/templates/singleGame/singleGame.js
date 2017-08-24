@@ -46,6 +46,11 @@ Template.singleGame.helpers({
   game: function(){
     return Games.findOne();
   },
+	sport: function(sport){
+		if (this.game[0].sport === sport){
+			return true
+		}
+	},
 	anyQuestions: function(){
 		var currentUserId = Meteor.userId();
 		var game = Games.findOne();
@@ -221,6 +226,7 @@ Template.eventQuestion.events({
 	},
 	"click [data-action=submit]": function (e, t) {
 		e.preventDefault();
+		console.log(e,t, this);
 		var multiplier = parseFloat(this.o.multiplier);
 		var userId = Meteor.userId();
 		var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
@@ -324,7 +330,11 @@ Template.footballInfoCard.helpers({
 		return period
 	},
 	time: function(){
-		return this.game[0].eventStatus.minutes + ":" + this.game[0].eventStatus.seconds
+		var seconds = this.game[0].eventStatus.seconds.toString()
+		if (seconds && seconds.length < 2) {
+			var seconds = "0" + seconds
+		}
+		return this.game[0].eventStatus.minutes + ":" + seconds
 	},
 	ballLocation: function(){
 		return "70%"

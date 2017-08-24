@@ -207,7 +207,11 @@ Template.rightSection.helpers({
   time: function () {
     if ( this.game.sport === "NFL" ) {
       var path = this.game.eventStatus
-      var string = path.minutes + ":" + path.seconds
+      var seconds = path.seconds.toString()
+      if (seconds && seconds.length < 2) {
+        var seconds = "0" + seconds
+      }
+      var string = path.minutes + ":" + seconds
       return string
     }
   },
