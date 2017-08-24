@@ -43,24 +43,43 @@
 
 <template name="singleAnswer">
 	<div class="item history-item {{status}}">
-		<span class="question-text">{{q.que}}</span>
-		<span class="outcome-coins">
-			{{#if active q.active}}
-				({{{winnings a.answered q.outcome}}})
-			{{/if}}
-		</span>
-
-		<ul class="question-attributes">
-			<ul class="question-details">
-				<li class="col-md-100">Selected: {{title a.answered}}</li>
-				{{#if active q.active}}
-					<li class="col-md-100">Answer: {{{title q.outcome}}}</li>
-				{{/if}}
-				{{#if details}}
-					<li class="col-md-50">Multiplier: {{a.multiplier}}x</li>
-					<li class="col-md-50">Wager: {{a.wager}}</li>
-				{{/if}}
-			</ul>
-		</ul>
+    <div class="question-inner">
+      <div class="single-question-history-top">
+        <span class="question-text">{{q.que}}</span>
+        <span class="outcome-coins">
+          {{#if active q.active}}
+            {{{winnings a.answered q.outcome}}}
+          {{/if}}
+        </span>
+      </div>  
+      {{#if details}}
+        <div class="time-ago">{{timeAgo}}</div>
+        <div class="single-question-history-bottom">
+          <ul class="question-details">
+            <li class="col-md-50">
+              <strong>Multiplier:</strong> {{a.multiplier}}x</li>
+            <li class="col-md-50">
+              <strong>Wager:</strong> {{a.wager}}</li>
+          </ul>
+        </div>
+      {{/if}}
+      <div class="single-question-history-bottom">
+        <ul class="question-attributes">
+          <ul class="question-details">
+            <li class="col-md-100">
+              <div class="col-md-25"><strong>Selected:</strong></div>
+              <div class="col-md-50">{{title a.answered}}</div>
+            </li>
+            {{#if active q.active}}
+              <li class="col-md-100">
+                <div class="col-md-25"><strong>Answer:</strong></div>
+                <div class="col-md-50">{{{title q.outcome}}}</div>
+              </li>
+            {{/if}}
+          </ul>
+        </ul>
+      </div>
+    </div>
+    <div class="arrow">{{> ionIcon icon="ios-arrow-right"}}</div>
 	</div>
 </template>
