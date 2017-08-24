@@ -57,6 +57,15 @@
   font-size: 1.2rem;
 }
 
+.card-list-header .button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-list-header .icon {
+  margin: -13px 0;
+}
+
 .card-list-footer {
   height: 40px;
   font-size: 1.2rem;
