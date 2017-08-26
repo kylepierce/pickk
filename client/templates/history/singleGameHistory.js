@@ -49,14 +49,12 @@ Template.singleAnswer.helpers({
 		}
 	},
 	questionTitle: function (){
-		console.log(this);
 		if(this.q.que.length > 20){
 			return "small-question-text"
 		}
 	},
 	title: function ( option ){
 		var options = this.q.options
-
 		if (option === "Removed" || option === "deleted") {
 			return "Removed"
 		} else if (Array.isArray(option)) {

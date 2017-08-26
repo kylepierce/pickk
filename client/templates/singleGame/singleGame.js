@@ -309,7 +309,7 @@ Template.footballInfoCard.helpers({
 		return this.game[0].eventStatus.distance
 	},
 	location: function(){
-		return this.game[0].eventStatus.down
+		return "@" + this.game[0].location
 	},
 	quarter: function(){
 		var period = this.game[0].eventStatus.period

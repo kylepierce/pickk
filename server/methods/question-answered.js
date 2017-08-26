@@ -187,16 +187,16 @@ Meteor.methods({
 		var isValid = validateAnswer(questionId, answer);
 		var selector = {userId: userId, gameId: gameId, period: period}
 		var enoughCoins = hasEnoughCoins(gameId, period, wager);
-
 		if (isValid && enoughCoins) {
+			var modify = {$inc: {coins: -wager, queCounter: +1}}
+			GamePlayed.update(selector, modify);
+
+			Meteor.call('activityForDiamonds', selector);
+			
 			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
 			Games.update({_id: gameId}, {$addToSet: {users: userId}});
 			Meteor.call('insertAnswer', gameId, questionId, type, answer, period, wager, multiplier);
 			Meteor.call('questionAnsweredAnalytics', gameId, period, questionId, type, answer, multiplier, wager)
-
-			var modify = {$inc: {coins: -wager, queCounter: +1}}
-			GamePlayed.update(selector, modify);
-			Meteor.call('activityForDiamonds', selector);
 		}
 	}
 });
