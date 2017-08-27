@@ -232,7 +232,7 @@ Template.eventQuestion.events({
 	},
 	"click [data-action=submit]": function (e, t) {
 		e.preventDefault();
-		console.log(e,t, this);
+
 		var multiplier = parseFloat(this.o.multiplier);
 		var userId = Meteor.userId();
 		var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
@@ -277,7 +277,17 @@ Template.eventQuestion.events({
 		$(".single-question").removeClass("slideInLeft")
 		$(".single-question").addClass("slideOutRight")
 
-		Meteor.call('answerNormalQuestion', this.q.gameId, this.q.period, this.q._id, this.t, this.o.option, multiplier, this.w);
+		var prediction = {
+			gameId: this.q.gameId,
+			period: this.q.period,
+			questionId: this.q._id,
+			type: this.t,
+			answered: this.o.option,
+			multiplier: multiplier,
+			wager: this.w
+		}
+
+		Meteor.call('answerNormalQuestion', prediction);
 	}
 });
 

@@ -310,6 +310,7 @@ Meteor.methods({
 				scheduled: timeCreated,
 				type: "prediction",
 				name: q.gameName,
+				period: 0,
 				users: []
 			});
 		} else {

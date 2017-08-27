@@ -51,48 +51,39 @@ Meteor.methods({
 		}
 	},
 
-	'questionAnsweredAnalytics': function(gameId, period, questionId, type, answer, multiplier, wager) {
-		if(multiplier < 2.5){
+	'questionAnsweredAnalytics': function(answer) {
+		if(answer.multiplier < 2.5){
 			var multiplierRange = "low"
-		} else if (multiplier < 4.5){
+		} else if (answer.multiplier < 4.5){
 			var multiplierRange = "med"
-		} else if (multiplier < 10){
+		} else if (answer.multiplier < 10){
 			var multiplierRange = "high"
-		} else if (multiplier < 99){
+		} else if (answer.multiplier < 99){
 			var multiplierRange = "game changer"
 		}
 
 		analytics.track("question answered", {
 			id: Meteor.userId(),
-			gameId: gameId,
-			questionId: questionId,
-			answered: answer,
-			period: period,
-			type: type,
-			multiplier: multiplier,
-			multiplierRange: multiplierRange,
-			wager: wager
+			gameId: answer.gameId,
+			questionId: answer.questionId,
+			answered: answer.answered,
+			period: answer.period,
+			type: answer.type,
+			multiplier: answer.multiplier,
+			multiplierRange: answer.multiplierRange,
+			wager: answer.wager
 		});
 	},
 
-	'insertAnswer': function (gameId, questionId, type, answer, period, wager, multiplier, description){
-		check(gameId, String);
-		check(questionId, String);
-		check(type, String);
-		check(answer, String);
-
-		check(period, Match.Maybe(Number));
-		check(wager, Match.Maybe(Number));
-		check(multiplier, Match.Maybe(Number));
-		check(description, Match.Maybe(Number));
-
+	'insertAnswer': function (answer){
+		check(answer, Object);
 		var obj = {
 			dateCreated: new Date(),
 			userId: Meteor.userId(),
-			gameId: gameId,
-			questionId: questionId,
-			answered: answer,
-			type: type
+			gameId: answer.gameId,
+			questionId: answer.questionId,
+			answered: answer.answered,
+			type: answer.type
 		}
 		addToObject = function (key, value) {
 			if (value) {
@@ -100,105 +91,117 @@ Meteor.methods({
 			}
 		}
 
-		addToObject("period", period)
-		addToObject("wager", wager)
-		addToObject("multiplier", multiplier)
-		addToObject("description", description)
+		addToObject("period", answer.period)
+		addToObject("wager", answer.wager)
+		addToObject("multiplier", answer.multiplier)
+		addToObject("description", answer.description)
 		Answers.insert(obj);
 	},
 
-	'answerFreePickk': function (gameId, period, questionId, answer, wager) {
-		check(gameId, String);
-		check(period, Number);
-		check(questionId, String);
-		check(answer, String);
-		check(wager, Number);
-
+	'answerDailyPickk': function (prediction) {
+		check(prediction, Object);
 		var userId = Meteor.userId();
-		var isValid = validateAnswer(questionId, answer);
+		var isValid = validateAnswer(prediction.questionId, prediction.answer);
 		if (isValid) {
-			var scoreMessage = "Thanks for Pickking! Here Are " + wager + " Free Coins!"
-			var selector = {userId: userId, gameId: gameId, period: period}
-			var modify = {$inc: {coins: +wager}}
+			var scoreMessage = "Thanks for Pickking! Here Are " + 5 + " Diamonds!"
+			var selector = {userId: userId, gameId: prediction.gameId}
+			var gamePlayed = {
+	      gameId: prediction.gameId,
+	      userId: userId,
+	      type: "daily-pickk"
+	    }
 
-			GamePlayed.update(selector, modify);
+			Meteor.call('userJoinsAGame', gamePlayed, function(error, result){
+				if(error) {
+					console.log(error);
+				} else {
+					GamePlayed.update({_id: result[0]._id}, {$inc: {diamonds: 5}});
+					Questions.update({_id: prediction.questionId}, {$addToSet: {usersAnswered: userId}});
+					Games.update({_id: prediction.gameId}, {$addToSet: {users: userId}});
+					var game = Games.findOne({_id: prediction.gameId});
+					var notifyObj = {
+						userId: userId,
+						gameId: prediction.gameId,
+						questionId: prediction.questionId,
+						source: "Daily Pickks",
+						gameName: game.name,
+						type: "diamonds",
+						value: 5, // Free coins
+						message: scoreMessage,
+					}
 
-			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
-			Games.update({_id: gameId}, {$addToSet: {users: userId}});
+					var o = {
+						userId: prediction.userId,
+						gameId: prediction.gameId,
+						questionId: prediction.questionId,
+						gameName: gameName,
+						value: 5,
+						source: "Daily Pickks"
+					}
 
-			Meteor.call('insertAnswer', gameId, questionId, "free-pickk", answer, period, wager, 4);
+					//Give user a diamond for answering
+					Meteor.call('awardDiamonds', o);
 
-			var notifyObj = {
-				userId: Meteor.userId(),
-				gameId: gameId,
-				questionId: questionId,
-				type: "coins",
-				value: wager, // Free coins
-				message: scoreMessage,
-			}
-			createPendingNotification(notifyObj);
+					createPendingNotification(notifyObj);
+					Meteor.call('insertAnswer', prediction);
+				}
+			});
 		}
 	},
 
-	"answerDailyPickk": function(userId, gameId, questionId, answer){
-		check(userId, String);
-		check(gameId, String);
-		check(questionId, String);
-		check(answer, String);
+	"answerFreePickk": function(prediction){
+		check(prediction, Object);
+		var userId = Meteor.userId();
+		var isValid = validateAnswer(prediction.questionId, prediction.answered);
 
-		var isValid = validateAnswer(c.questionId, c.answer);
 		if (isValid) {
-			var selector = {userId: c.userId, gameId: c.gameId}
+			var selector = {userId: userId, gameId: prediction.gameId}
 			var modify = {
-				$inc: {queCounter: +1},
-				$set: {type: "prediction"}
+				$inc: {queCounter: +1, coins: +prediction.wager},
 			}
 			GamePlayed.update(selector, modify, true);
-
-			Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
-			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
-
-			Meteor.call('insertAnswer', gameId, questionId, type, answer, period, wager, multiplier, description);
-
-			var game = Games.findOne({_id: c.gameId});
+			Questions.update({_id: prediction.questionId}, {$addToSet: {usersAnswered: userId}});
+			Games.update({_id: prediction.gameId}, {$addToSet: {users: userId}});
+			var question = Questions.findOne({_id: prediction.questionId})
+			var game = Games.findOne({_id: prediction.gameId});
 			var gameName = game.name
+			var scoreMessage = 'Predicted "' + question.options[prediction.answered].title + '" for ' + prediction.wager + " Free Coins!"
 
-			var o = {
-				userId: c.userId,
-				gameId: c.gameId,
-				questionId: c.questionId,
-				gameName: gameName,
-				value: 5,
-				source: "Daily Pickks"
+			var notifyObj = {
+				userId: userId,
+				gameId: prediction.gameId,
+				questionId: prediction.questionId,
+				source: "Free-Pickks",
+				gameName: game.name,
+				type: "coins",
+				value: prediction.wager, // Free coins
+				message: scoreMessage,
 			}
 
-			//Give user a diamond for answering
-			Meteor.call('awardDiamonds', o);
+			createPendingNotification(notifyObj);
+
+			Meteor.call('insertAnswer', prediction);
 		}
 	},
 
-	"answerNormalQuestion": function(gameId, period, questionId, type, answer, multiplier, wager){
-		check(gameId, String);
-		check(period, Number);
-		check(questionId, String);
-		check(type, String);
-		check(answer, String);
-		check(multiplier, Number);
-		check(wager, Number);
+	"answerNormalQuestion": function(prediction){
+		check(prediction, Object);
 
 		var userId = Meteor.userId();
-		var isValid = validateAnswer(questionId, answer);
-		var selector = {userId: userId, gameId: gameId, period: period}
-		var enoughCoins = hasEnoughCoins(gameId, period, wager);
+		var isValid = validateAnswer(prediction.questionId, prediction.answered);
+		var selector = {userId: userId, gameId: prediction.gameId, period: prediction.period}
+
+		var enoughCoins = hasEnoughCoins(prediction.gameId, prediction.period, prediction.wager);
 		if (isValid && enoughCoins) {
-			var modify = {$inc: {coins: -wager, queCounter: +1}}
+			var modify = {$inc: {coins: -prediction.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
 			Meteor.call('activityForDiamonds', selector);
 
-			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
-			Games.update({_id: gameId}, {$addToSet: {users: userId}});
-			Meteor.call('insertAnswer', gameId, questionId, type, answer, period, wager, multiplier);
-			Meteor.call('questionAnsweredAnalytics', gameId, period, questionId, type, answer, multiplier, wager)
+			Questions.update({_id: prediction.questionId}, {$addToSet: {usersAnswered: userId}});
+			Games.update({_id: prediction.gameId}, {$addToSet: {users: userId}});
+
+			Meteor.call('insertAnswer', prediction);
+			Meteor.call('questionAnsweredAnalytics', prediction)
 		}
 	}
 });

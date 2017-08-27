@@ -25,6 +25,16 @@ Template.freePickkQuestion.events({
 		$(e.currentTarget).addClass('play-selected');
 		Template.currentData().o = this.o;
 
-    Meteor.call('answerFreePickk', this.q.gameId, this.q.period, this.q._id, this.o.option, this.w)
+    var prediction = {
+      gameId: this.q.gameId,
+      period: this.q.period,
+      questionId: this.q._id,
+      answered: this.o.option,
+      multiplier: this.o.multiplier,
+      wager: this.w,
+      type: "free-pickk"
+    }
+
+    Meteor.call('answerFreePickk', prediction)
 	},
 });

@@ -18,7 +18,7 @@
       <div class="container">
         {{#if questionsExist}}
       		{{#each question in dailyPickks}}
-            {{> singleQuestion q=question}}
+            {{> dailyQuestion q=question}}
       		{{/each}}
         {{else}}
           <div class="no-notifications">
@@ -29,4 +29,4 @@
     {{scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
-</template> 
+</template>
