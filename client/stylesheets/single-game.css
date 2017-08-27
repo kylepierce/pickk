@@ -135,9 +135,7 @@
 }
 
 .special-background {
-  background: linear-gradient(rgba(34, 44, 49, .10), rgba(34, 44, 49, .65)), url(/baseball-background.png);
-  background-position-x: 46%;
-  background-position-y: 0%;
+	padding-top: 50px; 
   color: white!important;
 }
 

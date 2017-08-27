@@ -7,6 +7,14 @@ Template.joinGame.rendered = function () {
 };
 
 Template.joinGame.helpers({
+  background: function() {
+    var game = this.game[0]
+		if (game.sport === "NFL"){
+			return "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/join-football-game.png'); height: 100%; background-position-x: 46%; background-position-y: 100%; "
+		} else if (game.sport === "MLB") {
+      return "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/baseball-background.png'); height: 100%; background-position-x: 46%; background-position-y: 100%; "
+    }
+  },
   gameAbbr: function(){
     var game = Games.findOne();
     if (game) {

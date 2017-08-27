@@ -130,7 +130,7 @@ Template.gameTypePrompt.events({
       Branch.userCompletedAction(eventName)
     }
     Meteor.call('userJoinsAGame', data);
-    Meteor.subscribe('gamePlayed', userId, $gameId);
+    Meteor.subscribe('gamePlayed', $gameId);
 
     var leaderData = Session.get('leaderboardData');
   	// leaderData["period"] = game.period

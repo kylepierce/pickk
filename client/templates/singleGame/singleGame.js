@@ -205,7 +205,13 @@ Template.eventQuestion.helpers({
     }
 
     return optionsArray
-  }
+  },
+	background: function() {
+		var game = Games.findOne({_id: this.q.gameId})
+		if (game.sport === "NFL"){
+			return "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/question-background.png'); height: 75px; background-position-x: 46%; background-position-y: 100%; "
+		}
+	}
 });
 
 Template.eventQuestion.events({

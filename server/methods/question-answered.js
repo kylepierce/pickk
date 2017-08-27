@@ -117,14 +117,15 @@ Meteor.methods({
 		var userId = Meteor.userId();
 		var isValid = validateAnswer(questionId, answer);
 		if (isValid) {
-			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
-			Games.update({_id: gameId}, {$addToSet: {users: userId}});
-
 			var scoreMessage = "Thanks for Pickking! Here Are " + wager + " Free Coins!"
 			var selector = {userId: userId, gameId: gameId, period: period}
 			var modify = {$inc: {coins: +wager}}
 
 			GamePlayed.update(selector, modify);
+
+			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
+			Games.update({_id: gameId}, {$addToSet: {users: userId}});
+
 			Meteor.call('insertAnswer', gameId, questionId, "free-pickk", answer, period, wager, 4);
 
 			var notifyObj = {
@@ -147,14 +148,16 @@ Meteor.methods({
 
 		var isValid = validateAnswer(c.questionId, c.answer);
 		if (isValid) {
-			Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
-			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
 			var selector = {userId: c.userId, gameId: c.gameId}
 			var modify = {
 				$inc: {queCounter: +1},
 				$set: {type: "prediction"}
 			}
 			GamePlayed.update(selector, modify, true);
+
+			Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
+			Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
+
 			Meteor.call('insertAnswer', gameId, questionId, type, answer, period, wager, multiplier, description);
 
 			var game = Games.findOne({_id: c.gameId});
@@ -190,9 +193,8 @@ Meteor.methods({
 		if (isValid && enoughCoins) {
 			var modify = {$inc: {coins: -wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
-
 			Meteor.call('activityForDiamonds', selector);
-			
+
 			Questions.update({_id: questionId}, {$addToSet: {usersAnswered: userId}});
 			Games.update({_id: gameId}, {$addToSet: {users: userId}});
 			Meteor.call('insertAnswer', gameId, questionId, type, answer, period, wager, multiplier);

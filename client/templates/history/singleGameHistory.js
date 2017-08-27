@@ -13,7 +13,7 @@ Template.gameHistory.helpers({
 	questions: function (number){
 		var $gameId = Router.current().params._id
 		Meteor.subscribe('questionsByGameId', $gameId, number)
-		return Questions.find({}).fetch()
+		return Questions.find({}, {sort: {dateCreated: -1}}).fetch()
 	},
 	answers: function (id) {
 		var answer = Answers.findOne({"questionId": id})
