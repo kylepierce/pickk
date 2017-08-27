@@ -373,7 +373,9 @@ Template.coinsNotification.helpers({
 			return game
 		}
 	},
-	questionTitle: function (id) {
+	questionTitle: function () {
+    var id = this.note.question
+    console.log(this.note);
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id});
 		var que = question && question.que

@@ -47,7 +47,6 @@ richsilv:pikaday
 momentjs:moment
 simple:reactive-method
 chart:chart
-kadira:debug
 meteorhacks:subs-manager
 nvd3:nvd3
 juliancwirko:s-alert-slide
