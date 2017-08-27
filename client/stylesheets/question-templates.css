@@ -290,3 +290,14 @@
 	-o-animation-duration: .5s!important;
 	animation-duration: .5s!important;
 }
+
+.larger-card {
+	padding: 35px!important;
+	color: white!important;
+}
+
+.larger-card h4 {
+	color: white!important;
+	font-weight: bold;
+	text-shadow: 2px 2px #222c31;
+}

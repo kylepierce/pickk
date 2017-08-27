@@ -20,10 +20,6 @@
 	align-self: flex-end;
 }
 
-.larger-card {
-	padding: 35px!important;
-}
-
 .s-alert-info{
 	background-size: cover;
 	background-image: url('/coins3.png');
