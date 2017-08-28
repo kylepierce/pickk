@@ -45,3 +45,47 @@ Template.groups.events({
     Router.go('/allGroups')
   }
 });
+
+Template.leagueItem.helpers({
+  'joined': function(){
+    // var userId = Meteor.userId();
+    // var alreadyJoined = this.m.users.indexOf(userId)
+    // if(alreadyJoined > -1){
+    //   return "history-inprogress"
+    // }
+  },
+  'commissioner': function(){
+    // var groupId = matchup.groupId
+    //
+    // if(groupId){
+    //   Meteor.subscribe('singleGroup', groupId);
+    //   var group = Groups.find({_id: groupId}).fetch();
+    //   var commissioner = group[0].name
+    // } else {
+    //   var userId = matchup.commissioner
+    //   Meteor.subscribe('findSingle', userId);
+    //   var user = UserList.findOne({_id: userId});
+    //   if( user ){
+    //     var commissioner = user.profile.username
+    //   }
+    // }
+    // return commissioner
+  },
+  // 'username': function(ref) {
+	// 	Meteor.subscribe('findSingle', ref);
+  //   var user = UserList.findOne({_id: ref})
+  //   if (user){
+  //     return user.profile.username
+  //   }
+	// },
+  // 'users': function (userArray){
+  //   return userArray.length
+  // },
+  // 'limitNum': function(number){
+  //   if(number === -1){
+  //     return "∞"
+  //   } else {
+  //     return number
+  //   }
+  // }
+});

@@ -1,3 +1,47 @@
+.league-card-header {
+  font-family: "lato";
+  font-size: 1rem;
+  color: white;
+  background-color: #4F656F;
+  display: flex;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.league-card-header .detail-container {
+  width: 70%;
+  padding-left: 10px;
+}
+
+.league-avatar {
+  display: table;
+}
+
+.league-avatar > .circle-image {
+  width: 100%!important;
+}
+
+.league-name {
+  font-family: "lato";
+  font-weight: 900;
+  float: left;
+  font-size: 1rem;
+}
+
+.matchup-card-header .commissioner {
+  float: left;
+}
+
+
+
+
+
+
+
+
+
+
 .group-wrapper {
   background-color: white;
   width: 100%;

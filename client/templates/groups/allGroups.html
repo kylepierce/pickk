@@ -19,11 +19,7 @@
 		<div class="item item-divider">All Groups</div>
 
 		{{#each group}}
-      {{#ionItem path="group.show" avatar=true}}
-        {{> groupAvatar}}
-        <h2 class="center-username">{{name}}</h2>
-
-      {{/ionItem}}
+      {{> leagueItem}}
     {{/each}}
 
     {{/ionContent}}
