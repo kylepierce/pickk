@@ -8,17 +8,8 @@ Template.singleGroup.events({
 });
 
 Template.singleGroup.helpers({
-  leagueMatchups: function(){
-    var groupId = this.group[0]._id
-    var matchups = Matchup.find({groupId: groupId}).fetch();
-    if(matchups.length > 0){
-      return true
-    }
-  },
-  matchups: function(){
-    var groupId = this.group[0]._id
-    var matchups = Matchup.find({groupId: groupId});
-    return matchups
+  group: function() {
+    return this.group[0];
   },
   member: function(){
     var userId = Meteor.userId();
@@ -49,16 +40,7 @@ Template.singleGroup.helpers({
     } else {
       return true
     }
-  },
-  commissionerAdmin: function(){
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId});
-
-    if (group.commissioner == currentUser) {
-      return true
-    }
-  },
+  }
 });
 
 Template.chatIcon.helpers({
@@ -129,4 +111,32 @@ Template.groupData.helpers({
   description: function(){
     return this.group[0].desc
   }
+});
+
+Template.leagueMatchups.helpers({
+  leagueMatchups: function(){
+    var groupId = this.group[0]._id
+    var matchups = Matchup.find({groupId: groupId}).fetch();
+    if(matchups.length > 0){
+      return true
+    }
+  },
+  commissionerAdmin: function(){
+    var currentUser = Meteor.userId()
+    var groupId = Router.current().params._id
+    var group = Groups.findOne({_id: groupId});
+
+    if (group.commissioner == currentUser) {
+      return true
+    }
+  },
+});
+
+Template.leagueMatchupCard.helpers({
+
+  matchups: function(){
+    var groupId = this.group[0]._id
+    var matchups = Matchup.find({groupId: groupId});
+    return matchups
+  },
 });

@@ -29,7 +29,9 @@
 Template.groups.helpers({
   groups: function() {
     var currentUser = Meteor.user();
-    return currentUser.profile.groups
+    if (currentUser) {
+      return currentUser.profile.groups
+    }
   },
   userGroups: function() {
     var currentUser = Meteor.userId();
@@ -46,30 +48,37 @@ Template.groups.events({
   }
 });
 
-Template.leagueItem.helpers({
+Template.leagueCard.events({
+  "click [data-action=viewLeague]": function(e, t) {
+    if (this.__originalId){
+      var id = this.__originalId
+    } else {
+      var id = this._id
+    }
+    Router.go('group.show', {_id: id});
+  }
+});
+
+Template.leagueCard.helpers({
   'joined': function(){
-    // var userId = Meteor.userId();
-    // var alreadyJoined = this.m.users.indexOf(userId)
-    // if(alreadyJoined > -1){
-    //   return "history-inprogress"
-    // }
+    console.log(this);
+    if (this) {
+      var userId = Meteor.userId();
+      var alreadyJoined = this.members.indexOf(userId)
+      if(alreadyJoined > -1){
+        return "joined"
+      }
+    }
   },
   'commissioner': function(){
-    // var groupId = matchup.groupId
-    //
-    // if(groupId){
-    //   Meteor.subscribe('singleGroup', groupId);
-    //   var group = Groups.find({_id: groupId}).fetch();
-    //   var commissioner = group[0].name
-    // } else {
-    //   var userId = matchup.commissioner
-    //   Meteor.subscribe('findSingle', userId);
-    //   var user = UserList.findOne({_id: userId});
-    //   if( user ){
-    //     var commissioner = user.profile.username
-    //   }
-    // }
-    // return commissioner
+    if(this){
+      var userId = this.commissioner
+      Meteor.subscribe('findSingle', userId);
+      var user = UserList.findOne({_id: userId});
+      if (user) {
+        return user.profile.username
+      }
+    }
   },
   // 'username': function(ref) {
 	// 	Meteor.subscribe('findSingle', ref);

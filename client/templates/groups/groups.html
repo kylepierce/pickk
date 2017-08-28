@@ -49,52 +49,114 @@
     </div> -->
 
     <div class="item item-divider clear-fix" style="margin-top: 20px">Your Leagues</div>
-    {{#if groups}}
-      {{#each userGroups}}
-				{{> leagueItem}}
-      {{/each}}
-    {{else}}
-      {{#ionItem buttonRight=true}}
-        <p>No Leagues :( Join a League!</p>
-        <a data-action="no-group" class="button">
-          {{> ionIcon icon="ios-plus"}}
-        </a>
-      {{/ionItem}}
-    {{/if}}
+		<div class="container">
+			{{#if groups}}
+				{{#each userGroups}}
+					{{> leagueCard}}
+				{{/each}}
+			{{else}}
+				{{#ionItem buttonRight=true}}
+					<p>No Leagues :( Join a League!</p>
+					<a data-action="no-group" class="button">
+						{{> ionIcon icon="ios-plus"}}
+					</a>
+				{{/ionItem}}
+			{{/if}}
+		</div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 
-<template name="leagueItem">
-	<div class="{{joined}} card-list ten-spacing" data-action="viewMatchup">
-		<div class="league-card-header ">
+<template name="leagueCard">
+	<div class="card-list ten-spacing {{joined}}" data-action="viewLeague">
+		<div class="league-card-header">
 			{{> leagueAvatar}}
 			<div class="detail-container">
-				<span class="league-name">{{name}}</span>
-				<span class="commissioner">Commissioner: {{commissioner}}</span>
+				<div class="league-name">{{name}}</div>
+				<div class="commissioner">
+					{{> ionIcon icon='ios-person'}}
+					{{commissioner}}
+				</div>
 			</div>
-			<button data-action="viewUser" class="button">View</button>
-			<!-- <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span> -->
 		</div>
-
-		<!-- <div class="matchup-body">
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{users m.users}} of {{limitNum m.limitNum}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{m.secret}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{m.skill}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>1 game</div>
-			</div>
-		</div> -->
+		{{#if joined}}
+			{{> leagueMember}}
+		{{else}}
+			<!-- Expanded card detail -->
+		{{/if}}
 	</div>
+</template>
+
+<template name="leagueMember">
+	<div class="matchup-body">
+		<div class="section">
+			<div>{{> ionIcon icon='ios-people'}}</div>
+			<div></div>
+		</div>
+		<div class="section">
+			<div>{{> ionIcon icon='ios-people'}}</div>
+			<div></div>
+		</div>
+		<div class="section">
+			<div>{{> ionIcon icon='ios-people'}}</div>
+			<div></div>
+		</div>
+		<div class="section">
+			<div>{{> ionIcon icon='ios-people'}}</div>
+			<div></div>
+		</div>
+	</div>
+</template>
+
+<template name="groupData">
+  <ul class="group-details">
+    <li>
+      <span class="group-details-icon center-text" style="font-size: 1.9em;">
+        {{> ionIcon icon='ios-people'}}
+      </span>
+      <span class="group-details-text">
+        {{memberCount}} {{max}} Members
+      </span>
+    </li>
+    <li>
+      <span class="group-details-icon center-text">
+        {{> ionIcon icon='star'}}
+      </span>
+      <span class="group-details-text">
+        Commissioner: {{commissioner}}
+      </span>
+    </li>
+    {{#if skill}}
+      <li>
+        <span class="group-details-icon center-text">
+          {{> ionIcon icon='star'}}
+        </span>
+        <span class="group-details-text">
+          Skill: {{skill}}
+        </span>
+      </li>
+    {{/if}}
+    {{#if league}}
+      <li>
+        <span class="group-details-icon center-text">
+          {{> ionIcon icon='star'}}
+        </span>
+        <span class="group-details-text">
+          League: {{association}}
+        </span>
+      </li>
+      {{#if team}}
+        <li>
+          <span class="group-details-icon center-text">
+            {{> ionIcon icon='star'}}
+          </span>
+          <span class="group-details-text">
+            Team: {{favTeam}}
+          </span>
+        </li>
+      {{/if}}
+    {{/if}}
+    {{description}}
+  </ul>
 </template>
