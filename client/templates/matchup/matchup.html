@@ -37,7 +37,7 @@
       <div class="list container">
 				{{#if anyMatchups}}
 					{{#each matchup in matchups}}
-						{{> matchupItem m=matchup}}
+						{{> matchupCard m=matchup}}
 					{{/each}}
 				{{else}}
 					<div class="no-notifications">
@@ -47,34 +47,4 @@
       </div>
     {{/ionContent}}
   {{/ionView}}
-</template>
-
-<template name="matchupItem">
-	<div class="{{joined}} card-list" data-action="viewMatchup">
-		<div class="matchup-card-header ">
-			<div class="detail-container">
-				<span class="game">{{gameName m.gameId}}</span>
-				<span class="commissioner">Commissioner: {{commissioner m}}</span>
-			</div>
-			<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-		</div>
-		<div class="matchup-body">
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{users m.users}} of {{limitNum m.limitNum}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{m.secret}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>{{m.skill}}</div>
-			</div>
-			<div class="section">
-				<div>{{> ionIcon icon='ios-people'}}</div>
-				<div>1 game</div>
-			</div>
-		</div>
-	</div>
 </template>

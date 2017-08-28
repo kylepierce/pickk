@@ -131,12 +131,3 @@ Template.leagueMatchups.helpers({
     }
   },
 });
-
-Template.leagueMatchupCard.helpers({
-
-  matchups: function(){
-    var groupId = this.group[0]._id
-    var matchups = Matchup.find({groupId: groupId});
-    return matchups
-  },
-});

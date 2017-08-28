@@ -1,6 +1,6 @@
 <template name="singleMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="matchup"}}
+    {{>ionNavBackButton path="index"}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -21,7 +21,7 @@
     {{#ionContent}}
       {{#with matchup}}
         <div id="single-matchup" class="container">
-          {{> matchupItem m=matchup}}
+          {{> matchupCard m=matchup}}
 
           {{#if alreadyJoined this.users}}
             <div class="line-divider"></div>

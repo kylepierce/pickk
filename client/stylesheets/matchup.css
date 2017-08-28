@@ -1,3 +1,13 @@
+.card-list .matchup-card-header {
+  border-radius: 0;
+  background-color: white;
+  color: black;
+}
+
+.card-list .matchup-card-body {
+  display: none!important;
+}
+
 .matchup-card-header {
   font-family: "lato";
   font-size: 1rem;
@@ -17,6 +27,8 @@
 .detail-container {
   width: 90%;
   float: left;
+  display: grid;
+  align-items: center;
 }
 
 .matchup-card-header .game {
@@ -47,28 +59,28 @@
   display: none;
 }
 
-.matchup-body {
+.card-detail-section {
   padding: 10px 0;
   border-radius: 0 0 10px 10px;
   background-color: white;
   display: flex;
 }
 
-.history-inprogress .matchup-body {
+.history-inprogress .card-detail-section {
   border-radius: 0 10px 10px 0;
 }
 
-.matchup-body .section {
+.card-detail-section .section {
   width: 25%;
   float: left;
   border-right: 1px solid #CACCCD;
 }
 
-.matchup-body .section:last-child {
+.card-detail-section .section:last-child {
   border: none!important;
 }
 
-.matchup-body .section .icon {
+.card-detail-section .section .icon {
   width: 100%;
   clear: both;
   float: left;
@@ -79,7 +91,7 @@
   align-content: center;
 }
 
-.matchup-body .section div {
+.card-detail-section .section div {
   width: 100%;
   float: left;
   clear: both;

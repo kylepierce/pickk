@@ -1,0 +1,143 @@
+.league-card-header {
+  font-family: "lato";
+  font-size: 1rem;
+  color: white;
+  background-color: #4F656F;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.joined > .league-card-header {
+  border-radius: 5px 5px 0 0
+}
+
+.league-card-header .detail-container {
+  width: 70%;
+  padding-left: 10px;
+}
+
+.detail-container div {
+  width: 100%;
+}
+
+.league-avatar {
+  display: table;
+}
+
+.league-avatar > .circle-image {
+  width: 100%!important;
+}
+
+.league-name {
+  font-family: "lato";
+  font-weight: 900;
+  float: left;
+  font-size: 1rem;
+}
+
+.matchup-card-header .commissioner {
+  float: left;
+}
+
+
+
+
+
+
+
+
+
+
+.group-wrapper {
+  background-color: white;
+  width: 100%;
+  overflow: auto;
+  padding: 10px 0;
+}
+
+.groupButtons{
+  width: 60%;
+  float: right;
+  margin: 0 10px;
+}
+
+.m-check {
+  background-color: white;
+  border: 0;
+}
+
+.groupButtons .button{
+  float: right;
+  margin: 10px;
+}
+
+.groupButtons .m-check{
+  font-size: 2rem;
+}
+
+.groupButtons .button,
+.groupButtons .m-check{
+  float: right;
+  margin: 10px;
+}
+
+
+.group-wrapper .group-avatar {
+    float: left;
+    clear: both;
+    margin: 0 15px;
+    width: 75px;
+    height: 75px;
+}
+
+.group-wrapper button {
+  margin-top: 5px;
+  float: left;
+}
+
+.group-details {
+  padding: 5px;
+  width: 100%;
+  background-color: white;
+  overflow: auto;
+  clear: both;
+  float: left;
+}
+
+.group-details li {
+  clear: both;
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.group-details-list {
+  padding: 10px 0 10px 10px;
+  line-height: 8px;
+  vertical-align: text-top;
+  font-size: 1.2em;
+  float: left;
+}
+
+.group-details-icon {
+  float: left;
+  clear: both;
+  font-size: 1.7em;
+  width: 12%;
+}
+
+.group-details-text {
+  float: left;
+  padding-left: 10px;
+  font-size: 1.2em;
+  width: 88%;
+}
+
+.af-checkbox-group .item .item-checkbox .checkbox input{
+  float: left;
+}
+.af-checkbox-group .item.item-checkbox label.checkbox {
+  width: 0;
+}
