@@ -65,6 +65,7 @@ App.setPreference('android-minSdkVersion', '15');
 App.appendToConfig(`
   <branch-config>
     <ios-team-id value="Q768H4GZH4" />
+    <host name="getpickk.com" scheme="https" />
     <host name="pickk.app.link" scheme="https" />
   </branch-config>
   <platform name="ios">
