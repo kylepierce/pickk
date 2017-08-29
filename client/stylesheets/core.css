@@ -41,7 +41,7 @@
   margin: 10px 20px 0 0!important;
 }
 
-.card-list {
+.card-list, .card-container {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
   border-radius: 5px;
 }
@@ -79,6 +79,21 @@
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
   font-family: "lato";
+}
+
+.card-list .card-container {
+  margin-top: 0!important;
+  box-shadow: none!important;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+}
+
+.card-list .card-container:last-child{
+  border-bottom: 0px!important;
+}
+
+.card-container {
+  margin-top: 10px;
 }
 
 .button-card {

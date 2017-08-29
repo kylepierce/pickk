@@ -1,7 +1,7 @@
 <template name="singleGroup">
 <!-- Standard Nav instead of the custom nav design -->
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="groups"}}
+    {{>ionNavBackButton path="index"}}
   {{/contentFor}}
 
   {{> chatIcon}}
@@ -21,15 +21,9 @@
           {{/with}}
           {{#if member}}
             {{> leagueLinks}}
-            
             {{> leagueMatchups}}
-
           {{else}}
-            <div class="group-wrapper">
-              {{> groupAvatar}}
-              {{> memberCheck}}
-              {{> groupData}}
-            </div>
+            {{> memberCheck}}
           {{/if}}
         {{else}}
           <div class="no-notifications">

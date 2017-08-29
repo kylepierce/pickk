@@ -61,7 +61,6 @@ Template.leagueCard.events({
 
 Template.leagueCard.helpers({
   'joined': function(){
-    console.log(this);
     if (this) {
       var userId = Meteor.userId();
       var alreadyJoined = this.members.indexOf(userId)

@@ -17,8 +17,10 @@ Template.chatOverview.helpers({
   group: function() {
     var groupId = Session.get('chatGroup')
     if (groupId) {
-      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}})
-      return group.name
+      var group = Groups.findOne({_id: groupId}, {fields: {name: 1}});
+      if (group) {
+        return group.name
+      }
     }
   }
 });
