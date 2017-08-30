@@ -16,7 +16,7 @@
               {{> heroImage item=item}}
             {{/each}}
           </div>
-
+          {{> homeButtons}}
           <div class="container">
             {{#if gamePrediction}}
               {{> dailyPickkButton}}
@@ -35,6 +35,39 @@
       {{/if}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="homeButtons">
+  <div id="button-section">
+    <!-- These should be dynamicly created so it can changed quickly without submitting an update -->
+    <!-- {{#each button in buttons}}
+      <div class="button-card half" data-action="{{ref}}">
+        {{{icon}}}
+        <span class="text">{{title}}</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    {{/each}} -->
+    <div class="button-card half" data-action="notification-button">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Notifications</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="leagues-button">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Leagues</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="matchups-button">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Matchups</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="allGames-button">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">View Games</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  </div>
 </template>
 
 <template name="heroImage">

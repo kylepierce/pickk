@@ -66,36 +66,27 @@ Template.home.events({
   }
 });
 
+// Template.homeButtons.helpers({
+//   buttons: function(){
+//     var buttonArray = Admin.findOne({location: "home", type: "buttons"});
+//     console.log(buttonArray);
+//   },
+// });
 
-// else if (post.tag == "leader") {
-//         IonPopup.show({
-//           title: 'Leaderboard Winnings!',
-//           template: message,
-//           buttons: [{
-//             text: 'Got It!',
-//             type: 'button-positive',
-//             onTap: function() {
-//               Meteor.call('removeNotification', id);
-//               $('body').removeClass('popup-open');
-//               $('.backdrop').remove();
-//               Blaze.remove(this.view);
-//             }
-//           }]
-//         });
-//       } else if (post.source == "Exchange") {
-//         message = '<img style="max-width:100%;" src="/storeowner.png">' + message
-//         IonPopup.show({
-//           title: 'Diamond Exchange',
-//           template: message,
-//           buttons: [{
-//             text: 'Got It!',
-//             type: 'button-positive',
-//             onTap: function() {
-//               Meteor.call('removeNotification', id);
-//               $('body').removeClass('popup-open');
-//               $('.backdrop').remove();
-//               Blaze.remove(this.view);
-//             }
-//           }]
-//         });
-//       }
+Template.homeButtons.events({
+  'click [data-action=notification-button]': function(e, t){
+    Router.go('/notifications/?read=false');
+  },
+  'click [data-action=leagues-button]': function(e, t){
+    Router.go('/groups');
+  },
+  'click [data-action=matchups-button]': function(e, t){
+    Router.go('/matchups');
+  },
+  'click [data-action=allGames]': function(e, t){
+    Session.set('gamesDate', "month");
+    var all = ["NBA", "NFL", "MLB"]
+    Session.set('gamesBySport', all);
+    Router.go('/games')
+  },
+});
