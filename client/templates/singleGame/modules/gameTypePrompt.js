@@ -129,11 +129,24 @@ Template.gameTypePrompt.events({
       var eventName = 'joined_game';
       Branch.userCompletedAction(eventName)
     }
-    Meteor.call('userJoinsAGame', data);
+
     Meteor.subscribe('gamePlayed', $gameId);
 
     var leaderData = Session.get('leaderboardData');
   	// leaderData["period"] = game.period
+
+    var onSuccess = function(position) {
+      data.location = position
+    };
+
+    // onError Callback receives a PositionError object
+    function onError(error) {
+        alert('Location must be added to win prizes. Please update the settings. Code: ' + error.code + 'message: ' + error.message + '\n' );
+        data.location = null
+    }
+
+    var location = navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    Meteor.call('userJoinsAGame', data);
 
   	Session.set('leaderboardData', leaderData);
     IonLoading.show({

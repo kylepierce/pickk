@@ -69,6 +69,9 @@ App.appendToConfig(`
     <host name="pickk.app.link" scheme="https" />
   </branch-config>
   <platform name="ios">
+    <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+      <string>Prizes require location information</string>
+    </config-file>
     <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
       <string>Add Photos</string>
     </config-file>
@@ -84,4 +87,9 @@ App.configurePlugin("branch-cordova-sdk", {
 });
 App.configurePlugin('phonegap-plugin-push', {
     SENDER_ID: 259263435947
+});
+
+App.configurePlugin('cordova-plugin-facebook4', {
+  APP_ID: '1797018427256477',
+  APP_NAME: 'Pickk - Dev 2'
 });
