@@ -10,10 +10,22 @@
   {{#ionView}}
     {{#ionContent}}
     <div class="container ten-spacing">
-      {{#autoForm collection="Hero" type="insert" id="createHero"}}
-        {{> afQuickField autofocus='' name='name' label-type='stacked'}}
+      {{#autoForm collection="Hero" type="insert" id="createHero" }}
+        {{> afQuickField autofocus='' name='name' label-type='stacked' }}
         {{> afQuickField name='title' label-type='stacked' }}
 				{{> afQuickField name='description' label-type='stacked' }}
+        {{> afQuickField name='image' label-type='stacked'}}
+        {{> afQuickField name='url' label-type='stacked'}}
+        {{> afQuickField type="select-radio" name='active' label-type='stacked'}}
+        {{> afQuickField type="select-radio" name='important' label-type='stacked'}}
+
+        {{> afQuickField name='location' type='select-checkbox' label-type='stacked' }}
+        {{> afQuickField type="select-radio" name='time'}}
+        {{#if afFieldValueIs name="time" value="true"}}
+          {{> afQuickField type='datetimepicker' name="dateStart"}}
+          {{> afQuickField type='datetimepicker' name="dateEnd"}}
+        {{/if}}
+
         <input name="status" type="submit" class="button button-large button-balanced" value="Create Hero">
       {{/autoForm}}
     </div>
