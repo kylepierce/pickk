@@ -7,38 +7,35 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{> spinLoader}}
+      {{> homeHero}}
+      <div class="container">
+
+        {{> homeButtons}}
+        {{> dailyPickkButton}}
+      </div>
+
+      <!-- {{> spinLoader}}
 
       {{#if Template.subscriptionsReady}}
         <div class="loading-wrapper">
-          <div class="hero-section animated fadeInDown">
-            {{#each item in hero}}
-              {{> heroImage item=item}}
-            {{/each}}
-          </div>
-          {{> homeButtons}}
+
+
           <div class="container">
-            {{#if gamePrediction}}
-              {{> dailyPickkButton}}
-            {{/if}}
+
             <div id="animateGames" class="hundred-bottom">
               {{#each game in listGames}}
                 {{> entireGameCard game=game}}
               {{/each}}
-
-              <button class="ten-spacing button button-stable col col-100" data-action="viewAllGames">
-                <strong>View All Games</strong>
-              </button>
             </div>
           </div>
         </div>
-      {{/if}}
+      {{/if}} -->
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="homeButtons">
-  <div id="button-section">
+  <div id="button-section" class="animated fadeInRight">
     <!-- These should be dynamicly created so it can changed quickly without submitting an update -->
     <!-- {{#each button in buttons}}
       <div class="button-card half" data-action="{{ref}}">
@@ -71,27 +68,51 @@
 </template>
 
 <template name="heroImage">
-  <a href="{{item.url}}">
+  <!-- <a href="{{item.url}}"> -->
     <div class="single-slide" style="background-image: url({{item.image}})">
       <div class="slider-text">
         {{item.text}}
       </div>
     </div>
-  </a>
+  <!-- </a> -->
+</template>
+
+<template name="homeHero">
+  <div id="hero-section" class="animated fadeInDown">
+    {{#each hero in heros}}
+      <div class="single-slide">
+        {{> singleHero hero=hero}}
+      </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="singleHero">
+  <div class="card-container hero-card">
+    <div class="hero-image" style="background-image: url({{hero.image}})">
+      <span class="title">{{hero.title}}</span>
+    </div>
+    <div class="hero-bottom">
+      {{hero.description}}
+    </div>
+  </div>
+
 </template>
 
 <template name="dailyPickkButton">
-  <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
-    <div class="col-md-25">
-      <span class="numberNotification">
-        {{dailyPickkCount}}
-      </span>
-    </div>
-    <div class="col-md-50" style="float: left; margin-left: 20px">
-      <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
-      <span class="daily-pickk-text">
-        Daily Pickks
-      </span>
-    </div>
-  </button>
+  {{#if gamePrediction}}
+    <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+      <div class="col-md-25">
+        <span class="numberNotification">
+          {{dailyPickkCount}}
+        </span>
+      </div>
+      <div class="col-md-50" style="float: left; margin-left: 20px">
+        <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
+        <span class="daily-pickk-text">
+          Daily Pickks
+        </span>
+      </div>
+    </button>
+  {{/if}}
 </template>
