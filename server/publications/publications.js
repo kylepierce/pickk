@@ -44,6 +44,13 @@ Meteor.publish('singleTeam', function ( id ) {
   return Teams.find({statsTeamId: id})
 });
 
+Meteor.publish('singleGameTeams', function(team1, team2) {
+  check(team1, Number);
+  check(team2, Number);
+  this.unblock()
+  return Teams.find({statsTeamId: {$in: [team1, team2]}})
+});
+
 // Questions and Answers
 // Active Questions for one game
 

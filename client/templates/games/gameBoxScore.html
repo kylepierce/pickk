@@ -1,8 +1,12 @@
 <template name="entireGameCard">
-  <div class="complete-game-card ten-spacing clear-fix animated {{status}}" data-action="viewGame">
-    {{> singleGameInfo game=game}}
-    {{> singleGameCard game=game}}
-    {{> singleGameCTA game=game}}
+  <div class="loading-wrapper">
+    <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight" data-action="viewGame">
+      <!-- {{> loadingGame}} animated-background -->
+
+      {{> singleGameInfo game=game}}
+      {{> singleGameCard game=game}}
+      {{> singleGameCTA game=game}}
+    </div>
   </div>
 </template>
 
@@ -92,5 +96,60 @@
         </div>
       {{/if}}
     {{/if}}
+  </div>
+</template>
+
+<template name="loadingGame">
+  <div class="load-game">
+    <div class=load-game-top>
+      <div class="blue-block top-rounded"></div>
+      <div class="load-game-top-text">
+        <div class="blue-block top-left"></div>
+        <div class="top-left-text"></div>
+        <div class="blue-block top-middle"></div>
+        <div class="top-right-text"></div>
+        <div class="blue-block top-right"></div>
+      </div>
+      <div class="blue-block full-width"></div>
+    </div>
+    <div class="load-game-middle-container">
+      <div class="load-game-team-row"> <!--Team 1 -->
+        <div class="load-game-middle-shortcode">
+          <div class="whitespace-block shortcode-text"></div>
+        </div>
+        <div class="load-game-team-right">
+          <div class="whitespace-block middle-spacer"></div>
+          <div class="load-game-middle-text-row">
+            <div class="whitespace-block middle-left"></div>
+            <div class="whitespace-block middle-middle"></div>
+            <div class="whitespace-block middle-right"></div>
+          </div>
+          <div class="whitespace-block middle-spacer"></div>
+        </div>
+      </div>
+      <div class="load-game-team-row"> <!--Team 2 -->
+        <div class="load-game-middle-shortcode">
+          <div class="whitespace-block shortcode-text"></div>
+        </div>
+        <div class="load-game-team-right">
+          <div class="whitespace-block middle-spacer"></div>
+          <div class="load-game-middle-text-row">
+            <div class="whitespace-block middle-left"></div>
+            <div class="whitespace-block middle-middle"></div>
+            <div class="whitespace-block middle-right"></div>
+          </div>
+          <div class="whitespace-block middle-spacer rounded-bottom-right-edge"></div>
+        </div>
+      </div>
+    </div>
+    <div class="load-game-bottom">
+      <div class="yellow-block full-width"></div>
+      <div class="load-game-bottom-text">
+        <div class="yellow-block bottom-left"></div>
+        <div class="bottom-middle"></div>
+        <div class="yellow-block bottom-right"></div>
+      </div>
+      <div class="yellow-block bottom-rounded"></div>
+    </div>
   </div>
 </template>

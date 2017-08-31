@@ -29,15 +29,15 @@ Template.games.onCreated(function() {
   };
   self.autorun(function () {
     self.subscribe('activeGames', self.getFilter(), self.getSports(), function () {
-      $(".loader-holder").delay(500).fadeOut('slow', function () {
-        $(".loading-wrapper").fadeIn('slow');
-        $.each($(".complete-game-card"), function(i, el){
-          setTimeout(function(){
-            $(el).css("opacity","1");
-            $(el).addClass("fadeInRight","200");
-          }, 100 + ( i * 100 ));
-        });
-      });
+      // $(".loader-holder").delay(500).fadeOut('slow', function () {
+      //   $(".loading-wrapper").fadeIn('slow');
+      //   $.each($(".complete-game-card"), function(i, el){
+      //     setTimeout(function(){
+      //       $(el).css("opacity","1");
+      //       $(el).addClass("fadeInRight","200");
+      //     }, 100 + ( i * 100 ));
+      //   });
+      // });
     });
   });
 });

@@ -1,62 +1,35 @@
-// Template.home.onCreated( function() {
-//   // this.subscribe( 'activeHero', function() {
-//   //   $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
-//   //     $( ".loading-wrapper" ).fadeIn( 'slow' );
-//   //   });
-//   // });
-// });
-//
-// Template.home.onRendered( function() {
-//   // $.each($(".complete-game-card"), function(i, el){
-//   //   console.log(this);
-//   //   setTimeout(function(){
-//   //     $(el).css("opacity","1");
-//   //     $(el).addClass("fadeInRight","400");
-//   //   }, 100 + ( i * 100 ));
-//   // });
-//   $( "svg" ).delay( 250 ).fadeIn();
-// });
-//
-// Template.home.rendered = function () {
-//   // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
-//   var deeplink = Session.get("deepLinked");
-//   if(deeplink && deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
-//     handleOpenURL(deeplink["$deeplink_path"])
-//   }
-//   $('#hero-section').slick({
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 10000,
-//     accessibility: false,
-//     arrows: false,
-//     draggable: true,
-//   });
-// };
-//
-// Template.home.helpers({
+Template.home.onRendered( function() {
+});
 
+Template.home.rendered = function () {
+  // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
+  var deeplink = Session.get("deepLinked");
+  if(deeplink && deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
+    handleOpenURL(deeplink["$deeplink_path"])
+  }
+};
 
-//   listGames: function(){
-//     return Games.find({}, {sort: {"status": 1}});
-//   },
-// });
-//
-// Template.home.events({
-//   'click [data-action=game-prediction]': function(event, template){
-//     var userId = Meteor.userId()
-//     analytics.track("home-game-pickks", {
-//       userId: userId,
-//     });
-//     Router.go('/daily-pickks')
-//   },
-//   'click [data-action=viewAllGames]': function(){
-//     Session.set('gamesDate', "month");
-//     var all = ["NBA", "NFL", "MLB"]
-//     Session.set('gamesBySport', all);
-//     Router.go('/games')
-//   }
-// });
+Template.home.helpers({
+  listGames: function(){
+    return Games.find({}, {sort: {"status": 1}});
+  },
+});
+
+Template.home.events({
+  'click [data-action=game-prediction]': function(event, template){
+    var userId = Meteor.userId()
+    analytics.track("home-game-pickks", {
+      userId: userId,
+    });
+    Router.go('/daily-pickks')
+  },
+  'click [data-action=viewAllGames]': function(){
+    Session.set('gamesDate', "month");
+    var all = ["NBA", "NFL", "MLB"]
+    Session.set('gamesBySport', all);
+    Router.go('/games')
+  }
+});
 
 Template.dailyPickkButton.helpers({
   gamePrediction: function () {
@@ -91,16 +64,6 @@ Template.homeButtons.events({
     Session.set('gamesBySport', all);
     Router.go('/games')
   },
-});
-
-Template.homeHero.onCreated( function() {
-
-
-  // this.subscribe( 'activeHero', function() {
-  //   $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
-  //     $( ".loading-wrapper" ).fadeIn( 'slow' );
-  //   });
-  // });
 });
 
 Template.homeHero.rendered = function(){

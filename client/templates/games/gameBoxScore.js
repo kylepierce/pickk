@@ -1,3 +1,11 @@
+Template.entireGameCard.onCreated( function() {
+  var team1 = this.data.game.away_team
+  var team2 = this.data.game.home_team
+    this.subscribe( 'singleGameTeams', team1, team2, function() {
+      $( ".loading-wrapper" ).css('visibility', 'visible');
+    });
+});
+
 Template.entireGameCard.helpers({
   status: function () {
     if(this.game.sport === "MLB" && this.game.status === "In-Progress") {
@@ -10,11 +18,11 @@ Template.entireGameCard.helpers({
   }
 });
 
-Template.entireGameCard.events({
-  'click [data-action=viewGame]': function(){
-    console.log(this);
-  }
-});
+// Template.entireGameCard.events({
+//   'click [data-action=viewGame]': function(){
+//     console.log(this);
+//   }
+// });
 
 Template.singleGameInfo.helpers({
   inProgress: function () {
@@ -217,5 +225,5 @@ Template.rightSection.helpers({
   },
   tvStation: function (tvStations) {
     return tvStations[0].callLetters
-  },
+  }
 });

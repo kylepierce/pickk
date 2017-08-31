@@ -8,28 +8,15 @@
   {{#ionView}}
     {{#ionContent}}
       {{> homeHero}}
-      <div class="container">
+
+      <div class="container hundred-bottom">
 
         {{> homeButtons}}
         {{> dailyPickkButton}}
+        {{#each game in listGames}}
+          {{> entireGameCard game=game}}
+        {{/each}}
       </div>
-
-      <!-- {{> spinLoader}}
-
-      {{#if Template.subscriptionsReady}}
-        <div class="loading-wrapper">
-
-
-          <div class="container">
-
-            <div id="animateGames" class="hundred-bottom">
-              {{#each game in listGames}}
-                {{> entireGameCard game=game}}
-              {{/each}}
-            </div>
-          </div>
-        </div>
-      {{/if}} -->
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -68,13 +55,11 @@
 </template>
 
 <template name="heroImage">
-  <!-- <a href="{{item.url}}"> -->
-    <div class="single-slide" style="background-image: url({{item.image}})">
-      <div class="slider-text">
-        {{item.text}}
-      </div>
+  <div class="single-slide" style="background-image: url({{item.image}})">
+    <div class="slider-text">
+      {{item.text}}
     </div>
-  <!-- </a> -->
+  </div>
 </template>
 
 <template name="homeHero">
@@ -96,7 +81,6 @@
       {{hero.description}}
     </div>
   </div>
-
 </template>
 
 <template name="dailyPickkButton">
