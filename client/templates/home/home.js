@@ -56,7 +56,7 @@ Template.homeButtons.events({
     Router.go('/groups');
   },
   'click [data-action=matchups-button]': function(e, t){
-    Router.go('/matchups');
+    Router.go('/matchup');
   },
   'click [data-action=allGames]': function(e, t){
     Session.set('gamesDate', "month");

@@ -66,3 +66,14 @@
 	color: white!important;
 	border: 0!important;
 }
+
+.daily-pickk-background {
+	animation-duration: 10s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background: #f6f7f8;
+	background: linear-gradient(110deg, #26ad68 12%, #219e5e 25%, #26ad68 53%);
+	position: relative;
+}

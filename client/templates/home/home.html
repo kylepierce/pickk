@@ -70,6 +70,7 @@
       </div>
     {{/each}}
   </div>
+  <div class="line-divider"></div>
 </template>
 
 <template name="singleHero">
@@ -85,18 +86,18 @@
 
 <template name="dailyPickkButton">
   {{#if gamePrediction}}
-    <button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
-      <div class="col-md-25">
+    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+      <!-- <div class="col-md-25">
         <span class="numberNotification">
           {{dailyPickkCount}}
         </span>
-      </div>
-      <div class="col-md-50" style="float: left; margin-left: 20px">
-        <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
+      </div> -->
+      <!-- <div class="col-md-50" style="float: left; margin-left: 20px"> -->
+        <i class="fa fa-diamond" style="font-size: 1.3em; font-weight: 100;"></i>
         <span class="daily-pickk-text">
-          Daily Pickks
+          New Daily Pickks Available
         </span>
-      </div>
+      <!-- </div> -->
     </button>
   {{/if}}
 </template>
