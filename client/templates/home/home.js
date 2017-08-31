@@ -66,7 +66,7 @@ Template.homeButtons.events({
   },
 });
 
-Template.homeHero.rendered = function(){
+Template.heroSection.rendered = function(){
   $('#hero-section').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -78,7 +78,7 @@ Template.homeHero.rendered = function(){
   });
 }
 
-Template.homeHero.helpers({
+Template.heroSection.helpers({
   heros: function () {
     return Hero.find({}).fetch();
   },
