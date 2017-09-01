@@ -11,7 +11,7 @@ Template.home.rendered = function () {
 
 Template.home.helpers({
   listGames: function(){
-    return Games.find({}, {sort: {"status": 1}});
+    return Games.find();
   },
 });
 
@@ -46,7 +46,6 @@ Template.dailyPickkButton.helpers({
 //     console.log(buttonArray);
 //   },
 // });
-
 
 Template.homeButtons.events({
   'click [data-action=notification-button]': function(e, t){

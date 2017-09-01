@@ -1,9 +1,9 @@
 Template.entireGameCard.onCreated( function() {
-  var team1 = this.data.game.away_team
-  var team2 = this.data.game.home_team
-    this.subscribe( 'singleGameTeams', team1, team2, function() {
-      $( ".loading-wrapper" ).css('visibility', 'visible');
-    });
+  // var team1 = this.data.game.away_team
+  // var team2 = this.data.game.home_team
+  // this.subscribe( 'singleGameTeams', team1, team2, function() {
+  //   $( ".loading-wrapper" ).css('visibility', 'visible');
+  // });
 });
 
 Template.entireGameCard.helpers({
