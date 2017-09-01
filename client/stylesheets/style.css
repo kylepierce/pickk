@@ -74,7 +74,7 @@ body, .ionic-body {
 }
 
 .loading-wrapper {
-  visibility: hidden;
+  display: none;
 }
 
 body.keyboard-open .platform-android .content.overflow-scroll {

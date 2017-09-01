@@ -2,7 +2,7 @@ Template.gameTypePrompt.onCreated( function() {
   var gameId = Router.current().params._id
   this.subscribe( 'singleGame', gameId,  function() {
     $( ".spin-loader" ).delay( 100 ).fadeOut( 'slow', function() {
-      $( ".loading-wrapper" ).fadeIn( 'slow' );
+      $( ".loading-wrapper" ).show().fadeIn( 'slow' );
     });
   });
 });
