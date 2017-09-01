@@ -1,13 +1,12 @@
 <template name="entireGameCard">
-  <!-- <div class="loading-wrapper"> -->
+  <div class="loading-wrapper">
     <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight" data-action="viewGame">
       <!-- {{> loadingGame}} animated-background -->
-
       {{> singleGameInfo game=game}}
       {{> singleGameCard game=game}}
       {{> singleGameCTA game=game}}
     </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 <template name="singleGameInfo">
@@ -95,6 +94,11 @@
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
+    {{/if}}
+    {{#if delayed}}
+      <div class="game-time-container center-text game-card-right-side-border">
+        View Game
+      </div>
     {{/if}}
   </div>
 </template>

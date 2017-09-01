@@ -1,9 +1,9 @@
 Template.entireGameCard.onCreated( function() {
-  // var team1 = this.data.game.away_team
-  // var team2 = this.data.game.home_team
-  // this.subscribe( 'singleGameTeams', team1, team2, function() {
-  //   $( ".loading-wrapper" ).css('visibility', 'visible');
-  // });
+  var team1 = this.data.game.away_team
+  var team2 = this.data.game.home_team
+  this.subscribe( 'singleGameTeams', team1, team2, function() {
+    $( ".loading-wrapper" ).show();
+  });
 });
 
 Template.entireGameCard.helpers({
@@ -53,6 +53,8 @@ Template.singleGameCard.helpers({
       return "left-side-team-block "
     } else if (this.game.status === "Pre-Game"){
       return "left-side-team-block "
+    } else if (this.game.eventStatus.eventStatusId  === 5){
+      return "left-side-team-block "
     } else {
       return "full-width-team-block"
     }
@@ -63,6 +65,9 @@ Template.singleGameCard.helpers({
     } else if (this.game.status === "Pre-Game"){
       return true
     } else if (this.game.status === "closed" || this.game.status === "completed"){
+      return true
+    } else if (this.game.eventStatus.eventStatusId === 5 ){
+      console.log("hey");
       return true
     } else {
       return false
@@ -225,5 +230,10 @@ Template.rightSection.helpers({
   },
   tvStation: function (tvStations) {
     return tvStations[0].callLetters
+  },
+  delayed: function() {
+    if ( this.game.eventStatus.eventStatusId === 5 ) {
+      return true
+    }
   }
 });
