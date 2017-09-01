@@ -9,7 +9,7 @@
 }
 
 .matchup-card-header {
-  font-family: "lato";
+  font-family: "Lato";
   font-size: 1rem;
   color: white;
   background-color: #4F656F;
@@ -26,19 +26,21 @@
 
 .detail-container {
   width: 90%;
-  float: left;
-  display: grid;
+  height: 90%;
   align-items: center;
+  float: left;
 }
 
 .matchup-card-header .game {
-  font-family: "lato";
+  width: 100%;
+  font-family: "Lato";
   font-weight: 900;
   float: left;
   font-size: 1.2rem;
 }
 
 .matchup-card-header .commissioner {
+  width: 100%;
   float: left;
 }
 

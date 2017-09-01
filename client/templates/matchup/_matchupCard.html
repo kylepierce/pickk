@@ -3,7 +3,10 @@
 		<div class="matchup-card-header ">
 			<div class="detail-container">
 				<span class="game">{{gameName m.gameId}}</span>
-				<span class="commissioner">Commissioner: {{commissioner m}}</span>
+				<span class="commissioner">
+					{{> ionIcon icon='ios-person'}}
+					{{commissioner m}}
+				</span>
 			</div>
 			<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
 		</div>

@@ -1,5 +1,5 @@
 .league-card-header {
-  font-family: "lato";
+  font-family: "Lato";
   font-size: 1rem;
   color: white;
   background-color: #4F656F;
@@ -16,6 +16,9 @@
 .league-card-header .detail-container {
   width: 70%;
   padding-left: 10px;
+  height: 100%;
+  display: grid;
+  align-items: center;
 }
 
 .detail-container div {
@@ -31,16 +34,24 @@
 }
 
 .league-name {
-  font-family: "lato";
+  font-family: "Lato";
   font-weight: 900;
   float: left;
   font-size: 1rem;
 }
 
-.matchup-card-header .commissioner {
+.league-card-header .commissioner {
   float: left;
 }
 
+.league-card-header .arrow {
+  font-size: 2rem;
+  width: 10%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 

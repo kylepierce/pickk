@@ -50,7 +50,7 @@
   border-radius: 5px 5px 0 0;
   background-color: #37474F!important;
   color: white;
-  font-family: "lato";
+  font-family: "Lato";
   font-weight: bold;
   height: 47px;
   padding: 15px 15px 0;
@@ -78,7 +78,7 @@
   border-left: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
-  font-family: "lato";
+  font-family: "Lato";
 }
 
 .card-list .card-container {
