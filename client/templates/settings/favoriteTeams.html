@@ -7,7 +7,7 @@
           {{#with step}}
             {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}
               <div class="af-fav-teams hundred-bottom">
-                {{> afQuickField name=this type='select-checkbox'}}
+                {{>afFieldInput name=this template="ionic2"}}
               </div>
                 <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
             {{/autoForm}}
@@ -24,4 +24,18 @@
       {{#with profile}} {{this.profile.username}} {{/with}} Choose your Favorite <span class="header-text">Sports</span>
     </h1>
   {{/contentFor}}
+</template>
+
+<template name="afCheckboxGroup_ionic2">
+  <div class="af-checkbox-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="checkbox" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class="checkbox {{selected}} team-select-container button-card">
+        <div class="team-select-single">
+          <img src="{{this.label}}" />
+          <h4>{{this.value}}</h4>
+        </div>
+      </label>
+    {{/each}}
+  </div>
 </template>

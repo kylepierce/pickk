@@ -1,5 +1,3 @@
-// SimpleSchema.debug = true;
-
 var currentStep = new ReactiveVar('');
 var currentValue = new ReactiveVar("sports")
 var stepsToDo = [];   // Start with sports selection, and then add selected teams
@@ -8,7 +6,6 @@ var hooksObj = {
   onSubmit: function (insertDoc, updateDoc, currentDoc) {
     this.event.preventDefault();
     var done = this.done;
-
     if (!updateDoc['$set']) {
       IonLoading.show({
         customTemplate: "Please Select At Least One... ",
@@ -32,7 +29,6 @@ var hooksObj = {
 
     analytics.identify(userId, data)
     if (Meteor.isCordova) {
-      console.log(data)
       intercom.updateUser(data);
     }
     Meteor.call('updateFavorites', selectionArray, type, function(error) {
@@ -109,3 +105,44 @@ var moveNextStep = function () {
     }
   }
 }
+
+Template['afCheckboxGroup_ionic2'].events({
+  'click .checkbox': function(e,t){
+    var input = $("input[id='"+ this.value+"']")[0];
+
+    if (this.selected === true){
+      this.selected = false
+      $(e.currentTarget).prop('checked', false);
+      $(input).attr( 'checked', false )
+    } else if (this.selected === false){
+      this.selected = true
+      $(e.currentTarget).prop('checked', true);
+      $(input).attr( 'checked', true )
+    }
+
+    $(e.currentTarget).toggleClass('play-selected');
+  }
+});
+
+Template["afCheckboxGroup_ionic2"].helpers({
+  selected: function(){
+    if (this.selected) {
+      return "play-selected"
+    }
+  },
+  atts: function selectedAttsAdjust() {
+    var atts = _.clone(this.atts);
+    if (this.selected) {
+      atts.checked = "";
+    }
+    // remove data-schema-key attribute because we put it
+    // on the entire group
+    delete atts["data-schema-key"];
+    return atts;
+  },
+  dsk: function dsk() {
+    return {
+      "data-schema-key": this.atts["data-schema-key"]
+    }
+  }
+});
