@@ -20,6 +20,7 @@
             {{> leagueCard}}
           {{/with}}
           {{#if member}}
+            {{> commissionerLinks}}
             {{> leagueLinks}}
             {{> leagueMatchups}}
           {{else}}
@@ -65,7 +66,7 @@
       <span class="text">Members</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
-    <div class="button-card half {{ifPlayer}}" data-action="viewMembers">
+    <div class="button-card half {{ifPlayer}}" data-action="invite">
       {{> ionIcon icon="ios-gear"}}
       <span class="text">Invite</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
@@ -75,10 +76,27 @@
       <span class="text">Leaderboard</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
-    <div class="button-card half" data-action="viewGame">
+    <!-- <div class="button-card half" data-action="viewGame">
       {{> ionIcon icon="ios-gear"}}
       <span class="text">View Game</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
+    </div> -->
   </div>
+</template>
+
+<template name="commissionerLinks">
+  {{#if commissioner}}
+    <div id="button-section">
+      <div class="button-card half" data-action="settings">
+        {{> ionIcon icon="ios-gear"}}
+        <span class="text">Settings</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+      <div class="button-card half" data-ion-modal="_groupRequests">
+        {{> ionIcon icon="ios-gear"}}
+        <span class="text">Requests</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    </div>
+  {{/if}}
 </template>

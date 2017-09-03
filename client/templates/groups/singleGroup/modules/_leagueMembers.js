@@ -1,11 +1,11 @@
-Template._groupMembers.helpers({
+Template._leagueMembers.helpers({
 	users: function () {
 		var users = this.group[0].members
 		return UserList.find({_id: {$in: users}}).fetch();
 	}
 });
 
-Template._groupMembers.events({
+Template._leagueMembers.events({
 	'click [data-action=viewUser]': function(){
 		Router.go('/user-profile/' + this.user._id);
 	},

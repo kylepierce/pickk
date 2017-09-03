@@ -1,4 +1,4 @@
-<template name="groups">
+<template name="leaguesOverview">
 	{{#contentFor "headerButtonLeft"}}
     <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
       {{#if isAndroid}}
@@ -22,39 +22,13 @@
   {{#ionView }}
     {{#ionContent}}
 		{{> heroSection}}
-    <!-- {{> loader}}  -->
-    <!-- {{#if Template.subscriptionsReady}} -->
-    <!-- <div class="loading-wrapper"> -->
-    <!-- <div style="width: 100%; height: 200px; background-image:url('/friends.jpg'); background-size: cover; margin-top:-10px;"> -->
-
-    <!-- </div> -->
-
-    <!-- <div class="container">
-			<div style="margin: 20px 0;">
-      	Watching the game with friends? Want to prove to your fantasy league that you know the most about football? Create a league!
-			</div>
-      <a href="/newgroup" class="newGroup">
-      <button class="button button-balanced ">
-        <i class="fa fa-comments-o"></i>
-        Create League
-      </button>
-      </a>
-
-      <a style="float: right;" href="/allGroups" class="newGroup">
-      <button class="button button-stable ">
-          {{> ionIcon icon='ios-people'}}
-        All
-      </button>
-      </a>
-    </div> -->
-
-    <!-- <div class="item item-divider clear-fix" style="margin-top: 20px">Your Leagues</div> -->
 		<div class="container">
-			{{#if groups}}
-				{{#each userGroups}}
+			{{#each league in userLeague}}
+				{{#with league}}
 					{{> leagueCard}}
-				{{/each}}
-			{{else}}
+				{{/with}}
+			{{/each}}
+			{{#if noLeaguesJoined}}
 				{{#ionItem buttonRight=true}}
 					<p>No Leagues :( Join a League!</p>
 					<a data-action="no-group" class="button">
@@ -66,7 +40,6 @@
     {{/ionContent}}
   {{/ionView}}
 </template>
-
 
 <template name="leagueCard">
 	<div class="ten-spacing {{joined}} card-container" data-action="viewLeague">

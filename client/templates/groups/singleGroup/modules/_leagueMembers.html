@@ -1,0 +1,25 @@
+<template name="_leagueMembers">
+  {{#ionModal class="white-text-header" title="Group Members"}}
+		{{#ionList}}
+			{{#each user in users}}
+				{{> memberItem user=user group=this.group}}
+			{{/each}}
+    {{/ionList}}
+   {{/ionModal}}
+</template>
+
+<template name="memberItem">
+  <div data-action="viewUser" class="item item-avatar item-button-right">
+    {{> userAvatar userId=user._id}}
+    {{user.profile.username}}
+    {{#if admin}}
+      <button value="{{user._id}}" data-action="delete" class="button">
+        {{> ionIcon icon="ios-close"}}
+      </button>
+    {{else}}
+      <button value="{{user._id}}" data-action="viewUser" class="button">
+        View
+      </button>
+    {{/if}}
+  </div>
+</template>

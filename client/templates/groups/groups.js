@@ -26,20 +26,20 @@
 //   }.bind(this));
 // };
 
-Template.groups.helpers({
-  groups: function() {
-    var currentUser = Meteor.user();
-    if (currentUser) {
-      return currentUser.profile.groups
-    }
-  },
-  userGroups: function() {
+Template.leaguesOverview.helpers({
+  userLeague: function() {
     var currentUser = Meteor.userId();
     return Groups.find().fetch()
+  },
+  noLeaguesJoined: function(){
+    var count = Groups.find().count()
+    if(count === 0){
+      return true
+    }
   }
 });
 
-Template.groups.events({
+Template.leaguesOverview.events({
   'click .newGroup': function () {
     Router.go('/newgroup');
   },

@@ -1,6 +1,7 @@
 Template.singleGroup.rendered = function() {
   Session.set('chatGroup', this.data.group[0]._id)
 };
+
 Template.singleGroup.events({
   "click [data-action=createMatchup]": function(){
     Router.go('/matchup/create/')
@@ -129,5 +130,40 @@ Template.leagueMatchups.helpers({
     if (group.commissioner == currentUser) {
       return true
     }
+  },
+});
+
+Template.commissionerLinks.helpers({
+  commissioner: function(){
+    var commissionerId = this.group[0].commissioner
+    var userId = Meteor.userId();
+    if (commissionerId === userId){
+      return true
+    }
+  }
+});
+
+Template.commissionerLinks.events({
+  "click [data-action=settings]": function(e, t){
+    var groupId = Router.current().params._id
+    Router.go('/league/settings/' + groupId);
+  },
+  'click [data-ion-modal=_groupRequests]': function(event, template){
+    var groupId = Router.current().params._id
+    Session.set('groupId', groupId);
+  },
+});
+
+Template.leagueLinks.helpers({});
+
+Template.leagueLinks.events({
+  'click [data-action=viewMembers]': function(){
+    IonModal.open('_leagueMembers', this);
+  },
+  "click [data-action=invite]": function(){
+
+  },
+  "click [data-action=viewLeaderboard]": function(){
+
   },
 });
