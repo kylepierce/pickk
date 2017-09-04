@@ -1,4 +1,4 @@
-<template name="searchGroups">
+<template name="searchLeagues">
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton path="index"}}
   {{/contentFor}}
@@ -10,17 +10,16 @@
   {{#ionView }}
     {{#ionContent}}
 		<div class="container">
-    	{{> searchGroupBox}}
+    	{{> searchLeaguesBox}}
 		</div>
     {{/ionContent}}
   {{/ionView}}
-
 </template>
 
 
-<template name="searchGroupBox">
+<template name="searchLeaguesBox">
     <div class="search-bar-fix">
-    {{> EasySearch.Input index=GroupsIndex placeholder="Search..." }}
+    {{> EasySearch.Input index=GroupsIndex attributes=inputAttributes }}
     </div>
 
       {{#ionList}}
@@ -33,10 +32,9 @@
 
 		{{#EasySearch.IfNoResults index=GroupsIndex logic="OR" }}
 			<div class="no-results">No results found!</div>
-			<a href="/newgroup" class="newGroup">
-		    <button class="button col col-100">
-		      <i class="fa fa-comments-o"></i>
-		      Want to Create League?
+			<a href="/league/create">
+		    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
+		      Create League
 		    </button>
     	</a>
 		{{/EasySearch.IfNoResults}}

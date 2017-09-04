@@ -4,6 +4,7 @@
   color: white;
   background-color: #4F656F;
   display: flex;
+  align-items: center;
   width: 100%;
   padding: 10px;
   border-radius: 5px;

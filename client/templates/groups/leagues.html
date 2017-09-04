@@ -14,7 +14,7 @@
  {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <a href="/searchGroups" class="button button-clear pull-right newGroup">
+    <a href="/searchLeagues" class="button button-clear pull-right newGroup">
       {{> ionIcon icon='ios-search-strong'}}
     </a>
 	{{/contentFor}}
@@ -22,7 +22,7 @@
   {{#ionView }}
     {{#ionContent}}
 		{{> heroSection}}
-		<div class="container">
+		<div class="container hundred-bottom">
 			{{#each league in userLeague}}
 				{{#with league}}
 					{{> leagueCard}}
