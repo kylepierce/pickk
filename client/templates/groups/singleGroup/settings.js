@@ -21,7 +21,7 @@ Template.leagueSettings.events({
         if (index === 0) {
         var groupId = Router.current().params._id
         console.log(groupId);
-        Meteor.call('deleteGroup', groupId);
+        Meteor.call('deleteLeague', groupId);
         Router.go('/groups');
         return true
         }

@@ -20,7 +20,7 @@
 		    {{#if invite}}
 		      {{> inviteOnly}}
 		    {{else}}
-				  <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50 right" >Join</button>
+				  <button data-action="joinLeague" id="join-toggle" class="button button-balanced col col-50 right" >Join</button>
 			  {{/if}}
 			{{else}}
 				{{> inviteOnly}}
@@ -39,7 +39,7 @@
 
 <template name="inviteOnly">
   {{#if invite}}
-    <button data-action="joinGroup" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
+    <button data-action="joinLeague" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
   {{else}}
     {{> requestInvite}}
   {{/if}}

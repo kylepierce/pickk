@@ -26,7 +26,7 @@ Template._leagueMembers.events({
       },
       buttonClicked: function(index) {
         if (index === 0) {
-					Meteor.call('removeGroupMember', userId, groupId, inviter)
+					Meteor.call('removeLeagueMember', userId, groupId, inviter)
         	 sAlert.success("Removed " + username , {effect: 'slide', position: 'bottom', html: true});
         	return true
         }

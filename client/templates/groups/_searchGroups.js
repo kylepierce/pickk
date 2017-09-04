@@ -3,6 +3,6 @@ Template.searchGroupBox.helpers({
     return GroupsIndex;
   },
   href: function() {
-    return Router.routes["group.show"].path({_id: this.__originalId})
+    return Router.routes["league.show"].path({_id: this.__originalId})
   }
 })

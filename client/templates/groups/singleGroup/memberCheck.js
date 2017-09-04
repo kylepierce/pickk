@@ -43,14 +43,14 @@ Template.memberCheck.helpers({
 });
 
 Template.memberCheck.events({
-  'click [data-action=joinGroup]': function() {
+  'click [data-action=joinLeague]': function() {
     var currentUserId = Meteor.userId();
     var groupId = Router.current().params._id
     var group = Groups.findOne({_id: groupId})
     var groupName = group.name
     sAlert.success("You Joined " + groupName , {effect: 'slide', position: 'bottom', html: true});
     // Add this user to the group
-    Meteor.call('joinGroup', currentUserId, groupId);
+    Meteor.call('joinLeague', currentUserId, groupId);
   },
   'click [data-action=invite]': function(){
     var groupId = Router.current().params._id
@@ -59,7 +59,7 @@ Template.memberCheck.events({
   'click [data-action=requestInvite]': function(e, t){
     var userId = Meteor.userId();
     var groupId = Router.current().params._id
-    Meteor.call('requestInvite', userId, groupId)
+    Meteor.call('requestLeagueInvite', userId, groupId)
   },
   'click [data-action=requestPending]': function(template, event){
     IonActionSheet.show({
@@ -74,13 +74,13 @@ Template.memberCheck.events({
         if (index === 0) {
           var user = Meteor.userId();
           var group = Router.current().params._id
-          Meteor.call('removeRequest', user, group)
+          Meteor.call('removeLeagueRequest', user, group)
           return true
         }
       }
     });
   },
-  'click [data-action=leaveGroup]': function (event, template) {
+  'click [data-action=leaveLeague]': function (event, template) {
     IonActionSheet.show({
       titleText: 'Are You Sure You Want To Leave? You will need to request an invite or be invited to join again!',
       buttons: [
@@ -95,7 +95,7 @@ Template.memberCheck.events({
           var groupId = Router.current().params._id
 
           // Remove this user from the group
-          Meteor.call('leaveGroup', currentUserId, groupId);
+          Meteor.call('leaveLeague', currentUserId, groupId);
           var group = Groups.findOne({_id: groupId})
           var groupName = group.name
           sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
@@ -121,7 +121,7 @@ Template.memberCheck.events({
         var groupId = Router.current().params._id
 
         // Remove this user from the group
-        Meteor.call('leaveGroup', currentUserId, groupId);
+        Meteor.call('leaveLeague', currentUserId, groupId);
         var group = Groups.findOne({_id: groupId})
         var groupName = group.name
         sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});

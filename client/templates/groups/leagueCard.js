@@ -5,7 +5,7 @@ Template.leagueCard.events({
     } else {
       var id = this._id
     }
-    Router.go('group.show', {_id: id});
+    Router.go('league.show', {_id: id});
   }
 });
 

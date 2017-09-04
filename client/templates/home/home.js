@@ -52,7 +52,7 @@ Template.homeButtons.events({
     Router.go('/notifications/?read=false');
   },
   'click [data-action=leagues-button]': function(e, t){
-    Router.go('/groups');
+    Router.go('/leagues');
   },
   'click [data-action=matchups-button]': function(e, t){
     Router.go('/matchup');

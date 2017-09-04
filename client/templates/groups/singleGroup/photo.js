@@ -22,7 +22,7 @@ Template.leaguePhoto.events({
       if (error) {throw error;}
       var leagueId = Router.current().params._id
 
-      Meteor.call('setGroupAvatar', leagueId, result);
+      Meteor.call('setLeagueAvatar', leagueId, result);
     });
   }
 });

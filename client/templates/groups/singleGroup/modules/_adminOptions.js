@@ -33,7 +33,7 @@ Template._adminOptions.events({
     Session.set('groupId', groupId);
   },
 
-  'click [data-action=deleteGroup]': function(event, template){
+  'click [data-action=deleteLeague]': function(event, template){
     IonPopover.hide();
     IonActionSheet.show({
       titleText: 'Are You Sure You Want To Delete Group? It can not be undone',
@@ -47,7 +47,7 @@ Template._adminOptions.events({
         if (index === 0) {
         var groupId = Router.current().params._id
         console.log(groupId);
-        Meteor.call('deleteGroup', groupId);
+        Meteor.call('deleteLeague', groupId);
         Router.go('/groups');
         return true
         }

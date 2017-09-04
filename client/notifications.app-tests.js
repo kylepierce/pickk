@@ -113,7 +113,7 @@ if (Meteor.isClient) {
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("inviteToGroup", "CharlieDalton", "KnoxOverstreet", "Overlords", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("inviteToLeague", "CharlieDalton", "KnoxOverstreet", "Overlords", callback)}))
         .then(function() {
           assert.equal(Notifications.find({userId: "CharlieDalton", senderId: "KnoxOverstreet", type: "group" }).count(), 1);
         })

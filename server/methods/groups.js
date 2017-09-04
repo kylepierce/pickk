@@ -1,166 +1,161 @@
 Meteor.methods({
-	'isGroupNameUnique': function(name) {
-		check(name, String);
-		name = name.trim()
-		if (!name) {
-			return true;
-		}
-		var groupExists = Groups.find({name: name}).count()
-		if (groupExists > 0){
-			console.log("Group Already Exists")
-			return true
-		} else {
-			return false
-		}
-	},
+	// 'isGroupNameUnique': function(name) {
+	// 	check(name, String);
+	// 	name = name.trim()
+	// 	if (!name) {
+	// 		return true;
+	// 	}
+	// 	var leagueExists = Groups.find({name: name}).count()
+	// 	if (leagueExists > 0){
+	// 		console.log("Group Already Exists")
+	// 		return true
+	// 	} else {
+	// 		return false
+	// 	}
+	// },
 
-	'editGroup': function(id, groupName, secretStatus, description) {
-		check(id, String);
-		check(groupName, String);
-		check(secretStatus, String);
-		check(description, String);
-		Groups.update({_id: id},
-			{
-				$set: {
-					name: groupName,
-					secret: secretStatus,
-					desc: description
-				}
-			});
-	},
+	// 'editGroup': function(id, leagueName, secretStatus, description) {
+	// 	check(id, String);
+	// 	check(leagueName, String);
+	// 	check(secretStatus, String);
+	// 	check(description, String);
+	// 	Groups.update({_id: id},
+	// 		{
+	// 			$set: {
+	// 				name: leagueName,
+	// 				secret: secretStatus,
+	// 				desc: description
+	// 			}
+	// 		});
+	// },
 
-	'setGroupAvatar': function(id, avatar) {
+	'setLeagueAvatar': function(id, avatar) {
 		check(id, String);
 		check(avatar, String);
-		var group = Groups.findOne({_id: id});
+		var league = Groups.findOne({_id: id});
 		Groups.update({_id: id}, {$set: {avatar: avatar}});
 	},
 
-	'requestInvite': function(userId, groupId) {
+	'requestLeagueInvite': function(userId, leagueId) {
 		check(userId, String);
-		check(groupId, String);
-		Groups.update({_id: groupId},
+		check(leagueId, String);
+		Groups.update({_id: leagueId},
 			{$push: {requests: userId}}
 		);
 
-		var group = Groups.find({_id: groupId}).fetch();
+		var league = Groups.findOne({_id: leagueId});
 
 		var notifyObj = {
-	  	type: "group",
+	  	type: "league",
 			status: "Requested invite from you to",
 	  	senderId: userId,
-	  	userId: group[0].commissioner,
-	  	groupId: groupId
+	  	userId: league.commissioner,
+	  	leagueId: leagueId
 	  }
 
 	  createPendingNotification(notifyObj)
 	},
 
-	'removeRequest': function(userId, groupId) {
+	'removeLeagueRequest': function(userId, leagueId) {
 		check(userId, String);
-		check(groupId, String);
-		Groups.update({_id: groupId},
-			{$pull: {requests: userId}}
-		)
+		check(leagueId, String);
+		Groups.update({_id: leagueId}, {$pull: {requests: userId}})
 	},
 
-	// Users can add other users to join their group.
-	'inviteToGroup': function(invitee, inviter, groupId) {
+	// Users can add other users to join their league
+	'inviteToLeague': function(invitee, inviter, leagueId) {
 		check(invitee, String);
 		check(inviter, String);
-		check(groupId, String);
-		Groups.update({_id: groupId}, {$push: {invites: invitee}}, { validate: false })
+		check(leagueId, String);
+		Groups.update({_id: leagueId}, {$push: {invites: invitee}}, { validate: false })
 
 	  var notifyObj = {
-	  	type: "group",
+	  	type: "league",
 	  	senderId: inviter,
 	  	userId: invitee,
-	  	groupId: groupId
+	  	leagueId: leagueId
 	  }
 	  createPendingNotification(notifyObj)
 	},
 
-	'acceptRequest': function(groupId, userId, inviter) {
+	'acceptLeagueRequest': function(leagueId, userId, inviter) {
 		check(userId, String);
-		check(groupId, String);
+		check(leagueId, String);
 		check(inviter, String);
-		Meteor.call('removeRequest', userId, groupId)
-		Meteor.call('joinGroup', userId, groupId)
+		Meteor.call('removeLeagueRequest', userId, leagueId)
+		Meteor.call('joinLeague', userId, leagueId)
 
 		var notifyObj = {
-	  	type: "group",
+	  	type: "league",
 			status: "Accepted Your Request to ",
 	  	senderId: inviter,
 	  	userId: userId,
-	  	groupId: groupId
+	  	leagueId: leagueId
 	  }
 	  createPendingNotification(notifyObj)
 	},
 
-	'denyRequest': function(groupId, userId, inviter) {
+	'denyLeagueRequest': function(leagueId, userId, inviter) {
 		check(userId, String);
-		check(groupId, String);
+		check(leagueId, String);
 		check(inviter, String);
-		Meteor.call('removeRequest', id, groupId);
+		Meteor.call('removeLeagueRequest', id, leagueId);
 		var notifyObj = {
-	  	type: "group",
+	  	type: "league",
 			status: "Denied Your Request to ",
 	  	senderId: inviter,
 	  	userId: userId,
-	  	groupId: groupId
+	  	leagueId: leagueId
 	  }
 	  createPendingNotification(notifyObj)
 	},
 
-	'deleteGroup': function(groupId) {
-		check(groupId, String);
-		var group = Groups.findOne({_id: groupId})
-		var members = group.members
+	'deleteLeague': function(leagueId) {
+		check(leagueId, String);
+		var league = Groups.findOne({_id:leagueId})
+		var members = league.members
 
 		//Remove each user from the list
 		for (var i = members.length - 1; i >= 0; i--) {
 			var member = members[i]
-			console.log(member);
 
 			//Remove From both list and their account
-			Meteor.call('removeGroupMember', member, groupId, member);
+			Meteor.call('removeLeagueMember', member, leagueId, member);
 		}
 		;
-		Groups.remove({_id: groupId});
+		Groups.remove({_id: leagueId});
 	},
 
-	'removeGroupMember': function(userId, groupId, inviter) {
+	'removeLeagueMember': function(userId, leagueId, inviter) {
 		check(userId, String);
-		check(groupId, String);
+		check(leagueId, String);
 		check(inviter, String);
-		// Remove user from the group's list
-		Groups.update({_id: groupId}, {$pull: {members: userId}});
+		// Remove user from the league's list
+		Groups.update({_id: leagueId}, {$pull: {members: userId}});
 
-		// Remove group from user's list
-		UserList.update({_id: userId}, {$pull: {'profile.groups': groupId}});
+		// Remove league from user's list
 		var notifyObj = {
-			type: "group",
+			type: "league",
 			status: "removed",
 			senderId: inviter,
 			userId: userId,
-			groupId: groupId
+			leagueId: leagueId
 		}
 		createPendingNotification(notifyObj)
 	},
 
-	// Users can join any group
-	'joinGroup': function(user, groupId) {
+	// Users can join any league
+	'joinLeague': function(user, leagueId) {
 		check(user, String);
-		check(groupId, String);
-		Groups.update({_id: groupId}, {$push: {members: user}}, { validate: false });
-		UserList.update({_id: user}, {$push: {'profile.groups': groupId}});
+		check(leagueId, String);
+		Groups.update({_id: leagueId}, {$push: {members: user}}, { validate: false });
 	},
 
-	// Users can leave groups they are apart of
-	'leaveGroup': function(user, groupId) {
+	// Users can leave leagues they are apart of
+	'leaveLeague': function(user, leagueId) {
 		check(user, String);
-		check(groupId, String);
-		Groups.update({_id: groupId}, {$pull: {members: user}});
-		UserList.update({_id: user}, {$pull: {'profile.groups': groupId}});
+		check(leagueId, String);
+		Groups.update({_id: leagueId}, {$pull: {members: user}});
+		UserList.update({_id: user}, {$pull: {'profile.leagues': leagueId}});
 	}
 })

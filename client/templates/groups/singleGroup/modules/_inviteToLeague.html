@@ -1,4 +1,4 @@
-<template name="inviteToGroup">
+<template name="inviteToLeague">
 
   {{> yield 'header'}}
 
@@ -15,13 +15,13 @@
   {{#ionView }}
     {{#ionContent}}
       <div class="container">
-        {{> inviteToGroupBox}}
+        {{> inviteToLeagueBox}}
       </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="inviteToGroupBox">
+<template name="inviteToLeagueBox">
   <div class="search-bar-fix">
     {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
   </div>

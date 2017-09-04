@@ -1,4 +1,4 @@
-Template.inviteToGroup.helpers({
+Template.inviteToLeague.helpers({
   following: function () {
     var user = Meteor.user();
     return user.profile.following
@@ -26,7 +26,6 @@ Template.inviteButton.helpers({
 
 Template.inviteButton.events({
 	'click [data-action=invite]': function(e, t){
-    console.log(this);
     var invitee = this.__originalId
     if (!invitee) {
       var invitee = this._id
@@ -37,13 +36,13 @@ Template.inviteButton.events({
     var inviter = Meteor.userId()
     var groupId = Router.current().params._id
 
-    Meteor.call("inviteToGroup", invitee, inviter, groupId);
+    Meteor.call("inviteToLeague", invitee, inviter, groupId);
 
     var groupData = Groups.findOne(Router.current().params._id)
     var groupName = groupData.name
     var message = Meteor.user().profile.username + " has invited you to join " + groupName
 
-    Meteor.call('pushInvite', message, invitee);
+    // Meteor.call('pushInvite', message, invitee);
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)
@@ -52,7 +51,7 @@ Template.inviteButton.events({
 	}
 })
 
-Template.inviteToGroupBox.helpers({
+Template.inviteToLeagueBox.helpers({
   UserListIndex: function() {
     return UserListIndex;
   },
@@ -62,7 +61,7 @@ Template.inviteToGroupBox.helpers({
   },
 });
 
-Template.inviteToGroupBox.events({
+Template.inviteToLeagueBox.events({
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){
       var branchUniversalObj = null;
