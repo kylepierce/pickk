@@ -45,10 +45,10 @@ Template.commissionerSettings.events({
     IonModal.open('_editLeague');
   },
   'click [data-action=photo]': function(){
-    Router.go("/league/settings/photo/" + this.group._id);
+    Router.go("/league/settings/photo/" + this.league._id);
   },
   'click [data-action=association]': function(){
-    Router.go("/league/association/" + this.group._id);
+    Router.go("/league/association/" + this.league._id);
   },
   'click [data-action=delete]': function(){
     IonActionSheet.show({

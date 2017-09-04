@@ -110,15 +110,15 @@ Template['afCheckboxGroup_ionic2'].events({
   'click .checkbox': function(e,t){
     var input = $("input[id='"+ this.value+"']")[0];
 
-    if (this.selected === true){
-      this.selected = false
-      $(e.currentTarget).prop('checked', false);
-      $(input).attr( 'checked', false )
-    } else if (this.selected === false){
-      this.selected = true
-      $(e.currentTarget).prop('checked', true);
-      $(input).attr( 'checked', true )
-    }
+    // if (this.selected === true){
+    //   // this.selected = false
+    //   // $(e.currentTarget).prop('checked', false);
+    //   // $(input).attr( 'checked', false )
+    // } else if (this.selected === false){
+    //   // this.selected = true
+    //   // $(e.currentTarget).prop('checked', true);
+    //   // $(input).attr( 'checked', true );
+    // }
     $(e.currentTarget).toggleClass('play-selected');
   }
 });
