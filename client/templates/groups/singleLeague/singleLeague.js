@@ -112,3 +112,23 @@ Template.leagueLinks.events({
     Router.go('/league/week-leaderboard/' + this.league._id)
   },
 });
+
+// alreadyMember: function() {
+//   var currentUserId = Meteor.userId();
+//   var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
+//
+//   // Check to see if user is in the group already.
+//   if(groupMembers) {
+//     return true
+//   }
+// },
+// // Check to see if the current user is the commissioner.
+// commissionerAdmin: function(){
+//   var currentUser = Meteor.userId()
+//   var groupId = Router.current().params._id
+//   var group = Groups.findOne({_id: groupId});
+// 
+//   if (group.commissioner == currentUser) {
+//     return true
+//   }
+// },

@@ -1,5 +1,5 @@
 Template.leaguePhoto.events({
-  "change #new-icon": function(e, t) {
+  "change #leagueAvatar": function(e, t) {
     var files = e.currentTarget.files;
     t.$(".loading").show();
     t.$(".avatar").hide();
@@ -11,7 +11,7 @@ Template.leaguePhoto.events({
     });
 
     Cloudinary.upload(files, {
-      folder: "group avatars",
+      folder: "avatars",
       transformation: [
         {width: 200, height: 200, gravity: "face", crop: "lfill"},
       ],

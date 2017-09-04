@@ -1,42 +1,19 @@
 Template.memberCheck.helpers({
-  alreadyMember: function() {
-    var currentUserId = Meteor.userId();
-    var groupMembers = Groups.findOne({_id: Router.current().params._id, members: currentUserId});
-
-    // Check to see if user is in the group already.
-    if(groupMembers) {
+  alreadyFull: function(){
+    var numberOfUsers = this.league.members.length
+    var limit = this.league.limit
+    var max = this.league.limitNum
+    if(limit && max && limit === true && numberOfUsers >= max){
       return true
     }
   },
-
-  // Check to see if the current user is the commissioner.
-  commissionerAdmin: function(){
-    var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId});
-
-    if (group.commissioner == currentUser) {
+  public: function(){
+    if (this.league.secret === "public" || this.league.secret === false) {
       return true
     }
   },
-  invite: function(){
-    var currentUser = Meteor.userId();
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId});
-    if (group.secret === "invite" ) {
-      return true
-    } else {
-      return false
-    }
-  },
-  maxed: function(){
-    var group = Groups.findOne({_id: this.group[0]._id});
-    var numberOfUsers = group.members.length
-    var limit = group.limit
-    var max = group.limitNum
-    if(limit === "false"){
-      return true
-    } else if(max >= numberOfUsers){
+  inviteOnly: function(){
+    if (this.league.secret === "invite" ) {
       return true
     }
   }
@@ -45,25 +22,25 @@ Template.memberCheck.helpers({
 Template.memberCheck.events({
   'click [data-action=joinLeague]': function() {
     var currentUserId = Meteor.userId();
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId})
-    var groupName = group.name
-    sAlert.success("You Joined " + groupName , {effect: 'slide', position: 'bottom', html: true});
-    // Add this user to the group
-    Meteor.call('joinLeague', currentUserId, groupId);
+    var leagueId = Router.current().params._id
+    var league = Groups.findOne({_id: leagueId})
+    var leagueName = league.name
+    sAlert.success("You Joined " + leagueName , {effect: 'slide', position: 'bottom', html: true});
+    // Add this user to the league
+    Meteor.call('joinLeague', currentUserId, leagueId);
   },
   'click [data-action=invite]': function(){
-    var groupId = Router.current().params._id
-    Router.go('/groups/invite/' + groupId)
+    var leagueId = Router.current().params._id
+    Router.go('/leagues/invite/' + leagueId)
   },
   'click [data-action=requestInvite]': function(e, t){
     var userId = Meteor.userId();
-    var groupId = Router.current().params._id
-    Meteor.call('requestLeagueInvite', userId, groupId)
+    var leagueId = Router.current().params._id
+    Meteor.call('requestLeagueInvite', userId, leagueId)
   },
   'click [data-action=requestPending]': function(template, event){
     IonActionSheet.show({
-      titleText: 'Are you sure you want to remove your group request?',
+      titleText: 'Are you sure you want to remove your league request?',
       buttons: [
         { text: 'Remove Request <i class="icon ion-share"></i>' },
       ],
@@ -73,8 +50,8 @@ Template.memberCheck.events({
       buttonClicked: function(index) {
         if (index === 0) {
           var user = Meteor.userId();
-          var group = Router.current().params._id
-          Meteor.call('removeLeagueRequest', user, group)
+          var league = Router.current().params._id
+          Meteor.call('removeLeagueRequest', user, league)
           return true
         }
       }
@@ -92,13 +69,13 @@ Template.memberCheck.events({
       buttonClicked: function(index) {
         if (index === 0) {
           var currentUserId = Meteor.userId();
-          var groupId = Router.current().params._id
+          var leagueId = Router.current().params._id
 
-          // Remove this user from the group
-          Meteor.call('leaveLeague', currentUserId, groupId);
-          var group = Groups.findOne({_id: groupId})
-          var groupName = group.name
-          sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
+          // Remove this user from the league
+          Meteor.call('leaveLeague', currentUserId, leagueId);
+          var league = Groups.findOne({_id: leagueId})
+          var leagueName = league.name
+          sAlert.success("You Left " + leagueName , {effect: 'slide', position: 'bottom', html: true});
           return true
 
         }
@@ -118,13 +95,13 @@ Template.memberCheck.events({
       buttonClicked: function(index) {
         if (index === 0) {
           var currentUserId = Meteor.userId();
-        var groupId = Router.current().params._id
+        var leagueId = Router.current().params._id
 
-        // Remove this user from the group
-        Meteor.call('leaveLeague', currentUserId, groupId);
-        var group = Groups.findOne({_id: groupId})
-        var groupName = group.name
-        sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
+        // Remove this user from the league
+        Meteor.call('leaveLeague', currentUserId, leagueId);
+        var league = Groups.findOne({_id: leagueId})
+        var leagueName = league.name
+        sAlert.success("You Left " + leagueName , {effect: 'slide', position: 'bottom', html: true});
         return true
 
         }
@@ -136,25 +113,25 @@ Template.memberCheck.events({
 Template.requestInvite.helpers({
   alreadyRequested: function () {
     var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId,
+    var leagueId = Router.current().params._id
+    var league = Groups.findOne({_id: leagueId,
       requests: {$in: [currentUser]}});
       // THis is lazy code but I need to finish
-    if(!group) {
-      var group = Matchup.findOne({_id: groupId,
+    if(!league) {
+      var league = Matchup.findOne({_id: leagueId,
         requests: {$in: [currentUser]}});
     }
-    return group
+    return league
   }
 });
 
 Template.inviteOnly.helpers({
-  invite: function(){
+  invited: function(){
     var currentUser = Meteor.userId();
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId}, {fields: {invites: 1}});
-    if (group) {
-      var alreadyInvited = group && group.invites && group.invites.indexOf(currentUser);
+    var leagueId = Router.current().params._id
+    var league = Groups.findOne({_id: leagueId}, {fields: {invites: 1}});
+    if (league) {
+      var alreadyInvited = league && league.invites && league.invites.indexOf(currentUser);
       var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
 
       if( alreadyInvited > -1){

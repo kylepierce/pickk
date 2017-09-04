@@ -119,7 +119,6 @@ Template['afCheckboxGroup_ionic2'].events({
       $(e.currentTarget).prop('checked', true);
       $(input).attr( 'checked', true )
     }
-    console.log(this, input, e, t);
     $(e.currentTarget).toggleClass('play-selected');
   }
 });

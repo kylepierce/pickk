@@ -6,7 +6,7 @@ Template.leagueSettings.events({
     Router.go("/league/settings/photo/" + this.group._id);
   },
   'click [data-action=association]': function(){
-    Router.go("/groups/association/" + this.group._id);
+    Router.go("/league/association/" + this.group._id);
   },
   'click [data-action=delete]': function(){
     IonActionSheet.show({
@@ -21,7 +21,7 @@ Template.leagueSettings.events({
         if (index === 0) {
         var groupId = Router.current().params._id
         Meteor.call('deleteLeague', groupId);
-        Router.go('/groups');
+        Router.go('/leagues');
         return true
         }
       }

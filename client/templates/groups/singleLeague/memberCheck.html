@@ -1,46 +1,29 @@
 <template name="memberCheck">
-	<div class="groupButtons">
-		{{#if alreadyMember }}
-	    <button class="button col col-50 button-balanced" data-action="invite">
-	     {{> ionIcon icon='ios-upload-outline'}} Invite
-	    </button>
+	{{#if alreadyFull}}
 
-	    {{#if commissionerAdmin}}
-	      <button id="settings" style="min-width: 50px;" data-ion-popover="_adminOptions" class="m-check col col-10">
-	        {{> ionIcon icon='ios-gear'}}
-	      </button>
-	    {{else}}
-			  <button id="join-toggle" style="min-width: 50px;" data-action="showActionSheet" class="m-check col col-10" >
-	        {{> ionIcon icon='ios-gear'}}
-	      </button>
-	    {{/if}}
+	{{else}}
+		{{#if public}}
+			<button data-action="joinLeague" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Join</button>
+		{{/if}}
 
-		{{else}}
-			{{#if maxed}}
-		    {{#if invite}}
-		      {{> inviteOnly}}
-		    {{else}}
-				  <button data-action="joinLeague" id="join-toggle" class="button button-balanced col col-50 right" >Join</button>
-			  {{/if}}
-			{{else}}
-				{{> inviteOnly}}
-			{{/if}}
-	  {{/if}}
-	</div>
+		{{#if inviteOnly}}
+			{{> inviteOnly}}
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="inviteOnly">
+  {{#if invited}}
+    <button data-action="joinLeague" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Join</button>
+  {{else}}
+    {{> requestInvite}}
+  {{/if}}
 </template>
 
 <template name="requestInvite">
   {{#if alreadyRequested}}
-    <button data-action="requestPending" id="join-toggle" class="button button-stable col col-100" style="float:right">Request Pending</button>
+    <button data-action="requestPending" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Request Pending</button>
   {{else}}
-    <button data-action="requestInvite" id="join-toggle" class="button button-balanced col col-100" style="float:right">Request Invite</button>
-  {{/if}}
-</template>
-
-<template name="inviteOnly">
-  {{#if invite}}
-    <button data-action="joinLeague" id="join-toggle" class="button button-balanced col col-50" style="float:right">Join</button>
-  {{else}}
-    {{> requestInvite}}
+    <button data-action="requestInvite" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Request Invite</button>
   {{/if}}
 </template>

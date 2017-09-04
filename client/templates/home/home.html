@@ -56,36 +56,6 @@
   </div>
 </template>
 
-<template name="heroImage">
-  <div class="single-slide" style="background-image: url({{item.image}})">
-    <div class="slider-text">
-      {{item.text}}
-    </div>
-  </div>
-</template>
-
-<template name="heroSection">
-  <div id="hero-section" class="animated fadeInDown">
-    {{#each hero in heros}}
-      <div class="single-slide">
-        {{> singleHero hero=hero}}
-      </div>
-    {{/each}}
-  </div>
-  <div class="line-divider"></div>
-</template>
-
-<template name="singleHero">
-  <div class="card-container hero-card">
-    <div class="hero-image" style="background-image: url({{hero.image}})">
-      <span class="title">{{hero.title}}</span>
-    </div>
-    <div class="hero-bottom">
-      {{hero.description}}
-    </div>
-  </div>
-</template>
-
 <template name="dailyPickkButton">
   {{#if gamePrediction}}
     <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">

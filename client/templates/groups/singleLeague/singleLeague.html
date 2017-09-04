@@ -15,16 +15,18 @@
   {{#ionView}}
     {{#ionContent}}
       <div class="container hundred-bottom">
+        {{#with group}}
+          {{> leagueCard}}
+        {{/with}}
+
         {{#if visible}}
-          {{#with group}}
-            {{> leagueCard}}
-          {{/with}}
           {{#if member}}
             {{> commissionerLinks}}
             {{> leagueLinks}}
             {{> leagueMatchups}}
           {{else}}
             {{> memberCheck}}
+            {{> visitorLinks}}
           {{/if}}
         {{else}}
           <div class="no-notifications">
@@ -95,3 +97,33 @@
     </div>
   {{/if}}
 </template>
+
+<template name="visitorLinks">
+  <div id="button-section">
+    <div class="button-card half" data-action="viewMembers">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Members</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="viewLeaderboard">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Leaderboard</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  </div>
+</template>
+
+<!-- {{#if alreadyMember }}
+  <button class="button col col-50 button-balanced" data-action="invite">
+   {{> ionIcon icon='ios-upload-outline'}} Invite
+  </button>
+
+  {{#if commissionerAdmin}}
+    <button id="settings" style="min-width: 50px;" data-ion-popover="_adminOptions" class="m-check col col-10">
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{else}}
+    <button id="join-toggle" style="min-width: 50px;" data-action="showActionSheet" class="m-check col col-10" >
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{/if}} -->
