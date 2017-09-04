@@ -17,93 +17,101 @@
   </div>
 
   {{#ionList}}
-    {{#ionItem iconLeft=true href="/"  data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-photos-outline'}}
-      Home
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="prizes" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='trophy'}}
-      Prizes
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="games" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-calendar-outline'}}
-      Game Schedule
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="matchup" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-game-controller-a-outline'}}
-      Matchups
-    {{/ionItem}}
-
-
-      {{#if pendingNotifications}}
-        <div class="item item-icon-left" data-action="notifications">
-          <div class="unreadNotifications">
-            {{> ionIcon icon='ios-bell-outline'}}
-            {{notificationNumber}} Notifications
-          </div>
-        </div>
-      {{else}}
-        <div class="item item-icon-left" data-action="allNotifications">
-          {{> ionIcon icon='ios-bell-outline'}}
-          Notifications
-        </div>
-      {{/if}}
-
-    {{#ionItem iconLeft=true path="leagues" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-people-outline'}}
-      Leagues
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="history" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-time-outline'}}
-      Question History
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="week-leaderboard" data-ion-menu-toggle="left"}}
-      <i class="fa fa-diamond diamond-leaderboard"></i>
-      Diamond Leaderboard
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="rules" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-medical-outline'}}
-      Common Questions
-    {{/ionItem}}
-
-    {{#if isMobile}}
-      {{#ionItem class="contact-us" iconLeft=true data-ion-menu-toggle="left"}}
-        {{> ionIcon icon='ios-person-outline'}}
-        Contact Us {{messageCount}}
+    {{#each link in links}}
+      {{#ionItem class="custom-list" path=link.path data-ion-menu-toggle="left"}}
+        {{> pickkIcon size="sm" icon=link.icon}}
+        <div>{{link.title}}</div>
       {{/ionItem}}
-
-      {{#ionItem class="js-share-link" iconLeft=true data-ion-menu-toggle="left"}}
-        {{> ionIcon icon='share'}}
-        Share
-      {{/ionItem}}
-    {{/if}}
-
-    <!-- {{#ionItem iconLeft=true path="onboarding" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-help-outline'}}
-      How to play
-    {{/ionItem}} -->
-
-    {{#ionItem iconLeft=true path="friends" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-personadd-outline'}}
-      Find Friends
-    {{/ionItem}}
-
-    {{#ionItem iconLeft=true path="settings" data-ion-menu-toggle="left"}}
-      {{> ionIcon icon='ios-cog-outline'}}
-      Settings
-    {{/ionItem}}
-
-    <a href="/landing" data-action="logout">
-    {{#ionItem iconLeft=true }}
-      {{> ionIcon icon='log-out'}}
-      Logout
-    {{/ionItem}}
-    </a>
+    {{/each}}
   {{/ionList}}
 </template>
+
+<!-- {{#ionItem iconLeft=true path="onboarding" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-help-outline'}}
+  How to play
+{{/ionItem}} -->
+
+<!-- {{#ionItem iconLeft=true href="/"  data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-photos-outline'}}
+  Home
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="prizes" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='trophy'}}
+  Prizes
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="games" data-ion-menu-toggle="left"}}
+  {{> pickkIcon size="small" icon='stadium'}}
+  <span>Game Schedule</span>
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="matchup" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-game-controller-a-outline'}}
+  Matchups
+{{/ionItem}}
+
+
+{{#if pendingNotifications}}
+  <div class="item item-icon-left" data-action="notifications">
+    <div class="unreadNotifications">
+      {{> ionIcon icon='ios-bell-outline'}}
+      {{notificationNumber}} Notifications
+    </div>
+  </div>
+{{else}}
+  <div class="item item-icon-left" data-action="allNotifications">
+    {{> ionIcon icon='ios-bell-outline'}}
+    Notifications
+  </div>
+{{/if}}
+
+{{#ionItem iconLeft=true path="leagues" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-people-outline'}}
+  Leagues
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="history" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-time-outline'}}
+  Question History
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="week-leaderboard" data-ion-menu-toggle="left"}}
+  <i class="fa fa-diamond diamond-leaderboard"></i>
+  Diamond Leaderboard
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="rules" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-medical-outline'}}
+  Common Questions
+{{/ionItem}}
+
+{{#if isMobile}}
+  {{#ionItem class="contact-us" iconLeft=true data-ion-menu-toggle="left"}}
+    {{> ionIcon icon='ios-person-outline'}}
+    Contact Us {{messageCount}}
+  {{/ionItem}}
+
+  {{#ionItem class="js-share-link" iconLeft=true data-ion-menu-toggle="left"}}
+    {{> ionIcon icon='share'}}
+    Share
+  {{/ionItem}}
+{{/if}}
+
+
+{{#ionItem iconLeft=true path="friends" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-personadd-outline'}}
+  Find Friends
+{{/ionItem}}
+
+{{#ionItem iconLeft=true path="settings" data-ion-menu-toggle="left"}}
+  {{> ionIcon icon='ios-cog-outline'}}
+  Settings
+{{/ionItem}}
+
+<a href="/landing" data-action="logout">
+{{#ionItem iconLeft=true }}
+  {{> ionIcon icon='log-out'}}
+  Logout
+{{/ionItem}}
+</a> -->

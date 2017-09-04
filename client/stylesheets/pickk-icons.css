@@ -1,0 +1,30 @@
+.picon {
+  margin: 1%;
+}
+
+.icon-xs {
+  width: 15px;
+}
+
+.icon-sm {
+  width: 30px;
+}
+
+.icon-med {
+  width: 45px;
+}
+
+.icon-large {
+  width: 65px;
+}
+
+.custom-list {
+  padding: 10px 15px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.custom-list img{
+  margin-right: 25px;
+}

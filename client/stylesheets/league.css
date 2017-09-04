@@ -42,7 +42,8 @@
 }
 
 .league-card-header .commissioner {
-  float: left;
+  display: flex;
+  align-items: center;
 }
 
 .league-card-header .arrow {
