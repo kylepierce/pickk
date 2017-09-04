@@ -3,10 +3,10 @@ Template.leagueSettings.events({
     IonModal.open('_editGroup');
   },
   'click [data-action=photo]': function(){
-    console.log(this);
+    Router.go("/league/settings/photo/" + this.group._id);
   },
   'click [data-action=association]': function(){
-    Router.go("/groups/association/" + this.group[0]._id)
+    Router.go("/groups/association/" + this.group._id);
   },
   'click [data-action=delete]': function(){
     IonActionSheet.show({

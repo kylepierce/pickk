@@ -343,13 +343,6 @@ input[type=submit] {
 	top:0; left:0; right:0; bottom: 0;
 }*/
 
-.circle-image {
-	border-radius: 100%;
-	width: 50%;
-	max-width: 100px;
-	border: 3px solid white;
-}
-
 .username {
 	clear: both;
 }
@@ -393,10 +386,4 @@ input[type=submit] {
 }
 
 
-}
-
-
-
-.hidden {
-	display: none
 }

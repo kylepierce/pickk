@@ -32,12 +32,8 @@ Meteor.methods({
 	'setGroupAvatar': function(id, avatar) {
 		check(id, String);
 		check(avatar, String);
-		Groups.update({_id: id},
-			{
-				$set: {
-					avatar: avatar
-				}
-			});
+		var group = Groups.findOne({_id: id});
+		Groups.update({_id: id}, {$set: {avatar: avatar}});
 	},
 
 	'requestInvite': function(userId, groupId) {

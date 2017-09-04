@@ -1,0 +1,28 @@
+<template name="leaguePhoto">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      Upload Group Photo
+    </h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="photo-upload-container card-container">
+        <span>
+          {{#with this.league}}
+            {{> leagueAvatar size="medium" league=this}}
+            <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>
+          {{/with}}
+        </span>
+        <input type="file" id="leagueAvatar" name="avatar" class="hidden">
+        <label for="leagueAvatar" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
+            Upload Photo
+        </label>
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

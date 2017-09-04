@@ -2,6 +2,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Lato";
 }
 
+.hidden {
+  display: none;
+}
+
+.float-left {
+  float: left;
+}
 
 .outer-coin {
   width: 2.5rem;
@@ -18,10 +25,6 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   top: 5px;
   left: 5px;
-}
-
-.float-left {
-  float: left;
 }
 
 .option-fix {
@@ -168,4 +171,48 @@ h1, h2, h3, h4, h5, h6 {
 #button-section {
   width: 100%;
   display: table;
+}
+
+
+.photo-upload-container {
+  margin: 50px 0;
+  width: 80%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photo-upload-container span{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+
+.circle-image {
+	border-radius: 100%;
+	width: 50%;
+	border: 3px solid white;
+}
+
+.photo-size-small{
+  width: 50px!important;
+  height: 50px!important;
+}
+.photo-size-medium{
+  width: 100px!important;
+  height: 100px!important;
+}
+.photo-size-large{
+  width: 150px!important;
+  height: 150px!important;
+}
+
+
+.hidden {
+	display: none
 }
