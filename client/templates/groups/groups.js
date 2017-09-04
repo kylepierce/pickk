@@ -1,31 +1,3 @@
-// Template.groups.created = function () {
-//   this.autorun(function () {
-//     this.subscription = Meteor.subscribe('groups', Router.current().params._id);
-//   }.bind(this));
-// };
-
-// Template.groups.onCreated( function() {
-//   this.subscribe( 'groups', function() {
-//     $( ".loader" ).delay( 1000 ).fadeOut( 'slow', function() {
-//       $( ".loading-wrapper" ).fadeIn( 'slow' );
-//     });
-//   });
-// });
-
-// Template.groups.onRendered( function() {
-//   $( "svg" ).delay( 750 ).fadeIn();
-// });
-
-// Template.groups.rendered = function () {
-//   this.autorun(function () {
-//     if (!this.subscription.ready()) {
-//       IonLoading.show().delay(2000).hide(0);
-//     } else {
-//       IonLoading.hide();
-//     }
-//   }.bind(this));
-// };
-
 Template.leaguesOverview.helpers({
   userLeague: function() {
     var currentUser = Meteor.userId();
@@ -79,21 +51,86 @@ Template.leagueCard.helpers({
       }
     }
   },
-  // 'username': function(ref) {
-	// 	Meteor.subscribe('findSingle', ref);
-  //   var user = UserList.findOne({_id: ref})
-  //   if (user){
-  //     return user.profile.username
-  //   }
-	// },
-  // 'users': function (userArray){
-  //   return userArray.length
-  // },
-  // 'limitNum': function(number){
-  //   if(number === -1){
-  //     return "∞"
-  //   } else {
-  //     return number
-  //   }
-  // }
+});
+
+Template.leagueDetails.helpers({
+  sections: function(){
+    var userId = Meteor.userId();
+
+    memberCount = function(league){
+      var members = league.members.length
+      if(this.limit === "true"){
+        var number = this.limitNum
+        var limit = " / " + number
+      } else {
+        var limit = " / ∞"
+      }
+      return members + limit
+    }
+
+    requestsToJoin = function(league){
+      var number = league.requests.length
+      var requests = {headline: number, title: "Requests" }
+      return requests
+    }
+
+    futureMatchups = function(league){
+      Meteor.subscribe('singleGroupMatchupCount', league._id)
+      var count = Counts.get('singleGroupMatchupCount')
+      var matchup = {headline: count, title: "Matchups" }
+      return matchup
+    }
+
+    privacyObject = function(league){
+      if(league.secret === "invite"){
+        var privacy = {icon: "star", title: "Invite Only"}
+      } else if(league.secret === "private"){
+        var privacy = {icon: "star", title: "Private"}
+      } else {
+        var privacy = {icon: "star", title: "Public"}
+      }
+      return privacy
+    }
+
+    notifications = function(leagueId){
+      Meteor.subscribe('unreadLeagueNotificationCount', leagueId)
+      var count = Counts.get('unreadLeagueNotificationCount')
+      var notificationObj = {headline: count, title: "Alerts"}
+      if (count > 0){
+        notificationObj.alert = "notification-alert"
+      }
+      return notificationObj
+    }
+
+    weeklyRanking = function(league){
+      var rank = "1st"
+      var members = league.members.length
+      var rankingObj = {headline: rank, title: members + " players" }
+      return rankingObj
+    }
+
+    if (this.commissioner === Meteor.userId()){
+      var sections = [
+        notifications(this._id),
+        futureMatchups(this),
+        weeklyRanking(this),
+        requestsToJoin(this)
+      ]
+    } else if (this.members.indexOf(userId) > -1){
+      var sections = [
+        notifications(this._id),
+        futureMatchups(this),
+        weeklyRanking(this),
+        {icon: "star", title: "Section?"}
+      ]
+    } else {
+      var sections = [
+        privacyObject(this),
+        {icon: "star", title: memberCount(this)},
+        {icon: "star", title: "Section?!"},
+        {icon: "star", title: "Section?!"}
+      ]
+    }
+  return sections
+  }
 });

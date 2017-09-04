@@ -36,3 +36,11 @@ Meteor.publish("unreadNotificationsCount", function() {
 	var userId = this.userId;
   Counts.publish(this, "unreadNotificationsCount", Notifications.find({userId: userId, read: false}));
 });
+
+Meteor.publish("unreadLeagueNotificationCount", function(leagueId) {
+	check(leagueId, String);
+  this.unblock();
+	var userId = this.userId;
+	var selector = {userId: userId, read: false, groupId: leagueId}
+  Counts.publish(this, "unreadLeagueNotificationCount", Notifications.find(selector));
+});

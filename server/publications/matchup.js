@@ -35,6 +35,12 @@ Meteor.publish("singleGroupMatchups", function(groupId){
   return Matchup.find({groupId: groupId});
 });
 
+Meteor.publish("singleGroupMatchupCount", function(groupId){
+  check(groupId, String);
+  var selector = {groupId: groupId};
+  Counts.publish(this, "singleGroupMatchupCount", Matchup.find(selector));
+});
+
 Meteor.publish('matchupUsers', function(matchupId) {
   check(matchupId, String);
 

@@ -53,13 +53,15 @@
   align-items: center;
 }
 
+.section-icon-container{
+  width: 100%;
+  height: 30px;
+  text-align: center;
+}
 
-
-
-
-
-
-
+.notification-alert {
+  color: red;
+}
 
 .group-wrapper {
   background-color: white;

@@ -73,6 +73,7 @@ Template.weekLeaderboard.helpers({
 			});
 		return list
 		}
+
 		var data = Session.get('leaderboardFilter');
 		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", data)
 		var leaderboard = Fetcher.get("weekLeaderboard");

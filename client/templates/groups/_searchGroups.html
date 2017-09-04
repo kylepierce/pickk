@@ -25,7 +25,9 @@
 
       {{#ionList}}
         {{#EasySearch.Each index=GroupsIndex}}
-          {{> leagueCard}}
+          {{#with this}}
+            {{> leagueCard}}
+          {{/with}}
         {{/EasySearch.Each}}
       {{/ionList}}
 

@@ -54,83 +54,23 @@
 			</div>
 			<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
 		</div>
-		{{#if joined}}
-			{{> leagueMember}}
-		{{else}}
-			<!-- Expanded card detail -->
-		{{/if}}
+		{{> leagueDetails}}
 	</div>
 </template>
 
-<template name="leagueMember">
+<template name="leagueDetails">
 	<div class="league-card-body card-detail-section">
-		<div class="section">
-			<div>{{> ionIcon icon='ios-people'}}</div>
-			<div></div>
-		</div>
-		<div class="section">
-			<div>{{> ionIcon icon='ios-people'}}</div>
-			<div></div>
-		</div>
-		<div class="section">
-			<div>{{> ionIcon icon='ios-people'}}</div>
-			<div></div>
-		</div>
-		<div class="section">
-			<div>{{> ionIcon icon='ios-people'}}</div>
-			<div></div>
-		</div>
+		{{#each section in sections}}
+			<div class="section">
+				<div class="section-icon-container {{section.alert}}">
+					{{#if section.icon}}
+						{{> ionIcon icon=section.icon}}
+					{{else}}
+						<h4>{{section.headline}}</h4>
+					{{/if}}
+				</div>
+				<div>{{section.title}}</div>
+			</div>
+		{{/each}}
 	</div>
-</template>
-
-<template name="groupData">
-  <ul class="group-details">
-    <li>
-      <span class="group-details-icon center-text" style="font-size: 1.9em;">
-        {{> ionIcon icon='ios-people'}}
-      </span>
-      <span class="group-details-text">
-        {{memberCount}} {{max}} Members
-      </span>
-    </li>
-    <li>
-      <span class="group-details-icon center-text">
-        {{> ionIcon icon='star'}}
-      </span>
-      <span class="group-details-text">
-        Commissioner: {{commissioner}}
-      </span>
-    </li>
-    {{#if skill}}
-      <li>
-        <span class="group-details-icon center-text">
-          {{> ionIcon icon='star'}}
-        </span>
-        <span class="group-details-text">
-          Skill: {{skill}}
-        </span>
-      </li>
-    {{/if}}
-    {{#if league}}
-      <li>
-        <span class="group-details-icon center-text">
-          {{> ionIcon icon='star'}}
-        </span>
-        <span class="group-details-text">
-          League: {{association}}
-        </span>
-      </li>
-      {{#if team}}
-        <li>
-          <span class="group-details-icon center-text">
-            {{> ionIcon icon='star'}}
-          </span>
-          <span class="group-details-text">
-            Team: {{favTeam}}
-          </span>
-        </li>
-      {{/if}}
-    {{/if}}
-    {{description}}
-  </ul>
 </template>

@@ -60,60 +60,6 @@ Template.chatIcon.helpers({
   },
 });
 
-Template.groupData.helpers({
-  name: function(){
-    return this.group[0].name
-  },
-  commissioner: function() {
-    var commissionerId = this.group[0].commissioner
-    Meteor.subscribe('findSingle', commissionerId)
-    var user = UserList.findOne({_id: commissionerId});
-    return user.profile.username
-  },
-  skill: function(){
-    if (this.group[0].skill) {
-      return this.group[0].skill
-    }
-  },
-  league: function(){
-    if(this.group[0].leagueAssociation  === "true"){
-      return true
-    }
-  },
-  association: function(){
-    if(this.group[0].association){
-      return this.group[0].association
-    }
-  },
-  team: function(){
-    if(this.group[0].teamAssociation === "true"){
-      return true
-    }
-  },
-  favTeam: function(){
-    var group = this.group[0]
-    var league = group.association
-    var selector = "favorite" + league + "Team"
-    var team = group[selector]
-    var team = team.substring(4).toUpperCase();
-    return team
-  },
-  memberCount: function(){
-    return this.group[0].members.length
-  },
-  max: function(){
-    if(this.group[0].limit === "true"){
-      var number = this.group[0].limitNum
-      return "/ " + number
-    } else {
-      return "/ ∞"
-    }
-  },
-  description: function(){
-    return this.group[0].desc
-  }
-});
-
 Template.leagueMatchups.helpers({
   leagueMatchups: function(){
     var groupId = this.group[0]._id
