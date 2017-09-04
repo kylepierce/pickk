@@ -8,12 +8,15 @@
       {{/contentFor}}
 
       {{#ionList}}
-        {{#ionItem path="editProfile"}}
-          Edit Profile
-        {{/ionItem}}
-        {{#ionItem path="newUserFavoriteTeams"}}
-          Favorite Teams
-        {{/ionItem}}
+        {{#ionItem path="editProfile"}}Edit Profile{{/ionItem}}
+        {{#ionItem path="userPhoto"}}Upload Photo{{/ionItem}}
+        {{#ionItem path="newUserFavoriteTeams"}}Favorite Teams{{/ionItem}}
+        <a href="/landing" data-action="logout">
+          {{#ionItem iconLeft=true }}
+            {{> ionIcon icon='log-out'}}
+            Logout
+          {{/ionItem}}
+        </a> 
         <!-- {{#ionItem}}Notification Settings{{/ionItem}} -->
       {{/ionList}}
     {{/ionContent}}

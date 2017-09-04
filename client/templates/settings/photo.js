@@ -1,5 +1,5 @@
-Template.userPhoto.events({
-  "change #userAvatar": function(e, t) {
+Template.leaguePhoto.events({
+  "change #leagueAvatar": function(e, t) {
     var files = e.currentTarget.files;
     t.$(".loading").show();
     t.$(".avatar").hide();
@@ -11,7 +11,7 @@ Template.userPhoto.events({
     });
 
     Cloudinary.upload(files, {
-      folder: "avatar",
+      folder: "group avatar",
       transformation: [
         {width: 200, height: 200, gravity: "face", crop: "lfill"},
       ],
@@ -20,10 +20,14 @@ Template.userPhoto.events({
       t.$(".loading").hide();
       t.$(".avatar").show();
       if (error) {throw error;}
-      console.log(result);
+      var leagueId = Router.current().params._id;
 
-      Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
+      Meteor.call('setLeagueAvatar', leagueId, result.secure_url);
     });
+  },
+  "click [data-action=sports]": function(){
+    var leagueId = Router.current().params._id;
+    Router.go('/league/association/leagueId');
   }
 });
 

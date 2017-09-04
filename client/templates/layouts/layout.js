@@ -7,14 +7,6 @@ Template.mainLayout.rendered = function() {
 };
 
 Template.sideMenuContent.events({
-  'click [data-action=logout]': function () {
-    AccountsTemplates.logout();
-    if (Meteor.isCordova) {
-      Branch.logout();
-    }
-    analytics.reset();
-    Router.go("/landing")
-	},
   'click [data-action=profile]': function () {
     var userId = Meteor.userId();
     Router.go("/user-profile/" + userId)
