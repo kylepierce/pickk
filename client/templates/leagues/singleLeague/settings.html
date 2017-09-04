@@ -10,28 +10,50 @@
     {{#ionContent}}
       <div class="container">
         <div id="button-section">
-          <div class="button-card half" data-action="edit">
-            {{> ionIcon icon="ios-gear"}}
-            <span class="text">Edit Details</span>
-            <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-          </div>
-          <div class="button-card half" data-action="photo">
-            {{> ionIcon icon="ios-gear"}}
-            <span class="text">Upload Photo</span>
-            <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-          </div>
-          <div class="button-card half" data-action="association">
-            {{> ionIcon icon="ios-gear"}}
-            <span class="text">League Sports</span>
-            <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-          </div>
-          <div class="button-card half" data-action="delete">
-            <strong>Delete League</strong>
-          </div>
+          {{> commissionerSettings}}
+          {{> memberSettings}}
         </div>
       </div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="memberSettings">
+  <div class="button-card half" data-action="notifications">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Notifications</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  {{#if notCommissioner}}
+    <div class="button-card half" data-action="leave">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Leave League</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
+</template>
+
+<template name="commissionerSettings">
+  {{#if commissioner}}
+    <div class="button-card half" data-action="edit">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Edit Details</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="photo">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Upload Photo</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="association">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">League Sports</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="delete">
+      <strong>Delete League</strong>
+    </div>
+  {{/if}}
 </template>
 
 <template name="leagueAssociation">

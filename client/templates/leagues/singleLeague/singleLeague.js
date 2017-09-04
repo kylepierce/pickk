@@ -99,7 +99,15 @@ Template.commissionerLinks.events({
   },
 });
 
-Template.leagueLinks.helpers({});
+Template.leagueLinks.helpers({
+  notCommissioner: function(){
+    var commissionerId = this.league.commissioner
+    var userId = Meteor.userId();
+    if (commissionerId !== userId){
+      return true
+    }
+  }
+});
 
 Template.leagueLinks.events({
   'click [data-action=viewMembers]': function(){
@@ -110,6 +118,9 @@ Template.leagueLinks.events({
   },
   "click [data-action=viewLeaderboard]": function(){
     Router.go('/league/week-leaderboard/' + this.league._id)
+  },
+  "click [data-action=settings]": function(){
+    Router.go('/league/settings/' + this.league._id)
   },
 });
 
@@ -127,7 +138,7 @@ Template.leagueLinks.events({
 //   var currentUser = Meteor.userId()
 //   var groupId = Router.current().params._id
 //   var group = Groups.findOne({_id: groupId});
-// 
+//
 //   if (group.commissioner == currentUser) {
 //     return true
 //   }

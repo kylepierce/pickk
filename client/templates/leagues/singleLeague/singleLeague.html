@@ -78,6 +78,13 @@
       <span class="text">Leaderboard</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
+    {{#if notCommissioner}}
+      <div class="button-card half" data-action="settings">
+        {{> ionIcon icon="ios-gear"}}
+        <span class="text">Settings</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    {{/if}}
   </div>
 </template>
 
