@@ -17,10 +17,12 @@ Template.leaguePhoto.events({
       ],
       fields: {}
     }, function(error, result) {
+      console.log(error, result);
       t.$(".loading").hide();
       t.$(".avatar").show();
       if (error) {throw error;}
-      var leagueId = Router.current().params._id
+      var leagueId = Router.current().params._id;
+      console.log(leagueId, result);
 
       Meteor.call('setLeagueAvatar', leagueId, result);
     });

@@ -45,10 +45,15 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{#autoForm collection="Groups" type="update" id="groupTeam"  doc=groupData}}
-        <h3>What Sports Does the League Watch?</h3>
-        <!-- {{> afQuickField name='leagueAssociation' type='select-radio'}} -->
-        {{> afFieldInput name="association" template="ionic2"}}
+      <div class="container">
+        {{#autoForm collection="Groups" type="update" id="groupTeam"  doc=groupData}}
+          <h3>League Sports</h3>
+          <p>What sports does this league watch?</p>
+          {{> afFieldInput name="association" template="ionic2"}}
+          <input name="status" type="submit" class="button button-large button-balanced hundred-bottom" value="Add Sports">
+        {{/autoForm}}
+      </div>
+
         <!-- {{#if afFieldValueIs name="leagueAssociation" value="true"}}
           {{> afQuickField type='select-radio' name="association"}}
           {{> afFieldInput name="association" template="ionic2"}}
@@ -65,8 +70,7 @@
             {{/if}}
           {{/if}}
         {{/if}} -->
-        <input name="status" type="submit" class="button button-large button-balanced hundred-bottom" value="Add League Details">
-      {{/autoForm}}
+
   {{/ionContent}}
  {{/ionView}}
 </template>

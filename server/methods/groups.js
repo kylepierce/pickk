@@ -33,6 +33,7 @@ Meteor.methods({
 		check(id, String);
 		check(avatar, String);
 		var league = Groups.findOne({_id: id});
+		console.log(id, avatar);
 		Groups.update({_id: id}, {$set: {avatar: avatar}});
 	},
 
