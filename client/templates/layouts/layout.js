@@ -77,8 +77,8 @@ Template.mainLayout.events({
     IonPopover.show('_editGame', this, e.currentTarget);
   },
   'click [data-action=skip]': function(e, t){
-    var groupId = Router.current().params._id
-    Router.go('/league/'+groupId)
+    var leagueId = Router.current().params._id
+    Router.go('/league/'+ leagueId)
   },
   'click [data-action=editMatchup]': function(){
     IonActionSheet.show({

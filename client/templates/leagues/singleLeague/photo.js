@@ -11,21 +11,23 @@ Template.leaguePhoto.events({
     });
 
     Cloudinary.upload(files, {
-      folder: "avatars",
+      folder: "group avatar",
       transformation: [
         {width: 200, height: 200, gravity: "face", crop: "lfill"},
       ],
       fields: {}
     }, function(error, result) {
-      console.log(error, result);
       t.$(".loading").hide();
       t.$(".avatar").show();
       if (error) {throw error;}
       var leagueId = Router.current().params._id;
-      console.log(leagueId, result);
 
-      Meteor.call('setLeagueAvatar', leagueId, result);
+      Meteor.call('setLeagueAvatar', leagueId, result.secure_url);
     });
+  },
+  "click [data-action=sports]": function(){
+    var leagueId = Router.current().params._id;
+    Router.go('/league/association/leagueId');
   }
 });
 

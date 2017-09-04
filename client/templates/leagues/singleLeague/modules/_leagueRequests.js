@@ -3,16 +3,16 @@ Template._leagueRequests.created = function() {
 };
 
 Template._leagueRequests.helpers({
-	user: function () {
-    var leagueId = this.league._id
-    var league = Groups.findOne({_id: leagueId});
-		return league.requests
+	requests: function(){
+		if (this.league.requests > 0){
+			return true;
+		}
 	},
-	userDetails: function(userId){
-		Meteor.subscribe('findSingleUsername', userId)
-		return UserList.findOne({_id: userId})
+	requestList: function () {
+    var requests = this.league.requests
+		Meteor.subscribe('leagueRequests', this.league._id);
+		return UserList.find({_id: {$in: requests}}).fetch();
 	},
-
 });
 
 Template._leagueRequests.events({

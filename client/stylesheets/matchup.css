@@ -63,7 +63,7 @@
 
 .card-detail-section {
   padding: 10px 0;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
   background-color: white;
   display: flex;
 }

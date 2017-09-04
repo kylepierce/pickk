@@ -65,11 +65,13 @@ Template.leagueDetails.helpers({
 
     privacyObject = function(league){
       if(league.secret === "invite"){
-        var privacy = {icon: "star", title: "Invite Only"}
+        var privacy = {icon: "invite", title: "Invite"}
       } else if(league.secret === "private"){
-        var privacy = {icon: "star", title: "Private"}
+        var privacy = {icon: "lock", title: "Private"}
+      } else if(league.secret === "location"){
+        var privacy = {icon: "location", title: "Location"}
       } else {
-        var privacy = {icon: "star", title: "Public"}
+        var privacy = {icon: "public", title: "Public"}
       }
       return privacy
     }
@@ -87,28 +89,35 @@ Template.leagueDetails.helpers({
     weeklyRanking = function(league){
       var rank = "1st"
       var members = league.members.length
-      var rankingObj = {headline: rank, title: members + " players" }
+      var rankingObj = {headline: rank, title: "of " +
+
+
+      members }
       return rankingObj
+    }
+
+    sports = function(league){
+      console.log(league);
     }
 
     if (this.commissioner === Meteor.userId()){
       var sections = [
+        weeklyRanking(this),
         notifications(this._id),
         futureMatchups(this),
-        weeklyRanking(this),
         requestsToJoin(this)
       ]
     } else if (this.members.indexOf(userId) > -1){
       var sections = [
+        weeklyRanking(this),
         notifications(this._id),
         futureMatchups(this),
-        weeklyRanking(this),
         {icon: "star", title: "Section?"}
       ]
     } else {
       var sections = [
         privacyObject(this),
-        {icon: "star", title: memberCount(this)},
+        {icon: "coach", title: memberCount(this)},
         {icon: "star", title: "Section?!"},
         {icon: "star", title: "Section?!"}
       ]
