@@ -1,6 +1,6 @@
 Template._leagueMembers.helpers({
 	users: function () {
-		var users = this.group[0].members
+		var users = this.members
 		return UserList.find({_id: {$in: users}}).fetch();
 	}
 });
@@ -11,9 +11,9 @@ Template._leagueMembers.events({
 	},
 	'click [data-action=delete]': function (e, t) {
 		var inviter = Meteor.userId();
-		var userId = this.user._id
-		var username = this.user.profile.username
-		var groupId = this.group[0]._id
+		var userId = this.user._id;
+		var username = this.user.profile.username;
+		var leagueId = this.league._id;
 		IonActionSheet.show({
       titleText: 'Are You Sure You Want To Remove This User?',
       buttons: [
@@ -26,7 +26,7 @@ Template._leagueMembers.events({
       },
       buttonClicked: function(index) {
         if (index === 0) {
-					Meteor.call('removeLeagueMember', userId, groupId, inviter)
+					Meteor.call('removeLeagueMember', userId, leagueId, inviter)
         	 sAlert.success("Removed " + username , {effect: 'slide', position: 'bottom', html: true});
         	return true
         }
@@ -38,8 +38,7 @@ Template._leagueMembers.events({
 Template.memberItem.helpers({
 	admin: function(){
 		var userId = Meteor.userId();
-    var group = this.group[0]
-		if (userId === group.commissioner){
+		if (userId === this.league.commissioner){
 			return true
 		}
 	}

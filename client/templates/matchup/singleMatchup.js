@@ -121,7 +121,6 @@ Template.matchupJoin.helpers({
 
 Template.matchupMember.helpers({
   "ifPlayer": function(){
-    console.log(this);
     var userId = Meteor.userId();
     var list = this.users
     var onList = list.indexOf(userId);

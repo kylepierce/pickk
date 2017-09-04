@@ -1,6 +1,6 @@
 Template.leagueSettings.events({
   'click [data-action=edit]': function(){
-    IonModal.open('_editGroup');
+    IonModal.open('_editLeague');
   },
   'click [data-action=photo]': function(){
     Router.go("/league/settings/photo/" + this.group._id);
@@ -20,7 +20,6 @@ Template.leagueSettings.events({
       buttonClicked: function(index) {
         if (index === 0) {
         var groupId = Router.current().params._id
-        console.log(groupId);
         Meteor.call('deleteLeague', groupId);
         Router.go('/groups');
         return true
@@ -32,9 +31,8 @@ Template.leagueSettings.events({
 
 AutoForm.addHooks(['groupTeam'], {
   onSuccess: function(operation, result, template) {
-    console.log(operation, result, template);
     this.event.preventDefault();
-    Router.go("/groups/invite/" + this.docId);
+    Router.go("/league/invite/" + this.docId);
   }
 });
 

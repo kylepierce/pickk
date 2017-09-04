@@ -12,8 +12,8 @@ Template._adminOptions.helpers({
 
 Template._adminOptions.events({
   // Add group id to update group info.
-  'click [data-action=_editGroup]': function(e, t){
-    IonModal.open('_editGroup');
+  'click [data-action=_editLeague]': function(e, t){
+    IonModal.open('_editLeague');
   },
   'click [data-action=assocation]': function(){
     var groupId = Router.current().params._id
@@ -28,7 +28,7 @@ Template._adminOptions.events({
     Router.go('/groups/members/'+groupId)
   },
 
-  'click [data-ion-modal=_groupRequests]': function(event, template){
+  'click [data-ion-modal=_leagueRequests]': function(event, template){
     var groupId = Router.current().params._id
     Session.set('groupId', groupId);
   },
@@ -46,7 +46,6 @@ Template._adminOptions.events({
       buttonClicked: function(index) {
         if (index === 0) {
         var groupId = Router.current().params._id
-        console.log(groupId);
         Meteor.call('deleteLeague', groupId);
         Router.go('/groups');
         return true

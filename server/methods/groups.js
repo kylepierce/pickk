@@ -95,15 +95,15 @@ Meteor.methods({
 	  createPendingNotification(notifyObj)
 	},
 
-	'denyLeagueRequest': function(leagueId, userId, inviter) {
-		check(userId, String);
+	'denyLeagueRequest': function(leagueId, userId, commissionerUserId) {
 		check(leagueId, String);
-		check(inviter, String);
-		Meteor.call('removeLeagueRequest', id, leagueId);
+		check(userId, String);
+		check(commissionerUserId, String);
+		Meteor.call('removeLeagueRequest', userId, leagueId);
 		var notifyObj = {
 	  	type: "league",
 			status: "Denied Your Request to ",
-	  	senderId: inviter,
+	  	senderId: commissionerUserId,
 	  	userId: userId,
 	  	leagueId: leagueId
 	  }

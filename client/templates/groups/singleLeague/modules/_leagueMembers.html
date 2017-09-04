@@ -1,15 +1,15 @@
 <template name="_leagueMembers">
-  {{#ionModal class="white-text-header" title="Group Members"}}
+  {{#ionModal class="white-text-header" title="League Members"}}
 		{{#ionList}}
 			{{#each user in users}}
-				{{> memberItem user=user group=this.group}}
+				{{> memberItem user=user league=this}}
 			{{/each}}
     {{/ionList}}
    {{/ionModal}}
 </template>
 
 <template name="memberItem">
-  <div data-action="viewUser" class="item item-avatar item-button-right">
+  <div class="item item-avatar item-button-right">
     {{> userAvatar userId=user._id}}
     {{user.profile.username}}
     {{#if admin}}

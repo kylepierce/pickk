@@ -94,9 +94,8 @@ Template.commissionerLinks.events({
     var groupId = Router.current().params._id
     Router.go('/league/settings/' + groupId);
   },
-  'click [data-ion-modal=_groupRequests]': function(event, template){
-    var groupId = Router.current().params._id
-    Session.set('groupId', groupId);
+  'click [data-action=_leagueRequests]': function(event, template){
+    IonModal.open('_leagueRequests', this);
   },
 });
 
@@ -104,12 +103,12 @@ Template.leagueLinks.helpers({});
 
 Template.leagueLinks.events({
   'click [data-action=viewMembers]': function(){
-    IonModal.open('_leagueMembers', this);
+    IonModal.open('_leagueMembers', this.league);
   },
   "click [data-action=invite]": function(){
     Router.go('/league/invite/' + this.league._id);
   },
   "click [data-action=viewLeaderboard]": function(){
-
+    Router.go('/league/week-leaderboard/' + this.league._id)
   },
 });

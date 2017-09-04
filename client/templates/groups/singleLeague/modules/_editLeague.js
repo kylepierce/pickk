@@ -6,11 +6,11 @@ AutoForm.addHooks(['updateLeague'], {
   }
 });
 
-Template._editGroup.created = function() {
+Template._editLeague.created = function() {
   IonPopover.hide();
 };
 
-Template._editGroup.helpers({
+Template._editLeague.helpers({
   // group: function() {
   //   var groupId = Session.get('groupId');
   //   return Groups.findOne({_id: groupId})
@@ -37,7 +37,7 @@ Template._editGroup.helpers({
   }
 });
 
-Template._editGroup.events({
+Template._editLeague.events({
   'click [data-action=update]': function(){
 
     // sAlert.success("Updated Group!", {effect: 'slide', position: 'bottom', html: true});

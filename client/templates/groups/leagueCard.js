@@ -47,7 +47,11 @@ Template.leagueDetails.helpers({
     }
 
     requestsToJoin = function(league){
-      var number = league.requests.length
+      if(league.requests){
+        var number = league.requests.length
+      } else{
+        var number = 0
+      }
       var requests = {headline: number, title: "Requests" }
       return requests
     }
