@@ -3,7 +3,7 @@ Template.memberCheck.helpers({
     var numberOfUsers = this.league.members.length
     var limit = this.league.limit
     var max = this.league.limitNum
-    if(limit && max && limit === true && numberOfUsers >= max){
+    if(this.league.limit && this.league.limitNum && limit === true && numberOfUsers >= max){
       return true
     }
   },
@@ -12,7 +12,7 @@ Template.memberCheck.helpers({
       return true
     }
   },
-  inviteOnly: function(){
+  invite: function(){
     if (this.league.secret === "invite" ) {
       return true
     }
@@ -136,7 +136,7 @@ Template.inviteOnly.helpers({
 
       if( alreadyInvited > -1){
         return true
-      } else if (deeplinkAllowed === "true"){
+      } else if (deeplinkAllowed === true){
         return true
       }
     }

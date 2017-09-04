@@ -8,14 +8,14 @@
 
   {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">
-      {{groupName}}
+      {{leagueName}}
     </h1>
   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
       <div class="container hundred-bottom">
-        {{#with group}}
+        {{#with league}}
           {{> leagueCard}}
         {{/with}}
 
@@ -35,7 +35,7 @@
           {{/if}}
         {{else}}
           <div class="no-notifications">
-            This group is private and can only be seen by members
+            This league is private and can only be seen by members
           </div>
         {{/if}}
       </div>

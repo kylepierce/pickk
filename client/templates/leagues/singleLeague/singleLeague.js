@@ -2,38 +2,32 @@ Template.singleLeague.rendered = function() {
   Session.set('chatGroup', this.data.league._id)
 };
 
-Template.singleLeague.events({
-  "click [data-action=createMatchup]": function(){
-    Router.go('/matchup/create/')
-  }
-});
-
 Template.singleLeague.helpers({
-  group: function() {
+  league: function() {
     return this.league;
   },
   member: function(){
     var userId = Meteor.userId();
-    var group = this.league
-    var isMember = group.members.indexOf(userId)
+    var league = this.league
+    var isMember = league.members.indexOf(userId)
     if(isMember > -1) {
       return true
     }
   },
-  groupName: function(){
+  leagueName: function(){
     return this.league.name
   },
   visible: function(){
     var userId = Meteor.userId();
-    var group = this.league
-    var isMember = group.members.indexOf(userId)
-    if(group.invites){
-      var userInvited = group.invites.indexOf(userId)
+    var league = this.league
+    var isMember = league.members.indexOf(userId)
+    if(league.invites){
+      var userInvited = league.invites.indexOf(userId)
     } else {
       var userInvited = -1
     }
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
-    var privacy = group.secret
+    var privacy = league.secret
     if (privacy === "private" || privacy === true) {
       if (isMember > -1 || userInvited > -1 || deeplinkAllowed === "true"){
         return true
@@ -47,11 +41,11 @@ Template.singleLeague.helpers({
 Template.chatIcon.helpers({
   member: function(){
     var userId = Meteor.userId();
-    var groupId = Router.current().params._id
-    var group = this.league
-    var isMember = group.members.indexOf(userId)
+    var leagueId = Router.current().params._id
+    var league = this.league
+    var isMember = league.members.indexOf(userId)
     if(isMember > -1) {
-      Session.set('chatGroup', groupId)
+      Session.set('chatGroup', leagueId)
       return true
     } else {
       Session.set('chatGroup', null)
@@ -62,18 +56,19 @@ Template.chatIcon.helpers({
 
 Template.leagueMatchups.helpers({
   leagueMatchups: function(){
-    var groupId = this.league._id
-    var matchups = Matchup.find({groupId: groupId}).fetch();
+    console.log(this);
+    var leagueId = this.league._id
+    var matchups = Matchup.find({leagueId: leagueId}).fetch();
     if(matchups.length > 0){
       return true
     }
   },
   commissionerAdmin: function(){
     var currentUser = Meteor.userId()
-    var groupId = Router.current().params._id
-    var group = Groups.findOne({_id: groupId});
+    var leagueId = Router.current().params._id
+    var league = Groups.findOne({_id: leagueId});
 
-    if (group.commissioner == currentUser) {
+    if (league.commissioner == currentUser) {
       return true
     }
   },
@@ -91,8 +86,8 @@ Template.commissionerLinks.helpers({
 
 Template.commissionerLinks.events({
   "click [data-action=settings]": function(e, t){
-    var groupId = Router.current().params._id
-    Router.go('/league/settings/' + groupId);
+    var leagueId = Router.current().params._id
+    Router.go('/league/settings/' + leagueId);
   },
   'click [data-action=_leagueRequests]': function(event, template){
     IonModal.open('_leagueRequests', this);
