@@ -25,17 +25,3 @@
     </h1>
   {{/contentFor}}
 </template>
-
-<template name="afCheckboxGroup_ionic2">
-  <div class="af-checkbox-group team-select" {{dsk}}>
-    {{#each this.items}}
-      <input type="checkbox" id="{{this.value}}" value="{{this.value}}" {{atts}} />
-      <label for="{{this.value}}" class="checkbox {{selected}} team-select-container button-card">
-        <div class="team-select-single">
-          <img src="{{img}}" />
-          <h5>{{this.label}}</h5>
-        </div>
-      </label>
-    {{/each}}
-  </div>
-</template>
