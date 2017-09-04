@@ -21,11 +21,16 @@
 
         {{#if visible}}
           {{#if member}}
-            {{> commissionerLinks}}
-            {{> leagueLinks}}
+            <div class="line-divider"></div>
+            <div id="button-section">
+              {{> leagueLinks}}
+              {{> commissionerLinks}}
+            </div>
+            <div class="line-divider"></div>
             {{> leagueMatchups}}
           {{else}}
             {{> memberCheck}}
+            <div class="line-divider"></div>
             {{> visitorLinks}}
           {{/if}}
         {{else}}
@@ -62,45 +67,41 @@
 </template>
 
 <template name="leagueLinks">
-  <div id="button-section">
-    <div class="button-card half" data-action="viewMembers">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Members</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    <div class="button-card half {{ifPlayer}}" data-action="invite">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Invite</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    <div class="button-card half" data-action="viewLeaderboard">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Leaderboard</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    {{#if notCommissioner}}
-      <div class="button-card half" data-action="settings">
-        {{> ionIcon icon="ios-gear"}}
-        <span class="text">Settings</span>
-        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-      </div>
-    {{/if}}
+  <div class="button-card half" data-action="viewMembers">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Members</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
+  <div class="button-card half {{ifPlayer}}" data-action="invite">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Invite</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  <div class="button-card half" data-action="viewLeaderboard">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Leaderboard</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  {{#if notCommissioner}}
+    <div class="button-card half" data-action="settings">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Settings</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
 </template>
 
 <template name="commissionerLinks">
   {{#if commissioner}}
-    <div id="button-section">
-      <div class="button-card half" data-action="settings">
-        {{> ionIcon icon="ios-gear"}}
-        <span class="text">Settings</span>
-        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-      </div>
-      <div class="button-card half" data-action="_leagueRequests">
-        {{> ionIcon icon="ios-gear"}}
-        <span class="text">Requests</span>
-        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-      </div>
+    <div class="button-card half" data-action="settings">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Settings</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="_leagueRequests">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Requests</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
   {{/if}}
 </template>

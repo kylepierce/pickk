@@ -44,6 +44,21 @@
 	display: table;
 }
 
+.hero-bottom .description {
+	float: left;
+	width: 90%;
+}
+
+.hero-bottom .arrow {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  font-size: 2rem;
+	text-align: right;
+	float: left;
+	width: 10%;
+}
+
 #hero-section .slick-track {
 	margin-left: 2.5%;
 	margin-bottom: 5px;
