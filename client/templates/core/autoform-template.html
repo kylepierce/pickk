@@ -32,11 +32,44 @@
       <input type="radio" id="{{this.value}}" value="{{this.value}}" {{atts}} />
       <label for="{{this.value}}" class=" team-select-container button-card">
         <div class="team-select-single">
-          <!-- <img src="{{img}}" /> -->
           <h5>{{this.label}}</h5>
         </div>
       </label>
     {{/each}}
+  </div>
+</template>
+
+<template name="afRadioGroup_games">
+  <div class="af-radio-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <div data-action="showGames" class="full">
+        <h3>{{niceDate this.label}} - ({{count}} Games)</h3>
+      </div>
+      <span class="game-display hidden">
+        {{#each game in games}}
+          <input type="radio" id="{{game._id}}" value="{{game._id}}" {{atts}} />
+          <label for="{{game._id}}" class=" team-select-container button-card">
+            <div class="team-select-single">
+              <!-- <img src="{{img}}" /> -->
+              <h5>{{game.name}}</h5>
+            </div>
+          </label>
+        {{/each}}
+      </span>
+    {{/each}}
+  </div>
+</template>
+
+<template name="afFieldInput_singleGame">
+  <div class="af-radio-group team-select" {{dsk}}>
+    {{game}}
+      <!-- <input type="radio" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class=" team-select-container button-card">
+        <div class="team-select-single">
+          <img src="{{img}}" />
+          <h5>{{this.label}}</h5>
+        </div>
+      </label> -->
   </div>
 </template>
 <!--

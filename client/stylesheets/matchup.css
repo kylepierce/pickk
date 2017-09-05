@@ -113,3 +113,9 @@
   width: 100%;
   white-space: initial;
 }
+
+.game-display {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: wrap;
+}

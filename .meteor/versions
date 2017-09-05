@@ -58,6 +58,8 @@ fastclick@1.0.13
 flowkey:hotkeys@1.2.0
 flyandi:reactive-countdown@0.0.3
 fortawesome:fontawesome@4.7.0
+forwarder:autoform-wizard@0.9.1
+forwarder:autoform-wizard-iron-router@0.1.5
 fourseven:scss@3.13.0
 geojson-utils@1.0.10
 gfk:mailgun-api@1.1.0

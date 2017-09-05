@@ -103,3 +103,5 @@ mdg:meteor-apm-agent
 facebook-config-ui
 twitter-config-ui
 dynamic-import
+forwarder:autoform-wizard
+forwarder:autoform-wizard-iron-router

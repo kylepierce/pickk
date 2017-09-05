@@ -10,24 +10,51 @@
   {{#ionView}}
     {{#ionContent}}
     <div class="container ten-spacing hundred-bottom">
-      {{#autoForm collection="Matchup" type="insert" id="createMatchup"}}
-        {{> afQuickField type="select-radio" name='gameId'}}
-        <br>
-        {{> afQuickField type="select-radio" name='limit'}}
-        {{#if afFieldValueIs name="limit" value="true"}}
-
-          {{> afQuickField type='select-radio' name="limitNum"}}
-        {{/if}}
-        <br>
-        {{> afQuickField type='select-radio' name='secret' }}
-          {{#if afFieldValueIs name="secret" value="group"}}
-            {{> afQuickField type='select-radio' id="fix-check" name='groupId'}}
-          {{/if}}
-        <br>
-        <!-- {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}} -->
-        <input name="status" type="submit" class="button button-large button-balanced" value="Create Matchup">
-      {{/autoForm}}
+      {{> wizard id="createMatchup" route="create-matchup" steps=steps buttonClasses="button" confirmButton="Create Matchup!"}}
     </div>
     {{/ionContent}}
    {{/ionView}}
+</template>
+
+<template name="selectWho">
+  {{#autoForm id="selectUsers" doc=step.data schema=step.schema}}
+    <div class="item item-divider ten-spacing">Who Can Join?</div>
+    <div id="secret">
+      {{> afQuickField name='secret' }}
+    </div>
+
+    {{#if league}}
+      {{> afQuickField type='select-radio' name='leagueId'}}
+    {{/if}}
+
+    <div class="item item-divider ten-spacing">Limit</div>
+    {{> afQuickField type='select-radio' name='limitNum' }}
+
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="matchupLength">
+  {{#autoForm id="matchupLength" doc=step.data schema=step.schema}}
+    {{> afQuickField name='matchupLength'}}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="matchupGames">
+  {{#autoForm id="matchupGames" doc=step.data schema=step.schema}}
+    {{> afQuickField name='gameId'}}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="matchupFinalDetails">
+  {{#autoForm id='matchup-details' doc=step.data schema=step.schema}}
+    {{> afQuickField name='description'}}
+    {{#if admin}}
+      {{> afQuickField name='featured'}}
+      {{> afQuickField name='featured'}}
+    {{/if}}
+    {{> wizardButtons}}
+  {{/autoForm}}
 </template>
