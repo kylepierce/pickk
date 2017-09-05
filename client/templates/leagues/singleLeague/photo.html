@@ -8,12 +8,6 @@
       Upload League Photo
     </h1>
   {{/contentFor}}
-  
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear right" data-action="skip">
-      Skip
-    </button>
-  {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
@@ -28,6 +22,10 @@
         <label for="leagueAvatar" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
             Upload Photo
         </label>
+      </div>
+
+      <div class="move-to-next-step-without-completing-goal" data-action="selectSports">
+        I Will Upload A League Photo Later
       </div>
     {{/ionContent}}
   {{/ionView}}

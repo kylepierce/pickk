@@ -56,7 +56,6 @@ Template.chatIcon.helpers({
 
 Template.leagueMatchups.helpers({
   leagueMatchups: function(){
-    console.log(this);
     var leagueId = this.league._id
     var matchups = Matchup.find({leagueId: leagueId}).fetch();
     if(matchups.length > 0){
@@ -79,6 +78,12 @@ Template.commissionerLinks.helpers({
     var commissionerId = this.league.commissioner
     var userId = Meteor.userId();
     if (commissionerId === userId){
+      return true
+    }
+  },
+  requests: function(){
+    console.log(this.league.requests);
+    if(this.league.requests.length > 0){
       return true
     }
   }

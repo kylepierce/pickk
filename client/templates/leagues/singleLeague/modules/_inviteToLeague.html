@@ -14,51 +14,52 @@
 
   {{#ionView }}
     {{#ionContent}}
-      <div class="container">
-        {{> inviteToLeagueBox}}
-      </div>
+      {{> inviteToLeagueBox}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="inviteToLeagueBox">
   <div class="search-bar-fix">
-    {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
+    {{> EasySearch.Input index=UserListIndex attributes=inputAttributes }}
   </div>
-  {{#EasySearch.IfInputEmpty index=UserListIndex}}
-    {{#ionList}}
-      {{#each follower in followers}}
-        {{#ionItem buttonRight=true avatar=true}}
-          <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
-            {{> userAvatar userId=follower}}
-            {{> singleUsername userId= follower}}
-          </a>
-          {{> inviteButton _id=follower }}
-        {{/ionItem}}
-      {{/each}}
-    {{/ionList}}
-  {{else}}
-    <div class="list-group">
-      {{#ionList}}
-        {{#EasySearch.Each index=UserListIndex}}
-          {{#ionItem buttonRight=true avatar=true}}
-            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
-              {{> userAvatar user=. alreadySubscribed=true}}
-              {{profile.username}}
-            </a>
-            {{> inviteButton _id=__originalId user=profile.username}}
-          {{/ionItem}}
-        {{/EasySearch.Each}}
-      {{/ionList}}
-    </div>
-  {{/EasySearch.IfInputEmpty}}
 
-  {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
-  <div class="item invite-item item-button-right">
-    <h2>Invite New Friends</h2>
-    <button data-action="textInvite" class="button button-balanced">Invite</button>
+  <div class="container ten-spacing hundred-bottom">
+    {{#EasySearch.IfInputEmpty index=UserListIndex}}
+      {{#ionList}}
+        {{#each follower in followers}}
+          {{#ionItem buttonRight=true avatar=true}}
+            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
+              {{> userAvatar userId=follower}}
+              {{> singleUsername userId= follower}}
+            </a>
+            {{> inviteButton _id=follower }}
+          {{/ionItem}}
+        {{/each}}
+      {{/ionList}}
+    {{else}}
+      <div class="list-group">
+        {{#ionList}}
+          {{#EasySearch.Each index=UserListIndex}}
+            {{#ionItem buttonRight=true avatar=true}}
+              <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
+                {{> userAvatar user=. alreadySubscribed=true}}
+                {{profile.username}}
+              </a>
+              {{> inviteButton _id=__originalId user=profile.username}}
+            {{/ionItem}}
+          {{/EasySearch.Each}}
+        {{/ionList}}
+      </div>
+    {{/EasySearch.IfInputEmpty}}
+
+    {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
+    <div class="item invite-item item-button-right">
+      <h2>Invite New Friends</h2>
+      <button data-action="textInvite" class="button button-balanced">Invite</button>
+    </div>
+    {{/EasySearch.IfNoResults}}
   </div>
-  {{/EasySearch.IfNoResults}}
 </template>
 
 <template name="inviteButton">

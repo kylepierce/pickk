@@ -52,6 +52,9 @@ Template.inviteButton.events({
 })
 
 Template.inviteToLeagueBox.helpers({
+  inputAttributes: function(){
+    return {placeholder: "Search..."}
+  },
   UserListIndex: function() {
     return UserListIndex;
   },
@@ -59,6 +62,7 @@ Template.inviteToLeagueBox.helpers({
     var user = Meteor.user().profile.followers
     return user
   },
+
 });
 
 Template.inviteToLeagueBox.events({

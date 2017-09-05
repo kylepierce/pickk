@@ -9,16 +9,15 @@
 
   {{#ionView}}
     {{#ionContent}}
-    <div class="container ten-spacing">
+    <div class="container ten-spacing hundred-bottom">
       {{#autoForm collection="Groups" type="insert" id="createLeague"}}
         {{> afQuickField autofocus='' name='name' label-type='stacked'}}
-        <br>
+        <div class="item item-divider ten-spacing">Who Can Join?</div>
         {{> afQuickField type='select-radio' name='secret' }}
-        <br>
+        <div class="item item-divider ten-spacing">Limit</div>
         {{> afQuickField type='select-radio' name='limitNum' }}
-        <br>
         <!-- {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}} -->
-        <input name="status" type="submit" class="button button-large button-balanced" value="Create League">
+        <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;" value="Create League">
       {{/autoForm}}
     </div>
     {{/ionContent}}

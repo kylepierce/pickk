@@ -1,39 +1,8 @@
 Meteor.methods({
-	// 'isGroupNameUnique': function(name) {
-	// 	check(name, String);
-	// 	name = name.trim()
-	// 	if (!name) {
-	// 		return true;
-	// 	}
-	// 	var leagueExists = Groups.find({name: name}).count()
-	// 	if (leagueExists > 0){
-	// 		console.log("Group Already Exists")
-	// 		return true
-	// 	} else {
-	// 		return false
-	// 	}
-	// },
-
-	// 'editGroup': function(id, leagueName, secretStatus, description) {
-	// 	check(id, String);
-	// 	check(leagueName, String);
-	// 	check(secretStatus, String);
-	// 	check(description, String);
-	// 	Groups.update({_id: id},
-	// 		{
-	// 			$set: {
-	// 				name: leagueName,
-	// 				secret: secretStatus,
-	// 				desc: description
-	// 			}
-	// 		});
-	// },
-
 	'setLeagueAvatar': function(id, avatar) {
 		check(id, String);
 		check(avatar, String);
 		var league = Groups.findOne({_id: id});
-		console.log(id, avatar);
 		Groups.update({_id: id}, {$set: {avatar: avatar}});
 	},
 

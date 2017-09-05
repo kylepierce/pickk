@@ -215,3 +215,11 @@ h1, h2, h3, h4, h5, h6 {
 .hidden {
 	display: none
 }
+
+.move-to-next-step-without-completing-goal {
+  text-decoration: underline;
+  text-align: right;
+  margin-right: 50px;
+  font-style: italic;
+  color: #808080;
+}

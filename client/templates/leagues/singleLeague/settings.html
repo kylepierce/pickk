@@ -10,8 +10,8 @@
     {{#ionContent}}
       <div class="container">
         <div id="button-section">
-          {{> commissionerSettings}}
           {{> memberSettings}}
+          {{> commissionerSettings}}
         </div>
       </div>
     {{/ionContent}}
@@ -54,45 +54,4 @@
       <strong>Delete League</strong>
     </div>
   {{/if}}
-</template>
-
-<template name="leagueAssociation">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
-
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Create New League</h1>
-  {{/contentFor}}
-
-  {{#ionView}}
-    {{#ionContent}}
-      <div class="container">
-        {{#autoForm collection="Groups" type="update" id="groupTeam"  doc=groupData}}
-          <h3>League Sports</h3>
-          <p>What sports does this league watch?</p>
-          {{> afFieldInput name="association" template="ionic2"}}
-          <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;" value="Add Sports">
-        {{/autoForm}}
-      </div>
-
-        <!-- {{#if afFieldValueIs name="leagueAssociation" value="true"}}
-          {{> afQuickField type='select-radio' name="association"}}
-          {{> afFieldInput name="association" template="ionic2"}}
-          {{> afQuickField name='teamAssociation' type='select-radio'}}
-          {{#if afFieldValueIs name="teamAssociation" value="true"}}
-            {{#if afFieldValueIs name="association" value="NFL"}}
-              {{> afFieldInput name="favoriteNFLTeam" template="ionic2"}}
-            {{/if}}
-            {{#if afFieldValueIs name="association" value="NBA"}}
-              {{> afQuickField type='select-radio' name="favoriteNBATeam"}}
-            {{/if}}
-            {{#if afFieldValueIs name="association" value="MLB"}}
-              {{> afQuickField type='select-radio' name="favoriteMLBTeam"}}
-            {{/if}}
-          {{/if}}
-        {{/if}} -->
-
-  {{/ionContent}}
- {{/ionView}}
 </template>
