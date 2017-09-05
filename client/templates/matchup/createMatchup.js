@@ -6,10 +6,10 @@ Schema.who = new SimpleSchema({
       type: "select-radio",
       options: [
         {label: "Head to Head", value: 2},
-        {label: "4 Users", value: 4},
-        {label: "8 Users", value: 8},
-        {label: "16 Users", value: 16},
-        {label: "32 Users", value: 32},
+        {label: "4 Players", value: 4},
+        {label: "8 Players", value: 8},
+        {label: "16 Players", value: 16},
+        {label: "32 Players", value: 32},
         {label: "No Limit", value: -1},
       ]
     },
@@ -69,10 +69,11 @@ Schema.length = new SimpleSchema({
 
 Schema.games = new SimpleSchema({
   gameId: {
-    label: "Select Game",
-    type: String,
+    label: "Matchup Game",
+    type: [String],
+    maxCount: 3,
     autoform: {
-      type: "select-radio",
+      type: "select-checkbox",
       template: "games",
       options: function () {
         var games = Games.find().fetch();
@@ -89,28 +90,51 @@ Schema.games = new SimpleSchema({
           var daysGames = _.filter(games, function(game){
             return moment(game.iso).isBetween(start, end)
           });
-          return {label: start, options: formatGames(daysGames)}
+          if(daysGames.length > 0){
+            return {label: start, options: formatGames(daysGames)}
+          } else {
+            return false
+          }
         }
 
         var days = _.range(14)
         var twoWeeks = _.map(days, function(day){
-          return getSingleDay(day)
+          var list = getSingleDay(day)
+          return list
         });
 
-        return twoWeeks
+        return twoWeeks.filter(function(date){
+          return _.isObject(date)
+        });
       }
     }
   },
+  'gameId.$': {
+    type: String
+  }
 });
 
 Schema.extraDetails = new SimpleSchema({
+  period: {
+    type: Array,
+    optional: true,
+    autoform: {
+      type: "select-checkbox",
+      template: "small",
+    }
+  },
+  'period.$': {
+    type: Number,
+    optional: true
+  },
   description: {
     label: "Describe",
-    type: String
+    type: String,
+    optional: true
   },
   featured: {
     type: Boolean,
-    optional: true,
+    optional: true
   },
   commissioner: {
     type: String,
@@ -173,22 +197,14 @@ Matchup.attachSchema([
   Schema.who,
   Schema.length,
   Schema.games,
-  Schema.extraDetails,
-  Schema.matchupInital
+  Schema.extraDetails
 ]);
 
 Wizard.useRouter('iron:router');
 
 Template.createMatchup.helpers({
-  league: function(){
-    var secret = Session.get('secret');
-    if (secret === "league"){
-      return true
-    }
-  },
   steps: function() {
-    return [
-      {
+    return [{
       id: 'selectUsers',
       formId: "selectUsers",
       template: 'selectWho',
@@ -214,19 +230,71 @@ Template.createMatchup.helpers({
         Matchup.insert(
           _.extend(wizard.mergedData(), data), function(err, id) {
             if (err) {self.done();}
-            else {Router.go('matchup.show', {_id: id});
+            else {Router.go('/matchup/invite/:_id', {_id: id});
           }
         });
       }
-    }
-  ]
+    }]
   }
 });
-//
-// Template.createMatchup.events({
-//   'click button': function(e, template) {
-//     e.preventDefault();
-//     console.log(e, template);
-//     // this.wizard.next();
-//   }
+
+Template.selectWho.helpers({
+  league: function(){
+    var secret = Session.get('secret');
+    if (secret === "league"){
+      return true
+    }
+  },
+});
+
+Template.selectWho.events({
+  'click #secret label': function(e, t){
+    Session.set('secret', this.value);
+  }
+});
+
+Template.matchupGames.helpers({
+  dynamicFields: function(){
+    var data = this.wizard.mergedData();
+    var amount = data && data.matchupLength;
+    return data.matchupLength
+  }
+});
+
+// Template.matchupFinalDetails.onCreated(function() {
+//   Template.instance().data = this.wizard.mergedData();
 // });
+
+Template.matchupFinalDetails.helpers({
+  dynamicFields: function(){
+    var data = this.wizard.mergedData();
+    var amount = data && data.matchupLength;
+    return data.matchupLength
+  },
+  games: function(){
+    var data = this.wizard.mergedData();
+    return Games.find({_id: {$in: data.gameId}}).fetch();
+  },
+  matchupLength: function(letter){
+    var data = this.wizard.mergedData();
+    var lengthLetter = data.matchupLength[1]
+    if(lengthLetter === letter){
+      return true
+    }
+  },
+  quarterOptions: function(){
+    return [
+      {label: "Pre-Game", value: 0},
+      {label: "1st", value: 1},
+      {label: "2nd", value: 2},
+      {label: "3rd", value: 3},
+      {label: "4th", value: 4},
+    ]
+  },
+  halfOptions: function(){
+    return [
+      {label: "1st Half", value: 1},
+      {label: "2nd Half", value: 2},
+    ]
+  }
+});

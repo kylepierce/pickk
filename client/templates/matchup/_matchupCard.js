@@ -1,4 +1,26 @@
 Template.matchupCard.helpers({
+  'matchupName': function(){
+    if(this.m && this.m.gameId.length === 1){
+      var gameId = this.m.gameId[0]
+      Meteor.subscribe('singleGameData', gameId);
+      var game = Games.findOne({_id: gameId});
+      if(game){
+        return game.name
+      }
+    } else {
+      return this.m.matchupLength + " Matchup"
+      // var names = []
+      // for (var i = 0; i < this.m.gameId.length; i++) {
+      //   var gameId = this.m.gameId[i]
+      //   Meteor.subscribe('singleGameData', gameId);
+      //   var game = Games.findOne({_id: gameId});
+      //   if(game){
+      //     names.push(game.name);
+      //   }
+      // }
+      // return names
+    }
+  },
   'joined': function(){
     var userId = Meteor.userId();
     var alreadyJoined = this.m.users.indexOf(userId)

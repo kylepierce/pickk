@@ -30,10 +30,12 @@
             {{> matchupJoin}}
           {{/if}}
 
-          {{#with game matchup.gameId}}
-            <div class="line-divider"></div>
-            {{> entireGameCard game=this}}
-          {{/with}}
+          {{#each id in matchup.gameId}}
+            {{#with game id}}
+              <div class="line-divider"></div>
+              {{> entireGameCard game=this}}
+            {{/with}}
+          {{/each}}
 
         </div>
       {{/with}}

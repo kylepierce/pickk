@@ -119,3 +119,45 @@
   justify-content: space-between;
   flex-flow: wrap;
 }
+
+.game-display label {
+  padding: 10px;
+}
+
+.date-card {
+  background-color: #4F656F!important;
+  color: white!important;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+.date-card .arrow {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+#createMatchup .wizard-next-button {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+}
+
+.date-select-single {
+  width: 90%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  margin: 0;
+}
+
+.date-select-single .spelled {
+  font-size: 1.2rem;
+}
+
+.date-select-single .count {
+  font-size: 1rem;
+  font-weight: 400;
+}

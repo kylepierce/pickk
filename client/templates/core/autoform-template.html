@@ -39,19 +39,23 @@
   </div>
 </template>
 
-<template name="afRadioGroup_games">
-  <div class="af-radio-group team-select" {{dsk}}>
+<template name="afCheckboxGroup_games">
+  <div class="af-checkbox-group team-select" {{dsk}}>
     {{#each this.items}}
-      <div data-action="showGames" class="full">
-        <h3>{{niceDate this.label}} - ({{count}} Games)</h3>
+      <div data-action="showGames" class="date-card card-container full">
+        <div class="date-select-single">
+          <span class="spelled">{{niceDate this.label}}</span>
+          <span class="count">{{count}} Games</span>
+        </div>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-down"}}</span>
       </div>
-      <span class="game-display hidden">
+      <span class="game-display hidden ten-spacing">
         {{#each game in games}}
-          <input type="radio" id="{{game._id}}" value="{{game._id}}" {{atts}} />
+          <input type="checkbox" id="{{game._id}}" value="{{game._id}}" {{atts}} />
           <label for="{{game._id}}" class=" team-select-container button-card">
             <div class="team-select-single">
-              <!-- <img src="{{img}}" /> -->
               <h5>{{game.name}}</h5>
+              <h5>{{time game.iso}}</h5>
             </div>
           </label>
         {{/each}}
@@ -60,32 +64,15 @@
   </div>
 </template>
 
-<template name="afFieldInput_singleGame">
-  <div class="af-radio-group team-select" {{dsk}}>
-    {{game}}
-      <!-- <input type="radio" id="{{this.value}}" value="{{this.value}}" {{atts}} />
-      <label for="{{this.value}}" class=" team-select-container button-card">
+<template name="afCheckboxGroup_small">
+  <div class="af-checkbox-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="checkbox" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class="checkbox {{selected}} team-select-container button-card">
         <div class="team-select-single">
-          <img src="{{img}}" />
           <h5>{{this.label}}</h5>
         </div>
-      </label> -->
-  </div>
-</template>
-<!--
-<template name="afRadioGroup_ionic">
-  <div class="af-radio-group" {{dsk}}>
-    <div class="item item-divider">
-      {{afFieldLabelText name=this.name}}
-    </div>
-    {{#each this.items}}
-      <label class="item item-radio item-text-wrap">
-        <input type="radio" value="{{this.value}}" {{atts}} />
-        <div class="item-content disable-pointer-events">
-          {{this.label}}
-        </div>
-        <i class="radio-icon ion-checkmark disable-pointer-events"></i>
       </label>
     {{/each}}
   </div>
-</template> -->
+</template>
