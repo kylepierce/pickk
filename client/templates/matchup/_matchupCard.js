@@ -29,7 +29,6 @@ Template.matchupCard.helpers({
     }
   },
   'commissioner': function(matchup){
-    console.log(matchup);
     var leagueId = matchup.leagueId
 
     if(leagueId){
@@ -93,17 +92,17 @@ Template.matchupCard.events({
 Template.matchupDetails.helpers({
   sections: function(){
     var userId = Meteor.userId();
+    var matchup = this.m
 
-    // memberCount = function(matchup){
-    //   var members = matchup.members.length
-    //   if(this.limit === "true"){
-    //     var number = this.limitNum
-    //     var limit = " / " + number
-    //   } else {
-    //     var limit = " / ∞"
-    //   }
-    //   return members + limit
-    // }
+    memberCount = function(matchup){
+      var members = matchup.users.length
+      if(matchup.limitNum !== -1){
+        var limit = " / " + matchup.limitNum
+      } else {
+        var limit = " / ∞"
+      }
+      return members + limit
+    }
 
     // requestsToJoin = function(matchup){
     //   if(matchup.requests){
@@ -115,69 +114,64 @@ Template.matchupDetails.helpers({
     //   return requests
     // }
 
-    // futureMatchups = function(matchup){
-    //   Meteor.subscribe('singleGroupMatchupCount', matchup._id)
-    //   var count = Counts.get('singleGroupMatchupCount')
-    //   var matchup = {headline: count, title: "Matchups" }
-    //   return matchup
-    // }
+    privacyObject = function(matchup){
+      if(matchup.secret === "invite"){
+        var privacy = {icon: "invite", title: "Invite"}
+      } else if(matchup.secret === "league"){
+        var privacy = {icon: "league", title: "League"}
+      } else if(matchup.secret === "location"){
+        var privacy = {icon: "location", title: "Location"}
+      } else {
+        var privacy = {icon: "public", title: "Public"}
+      }
+      return privacy
+    }
 
-    // privacyObject = function(matchup){
-    //   if(matchup.secret === "invite"){
-    //     var privacy = {icon: "invite", title: "Invite"}
-    //   } else if(matchup.secret === "league"){
-    //     var privacy = {icon: "league", title: "League"}
-    //   } else if(matchup.secret === "location"){
-    //     var privacy = {icon: "location", title: "Location"}
-    //   } else {
-    //     var privacy = {icon: "public", title: "Public"}
-    //   }
-    //   return privacy
-    // }
-
-    // notifications = function(matchupId){
-    //   Meteor.subscribe('unreadLeagueNotificationCount', matchupId)
-    //   var count = Counts.get('unreadLeagueNotificationCount')
-    //   var notificationObj = {headline: count, title: "Alerts"}
-    //   if (count > 0){
-    //     notificationObj.alert = "notification-alert"
-    //   }
-    //   return notificationObj
-    // }
+    timeToGame = function(matchup){
+      var gameId = matchup.gameId[0]
+      Meteor.subscribe('singleGameData', gameId);
+      var game = Games.findOne({_id: gameId});
+      var end = Chronos.moment(game.iso)
+      var current = Chronos.moment()
+      var clock = end.diff(current, "seconds");
+      var duration = moment.duration(clock, 'seconds');
+      // var formatted = duration.format("DD:HH:MM:ss");
+      var base = duration._data
+      return base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
+      // return clock
+    }
 
     // weeklyRanking = function(matchup){
     //   var rank = "1st"
     //   var members = matchup.members.length
     //   var rankingObj = {headline: rank, title: "of " +
-    //
-    //
     //   members }
     //   return rankingObj
     // }
 
-    // matchupSports = function(matchup){
-    //   if(!matchup.association){
-    //     var sports = {headline: "All", title: "Sports"}
-    //   } else if (matchup.association.length === 1) {
-    //     var sports = {icon: "location", title: matchup.association}
-    //   } else {
-    //     var sports =  {list: matchup.association}
-    //   }
-    //   return sports
-    // }
-
+    matchupLength = function(matchup){
+      var len = matchup.matchupLength;
+      var number = len[0]
+      var length = len[1]
+      if (length === "Q"){
+        var period = "Quarter"
+      } else if (length === "H"){
+        var period = "Half"
+      } else if (length === "G"){
+        var period = "Game"
+      }
+      return {headline: number, title: period}
+    }
     // if (this.commissioner === Meteor.userId()){
     //   var sections = [
     //     weeklyRanking(this),
     //     notifications(this._id),
-    //     futureMatchups(this),
     //     requestsToJoin(this)
     //   ]
     // } else if (this.members.indexOf(userId) > -1){
     //   var sections = [
     //     weeklyRanking(this),
     //     notifications(this._id),
-    //     futureMatchups(this),
     //     matchupSports(this)
     //   ]
     // } else {
@@ -190,10 +184,10 @@ Template.matchupDetails.helpers({
     // }
 
   var sections = [
-    {icon: "league", title: "Leagues"},
-    {icon: "league", title: "Leagues"},
-    {icon: "league", title: "Leagues"},
-    {icon: "league", title: "Leagues"},
+    {icon: "coach", title: memberCount(matchup)},
+    privacyObject(matchup),
+    matchupLength(matchup),
+    {icon: "stopwatch", title: timeToGame(matchup)}
   ]
   return sections
   }

@@ -64,12 +64,17 @@ Template.singleMatchup.events({
     });
   },
 });
+Template.matchupJoin.events({
+  "click [data-action=viewLeague]": function(e, t) {
+    Router.go('/league/' + this.leagueId );
+  }
+});
 
 Template.matchupJoin.helpers({
   notMaxed: function(){
-    var matchup = this
-    var numOfUsers = this.users.length
-    var max = this.limitNum
+    var matchup = this.m
+    var numOfUsers = matchup.users.length
+    var max = matchup.limitNum
     if(max === -1){
       return true
     } else if(numOfUsers < max){
@@ -84,9 +89,9 @@ Template.matchupJoin.helpers({
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
     if (this.secret === "public"){
       return true
-    } else if(this.groupId){
-      Meteor.subscribe('singleGroup', this.groupId);
-      var group = Groups.find({_id: this.groupId}).fetch()
+    } else if(this.leagueId){
+      Meteor.subscribe('singleGroup', this.leagueId);
+      var group = Groups.find({_id: this.leagueId}).fetch()
       var isMember = group[0].members.indexOf(userId)
       if(isMember > -1){
         return true
@@ -112,7 +117,7 @@ Template.matchupJoin.helpers({
     }
   },
   league: function () {
-    if(this.groupId) {
+    if(this.leagueId) {
       return true
     }
   }
@@ -125,6 +130,11 @@ Template.matchupMember.helpers({
     var onList = list.indexOf(userId);
     if (onList > 0){
       return "cta-button"
+    }
+  },
+  "league": function(){
+    if(this.secret === "league"){
+      return true
     }
   }
 });
@@ -143,6 +153,7 @@ Template.matchupMember.events({
     Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
   },
   "click [data-action=viewLeague]": function(e, t) {
-    Router.go('/groups/' + this.groupId );
+    console.log(viewLeague);
+    Router.go('/league/' + this.m.leagueId );
   }
 });

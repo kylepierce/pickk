@@ -25,7 +25,9 @@
 
           {{#if alreadyJoined this.users}}
             <div class="line-divider"></div>
-            {{> matchupMember}}
+            <div id="button-section">
+              {{> matchupMember}}
+            </div>
           {{else}}
             {{> matchupJoin}}
           {{/if}}
@@ -51,7 +53,9 @@
       </button>
       <div class="line-divider"></div>
 
-      {{> matchupMember}}
+      <div id="button-section">
+        {{> matchupMember}}
+      </div>
 
     {{else}}
       {{#if request}}
@@ -59,30 +63,37 @@
       {{/if}}
     {{/if}}
   {{else}}
+    {{#if league}}
+      <div class="button-card half" data-action="viewLeague">
+        {{> ionIcon icon="ios-gear"}}
+        <span class="text">View League</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 
 <template name="matchupMember">
-  <div id="button-section">
-    <div class="button-card half" data-action="viewMembers">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Members</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    <div class="button-card half {{ifPlayer}}" data-action="invite">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Invite</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    <div class="button-card half" data-action="viewLeaderboard">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Leaderboard</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div>
-    <!-- <div class="button-card half" data-action="viewGame">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">View Game</span>
-      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-    </div> -->
+  <div class="button-card half" data-action="viewMembers">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Members</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
+  <div class="button-card half {{ifPlayer}}" data-action="invite">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Invite</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  <div class="button-card half" data-action="viewLeaderboard">
+    {{> ionIcon icon="ios-gear"}}
+    <span class="text">Leaderboard</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  {{#if leauge}}
+    <div class="button-card half" data-action="viewLeague">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">View League</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
 </template>

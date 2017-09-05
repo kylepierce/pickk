@@ -104,7 +104,7 @@ Template['afCheckboxGroup_games'].events({
       $(e.currentTarget).toggleClass('play-selected');
       $(e.currentTarget.previousElementSibling)[0].checked = false
     } else if(count >= max){
-      sAlert.error("Max number of games (" + max + ") has already been selected.", {effect: 'slide', position: 'bottom', html: true});
+      sAlert.error("Max number of games (" + max + ") has already been selected. Tap an existing game to uncheck then select this game again.", {effect: 'slide', position: 'bottom', html: true});
     } else {
       $(e.currentTarget).toggleClass('play-selected');
       $(e.currentTarget.previousElementSibling)[0].checked = true
@@ -165,7 +165,7 @@ Template['afCheckboxGroup_small'].events({
       $(e.currentTarget).toggleClass('play-selected');
       $(e.currentTarget.previousElementSibling)[0].checked = false
     } else if(count >= max){
-      sAlert.error("Max number of periods (" + max + ") hav already been selected.", {effect: 'slide', position: 'bottom', html: true});
+      sAlert.error("Max number of periods (" + max + ") hav already been selected. Tap an existing period to uncheck then select this period again.", {effect: 'slide', position: 'bottom', html: true});
     } else {
       $(e.currentTarget).toggleClass('play-selected');
       $(e.currentTarget.previousElementSibling)[0].checked = true
