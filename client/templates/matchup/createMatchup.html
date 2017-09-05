@@ -54,9 +54,12 @@
     {{#each game in games}}
       {{> entireGameCard game=game}}
       {{#if matchupLength "Q"}}
+        <div class="item item-divider ten-spacing">Select Quarter</div>
         {{> afQuickField name="period" data=dynamicFields options=quarterOptions}}
       {{/if}}
       {{#if matchupLength "H"}}
+        <div class="item item-divider ten-spacing">Select Half</div>
+
         {{> afQuickField name="period" data=dynamicFields options=halfOptions}}
       {{/if}}
     {{/each}}

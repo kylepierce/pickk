@@ -113,7 +113,6 @@ Template.matchupJoin.helpers({
   },
   league: function () {
     if(this.groupId) {
-      console.log(this);
       return true
     }
   }
@@ -136,6 +135,9 @@ Template.matchupMember.events({
   },
   "click [data-action=viewMembers]": function(e, t){
      Router.go('/matchup/members/' + this._id );
+  },
+  "click [data-action=invite]": function(e, t){
+     Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
     Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );

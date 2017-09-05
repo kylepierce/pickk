@@ -230,7 +230,7 @@ Template.createMatchup.helpers({
         Matchup.insert(
           _.extend(wizard.mergedData(), data), function(err, id) {
             if (err) {self.done();}
-            else {Router.go('/matchup/invite/:_id', {_id: id});
+            else {Router.go('/matchup/invite/' + id);
           }
         });
       }
