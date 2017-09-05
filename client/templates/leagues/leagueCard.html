@@ -20,6 +20,13 @@
 		{{#each section in sections}}
 			<div class="section">
 				<div class="section-icon-container {{section.alert}}">
+					{{#if section.list}}
+						<ul style="margin-top:auto;">
+							{{#each item in section.list}}
+								<li>{{item}}</li>
+							{{/each}}
+						</ul>
+					{{/if}}
 					{{#if section.icon}}
 						{{> pickkIcon size="sm" icon=section.icon}}
 					{{else}}

@@ -67,7 +67,7 @@ Template.leagueDetails.helpers({
       if(league.secret === "invite"){
         var privacy = {icon: "invite", title: "Invite"}
       } else if(league.secret === "private"){
-        var privacy = {icon: "lock", title: "Private"}
+        var privacy = {icon: "private", title: "Private"}
       } else if(league.secret === "location"){
         var privacy = {icon: "location", title: "Location"}
       } else {
@@ -96,8 +96,15 @@ Template.leagueDetails.helpers({
       return rankingObj
     }
 
-    sports = function(league){
-      console.log(league);
+    leagueSports = function(league){
+      if(!league.association){
+        var sports = {headline: "All", title: "Sports"}
+      } else if (league.association.length === 1) {
+        var sports = {icon: "location", title: league.association}
+      } else {
+        var sports =  {list: league.association}
+      }
+      return sports
     }
 
     if (this.commissioner === Meteor.userId()){
@@ -112,14 +119,14 @@ Template.leagueDetails.helpers({
         weeklyRanking(this),
         notifications(this._id),
         futureMatchups(this),
-        {icon: "star", title: "Section?"}
+        leagueSports(this)
       ]
     } else {
       var sections = [
         privacyObject(this),
         {icon: "coach", title: memberCount(this)},
-        {icon: "star", title: "Section?!"},
-        {icon: "star", title: "Section?!"}
+        {icon: "podium", title: "Rank"},
+        leagueSports(this)
       ]
     }
   return sections

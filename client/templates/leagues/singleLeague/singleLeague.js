@@ -73,6 +73,12 @@ Template.leagueMatchups.helpers({
   },
 });
 
+Template.leagueMatchups.events({
+  'click [data-action=createMatchup]': function(){
+    Router.go('/matchup/create');
+  }
+});
+
 Template.commissionerLinks.helpers({
   commissioner: function(){
     var commissionerId = this.league.commissioner
@@ -82,7 +88,6 @@ Template.commissionerLinks.helpers({
     }
   },
   requests: function(){
-    console.log(this.league.requests);
     if(this.league.requests.length > 0){
       return true
     }
