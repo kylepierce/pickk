@@ -5,7 +5,7 @@ Template.sideMenuContent.helpers({
       {title: "Prizes", path: "prizes", icon: "prizes"},
       {title: "Game Schedule", path: "games", icon: "calendar"},
       {title: "Matchups", path: "matchup", icon: "stadium"},
-      {title: "Leagues", path: "leagues", icon: "lockers"},
+      {title: "Leagues", path: "leagues", icon: "league"},
       {title: "Week Leaderboard", path: "week-leaderboard", icon: "podium"},
       {title: "Common Questions", path: "rules", icon: "faq"},
       {title: "Game History", path: "history", icon: "scoreboard"},

@@ -26,9 +26,9 @@
 
 .detail-container {
   width: 90%;
-  height: 90%;
+  height: 100%;
+  display: grid;
   align-items: center;
-  float: left;
 }
 
 .matchup-card-header .game {
@@ -40,8 +40,8 @@
 }
 
 .matchup-card-header .commissioner {
-  width: 100%;
-  float: left;
+  display: flex;
+  align-items: center;
 }
 
 .matchup-card-header .arrow {

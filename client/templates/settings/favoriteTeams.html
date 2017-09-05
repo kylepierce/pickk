@@ -1,7 +1,6 @@
 <template name="favoriteTeams">
   {{#ionView}}
     {{#ionContent}}
-
       {{#each step in allSteps}}
         <div id="favoriteList" class="container {{hide step}}">
           {{#with step}}
@@ -9,7 +8,7 @@
               <div class="af-fav-teams hundred-bottom">
                 {{>afFieldInput name=this template="ionic2"}}
               </div>
-                <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
+              <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
             {{/autoForm}}
           {{/with}}
         </div>
