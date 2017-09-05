@@ -29,12 +29,13 @@ Template.matchupCard.helpers({
     }
   },
   'commissioner': function(matchup){
-    var groupId = matchup.groupId
+    console.log(matchup);
+    var leagueId = matchup.leagueId
 
-    if(groupId){
-      Meteor.subscribe('singleGroup', groupId);
-      var group = Groups.find({_id: groupId}).fetch();
-      var commissioner = group[0].name
+    if(leagueId){
+      Meteor.subscribe('singleGroup', leagueId);
+      var league = Groups.find({_id: leagueId}).fetch();
+      var commissioner = league[0].name
     } else {
       var userId = matchup.commissioner
       Meteor.subscribe('findSingle', userId);
@@ -45,16 +46,16 @@ Template.matchupCard.helpers({
     }
     return commissioner
   },
-  'group': function(){
-    if(this.m.secret === "group"){
+  'league': function(){
+    if(this.m.secret === "league"){
       return true
     }
   },
-  'groupName': function(groupId){
-    Meteor.subscribe('singleGroup', groupId);
-    var group = Groups.findOne({_id: groupId})
-    if (group){
-      return group.name
+  'leagueName': function(leagueId){
+    Meteor.subscribe('singleGroup', leagueId);
+    var league = Groups.findOne({_id: leagueId})
+    if (league){
+      return league.name
     }
   },
   'username': function(ref) {

@@ -261,9 +261,10 @@ Template.matchupGames.helpers({
   }
 });
 
-// Template.matchupFinalDetails.onCreated(function() {
-//   Template.instance().data = this.wizard.mergedData();
-// });
+Template.createMatchup.onCreated(function() {
+  var subs = new SubsManager();
+  subs.clear();
+});
 
 Template.matchupFinalDetails.helpers({
   dynamicFields: function(){

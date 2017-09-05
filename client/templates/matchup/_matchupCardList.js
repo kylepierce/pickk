@@ -2,7 +2,7 @@ Template.matchupCardList.helpers({
   matchups: function(){
     if(this.type === "league"){
       var leagueId = this.data.league._id
-      var selector = {groupId: leagueId};
+      var selector = {leagueId: leagueId};
     } else {
 
     }
