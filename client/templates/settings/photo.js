@@ -21,7 +21,13 @@ Template.userPhoto.events({
       t.$(".avatar").show();
       if (error) {throw error;}
 
-      Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
+      Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}}, function(error){
+        if(error){
+          sAlert.error("Error: " + error , {effect: 'slide', position: 'bottom', html: true});
+        } else {
+          Router.go('/newUserFavoriteTeams');
+        }
+      });
     });
   }
 });

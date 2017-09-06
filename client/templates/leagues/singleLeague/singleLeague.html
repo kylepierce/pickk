@@ -68,23 +68,23 @@
 
 <template name="leagueLinks">
   <div class="button-card half" data-action="viewMembers">
-    {{> ionIcon icon="ios-gear"}}
-    <span class="text">Members</span>
+    {{> pickkIcon icon="player" size="small"}}
+    <span class="text">Players</span>
     <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
   <div class="button-card half {{ifPlayer}}" data-action="invite">
-    {{> ionIcon icon="ios-gear"}}
+    {{> pickkIcon icon="invite" size="small"}}
     <span class="text">Invite</span>
     <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
   <div class="button-card half" data-action="viewLeaderboard">
-    {{> ionIcon icon="ios-gear"}}
+    {{> pickkIcon icon="leaderboard" size="small"}}
     <span class="text">Leaderboard</span>
     <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
   {{#if notCommissioner}}
     <div class="button-card half" data-action="settings">
-      {{> ionIcon icon="ios-gear"}}
+      {{> pickkIcon icon="settings" size="small"}}
       <span class="text">Settings</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
@@ -94,13 +94,13 @@
 <template name="commissionerLinks">
   {{#if commissioner}}
     <div class="button-card half" data-action="settings">
-      {{> ionIcon icon="ios-gear"}}
+      {{> pickkIcon icon="settings" size="small"}}
       <span class="text">Settings</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
     {{#if requests}}
       <div class="button-card half" data-action="_leagueRequests">
-        {{> ionIcon icon="ios-gear"}}
+        {{> pickkIcon icon="settings" size="players"}}
         <span class="text">Requests</span>
         <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
       </div>

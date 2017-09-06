@@ -134,10 +134,14 @@ Template.matchupDetails.helpers({
       var end = Chronos.moment(game.iso)
       var current = Chronos.moment()
       var clock = end.diff(current, "seconds");
+      if (clock < 0){
+        return {headline: "Live", title: "Game"}
+      }
       var duration = moment.duration(clock, 'seconds');
       // var formatted = duration.format("DD:HH:MM:ss");
       var base = duration._data
-      return base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
+      var time = base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
+      return {icon: "stopwatch", title: time}
       // return clock
     }
 
@@ -177,17 +181,17 @@ Template.matchupDetails.helpers({
     // } else {
     //   var sections = [
     //     privacyObject(this),
-    //     {icon: "coach", title: memberCount(this)},
+    //     {icon: "player", title: memberCount(this)},
     //     {icon: "podium", title: "Rank"},
     //     matchupSports(this)
     //   ]
     // }
 
   var sections = [
-    {icon: "coach", title: memberCount(matchup)},
+    {icon: "player", title: memberCount(matchup)},
     privacyObject(matchup),
     matchupLength(matchup),
-    {icon: "stopwatch", title: timeToGame(matchup)}
+    timeToGame(matchup)
   ]
   return sections
   }

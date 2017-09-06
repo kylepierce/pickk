@@ -20,7 +20,7 @@ AutoForm.hooks({
           if (Meteor.user().profile.isOnboarded) {
             Router.go('/push-active');
           } else {
-            Router.go('/newUserFavoriteTeams');
+            Router.go('/userPhoto');
           }
         }
       });

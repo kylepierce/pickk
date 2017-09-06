@@ -124,8 +124,8 @@ Template.leagueDetails.helpers({
     } else {
       var sections = [
         privacyObject(this),
-        {icon: "coach", title: memberCount(this)},
-        {icon: "podium", title: "Rank"},
+        {icon: "player", title: memberCount(this)},
+        {icon: "leaderboard", title: "Rank"},
         leagueSports(this)
       ]
     }
