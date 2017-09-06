@@ -264,8 +264,8 @@ Template.matchupGames.helpers({
 });
 
 Template.createMatchup.onCreated(function() {
-  var subs = new SubsManager();
-  subs.clear();
+  // var subs = new SubsManager();
+  // subs.clear();
 });
 
 Template.matchupFinalDetails.helpers({

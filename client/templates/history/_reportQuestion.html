@@ -1,0 +1,11 @@
+<template name="_reportQuestion">
+  {{#ionModal class="white-text-header" title="Report A Question"}}
+    {{#autoForm collection="QuestionReport" id="reportQuestion" schema=reportQuestion type="insert"}}
+      <h3>Question: {{this.que}}</h3>
+      <h4>Answer: {{answer}}</h4>
+      {{> afQuickField name="correctAnswer" type="select-checkbox" options=questionOptions}}
+      {{> afQuickField name="description" type="textarea"}}
+      <button type="submit" class="full">Submit Question Report</button>
+    {{/autoForm}}
+  {{/ionModal}}
+</template>

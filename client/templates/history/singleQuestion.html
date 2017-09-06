@@ -1,0 +1,20 @@
+<template name="questionDetails">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">
+      Single Question
+    </h1>
+	{{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+      {{temp}}
+      {{> singleAnswer q=this.question a=this.answer}}
+
+      <button class="button" data-action="report-question">Report This Question</button>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

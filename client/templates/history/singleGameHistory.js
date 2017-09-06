@@ -16,7 +16,7 @@ Template.gameHistory.helpers({
 		return Questions.find({}, {sort: {dateCreated: -1}}).fetch()
 	},
 	answers: function (id) {
-		var answer = Answers.findOne({"questionId": id})
+		var answer = Answers.findOne({"questionId": id});
 		return answer
 	}
 });
