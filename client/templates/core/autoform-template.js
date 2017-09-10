@@ -111,6 +111,7 @@ Template['afCheckboxGroup_games'].events({
     }
   },
   'click [data-action=showGames]': function(e, t){
+    var other = $(".game-display").addClass('hidden');
     var prev = this.selected
     this.selected = !prev
     $(e.currentTarget.nextElementSibling).toggleClass('hidden');

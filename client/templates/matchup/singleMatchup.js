@@ -153,7 +153,6 @@ Template.matchupMember.events({
     Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
   },
   "click [data-action=viewLeague]": function(e, t) {
-    console.log(viewLeague);
-    Router.go('/league/' + this.m.leagueId );
+    Router.go('/league/' + this.leagueId );
   }
 });

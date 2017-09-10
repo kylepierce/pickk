@@ -13,6 +13,7 @@ Template.inviteToLeague.helpers({
   //   console.log(user)
   // }
 });
+
 Template.inviteButton.helpers({
   isInvited: function() {
     var invitee = this.__originalId
@@ -66,6 +67,10 @@ Template.inviteToLeagueBox.helpers({
 });
 
 Template.inviteToLeagueBox.events({
+  'click [data-action=selectLater]': function(e, t){
+    var leagueId = Router.current().params._id
+    Router.go('/league/' + leagueId);
+  },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){
       var branchUniversalObj = null;

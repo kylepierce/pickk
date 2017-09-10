@@ -49,6 +49,9 @@ Template.inviteMatchupButton.events({
 });
 
 Template.inviteToMatchupBox.helpers({
+  inputAttributes: function(){
+    return {placeholder: "Search..."}
+  },
   UserListIndex: function() {
     return UserListIndex;
   },
