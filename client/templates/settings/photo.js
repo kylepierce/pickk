@@ -1,4 +1,7 @@
 Template.userPhoto.events({
+  "click [data-action=selectTeam]": function(){
+    Router.go('/newUserFavoriteTeams');
+  },
   "change #userAvatar": function(e, t) {
     var files = e.currentTarget.files;
     t.$(".loading").show();

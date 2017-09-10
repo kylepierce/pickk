@@ -1,4 +1,5 @@
 NSCameraUsageDescription
+cordova-plugin-device@1.1.2
 
 ------ Before App Store Submission -------
 

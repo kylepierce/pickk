@@ -17,20 +17,19 @@ Template._reportQuestion.helpers({
 	},
 });
 
-AutoForm.hooks({
-  "reportQuestion": {
-    onSubmit: function (insertDoc, updateDoc, currentDoc) {
-      if (insertDoc) {
-				console.log("dfsf");
-				IonModal.close();
-        this.done();
-      } else {
-        this.done(new Error("Submission failed"));
-      }
-      return false;
-    }
-  }
-});
+// AutoForm.hooks({
+//   "reportQuestion": {
+//     onSubmit: function (insertDoc, updateDoc, currentDoc) {
+//       if (insertDoc) {
+// 				IonModal.close();
+//         this.done();
+//       } else {
+//         this.done(new Error("Submission failed"));
+//       }
+//       return false;
+//     }
+//   }
+// });
 
 // Template._reportQuestion.events({
 //

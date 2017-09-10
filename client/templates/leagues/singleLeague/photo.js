@@ -1,6 +1,5 @@
 Template.leaguePhoto.events({
   'click [data-action=selectSports]': function(e, t){
-    console.log(this);
     Router.go('/league/association/' + this.league._id);
   },
   "change #leagueAvatar": function(e, t) {
