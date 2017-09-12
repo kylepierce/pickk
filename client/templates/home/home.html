@@ -47,7 +47,7 @@
       <span class="text">Matchups</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
-    <div class="button-card half" data-action="allGames-button">
+    <div class="button-card half" data-action="allGames">
       {{> pickkIcon size="small" icon="games"}}
       <span class="text">View Games</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
@@ -57,9 +57,11 @@
 
 <template name="dailyPickkButton">
   {{#if gamePrediction}}
-    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+  <div class="animated fadeInRight">
+    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
       <i class="fa fa-diamond" style="font-size: 1.3em; font-weight: 100;"></i>
       <span class="daily-pickk-text">New Daily Pickks</span>
     </button>
+  </div>
   {{/if}}
 </template>

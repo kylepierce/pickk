@@ -7,121 +7,24 @@
   {{#ionView}}
     {{#ionContent}}
 			{{> singleGameInfo game=game}}
-
-			<div id="notification-center" class="animated fadeInLeft">
-				<div class="single-notification complete-game-card ">
-					{{> singleGameCard game=game}}
-				</div>
-				{{#if sport "NFL"}}
-					{{> footballInfoCard}}
-				{{/if}}
-				{{#if sport "MLB"}}
-					{{> baseballInfoCard}}
-				{{/if}}
-			</div>
-
-			<div class="container ten-spacing">
-				{{> waitingForNextPlay}}
-
-				{{#if anyQuestions}}
-					{{> liveGame game=game}}
-				{{/if}}
-					<!-- {{> inviteToPlay}} -->
-			</div>
+			{{> notificationCenter game=game}}
+			{{> gameDisplay}}
+			<!-- {{> inviteToPlay}} -->
 			{{ scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="liveGame">
-		{{#if game.commercial}}
-			{{#each question in commericalQuestions}}
-				{{#if questionTypeIs "freePickk" question.type}}
-					{{> freePickkQuestion q=question t=question.type}}
-				{{else}}
-					{{> eventQuestion q=question t=question.type}}
-				{{/if}}
-			{{/each}}
-
-		{{else}}
-			{{#each question in questions}}
-				{{#if questionTypeIs "play" question.type}}
-					{{> eventQuestion q=question t=question.type}}
-				{{/if}}
-				{{#if questionTypeIs "pitch" question.type}}
-					{{> eventQuestion q=question t=question.type}}
-				{{/if}}
-				{{#if questionTypeIs "atBat" question.type}}
-					{{> eventQuestion q=question t=question.type}}
-				{{/if}}
-			{{/each}}
+<template name="gameDisplay">
+	<div class="container ten-spacing">
+		{{#if status 1}}
+			{{> preGame}}
 		{{/if}}
-</template>
-
-<template name="eventQuestion">
-	<div class="single-question animated fast slideInLeft">
-		<div class="question" style="{{background}}">
-			<div class="display-question center">
-				<span class="live-question-text center-text">{{q.que}}</span>
-				{{#if liveQuestion q}}
-					{{>countDownClock date=q.dateCreated}}
-				{{/if}}
-			</div>
-		</div>
-		<div class="option-container">
-			{{#each o in options q}}
-				{{> option o=o q=q t=t}}
-			{{/each}}
-		</div>
-		{{> wagers}}
-		<button id="submitButton" class="submit-button button button-balanced center-text ten-spacing" data-action="submit">Submit</button>
-	</div>
-</template>
-
-<template name="option">
-	<li class="option square-options" data-action="play-selected">
-		<div class="option-inner">
-			<span class="option-title">{{o.title}}</span>
-			<span class="multiplier">x {{o.multiplier}}</span>
-		</div>
-	</li>
-</template>
-
-<template name="footballInfoCard">
-	<div class="single-notification complete-game-card info-card">
-		<div class="football-inner">
-			<div class="down">
-				<span class="title">Down</span>
-				<span class="detail">{{down}} & {{distance}}</span>
-			</div>
-			<div class="vertical-divider"></div>
-			<div class="location">
-				<span class="title">Location</span>
-				<span class="detail">{{location}}</span>
-			</div>
-			<div class="vertical-divider"></div>
-			<div class="time">
-				<span class="title">{{quarter}}</span>
-				<span class="detail">{{time}}</span>
-			</div>
-		</div>
-		<div class="football-field">
-			{{#with away}}
-				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
-			{{/with}}
-			<div class="field">
-				<div class="distance-marker marker" style="margin-left: {{ballLocation}}"></div>
-				<div class="down-marker marker" style="margin-left: {{yardsToGo}};"></div>
-			</div>
-			{{#with home}}
-				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
-			{{/with}}
-		</div>
-	</div>
-</template>
-
-<template name="baseballInfoCard">
-	<div class="single-notification complete-game-card info-card">
-		<!-- <h1>Player Name</h1> -->
+		{{#if status 2}}
+			{{> activeGame}}
+		{{/if}}
+		{{#if status 4}}
+			{{> postGame}}
+		{{/if}}
 	</div>
 </template>

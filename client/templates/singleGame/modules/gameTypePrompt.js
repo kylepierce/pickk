@@ -144,8 +144,9 @@ Template.gameTypePrompt.events({
         alert('Location must be added to win prizes. Please update the settings. Code: ' + error.code + 'message: ' + error.message + '\n' );
         data.location = null
     }
-
-    var location = navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    if(Meteor.isCordova){
+      var location = navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
     Meteor.call('userJoinsAGame', data);
 
   	Session.set('leaderboardData', leaderData);

@@ -16,7 +16,7 @@ $DIRNAME/merge-settings $ENV ios > /tmp/$ENV.json
 
 # reset all IOS simulators
 xcrun simctl erase all
-#
+#--mobile-server pickkapp.meteorapp.com
 
-meteor run ios-device  --mobile-server pickkapp.meteorapp.com --settings /tmp/$ENV.json
+meteor run ios-device  --settings /tmp/$ENV.json
 # "$@"

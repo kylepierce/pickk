@@ -2,18 +2,24 @@
  {{> homeLayoutHeader}}
 
  {{#contentFor "headerTitle"}}
-     <h1 class="title white-text-header">Prizes</h1>
+    <h1 class="title white-text-header">Prizes</h1>
  {{/contentFor}}
 
  {{#ionView}}
    {{#ionContent}}
-      {{#each prize in prizes}}
-        {{#ionItem avatar=true}}
-          <h2>{{prize.title}}</h2>
-          <img class="avatar" src="{{prize.photo}}">
-          {{prize.text}}
-        {{/ionItem}}
-      {{/each}}
+      {{#if prizes}}
+        {{#each prize in prizes}}
+          {{#ionItem avatar=true}}
+            <h2>{{prize.title}}</h2>
+            <img class="avatar" src="{{prize.photo}}">
+            {{prize.text}}
+          {{/ionItem}}
+        {{/each}}
+      {{else}}
+        <div class="no-notifications">
+          No Prizes Right Now. <br /><br /> Check Back Soon!
+        </div>
+      {{/if}}
    {{/ionContent}}
  {{/ionView}}
 </template>

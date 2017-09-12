@@ -1,13 +1,17 @@
 <template name="singleGameAwards">
-	<h1 class="title white-text-header" style="font-size: 1.2em;">
-		<strong style="margin-right: 15px">
-			{{gameType}}
-		</strong>
-		<i class="fa fa-diamond"></i>
-	  <strong style="margin-right: 15px">
-			{{usersAward "diamonds"}}
-		</strong>
-	  <span class="coin-icon"><i class="fa fa-circle"></i></span>
-  	<strong>{{usersAward "coins"}}</strong>
-	</h1>
+	{{#if active}}
+		<h1 class="title white-text-header" style="font-size: 1.2em;">
+			<strong style="margin-right: 15px">
+				{{gameType}}
+			</strong>
+			<i class="fa fa-diamond"></i>
+		  <strong style="margin-right: 15px">
+				{{usersAward "diamonds"}}
+			</strong>
+		  <span class="coin-icon"><i class="fa fa-circle"></i></span>
+	  	<strong>{{usersAward "coins"}}</strong>
+		</h1>
+	{{else}}
+		<h1 class="title white-text-header" style="font-size: 1.2em;">{{{gameAbbr}}}</h1>
+	{{/if}}
 </template>

@@ -18,11 +18,12 @@ Template.entireGameCard.helpers({
   }
 });
 
-// Template.entireGameCard.events({
-//   'click [data-action=viewGame]': function(){
-//     console.log(this);
-//   }
-// });
+Template.entireGameCard.events({
+  'click [data-action=viewGame]': function(){
+    var gameId = this.game._id
+    Router.go('/game/' + gameId );
+  }
+});
 
 Template.singleGameInfo.helpers({
   inProgress: function () {
