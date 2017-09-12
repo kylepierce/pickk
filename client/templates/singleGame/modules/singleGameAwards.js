@@ -2,7 +2,7 @@ Template.singleGameAwards.helpers({
   active: function(){
     var $game = Router.current().params._id
     var game = Games.findOne({_id: $game});
-    if (game.eventStatus === 2){
+    if (game.eventStatus.eventStatusId === 2){
       return true
     } else {
       return false

@@ -1,3 +1,18 @@
 <template name="preGame">
-	<h1>Pre Game</h1>
+	<!-- <div class="card-list">
+		<div class="card-list-header ten-spacing">Game Matchups</div>
+
+		<div class="card-list-footer" data-action="game-matchups">
+			View All Matchups
+		</div>
+	</div>
+
+	<div class="card-list">
+		<div class="card-list-header ten-spacing">Updates & Articles</div>
+
+		<div class="card-list-footer" data-action="previous-answers">
+			View All
+		</div>
+	</div> -->
+	{{> matchupCardList data=this type="game"}}
 </template>

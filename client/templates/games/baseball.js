@@ -4,6 +4,9 @@ Template.gameInProgressInfo.helpers({
     if (!football){
       return true
     }
+  },
+  border: function(){
+    console.log(this);
   }
 });
 

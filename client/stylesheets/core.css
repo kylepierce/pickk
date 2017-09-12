@@ -238,3 +238,7 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
   color: #808080;
 }
+
+.no-border {
+  border-radius: 0!important;
+}

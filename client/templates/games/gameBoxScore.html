@@ -2,7 +2,8 @@
   <div class="loading-wrapper">
     <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight" data-action="viewGame">
       <!-- {{> loadingGame}} animated-background -->
-      {{> singleGameInfo game=game}}
+
+      {{> singleGameInfo game=game border=true}}
       {{> singleGameCard game=game}}
       {{> singleGameCTA game=game}}
     </div>
@@ -12,11 +13,11 @@
 <template name="singleGameInfo">
   {{#if sport "MLB"}}
     {{#if inProgress}}
-      {{> gameInProgressInfo game=game}}
+      {{> gameInProgressInfo game=game border=border}}
     {{/if}}
   {{/if}}
   {{#if future}}
-    {{> futureGameInfo}}
+    {{> futureGameInfo game=game border=border}}
   {{/if}}
 </template>
 
@@ -42,7 +43,7 @@
 </template>
 
 <template name="futureGameInfo">
-  <div class="single-game-shared single-game-info future-game-info">
+  <div class="single-game-shared single-game-info future-game-info {{border}}">
     <strong class="game-time">{{displayDate game.iso}}</strong>
     <span class="game-tv">
       {{#each station in tv game.tvStations}}

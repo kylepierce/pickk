@@ -68,7 +68,6 @@ Template.singleGameCard.helpers({
     } else if (this.game.status === "closed" || this.game.status === "completed"){
       return true
     } else if (this.game.eventStatus.eventStatusId === 5 ){
-      console.log("hey");
       return true
     } else {
       return false
@@ -130,6 +129,12 @@ Template.singleGameCTA.events({
 });
 
 Template.futureGameInfo.helpers({
+  border: function(){
+    // console.log(this);
+    if(this.border === false){
+      return "no-border"
+    }
+  },
   displayDate: function (date) {
     function compare(today, game) {
       var momentA = moment(today,"MM/DD/YYYY", true).dayOfYear();
