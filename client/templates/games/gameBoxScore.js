@@ -1,9 +1,11 @@
 Template.entireGameCard.onCreated( function() {
   var team1 = this.data.game.away_team
   var team2 = this.data.game.home_team
-  this.subscribe( 'singleGameTeams', team1, team2, function() {
-    $( ".loading-wrapper" ).show();
-  });
+  if (team1 && team2){
+    this.subscribe( 'singleGameTeams', team1, team2, function() {
+      $( ".loading-wrapper").show();
+    });
+  }
 });
 
 Template.entireGameCard.helpers({
@@ -50,39 +52,49 @@ Template.singleGameInfo.helpers({
 
 Template.singleGameCard.helpers({
   status: function() {
-    if(this.game.status === "In-Progress") {
-      return "left-side-team-block "
-    } else if (this.game.status === "Pre-Game"){
-      return "left-side-team-block "
-    } else if (this.game.eventStatus.eventStatusId  === 5){
-      return "left-side-team-block "
-    } else {
-      return "full-width-team-block"
+    if(this.game) {
+      if(this.game.status === "In-Progress") {
+        return "left-side-team-block "
+      } else if (this.game.status === "Pre-Game"){
+        return "left-side-team-block "
+      }
+      // else if (this.game.eventStatus.eventStatusId === 5){
+      //   return "left-side-team-block "
+      // }
+      else {
+        return "full-width-team-block"
+      }
     }
   },
   showRight: function() {
-    if(this.game.status === "In-Progress") {
-      return true
-    } else if (this.game.status === "Pre-Game"){
-      return true
-    } else if (this.game.status === "closed" || this.game.status === "completed"){
-      return true
-    } else if (this.game.eventStatus.eventStatusId === 5 ){
-      return true
-    } else {
-      return false
+    if(this.game) {
+      if(this.game.status === "In-Progress") {
+        return true
+      } else if (this.game.status === "Pre-Game"){
+        return true
+      } else if (this.game.status === "closed" || this.game.status === "completed"){
+        return true
+      }
+      // else if (this.game.eventStatus.eventStatusId === 5 ){
+      //   return true
+      // }
+      else {
+        return false
+      }
     }
   },
   teams: function () {
-    var teams = _.values(this.game.teams);
-    if (this.game.scoring){
-      teams[1].runs = this.game.scoring.home.runs;
-      teams[0].runs = this.game.scoring.away.runs;
-    } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
-      teams[0].runs = this.game.teams[0].linescoreTotals.hits
-      teams[1].runs = this.game.teams[1].linescoreTotals.hits
+    if (this.game.teams){
+      var teams = _.values(this.game.teams);
+      if (this.game.scoring){
+        teams[1].runs = this.game.scoring.home.runs;
+        teams[0].runs = this.game.scoring.away.runs;
+      } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
+        teams[0].runs = this.game.teams[0].linescoreTotals.hits
+        teams[1].runs = this.game.teams[1].linescoreTotals.hits
+      }
+      return teams
     }
-    return teams
   }
 });
 
@@ -224,7 +236,7 @@ Template.rightSection.helpers({
     return period
   },
   time: function () {
-    if ( this.game.sport === "NFL" ) {
+    if (this.game && this.game.sport === "NFL" ) {
       var path = this.game.eventStatus
       var seconds = path.seconds.toString()
       if (seconds && seconds.length < 2) {

@@ -1,6 +1,6 @@
 <template name="singleMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="matchup"}}
+    {{>ionNavBackButton path=index}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -32,7 +32,7 @@
             {{> matchupJoin}}
           {{/if}}
 
-          {{#each id in matchup.gameId}}
+          {{#each id in gameList}}
             {{#with game id}}
               <div class="line-divider"></div>
               {{> entireGameCard game=this}}

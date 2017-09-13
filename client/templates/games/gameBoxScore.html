@@ -24,7 +24,7 @@
 <template name="singleGameCard">
   <div class="single-game-card">
     <div class="{{status}}">
-      {{#each team in teams }}
+      {{#each team in teams}}
         {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
       {{/each}}
     </div>

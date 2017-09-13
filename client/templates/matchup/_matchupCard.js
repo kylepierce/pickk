@@ -33,8 +33,10 @@ Template.matchupCard.helpers({
 
     if(leagueId){
       Meteor.subscribe('singleGroup', leagueId);
-      var league = Groups.find({_id: leagueId}).fetch();
-      var commissioner = league[0].name
+      var league = Groups.findOne({_id: leagueId});
+      if(league){
+        var commissioner = league.name
+      }
     } else {
       var userId = matchup.commissioner
       Meteor.subscribe('findSingle', userId);
@@ -131,18 +133,19 @@ Template.matchupDetails.helpers({
       var gameId = matchup.gameId[0]
       Meteor.subscribe('singleGameData', gameId);
       var game = Games.findOne({_id: gameId});
-      var end = Chronos.moment(game.iso)
-      var current = Chronos.moment()
-      var clock = end.diff(current, "seconds");
-      if (clock < 0){
-        return {headline: "Live", title: "Game"}
+      if (game){
+        var end = Chronos.moment(game.iso)
+        var current = Chronos.moment()
+        var clock = end.diff(current, "seconds");
+        if (clock < 0){
+          return {headline: "Live", title: "Game"}
+        }
+        var duration = moment.duration(clock, 'seconds');
+        // var formatted = duration.format("DD:HH:MM:ss");
+        var base = duration._data
+        var time = base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
+        return {icon: "stopwatch", title: time}
       }
-      var duration = moment.duration(clock, 'seconds');
-      // var formatted = duration.format("DD:HH:MM:ss");
-      var base = duration._data
-      var time = base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
-      return {icon: "stopwatch", title: time}
-      // return clock
     }
 
     // weeklyRanking = function(matchup){

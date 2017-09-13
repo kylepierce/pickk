@@ -4,32 +4,21 @@ Template.gameInProgressInfo.helpers({
     if (!football){
       return true
     }
-  },
-  border: function(){
-    console.log(this);
   }
 });
 
 Template.outDisplay.helpers({
-  outs: function (number) {
-    var out = "<div class='out'></div>"
-    var noOut = "<div class='no-out'></div>"
-
-    var repeat = function (s, n) {
-      return --n ? s + ("") + repeat(s, n) : "" + s;
-    };
-
-    if (number === 0) {
-      return repeat(noOut, 3)
-    } else if (number === 3) {
-      return repeat(out, 3)
-    }  else {
-      var diff = Math.abs(number - 3)
-      var outs = repeat(out, number)
-      var noOuts = repeat(noOut, diff)
-      return outs + noOuts
+  outsCount: function(number){
+    if (number === 0){
+      return "<div class='no-out'></div> <div class='no-out'></div> <div class='no-out'></div>"
+    } else if(number === 1){
+      return "<div class='out'></div> <div class='no-out'></div> <div class='no-out'></div>"
+    } else if (number === 2) {
+      return "<div class='out'></div> <div class='out'></div> <div class='no-out'></div>"
+    } else if (number === 3){
+      return "<div class='out'></div><div class='out'></div><div class='out'></div>"
     }
-  },
+  }
 });
 
 Template.inningDisplay.helpers({

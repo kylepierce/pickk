@@ -3,18 +3,22 @@
 }
 
 .icon-xs {
+  height: auto;
   width: 15px;
 }
 
 .icon-sm {
+  height: auto;
   width: 30px;
 }
 
 .icon-med {
+  height: auto;
   width: 45px;
 }
 
 .icon-large {
+  height: auto;
   width: 65px;
 }
 

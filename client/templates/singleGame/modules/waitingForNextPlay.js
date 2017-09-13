@@ -66,23 +66,23 @@ Template.waitingForNextPlay.rendered = function () {
 
 Template.waitingForNextPlay.helpers({
 	currentBatter: function (){
-		var currentBatter = this.game[0]['eventStatus']['currentBatter']
+		var currentBatter = this.game['eventStatus']['currentBatter']
 		return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
 	},
 	upNext: function(){
-		var currentPosition = this.game[0]['eventStatus']['inningDivision']
+		var currentPosition = this.game['eventStatus']['inningDivision']
 		if(currentPosition === "Top"){
-			var currentBatter = this.game[0]['home']['liveState']['nextUpBatters'][0]
+			var currentBatter = this.game['home']['liveState']['nextUpBatters'][0]
 			return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
 		} else {
-			var currentBatter = this.game[0]['away']['liveState']['nextUpBatters'][0]
+			var currentBatter = this.game['away']['liveState']['nextUpBatters'][0]
 			return "#" + currentBatter['uniform'] + " " + currentBatter['firstName'] + " " + currentBatter['lastName']
 		}
 	},
 	drive: function(){
 		var userId = Meteor.userId();
-		var gameId = this.game[0]._id
-		var period = this.game[0].period
+		var gameId = this.game._id
+		var period = this.game.period
 		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 		if (gamePlayed && gamePlayed.type === "drive"){
 			return true
@@ -90,8 +90,8 @@ Template.waitingForNextPlay.helpers({
 	},
 	periodDiff: function(){
 		var userId = Meteor.userId();
-		var gameId = this.game[0]._id
-		var period = this.game[0].period
+		var gameId = this.game._id
+		var period = this.game.period
 		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 		if(gamePlayed === 0){
 			return true
@@ -107,8 +107,8 @@ Template.waitingForNextPlay.events({
 	'click [data-action="switchToLive"]': function(e, t){
 		var data = {
 			userId: Meteor.userId(),
-			gameId: this.game[0]._id,
-			period: this.game[0].period,
+			gameId: this.game._id,
+			period: this.game.period,
 		}
 		Meteor.call('switchToLive', data);
 	},

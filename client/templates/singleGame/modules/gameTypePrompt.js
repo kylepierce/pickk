@@ -145,7 +145,7 @@ Template.gameTypePrompt.events({
         data.location = null
     }
     if(Meteor.isCordova){
-      var location = navigator.geolocation.getCurrentPosition(onSuccess, onError);
+      var location = navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
     }
     Meteor.call('userJoinsAGame', data);
 

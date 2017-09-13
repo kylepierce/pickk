@@ -6,9 +6,12 @@ Template.singleMatchup.helpers({
   matchup: function(){
     return Matchup.findOne();
   },
+  'gameList': function(){
+    return this.gameId
+  },
   'game': function(gameId) {
     Meteor.subscribe('singleGame', gameId);
-    var game = Games.findOne({_id: gameId})
+    var game = Games.findOne({_id: gameId});
     if (game) {
       return game
     }
@@ -72,15 +75,17 @@ Template.matchupJoin.events({
 
 Template.matchupJoin.helpers({
   notMaxed: function(){
-    var matchup = this.m
-    var numOfUsers = matchup.users.length
-    var max = matchup.limitNum
-    if(max === -1){
-      return true
-    } else if(numOfUsers < max){
-      return true
-    } else {
-      return false
+    var matchup = this
+    if (matchup) {
+      var numOfUsers = matchup.users.length
+      var max = matchup.limitNum
+      if(max === -1){
+        return true
+      } else if(numOfUsers < max){
+        return true
+      } else {
+        return false
+      }
     }
   },
   allowToView: function(){
