@@ -56,6 +56,13 @@ Meteor.methods({
 			return;
 		}
 
+		var isOverAge = function(age){
+			var today = new Date();
+			var minusAge = moment().subtract(age, 'years');
+			return moment(birthday).isBefore(minusAge);
+			// if ()
+		}
+
 		UserList.update(this.userId,
 			{
 				$set: {
@@ -64,7 +71,9 @@ Meteor.methods({
 					'profile.firstName': firstName,
 					'profile.lastName': lastName,
 					'profile.birthday': birthday,
-					'profile.timezone': timezone
+					'profile.timezone': timezone,
+					'profile.over18': isOverAge(18),
+					'profile.over21': isOverAge(21)
 				}
 			});
 	},
