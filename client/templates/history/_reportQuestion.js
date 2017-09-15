@@ -15,21 +15,25 @@ Template._reportQuestion.helpers({
 		list.push(deleteOption)
 		return list
 	},
+	questionId: function(){
+		return this._id
+	}
 });
 
-// AutoForm.hooks({
-//   "reportQuestion": {
-//     onSubmit: function (insertDoc, updateDoc, currentDoc) {
-//       if (insertDoc) {
-// 				IonModal.close();
-//         this.done();
-//       } else {
-//         this.done(new Error("Submission failed"));
-//       }
-//       return false;
-//     }
-//   }
-// });
+AutoForm.hooks({
+  reportQuestion: {
+    onSubmit: function (insertDoc) {
+      if (insertDoc) {
+				sAlert.success("Thanks for reporting a question!" , {effect: 'slide', position: 'bottom', html: true});
+				IonModal.close();
+        this.done();
+      } else {
+        this.done(new Error("Submission failed"));
+      }
+      return false;
+    }
+  }
+});
 
 // Template._reportQuestion.events({
 //
@@ -41,18 +45,15 @@ Schema.reportQuestion = new SimpleSchema({
 		type: [String],
 	},
 	'correctAnswer.$': {
-		type: String,
+		type: String
 	},
 	questionId: {
-		type: String,
-		autoValue: function(){
-			if ( this.isInsert ) {
-				return this.userId
-			}
-		}
+		type: String
 	},
-	description: {
+	comment: {
+		label: "Any comments?",
 		type: String,
+		optional: true
 	},
 	userId: {
     type: String,

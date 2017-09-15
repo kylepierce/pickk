@@ -126,3 +126,9 @@ Template.singleAnswer.helpers({
 		}
 	}
 });
+
+Template.singleAnswer.events({
+	'click': function(){
+		Router.go('/question/' + this.q._id);
+	}
+})
