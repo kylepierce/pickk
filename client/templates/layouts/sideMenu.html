@@ -18,7 +18,7 @@
 
   {{#ionList}}
     {{#each link in links}}
-      {{#ionItem class="custom-list" path=link.path data-ion-menu-toggle="left"}}
+      {{#ionItem class="custom-list" path=link.path data-ion-menu-toggle="left" data-action='close-menu'}}
         {{> pickkIcon size="sm" icon=link.icon}}
         <div>{{link.title}}</div>
       {{/ionItem}}

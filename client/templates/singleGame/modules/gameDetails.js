@@ -27,34 +27,36 @@ Template.notificationCenter.helpers({
 
 Template.footballInfoCard.helpers({
 	down: function(){
-		var down = this.game[0].eventStatus.down
-		switch (down) {
-			case 1:
-				var down = down + "st"
-				break;
-			case 2:
-				var down = down + "nd"
-				break;
-			case 3:
-				var down = down + "rd"
-				break;
-			case 4:
-				var down = down + "th"
-				break;
-			default:
-				var down = "---"
-				break;
+		if (this.game.eventStatus){
+			var down = parseInt(this.game.eventStatus.down);
+			switch (down) {
+				case 1:
+					var down = down + "st"
+					break;
+				case 2:
+					var down = down + "nd"
+					break;
+				case 3:
+					var down = down + "rd"
+					break;
+				case 4:
+					var down = down + "th"
+					break;
+				default:
+					var down = "---"
+					break;
+			}
+			return down
 		}
-		return down
 	},
 	distance: function(){
-		return this.game[0].eventStatus.distance
+		return this.game.eventStatus.distance
 	},
 	location: function(){
-		return "@" + this.game[0].location
+		return "@" + this.game.location
 	},
 	quarter: function(){
-		var period = this.game[0].eventStatus.period
+		var period = this.game.eventStatus.period
 		switch (period) {
 			case 1:
 				var period = period + "st"
@@ -72,11 +74,11 @@ Template.footballInfoCard.helpers({
 		return period
 	},
 	time: function(){
-		var seconds = this.game[0].eventStatus.seconds.toString()
+		var seconds = this.game.eventStatus.seconds.toString()
 		if (seconds && seconds.length < 2) {
 			var seconds = "0" + seconds
 		}
-		return this.game[0].eventStatus.minutes + ":" + seconds
+		return this.game.eventStatus.minutes + ":" + seconds
 	},
 	ballLocation: function(){
 		return "70%"
@@ -85,12 +87,12 @@ Template.footballInfoCard.helpers({
 		return "10%"
 	},
 	away: function (){
-		statsTeamId = this.game[0].teams[0].teamId
+		statsTeamId = this.game.teams[0].teamId
 		Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},
 	home: function() {
-		statsTeamId = this.game[0].teams[1].teamId
+		statsTeamId = this.game.teams[1].teamId
 		Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},

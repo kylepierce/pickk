@@ -4,7 +4,13 @@ Template.gameInProgressInfo.helpers({
     if (!football){
       return true
     }
-  }
+  },
+  border: function(){
+    // console.log(this);
+    if(this.border === false){
+      return "no-border"
+    }
+  },
 });
 
 Template.outDisplay.helpers({

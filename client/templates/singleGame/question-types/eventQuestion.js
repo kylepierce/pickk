@@ -36,7 +36,7 @@ Template.eventQuestion.events({
 		$('.play-selected').removeClass('play-selected');
 		$(e.currentTarget).addClass('play-selected');
 		t.data.o = this.o;
-		$('#wagers').show();
+		// $('#wagers').show();
 	},
 	// 'dblclick [data-action=play-selected]': function (e, t){
 	// 	console.log(e, t);

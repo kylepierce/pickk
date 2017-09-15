@@ -39,7 +39,8 @@
 
 .option-container {
 	margin-top: 10px;
-	display: flow-root;
+	display: flex;
+	flex-flow: wrap;
 }
 
 .option {
@@ -221,7 +222,7 @@
 }
 
 #wagers {
-	display: none;
+	display: flex;
 	margin-top: 10px;
 }
 

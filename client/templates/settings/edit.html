@@ -6,9 +6,9 @@
       <div class="container">
         {{#autoForm collection="Meteor.users" schema=UsersProfileSchema doc=currentUser id="settings"}}
           <div class="list">
-            {{> afQuickField autofocus='' label-type='stacked' name='profile.username'}}
-            {{> afQuickField label-type='stacked' name='profile.firstName'}}
-            {{> afQuickField label-type='stacked' name='profile.lastName'}}
+            {{> afQuickField autofocus='' label-type='stacked' name='profile.username' placeholder="throwback33"}}
+            {{> afQuickField label-type='stacked' name='profile.firstName' placeholder="John"}}
+            {{> afQuickField label-type='stacked' name='profile.lastName' placeholder="Smith"}}
 
             <!-- {{> afQuickField label-type='stacked' name='emails.0.address'}} -->
             {{> afQuickField label-type='stacked' name='profile.birthday'}}
@@ -22,11 +22,11 @@
 </template>
 
 <template name="submitNew">
-  <input style="margin-bottom: 300px;" name="status" type="submit" class="button button-large button-balanced" value="Finish Profile">
+  <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Finish Profile">
 </template>
 
 <template name="submitOld">
-  <input style="margin-bottom: 300px;" name="status" type="submit" class="button button-large button-balanced" value="Update Profile">
+  <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Update Profile">
 </template>
 
 <template name="newUserHeader">

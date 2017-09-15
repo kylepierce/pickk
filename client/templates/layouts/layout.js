@@ -61,6 +61,9 @@ Template.sideMenuContent.events({
   'click [data-action=allNotifications]': function(){
     IonSideMenu.snapper.close();
     Router.go('/notifications');
+  },
+  'click .custom-list': function(){
+    IonSideMenu.snapper.close();
   }
 });
 

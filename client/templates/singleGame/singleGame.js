@@ -1,6 +1,7 @@
 Template.singleGame.onCreated(function() {
+	var subs = new SubsManager();
+	subs.clear();
 	var t = Template.instance();
-	console.log(t.data);
 	if (t.data.game.eventStatus.eventStatusId === 2 && t.data.gamePlayed === 0){
 		var gameId = t.data.game._id
 		Router.go('joinGame.show', {_id: gameId});
@@ -19,7 +20,7 @@ Template.singleGame.onCreated(function() {
 	self.getCommercial = function(){ return game.commercial }
 	self.autorun(function() {
 		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
-		// self.subscribe('userQuestions', game._id, self.getCommercial())
+		self.subscribe('userQuestions', game._id, self.getCommercial())
 	});
 });
 
@@ -30,34 +31,6 @@ Template.singleGame.rendered = function () {
 };
 
 Template.singleGame.helpers({
-	anyQuestions: function(){
-		var currentUserId = Meteor.userId();
-		var game = Games.findOne();
-		var gamePlayed = GamePlayed.findOne();
-		var gameType = gamePlayed.type
-		var selector = {
-			active: true,
-			usersAnswered: {$nin: [currentUserId]}
-		}
-
-		if (gameType == "live" && game.commercial === false){
-			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector.dateCreated = {$gt: finish}
-
-		} else if (gameType === "atbat" && game.commercial === false){
-			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector.dateCreated = {$gt: finish}
-		}
-
-		var count = Questions.find(selector).count();
-		if (count > 0){
-			$('#waiting-for-play').hide();
-			return true
-		} else {
-			$('#waiting-for-play').show();
-			return false
-		}
-	},
   scoreMessage: function() {
     var userId = Meteor.userId();
     var $game = Router.current().params._id

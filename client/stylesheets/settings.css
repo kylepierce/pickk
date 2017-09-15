@@ -119,3 +119,19 @@ div.hopscotch-bubble .hopscotch-bubble-content{
 	height: 100px;
 	float: left;
 }
+
+input#MLB {
+	visibility: hidden;
+}
+
+input#NFL {
+	visibility: hidden;
+}
+
+input#NBA {
+	visibility: hidden;
+}
+
+.af-fav-teams input {
+	visibility: hidden;
+}

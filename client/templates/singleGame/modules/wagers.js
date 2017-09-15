@@ -3,7 +3,7 @@ Template.wagers.rendered = function () {
   var lastWager = Session.get('lastWager');
   var position = wagerArray.indexOf(lastWager)
   var wager = $('[value=' + lastWager + ']' ).click();
-  $('#wagers').show();
+  // $('#wagers').css('display', 'flex');
 };
 
 Template.wagers.helpers({
