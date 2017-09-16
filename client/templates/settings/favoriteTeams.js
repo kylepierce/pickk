@@ -6,6 +6,7 @@ var hooksObj = {
   onSubmit: function (insertDoc, updateDoc, currentDoc) {
     this.event.preventDefault();
     var done = this.done;
+    console.log(insertDoc, updateDoc, currentDoc);
     if (!updateDoc['$set']) {
       IonLoading.show({
         customTemplate: "Please Select At Least One... ",

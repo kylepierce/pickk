@@ -1,6 +1,16 @@
 Template['afCheckboxGroup_ionic2'].events({
   'click .checkbox': function(e,t){
-    $(e.currentTarget).toggleClass('play-selected');
+    if ($(e.currentTarget).hasClass('play-selected')){
+      $(e.currentTarget).toggleClass('play-selected');
+      $(e.currentTarget.previousElementSibling)[0].checked = false
+      var x = $(e.currentTarget.previousElementSibling)[0].checked
+      console.log(x);
+    } else {
+      $(e.currentTarget).toggleClass('play-selected');
+      $(e.currentTarget.previousElementSibling)[0].checked = true
+      var x = $(e.currentTarget.previousElementSibling)[0].checked
+      console.log(x);
+    }
   }
 });
 

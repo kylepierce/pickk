@@ -56,14 +56,16 @@ Meteor.methods({
 
 	'push': function(message, userId) {
 		check(message, String);
+		check(userId, String);
 		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
 		}
 
-		if (Meteor.user().profile.role !== "admin") {
-      throw new Meteor.Error(403, "Unauthorized");
-		}
+		// if (Meteor.user().profile.role !== "admin") {
+		// 	console.log(Meteor.user());
+    //   throw new Meteor.Error(403, "Unauthorized -- Try again");
+		// }
 
 		Push.send({
 			from: 'Pickk',

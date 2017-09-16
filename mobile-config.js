@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.26'
+  version: '0.0.30',
 });
 
 App.accessRule('*');
@@ -90,6 +90,6 @@ App.configurePlugin('phonegap-plugin-push', {
 });
 
 App.configurePlugin('cordova-plugin-facebook4', {
-  APP_ID: '1797018427256477',
-  APP_NAME: 'Pickk - Dev 2'
+  APP_ID: '1399965486969249',
+  APP_NAME: 'Pickk'
 });
