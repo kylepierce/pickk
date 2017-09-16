@@ -28,7 +28,8 @@ Template.userPhoto.events({
         if(error){
           sAlert.error("Error: " + error , {effect: 'slide', position: 'bottom', html: true});
         } else {
-          Router.go('/newUserFavoriteTeams');
+          // Router.go('/newUserFavoriteTeams');
+          Router.go('/');
         }
       });
     });

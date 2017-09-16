@@ -110,9 +110,11 @@ Template.gameTypePrompt.events({
       type: type
     }
 
-    var opinion = checkUsersOpinion(game, user)
-    var data = _.extend(gamePlayed, opinion)
-    analytics.track("joined game", data);
+    // var opinion = checkUsersOpinion(game, user)
+    // var data = _.extend(gamePlayed, opinion)
+    // analytics.track("joined game", data);
+
+    analytics.track("joined game", gamePlayed);
 
     if(Meteor.isCordova){
       //Intercom needs unix time with '_at' in JSON to work.
