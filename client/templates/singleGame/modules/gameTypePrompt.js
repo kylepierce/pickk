@@ -102,7 +102,7 @@ Template.gameTypePrompt.events({
     var game = Games.findOne();
     var type = e.currentTarget.dataset.value.toLowerCase( )
 
-    var gamePlayed = {
+    var data = {
       gameId: $gameId,
       dateCreated: new Date(),
       userId: userId,
@@ -114,7 +114,7 @@ Template.gameTypePrompt.events({
     // var data = _.extend(gamePlayed, opinion)
     // analytics.track("joined game", data);
 
-    analytics.track("joined game", gamePlayed);
+    analytics.track("joined game", data);
 
     if(Meteor.isCordova){
       //Intercom needs unix time with '_at' in JSON to work.
