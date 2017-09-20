@@ -16,7 +16,8 @@ Template.gameHistory.helpers({
 		return Questions.find({}, {sort: {dateCreated: -1}}).fetch()
 	},
 	answers: function (id) {
-		var answer = Answers.findOne({"questionId": id});
+		var userId = Meteor.userId()
+		var answer = Answers.findOne({"questionId": id, userId: userId});
 		return answer
 	}
 });

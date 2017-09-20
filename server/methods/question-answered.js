@@ -102,6 +102,7 @@ Meteor.methods({
 		check(prediction, Object);
 		var userId = Meteor.userId();
 		var isValid = validateAnswer(prediction.questionId, prediction.answer);
+
 		if (isValid) {
 			var scoreMessage = "Thanks for Pickking! Here Are " + 5 + " Diamonds!"
 			var selector = {userId: userId, gameId: prediction.gameId}
@@ -143,6 +144,8 @@ Meteor.methods({
 					Meteor.call('awardDiamonds', o);
 
 					createPendingNotification(notifyObj);
+
+					console.log(prediction);
 					Meteor.call('insertAnswer', prediction);
 				}
 			});

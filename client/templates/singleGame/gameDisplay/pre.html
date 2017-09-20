@@ -1,10 +1,27 @@
 <template name="preGame">
-	{{> matchupCardList data=this type="game"}}
-	<div class="card-list">
-		<div class="card-list-header ten-spacing">Updates & Articles</div>
 
-		<div class="card-list-footer" data-action="previous-answers">
-			View All
+
+	{{#if noQuestions}}
+		<div class="card-list">
+			<div class="card-list-header ten-spacing">Question History</div>
+			{{> gameHistory i=3 extended=false}}
+
+			<div class="card-list-footer" data-action="previous-answers">
+				View Entire History
+			</div>
 		</div>
-	</div>
+		{{> matchupCardList data=this type="game"}}
+		<!-- <div class="card-list">
+			<div class="card-list-header ten-spacing">Updates & Articles</div>
+
+			<div class="card-list-footer" data-action="previous-answers">
+				View All
+			</div>
+		</div> -->
+	{{else}}
+		<h3 class="center">{{questionsAnswered}} / {{questionsAvailable}} Pre Pickks</h3>
+		{{#each question in preGamePickks}}
+			{{> eventQuestion q=question t=question.type}}
+		{{/each}}
+	{{/if}}
 </template>

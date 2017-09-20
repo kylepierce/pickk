@@ -35,6 +35,11 @@
 </template>
 
 <template name="singleGameCTA">
+  {{#if preGame}}
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+      Pre Pickks Open!
+    </div>
+  {{/if}}
   {{#if inProgress}}
     <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
       Play Now!

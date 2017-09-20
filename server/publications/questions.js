@@ -94,3 +94,20 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
     return Questions.find(selector, sort);
   }
 });
+
+Meteor.publish('preGamePickks', function(gameId) {
+  check(gameId, String);
+  var userId = this.userId;
+  var game = Games.findOne({_id: gameId});
+
+  if(game){
+    var selector = {
+      gameId: gameId,
+      active: true,
+      period: 0,
+      // usersAnswered: {$nin: [userId]}
+    }
+    // var sort = {sort: {dateCreated: -1}, limit: 1}
+    return Questions.find(selector);
+  }
+});

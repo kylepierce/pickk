@@ -112,6 +112,11 @@ Template.singleGameCard.events({
 });
 
 Template.singleGameCTA.helpers({
+  preGame: function () {
+    if (this.game.pre_game_processed === true){
+      return true
+    }
+  },
   inProgress: function () {
     if (this.game.live === true){
       return true
