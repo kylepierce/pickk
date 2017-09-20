@@ -1,0 +1,26 @@
+<template name="createTemplate">
+  {{#ionView}}
+  {{#ionContent}}
+  {{#autoForm collection="QuestionTemplate" type="insert" id="createQuestionTemplate" }}
+    {{> afQuickField autofocus='' name='que' label-type='stacked' }}
+    {{> afQuickField name='length' label-type='stacked' }}
+    {{> afQuickField name='sport' label-type='stacked' }}
+    {{> afQuickField name='options' label-type='stacked' }}
+    <!-- {{> afQuickField name='description' label-type='stacked' }}
+    {{> afQuickField name='image' label-type='stacked'}}
+    {{> afQuickField name='url' label-type='stacked'}}
+    {{> afQuickField type="boolean-radios" name='active' label-type='stacked'}}
+    {{> afQuickField type="boolean-radios" name='important' label-type='stacked'}}
+
+    {{> afQuickField name='location' type='select-checkbox' label-type='stacked' }}
+    {{> afQuickField type="select-radio" name='time'}}
+    {{#if afFieldValueIs name="time" value="true"}}
+      {{> afQuickField type='datetimepicker' name="dateStart"}}
+      {{> afQuickField type='datetimepicker' name="dateEnd"}}
+    {{/if}} -->
+
+    <input name="status" type="submit" class="button button-large button-balanced" value="Create Template">
+  {{/autoForm}}
+  {{/ionContent}}
+  {{/ionView}}
+</template>
