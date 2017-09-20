@@ -17,10 +17,9 @@ Template.singleGame.onCreated(function() {
 
 	var self = this
 	self.getPeriod = function(){ return game.period }
-	self.getCommercial = function(){ return game.commercial }
+	// self.getCommercial = function(){ return game.commercial }
 	self.autorun(function() {
 		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
-		self.subscribe('userQuestions', game._id, self.getCommercial())
 	});
 });
 

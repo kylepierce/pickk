@@ -1,5 +1,7 @@
 Template.joinGame.onCreated(function() {
-
+  $(".loader-holder").delay(500).fadeOut('slow', function () {
+    $(".loading-wrapper").fadeIn('slow');
+  });
 });
 
 Template.joinGame.rendered = function () {

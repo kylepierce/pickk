@@ -1,6 +1,10 @@
 <template name="activeGame">
 	{{> waitingForNextPlay}}
 
+	<!-- {{#if admin}}
+		<h2>{{{this.game.commercial}}}</h2>
+	{{/if}} -->
+
 	{{#if anyQuestions}}
 		{{> liveGame game=game}}
 	{{/if}}
