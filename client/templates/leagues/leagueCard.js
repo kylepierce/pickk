@@ -29,6 +29,11 @@ Template.leagueCard.helpers({
       }
     }
   },
+  'single': function(){
+    if (this.single){
+      return "hidden"
+    }
+  }
 });
 
 Template.leagueDetails.helpers({

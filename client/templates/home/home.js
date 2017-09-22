@@ -11,6 +11,7 @@ Template.home.rendered = function () {
 
 Template.home.helpers({
   listGames: function(){
+    Meteor.subscribe('liveGames')
     return Games.find();
   },
 });

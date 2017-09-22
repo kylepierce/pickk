@@ -1,10 +1,12 @@
 <template name="_leagueMembers">
   {{#ionModal class="white-text-header" title="League Members"}}
-		{{#ionList}}
-			{{#each user in users}}
-				{{> memberItem user=user league=this}}
-			{{/each}}
-    {{/ionList}}
+    <div class="hundred-bottom">
+      {{#ionList}}
+        {{#each user in users}}
+          {{> memberItem user=user league=this}}
+        {{/each}}
+      {{/ionList}}
+    </div>
    {{/ionModal}}
 </template>
 

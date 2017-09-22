@@ -88,7 +88,7 @@ Template.commissionerLinks.helpers({
     }
   },
   requests: function(){
-    if(this.league.requests.length > 0){
+    if(this.league.requests && this.league.requests.length > 0){
       return true
     }
   }
