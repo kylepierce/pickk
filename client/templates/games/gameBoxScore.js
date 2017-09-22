@@ -252,7 +252,9 @@ Template.rightSection.helpers({
     }
   },
   tvStation: function (tvStations) {
-    return tvStations[0].callLetters
+    if(tvStations[0]){
+      return tvStations[0].callLetters
+    }
   },
   delayed: function() {
     if ( this.game.eventStatus.eventStatusId === 5 ) {

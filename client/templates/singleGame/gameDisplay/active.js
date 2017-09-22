@@ -17,13 +17,16 @@ Template.activeGame.helpers({
 		if (gameType == "live" && game.commercial === false){
 			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
 			selector.dateCreated = {$gt: finish}
+			selector.commercial = false
 
 		} else if (gameType === "atbat" && game.commercial === false){
 			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
 			selector.dateCreated = {$gt: finish}
+			selector.commercial = false
 		}
 		Meteor.subscribe('userQuestions', game._id, game.commercial);
 		var count = Questions.find(selector).count();
+		// console.log(count);
 		if (count > 0){
 			$('#waiting-for-play').hide();
 			return true
