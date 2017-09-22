@@ -72,56 +72,76 @@ Meteor.publish("userRank", function(o, usersCoins) {
   Counts.publish(this, "userRank", GamePlayed.find(selector, sort, fields));
 });
 
-Meteor.publish('leaderboardGamePlayed', function(o) {
-  check(o, Object);
-  this.unblock()
-	var selector = {gameId: o.gameId}
-	var sort = {sort: {coins: -1}}
-  var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1, type: 1, diamonds: 1}}
+// Meteor.publish('leaderboardGamePlayed', function(o) {
+//   check(o, Object);
+//   this.unblock()
+// 	var selector = {gameId: o.gameId}
+// 	var sort = {sort: {coins: -1}}
+//   var fields = {fields: {userId: 1, gameId: 1, coins: 1, period: 1, queCounter: 1, type: 1, diamonds: 1}}
+//
+// 	if (!o.filter){
+// 		o.filter = "All"
+// 	} else if (o.filter) {
+// 		o.filter = o.filter.toLowerCase();
+// 		switch (o.filter) {
+// 			case "live":
+// 				selector.type = "live"
+// 				break;
+//
+// 			case "drive":
+// 				selector.type = "drive"
+// 				break;
+//
+// 			case "followers":
+// 				var user = UserList.find({_id: this.userId}).fetch()
+// 				var followers = user[0].profile.followers
+// 				selector.userId = {$in: followers}
+// 				break;
+//
+// 			case "following":
+// 				var user = UserList.find({_id: this.userId}).fetch()
+// 				var following = user[0].profile.following
+// 				selector.userId = {$in: following}
+// 				break;
+//
+// 			case "group":
+// 				var groupId = o.groupId;
+// 				var group = Groups.findOne({_id: o.groupId});
+// 				var members = group.members
+// 				selector.userId = {$in: members}
+// 				break;
+//
+// 			case "matchup":
+// 				var matchupId = o.matchupId;
+// 				var matchup = Matchup.findOne({_id: o.matchupId});
+// 				var members = matchup.users
+// 				selector.userId = {$in: members}
+// 				break;
+// 		}
+// 	}
+//
+// 	if (o.period) { selector.period = parseInt(o.period) }
+//   if (o.number) { sort.limit = parseInt(o.number) }
+//
+//   var gamesPlayed = GamePlayed.find(selector, sort, fields);  return gamesPlayed
+// });
 
-	if (!o.filter){
-		o.filter = "All"
-	} else if (o.filter) {
-		o.filter = o.filter.toLowerCase();
-		switch (o.filter) {
-			case "live":
-				selector.type = "live"
-				break;
+Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
+	check(gameId, String);
+	check(period, Number);
+	check(limit, Number);
 
-			case "drive":
-				selector.type = "drive"
-				break;
+	var gp = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}}).fetch();
+	var userId = Meteor.userId();
+	var userRank = _.indexOf(_.pluck(gp, 'userId'), Meteor.userId());
 
-			case "followers":
-				var user = UserList.find({_id: this.userId}).fetch()
-				var followers = user[0].profile.followers
-				selector.userId = {$in: followers}
-				break;
+	var list = _.map(gp, function(player, index){
+		var rank = index + 1
+		return player.userId
+	});
 
-			case "following":
-				var user = UserList.find({_id: this.userId}).fetch()
-				var following = user[0].profile.following
-				selector.userId = {$in: following}
-				break;
-
-			case "group":
-				var groupId = o.groupId;
-				var group = Groups.findOne({_id: o.groupId});
-				var members = group.members
-				selector.userId = {$in: members}
-				break;
-
-			case "matchup":
-				var matchupId = o.matchupId;
-				var matchup = Matchup.findOne({_id: o.matchupId});
-				var members = matchup.users
-				selector.userId = {$in: members}
-				break;
-		}
-	}
-
-	if (o.period) { selector.period = parseInt(o.period) }
-  if (o.number) { sort.limit = parseInt(o.number) }
-
-  var gamesPlayed = GamePlayed.find(selector, sort, fields);  return gamesPlayed
+	return [
+		GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit}),
+		UserList.find({_id: {$in: list}})
+	]
 });

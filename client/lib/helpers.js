@@ -8,20 +8,20 @@ Template.registerHelper('username', function (user) {
   return this.profile.username
 });
 
-Template.registerHelper('userObj', function ( userId ) {
-	Meteor.subscribe('findSingle', userId)
-	if (userId) {
-		var user = Meteor.users.findOne({_id: userId})
-	} else if (this.userId) {
-		var user = Meteor.users.findOne({_id: this.userId})
-	} else if (this.user){
-		var user = this.user
-	}  
-	return user
-});
+// Template.registerHelper('userObj', function ( userId ) {
+// 	Meteor.subscribe('findSingle', userId)
+// 	if (userId) {
+// 		var user = Meteor.users.findOne({_id: userId})
+// 	} else if (this.userId) {
+// 		var user = Meteor.users.findOne({_id: this.userId})
+// 	} else if (this.user){
+// 		var user = this.user
+// 	}
+// 	return user
+// });
 
 Template.registerHelper('messageText', function(item){
-	var messageExists = item && item.message 
+	var messageExists = item && item.message
 	if(messageExists) {
 		return item.message.replace(/(@[^\s]+)/g, "<strong>$1</strong>");
 	}

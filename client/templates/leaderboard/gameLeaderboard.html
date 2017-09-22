@@ -1,4 +1,50 @@
 <template name="gameLeaderboard">
+ {{> yield 'header'}}
+
+ {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Game Leaderboard</h1>
+ {{/contentFor}}
+
+ 	<!-- {{#contentFor "headerButtonRight"}}
+     <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
+       {{> ionIcon icon="funnel"}}
+     </button>
+   {{/contentFor}} -->
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        <!-- {{> spinLoader}} -->
+
+        <!-- {{#if Template.subscriptionsReady}}
+          <div class="loading-wrapper">
+
+          </div>
+        {{/if}} -->
+        <ol type="1" id="leaderboard">
+          {{#each player in players}}
+            {{> singlePlayerLeader player=player}}
+          {{/each}}
+        </ol>
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="singlePlayerLeader">
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+    {{> userAvatar userId=player._id}}
+    <li class="list-font" value={{player.rank}}>
+      <span class="username">{{username player._id}}</span>
+      <span class="score">
+          {{{player.coins}}}
+      </span>
+    </li>
+  </div>
+</template>
+
+
+<!-- <template name="gameLeaderboard">
   {{#contentFor "headerButtonLeft"}}
     {{>ionNavBackButton path="index"}}
   {{/contentFor}}
@@ -7,58 +53,37 @@
     <h1 class="title white-text-header">
     	Leaderboard
     </h1>
-  {{/contentFor}}
+  {{/contentFor}} -->
 
-  {{#contentFor "headerButtonRight"}}
+  <!-- {{#contentFor "headerButtonRight"}}
      <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
        {{> ionIcon icon="funnel"}}
      </button>
-   {{/contentFor}}
+   {{/contentFor}} -->
 
-  {{#ionView}}
+  <!-- {{#ionView}}
 	  {{#ionContent}}
-      {{> miniLeaderboard i=30}}
+      {{> miniLeaderboard gameId=this.game._id i=30}}
 	  {{/ionContent}}
 	{{/ionView}}
 </template>
 
 <template name="miniLeaderboard">
-  <!-- {{> spinLoader}} -->
-
-  <!-- {{#if Template.subscriptionsReady}}
-    <div class="loading-wrapper"> -->
-    <ol type="1" id="leaderboard">
-      {{#each player i}}
-        {{> singlePlayer}}
-      {{/each}}
-    </ol>
-  <!-- </div>
-  {{/if}} -->
+  <ol type="1" id="leaderboard">
+    {{#each player in players i}}
+      {{> singlePlayer player=player}}
+    {{/each}}
+  </ol>
 </template>
 
 <template name="singlePlayer">
   <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-    {{> fakePlayer}}
-    {{#if Template.subscriptionsReady}}
-    {{> userAvatar userId=userId}}
+    {{> userAvatar userId=player.userId}}
     <li class="list-font legit" value={{rank}}>
-      <span class="username">{{username userId}}</span>
+      <span class="username">{{username player.userId}}</span>
       <span class="score">
-          {{{coins}}}
+        {{{player.coins}}}
       </span>
     </li>
-    {{/if}}
   </div>
-
-</template>
-
-<template name="fakePlayer">
-  <div class="not-legit">
-  </div>
-    <!-- <img class="avatar-image circle-image">
-  </div>
-  <li class="list-font not-legit">
-    <span class="username"></span>
-    <span class="score"></span>
-  </li> -->
-</template>
+</template> -->

@@ -132,7 +132,7 @@ Template.gameTypePrompt.events({
       Branch.userCompletedAction(eventName)
     }
 
-    Meteor.subscribe('gamePlayed', $gameId);
+    // Meteor.subscribe('gamePlayed', $gameId);
 
     var leaderData = Session.get('leaderboardData');
   	// leaderData["period"] = game.period

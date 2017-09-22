@@ -28,8 +28,8 @@ Template.userAvatar.helpers({
   }
 });
 
-Template.userAvatar.onCreated(function() {
-  if (!this.data.alreadySubscribed && !this.data.user) {
-    this.subscribe('findSingleUsername', this.data.userId);
-  }
-});
+// Template.userAvatar.onCreated(function() {
+//   if (!this.data.alreadySubscribed && !this.data.user) {
+//     this.subscribe('findSingleUsername', this.data.userId);
+//   }
+// });

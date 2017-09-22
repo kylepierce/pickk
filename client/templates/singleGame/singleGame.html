@@ -8,6 +8,7 @@
     {{#ionContent}}
 			{{> singleGameInfo game=game border=false}}
 			{{> notificationCenter game=game}}
+			{{checkGamePlayedStatus}}
 			{{> gameDisplay}}
 			<!-- {{> inviteToPlay}} -->
 			{{ scoreMessage}}
