@@ -55,7 +55,7 @@
 
 <template name="leagueMatchups">
   {{#if leagueMatchups}}
-    {{> matchupCardList data=this type="league"}}
+    {{> matchupCardList leagueId=this.league._id type="league"}}
   {{else}}
     <div class="no-notifications container">
       No Matchups Scheduled

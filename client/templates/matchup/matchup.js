@@ -41,5 +41,7 @@ Template.matchup.helpers({
 });
 
 Template.matchup.events({
-
+  'click [data-action=createMatchup]': function(){
+    Router.go('create-matchup');
+  }
 });
