@@ -64,12 +64,12 @@
           <ul class="question-details">
             <li class="col-md-100">
               <div class="col-md-25"><strong>Selected:</strong></div>
-              <div class="col-md-50">{{title a.answered}}</div>
+              <div class="col-md-75">{{title a.answered}}</div>
             </li>
             {{#if active q.active}}
               <li class="col-md-100">
                 <div class="col-md-25"><strong>Answer:</strong></div>
-                <div class="col-md-50">{{{title q.outcome}}}</div>
+                <div class="col-md-75">{{{title q.outcome}}}</div>
               </li>
             {{/if}}
           </ul>
@@ -87,6 +87,6 @@
       {{/if}}
     </div>
 
-    <div class="arrow">{{> ionIcon icon="ios-arrow-right"}}</div>
+    <div class="arrow {{single}}">{{> ionIcon icon="ios-arrow-right"}}</div>
 	</div>
 </template>

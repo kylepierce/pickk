@@ -17,14 +17,7 @@
 		<div id="ratingBox"></div>
 
 		{{> inviteToPlay}}
-		<div class="card-list">
-			<div class="card-list-header ten-spacing">Question History</div>
-			{{> gameHistory i=3 extended=false}}
-
-			<div class="card-list-footer" data-action="previous-answers">
-				View Entire History
-			</div>
-		</div>
+		{{> historyCardList gameId=this.game._id i=3}}
 
 		<div class="card-list">
 		<div class="card-list-header ten-spacing">

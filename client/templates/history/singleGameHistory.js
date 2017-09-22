@@ -45,7 +45,8 @@ Template.singleAnswer.helpers({
 	},
 	location: function(){
 		var extended = Template.parentData(2).extended
-		if (extended) {
+		var answerExtended = this.extended
+		if (extended || answerExtended) {
 			return "single-question-history-card"
 		}
 	},
@@ -125,6 +126,11 @@ Template.singleAnswer.helpers({
 		} else if (diff > 86400000){
 			var timeNumber = timeConverter(diff, 86400000)
 			return timeNumber + " Days Ago"
+		}
+	},
+	single: function(){
+		if(this.single){
+			return "hidden"
 		}
 	}
 });

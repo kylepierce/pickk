@@ -86,15 +86,6 @@ Template.singleGame.events({
     });
     Router.go('/leaderboard/'+ gameId + "?period=" + period)
   },
-  'click [data-action=previous-answers]': function(event, template){
-    var $game = Router.current().params._id
-    var userId = Meteor.userId()
-    analytics.track("waiting-history", {
-      userId: userId,
-      gameId: $game,
-    });
-    Router.go('/history/' + $game )
-  },
 });
 
 Template.gameDisplay.helpers({

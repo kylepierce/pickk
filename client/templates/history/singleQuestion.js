@@ -1,6 +1,5 @@
 Template.questionDetails.helpers({
   'reported': function(){
-    console.log(this);
     if (this.questionReported){
       return true
     }
