@@ -8,8 +8,8 @@ Template._reportQuestion.helpers({
 		return obj.title
 	},
 	questionOptions: function(){
-		var list = _.map(this.options, function(option){
-			return {label: option.title, value: option.option}
+		var list = _.map(this.options, function(option, index){
+			return {label: option.title, value: index}
 		});
 		var deleteOption = {label: "Delete Question", value: "Delete"}
 		list.push(deleteOption)
@@ -20,24 +20,14 @@ Template._reportQuestion.helpers({
 	}
 });
 
-AutoForm.hooks({
-  reportQuestion: {
-    onSubmit: function (insertDoc) {
-      if (insertDoc) {
-				sAlert.success("Thanks for reporting a question!" , {effect: 'slide', position: 'bottom', html: true});
-				IonModal.close();
-        this.done();
-      } else {
-        this.done(new Error("Submission failed"));
-      }
-      return false;
-    }
+AutoForm.addHooks('reportQuestion', {
+  onSuccess: function(doc) {
+		if (doc) {
+			sAlert.success("Thanks alerting us! We will take a look and give you an update." , {effect: 'slide', position: 'bottom', html: true});
+			IonModal.close();
+		}
   }
 });
-
-// Template._reportQuestion.events({
-//
-// });
 
 Schema.reportQuestion = new SimpleSchema({
 	correctAnswer: {

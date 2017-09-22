@@ -28,6 +28,7 @@ Meteor.publish('questionHistory', function(questionId) {
   var answerSelector = {userId: userId, questionId: questionId}
   return [
     Questions.find(selector),
-    Answers.find(answerSelector)
+    Answers.find(answerSelector),
+    QuestionReport.find(answerSelector)
   ]
 });

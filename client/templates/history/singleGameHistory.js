@@ -98,7 +98,8 @@ Template.singleAnswer.helpers({
 	},
 	details: function() {
 		var extended = Template.parentData(2).extended
-		if (extended){
+		var answerExtended = this.extended
+		if (extended || answerExtended) {
 			return true
 		}
 	},

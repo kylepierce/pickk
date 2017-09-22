@@ -12,3 +12,9 @@ Template.wagers.helpers({
     return wagerArray
   }
 });
+
+Template.wagers.events({
+  'click [data-action=wager-selected]': function () {
+    var lastWager = Session.set('lastWager', this.w);
+  }
+});

@@ -47,15 +47,86 @@ Template.eventQuestion.events({
 		t.data.w = $('.wager-selected')[0].value;
 		$('#submitButton').show();
 	},
-	"click [data-action=submit]": function (e, t) {
-		e.preventDefault();
+  "dblclick [data-action=play-selected]": function (e, t) {
+    var lastWager = Session.get('lastWager');
+    if(this.w || lastWager){
+      e.preventDefault();
+      $('.play-selected').removeClass('play-selected');
+      $(e.currentTarget).addClass('play-selected');
+      t.data.o = this.o;
+      var multiplier = parseFloat(this.o.multiplier);
+      var userId = Meteor.userId();
+      var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
 
+      var userCoins = GamePlayed.findOne(selector)
+      var hasEnoughCoins = userCoins.coins >= lastWager
+
+      if (!hasEnoughCoins) {
+        analytics.track("no coins", {
+          id: userId,
+          where: "Client",
+          answered: this.o.option,
+          type: this.t.type,
+          gameId: this.q.gameId,
+          multiplier: this.o.multiplier,
+          wager: lastWager,
+          userCoins: userCoins
+        });
+
+        IonLoading.show({
+          customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
+          duration: 1500,
+          backdrop: true
+        });
+        return
+      }
+
+      if(Meteor.isCordova){
+        //Intercom needs unix time with '_at' in JSON to work.
+        var intercomData = {
+          "last_question_answered_at": parseInt(Date.now() / 1000),
+          "userId": userId,
+        }
+        updateIntercom(intercomData)
+        Branch.setIdentity(userId)
+        var eventName = 'question_answered';
+        Branch.userCompletedAction(eventName)
+      }
+
+      analytics.identify(userId, {lastQuestion: new Date()})
+      $(".single-question").removeClass("slideInLeft")
+      $(".single-question").addClass("slideOutRight")
+
+      var prediction = {
+        gameId: this.q.gameId,
+        period: this.q.period,
+        questionId: this.q._id,
+        type: this.t,
+        answered: this.o.option,
+        multiplier: multiplier,
+        wager: lastWager
+      }
+
+      Meteor.call('answerNormalQuestion', prediction);
+    }
+  },
+	"click [data-action=submit]": function (e, t) {
+    if (!this.o){
+      IonLoading.show({
+        customTemplate: '<h3>Select an Option!</p>',
+        duration: 1500,
+        backdrop: true
+      });
+    }
+		e.preventDefault();
+    var lastWager = Session.get('lastWager');
 		var multiplier = parseFloat(this.o.multiplier);
 		var userId = Meteor.userId();
 		var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
 
-		var userCoins = GamePlayed.find(selector).fetch();
-		var hasEnoughCoins = userCoins[0].coins >= this.w
+		var userCoins = GamePlayed.findOne(selector)
+		var hasEnoughCoins = userCoins.coins >= lastWager
+
 
 		if (!hasEnoughCoins) {
 			analytics.track("no coins", {
@@ -65,7 +136,7 @@ Template.eventQuestion.events({
 				type: this.t.type,
 				gameId: this.q.gameId,
 				multiplier: this.o.multiplier,
-				wager: this.w,
+				wager: lastWager,
 				userCoins: userCoins
 			});
 
@@ -90,7 +161,6 @@ Template.eventQuestion.events({
 		}
 
 		analytics.identify(userId, {lastQuestion: new Date()})
-		Session.set('lastWager', this.w);
 		$(".single-question").removeClass("slideInLeft")
 		$(".single-question").addClass("slideOutRight")
 
@@ -101,7 +171,7 @@ Template.eventQuestion.events({
 			type: this.t,
 			answered: this.o.option,
 			multiplier: multiplier,
-			wager: this.w
+			wager: lastWager
 		}
 
 		Meteor.call('answerNormalQuestion', prediction);
