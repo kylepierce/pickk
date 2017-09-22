@@ -47,9 +47,9 @@
           <span class="spelled">{{niceDate this.label}}</span>
           <span class="count">{{count}} Games</span>
         </div>
-        <span class="arrow">{{> ionIcon icon="ios-arrow-down"}}</span>
+        <!-- <span class="arrow">{{> ionIcon icon="ios-arrow-down"}}</span> -->
       </div>
-      <span class="game-display hidden ten-spacing">
+      <span class="game-display ten-spacing">
         {{#each game in games}}
           <input type="checkbox" id="{{game._id}}" value="{{game._id}}" {{atts}} />
           <label for="{{game._id}}" class=" team-select-container button-card">

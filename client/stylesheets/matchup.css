@@ -115,13 +115,21 @@
 }
 
 .game-display {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-flow: wrap;
+  align-items: center;
 }
 
 .game-display label {
   padding: 10px;
+}
+
+.game-display input[type="checkbox"] {
+  visibility: hidden;
+  height: 0;
+  width: 0;
 }
 
 .date-card {

@@ -119,12 +119,6 @@ Template['afCheckboxGroup_games'].events({
       $(e.currentTarget).toggleClass('play-selected');
       $(e.currentTarget.previousElementSibling)[0].checked = true
     }
-  },
-  'click [data-action=showGames]': function(e, t){
-    var other = $(".game-display").addClass('hidden');
-    var prev = this.selected
-    this.selected = !prev
-    $(e.currentTarget.nextElementSibling).toggleClass('hidden');
   }
 });
 

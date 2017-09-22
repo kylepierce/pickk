@@ -1,6 +1,6 @@
 <template name="createMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
+    {{>ionNavBackButton}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -24,7 +24,7 @@
     </div>
 
     {{#if league}}
-      {{> afQuickField type='select-radio' name='leagueId'}}
+      {{> afQuickField type='select-radio' name='leagueId' options=userLeagues}}
     {{/if}}
 
     <div class="item item-divider ten-spacing">Limit</div>
@@ -43,10 +43,12 @@
 </template>
 
 <template name="matchupGames">
-  {{#autoForm id="matchupGames" doc=step.data schema=step.schema}}
-    {{> afQuickField name='gameId' data=dynamicFields}}
-    {{> wizardButtons}}
-  {{/autoForm}}
+  <div class="hundred-bottom">
+    {{#autoForm id="matchupGames" doc=step.data schema=step.schema}}
+      {{> afQuickField name='gameId' data=dynamicFields}}
+      {{> wizardButtons}}
+    {{/autoForm}}
+  </div>
 </template>
 
 <template name="matchupFinalDetails">

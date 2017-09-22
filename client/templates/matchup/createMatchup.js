@@ -32,15 +32,6 @@ Schema.who = new SimpleSchema({
     label: "League",
     type: String,
     optional: true,
-    autoform: {
-      options: function () {
-        var user = this.userId
-        var groups = Groups.find({}).fetch()
-        return _.map(groups, function (i) {
-          return {label:  i.name, value: i._id};
-        });
-      }
-    }
   },
 });
 
@@ -247,6 +238,12 @@ Template.selectWho.helpers({
       return true
     }
   },
+  userLeagues: function(){
+    var groups = Groups.find({}).fetch()
+    return _.map(groups, function (i) {
+      return {label:  i.name, value: i._id};
+    });
+  }
 });
 
 Template.selectWho.events({
