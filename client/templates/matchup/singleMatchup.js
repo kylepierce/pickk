@@ -103,7 +103,7 @@ Template.matchupJoin.helpers({
       }
     } else if (deeplinkAllowed === "true"){
       return true
-    } else if (deepLinked.matchupId === this._id && deepLinked.allowed === 1){
+    } else if (deepLinked && deepLinked.matchupId === this._id && deepLinked.allowed === 1){
       return true
     } else if (this.secret === "invite"){
       var invited = this.invites.indexOf(userId)
@@ -149,7 +149,7 @@ Template.matchupMember.events({
      Router.go('/game/' + this.gameId );
   },
   "click [data-action=viewMembers]": function(e, t){
-     Router.go('/matchup/members/' + this._id );
+    IonModal.open('_matchupMembers', this);
   },
   "click [data-action=invite]": function(e, t){
      Router.go('/matchup/invite/' + this._id );
