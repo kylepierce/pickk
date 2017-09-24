@@ -1,3 +1,50 @@
+Template.miniLeaderboard.onCreated(function(){
+	// 	var gameId = Router.current().params._id
+	// 	var query = Router.current().params.query
+	var t = this.data
+	var self = this
+	self.getUsers = function(){
+		return GamePlayed.find({}).map(function(player){
+			return player.userId
+		});
+	}
+	self.autorun(function() {
+		 self.subscribe('leaderboardGamePlayed', t.gameId, t.period, t.limit);
+		 self.subscribe('leaderboardUserList', self.getUsers())
+	});
+});
+
+Template.miniLeaderboard.helpers({
+	'players': function(){
+		return GamePlayed.find({}, {sort: {coins: -1}}).fetch()
+	}
+});
+
+Template.singlePlayerLeader.helpers({
+	username: function(id){
+		var user = UserList.findOne({_id: id});
+		return user.profile.username
+	},
+	coins: function(){
+
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Template.gameLeaderboard.onCreated(function() {
 // 	var gameId = Router.current().params._id
 // 	var query = Router.current().params.query
@@ -113,150 +160,149 @@
 // 	},
 // });
 
-Template.gameLeaderboard.onCreated(function() {
-	var filter = Router.current().params.query.filter
-	var query = Router.current().params.query
-	var gameId = Router.current().params._id
-	// var leagueId = Router.current().params.leagueId
-	//If there is no new data
-	// var data = Session.get('singleLeaderboard');
-	// var noNewData = _.isEmpty(data);
+// Template.gameLeaderboard.onCreated(function() {
+// 	var filter = Router.current().params.query.filter
+// 	var query = Router.current().params.query
+// 	var gameId = Router.current().params._id
+// 	// var leagueId = Router.current().params.leagueId
+// 	//If there is no new data
+// 	// var data = Session.get('singleLeaderboard');
+// 	// var noNewData = _.isEmpty(data);
+//
+// 	// if(noNewData || !data) {
+// 	// 	if(!query) {
+// 	// 		var data = {}
+// 	// 	} else if (leagueId){
+// 	// 		var data = {
+// 	// 			filter: "league",
+// 	// 			leagueId: leagueId
+// 	// 		}
+// 	// 	} else {
+// 	// 		var data = query
+// 	// 	}
+// 	// }
+// 	// data.gameId = gameId
+// 	console.log(gameId);
+// 	// Session.set('singleLeaderboard', data);
+//
+// 	var self = this;
+// 	self.getFilter = function () {
+// 		var obj = {
+// 			gameId: gameId
+// 		}
+// 		return obj
+// 		// return Session.get('singleLeaderboard');
+// 	}
+// 	self.autorun(function() {
+// 		self.subscribe( 'gameLeaderboard', self.getFilter(), function(){
+// 			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+// 	      $( ".loading-wrapper" ).fadeIn( 'slow' );
+// 			});
+// 		});
+// 	});
+// });
+//
+// Template.gameLeaderboard.onRendered( function() {
+//   $( "svg" ).delay( 250 ).fadeIn();
+// });
+//
+// Template.gameLeaderboard.helpers({
+// 	'players': function(){
+// 		var following = Meteor.user().profile.following
+// 		var leaderboardList = function(list){
+// 			var fixed = _.sortBy(list, function(obj){return - obj.diamonds})
+// 			var rank = _.first(fixed, 25)
+// 			var i = 1
+// 			_.map(rank, function(user){
+// 				var isFollowingUser = following.indexOf(user._id)
+// 				if(isFollowingUser >= 0){
+// 					user.following = true
+// 				}
+// 				user.rank = i
+// 				i++
+// 			});
+// 			return rank
+// 		}
+//
+// 		var shortList = function(all, array){
+// 			var list = _.filter(all, function(user){
+// 				var onTheList = array.indexOf(user._id)
+// 				if (onTheList !== -1){
+// 					return user
+// 				}
+// 			});
+// 		return list
+// 		}
+//
+// 		var data = Session.get('leaderboardFilter');
+// 		Fetcher.retrieve("gameLeaderboard", "loadWeekLeaderboard", data)
+// 		var leaderboard = Fetcher.get("gameLeaderboard");
+//
+// 		// Only show the results from the filters
+// 		switch (data.filter) {
+// 			case "All":
+// 				return leaderboardList(leaderboard)
+// 				break;
+//
+// 			case "Followers":
+// 				var followers = Meteor.user().profile.followers
+// 				var list = shortList(leaderboard, followers)
+// 				return leaderboardList(list)
+// 				break;
+//
+// 			case "Following":
+// 				var following = Meteor.user().profile.following
+// 				var list = shortList(leaderboard, following)
+// 				return leaderboardList(list)
+// 				break;
+//
+// 			case "league":
+// 				var leagueId = data.leagueId
+// 				var league = Groups.findOne({_id: leagueId});
+// 				var members = league.members
+// 				var list = shortList(leaderboard, members)
+// 				return leaderboardList(list)
+// 				break;
+//
+// 			default:
+// 				return leaderboardList(leaderboard)
+// 				break;
+// 		}
+// 	},
+// 	// 'date': function() {
+// 	//   var startDay = moment().day("Tuesday").week(date)._d;
+// 	// 	var endDay = moment().day("Monday").week(date+1)._d;
+// 	// 	var startDay = moment(startDay).format("MMM Do")
+// 	// 	var endDay = moment(endDay).format("MMM Do")
+// 	//
+// 	//   return startDay + " - " + endDay
+// 	// },
+// });
 
-	// if(noNewData || !data) {
-	// 	if(!query) {
-	// 		var data = {}
-	// 	} else if (leagueId){
-	// 		var data = {
-	// 			filter: "league",
-	// 			leagueId: leagueId
-	// 		}
-	// 	} else {
-	// 		var data = query
-	// 	}
-	// }
-	// data.gameId = gameId
-	console.log(gameId);
-	// Session.set('singleLeaderboard', data);
+// Template.singlePlayerLeader.helpers({
+// 	'username': function(userId){
+// 		var user = UserList.findOne({_id: userId})
+// 		if(user){
+// 			return user.profile.username
+// 		}
+// 	},
+// 	'following': function(){
+// 		if(this.player.following){
+// 			return "following"
+// 		}
+// 	},
+// 	'thisUser': function(){
+// 		var userId = Meteor.userId()
+// 		if(this.userId === userId){
+// 			return "history-inprogress"
+// 		}
+// 	},
+// });
 
-	var self = this;
-	self.getFilter = function () {
-		var obj = {
-			gameId: gameId
-		}
-		return obj
-		// return Session.get('singleLeaderboard');
-	}
-	self.autorun(function() {
-		self.subscribe( 'gameLeaderboard', self.getFilter(), function(){
-			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
-	      $( ".loading-wrapper" ).fadeIn( 'slow' );
-			});
-		});
-	});
-});
-
-Template.gameLeaderboard.onRendered( function() {
-  $( "svg" ).delay( 250 ).fadeIn();
-});
-
-Template.gameLeaderboard.helpers({
-	'players': function(){
-		var following = Meteor.user().profile.following
-		var leaderboardList = function(list){
-			var fixed = _.sortBy(list, function(obj){return - obj.diamonds})
-			var rank = _.first(fixed, 25)
-			var i = 1
-			_.map(rank, function(user){
-				var isFollowingUser = following.indexOf(user._id)
-				if(isFollowingUser >= 0){
-					user.following = true
-				}
-				user.rank = i
-				i++
-			});
-			return rank
-		}
-
-		var shortList = function(all, array){
-			var list = _.filter(all, function(user){
-				var onTheList = array.indexOf(user._id)
-				if (onTheList !== -1){
-					return user
-				}
-			});
-		return list
-		}
-
-		var data = Session.get('leaderboardFilter');
-		Fetcher.retrieve("gameLeaderboard", "loadWeekLeaderboard", data)
-		var leaderboard = Fetcher.get("gameLeaderboard");
-
-		// Only show the results from the filters
-		switch (data.filter) {
-			case "All":
-				return leaderboardList(leaderboard)
-				break;
-
-			case "Followers":
-				var followers = Meteor.user().profile.followers
-				var list = shortList(leaderboard, followers)
-				return leaderboardList(list)
-				break;
-
-			case "Following":
-				var following = Meteor.user().profile.following
-				var list = shortList(leaderboard, following)
-				return leaderboardList(list)
-				break;
-
-			case "league":
-				var leagueId = data.leagueId
-				var league = Groups.findOne({_id: leagueId});
-				var members = league.members
-				var list = shortList(leaderboard, members)
-				return leaderboardList(list)
-				break;
-
-			default:
-				return leaderboardList(leaderboard)
-				break;
-		}
-	},
-	// 'date': function() {
-	//   var startDay = moment().day("Tuesday").week(date)._d;
-	// 	var endDay = moment().day("Monday").week(date+1)._d;
-	// 	var startDay = moment(startDay).format("MMM Do")
-	// 	var endDay = moment(endDay).format("MMM Do")
-	//
-	//   return startDay + " - " + endDay
-	// },
-
-});
-
-Template.singlePlayerLeader.helpers({
-	'username': function(userId){
-		var user = UserList.findOne({_id: userId})
-		if(user){
-			return user.profile.username
-		}
-	},
-	'following': function(){
-		if(this.player.following){
-			return "following"
-		}
-	},
-	'thisUser': function(){
-		var userId = Meteor.userId()
-		if(this.userId === userId){
-			return "history-inprogress"
-		}
-	},
-});
-
-Template.gameLeaderboard.events({
-	"click .leaderboard-item": function(e, t){
-		 Router.go("/user-profile/" + this.player._id)
-	}
+// Template.gameLeaderboard.events({
+// 	"click .leaderboard-item": function(e, t){
+// 		 Router.go("/user-profile/" + this.player._id)
+// 	}
 	//
 	// 'click [data-action=previous]': function (e, t){
   //   // Find the week from router or session
@@ -279,4 +325,4 @@ Template.gameLeaderboard.events({
   //   var nextWeek = parseInt(weekNumber) + 1
   //   Router.go("/week-leaderboard/" + nextWeek)
   // }
-});
+// });

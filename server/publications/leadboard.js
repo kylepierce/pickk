@@ -131,17 +131,21 @@ Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
 	check(period, Number);
 	check(limit, Number);
 
-	var gp = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}}).fetch();
-	var userId = Meteor.userId();
-	var userRank = _.indexOf(_.pluck(gp, 'userId'), Meteor.userId());
+	var data = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit, fields: {userId: 1, coins: 1}});
 
-	var list = _.map(gp, function(player, index){
-		var rank = index + 1
-		return player.userId
-	});
+	if (data) {
+		return data
+	}
+	return this.ready();
+});
 
-	return [
-		GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit}),
-		UserList.find({_id: {$in: list}})
-	]
+Meteor.publish('leaderboardUserList', function(list) {
+	check(list, Array);
+
+	var data = UserList.find({_id: {$in: list}}, {fields: {profile: 1}});
+
+	if (data) {
+		return data
+	}
+	return this.ready();
 });

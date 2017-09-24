@@ -2,7 +2,7 @@
  {{> yield 'header'}}
 
  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">Game Leaderboard</h1>
+  <h1 class="title white-text-header">Game Leaderboard</h1>
  {{/contentFor}}
 
  	<!-- {{#contentFor "headerButtonRight"}}
@@ -13,31 +13,26 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{#ionList}}
-        <!-- {{> spinLoader}} -->
-
-        <!-- {{#if Template.subscriptionsReady}}
-          <div class="loading-wrapper">
-
-          </div>
-        {{/if}} -->
-        <ol type="1" id="leaderboard">
-          {{#each player in players}}
-            {{> singlePlayerLeader player=player}}
-          {{/each}}
-        </ol>
-      {{/ionList}}
+      {{> miniLeaderboard gameId="S6DEtxYTPRsjaTFCr" period=1 limit=30}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
+<template name="miniLeaderboard">
+  <ol type="1" id="leaderboard">
+    {{#each player in players}}
+      {{> singlePlayerLeader player=player}}
+    {{/each}}
+  </ol>
+</template>
+
 <template name="singlePlayerLeader">
   <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-    {{> userAvatar userId=player._id}}
+    {{> userAvatar userId=player.userId}}
     <li class="list-font" value={{player.rank}}>
-      <span class="username">{{username player._id}}</span>
+      <span class="username">{{username player.userId}}</span>
       <span class="score">
-          {{{player.coins}}}
+        {{{player.coins}}}
       </span>
     </li>
   </div>
