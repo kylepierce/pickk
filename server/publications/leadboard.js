@@ -149,3 +149,41 @@ Meteor.publish('leaderboardUserList', function(list) {
 	}
 	return this.ready();
 });
+
+Meteor.publish("reactiveLeaderboard", function(selector) {
+	var newSelector = {
+		gameId: {$in: [selector.gameId]},
+		period: {$in: selector.period},
+	}
+	var limit = selector.limit
+
+	if (selector.matchupId){
+		var matchup = Matchup.findOne({_id: selector.matchupId});
+		newSelector.userId = {$in: matchup.users}
+		newSelector.period = {$in: matchup.period}
+		newSelector.gameId = {$in: matchup.gameId}
+
+	} else if (selector.leagueId){
+		var matchup = Matchup.findOne({_id: selector.matchupId});
+		newSelector.userId = {$in: matchup.users}
+	}
+
+	ReactiveAggregate(this, GamePlayed, [
+		{$match: newSelector},
+		{
+	    $group: {
+	        '_id': '$userId',
+	        'coins': {
+	            $sum: '$coins'
+	        },
+	    }
+	},
+	{$sort : {coins: -1}},
+	{$limit: limit },
+	{
+    $project: {
+				userId: '$userId',
+        coins: '$coins',
+    }
+	}], { clientCollection: "leaderboard" });
+});

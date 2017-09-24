@@ -1,32 +1,51 @@
+Leaderboard = new Meteor.Collection('leaderboard');
+
+Template.gameLeaderboard.helpers({
+	data: function(){
+		var gameId = Router.current().params._id
+		var query = Router.current().params.query
+
+		var obj = {
+			gameId: gameId,
+			period: [parseInt(query.period)],
+			limit: 30
+		}
+		var all = _.extend(query, obj)
+		return all
+	}
+});
+
 Template.miniLeaderboard.onCreated(function(){
-	// 	var gameId = Router.current().params._id
-	// 	var query = Router.current().params.query
-	var t = this.data
+	var templateData = this.data.data
 	var self = this
 	self.getUsers = function(){
-		return GamePlayed.find({}).map(function(player){
-			return player.userId
+		return Leaderboard.find({}).map(function(player){
+			return player._id
 		});
 	}
+
+	self.getSelector = function(){
+		return templateData
+	}
 	self.autorun(function() {
-		 self.subscribe('leaderboardGamePlayed', t.gameId, t.period, t.limit);
-		 self.subscribe('leaderboardUserList', self.getUsers())
+		self.subscribe('reactiveLeaderboard', self.getSelector());
+		self.subscribe('leaderboardUserList', self.getUsers());
 	});
 });
 
 Template.miniLeaderboard.helpers({
 	'players': function(){
-		return GamePlayed.find({}, {sort: {coins: -1}}).fetch()
+		var leaderboard = Leaderboard.find({}, {sort: {coins: -1}});
+		return leaderboard
 	}
 });
 
 Template.singlePlayerLeader.helpers({
 	username: function(id){
 		var user = UserList.findOne({_id: id});
-		return user.profile.username
-	},
-	coins: function(){
-
+		if(user){
+			return user.profile.username
+		}
 	}
 });
 

@@ -1,6 +1,10 @@
 <template name="gameLeaderboard">
  {{> yield 'header'}}
 
+ {{#contentFor "headerButtonLeft"}}
+   {{>ionNavBackButton path="index"}}
+ {{/contentFor}}
+
  {{#contentFor "headerTitle"}}
   <h1 class="title white-text-header">Game Leaderboard</h1>
  {{/contentFor}}
@@ -13,7 +17,7 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{> miniLeaderboard gameId="S6DEtxYTPRsjaTFCr" period=1 limit=30}}
+      {{> miniLeaderboard data=data}}
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -28,57 +32,12 @@
 
 <template name="singlePlayerLeader">
   <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-    {{> userAvatar userId=player.userId}}
+    {{> userAvatar userId=player._id}}
     <li class="list-font" value={{player.rank}}>
-      <span class="username">{{username player.userId}}</span>
+      <span class="username">{{username player._id}}</span>
       <span class="score">
         {{{player.coins}}}
       </span>
     </li>
   </div>
 </template>
-
-
-<!-- <template name="gameLeaderboard">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
-
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">
-    	Leaderboard
-    </h1>
-  {{/contentFor}} -->
-
-  <!-- {{#contentFor "headerButtonRight"}}
-     <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
-       {{> ionIcon icon="funnel"}}
-     </button>
-   {{/contentFor}} -->
-
-  <!-- {{#ionView}}
-	  {{#ionContent}}
-      {{> miniLeaderboard gameId=this.game._id i=30}}
-	  {{/ionContent}}
-	{{/ionView}}
-</template>
-
-<template name="miniLeaderboard">
-  <ol type="1" id="leaderboard">
-    {{#each player in players i}}
-      {{> singlePlayer player=player}}
-    {{/each}}
-  </ol>
-</template>
-
-<template name="singlePlayer">
-  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-    {{> userAvatar userId=player.userId}}
-    <li class="list-font legit" value={{rank}}>
-      <span class="username">{{username player.userId}}</span>
-      <span class="score">
-        {{{player.coins}}}
-      </span>
-    </li>
-  </div>
-</template> -->
