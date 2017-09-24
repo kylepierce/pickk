@@ -87,13 +87,13 @@ Template.footballInfoCard.helpers({
 		return "10%"
 	},
 	away: function (){
-		statsTeamId = this.game.teams[0].teamId
-		Meteor.subscribe('singleTeam', statsTeamId);
+		var statsTeamId = this.game.teams[0].teamId
+		// Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},
 	home: function() {
-		statsTeamId = this.game.teams[1].teamId
-		Meteor.subscribe('singleTeam', statsTeamId);
+		var statsTeamId = this.game.teams[1].teamId
+		// Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},
 	shortCode: function() {

@@ -18,8 +18,10 @@ Template.gameLeaderboard.helpers({
 Template.miniLeaderboard.onCreated(function(){
 	var templateData = this.data.data
 	var self = this
+	var limit = templateData.limit
+
 	self.getUsers = function(){
-		return Leaderboard.find({}).map(function(player){
+		return Leaderboard.find({}, {limit: limit}).map(function(player, index){
 			return player._id
 		});
 	}

@@ -63,7 +63,7 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
   var userId = this.userId;
   var game = Games.findOne({_id: gameId});
   var period = game.period
-  var gamePlayed = GamePlayed.findOne({gameId: gameId, period: period});
+  var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 
   if(game){
     var selector = {

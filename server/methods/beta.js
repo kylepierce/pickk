@@ -10,6 +10,8 @@ Meteor.methods({
 		var user = Meteor.users.findOne({_id: user})
 		mailChimpLists.subscribeUser(user, {double_optin: false});
 	},
+	'updateGames': function(){
+		Games.update({sport: "NFL", iso: { $exists: true}}, {$set: {dateCreated: "2017-09-27T04:30:00.000Z"}}, {multi: true})
+	},
 
-	
 });

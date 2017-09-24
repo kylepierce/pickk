@@ -23,6 +23,17 @@
         <div>{{link.title}}</div>
       {{/ionItem}}
     {{/each}}
+    {{#if isMobile}}
+      {{#ionItem class="contact-us" iconLeft=true data-ion-menu-toggle="left"}}
+        {{> ionIcon icon='ios-person-outline'}}
+        Contact Us {{messageCount}}
+      {{/ionItem}}
+
+      {{#ionItem class="js-share-link" iconLeft=true data-ion-menu-toggle="left"}}
+        {{> ionIcon icon='share'}}
+        Share
+      {{/ionItem}}
+    {{/if}}
   {{/ionList}}
 </template>
 
@@ -85,18 +96,6 @@
   {{> ionIcon icon='ios-medical-outline'}}
   Common Questions
 {{/ionItem}}
-
-{{#if isMobile}}
-  {{#ionItem class="contact-us" iconLeft=true data-ion-menu-toggle="left"}}
-    {{> ionIcon icon='ios-person-outline'}}
-    Contact Us {{messageCount}}
-  {{/ionItem}}
-
-  {{#ionItem class="js-share-link" iconLeft=true data-ion-menu-toggle="left"}}
-    {{> ionIcon icon='share'}}
-    Share
-  {{/ionItem}}
-{{/if}}
 
 
 {{#ionItem iconLeft=true path="friends" data-ion-menu-toggle="left"}}

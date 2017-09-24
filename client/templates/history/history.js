@@ -6,7 +6,7 @@ Template.history.helpers({
 		}
 	},
   gamesPlayed: function() {
-    var selector = {users: Meteor.userId()};
-    return Games.find(selector, {sort: {dateCreated: -1}});
+    // var selector = {users: Meteor.userId()};
+    return Games.find({}, {sort: {dateCreated: 1}});
   }
 });

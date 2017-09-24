@@ -181,7 +181,7 @@ Template.futureGameInfo.helpers({
 
 Template.teamBlock.helpers({
   team: function (statsTeamId) {
-    Meteor.subscribe('singleTeam', statsTeamId);
+    // Meteor.subscribe('singleTeam', statsTeamId);
     return Teams.findOne({"statsTeamId": statsTeamId});
   },
   upper: function (name) {
