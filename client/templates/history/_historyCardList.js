@@ -1,5 +1,16 @@
-Template.historyCardList.helpers({
+Template.historyCardList.onCreated(function(){
+  this.subscribe('gameQuestionCount', this.data.gameId)
+});
 
+Template.historyCardList.helpers({
+  userPlayed: function(){
+    var count = Counts.get('gameQuestionCount');
+    if (count > 0){
+      return true
+    } else {
+      return false
+    }
+  }
 });
 
 Template.historyCardList.events({

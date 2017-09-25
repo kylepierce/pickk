@@ -11,8 +11,12 @@ Template.home.rendered = function () {
 
 Template.home.helpers({
   listGames: function(){
-    Meteor.subscribe('liveGames')
-    return Games.find();
+    Meteor.subscribe('liveGames');
+    return Games.find({status: "In-Progress"});
+  },
+  upcomingGames: function(){
+    Meteor.subscribe('upcomingGames');
+    return Games.find({status: "Pre-Game"}, {sort: {iso: -1}});
   },
 });
 

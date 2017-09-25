@@ -3,11 +3,13 @@
 		<div class="single-notification complete-game-card ">
 			{{> singleGameCard game=game}}
 		</div>
-		{{#if sport "NFL"}}
-			{{> footballInfoCard}}
-		{{/if}}
-		{{#if sport "MLB"}}
-			{{> baseballInfoCard}}
+		{{#if active}}
+			{{#if sport "NFL"}}
+				{{> footballInfoCard}}
+			{{/if}}
+			{{#if sport "MLB"}}
+				{{> baseballInfoCard}}
+			{{/if}}
 		{{/if}}
 	</div>
 </template>

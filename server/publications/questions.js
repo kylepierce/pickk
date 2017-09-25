@@ -111,3 +111,13 @@ Meteor.publish('preGamePickks', function(gameId) {
     return Questions.find(selector);
   }
 });
+
+Meteor.publish("gameQuestionCount", function(gameId) {
+  this.unblock()
+  var userId = this.userId;
+  var selector = {
+    gameId: gameId,
+    usersAnswered: {$in: [userId]}
+  }
+  Counts.publish(this, "gameQuestionCount", Questions.find(selector));
+});

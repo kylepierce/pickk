@@ -18,6 +18,11 @@ Template.notificationCenter.helpers({
   game: function(){
     return Games.findOne();
   },
+	active: function(){
+		if (this.game.status === "In-Progress"){
+			return true
+		}
+	},
 	sport: function(sport){
 		if (this.game.sport === sport){
 			return true

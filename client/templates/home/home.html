@@ -12,8 +12,11 @@
       <div class="container hundred-bottom">
         {{> homeButtons}}
         {{> dailyPickkButton}}
+        {{#each game in listGames}}
+          {{> entireGameCard game=game}}
+        {{/each}}
         {{#if Template.subscriptionsReady}}
-          {{#each game in listGames}}
+          {{#each game in upcomingGames}}
             {{> entireGameCard game=game}}
           {{/each}}
         {{/if}}

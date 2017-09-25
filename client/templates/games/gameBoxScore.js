@@ -67,12 +67,14 @@ Template.singleGameCard.helpers({
         return "left-side-team-block "
       } else if (this.game.status === "Pre-Game"){
         return "left-side-team-block "
+      } else if (this.game.status === "Final"){
+        return "left-side-team-block "
       }
       // else if (this.game.eventStatus.eventStatusId === 5){
       //   return "left-side-team-block "
       // }
       else {
-        return "full-width-team-block"
+        return "left-side-team-block"
       }
     }
   },
@@ -82,7 +84,7 @@ Template.singleGameCard.helpers({
         return true
       } else if (this.game.status === "Pre-Game"){
         return true
-      } else if (this.game.status === "closed" || this.game.status === "completed"){
+      } else if (this.game.status === "closed" || this.game.status === "completed" || this.game.status === "Final"){
         return true
       }
       // else if (this.game.eventStatus.eventStatusId === 5 ){
@@ -207,7 +209,7 @@ Template.teamBlock.helpers({
 
 Template.rightSection.helpers({
   completed: function () {
-    if (this.game.status === "closed" || this.game.status === "completed"){
+    if (this.game.status === "closed" || this.game.status === "completed"|| this.game.status === "Final") {
       return true
     }
   },

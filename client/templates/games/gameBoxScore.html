@@ -1,6 +1,6 @@
 <template name="entireGameCard">
   <div class="loading-wrapper">
-    <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight" data-action="viewGame">
+    <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight">
       <!-- {{> loadingGame}} animated-background -->
 
       {{> singleGameInfo game=game border=true}}
@@ -23,7 +23,7 @@
 
 <template name="singleGameCard">
   <div class="single-game-card">
-    <div class="{{status}}">
+    <div class="{{status}}" data-action="viewGame">
       {{#each team in teams}}
         {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
       {{/each}}
@@ -77,7 +77,9 @@
 <template name="rightSection">
   <div class="additional-game-details">
     {{#if completed}}
-      <span>View Game</span>
+      <div class="game-time-container center-text game-card-right-side-border">
+        <span>View Game</span>
+      </div>
     {{/if}}
     {{#if live}}
       <div class="game-time-container center-text game-card-right-side-border">
