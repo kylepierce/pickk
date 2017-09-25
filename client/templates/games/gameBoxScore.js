@@ -27,6 +27,16 @@ Template.entireGameCard.events({
   }
 });
 
+Template.singleGameInfo.onCreated( function() {
+  var team1 = this.data.game.away_team
+  var team2 = this.data.game.home_team
+  if (team1 && team2){
+    this.subscribe( 'singleGameTeams', team1, team2, function() {
+      $( ".loading-wrapper").show();
+    });
+  }
+});
+
 Template.singleGameInfo.helpers({
   inProgress: function () {
     if (this.game.live === true){
@@ -181,7 +191,6 @@ Template.futureGameInfo.helpers({
 
 Template.teamBlock.helpers({
   team: function (statsTeamId) {
-    // Meteor.subscribe('singleTeam', statsTeamId);
     return Teams.findOne({"statsTeamId": statsTeamId});
   },
   upper: function (name) {

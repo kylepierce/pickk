@@ -21,7 +21,7 @@ Template.miniLeaderboard.onCreated(function(){
 	var limit = templateData.limit
 
 	self.getUsers = function(){
-		return Leaderboard.find({}, {limit: limit}).map(function(player, index){
+		return Leaderboard.find({}, {sort: {coins: -1}, limit: limit}).map(function(player, index){
 			return player._id
 		});
 	}
@@ -37,8 +37,13 @@ Template.miniLeaderboard.onCreated(function(){
 
 Template.miniLeaderboard.helpers({
 	'players': function(){
-		var leaderboard = Leaderboard.find({}, {sort: {coins: -1}});
-		return leaderboard
+		var templateData = this.data
+		if (templateData && templateData.limit){
+			var limit = templateData.limit
+
+			var leaderboard = Leaderboard.find({}, {sort: {coins: -1}, limit: limit}).fetch();
+			return leaderboard
+		}
 	}
 });
 

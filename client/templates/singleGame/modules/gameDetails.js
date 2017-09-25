@@ -88,12 +88,10 @@ Template.footballInfoCard.helpers({
 	},
 	away: function (){
 		var statsTeamId = this.game.teams[0].teamId
-		// Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},
 	home: function() {
 		var statsTeamId = this.game.teams[1].teamId
-		// Meteor.subscribe('singleTeam', statsTeamId);
 		return Teams.findOne({"statsTeamId": statsTeamId});
 	},
 	shortCode: function() {

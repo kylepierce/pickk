@@ -130,7 +130,7 @@ Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
 	check(gameId, String);
 	check(period, Number);
 	check(limit, Number);
-
+	this.unblock()
 	var data = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit, fields: {userId: 1, coins: 1}});
 
 	if (data) {
@@ -141,7 +141,7 @@ Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
 
 Meteor.publish('leaderboardUserList', function(list) {
 	check(list, Array);
-
+	this.unblock()
 	var data = UserList.find({_id: {$in: list}}, {fields: {profile: 1}});
 
 	if (data) {
@@ -156,7 +156,7 @@ Meteor.publish("reactiveLeaderboard", function(selector) {
 		period: {$in: selector.period},
 	}
 	// var limit = selector.limit
-
+	this.unblock()
 	if (selector.matchupId){
 		var matchup = Matchup.findOne({_id: selector.matchupId});
 		newSelector.userId = {$in: matchup.users}
@@ -169,7 +169,6 @@ Meteor.publish("reactiveLeaderboard", function(selector) {
 	}
 
 	ReactiveAggregate(this, GamePlayed, [
-
 		{$match: newSelector},
 		{
 	    $group: {
