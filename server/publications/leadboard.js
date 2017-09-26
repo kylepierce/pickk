@@ -151,21 +151,27 @@ Meteor.publish('leaderboardUserList', function(list) {
 });
 
 Meteor.publish("reactiveLeaderboard", function(selector) {
-	var newSelector = {
-		gameId: {$in: [selector.gameId]},
-		period: {$in: selector.period},
-	}
-	// var limit = selector.limit
+	check(selector, Object)
 	this.unblock()
-	if (selector.matchupId){
-		var matchup = Matchup.findOne({_id: selector.matchupId});
+	var newSelector = {}
+	var type = selector.type.toLowerCase()
+	var week = moment().week() - 1
+	var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
+	var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
+	var daySelector = {dateCreated: {$gte : startDay, $lt: endDay}}
+	var listOfGames = _.map(Games.find(daySelector).fetch(), function(game){
+		return game._id
+	});
+
+	if (type === "matchup"){
+		var matchup = Matchup.findOne({_id: selector._id});
 		newSelector.userId = {$in: matchup.users}
 		newSelector.period = {$in: matchup.period}
 		newSelector.gameId = {$in: matchup.gameId}
-
-	} else if (selector.leagueId){
-		var matchup = Matchup.findOne({_id: selector.matchupId});
-		newSelector.userId = {$in: matchup.users}
+	} else if (type === "league"){
+		var leagueUsers = Groups.findOne({_id: selector._id}).members;
+		newSelector.userId = {$in: leagueUsers}
+		newSelector.gameId = {$in: listOfGames}
 	}
 
 	ReactiveAggregate(this, GamePlayed, [

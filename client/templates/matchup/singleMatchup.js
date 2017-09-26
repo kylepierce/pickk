@@ -24,6 +24,14 @@ Template.singleMatchup.helpers({
         return true
       }
     }
+  },
+  'data': function(){
+    var obj = {
+      limit: 2,
+      type: "matchup",
+      _id: this._id
+    }
+    return obj
   }
 });
 
@@ -155,7 +163,7 @@ Template.matchupMember.events({
      Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
-    Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
+    Router.go('/leaderboard/?filter=matchup&matchupId=' + this._id );
   },
   "click [data-action=viewLeague]": function(e, t) {
     Router.go('/league/' + this.leagueId );

@@ -23,11 +23,19 @@
 </template>
 
 <template name="miniLeaderboard">
+  {{#if leaderboard}}
+    <ol type="1" id="leaderboard">
+      {{#each player in players}}
+        {{> singlePlayerLeader player=player}}
+      {{/each}}
+    </ol>
+  {{else}}
   <ol type="1" id="leaderboard">
-    {{#each player in players}}
-      {{> singlePlayerLeader player=player}}
+    {{#each number in limit}}
+      {{> singlePlayerLeaderHolder number=number}}
     {{/each}}
   </ol>
+  {{/if}}
 </template>
 
 <template name="singlePlayerLeader">
@@ -39,5 +47,14 @@
         {{{player.coins}}}
       </span>
     </li>
+  </div>
+</template>
+
+<template name="singlePlayerLeaderHolder">
+  <div class="item item-avatar leaderboard-item">
+    <div class="avatar user-avatar legit">
+      <img class="avatar-loading-anim avatar-image circle-image">
+    </div>
+    <li class="list-font" value={{number}}></li>
   </div>
 </template>

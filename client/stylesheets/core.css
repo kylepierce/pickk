@@ -242,3 +242,14 @@ h1, h2, h3, h4, h5, h6 {
 .no-border {
   border-radius: 0!important;
 }
+
+.avatar-loading-anim {
+	animation-duration: 50s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background: #f6f7f8;
+	background: linear-gradient(110deg, #CACCCD 30%, #bdc3c7 50%, #CACCCD 70%);
+	position: relative;
+}

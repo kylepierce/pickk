@@ -6,10 +6,9 @@ Template.gameLeaderboard.helpers({
 		var query = Router.current().params.query
 
 		var obj = {
-			gameId: gameId,
-			period: [parseInt(query.period)],
 			limit: 30
 		}
+
 		var all = _.extend(query, obj)
 		return all
 	}
@@ -30,12 +29,25 @@ Template.miniLeaderboard.onCreated(function(){
 		return templateData
 	}
 	self.autorun(function() {
-		self.subscribe('reactiveLeaderboard', self.getSelector());
-		self.subscribe('leaderboardUserList', self.getUsers());
+		var leaderboard = self.subscribe('reactiveLeaderboard', self.getSelector());
+		var users = self.subscribe('leaderboardUserList', self.getUsers());
+		// console.log(leaderboard.ready());
+		// console.log(users.ready());
 	});
 });
 
 Template.miniLeaderboard.helpers({
+	'leaderboard': function(){
+		var count = Leaderboard.find({}).count();
+		if(count > 0){
+			return true
+		}
+	},
+	'limit': function(){
+		return _.map(_.range(this.data.limit), function (index) {
+			return {number: index}
+		});
+	},
 	'players': function(){
 		var templateData = this.data
 		if (templateData && templateData.limit){

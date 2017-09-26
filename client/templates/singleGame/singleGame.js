@@ -81,19 +81,6 @@ Template.singleGame.helpers({
   }
 });
 
-Template.singleGame.events({
-  'click [data-action=game-leaderboard]': function(e, t){
-    var gameId = Router.current().params._id
-    var period = Games.findOne({_id: gameId}).period
-    var userId = Meteor.userId()
-    analytics.track("waiting-leaderboard", {
-      userId: userId,
-      gameId: gameId,
-    });
-    Router.go('/leaderboard/'+ gameId + "?period=" + period)
-  },
-});
-
 Template.gameDisplay.helpers({
 	status: function (eventStatusNumber){
 		if (this.game.eventStatus.eventStatusId === eventStatusNumber){
