@@ -17,7 +17,7 @@
     {{#ionContent}}
       <div class="photo-upload-container card-container">
         <span>
-          {{> userAvatar size="medium" user=this.user}}
+          {{> userAvatar size="medium" userId=this.user._id}}
           <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>
         </span>
         <h3 class="center">{{this.user.profile.username}}</h3>

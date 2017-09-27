@@ -98,11 +98,19 @@ Template.waitingForNextPlay.helpers({
 		}
 	},
 	data: function(){
+		var userId = Meteor.userId();
+		var gameId = this.game._id
+		var period = this.game.period
+		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
+		console.log(gamePlayed);
 		var obj = {
-			gameId: this.game._id,
+			type: "game",
+			gameId: [this.game._id],
 			period: [this.game.period],
+			playType: gamePlayed.type,
 			limit: 3
 		}
+		console.log(obj);
 		return obj
 	}
 });

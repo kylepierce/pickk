@@ -172,6 +172,10 @@ Meteor.publish("reactiveLeaderboard", function(selector) {
 		var leagueUsers = Groups.findOne({_id: selector._id}).members;
 		newSelector.userId = {$in: leagueUsers}
 		newSelector.gameId = {$in: listOfGames}
+	} else {
+		newSelector.gameId = {$in: selector.gameId}
+		newSelector.period = {$in: selector.period}
+		newSelector.type = selector.playType
 	}
 
 	ReactiveAggregate(this, GamePlayed, [

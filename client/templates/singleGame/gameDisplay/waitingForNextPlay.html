@@ -18,23 +18,8 @@
 
 		{{> inviteToPlay}}
 		{{> historyCardList gameId=this.game._id i=3}}
+		{{> _leaderboardCard data=data}}
 
-		<div class="card-list">
-		<div class="card-list-header ten-spacing">
-			<span>Leaderboard +</span>
-			<!-- <span>
-				<button style="font-size: 11px; min-height: 20px; max-height: 20px;" class="button button-clear float-right" data-action="filter-leaderboard">
-	      	{{> ionIcon icon="funnel"}}
-	    	</button>
-			</span> -->
-		</div>
-
-		{{> miniLeaderboard data=data}}
-
-		<div class="card-list-footer" data-action="game-leaderboard">
-			View All
-		</div>
-		</div>
 		{{#if drive}}
 		<button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="switchToLive">
 			Switch to Live (Play by Play)
