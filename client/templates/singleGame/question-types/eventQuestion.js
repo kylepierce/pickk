@@ -176,6 +176,28 @@ Template.eventQuestion.events({
 			wager: lastWager
 		}
 
+    if(multiplier < 2.5){
+      var multiplierRange = "low"
+    } else if (multiplier < 4.5){
+      var multiplierRange = "med"
+    } else if (multiplier < 10){
+      var multiplierRange = "high"
+    } else if (multiplier < 99){
+      var multiplierRange = "game changer"
+    }
+
+    analytics.track("question answered", {
+      gameId: this.q.gameId,
+      period: this.q.period,
+      questionId: this.q._id,
+      type: this.t,
+      answered: lastPlay.option,
+      userId: Meteor.userId(),
+      multiplier: multiplier,
+      multiplierRange: multiplierRange,
+      wager: lastWager
+    });
+
 		Meteor.call('answerNormalQuestion', prediction);
 	}
 });

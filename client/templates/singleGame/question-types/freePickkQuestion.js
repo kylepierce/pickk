@@ -41,6 +41,15 @@ Template.freePickkQuestion.events({
       type: "free-pickk"
     }
 
+    analytics.track("question answered", {
+      gameId: this.q.gameId,
+      period: this.q.period,
+      questionId: this.q._id,
+      type: this.t,
+      answered: this.o.option,
+      userId: Meteor.userId(),
+    });
+
     Meteor.call('answerFreePickk', prediction)
 	},
 });

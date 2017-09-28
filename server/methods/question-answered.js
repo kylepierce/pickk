@@ -204,7 +204,6 @@ Meteor.methods({
 			Games.update({_id: prediction.gameId}, {$addToSet: {users: userId}});
 
 			Meteor.call('insertAnswer', prediction);
-			Meteor.call('questionAnsweredAnalytics', prediction)
 		}
 	}
 });
