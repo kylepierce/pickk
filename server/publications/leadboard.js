@@ -18,6 +18,65 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
   return GamePlayed.find(selector);
 });
 
+Meteor.publish('leaderboardUserList', function(list) {
+	check(list, Array);
+	this.unblock()
+	var data = UserList.find({_id: {$in: list}}, {fields: {profile: 1}});
+
+	if (data) {
+		return data
+	}
+	return this.ready();
+});
+
+Meteor.publish("reactiveLeaderboard", function(selector) {
+	check(selector, Object)
+	this.unblock()
+	var newSelector = {}
+	var type = selector.type
+	var week = moment().week() - 1
+	var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
+	var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
+	var daySelector = {dateCreated: {$gte : startDay, $lt: endDay}}
+	var listOfGames = _.map(Games.find(daySelector).fetch(), function(game){
+		return game._id
+	});
+
+	if (type === "matchup"){
+		var matchup = Matchup.findOne({_id: selector._id});
+		newSelector.userId = {$in: matchup.users}
+		newSelector.period = {$in: matchup.period}
+		newSelector.gameId = {$in: matchup.gameId}
+	} else if (type === "league"){
+		var leagueUsers = Groups.findOne({_id: selector._id}).members;
+		newSelector.userId = {$in: leagueUsers}
+		newSelector.gameId = {$in: listOfGames}
+	} else {
+		newSelector.gameId = {$in: selector.gameId}
+		if (selector.period){newSelector.period = {$in: [parseInt(selector.period)]}}
+		if (selector.playType){newSelector.type = selector.playType}
+		if (selector._id){newSelector.gameId = {$in: [selector._id]}}
+	}
+
+	ReactiveAggregate(this, GamePlayed, [
+		{$match: newSelector},
+		{
+	    $group: {
+	        '_id': '$userId',
+	        'coins': {
+	            $sum: '$coins'
+	        },
+	    }
+	},
+	{$sort : {coins: -1}},
+	{
+    $project: {
+				userId: '$userId',
+        coins: '$coins',
+    }
+	}], { clientCollection: "leaderboard" });
+});
+
 // Meteor.publish("userRank", function(o, usersCoins) {
 //   check(o, Match.Maybe(Object));
 // 	check(usersCoins, Match.Maybe(Number));
@@ -125,74 +184,16 @@ Meteor.publish('singleGamePlayedIn', function (game, userId){
 //
 //   var gamesPlayed = GamePlayed.find(selector, sort, fields);  return gamesPlayed
 // });
-
-Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
-	check(gameId, String);
-	check(period, Number);
-	check(limit, Number);
-	this.unblock()
-	var data = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit, fields: {userId: 1, coins: 1}});
-
-	if (data) {
-		return data
-	}
-	return this.ready();
-});
-
-Meteor.publish('leaderboardUserList', function(list) {
-	check(list, Array);
-	this.unblock()
-	var data = UserList.find({_id: {$in: list}}, {fields: {profile: 1}});
-
-	if (data) {
-		return data
-	}
-	return this.ready();
-});
-
-Meteor.publish("reactiveLeaderboard", function(selector) {
-	check(selector, Object)
-	this.unblock()
-	var newSelector = {}
-	var type = selector.type.toLowerCase()
-	var week = moment().week() - 1
-	var startDay = moment().startOf('day').add(4, "hour").day("Tuesday").week(week)._d;
-	var endDay = moment().startOf('day').day("Monday").add(28, "hour").week(week+1)._d;
-	var daySelector = {dateCreated: {$gte : startDay, $lt: endDay}}
-	var listOfGames = _.map(Games.find(daySelector).fetch(), function(game){
-		return game._id
-	});
-
-	if (type === "matchup"){
-		var matchup = Matchup.findOne({_id: selector._id});
-		newSelector.userId = {$in: matchup.users}
-		newSelector.period = {$in: matchup.period}
-		newSelector.gameId = {$in: matchup.gameId}
-	} else if (type === "league"){
-		var leagueUsers = Groups.findOne({_id: selector._id}).members;
-		newSelector.userId = {$in: leagueUsers}
-		newSelector.gameId = {$in: listOfGames}
-	} else {
-		newSelector.gameId = {$in: selector.gameId}
-		newSelector.period = {$in: selector.period}
-		newSelector.type = selector.playType
-	}
-
-	ReactiveAggregate(this, GamePlayed, [
-		{$match: newSelector},
-		{
-	    $group: {
-	        '_id': '$userId',
-	        'coins': {
-	            $sum: '$coins'
-	        },
-	    }
-	},
-	{$sort : {"coins": -1}},
-	{
-    $project: {
-				userId: '$userId',
-        coins: '$coins',
-    }
-	}], { clientCollection: "leaderboard" });
-});
+//
+// Meteor.publish('leaderboardGamePlayed', function(gameId, period, limit) {
+// 	check(gameId, String);
+// 	check(period, Number);
+// 	check(limit, Number);
+// 	this.unblock()
+// 	var data = GamePlayed.find({gameId: gameId, period: period}, {sort: {coins: -1}, limit: limit, fields: {userId: 1, coins: 1}});
+//
+// 	if (data) {
+// 		return data
+// 	}
+// 	return this.ready();
+// });

@@ -1,8 +1,9 @@
 Template.postGame.helpers({
   data: function(){
     var obj = {
-      gameId: this.game._id,
-      period: [this.game.period],
+      type: "game",
+      _id: this.game._id,
+			gameId: [this.game._id],
       limit: 3
     }
     return obj

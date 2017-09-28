@@ -1,14 +1,4 @@
 <template name="postGame">
 	{{> historyCardList gameId=this.game._id i=3}}
-	<div class="card-list">
-	<div class="card-list-header ten-spacing">
-		<span>Leaderboard +</span>
-	</div>
-
-	{{> miniLeaderboard data=data}}
-
-	<div class="card-list-footer" data-action="game-leaderboard">
-		View All
-	</div>
-	</div>
+	{{> _leaderboardCard data=data}}
 </template>

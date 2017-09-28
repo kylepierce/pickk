@@ -9,8 +9,18 @@ Template.gameLeaderboard.helpers({
 			limit: 30
 		}
 
-		var all = _.extend(query, obj)
-		return all
+		if (query.type){obj.type = query.type}
+		if (query._id){obj._id = query._id}
+		if (query.gameId){
+			obj.gameId = [query.gameId]
+		} else {
+			obj.gameId = [query._id]
+		}
+		if (query.playType){obj.playType = query.playType}
+		if (query.period){obj.period = [parseInt(query.period)]}
+
+		// var all = _.extend(query, obj)
+		return obj
 	}
 });
 

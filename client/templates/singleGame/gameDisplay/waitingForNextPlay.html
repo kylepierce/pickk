@@ -1,19 +1,5 @@
 <template name="waitingForNextPlay">
 	<div id="waiting-for-play" class="animated fast fadeInUp hundred-bottom">
-		<!-- {{#if baseball}}
-			Current Batter: {{currentBatter}} <br>
-			Up Next: {{upNext}}
-		{{/if}}
-		{{#if periodDiff}}
-			<button data-action="nextPeriod">Join Next Quarter</button>
-		{{else}}
-			<div class="clear-fix"></div>
-				<h5 style="margin-bottom: 0;">
-					Progress To Next Diamond Reward
-				</h5>
-				{{>diamondWatcher}}
-			<div class="clear-fix"></div>
-		{{/if}} -->
 		<div id="ratingBox"></div>
 
 		{{> inviteToPlay}}
@@ -21,9 +7,9 @@
 		{{> _leaderboardCard data=data}}
 
 		{{#if drive}}
-		<button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="switchToLive">
-			Switch to Live (Play by Play)
-		</button>
+			<button class="button col-md-100 ten-spacing daily-pickk-cta" style="height: 45px; margin-bottom: 10px;" data-action="switchToLive">
+				Switch to Live (Play by Play)
+			</button>
 		{{/if}}
 	</div>
 </template>
@@ -35,3 +21,18 @@
     <button class="yes-prompt" data-action="{{yesAction}}">{{yesText}}</button>
   </div>
 </template>
+
+<!-- {{#if baseball}}
+	Current Batter: {{currentBatter}} <br>
+	Up Next: {{upNext}}
+{{/if}}
+{{#if periodDiff}}
+	<button data-action="nextPeriod">Join Next Quarter</button>
+{{else}}
+	<div class="clear-fix"></div>
+		<h5 style="margin-bottom: 0;">
+			Progress To Next Diamond Reward
+		</h5>
+		{{>diamondWatcher}}
+	<div class="clear-fix"></div>
+{{/if}} -->
