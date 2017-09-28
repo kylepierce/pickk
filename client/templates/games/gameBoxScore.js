@@ -154,12 +154,15 @@ Template.singleGameCTA.helpers({
 Template.singleGameCTA.events({
   'click [data-action=play]': function (e, t) {
     Router.go('joinGame.show', {_id: this.game._id});
+  },
+  'click [data-action=pre-pickk]': function(){
+    var gameId = this.game._id
+    Router.go('/game/' + gameId );
   }
 });
 
 Template.futureGameInfo.helpers({
   border: function(){
-    // console.log(this);
     if(this.border === false){
       return "no-border"
     }

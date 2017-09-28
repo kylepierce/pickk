@@ -9,28 +9,24 @@ Template.singleGameHistory.helpers({
 	}
 });
 
-Template.gameHistory.helpers({
-	questions: function (number){
-		var $gameId = Router.current().params._id
-		Meteor.subscribe('questionsByGameId', $gameId, number)
-		return Questions.find({}, {sort: {dateCreated: -1}}).fetch()
-	},
-	answers: function (id) {
-		var userId = Meteor.userId()
-		var answer = Answers.findOne({"questionId": id, userId: userId});
-		return answer
-	}
+Template.gameHistory.onCreated(function(){
+	var $gameId = Router.current().params._id
+	this.subscribe('questionsByGameId', $gameId, this.data.number, this.data.prePickks);
 });
 
-Template.singleAnswer.helpers({
-	active: function (status){
-		if (status === false){
-			return true
-		}
+Template.gameHistory.helpers({
+	questions: function (number){
+		return Questions.find({}, {sort: {dateCreated: -1}}).fetch()
 	},
+
+});
+
+Template.singleQuestion.helpers({
 	status: function () {
-		if (this.q.outcome){
-			var contains = this.q.outcome.indexOf(this.a.answered)
+		var userId = Meteor.userId()
+		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
+		if (this.q.outcome && answer){
+			var contains = this.q.outcome.indexOf(answer.answered)
 		}
 
 		if (contains > -1) {
@@ -50,9 +46,94 @@ Template.singleAnswer.helpers({
 			return "single-question-history-card"
 		}
 	},
+	single: function(){
+		if(this.single){
+			return "hidden"
+		}
+	}
+});
+
+Template.singleQuestion.events({
+	'click': function(){
+		Router.go('/question/' + this.q._id);
+	}
+})
+
+Template.questionTop.helpers({
 	questionTitle: function (){
 		if(this.q.que.length > 20){
 			return "small-question-text"
+		}
+	},
+	timeAgo: function(){
+		var userId = Meteor.userId()
+		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
+		if(answer){
+			var answerCreated = answer.dateCreated
+			var now = new Date;
+			var diff = now - answerCreated
+
+			var timeConverter = function(time, length) {
+				var timeNumber = time / length
+				return parseFloat(timeNumber).toFixed(0)
+			}
+
+			if (diff < 60000) {
+				var timeNumber = timeConverter(diff, 1000)
+				return timeNumber + " Seconds Ago"
+			} else if (diff > 60000 && diff < 3600000) {
+				var timeNumber = timeConverter(diff, 60000)
+				return timeNumber + " Mins Ago"
+			} else if (diff > 3600000 && diff < 86400000) {
+				var timeNumber = timeConverter(diff, 3600000)
+				return timeNumber + " Hours Ago"
+			} else if (diff > 86400000){
+				var timeNumber = timeConverter(diff, 86400000)
+				return timeNumber + " Days Ago"
+			}
+		}
+	},
+	details: function() {
+		var extended = Template.parentData(2).extended
+		var answerExtended = this.extended
+		if (extended || answerExtended) {
+			return true
+		}
+	},
+	winnings: function (id){
+		var userId = Meteor.userId()
+		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
+
+		addCommas = function(number){
+			return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
+		if (answer){
+			// var contains = outcome.indexOf(answered)
+		}
+		// if (contains > -1) {
+		// 	return "+ " + addCommas(parseInt(this.a.wager * this.a.multiplier)) + "</strong>"
+		// } else if (outcome === "Removed" || this.q.type === 'freePickk'){
+		// 	return "+ " + this.a.wager
+		// } else if (outcome !== undefined && answered !== outcome) {
+		// 	return "- " + this.a.wager
+		// }
+	},
+});
+
+Template.questionBottom.helpers({
+	active: function (status){
+		if (status === false){
+			return true
+		}
+	},
+	answer: function(){
+		var userId = Meteor.userId()
+		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
+		if (answer){
+			return answer.answered
+		} else {
+			return "N/A"
 		}
 	},
 	title: function ( option ){
@@ -69,74 +150,22 @@ Template.singleAnswer.helpers({
 			return list
 		} else if (option === true || option === false) {
 			return option
-		} else if (option === undefined) {
-			return ""
+		} else if (option === undefined || option === "N/A") {
+			return "Unanswered"
 		}
 		var selected = options[option]
 		return selected.title
 	},
-	result: function (){
-		if (this.q.outcome){
-			return this.q.outcome
-		} else {
-			return this.q.play
-		}
-	},
-	winnings: function ( answered, outcome ){
-		var contains = outcome.indexOf(answered)
+});
 
-		addCommas = function(number){
-			return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
-
-		if (contains > -1) {
-			return "+ " + addCommas(parseInt(this.a.wager * this.a.multiplier)) + "</strong>"
-		} else if (outcome === "Removed" || this.q.type === 'freePickk'){
-			return "+ " + this.a.wager
-		} else if (outcome !== undefined && answered !== outcome) {
-			return "- " + this.a.wager
-		}
-	},
+Template.questionExtended.helpers({
 	details: function() {
+		var userId = Meteor.userId()
 		var extended = Template.parentData(2).extended
 		var answerExtended = this.extended
-		if (extended || answerExtended) {
-			return true
-		}
-	},
-	timeAgo: function(){
-		var answerCreated = this.a.dateCreated
-		var now = new Date;
-		var diff = now - answerCreated
-
-		var timeConverter = function(time, length) {
-			var timeNumber = time / length
-			return parseFloat(timeNumber).toFixed(0)
-		}
-
-		if (diff < 60000) {
-			var timeNumber = timeConverter(diff, 1000)
-			return timeNumber + " Seconds Ago"
-		} else if (diff > 60000 && diff < 3600000) {
-			var timeNumber = timeConverter(diff, 60000)
-			return timeNumber + " Mins Ago"
-		} else if (diff > 3600000 && diff < 86400000) {
-			var timeNumber = timeConverter(diff, 3600000)
-			return timeNumber + " Hours Ago"
-		} else if (diff > 86400000){
-			var timeNumber = timeConverter(diff, 86400000)
-			return timeNumber + " Days Ago"
-		}
-	},
-	single: function(){
-		if(this.single){
-			return "hidden"
+		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
+		if (answer && extended || answer && answerExtended) {
+			return answer
 		}
 	}
 });
-
-Template.singleAnswer.events({
-	'click': function(){
-		Router.go('/question/' + this.q._id);
-	}
-})

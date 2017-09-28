@@ -1,18 +1,24 @@
 // History
-Meteor.publish('questionsByGameId', function(gameId, number) {
+Meteor.publish('questionsByGameId', function(gameId, number, prePickks) {
   check(gameId, String);
   check(number, Number);
-  this.unblock()
+  check(prePickks, Boolean);
+  this.unblock();
+
+  var selector = {gameId: gameId}
 
   if (number === -1){
     var sort = {sort: {dateCreated: -1}}
   } else {
     var sort = {sort: {dateCreated: -1}, limit: number}
   }
-
   var user = this.userId
+  if (!prePickks){
+    selector.usersAnswered = {$in: [user]}
+  } else if (prePickks) {
+    selector.period = 0
+  }
 
-  var selector = {gameId: gameId, usersAnswered: {$in: [user]}}
   var answerSelector = {userId: this.userId, gameId: gameId}
   return [
     Questions.find(selector, sort),

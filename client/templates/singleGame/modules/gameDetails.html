@@ -1,17 +1,17 @@
 <template name="notificationCenter">
+	{{#if active}}
 	<div id="notification-center" class="animated fadeInLeft">
 		<div class="single-notification complete-game-card ">
 			{{> singleGameCard game=game}}
 		</div>
-		{{#if active}}
-			{{#if sport "NFL"}}
-				{{> footballInfoCard}}
-			{{/if}}
-			{{#if sport "MLB"}}
-				{{> baseballInfoCard}}
-			{{/if}}
+		{{#if sport "NFL"}}
+			{{> footballInfoCard}}
+		{{/if}}
+		{{#if sport "MLB"}}
+			{{> baseballInfoCard}}
 		{{/if}}
 	</div>
+	{{/if}}
 </template>
 
 <template name="footballInfoCard">

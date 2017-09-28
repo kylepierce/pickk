@@ -21,13 +21,14 @@ Template.preGame.helpers({
       return true
     }
   },
+});
+
+Template.prePickkList.helpers({
   'preGamePickks': function(){
     var selector = {
       period: 0,
-      active: true,
-      usersAnswered: {$nin: [Meteor.userId()]}
     }
-    var sort = {sort: {dateCreated: 1}, limit: 1}
+    var sort = {sort: {dateCreated: 1}}
     return Questions.find(selector, sort).fetch();
   },
   'questionsAvailable': function(){
@@ -44,5 +45,11 @@ Template.preGame.helpers({
       usersAnswered: {$in: [Meteor.userId()]}
     }
     return Questions.find(selector).count();
+  }
+})
+
+Template.prePickkList.events({
+  'click': function(){
+    console.log("YEAR");
   }
 });
