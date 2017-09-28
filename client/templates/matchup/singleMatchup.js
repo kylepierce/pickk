@@ -100,14 +100,17 @@ Template.matchupJoin.helpers({
     var userId = Meteor.userId();
     var deepLinked = Session.get('deepLinked');
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
-    if (this.secret === "public"){
+    if (this.secret === "public" ){
       return true
-    } else if(this.leagueId){
-      Meteor.subscribe('singleGroup', this.leagueId);
-      var group = Groups.find({_id: this.leagueId}).fetch()
-      var isMember = group[0].members.indexOf(userId)
-      if(isMember > -1){
-        return true
+    } else if (this.leagueId) {
+      var userId = Meteor.userId()
+      var group = Groups.findOne({_id: this.leagueId});
+      if(group){
+        var isMember = group.members.indexOf(userId)
+        var isInvited = group.invites.indexOf(userId)
+        if (isMember > -1 ){
+          return true
+        }
       }
     } else if (deeplinkAllowed === "true"){
       return true
@@ -131,7 +134,21 @@ Template.matchupJoin.helpers({
   },
   league: function () {
     if(this.leagueId) {
-      return true
+      var userId = Meteor.userId()
+      var group = Groups.findOne({_id: this.leagueId});
+      if(group){
+        var isMember = group.members.indexOf(userId)
+        var isInvited = group.invites.indexOf(userId)
+        if(isMember > -1){
+          return false
+        } else if(isInvited > -1){
+          return true
+        } else if (group.secret === "public" ){
+          return true
+        } else {
+          return false
+        }
+      }
     }
   }
 });
