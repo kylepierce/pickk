@@ -112,7 +112,7 @@ Template.inviteToLeagueBox.events({
           "feature" : "share",
         }, {
           // put your control parameters here
-          "$deeplink_path" : "/group/" + groupId,
+          "$deeplink_path" : "/league/" + groupId,
         }, message);
       });
     }

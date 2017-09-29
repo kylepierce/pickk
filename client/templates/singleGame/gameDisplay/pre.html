@@ -1,6 +1,6 @@
 <template name="preGame">
 	{{#if noQuestions}}
-		{{> historyCardList gameId=this.game._id number=3 prePickks=true}}
+		{{> historyCardList gameId=this.game._id number=3}}
 		{{> matchupCardList gameId=this.game._id type="game"}}
 	{{else}}
 		{{> prePickkList}}
@@ -8,12 +8,18 @@
 </template>
 
 <template name="prePickkList">
-	<div class="card-list">
+	<!-- <div class="card-list">
 		<div class="card-list-header ten-spacing">{{questionsAnswered}} / {{questionsAvailable}} Pre Pickks</div>
 		{{#each question in preGamePickks}}
 			{{> singleQuestion q=question}}
 		{{/each}}
-	</div>
+	</div> -->
+
+	<h3>{{questionsAnswered}} / {{questionsAvailable}} Pre Pickks</h3>
+	{{#each question in preGamePickks}}
+		{{> eventQuestion q=question t=question.type}}
+		<!-- {{> singleQuestion q=question}} -->
+	{{/each}}
 </template>
 
 <!-- <div class="card-list">

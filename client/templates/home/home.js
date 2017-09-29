@@ -1,6 +1,3 @@
-Template.home.onRendered( function() {
-});
-
 Template.home.rendered = function () {
   // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
   var deeplink = Session.get("deepLinked");

@@ -4,7 +4,8 @@
 }
 
 .hero-card {
-  display: grid;
+  display: flex;
+	flex-flow: column;
 	font-family: "Lato";
   width: 95%;
   border-radius: 5px;
@@ -14,9 +15,8 @@
 
 .hero-image {
   height: 125px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+	display: flex;
+	align-items: flex-end;
   border-radius: 5px 5px 0 0;
   background-size: cover;
 }

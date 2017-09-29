@@ -7,14 +7,22 @@
 </template>
 
 <template name="heroSection">
-  <div id="hero-section" class="animated fadeInDown">
-    {{#each hero in heros}}
-      <div class="single-slide">
-        {{> singleHero hero=hero}}
+  <div style="min-height: 180px;">
+    {{#if Template.subscriptionsReady}}
+      <div id="hero-section" class="animated fadeInDown">
+        {{> heroInBetween}}
       </div>
-    {{/each}}
+    {{/if}}
   </div>
   <div class="line-divider"></div>
+</template>
+
+<template name="heroInBetween">
+  {{#each hero in heros}}
+    <div class="single-slide">
+      {{> singleHero hero=hero}}
+    </div>
+  {{/each}}
 </template>
 
 <template name="singleHero">

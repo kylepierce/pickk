@@ -11,7 +11,7 @@ Template.singleGameHistory.helpers({
 
 Template.gameHistory.onCreated(function(){
 	var $gameId = Router.current().params._id
-	this.subscribe('questionsByGameId', $gameId, this.data.number, this.data.prePickks);
+	this.subscribe('questionsByGameId', $gameId, this.data.number, false);
 });
 
 Template.gameHistory.helpers({

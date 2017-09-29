@@ -1,28 +1,28 @@
 DeepLinkHandler = function (data) {
-  IonLoading.show({
-    customTemplate: "Redirecting!..",
-    duration: 2500,
-    backdrop: true
-  });
   console.log(data);
   if (data) {
     Session.set("deepLinked", data);
-    if (data.$deeplink_path){
+    if (data.$deeplink_path && Meteor.userId()){
+      IonLoading.show({
+        customTemplate: "Redirecting!..",
+        duration: 2500,
+      });
     	handleOpenURL(data.$deeplink_path)
     	return data
     }
   } else {
-    console.log('No data found');
+    console.log("User not logged in. Creating a notification object.");
   }
+  var deep = Session.get("deepLinked");
+  console.log(deep);
 }
 
 NonBranchLinkHandler = function(link) {
-  IonLoading.show({
-    customTemplate: "Redirecting...",
-    duration: 2500,
-    backdrop: true
-  });
-  if(link.url) {
+  if(link.url && Meteor.userId()) {
+    IonLoading.show({
+      customTemplate: "Redirecting!..",
+      duration: 2500,
+    });
   	Session.set("nonBranch", link.url);
     //with the leading "/"
   	var route = link.url.slice(7)

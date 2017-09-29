@@ -27,8 +27,10 @@ Template.prePickkList.helpers({
   'preGamePickks': function(){
     var selector = {
       period: 0,
+      active: true,
+      usersAnswered: {$nin: [Meteor.userId()]}
     }
-    var sort = {sort: {dateCreated: 1}}
+    var sort = {sort: {dateCreated: 1}, limit: 1}
     return Questions.find(selector, sort).fetch();
   },
   'questionsAvailable': function(){
