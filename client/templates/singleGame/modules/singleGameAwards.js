@@ -26,7 +26,9 @@ Template.singleGameAwards.helpers({
     if (game){
       var period = game.period
       var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
-      return userGamePlayed[award];
+      if(userGamePlayed){
+        return userGamePlayed[award];
+      }
     }
   },
   gameType: function () {

@@ -41,8 +41,6 @@ Template.miniLeaderboard.onCreated(function(){
 	self.autorun(function() {
 		var leaderboard = self.subscribe('reactiveLeaderboard', self.getSelector());
 		var users = self.subscribe('leaderboardUserList', self.getUsers());
-		// console.log(leaderboard.ready());
-		// console.log(users.ready());
 	});
 });
 
