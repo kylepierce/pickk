@@ -24,15 +24,10 @@ Meteor.publish('singleMatchup', function(matchupId){
   return Matchup.find({_id: matchupId});
 });
 
-Meteor.publish('singleGameMatchups', function(gameId){
-  check(gameId, String);
-  var userId = this.userId;
-  return Matchup.find({gameId: gameId, users: {$in: [userId]}})
-});
-
-Meteor.publish("singleLeagueMatchups", function(leagueId){
-  check(leagueId, String);
-  return Matchup.find({leagueId: leagueId});
+Meteor.publish('listOfMatchups', function(selector){
+  this.unblock();
+  check(selector, Object);
+  return Matchup.find(selector)
 });
 
 Meteor.publish("singleGroupMatchupCount", function(groupId){
