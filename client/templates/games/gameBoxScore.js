@@ -61,6 +61,9 @@ Template.singleGameInfo.helpers({
 });
 
 Template.singleGameCard.helpers({
+  hasBall: function(){
+    return this.game.whoHasBall
+  },
   status: function() {
     if(this.game) {
       if(this.game.status === "In-Progress") {
@@ -195,17 +198,26 @@ Template.futureGameInfo.helpers({
 });
 
 Template.teamBlock.helpers({
+  whoHasBall: function (){
+    if(this.statsTeamId === this.hasBall){
+      return true
+    }
+  },
   team: function (statsTeamId) {
-    return Teams.findOne({"statsTeamId": statsTeamId});
+    var team = Teams.findOne({"statsTeamId": statsTeamId});
+		if(this.hasBall === statsTeamId){
+			team.hasBall = true
+		}
+		return team
   },
   upper: function (name) {
     return name.toUpperCase()
   },
   hex: function () {
-    if (this.hex){
-      return "#" + this.hex[0]
+    if(!this.hasBall){
+      return "grey"
     } else {
-      return "#134A8E"
+      return "#" + this.hex[0]
     }
   }
 });
@@ -255,14 +267,8 @@ Template.rightSection.helpers({
     return period
   },
   time: function () {
-    if (this.game && this.game.sport === "NFL" ) {
-      var path = this.game.eventStatus
-      var seconds = path.seconds.toString()
-      if (seconds && seconds.length < 2) {
-        var seconds = "0" + seconds
-      }
-      var string = path.minutes + ":" + seconds
-      return string
+    if (this.game.time ) {
+      return this.game.time
     }
   },
   tvStation: function (tvStations) {

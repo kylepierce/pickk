@@ -24,7 +24,7 @@
   <div class="single-game-card">
     <div class="{{status}}" data-action="viewGame">
       {{#each team in teams}}
-        {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
+        {{> teamBlock statsTeamId=team.teamId runs=team.runs hasBall=hasBall}}
       {{/each}}
     </div>
     {{#if showRight}}
@@ -61,6 +61,7 @@
   <div class="team-block">
     {{#with team statsTeamId}}
       <div class="team-colors team-text" style="background-color:{{hex}}">
+        {{#if hasBall}} x {{/if}}
         {{upper computerName}}
       </div>
     {{/with}}
