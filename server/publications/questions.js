@@ -104,7 +104,7 @@ Meteor.publish('preGamePickks', function(gameId) {
   if(game){
     var selector = {
       gameId: gameId,
-      active: true,
+      active: {$ne: "future"},
       period: 0,
     }
     var answer = {

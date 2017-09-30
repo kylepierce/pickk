@@ -1,5 +1,5 @@
-<template name="preGamePickks">
-  {{#each question in preGame}}
-    {{> eventQuestion}}
-  {{/each}}
+<template name="prePickkQuestion">
+	{{#questionPopover}}
+		{{> eventQuestion q=this.q t=this.q.type}}
+	{{/questionPopover}}
 </template>

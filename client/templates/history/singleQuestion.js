@@ -8,7 +8,7 @@ Template.singleQuestion.helpers({
 
 		if (contains > -1) {
 			return "history-correct" // Correct
-		} else if (answer === undefined) {
+		} else if (answer === undefined && this.q.active === true) {
 			return "history-open"
 		} else if (this.q.active === true){
 			return "history-live" // In progress
@@ -20,7 +20,8 @@ Template.singleQuestion.helpers({
 	},
 	location: function(){
 		var answerExtended = this.extended
-		if (answerExtended) {
+		var rounded = this.rounded
+		if (answerExtended || rounded) {
 			return "single-question-history-card"
 		}
 	},
@@ -70,7 +71,9 @@ Template.questionTop.helpers({
 		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
 
 		addCommas = function(number){
-			return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			var sign = ""
+			if (number > 0){ sign = "+ "}
+			return sign + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 
 		if (answer){
@@ -78,11 +81,13 @@ Template.questionTop.helpers({
 				var contains = this.q.outcome.indexOf(answer. answered);
 				if (contains > -1) {
 					var reward = parseInt(answer.wager * answer.multiplier) // Correct
+				} else if (this.q.outcome === "Removed") {
+					var reward = answer.wager
 				} else {
 					var reward = -answer.wager // Incorrect
 				}
 			} else {
-				if (this.q.outcome === "Removed" || this.q.type === 'freePickk'){
+				if (this.q.type === 'freePickk'){
 					var reward = answer.wager // Removed
 				} else {
 					var reward = -answer.wager // Incorrect
@@ -104,6 +109,13 @@ Template.questionBottom.helpers({
 		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
 		if (answer){
 			return answer.answered;
+		}
+	},
+	notAnswered: function(){
+		if (this.q.active){
+			return "Make a Pickk!"
+		} else {
+			return "Not Answered"
 		}
 	},
 	title: function ( option ){

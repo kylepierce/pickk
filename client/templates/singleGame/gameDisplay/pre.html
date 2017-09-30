@@ -1,29 +1,41 @@
 <template name="preGame">
-	{{> prePickkList}}
-	{{> matchupCardList gameId=this.game._id type="game"}}
+	<div class="hundred-bottom">
+		{{#if questionsAvailable}}
+			{{> preGameCard}}
+			{{> prePickkList}}
+		{{else}}
+			{{> historyCardList gameId=this.game._id number=3}}
+			{{> matchupCardList gameId=this.game._id type="game"}}
+		{{/if}}
+	</div>
 </template>
 
 <template name="prePickkList">
-	{{#if questionsAvailable}}
-		<div class="card-list">
-			<div class="card-list-header ten-spacing">Pre Pickks ({{questionsAnswered}} / {{questionsAvailable}})</div>
-			{{#each question in preGamePickks}}
-				{{> singleQuestion q=question}}
-			{{/each}}
-		</div>
-	{{/if}}
+	<h3>Pre Pickk Questions:</h3>
+	{{#each question in preGamePickks}}
+		{{> singleQuestion q=question rounded=true}}
+	{{/each}}
 </template>
 
-<!-- <div class="card-list">
-	<div class="card-list-header ten-spacing">Updates & Articles</div>
-
-	<div class="card-list-footer" data-action="previous-answers">
-		View All
+<template name="preGameCard">
+	<div id="notification-center" class="animated fadeInRight">
+		<div class="single-notification complete-game-card info-card">
+			<div class="football-inner">
+				<div class="location">
+					<span class="title">Coins</span>
+					<span class="detail">{{coins}}</span>
+				</div>
+				<div class="vertical-divider"></div>
+				<div class="location">
+					<span class="title">Pickks</span>
+					<span class="detail">
+						({{questionsAnswered}} / {{questionsAvailable}})
+					</span>
+				</div>
+				<div class="vertical-divider"></div>
+				<div class="location">
+				</div>
+			</div>
+		</div>
 	</div>
-</div> -->
-
-<template name="prePickkQuestion">
-	{{#questionPopover class="questionPopover"}}
-		{{> eventQuestion q=this.q t=this.q.type}}
-	{{/questionPopover}}
 </template>
