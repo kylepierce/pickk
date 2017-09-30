@@ -98,7 +98,7 @@ Template.singleGameCard.helpers({
   teams: function () {
     if (this.game.teams){
       var teams = _.values(this.game.teams);
-      if (this.game.scoring){
+      if (this.game.live && this.game.scoring){
         teams[1].runs = this.game.scoring.home.runs;
         teams[0].runs = this.game.scoring.away.runs;
       } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
