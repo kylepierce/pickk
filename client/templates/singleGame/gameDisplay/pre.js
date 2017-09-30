@@ -1,5 +1,4 @@
 Template.preGame.onCreated(function() {
-  Meteor.subscribe('preGamePickks', this.data.game._id);
   var data = {
     gameId: this.data.game._id,
     dateCreated: new Date(),
@@ -9,28 +8,18 @@ Template.preGame.onCreated(function() {
   Meteor.call('userJoinsAGame', data)
 });
 
-Template.preGame.helpers({
-  'noQuestions': function(){
-    var selector = {
-      period: 0,
-      active: true,
-      usersAnswered: {$nin: [Meteor.userId()]}
-    }
-    count = Questions.find(selector).count();
-    if (count === 0) {
-      return true
-    }
-  },
+Template.preGame.onCreated(function() {
+  Meteor.subscribe('preGamePickks', this.data.game._id);
 });
+
 
 Template.prePickkList.helpers({
   'preGamePickks': function(){
     var selector = {
       period: 0,
-      active: true,
-      usersAnswered: {$nin: [Meteor.userId()]}
+      active: true
     }
-    var sort = {sort: {dateCreated: 1}, limit: 1}
+    var sort = {sort: {dateCreated: 1}}
     return Questions.find(selector, sort).fetch();
   },
   'questionsAvailable': function(){
@@ -51,7 +40,13 @@ Template.prePickkList.helpers({
 })
 
 Template.prePickkList.events({
-  'click': function(){
-    console.log("YEAR");
+  'click': function(e, t){
+    var alreadyAnswered = this.q.usersAnswered.indexOf(Meteor.userId());
+    if (alreadyAnswered === -1){
+      QuestionPopover.show('prePickkQuestion', this);
+    } else {
+      console.log("alreadyAnswered");
+    }
+
   }
 });

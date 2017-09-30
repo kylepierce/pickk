@@ -199,6 +199,7 @@ Template.eventQuestion.events({
     });
 
 		Meteor.call('answerNormalQuestion', prediction);
+    QuestionPopover.hide();
 	}
 });
 

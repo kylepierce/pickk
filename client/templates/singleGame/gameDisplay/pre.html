@@ -1,25 +1,17 @@
 <template name="preGame">
-	{{#if noQuestions}}
-		{{> historyCardList gameId=this.game._id number=3}}
-		{{> matchupCardList gameId=this.game._id type="game"}}
-	{{else}}
-		{{> prePickkList}}
-	{{/if}}
+	{{> prePickkList}}
+	{{> matchupCardList gameId=this.game._id type="game"}}
 </template>
 
 <template name="prePickkList">
-	<!-- <div class="card-list">
-		<div class="card-list-header ten-spacing">{{questionsAnswered}} / {{questionsAvailable}} Pre Pickks</div>
-		{{#each question in preGamePickks}}
-			{{> singleQuestion q=question}}
-		{{/each}}
-	</div> -->
-
-	<h3>{{questionsAnswered}} / {{questionsAvailable}} Pre Pickks</h3>
-	{{#each question in preGamePickks}}
-		{{> eventQuestion q=question t=question.type}}
-		<!-- {{> singleQuestion q=question}} -->
-	{{/each}}
+	{{#if questionsAvailable}}
+		<div class="card-list">
+			<div class="card-list-header ten-spacing">Pre Pickks ({{questionsAnswered}} / {{questionsAvailable}})</div>
+			{{#each question in preGamePickks}}
+				{{> singleQuestion q=question}}
+			{{/each}}
+		</div>
+	{{/if}}
 </template>
 
 <!-- <div class="card-list">
@@ -29,3 +21,9 @@
 		View All
 	</div>
 </div> -->
+
+<template name="prePickkQuestion">
+	{{#questionPopover class="questionPopover"}}
+		{{> eventQuestion q=this.q t=this.q.type}}
+	{{/questionPopover}}
+</template>

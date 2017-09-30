@@ -1,7 +1,9 @@
 <template name="activeGame">
 	{{> waitingForNextPlay}}
 	{{#if anyQuestions}}
-		{{> liveGame game=game}}
+		<div class="hundred-bottom">
+			{{> liveGame game=game}}
+		</div>
 	{{/if}}
 </template>
 

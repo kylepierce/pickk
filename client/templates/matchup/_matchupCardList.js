@@ -8,6 +8,12 @@ Template.matchupCardList.onCreated(function(){
 });
 
 Template.matchupCardList.helpers({
+  matchupCount: function(){
+    var count = Matchup.find().count();
+    if(count > 0){
+      return true
+    }
+  },
   matchups: function(){
     return Matchup.find();
   },

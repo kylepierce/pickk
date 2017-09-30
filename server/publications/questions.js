@@ -97,6 +97,7 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
 
 Meteor.publish('preGamePickks', function(gameId) {
   check(gameId, String);
+  this.unblock();
   var userId = this.userId;
   var game = Games.findOne({_id: gameId});
 
@@ -105,15 +106,19 @@ Meteor.publish('preGamePickks', function(gameId) {
       gameId: gameId,
       active: true,
       period: 0,
-      // usersAnswered: {$nin: [userId]}
     }
-    // var sort = {sort: {dateCreated: -1}, limit: 1}
-    return Questions.find(selector);
+    var answer = {
+      gameId: gameId,
+    }
+    return [
+      Questions.find(selector),
+      Answers.find(answer)
+    ]
   }
 });
 
 Meteor.publish("gameQuestionCount", function(gameId) {
-  this.unblock()
+  this.unblock();
   var userId = this.userId;
   var selector = {
     gameId: gameId,
