@@ -9,7 +9,7 @@ Template.preGame.onCreated(function() {
 });
 
 Template.preGame.onCreated(function() {
-  Meteor.subscribe('preGamePickks', this.data.game._id);
+  this.subscribe('preGamePickks', this.data.game._id);
 });
 
 
@@ -45,7 +45,7 @@ Template.prePickkList.events({
     if (alreadyAnswered === -1){
       QuestionPopover.show('prePickkQuestion', this);
     } else {
-      console.log("alreadyAnswered");
+      IonModal.open('questionDetails', this);
     }
 
   }

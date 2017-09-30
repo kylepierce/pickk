@@ -23,27 +23,25 @@
 }
 
 .history-inprogress {
-	/*border-left: 10px solid green!important;*/
 	font-style: italic;
 }
 
-.history-live {
-	/*font-style: italic;*/
-	/*padding-left: 15px!important;*/
+.history-live {}
+
+.history-live .outcome-coins {
+	font-style: italic;
 }
 
-.history-live .question-text {
+.history-open {}
+
+.history-open .question-text {
+	color: green;
 	width: 100%;
 }
 
+.history-pending {}
 
-.history-pending {
-	/*padding-left: 15px;*/
-}
-
-.history-correct {
-	/*border-left: 5px solid purple!important;*/
-}
+.history-correct {}
 
 .single-question-history-card .single-question-history-top,
 .single-question-history-card .single-question-history-bottom {
@@ -59,7 +57,6 @@
 .history-incorrect .single-question-history-top .question-text,
 .history-incorrect .single-question-history-top .outcome-coins{
 	color: gray;
-	/*border-left: 5px solid gray!important;*/
 }
 
 .question-inner {
@@ -70,7 +67,6 @@
 .single-question-history-top {
 	padding: 5px 0!important;
 	width: 100%;
-	/*display: flex;*/
 }
 
 .single-question-history-bottom {
@@ -86,7 +82,7 @@
 	font-weight: bold;
 	float: left;
 	clear: both;
-	font-size: 1rem;
+	font-size: 1.15rem;
 	letter-spacing: 0.7px;
 }
 

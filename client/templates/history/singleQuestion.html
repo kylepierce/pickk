@@ -1,24 +1,3 @@
-<template name="questionDetails">
-  {{#ionModal class="white-text-header" title="Single Question"}}
-    <div class="container ten-spacing">
-      {{> singleQuestion q=this.q single=true extended=true}}
-
-      <!-- {{#if reported}}
-        <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
-          Question Reported
-        </button>
-        <div>
-          You reported this question {{questionReported.dateCreated}}
-        </div>
-      {{else}}
-        <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
-          Report This Question
-        </button>
-      {{/if}} -->
-    </div>
-  {{/ionModal}}
-</template>
-
 <template name="singleQuestion">
 	<div class="history-item {{status}} {{location}}">
     <div class="question-inner">
@@ -36,7 +15,7 @@
       {{q.que}}
     </div>
     <div class="outcome-coins">{{{winnings}}}</div>
-    {{#if details}}
+    {{#if this.extended}}
       <div class="time-ago">{{timeAgo}}</div>
       <div class="history-card-divider"></div>
     {{/if}}
@@ -47,11 +26,17 @@
   <div class="single-question-history-bottom">
     <ul class="question-attributes">
       <ul class="question-details">
-        <li class="col-md-100">
-          <div class="col-md-25"><strong>Selected:</strong></div>
-          <div class="col-md-75">{{title answer}}</div>
-        </li>
-        {{#if active q.active}}
+        {{#if answer}}
+          <li class="col-md-100">
+            <div class="col-md-25"><strong>Selected:</strong></div>
+            <div class="col-md-75">{{title answer}}</div>
+          </li>
+        {{else}}
+          <li class="col-md-100">
+            <strong>Make a Pickk!</strong>
+          </li>
+        {{/if}}
+        {{#if q.outcome}}
           <li class="col-md-100">
             <div class="col-md-25"><strong>Answer:</strong></div>
             <div class="col-md-75">{{{title q.outcome}}}</div>
@@ -73,4 +58,25 @@
       </ul>
     </div>
   {{/if}}
+</template>
+
+<template name="questionDetails">
+  {{#ionModal class="white-text-header" title="Single Question"}}
+    <div class="container ten-spacing">
+      {{> singleQuestion q=this.q single=true extended=true}}
+
+      {{#if reported}}
+        <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
+          Question Reported
+        </button>
+        <div>
+          You reported this question {{questionReported.dateCreated}}
+        </div>
+      {{else}}
+        <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
+          Report This Question
+        </button>
+      {{/if}}
+    </div>
+  {{/ionModal}}
 </template>

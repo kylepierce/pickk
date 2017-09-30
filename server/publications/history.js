@@ -1,4 +1,3 @@
-// History
 Meteor.publish('questionsByGameId', function(gameId, number, prePickks) {
   check(gameId, String);
   check(number, Number);
