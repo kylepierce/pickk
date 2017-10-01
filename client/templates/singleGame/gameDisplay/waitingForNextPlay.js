@@ -115,10 +115,6 @@ Template.waitingForNextPlay.helpers({
 });
 
 Template.waitingForNextPlay.events({
-	'click [data-action="nextPeriod"]': function(e,t){
-		var gameId = t.data.game[0]._id
-		Router.go('joinGame.show', {_id: gameId});
-	},
 	'click [data-action="switchToLive"]': function(e, t){
 		var data = {
 			userId: Meteor.userId(),

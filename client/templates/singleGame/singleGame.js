@@ -26,13 +26,6 @@ Template.singleGame.helpers({
 			return true
 		}
 	},
-	// checkGamePlayedStatus: function(){
-	// 	var t = Template.instance();
-	// 	if (t.data.game.eventStatus.eventStatusId === 2 && t.data.gamePlayed === 0){
-	// 		var gameId = t.data.game._id
-	// 		Router.go('joinGame.show', {_id: gameId});
-	// 	}
-	// },
   scoreMessage: function() {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
