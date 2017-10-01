@@ -191,3 +191,21 @@
 	color: white;
 	background-color: transparent;
 }
+
+.pre-game-pickks {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-size: 1.4rem;
+	font-weight: 900;
+	border-radius: 5px;
+	animation-duration: 50s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background: #f6f7f8;
+	background: linear-gradient(110deg, #26ad68 12%, #219e5e 25%, #26ad68 53%);
+	position: relative;
+	width: 70%;
+}

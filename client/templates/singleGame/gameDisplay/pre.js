@@ -1,12 +1,19 @@
-Template.preGame.onCreated(function() {
+Template.prePickkList.onCreated(function() {
   this.subscribe('preGamePickks', this.data.game._id);
   var data = {
     gameId: this.data.game._id,
     dateCreated: new Date(),
     userId: Meteor.userId(),
     period: 0,
+    type: "pre-pickks",
+    coins: 15000
   }
-  Meteor.call('userJoinsAGame', data)
+  console.log(data);
+  Meteor.call('userJoinsAGame', data);
+});
+
+Template.preGame.onCreated(function() {
+  this.subscribe('preGamePickks', this.data.game._id);
 });
 
 Template.preGame.helpers({

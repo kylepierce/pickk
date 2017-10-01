@@ -198,7 +198,14 @@ Template.eventQuestion.events({
       wager: lastWager
     });
 
-		Meteor.call('answerNormalQuestion', prediction);
+		Meteor.call('answerNormalQuestion', prediction, function(error, response){
+      if (error){
+        console.log(error);
+      } else {
+        console.log("Done");
+      }
+    });
+    console.log(prediction);
     QuestionPopover.hide();
 	}
 });

@@ -4,6 +4,8 @@
 }
 
 .single-question-history-card {
+	display: flex;
+	flex-flow: wrap;
 	margin: 5px 0;
   border-radius: 5px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
@@ -34,9 +36,23 @@
 
 .history-open {}
 
+.history-open .question-inner {
+	width: 100%;
+}
+
 .history-open .question-text {
 	color: green;
-	width: 100%;
+	display: flex;
+	align-items: center;
+	width: 80%;
+}
+
+.history-open .outcome-coins {
+	width: 20%;
+}
+
+.history-open .single-question-history-bottom {
+	display: none;
 }
 
 .history-pending {}
@@ -65,6 +81,8 @@
 }
 
 .single-question-history-top {
+	display: flex;
+	flex-flow: row;
 	padding: 5px 0!important;
 	width: 100%;
 }

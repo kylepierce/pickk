@@ -94,6 +94,8 @@ Template.questionTop.helpers({
 				}
 			}
 			return addCommas(reward)
+		} else if (!answer && this.q.active) {
+			return "<button class='pre-game-pickks center-text'><i class='icon ion-ios-arrow-right'></i></button>"
 		}
 	},
 });
