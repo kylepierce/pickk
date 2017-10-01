@@ -143,6 +143,12 @@
   color: white!important;
 }
 
+.join-game-description{
+	color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 5px;
+}
+
 .game-prompt-icon img{
   filter: invert(100%);
   width: 4rem;

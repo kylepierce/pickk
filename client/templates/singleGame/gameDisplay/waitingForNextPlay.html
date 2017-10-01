@@ -3,7 +3,9 @@
 		<div id="ratingBox"></div>
 
 		{{> inviteToPlay}}
+
 		{{> historyCardList gameId=this.game._id number=3}}
+		<br />
 		{{> _leaderboardCard data=data}}
 
 		{{#if drive}}

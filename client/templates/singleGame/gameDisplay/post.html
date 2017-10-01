@@ -1,4 +1,9 @@
 <template name="postGame">
+	<div id="notification-center" class="animated fadeInLeft">
+		<div class="single-notification complete-game-card ">
+			{{> singleGameCard game=this.game}}
+		</div>
+	</div>
 	{{> historyCardList gameId=this.game._id number=3}}
 	{{> _leaderboardCard data=data}}
 </template>

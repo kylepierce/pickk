@@ -24,13 +24,19 @@ Meteor.publish('usersGroups', function ( user ) {
 
 Meteor.publish('gamePlayed', function (gameId) {
   check(gameId, String);
-
   var userId = this.userId
   var game = Games.findOne({_id: gameId});
-  var period = game.period
-
-  return GamePlayed.find({userId: userId, gameId: gameId, period: period})
+  return GamePlayed.find({userId: userId, gameId: gameId})
 });
+
+// Meteor.publish('gamePlayedPeriod', function (gameId, period) {
+//   check(gameId, String);
+//   check(period, Number);
+//
+//   var userId = this.userId
+//   var game = Games.findOne({_id: gameId});
+//   return GamePlayed.find({userId: userId, gameId: gameId, period: period})
+// });
 
 // Teams
 Meteor.publish('teams', function() {

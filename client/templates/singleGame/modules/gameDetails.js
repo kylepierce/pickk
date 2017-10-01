@@ -69,7 +69,7 @@ Template.footballInfoCard.helpers({
 	team: function(num) {
 		var statsTeamId = this.game.teams[num].teamId
 		var team = Teams.findOne({"statsTeamId": statsTeamId});
-		if(this.game.whoHasBall === statsTeamId){
+		if(team && this.game.whoHasBall === statsTeamId){
 			team.hasBall = true
 		}
 		return team

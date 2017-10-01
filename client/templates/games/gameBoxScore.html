@@ -61,13 +61,16 @@
   <div class="team-block">
     {{#with team statsTeamId}}
       <div class="team-colors team-text" style="background-color:{{hex}}">
-        {{#if hasBall}} x {{/if}}
+
         {{upper computerName}}
       </div>
     {{/with}}
     <div class="team-inner">
       <span class="team-name team-text">
-        {{#with team statsTeamId}} {{nickname}} {{/with}}
+        {{#with team statsTeamId}}
+          {{#if hasBall}} &#9679; {{/if}}
+          {{nickname}}
+        {{/with}}
       </span>
       <span class="team-score team-text">{{runs}}</span>
     </div>

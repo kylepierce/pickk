@@ -1,7 +1,7 @@
 <template name="preGame">
 	<div class="hundred-bottom">
 		{{#if questionsAvailable}}
-			{{> preGameCard}}
+			<!-- {{> preGameCard}} -->
 			{{> prePickkList}}
 		{{else}}
 			{{> historyCardList gameId=this.game._id number=3}}
@@ -11,7 +11,7 @@
 </template>
 
 <template name="prePickkList">
-	<h3>Pre Pickk Questions:</h3>
+	<h3>Pre Pickk Questions: ({{questionsAnswered}} / {{questionsAvailable}})</h3>
 	{{#each question in preGamePickks}}
 		{{> singleQuestion q=question rounded=true}}
 	{{/each}}

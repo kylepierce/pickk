@@ -1,25 +1,10 @@
 Template.singleGame.onCreated(function() {
-	var t = Template.instance();
-	// if (t.data.game.eventStatus.eventStatusId === 2 && t.data.gamePlayed === 0){
-	// 	var gameId = t.data.game._id
-	// 	Router.go('joinGame.show', {_id: gameId});
-	// }
-	var userId = Meteor.userId();
-	var game = Games.findOne();
-	var data = {
-		gameId: game._id,
-		period: game.period,
-		number: 3
-	}
-	Session.set('leaderboardData', data);
-
+	var gameId = Router.current().params._id;
 	var self = this
-	self.getPeriod = function(){ return game.period }
-	// self.getCommercial = function(){ return game.commercial }
 	self.autorun(function() {
-		self.subscribe('gameNotifications', game._id)
-		// self.subscribe('gamePlayed', game._id, self.getPeriod());
-		// self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
+		self.subscribe('gameNotifications', gameId);
+		self.subscribe('singleGame', gameId);
+		self.subscribe('gamePlayed', gameId);
 	});
 });
 
@@ -30,6 +15,17 @@ Template.singleGame.rendered = function () {
 };
 
 Template.singleGame.helpers({
+	game: function(){
+		var t = Template.instance();
+		var game = Games.findOne();
+		return game
+	},
+	status: function (eventStatusNumber){
+		var game = Games.findOne();
+		if (game.eventStatus.eventStatusId === eventStatusNumber){
+			return true
+		}
+	},
 	// checkGamePlayedStatus: function(){
 	// 	var t = Template.instance();
 	// 	if (t.data.game.eventStatus.eventStatusId === 2 && t.data.gamePlayed === 0){
@@ -80,12 +76,4 @@ Template.singleGame.helpers({
       Meteor.call('removeNotification', id);
     });
   }
-});
-
-Template.gameDisplay.helpers({
-	status: function (eventStatusNumber){
-		if (this.game.eventStatus.eventStatusId === eventStatusNumber){
-			return true
-		}
-	}
 });

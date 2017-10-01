@@ -62,7 +62,9 @@ Template.singleGameInfo.helpers({
 
 Template.singleGameCard.helpers({
   hasBall: function(){
-    return this.game.whoHasBall
+    if(this.game){
+      return this.game.whoHasBall
+    }
   },
   status: function() {
     if(this.game) {
@@ -156,11 +158,10 @@ Template.singleGameCTA.helpers({
 
 Template.singleGameCTA.events({
   'click [data-action=play]': function (e, t) {
-    Router.go('joinGame.show', {_id: this.game._id});
+    Router.go('/game/' + this.game._id );
   },
   'click [data-action=pre-pickk]': function(){
-    var gameId = this.game._id
-    Router.go('/game/' + gameId );
+    Router.go('/game/' + this.game._id );
   }
 });
 
@@ -205,7 +206,7 @@ Template.teamBlock.helpers({
   },
   team: function (statsTeamId) {
     var team = Teams.findOne({"statsTeamId": statsTeamId});
-		if(this.hasBall === statsTeamId){
+		if(team && this.hasBall === statsTeamId){
 			team.hasBall = true
 		}
 		return team
@@ -214,10 +215,10 @@ Template.teamBlock.helpers({
     return name.toUpperCase()
   },
   hex: function () {
-    if(!this.hasBall){
-      return "grey"
-    } else {
+    if(this.hex){
       return "#" + this.hex[0]
+    } else {
+      return "grey"
     }
   }
 });

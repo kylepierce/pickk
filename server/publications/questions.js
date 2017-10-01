@@ -57,12 +57,13 @@ Meteor.publish("questionCount", function(gameId) {
   Counts.publish(this, "questionCount", data);
 });
 
-Meteor.publish('userQuestions', function(gameId, commercial) {
+Meteor.publish('userQuestions', function(gameId, commercial, period) {
   check(gameId, String);
   check(commercial, Boolean);
+  check(period, Number);
+
   var userId = this.userId;
   var game = Games.findOne({_id: gameId});
-  var period = game.period
   var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 
   if(game){
@@ -73,6 +74,7 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
       commercial: commercial,
       usersAnswered: {$nin: [userId]}
     }
+
     var sort = {sort: {dateCreated: -1}, limit: 1}
 
     if (gamePlayed.type === "live"){
