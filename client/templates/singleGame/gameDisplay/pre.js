@@ -5,7 +5,6 @@ Template.prePickkList.onCreated(function() {
     dateCreated: new Date(),
     userId: Meteor.userId(),
     period: 0,
-    type: "pre-pickks",
     coins: 15000
   }
   console.log(data);
