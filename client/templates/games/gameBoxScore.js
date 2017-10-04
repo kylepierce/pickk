@@ -107,8 +107,8 @@ Template.singleGameCard.helpers({
         teams[1].runs = this.game.scoring.home.runs;
         teams[0].runs = this.game.scoring.away.runs;
       } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
-        teams[0].runs = this.game.teams[0].linescoreTotals.hits
-        teams[1].runs = this.game.teams[1].linescoreTotals.hits
+        teams[0].runs = this.game.teams[0].linescoreTotals.runs
+        teams[1].runs = this.game.teams[1].linescoreTotals.runs
       }
       return teams
     }

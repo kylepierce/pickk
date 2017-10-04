@@ -11,7 +11,13 @@ Template.gameTypePrompt.onCreated( function() {
     }
 
   } else if (game.sport === "MLB") {
-    var background = "background: linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/baseball-background.png');"
+    var background = {
+          "background": "linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/baseball-background.png')",
+          "height": "100%",
+          "background-size": "cover",
+          "background-position-x": "50%",
+          "background-position-y": "100%"
+        }
   }
   $('.content').css(background);
   this.subscribe( 'singleGame', gameId,  function() {

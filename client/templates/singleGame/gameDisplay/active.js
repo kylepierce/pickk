@@ -7,7 +7,7 @@ Template.activeGame.onCreated(function() {
 		number: 3
 	}
 	Session.set('leaderboardData', data);
-	
+
 	var self = this
 	self.autorun(function(){
 		self.subscribe('userQuestions', self.data.game._id, game.commercial, game.period);
@@ -80,7 +80,7 @@ Template.activeGame.helpers({
 		var game = Games.findOne({});
 		var gamePlayed = GamePlayed.findOne({period: game.period})
 		var gameType = gamePlayed.type
-		if (gameType === "live" || gameType === "atBat"){
+		if (gameType === "live" || gameType === "atbat"){
 			var selector = {
 				active: true,
 				commercial: false,
