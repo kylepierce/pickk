@@ -9,6 +9,10 @@ Template._leaderboardCard.events({
     //   userId: userId,
     //   gameId: gameId,
     // });
-    Router.go('/leaderboard?type=' + this.data.type + '&_id=' + this.data._id)
+    var params = 'type=' + this.data.type + '&_id=' + this.data._id
+    if(this.data.period) {
+      params = params + "&period=" + this.data.period
+    }
+    Router.go('/leaderboard?')
   },
 });
