@@ -4,9 +4,12 @@
 }
 
 .single-question-history-card {
+	display: flex;
+	flex-flow: wrap;
 	margin: 5px 0;
   border-radius: 5px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
+	color: black;
 }
 
 .history-item {
@@ -22,27 +25,39 @@
 }
 
 .history-inprogress {
-	/*border-left: 10px solid green!important;*/
 	font-style: italic;
 }
 
-.history-live {
-	/*font-style: italic;*/
-	/*padding-left: 15px!important;*/
+.history-live {}
+
+.history-live .outcome-coins {
+	font-style: italic;
 }
 
-.history-live .question-text {
+.history-open {}
+
+.history-open .question-inner {
 	width: 100%;
 }
 
-
-.history-pending {
-	/*padding-left: 15px;*/
+.history-open .question-text {
+	color: green;
+	display: flex;
+	align-items: center;
+	width: 80%;
 }
 
-.history-correct {
-	/*border-left: 5px solid purple!important;*/
+.history-open .outcome-coins {
+	width: 20%;
 }
+
+.history-open .single-question-history-bottom {
+	display: none;
+}
+
+.history-pending {}
+
+.history-correct {}
 
 .single-question-history-card .single-question-history-top,
 .single-question-history-card .single-question-history-bottom {
@@ -58,7 +73,6 @@
 .history-incorrect .single-question-history-top .question-text,
 .history-incorrect .single-question-history-top .outcome-coins{
 	color: gray;
-	/*border-left: 5px solid gray!important;*/
 }
 
 .question-inner {
@@ -67,9 +81,10 @@
 }
 
 .single-question-history-top {
+	display: flex;
+	flex-flow: row;
 	padding: 5px 0!important;
 	width: 100%;
-	/*display: flex;*/
 }
 
 .single-question-history-bottom {
@@ -85,7 +100,7 @@
 	font-weight: bold;
 	float: left;
 	clear: both;
-	font-size: 1rem;
+	font-size: 1.15rem;
 	letter-spacing: 0.7px;
 }
 

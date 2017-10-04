@@ -1,6 +1,3 @@
-Template.home.onRendered( function() {
-});
-
 Template.home.rendered = function () {
   // If the user was invited to a game or group we want to redirect them to the correct place after the push prompt.
   var deeplink = Session.get("deepLinked");
@@ -11,8 +8,12 @@ Template.home.rendered = function () {
 
 Template.home.helpers({
   listGames: function(){
-    Meteor.subscribe('liveGames')
-    return Games.find();
+    Meteor.subscribe('liveGames');
+    return Games.find({status: "In-Progress"});
+  },
+  upcomingGames: function(){
+    Meteor.subscribe('upcomingGames');
+    return Games.find({status: "Pre-Game"}, {sort: {iso: -1}});
   },
 });
 

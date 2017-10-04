@@ -1,36 +1,33 @@
 <template name="activeGame">
-	{{> waitingForNextPlay}}
-
-	<!-- {{#if admin}}
-		<h2>{{{this.game.commercial}}}</h2>
-	{{/if}} -->
-
-	{{#if anyQuestions}}
-		{{> liveGame game=game}}
-	{{/if}}
-</template>
-
-<template name="liveGame">
-	{{#if game.commercial}}
-		{{#each question in commericalQuestions}}
-			{{#if questionTypeIs "freePickk" question.type}}
-				{{> freePickkQuestion q=question t=question.type}}
-			{{else}}
-				{{> eventQuestion q=question t=question.type}}
-			{{/if}}
-		{{/each}}
-
+	{{#if userHasntJoined}}
+		{{> gameTypePrompt}}
 	{{else}}
-		{{#each question in questions}}
-			{{#if questionTypeIs "play" question.type}}
-				{{> eventQuestion q=question t=question.type}}
-			{{/if}}
-			{{#if questionTypeIs "pitch" question.type}}
-				{{> eventQuestion q=question t=question.type}}
-			{{/if}}
-			{{#if questionTypeIs "atBat" question.type}}
-				{{> eventQuestion q=question t=question.type}}
-			{{/if}}
-		{{/each}}
+		{{> waitingForNextPlay}}
+		{{#if anyQuestions}}
+			<div class="hundred-bottom">
+				{{#if game.commercial}}
+					{{#each question in commericalQuestions}}
+						{{#if questionTypeIs "freePickk" question.type}}
+							{{> freePickkQuestion q=question t=question.type}}
+						{{else}}
+							{{> eventQuestion q=question t=question.type}}
+						{{/if}}
+					{{/each}}
+
+				{{else}}
+					{{#each question in questions}}
+						{{#if questionTypeIs "play" question.type}}
+							{{> eventQuestion q=question t=question.type}}
+						{{/if}}
+						{{#if questionTypeIs "pitch" question.type}}
+							{{> eventQuestion q=question t=question.type}}
+						{{/if}}
+						{{#if questionTypeIs "atBat" question.type}}
+							{{> eventQuestion q=question t=question.type}}
+						{{/if}}
+					{{/each}}
+				{{/if}}
+			</div>
+		{{/if}}
 	{{/if}}
 </template>

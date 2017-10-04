@@ -62,6 +62,14 @@ Meteor.methods({
 			coins: 25000
 		}
 
+		if (gamePlayed.coins){
+			data.coins = gamePlayed.coins
+		}
+
+		if (gamePlayed.type){
+			selector.type = gamePlayed.type
+		}
+
 		if (gamePlayed.period){
 			selector.period = gamePlayed.period
 		}

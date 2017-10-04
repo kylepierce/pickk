@@ -24,6 +24,14 @@ Template.singleMatchup.helpers({
         return true
       }
     }
+  },
+  'data': function(){
+    var obj = {
+      limit: 2,
+      type: "matchup",
+      _id: this._id
+    }
+    return obj
   }
 });
 
@@ -92,14 +100,17 @@ Template.matchupJoin.helpers({
     var userId = Meteor.userId();
     var deepLinked = Session.get('deepLinked');
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
-    if (this.secret === "public"){
+    if (this.secret === "public" ){
       return true
-    } else if(this.leagueId){
-      Meteor.subscribe('singleGroup', this.leagueId);
-      var group = Groups.find({_id: this.leagueId}).fetch()
-      var isMember = group[0].members.indexOf(userId)
-      if(isMember > -1){
-        return true
+    } else if (this.leagueId) {
+      var userId = Meteor.userId()
+      var group = Groups.findOne({_id: this.leagueId});
+      if(group){
+        var isMember = group.members.indexOf(userId)
+        var isInvited = group.invites.indexOf(userId)
+        if (isMember > -1 ){
+          return true
+        }
       }
     } else if (deeplinkAllowed === "true"){
       return true
@@ -123,7 +134,21 @@ Template.matchupJoin.helpers({
   },
   league: function () {
     if(this.leagueId) {
-      return true
+      var userId = Meteor.userId()
+      var group = Groups.findOne({_id: this.leagueId});
+      if(group){
+        var isMember = group.members.indexOf(userId)
+        var isInvited = group.invites.indexOf(userId)
+        if(isMember > -1){
+          return false
+        } else if(isInvited > -1){
+          return true
+        } else if (group.secret === "public" ){
+          return true
+        } else {
+          return false
+        }
+      }
     }
   }
 });
@@ -155,7 +180,7 @@ Template.matchupMember.events({
      Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
-    Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
+    Router.go('/leaderboard/?filter=matchup&matchupId=' + this._id );
   },
   "click [data-action=viewLeague]": function(e, t) {
     Router.go('/league/' + this.leagueId );

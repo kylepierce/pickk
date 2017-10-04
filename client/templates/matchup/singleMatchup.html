@@ -1,6 +1,6 @@
 <template name="singleMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="matchup"}}
+    {{>ionNavBackButton path=index}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -39,6 +39,8 @@
             {{/with}}
           {{/each}}
 
+          {{> _leaderboardCard data=data}}
+
         </div>
       {{/with}}
     {{/ionContent}}
@@ -47,8 +49,13 @@
 
 <template name="matchupJoin">
   {{#if notMaxed}}
+    {{#if league}}
+      <button data-action="viewLeague" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
+        Join League
+      </button>
+    {{/if}}
     {{#if allowToView}}
-      <button data-action="joinMatchup" class="button-card full cta-button ten-spacing">
+      <button data-action="joinMatchup" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
         Join Matchup
       </button>
       <div class="line-divider"></div>
@@ -56,19 +63,9 @@
       <div id="button-section">
         {{> matchupMember}}
       </div>
-
-    {{else}}
-      {{#if request}}
-        {{> requestInvite}}
-      {{/if}}
     {{/if}}
-  {{else}}
-    {{#if league}}
-      <div class="button-card half" data-action="viewLeague">
-        {{> pickkIcon size="small" icon="league"}}
-        <span class="text">League</span>
-        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-      </div>
+    {{#if request}}
+      {{> requestInvite}}
     {{/if}}
   {{/if}}
 </template>

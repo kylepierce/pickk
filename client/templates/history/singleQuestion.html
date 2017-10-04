@@ -1,33 +1,82 @@
+<template name="singleQuestion">
+	<div class="history-item {{status}} {{location}}">
+    <div class="question-inner">
+      {{> questionTop q=this.q extended=this.extended}}
+      {{> questionBottom q=this.q}}
+      {{> questionExtended q=this.q extended=this.extended}}
+    </div>
+    <div class="arrow {{single}}">{{> ionIcon icon="ios-arrow-right"}}</div>
+	</div>
+</template>
+
+<template name="questionTop">
+  <div class="single-question-history-top">
+    <div class="question-text {{questionTitle}}">
+      {{q.que}}
+    </div>
+    <div class="outcome-coins">{{{winnings}}}</div>
+    {{#if this.extended}}
+      <div class="time-ago">{{timeAgo}}</div>
+      <div class="history-card-divider"></div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="questionBottom">
+  <div class="single-question-history-bottom">
+    <ul class="question-attributes">
+      <ul class="question-details">
+        {{#if answer}}
+          <li class="col-md-100">
+            <div class="col-md-25"><strong>Selected:</strong></div>
+            <div class="col-md-75">{{title answer}}</div>
+          </li>
+        {{else}}
+          <li class="col-md-100">
+            <strong>{{notAnswered}}</strong>
+          </li>
+        {{/if}}
+        {{#if q.outcome}}
+          <li class="col-md-100">
+            <div class="col-md-25"><strong>Answer:</strong></div>
+            <div class="col-md-75">{{{title q.outcome}}}</div>
+          </li>
+        {{/if}}
+      </ul>
+    </ul>
+  </div>
+</template>
+
+<template name="questionExtended">
+  {{#if details}}
+    <div class="single-question-history-bottom">
+      <ul class="question-details">
+        <li class="col-md-50">
+          <strong>Wager:</strong> {{details.wager}}</li>
+        <li class="col-md-50">
+          <strong>Multiplier:</strong> {{details.multiplier}}x</li>
+      </ul>
+    </div>
+  {{/if}}
+</template>
+
 <template name="questionDetails">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
+  {{#ionModal class="white-text-header" title="Single Question"}}
+    <div class="container ten-spacing">
+      {{> singleQuestion q=this.q single=true extended=true}}
 
-	{{#contentFor "headerTitle"}}
-		<h1 class="title white-text-header">
-      Single Question
-    </h1>
-	{{/contentFor}}
-
-  {{#ionView }}
-    {{#ionContent}}
-      {{#ionList}}
-        <div class="container ten-spacing">
-          {{> singleAnswer q=this.question a=this.answer extended=true single=true}}
-          {{#if reported}}
-            <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
-              Question Reported
-            </button>
-            <div>
-              You reported this question {{questionReported.dateCreated}}
-            </div>
-          {{else}}
-            <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
-              Report This Question
-            </button>
-          {{/if}}
+      {{#if reported}}
+        <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
+          Question Reported
+        </button>
+        <div>
+          You reported this question {{questionReported.dateCreated}}
         </div>
-      {{/ionList}}
-    {{/ionContent}}
-  {{/ionView}}
+      {{else}}
+        <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
+          Report This Question
+        </button>
+      {{/if}}
+    </div>
+  {{/ionModal}}
 </template>

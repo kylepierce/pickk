@@ -1,11 +1,21 @@
+Template.matchupCardList.onCreated(function(){
+  if(this.data.type === "league"){
+    var selector = {leagueId: this.data.leagueId};
+  } else if(this.data.type === "game") {
+    var selector = {gameId: this.data.gameId};
+  }
+  this.subscribe('listOfMatchups', selector)
+});
+
 Template.matchupCardList.helpers({
-  matchups: function(){
-    if(this.type === "league"){
-      var selector = {leagueId: this.leagueId};
-    } else if(this.type === "game") {
-      var selector = {gameId: this.gameId};
+  matchupCount: function(){
+    var count = Matchup.find().count();
+    if(count > 0){
+      return true
     }
-    return Matchup.find(selector);
+  },
+  matchups: function(){
+    return Matchup.find();
   },
 });
 

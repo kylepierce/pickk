@@ -57,13 +57,14 @@ Meteor.publish("questionCount", function(gameId) {
   Counts.publish(this, "questionCount", data);
 });
 
-Meteor.publish('userQuestions', function(gameId, commercial) {
+Meteor.publish('userQuestions', function(gameId, commercial, period) {
   check(gameId, String);
   check(commercial, Boolean);
+  check(period, Number);
+
   var userId = this.userId;
   var game = Games.findOne({_id: gameId});
-  var period = game.period
-  var gamePlayed = GamePlayed.findOne({gameId: gameId, period: period});
+  var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 
   if(game){
     var selector = {
@@ -73,6 +74,7 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
       commercial: commercial,
       usersAnswered: {$nin: [userId]}
     }
+
     var sort = {sort: {dateCreated: -1}, limit: 1}
 
     if (gamePlayed.type === "live"){
@@ -97,17 +99,32 @@ Meteor.publish('userQuestions', function(gameId, commercial) {
 
 Meteor.publish('preGamePickks', function(gameId) {
   check(gameId, String);
+  this.unblock();
   var userId = this.userId;
   var game = Games.findOne({_id: gameId});
 
   if(game){
     var selector = {
       gameId: gameId,
-      active: true,
+      active: {$ne: "future"},
       period: 0,
-      // usersAnswered: {$nin: [userId]}
     }
-    // var sort = {sort: {dateCreated: -1}, limit: 1}
-    return Questions.find(selector);
+    var answer = {
+      gameId: gameId,
+    }
+    return [
+      Questions.find(selector),
+      Answers.find(answer)
+    ]
   }
+});
+
+Meteor.publish("gameQuestionCount", function(gameId) {
+  this.unblock();
+  var userId = this.userId;
+  var selector = {
+    gameId: gameId,
+    usersAnswered: {$in: [userId]}
+  }
+  Counts.publish(this, "gameQuestionCount", Questions.find(selector));
 });

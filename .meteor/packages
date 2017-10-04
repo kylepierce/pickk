@@ -105,3 +105,4 @@ twitter-config-ui
 dynamic-import
 forwarder:autoform-wizard
 forwarder:autoform-wizard-iron-router
+jcbernack:reactive-aggregate

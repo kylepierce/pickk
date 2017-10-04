@@ -1,5 +1,25 @@
 Template.gameTypePrompt.onCreated( function() {
-  var gameId = Router.current().params._id
+  var gameId = Router.current().params._id;
+  var game = Games.findOne({})
+  if (game.sport === "NFL"){
+    var background = {
+      "background": "linear-gradient(rgba(34, 44, 49, .30), rgba(34, 44, 49, .20)), url('/join-football-game.png')",
+      "height": "100%",
+      "background-size": "cover",
+      "background-position-x": "50%",
+      "background-position-y": "100%"
+    }
+
+  } else if (game.sport === "MLB") {
+    var background = {
+          "background": "linear-gradient(rgba(34, 44, 49, .0), rgba(34, 44, 49, .5)), url('/baseball-background.png')",
+          "height": "100%",
+          "background-size": "cover",
+          "background-position-x": "50%",
+          "background-position-y": "100%"
+        }
+  }
+  $('.content').css(background);
   this.subscribe( 'singleGame', gameId,  function() {
     $( ".spin-loader" ).delay( 100 ).fadeOut( 'slow', function() {
       $( ".loading-wrapper" ).show().fadeIn( 'slow' );
@@ -58,7 +78,7 @@ Template.gameTypePrompt.helpers({
         var playTypes = {
           title: "Select Contest Type",
           subTitle: "Join Pickk NFL Contest",
-          desc: "Note: You Select Play Type Every Quarter.",
+          desc: "Note: You Select Play Type Every Quarter. Coins and diamonds from previous quarter are saved but you get new set of coins to compete.",
           options: [{
               title: "Live",
               gameType: "Live",
@@ -132,7 +152,7 @@ Template.gameTypePrompt.events({
       Branch.userCompletedAction(eventName)
     }
 
-    Meteor.subscribe('gamePlayed', $gameId);
+    // Meteor.subscribe('gamePlayed', $gameId);
 
     var leaderData = Session.get('leaderboardData');
   	// leaderData["period"] = game.period

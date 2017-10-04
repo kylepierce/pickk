@@ -62,7 +62,7 @@
 .field {
 	width: 60%;
 	background: url('/field.svg');
-	background-size: contain;
+	background-size: cover;
 	height: 35px;
 	float: left;
 }
@@ -93,11 +93,11 @@
 }
 
 .down-marker {
-	background-color: red;
+	background-color: yellow;
 }
 
 .distance-marker {
-	background-color: black;
+	background-color: #e35b48;
 }
 
 .waiting-options-icon {
@@ -143,6 +143,12 @@
   color: white!important;
 }
 
+.join-game-description{
+	color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 5px;
+}
+
 .game-prompt-icon img{
   filter: invert(100%);
   width: 4rem;
@@ -184,4 +190,22 @@
 	float: left;
 	color: white;
 	background-color: transparent;
+}
+
+.pre-game-pickks {
+	border: none;
+	padding: 5px 10px;
+	color: #fff;
+	font-size: 1.4rem;
+	font-weight: 900;
+	border-radius: 5px;
+	animation-duration: 50s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background: #f6f7f8;
+	background: linear-gradient(110deg, #26ad68 12%, #219e5e 25%, #26ad68 53%);
+	position: relative;
+	width: 70%;
 }

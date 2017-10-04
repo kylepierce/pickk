@@ -5,10 +5,10 @@ Template.singleUsername.helpers({
       return user.profile.username
     }
   }
-}); 
-
-Template.singleUsername.onCreated(function() {
-  if (!this.data.alreadySubscribed && !this.data.user) {
-    this.subscribe('findSingleUsername', this.data.userId);
-  }
 });
+
+// Template.singleUsername.onCreated(function() {
+//   if (!this.data.alreadySubscribed && !this.data.user) {
+//     this.subscribe('findSingleUsername', this.data.userId);
+//   }
+// });

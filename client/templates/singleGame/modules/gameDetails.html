@@ -1,4 +1,5 @@
 <template name="notificationCenter">
+	{{#if active}}
 	<div id="notification-center" class="animated fadeInLeft">
 		<div class="single-notification complete-game-card ">
 			{{> singleGameCard game=game}}
@@ -6,10 +7,11 @@
 		{{#if sport "NFL"}}
 			{{> footballInfoCard}}
 		{{/if}}
-		{{#if sport "MLB"}}
+		<!-- {{#if sport "MLB"}}
 			{{> baseballInfoCard}}
-		{{/if}}
+		{{/if}} -->
 	</div>
+	{{/if}}
 </template>
 
 <template name="footballInfoCard">
@@ -17,7 +19,7 @@
 		<div class="football-inner">
 			<div class="down">
 				<span class="title">Down</span>
-				<span class="detail">{{down}} & {{distance}}</span>
+				<span class="detail">{{downAndDistance}}</span>
 			</div>
 			<div class="vertical-divider"></div>
 			<div class="location">
@@ -31,14 +33,14 @@
 			</div>
 		</div>
 		<div class="football-field">
-			{{#with away}}
+			{{#with team 0}}
 				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
 			{{/with}}
 			<div class="field">
 				<div class="distance-marker marker" style="margin-left: {{ballLocation}}"></div>
 				<div class="down-marker marker" style="margin-left: {{yardsToGo}};"></div>
 			</div>
-			{{#with home}}
+			{{#with team 1}}
 				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
 			{{/with}}
 		</div>

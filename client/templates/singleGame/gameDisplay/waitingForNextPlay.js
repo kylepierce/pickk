@@ -96,14 +96,25 @@ Template.waitingForNextPlay.helpers({
 		if(gamePlayed === 0){
 			return true
 		}
+	},
+	data: function(){
+		var userId = Meteor.userId();
+		var gameId = this.game._id
+		var period = this.game.period
+		var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
+		var obj = {
+			type: "game",
+			_id: this.game._id,
+			gameId: [this.game._id],
+			period: [this.game.period],
+			playType: gamePlayed.type,
+			limit: 3
+		}
+		return obj
 	}
 });
 
 Template.waitingForNextPlay.events({
-	'click [data-action="nextPeriod"]': function(e,t){
-		var gameId = t.data.game[0]._id
-		Router.go('joinGame.show', {_id: gameId});
-	},
 	'click [data-action="switchToLive"]': function(e, t){
 		var data = {
 			userId: Meteor.userId(),

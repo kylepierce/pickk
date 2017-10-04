@@ -1,7 +1,7 @@
 <template name="singleLeague">
 <!-- Standard Nav instead of the custom nav design -->
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="leagues"}}
+    {{>ionNavBackButton path=index}}
   {{/contentFor}}
 
   {{> chatIcon}}
@@ -111,12 +111,12 @@
 <template name="visitorLinks">
   <div id="button-section">
     <div class="button-card half" data-action="viewMembers">
-      {{> ionIcon icon="ios-gear"}}
-      <span class="text">Members</span>
+      {{> pickkIcon icon="player" size="small"}}
+      <span class="text">Players</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
     <div class="button-card half" data-action="viewLeaderboard">
-      {{> ionIcon icon="ios-gear"}}
+      {{> pickkIcon icon="leaderboard" size="small"}}
       <span class="text">Leaderboard</span>
       <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>

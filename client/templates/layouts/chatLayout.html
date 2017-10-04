@@ -16,9 +16,9 @@
         <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
         {{#ionNavView transition="backward"}}
-          {{> chatHeader}}
+          <!-- {{> chatHeader}} -->
         {{/ionNavView}}
-        {{> yield}}
+        <!-- {{> yield}} -->
       {{/ionSideMenuContent}}
     {{/ionSideMenuContainer}}
   {{/ionBody}}
@@ -28,17 +28,17 @@
 	  {{#contentFor "headerTitle"}}
    <h1 class="title white-text-header">{{group}} Chat</h1>
   {{/contentFor}}
-  
+
   {{#contentFor "headerButtonLeft"}}
   <a href="/chatOverview">
-   <button class="button button-clear" data-action="loader"> 
+   <button class="button button-clear" data-action="loader">
       {{> ionIcon icon="ios-arrow-back" }}
     </button>
   </a>
   {{/contentFor}}
 
    {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear" data-ion-popover="_groupChats"> 
+    <button class="button button-clear" data-ion-popover="_groupChats">
       {{> ionIcon icon="ios-people" }}
     </button>
   {{/contentFor}}

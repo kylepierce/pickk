@@ -24,24 +24,24 @@ Meteor.publish('usersGroups', function ( user ) {
 
 Meteor.publish('gamePlayed', function (gameId) {
   check(gameId, String);
-
   var userId = this.userId
   var game = Games.findOne({_id: gameId});
-  var period = game.period
-
-  return GamePlayed.find({userId: userId, gameId: gameId, period: period})
+  return GamePlayed.find({userId: userId, gameId: gameId})
 });
+
+// Meteor.publish('gamePlayedPeriod', function (gameId, period) {
+//   check(gameId, String);
+//   check(period, Number);
+//
+//   var userId = this.userId
+//   var game = Games.findOne({_id: gameId});
+//   return GamePlayed.find({userId: userId, gameId: gameId, period: period})
+// });
 
 // Teams
 Meteor.publish('teams', function() {
   this.unblock()
   return Teams.find({})
-});
-
-Meteor.publish('singleTeam', function ( id ) {
-  check(id, Number);
-  this.unblock()
-  return Teams.find({statsTeamId: id})
 });
 
 Meteor.publish('singleGameTeams', function(team1, team2) {
@@ -61,7 +61,7 @@ Meteor.publish('gameQuestions', function() {
 // All of the games user has played
 Meteor.publish('gamesPlayed', function() {
   var selector = {users: {$in: [this.userId]}}
-  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1,  tv: 1, dateCreated: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}
+  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1,  tv: 1, dateCreated: 1, iso: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}
   return Games.find(selector, fields );
 });
 

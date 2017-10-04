@@ -31,7 +31,7 @@
           {{#ionItem buttonRight=true avatar=true}}
             <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
               {{> userAvatar userId=follower}}
-              {{> singleUsername userId= follower}}
+              {{> singleUsername userId=follower}}
             </a>
             {{> inviteMatchupButton _id=follower }}
           {{/ionItem}}

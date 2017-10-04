@@ -17,7 +17,7 @@ hasEnoughCoins = function (gameId, period, wager){
 	var selector = {userId: userId, gameId: gameId, period: period}
 	var userCoins = GamePlayed.findOne(selector).coins;
 
-	if ( userCoins > wager ) {
+	if ( userCoins >= wager ) {
 		return true
 	} else {
 		analytics.track("no coins", {
@@ -27,7 +27,7 @@ hasEnoughCoins = function (gameId, period, wager){
 			wager: wager,
 			userCoins: userCoins
 		});
-		throw new Meteor.Error("User already answered question");
+		throw new Meteor.Error("Not Enough Coins!");
 	}
 }
 
@@ -193,8 +193,8 @@ Meteor.methods({
 		var userId = Meteor.userId();
 		var isValid = validateAnswer(prediction.questionId, prediction.answered);
 		var selector = {userId: userId, gameId: prediction.gameId, period: prediction.period}
-
 		var enoughCoins = hasEnoughCoins(prediction.gameId, prediction.period, prediction.wager);
+
 		if (isValid && enoughCoins) {
 			var modify = {$inc: {coins: -prediction.wager, queCounter: +1}}
 			GamePlayed.update(selector, modify);
@@ -204,7 +204,6 @@ Meteor.methods({
 			Games.update({_id: prediction.gameId}, {$addToSet: {users: userId}});
 
 			Meteor.call('insertAnswer', prediction);
-			Meteor.call('questionAnsweredAnalytics', prediction)
 		}
 	}
 });

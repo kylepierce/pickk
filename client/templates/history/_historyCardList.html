@@ -1,10 +1,12 @@
 <template name="historyCardList">
-  <div class="card-list">
-    <div class="card-list-header ten-spacing">Question History</div>
-    {{> gameHistory i=this.i extended=false}}
+  {{#if userPlayed}}
+    <div class="card-list">
+      <div class="card-list-header ten-spacing">Question History</div>
+      {{> gameHistory number=this.number extended=false prePickks=this.prePickks}}
 
-    <div class="card-list-footer" data-action="previous-answers">
-      View Entire History
+      <div class="card-list-footer" data-action="previous-answers">
+        View Entire History
+      </div>
     </div>
-  </div>
+  {{/if}}
 </template>

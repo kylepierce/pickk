@@ -6,25 +6,26 @@
 
   {{#ionView}}
     {{#ionContent}}
-			{{> singleGameInfo game=game border=false}}
-			{{> notificationCenter game=game}}
-			{{> gameDisplay}}
-			<!-- {{> inviteToPlay}} -->
-			{{ scoreMessage}}
+			{{#if Template.subscriptionsReady}}
+				{{> singleGameInfo game=game border=false}}
+				{{> notificationCenter game=game}}
+
+				<div class="container ten-spacing">
+					{{#if status 1}}
+						{{> preGame game=game}}
+					{{/if}}
+					{{#if status 2}}
+						{{> activeGame game=game}}
+					{{/if}}
+					{{#if status 4}}
+						{{> postGame game=game}}
+					{{/if}}
+				</div>
+
+				<!-- {{checkGamePlayedStatus}} -->
+				<!-- {{> inviteToPlay}} -->
+				{{ scoreMessage}}
+			{{/if}}
     {{/ionContent}}
   {{/ionView}}
-</template>
-
-<template name="gameDisplay">
-	<div class="container ten-spacing">
-		{{#if status 1}}
-			{{> preGame}}
-		{{/if}}
-		{{#if status 2}}
-			{{> activeGame}}
-		{{/if}}
-		{{#if status 4}}
-			{{> postGame}}
-		{{/if}}
-	</div>
 </template>

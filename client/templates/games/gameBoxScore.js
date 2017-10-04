@@ -27,6 +27,16 @@ Template.entireGameCard.events({
   }
 });
 
+Template.singleGameInfo.onCreated( function() {
+  var team1 = this.data.game.away_team
+  var team2 = this.data.game.home_team
+  if (team1 && team2){
+    this.subscribe( 'singleGameTeams', team1, team2, function() {
+      $( ".loading-wrapper").show();
+    });
+  }
+});
+
 Template.singleGameInfo.helpers({
   inProgress: function () {
     if (this.game.live === true){
@@ -51,18 +61,25 @@ Template.singleGameInfo.helpers({
 });
 
 Template.singleGameCard.helpers({
+  hasBall: function(){
+    if(this.game){
+      return this.game.whoHasBall
+    }
+  },
   status: function() {
     if(this.game) {
       if(this.game.status === "In-Progress") {
         return "left-side-team-block "
       } else if (this.game.status === "Pre-Game"){
         return "left-side-team-block "
+      } else if (this.game.status === "Final"){
+        return "left-side-team-block "
       }
       // else if (this.game.eventStatus.eventStatusId === 5){
       //   return "left-side-team-block "
       // }
       else {
-        return "full-width-team-block"
+        return "left-side-team-block"
       }
     }
   },
@@ -72,7 +89,7 @@ Template.singleGameCard.helpers({
         return true
       } else if (this.game.status === "Pre-Game"){
         return true
-      } else if (this.game.status === "closed" || this.game.status === "completed"){
+      } else if (this.game.status === "closed" || this.game.status === "completed" || this.game.status === "Final"){
         return true
       }
       // else if (this.game.eventStatus.eventStatusId === 5 ){
@@ -86,12 +103,12 @@ Template.singleGameCard.helpers({
   teams: function () {
     if (this.game.teams){
       var teams = _.values(this.game.teams);
-      if (this.game.scoring){
+      if (this.game.live && this.game.scoring){
         teams[1].runs = this.game.scoring.home.runs;
         teams[0].runs = this.game.scoring.away.runs;
       } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
-        teams[0].runs = this.game.teams[0].linescoreTotals.hits
-        teams[1].runs = this.game.teams[1].linescoreTotals.hits
+        teams[0].runs = this.game.teams[0].linescoreTotals.runs
+        teams[1].runs = this.game.teams[1].linescoreTotals.runs
       }
       return teams
     }
@@ -141,13 +158,15 @@ Template.singleGameCTA.helpers({
 
 Template.singleGameCTA.events({
   'click [data-action=play]': function (e, t) {
-    Router.go('joinGame.show', {_id: this.game._id});
+    Router.go('/game/' + this.game._id );
+  },
+  'click [data-action=pre-pickk]': function(){
+    Router.go('/game/' + this.game._id );
   }
 });
 
 Template.futureGameInfo.helpers({
   border: function(){
-    // console.log(this);
     if(this.border === false){
       return "no-border"
     }
@@ -180,25 +199,33 @@ Template.futureGameInfo.helpers({
 });
 
 Template.teamBlock.helpers({
+  whoHasBall: function (){
+    if(this.statsTeamId === this.hasBall){
+      return true
+    }
+  },
   team: function (statsTeamId) {
-    Meteor.subscribe('singleTeam', statsTeamId);
-    return Teams.findOne({"statsTeamId": statsTeamId});
+    var team = Teams.findOne({"statsTeamId": statsTeamId});
+		if(team && this.hasBall === statsTeamId){
+			team.hasBall = true
+		}
+		return team
   },
   upper: function (name) {
     return name.toUpperCase()
   },
   hex: function () {
-    if (this.hex){
+    if(this.hex){
       return "#" + this.hex[0]
     } else {
-      return "#134A8E"
+      return "grey"
     }
   }
 });
 
 Template.rightSection.helpers({
   completed: function () {
-    if (this.game.status === "closed" || this.game.status === "completed"){
+    if (this.game.status === "closed" || this.game.status === "completed"|| this.game.status === "Final") {
       return true
     }
   },
@@ -241,14 +268,8 @@ Template.rightSection.helpers({
     return period
   },
   time: function () {
-    if (this.game && this.game.sport === "NFL" ) {
-      var path = this.game.eventStatus
-      var seconds = path.seconds.toString()
-      if (seconds && seconds.length < 2) {
-        var seconds = "0" + seconds
-      }
-      var string = path.minutes + ":" + seconds
-      return string
+    if (this.game.time ) {
+      return this.game.time
     }
   },
   tvStation: function (tvStations) {

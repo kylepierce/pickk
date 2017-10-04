@@ -86,6 +86,7 @@ body.keyboard-open .platform-android .content.overflow-scroll {
     overflow-x:hidden;
 		overflow-y: auto;
 	  -webkit-overflow-scrolling: touch;
+		background-color:  #222C31;
 }
 
 a {

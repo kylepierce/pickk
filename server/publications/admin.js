@@ -9,7 +9,7 @@ Meteor.publish('multiplier', function(){
 
 Meteor.publish('prizes', function () {
   this.unblock();
-  return Admin.find({prizes: true, active: true})
+  return Admin.find({prizes: true, active: true});
 });
 
 Meteor.publish('situationalQuestions', function(){

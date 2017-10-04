@@ -39,5 +39,23 @@ Meteor.methods({
 			}});
 
 		return diamonds
+	},
+
+	'gameLeaderboard': function(data){
+		check(data, Object);
+    this.unblock();
+
+    var selector = {
+			gameId: data.gameId
+    }
+
+    var coins = GamePlayed.aggregate(
+      { $match: selector },
+      { $group: {
+        _id: null,
+        result: { $sum: '$coins'}}
+      }
+    );
+		return coins
 	}
 });

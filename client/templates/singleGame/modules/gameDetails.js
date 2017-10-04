@@ -18,6 +18,11 @@ Template.notificationCenter.helpers({
   game: function(){
     return Games.findOne();
   },
+	active: function(){
+		if (this.game.status === "In-Progress"){
+			return true
+		}
+	},
 	sport: function(sport){
 		if (this.game.sport === sport){
 			return true
@@ -26,80 +31,57 @@ Template.notificationCenter.helpers({
 });
 
 Template.footballInfoCard.helpers({
-	down: function(){
-		if (this.game.eventStatus){
-			var down = parseInt(this.game.eventStatus.down);
-			switch (down) {
-				case 1:
-					var down = down + "st"
-					break;
-				case 2:
-					var down = down + "nd"
-					break;
-				case 3:
-					var down = down + "rd"
-					break;
-				case 4:
-					var down = down + "th"
-					break;
-				default:
-					var down = "---"
-					break;
-			}
-			return down
+	downAndDistance: function(){
+		if (this.game.downAndDistance === "Point After Attempt"){
+			return "PAT"
+		} else {
+			return this.game.downAndDistance
 		}
-	},
-	distance: function(){
-		return this.game.eventStatus.distance
 	},
 	location: function(){
 		return "@" + this.game.location
 	},
 	quarter: function(){
-		var period = this.game.eventStatus.period
-		switch (period) {
-			case 1:
-				var period = period + "st"
-				break;
-			case 2:
-				var period = period + "nd"
-				break;
-			case 3:
-				var period = period + "rd"
-				break;
-			default:
-				var period = period + "th"
-				break;
-		}
-		return period
+		return this.game.quarter
 	},
 	time: function(){
-		var seconds = this.game.eventStatus.seconds.toString()
-		if (seconds && seconds.length < 2) {
-			var seconds = "0" + seconds
-		}
-		return this.game.eventStatus.minutes + ":" + seconds
+		return this.game.time
 	},
 	ballLocation: function(){
-		return "70%"
+		var distance = this.game.distanceToTouchdown
+		var marker = distance
+		if (this.game.whoHasBall === this.game.home_team){
+			if (distance > 50){
+				var over = distance - 50
+				var marker = 50 - over
+			}
+		}
+		return marker + "%"
 	},
 	yardsToGo: function(){
-		return "10%"
+		if (this.game.whoHasBall === this.game.away_team){
+			var sign = "-"
+		} else {
+			var sign = ""
+		}
+		return sign + this.game.distanceToFirstDown + "%"
 	},
-	away: function (){
-		statsTeamId = this.game.teams[0].teamId
-		Meteor.subscribe('singleTeam', statsTeamId);
-		return Teams.findOne({"statsTeamId": statsTeamId});
-	},
-	home: function() {
-		statsTeamId = this.game.teams[1].teamId
-		Meteor.subscribe('singleTeam', statsTeamId);
-		return Teams.findOne({"statsTeamId": statsTeamId});
+	team: function(num) {
+		var statsTeamId = this.game.teams[num].teamId
+		var team = Teams.findOne({"statsTeamId": statsTeamId});
+		if(team && this.game.whoHasBall === statsTeamId){
+			team.hasBall = true
+		}
+		return team
 	},
 	shortCode: function() {
 		return this.computerName.toUpperCase()
 	},
 	hexColor: function(){
-		return "#" + this.hex[0]
+		if(!this.hasBall){
+			return "grey"
+		} else {
+			return "#" + this.hex[0]
+		}
 	}
 });

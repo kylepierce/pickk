@@ -1,64 +1,60 @@
 <template name="gameLeaderboard">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
+ {{> yield 'header'}}
 
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">
-    	Leaderboard
-    </h1>
-  {{/contentFor}}
+ {{#contentFor "headerButtonLeft"}}
+   {{>ionNavBackButton path="index"}}
+ {{/contentFor}}
 
-  {{#contentFor "headerButtonRight"}}
+ {{#contentFor "headerTitle"}}
+  <h1 class="title white-text-header">Game Leaderboard</h1>
+ {{/contentFor}}
+
+ 	<!-- {{#contentFor "headerButtonRight"}}
      <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
        {{> ionIcon icon="funnel"}}
      </button>
-   {{/contentFor}}
+   {{/contentFor}} -->
 
   {{#ionView}}
-	  {{#ionContent}}
-      {{> miniLeaderboard i=30}}
-	  {{/ionContent}}
-	{{/ionView}}
+    {{#ionContent}}
+      {{> miniLeaderboard data=data}}
+    {{/ionContent}}
+  {{/ionView}}
 </template>
 
 <template name="miniLeaderboard">
-  <!-- {{> spinLoader}} -->
-
-  <!-- {{#if Template.subscriptionsReady}}
-    <div class="loading-wrapper"> -->
+  {{#if leaderboard}}
     <ol type="1" id="leaderboard">
-      {{#each player i}}
-        {{> singlePlayer}}
+      {{#each player in players}}
+        {{> singlePlayerLeader player=player}}
       {{/each}}
     </ol>
-  <!-- </div>
-  {{/if}} -->
+  {{else}}
+  <ol type="1" id="leaderboard">
+    {{#each number in limit}}
+      {{> singlePlayerLeaderHolder number=number}}
+    {{/each}}
+  </ol>
+  {{/if}}
 </template>
 
-<template name="singlePlayer">
+<template name="singlePlayerLeader">
   <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-    {{> fakePlayer}}
-    {{#if Template.subscriptionsReady}}
-    {{> userAvatar userId=userId}}
-    <li class="list-font legit" value={{rank}}>
-      <span class="username">{{username userId}}</span>
+    {{> userAvatar userId=player._id}}
+    <li class="list-font" value={{player.rank}}>
+      <span class="username">{{username player._id}}</span>
       <span class="score">
-          {{{coins}}}
+        {{{player.coins}}}
       </span>
     </li>
-    {{/if}}
   </div>
-
 </template>
 
-<template name="fakePlayer">
-  <div class="not-legit">
+<template name="singlePlayerLeaderHolder">
+  <div class="item item-avatar leaderboard-item">
+    <div class="avatar user-avatar legit">
+      <img class="avatar-loading-anim avatar-image circle-image">
+    </div>
+    <li class="list-font" value={{number}}></li>
   </div>
-    <!-- <img class="avatar-image circle-image">
-  </div>
-  <li class="list-font not-legit">
-    <span class="username"></span>
-    <span class="score"></span>
-  </li> -->
 </template>

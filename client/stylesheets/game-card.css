@@ -3,7 +3,8 @@
   /*opacity: 0;*/
 	box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 0px;
 	border-radius: 10px;
-	display: grid;
+	display: flex;
+	flex-flow: column;
 }
 
 #animateGames .complete-game-card {
@@ -53,9 +54,9 @@
 	border-radius: 0!important;
 }
 
-.pre-game-card {
+/*.pre-game-card {
 	height: 131px
-}
+}*/
 
 .pre-game-card .team-block:first-child .team-colors{
 	border-radius: 0!important;

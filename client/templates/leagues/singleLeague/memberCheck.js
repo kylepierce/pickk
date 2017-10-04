@@ -8,7 +8,10 @@ Template.memberCheck.helpers({
     }
   },
   public: function(){
+    var isInvited = this.league.invites.indexOf(Meteor.userId())
     if (this.league.secret === "public" || this.league.secret === false) {
+      return true
+    } else if (isInvited > -1){
       return true
     }
   },

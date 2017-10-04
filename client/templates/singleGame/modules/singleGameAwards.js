@@ -2,8 +2,12 @@ Template.singleGameAwards.helpers({
   active: function(){
     var $game = Router.current().params._id
     var game = Games.findOne({_id: $game});
-    if (game && game.eventStatus.eventStatusId === 2){
+
+    var gamePlayed = GamePlayed.findOne({gameId: $game, period: game.period, userId: Meteor.userId()})
+    if (game && gamePlayed){
       return true
+    } else if (game && game.eventStatus.eventStatusId === 2){
+       return true
     } else {
       return false
     }
@@ -26,12 +30,16 @@ Template.singleGameAwards.helpers({
     if (game){
       var period = game.period
       var userGamePlayed = GamePlayed.findOne({userId: userId, gameId: $game, period: period});
-      return userGamePlayed[award];
+      if(userGamePlayed){
+        return userGamePlayed[award];
+      }
     }
   },
   gameType: function () {
-    var userId = Meteor.userId()
-    var game = GamePlayed.findOne({userId: userId});
+    var userId = Meteor.userId();
+    var $game = Router.current().params._id
+    var game = Games.findOne({_id: $game});
+    var game = GamePlayed.findOne({period: game.period})
     if(game && game.type === "proposition"){
       var type = "PROP"
       return type

@@ -1,9 +1,15 @@
 <template name="matchupCardList">
   <div class="card-list">
     <div class="card-list-header ten-spacing">Matchups</div>
-    {{#each matchup in matchups}}
-      {{> matchupCard m=matchup}}
-    {{/each}}
+    {{#if matchupCount}}
+      {{#each matchup in matchups}}
+        {{> matchupCard m=matchup}}
+      {{/each}}
+    {{else}}
+      {{#ionItem}}
+        Challenge a Friend
+      {{/ionItem}}
+    {{/if}}
     <div class="card-list-footer" data-action="view-matchups">
       View Matchups
     </div>
