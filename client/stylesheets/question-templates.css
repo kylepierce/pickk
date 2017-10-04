@@ -1,7 +1,29 @@
 .single-question {
-	width: 100%;
+	border-radius: 10px;
+	border: 0px solid;
+	padding: 10px;
+	background-color: #263238;
 	font-size: .9rem;
 	font-family: lato;
+	display: inline-block;
+	width: 100%;
+}
+
+.question {
+	width: 100%;
+	min-height: 50px;
+	color: white;
+	display: flex;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #CCC;
+	font-weight: bold;
+	border-radius: 10px;
+	border: 0px solid;
+}
+
+.live-question-text {
+	text-shadow: 2px 2px #222c31;
 }
 
 .display-question {
@@ -15,6 +37,12 @@
 	margin-left: 20px;
 }
 
+.option-container {
+	margin-top: 10px;
+	display: flex;
+	flex-flow: wrap;
+}
+
 .option {
 	border: 1px solid #DDDDDD;
 	display: flex;
@@ -23,40 +51,126 @@
 	background-color: white;
 	height: 44px;
 	margin-top: -1px;
+	border: 0px;
 }
 
-.square-options:nth-of-type(2n+1) {
+.binary-options {
 	width: 49%;
-	margin-right: 2%!important;
+	height: 70px;
+	float: left;
+	border: 0px;
+}
+
+.binary-options .option-inner {
+	width: 90%;
+	display: grid;
+	height: 95%;
+	margin: 3px;
+}
+
+.binary-options .option-title {
+	width: 100%;
+	text-align: center;
+	padding-left: 0%;
+	float: left;
+	clear: both;
+}
+
+.binary-options .multiplier {
+	width: 100%;
+	text-align: center;
+	white-space: nowrap;
+	float: left;
+	clear: both;
+}
+
+.binary-options:nth-child(1){
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.binary-options:nth-child(2){
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	margin-left: 2%!important;
 	float: left;
 }
 
-.square-options:nth-last-child(1){
-	margin-bottom: 100px;
+.square-options {
+	width: 49%;
+	height: 70px;
+	border: 0px;
 }
 
-.square-options .option-inner {
-	width: 100%;
-	display: block;
-	height: 95%;
-	margin: 3px;
+.square-options:nth-child(1){
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	float: left;
+	margin-right: 2%!important;
+}
+
+.square-options:nth-child(2){
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	float: right;
+}
+
+.square-options:nth-child(3){
+	margin-top: 2%!important;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	float: left;
+	margin-right: 2%!important;
+}
+
+.square-options:nth-child(4){
+	margin-top: 2%!important;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	float: right;
+}
+
+.square-options:nth-child(5):nth-last-child(2){
+	margin-top: 2%!important;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px!important;
+	float: left;
+	margin-right: 2%!important;
+}
+
+.square-options:nth-child(5):nth-last-child(1){
+	margin-top: 2%!important;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px!important;
+	float: left;
+	margin-right: 2%!important;
+}
+
+.square-options:nth-child(6){
+	margin-top: 2%!important;
+	border-top-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	float: right;
+}
+
+.square-options:nth-last-child(1){
+	border-bottom-left-radius: 0!important;
+	border-bottom-right-radius: 10px;
+}
+
+.square-options:nth-last-child(2){
+	border-bottom-left-radius: 10px!important;
+	border-bottom-right-radius: 0!important;
 }
 
 .option-inner {
 	width: 100%;
-	display: flex;
+	display: grid;
 	align-items: center;
 	justify-content: center;
-	background-color: white;
-	height: 95%;
+	/*background-color: white;*/
+	height: 90%;
 	margin: 3px;
-}
-
-.square-options {
-	margin-top: .25rem;
-	width: 49%;
-	height: 90px;
-	float: left;
 }
 
 .icon-container {
@@ -66,11 +180,17 @@
 	width: 20%;
 }
 
+.square-options .option-inner {
+	width: 90%;
+	display: grid;
+	height: 95%;
+	margin: 3px;
+}
+
 .square-options .option-title {
 	width: 100%;
-	padding-top: 20px;
 	text-align: center;
-	padding-left: 0%; 
+	padding-left: 0%;
 	float: left;
 	clear: both;
 }
@@ -78,6 +198,7 @@
 .square-options .multiplier {
 	width: 100%;
 	text-align: center;
+	white-space: nowrap;
 	float: left;
 	clear: both;
 }
@@ -85,14 +206,14 @@
 .option-title{
 	float: left;
 	width: 70%;
-	padding-left: 5%; 
+	padding-left: 5%;
 }
 
 .multiplier {
-	width: 20%;
+	width: 70%;
 	float: right;
 	text-align: right;
-	padding-right: 2.5%; 
+	padding-right: 2.5%;
 }
 
 .baseball-call-icon {
@@ -100,11 +221,12 @@
 	width: 25px;
 }
 
-.wagers {
-	margin-top: -1px;
+#wagers {
+	display: flex;
+	margin-top: 10px;
 }
 
-.wagers li {
+#wagers li {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -115,12 +237,22 @@
 	border: 1px solid #DDDDDD;
 }
 
+#wagers li:nth-child(1){
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+#wagers li:nth-child(3){
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
 .wager-inner {
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: white;
+	/*background-color: white;*/
 	height: 38px;
 	margin: 3px;
 }
@@ -132,7 +264,12 @@
 }
 
 .wager-selected .wager-inner, .play-selected .option-inner {
-  background: #F1C40F;
+  /*background: #F1C40F;*/
+}
+
+#submitButton{
+	display: none;
+	background:
 }
 
 .submit-button {
@@ -154,4 +291,15 @@
 	-ms-animation-duration: .5s!important;
 	-o-animation-duration: .5s!important;
 	animation-duration: .5s!important;
+}
+
+.larger-card {
+	padding: 35px!important;
+	color: white!important;
+}
+
+.larger-card h4 {
+	color: white!important;
+	font-weight: bold;
+	text-shadow: 2px 2px #222c31;
 }

@@ -1,0 +1,28 @@
+<template name="eventQuestion">
+	<div class="single-question animated fast slideInLeft hundred-bottom">
+		<div class="question" style="{{background}}">
+			<div class="display-question center">
+				<span class="live-question-text center-text">{{q.que}}</span>
+				{{#if liveQuestion q}}
+					{{>countDownClock date=q.dateCreated}}
+				{{/if}}
+			</div>
+		</div>
+		<div class="option-container">
+			{{#each o in options q}}
+				{{> option o=o q=q t=t}}
+			{{/each}}
+		</div>
+		{{> wagers}}
+		<button id="submitButton" class="submit-background submit-button center-text ten-spacing" data-action="submit">Submit</button>
+	</div>
+</template>
+
+<template name="option">
+	<li class="option square-options" data-action="play-selected">
+		<div class="option-inner">
+			<span class="option-title">{{o.title}}</span>
+			<span class="multiplier">x {{o.multiplier}}</span>
+		</div>
+	</li>
+</template>

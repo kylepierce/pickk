@@ -1,13 +1,51 @@
 /* Makes the label not take 100% of the available area */
-.af-fav-teams .checkbox  {
-	max-width: 50px;
+.af-fav-teams {
+	width: 100%;
+	margin-bottom: 100px;
+}
+
+.team-select {
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: 10px;
+	flex-flow: wrap;
+}
+
+.team-select input[type="checkbox"] {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.team-select-container {
+	width: 32%;
+	margin-right: .5%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.team-select-single {
+	display: flex;
+  align-items: center;
+  flex-flow: column;
+	width: 100%;
+	float: left;
+}
+
+.team-select-single img {
+	max-width: 100%;
+	height: 50px;
+}
+
+.team-select-single h5 {
+	text-align: center;
 }
 
 #team-submit-button {
 	bottom: 0;
+	left: 0;
   position: fixed;
   z-index: 100;
-  margin-left: -5%;
 	background: #26ad68;
 }
 
@@ -67,4 +105,40 @@ div.hopscotch-bubble .hopscotch-bubble-content{
 
 #new-icon input[type="button"] {
 	background-color: blue!important;
+}
+
+
+.favorite-league-list {
+	width: 100%;
+	display: grid;
+}
+
+#favoriteList {
+	/*display: flex;*/
+}
+
+#favoriteList form{
+	width: 100%;
+}
+
+#favoriteList .item-checkbox {
+	width: 50%;
+	height: 100px;
+	float: left;
+}
+
+input#MLB {
+	visibility: hidden;
+}
+
+input#NFL {
+	visibility: hidden;
+}
+
+input#NBA {
+	visibility: hidden;
+}
+
+.af-fav-teams input {
+	visibility: hidden;
 }

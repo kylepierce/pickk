@@ -109,14 +109,14 @@ Template.notification.helpers({
   }
 });
 
-Template.groupNotification.helpers({
+Template.leagueNotification.helpers({
 	user: function(ref) {
 		Meteor.subscribe('findSingle', ref);
 		return UserList.findOne({_id: ref})
 	},
-	groupData: function(groupId) {
-		Meteor.subscribe('singleGroup', groupId);
-		return Groups.findOne({_id: groupId})
+	leagueData: function(leagueId) {
+		Meteor.subscribe('singleGroup', leagueId);
+		return Groups.findOne({_id: leagueId})
 	},
   status: function(status){
     if(status){
@@ -125,7 +125,7 @@ Template.groupNotification.helpers({
   }
 });
 
-Template.groupNotification.events({
+Template.leagueNotification.events({
   // 'click [data-action=viewGroup]': function(e, t){
   //   Router.go('/groups/' + this.note.groupId);
   // }
@@ -209,11 +209,10 @@ Template.newFollower.helpers({
 });
 
 Template.notification.events({
-  'click [data-action=viewGroup]': function(e, t){
-    Router.go('/groups/' + this.note.groupId);
+  'click [data-action=viewLeague]': function(e, t){
+    Router.go('/league/' + this.note.leagueId);
   },
   'click [data-action=viewUser]':function(e, t){
-    console.log(e,t);
     var userId = t.data.note.senderId
     if (userId){
       Router.go('/user-profile/' + userId);
@@ -373,7 +372,9 @@ Template.coinsNotification.helpers({
 			return game
 		}
 	},
-	questionTitle: function (id) {
+	questionTitle: function () {
+    var id = this.note.question
+    console.log(this.note);
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id});
 		var que = question && question.que

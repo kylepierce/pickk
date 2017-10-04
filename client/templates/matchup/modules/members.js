@@ -1,19 +1,21 @@
-Template.matchupMembers.helpers({
+Template._matchupMembers.helpers({
 	users: function () {
-		var users = this.matchup[0].users
+		Meteor.subscribe('matchupUsers', this._id)
+		var users = this.users
 		return UserList.find({_id: {$in: users}}).fetch();
 	}
 });
 
-Template.matchupMembers.events({
+Template._matchupMembers.events({
 	'click [data-action=viewUser]': function(){
+		IonModal.close()
 		Router.go('/user-profile/' + this.user._id);
 	},
 	'click [data-action=delete]': function (e, t) {
 		var inviter = Meteor.userId();
 		var userId = this.user._id
 		var username = this.user.profile.username
-		var matchupId = this.matchup[0]._id
+		var matchupId = this._id
 		IonActionSheet.show({
       titleText: 'Are You Sure You Want To Remove This User?',
       buttons: [
@@ -38,8 +40,7 @@ Template.matchupMembers.events({
 Template.matchupMemberItem.helpers({
 	admin: function(){
 		var userId = Meteor.userId();
-    var matchup = this.matchup[0]
-		if (userId === matchup.commissioner){
+		if (userId === this.commissioner){
 			return true
 		}
 	}

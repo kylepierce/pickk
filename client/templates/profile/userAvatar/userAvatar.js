@@ -1,4 +1,16 @@
 Template.userAvatar.helpers({
+  photoSize: function(){
+    switch (this.size) {
+      case "large":
+        return "photo-size-large"
+        break;
+      case "medium":
+        return "photo-size-medium"
+        break;
+      default:
+        return "photo-size-small"
+    }
+  },
   url: function() {
     var user = this.user || UserList.findOne({_id: this.userId});
     if (user) {

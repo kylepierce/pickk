@@ -1,6 +1,6 @@
 <template name="joinGame">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
+    {{>ionNavBackButton path="home"}}
   {{/contentFor}}
 
 	{{#contentFor "headerTitle"}}
@@ -9,11 +9,13 @@
     </h1>
 	{{/contentFor}}
 
-  {{#ionView class="special-background"}}
+  {{#ionView}}
     {{#ionContent}}
-      {{#if notAlreadyJoined}}
-        {{> gameTypePrompt}}
-      {{/if}}
+      <div style="{{background}}" class="special-background">
+        {{#if notAlreadyJoined}}
+          {{> gameTypePrompt}}
+        {{/if}}
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>

@@ -7,14 +7,6 @@ Template.mainLayout.rendered = function() {
 };
 
 Template.sideMenuContent.events({
-  'click [data-action=logout]': function () {
-    AccountsTemplates.logout();
-    if (Meteor.isCordova) {
-      Branch.logout();
-    }
-    analytics.reset();
-    Router.go("/landing")
-	},
   'click [data-action=profile]': function () {
     var userId = Meteor.userId();
     Router.go("/user-profile/" + userId)
@@ -69,6 +61,9 @@ Template.sideMenuContent.events({
   'click [data-action=allNotifications]': function(){
     IonSideMenu.snapper.close();
     Router.go('/notifications');
+  },
+  'click .custom-list': function(){
+    IonSideMenu.snapper.close();
   }
 });
 
@@ -77,8 +72,8 @@ Template.mainLayout.events({
     IonPopover.show('_editGame', this, e.currentTarget);
   },
   'click [data-action=skip]': function(e, t){
-    var groupId = Router.current().params._id
-    Router.go('/groups/'+groupId)
+    var leagueId = Router.current().params._id
+    Router.go('/league/'+ leagueId)
   },
   'click [data-action=editMatchup]': function(){
     IonActionSheet.show({

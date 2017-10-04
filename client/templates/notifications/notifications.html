@@ -58,9 +58,9 @@
 </template>
 
 <template name="notification">
-	{{#if notif "group"}}
+	{{#if notif "league"}}
 		<div class="item item-avatar item-button-right {{new}}">
-			{{> groupNotification}}
+			{{> leagueNotification}}
 		</div>
 	{{/if}}
 
@@ -119,24 +119,15 @@
 	{{/if}}
  </template>
 
-<template name="groupNotification">
+<template name="leagueNotification">
 		{{#with user note.senderId}}
 	    {{> userAvatar userId=_id}}
 	    <h2 data-action="viewUser">{{profile.username}}</h2>
 	  {{/with}}
-
-		{{#if status note.status}}
-			<p>{{note.status}}
-			{{#with groupData note.groupId}}
-				<strong>{{name}}</strong>
-			{{/with}}
-			</p>
-		{{else}}
-			{{#with groupData note.groupId}}
-				<p>wants you to join <strong>{{name}}</strong></p>
-			{{/with}}
-		{{/if}}
-		<button data-action="viewGroup" class="button">View</button>
+		{{#with leagueData note.leagueId}}
+			<p>wants you to join <strong>{{name}}</strong></p>
+		{{/with}}
+		<button data-action="viewLeague" class="button">View</button>
 </template>
 
 <template name="chatNotification">
@@ -163,7 +154,7 @@
 		</div>
 	</span>
 	<h2>You earned {{note.value}} coins!</h2>
-	<p>{{questionTitle note.questionId}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
+	<p>{{questionTitle}} ({{#with gameName note.gameId}} {{name}} {{/with}})</p>
 </template>
 
 <template name="diamondNotification">

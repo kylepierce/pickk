@@ -1,0 +1,11 @@
+<template name="matchupCardList">
+  <div class="card-list">
+    <div class="card-list-header ten-spacing">Matchups</div>
+    {{#each matchup in matchups}}
+      {{> matchupCard m=matchup}}
+    {{/each}}
+    <div class="card-list-footer" data-action="view-matchups">
+      View Matchups
+    </div>
+  </div>
+</template>

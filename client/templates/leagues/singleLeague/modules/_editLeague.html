@@ -1,0 +1,14 @@
+<template name="_editLeague">
+  {{#ionModal class="white-text-header" title="Edit League"}}
+    {{#autoForm collection="Groups" type="update" id="updateLeague" doc=groupData}}
+      {{> afQuickField autofocus='' name='name' label-type='stacked'}}
+      <br>
+      {{> afQuickField type='select-radio' name='secret' }}
+      <br>
+      {{> afQuickField type='select-radio' name='limitNum' }}
+      <br>
+      <!-- {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}} -->
+      <input data-action="update" type="submit" class="button button-large button-balanced hundred-bottom" value="Update League">
+    {{/autoForm}}
+  {{/ionModal}}
+</template>

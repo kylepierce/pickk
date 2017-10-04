@@ -20,6 +20,19 @@
     }
   },
   "public": {
+    "facebook": {
+      "permissions": [
+        "basic_info",
+        "user_interests",
+        "user_activities",
+        "read_friendlists"
+      ],
+      "profileFields": [
+        "name",
+        "gender",
+        "location"
+      ]
+    },
     "isDebug": false,
     "isDevLogin": false,
     "isCronEnabled": true,

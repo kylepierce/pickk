@@ -1,31 +1,13 @@
-<template name="matchupMembers">
-  {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path="index"}}
-  {{/contentFor}}
-
-  <!-- {{#if member}}
-    {{#contentFor "headerButtonRight"}}
-      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
-        {{> ionIcon icon="ios-chatboxes"}}
-      </button>
-    {{/contentFor}}
-  {{/if}} -->
-
-  {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">
-      Members
-    </h1>
-  {{/contentFor}}
-
-  {{#ionView}}
-    {{#ionContent}}
-  		{{#ionList}}
-  			{{#each user in users}}
-  				{{> matchupMemberItem user=user matchup=this.matchup}}
-  			{{/each}}
+<template name="_matchupMembers">
+  {{#ionModal class="white-text-header" title="Members"}}
+    <div class="hundred-bottom">
+      {{#ionList}}
+        {{#each user in users}}
+          {{> matchupMemberItem user=user matchup=this.matchup}}
+        {{/each}}
       {{/ionList}}
-    {{/ionContent}}
-   {{/ionView}}
+    </div>
+  {{/ionModal}}
 </template>
 
 <template name="matchupMemberItem">

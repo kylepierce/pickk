@@ -1,0 +1,139 @@
+<template name="singleLeague">
+<!-- Standard Nav instead of the custom nav design -->
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="leagues"}}
+  {{/contentFor}}
+
+  {{> chatIcon}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      {{leagueName}}
+    </h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container hundred-bottom">
+        {{#with league}}
+          {{> leagueCard}}
+        {{/with}}
+
+        {{#if visible}}
+          {{#if member}}
+            <div class="line-divider"></div>
+            <div id="button-section">
+              {{> leagueLinks}}
+              {{> commissionerLinks}}
+            </div>
+            <div class="line-divider"></div>
+            {{> leagueMatchups}}
+          {{else}}
+            {{> memberCheck}}
+            <div class="line-divider"></div>
+            {{> visitorLinks}}
+          {{/if}}
+        {{else}}
+          <div class="no-notifications">
+            This league is private and can only be seen by members
+          </div>
+        {{/if}}
+      </div>
+   {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="chatIcon">
+  {{#if member}}
+    {{#contentFor "headerButtonRight"}}
+      <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
+        {{> ionIcon icon="ios-chatboxes"}}
+      </button>
+    {{/contentFor}}
+  {{/if}}
+</template>
+
+<template name="leagueMatchups">
+  {{#if leagueMatchups}}
+    {{> matchupCardList leagueId=this.league._id type="league"}}
+  {{else}}
+    <div class="no-notifications container">
+      No Matchups Scheduled
+      {{#if commissionerAdmin}}
+        <button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="leagueLinks">
+  <div class="button-card half" data-action="viewMembers">
+    {{> pickkIcon icon="player" size="small"}}
+    <span class="text">Players</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  <div class="button-card half {{ifPlayer}}" data-action="invite">
+    {{> pickkIcon icon="invite" size="small"}}
+    <span class="text">Invite</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  <div class="button-card half" data-action="viewLeaderboard">
+    {{> pickkIcon icon="leaderboard" size="small"}}
+    <span class="text">Leaderboard</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  {{#if notCommissioner}}
+    <div class="button-card half" data-action="settings">
+      {{> pickkIcon icon="settings" size="small"}}
+      <span class="text">Settings</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
+</template>
+
+<template name="commissionerLinks">
+  {{#if commissioner}}
+    <div class="button-card half" data-action="settings">
+      {{> pickkIcon icon="settings" size="small"}}
+      <span class="text">Settings</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    {{#if requests}}
+      <div class="button-card half" data-action="_leagueRequests">
+        {{> pickkIcon icon="settings" size="players"}}
+        <span class="text">Requests</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name="visitorLinks">
+  <div id="button-section">
+    <div class="button-card half" data-action="viewMembers">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Members</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="viewLeaderboard">
+      {{> ionIcon icon="ios-gear"}}
+      <span class="text">Leaderboard</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  </div>
+</template>
+
+<!-- {{#if alreadyMember }}
+  <button class="button col col-50 button-balanced" data-action="invite">
+   {{> ionIcon icon='ios-upload-outline'}} Invite
+  </button>
+
+  {{#if commissionerAdmin}}
+    <button id="settings" style="min-width: 50px;" data-ion-popover="_adminOptions" class="m-check col col-10">
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{else}}
+    <button id="join-toggle" style="min-width: 50px;" data-action="showActionSheet" class="m-check col col-10" >
+      {{> ionIcon icon='ios-gear'}}
+    </button>
+  {{/if}} -->

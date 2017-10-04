@@ -1,9 +1,10 @@
 branch-cordova-sdk@2.2.5
-cordova-plugin-device@1.1.2
+cordova-plugin-device@1.1.4
+cordova-plugin-geolocation@2.4.3
 cordova-plugin-inappbrowser@https://github.com/ephemer/cordova-plugin-inappbrowser.git#04091fde737519c149e7ad6316971cb6b490c5b3
-cordova-plugin-meteor-webapp@1.4.1
-cordova-plugin-x-socialsharing@5.1.1
 cordova-plugin-insomnia@4.2.0
-cordova-plugin-wkwebview-engine@https://github.com/apache/cordova-plugin-wkwebview-engine.git#815ed0741b9ae30b343d6429bd8ff2ad37ec5790
 cordova-plugin-intercom@3.0.19
+cordova-plugin-meteor-webapp@1.4.1
+cordova-plugin-wkwebview-engine@https://github.com/apache/cordova-plugin-wkwebview-engine.git#815ed0741b9ae30b343d6429bd8ff2ad37ec5790
+cordova-plugin-x-socialsharing@5.1.1
 phonegap-plugin-push@https://github.com/intercom/phonegap-plugin-push.git#9089ed0e8ac693fe37478596e23b6a4c12a56b3f

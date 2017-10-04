@@ -39,6 +39,13 @@
 	float: left;
 }
 
+.col-md-75 {
+	width: 75%!important;
+	min-width: 75%!important;
+	max-width: 75%!important;
+	float: left;
+}
+
 .col-md-80 {
 	width: 80%;
 	float: left;

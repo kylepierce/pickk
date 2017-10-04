@@ -20,44 +20,25 @@
   {{#ionView}}
     {{#ionContent}}
       {{#with matchup}}
-        <div class="container">
-          <div class="item item-divider ten-spacing">
-      			<span>{{matchupName this}}'s Matchup</span>
-      		</div>
-          <div class="matchup-card">
-          <h4>{{gameName this.gameId}}</h4>
+        <div id="single-matchup" class="container">
+          {{> matchupCard m=matchup}}
 
-          <span class="group-details-icon">
-            {{> ionIcon icon='star'}}
-          </span>
-          <span class="group-details-list">
-            Commissioner: {{username this.commissioner}}
-          </span>
+          {{#if alreadyJoined this.users}}
+            <div class="line-divider"></div>
+            <div id="button-section">
+              {{> matchupMember}}
+            </div>
+          {{else}}
+            {{> matchupJoin}}
+          {{/if}}
 
-          <span class="group-details-icon">
-            {{> ionIcon icon='ios-people'}}
-          </span>
-          <span class="group-details-list">
-            {{users this.users}} of {{limitNum}}
-          </span>
+          {{#each id in gameList}}
+            {{#with game id}}
+              <div class="line-divider"></div>
+              {{> entireGameCard game=this}}
+            {{/with}}
+          {{/each}}
 
-          <!-- <span class="group-details-icon">
-            {{> ionIcon icon='ios-people'}}
-          </span>
-          <span class="group-details-list">
-            {{this.skill}}
-          </span> -->
-
-          {{this.description}}
-        </div>
-        {{#if alreadyJoined this.users}}
-          {{> matchupMember}}
-          <button data-action="inviteToMatchup" class="button button-balanced col col-100 float-left">
-            {{> ionIcon icon='ios-upload-outline'}} Invite
-          </button>
-        {{else}}
-          {{> matchupJoin}}
-        {{/if}}
         </div>
       {{/with}}
     {{/ionContent}}
@@ -66,32 +47,53 @@
 
 <template name="matchupJoin">
   {{#if notMaxed}}
-    {{#if allowToJoin}}
-      <button data-action="joinMatchup" class="button button-balanced col col-100">
-        Join
+    {{#if allowToView}}
+      <button data-action="joinMatchup" class="button-card full cta-button ten-spacing">
+        Join Matchup
       </button>
+      <div class="line-divider"></div>
+
+      <div id="button-section">
+        {{> matchupMember}}
+      </div>
+
     {{else}}
       {{#if request}}
         {{> requestInvite}}
       {{/if}}
     {{/if}}
   {{else}}
-
+    {{#if league}}
+      <div class="button-card half" data-action="viewLeague">
+        {{> pickkIcon size="small" icon="league"}}
+        <span class="text">League</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 
 <template name="matchupMember">
-  <div class="match-links">
-    {{#ionList}}
-      <div class="item" data-action="viewGame">
-        View Game
-      </div>
-      <div class="item" data-action="viewMembers">
-        View Members
-      </div>
-      <div class="item" data-action="viewLeaderboard">
-        View Leaderboard
-      </div>
-    {{/ionList}}
+  <div class="button-card half" data-action="viewMembers">
+    {{> pickkIcon size="small" icon="player"}}
+    <span class="text">Players</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
+  <div class="button-card half" data-action="invite">
+    {{> pickkIcon size="small" icon="invite"}}
+    <span class="text">Invite</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  <div class="button-card half" data-action="viewLeaderboard">
+    {{> pickkIcon size="small" icon="leaderboard"}}
+    <span class="text">Leaderboard</span>
+    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+  </div>
+  {{#if league}}
+    <div class="button-card half" data-action="viewLeague">
+      {{> pickkIcon size="small" icon="league"}}
+      <span class="text">View League</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
 </template>

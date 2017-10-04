@@ -66,9 +66,15 @@ Meteor.publish('upcomingGames', function() {
 });
 
 Meteor.publish('singleGameData', function(id) {
-  check(id, String);
+  check(id, Match.Maybe(String));
   this.unblock()
-  return Games.find({_id: id}, {fields: {name: 1, scheduled: 1}});
+  return Games.find({_id: id}, {fields: {name: 1, scheduled: 1, home_team: 1, away_team: 1}});
+});
+
+Meteor.publish('multipleGameData', function(ids) {
+  check(ids, Match.Maybe(Array));
+  this.unblock()
+  return Games.find({_id: {$in: [ids]}}, {fields: {inning: 0, pbp: 0}});
 });
 
 Meteor.publish('singleQuestion', function(id) {

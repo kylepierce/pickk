@@ -4,11 +4,18 @@ Meteor.startup(function () {
       PushNotification.hasPermission(function(data) {
         if(user.profile.isOnboarded && !data.isEnabled){
           Router.go('/push-active');
-        } 
-      }) 
+        }
+      })
     }
   });
 });
+
+Push.allow({
+   send: function(userId, notification) {
+     // Allow all users to send to everybody - For test only!
+     return true;
+   }
+ });
 
 
 enablePush = function (){

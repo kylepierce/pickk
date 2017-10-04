@@ -1,19 +1,9 @@
 <template name="favoriteTeams">
   {{#ionView}}
     {{#ionContent}}
-
-      {{#each step in allSteps}}
-        <div id="favoriteList" class="container {{hide step}}">
-          {{#with step}}
-            {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}
-              <div class="af-fav-teams hundred-bottom">
-                {{> afQuickField name=this type='select-checkbox'}}
-              </div>
-                <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
-            {{/autoForm}}
-          {{/with}}
-        </div>
-      {{/each}}
+      <div class="container ten-spacing hundred-bottom">
+        {{> wizard id="select-sports" route="newUserFavoriteTeams" steps=steps}}
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -25,3 +15,45 @@
     </h1>
   {{/contentFor}}
 </template>
+
+<template name="favoriteSports">
+  {{#autoForm id="favoriteSports" doc=step.data schema=step.schema}}
+    {{> afQuickField name='favoriteSports'}}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="favoriteNFL">
+  {{#autoForm id="favoriteNFL" doc=step.data schema=step.schema}}
+    {{> afQuickField name='favoriteNFL'}}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="favoriteMLB">
+  {{#autoForm id="favoriteMLB" doc=step.data schema=step.schema}}
+    {{> afQuickField name='favoriteMLB' }}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+<template name="favoriteNBA">
+  {{#autoForm id="favoriteNBA" doc=step.data schema=step.schema}}
+    {{> afQuickField name='favoriteNBA'}}
+    {{> wizardButtons}}
+  {{/autoForm}}
+</template>
+
+
+<!-- {{#each step in allSteps}}
+  <div id="favoriteList" class="container {{hide step}}">
+    {{#with step}}
+      {{#autoForm schema=UsersProfileSchema doc=currentUser.profile id=step}}
+        <div class="af-fav-teams hundred-bottom">
+          {{>afFieldInput name=this template="ionic2"}}
+        </div>
+        <input id="team-submit-button" name="saveTeam" type="submit" class="button button-large button-balanced bold" value="{{submitText}}">
+      {{/autoForm}}
+    {{/with}}
+  </div>
+{{/each}} -->

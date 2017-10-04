@@ -22,52 +22,19 @@
 
   {{#ionView}}
     {{#ionContent}}
-		<div class="container">
-			<div style="margin-top:20px;">
-				Watching a game with friends or at a party? Create a matchup to prove your knowledge!
-			</div>
-			<br>
-      <br>
-      <a href="/matchup/create" class="newGroup">
-      <button class="button button-balanced col col-100">
-        Challenge a Friend
-      </button>
-      </a>
-    </div>
-      <div class="list container">
+			{{> heroSection}}
+      <div class="container hundred-bottom">
 				{{#if anyMatchups}}
 					{{#each matchup in matchups}}
-						{{> matchupItem m=matchup}}
+						{{> matchupCard m=matchup}}
 					{{/each}}
 				{{else}}
 					<div class="no-notifications">
 						No Matchups Found.
 					</div>
-
 				{{/if}}
+				<button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
       </div>
     {{/ionContent}}
   {{/ionView}}
-</template>
-
-<template name="matchupItem">
-	<div class="item item-divider ten-spacing ">
-		<span>{{matchupName m}}'s Matchup</span>
-	</div>
-  <div class="item {{joined}}">
-    <h2>{{gameName m.gameId}}</h2>
-		<strong class="col col-md-33">
-			{{m.secret}}
-		</strong>
-
-		<strong class="col col-md-33">
-			{{users m.users}} of {{limitNum m.limitNum}}
-		</strong>
-
-		<strong class="col col-md-33">
-			{{m.skill}}
-		</strong>
-
-
-  </div>
 </template>

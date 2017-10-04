@@ -1,0 +1,42 @@
+<template name="leagues">
+	{{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+
+ {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Leagues</h1>
+ {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <a href="/searchLeagues" class="button button-clear pull-right newGroup">
+      {{> ionIcon icon='ios-search-strong'}}
+    </a>
+	{{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+		{{> heroSection}}
+		<div class="container hundred-bottom">
+			{{#each league in userLeague}}
+				{{#with league}}
+					{{> leagueCard}}
+				{{/with}}
+			{{/each}}
+			{{#if noLeaguesJoined}}
+				{{#ionItem buttonRight=true}}
+					<p>No Leagues :( Join a League!</p>
+					<a data-action="no-group" class="button">
+						{{> ionIcon icon="ios-plus"}}
+					</a>
+				{{/ionItem}}
+			{{/if}}
+		</div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

@@ -1,30 +1,4 @@
-Template.home.onCreated( function() {
-  this.subscribe( 'activeHero', function() {
-    $( ".loader-holder" ).delay( 100 ).fadeOut( 'slow', function() {
-      $( ".loading-wrapper" ).fadeIn( 'slow' );
-
-      $.each($(".game-container"), function(i, el){
-        setTimeout(function(){
-          $(el).css("opacity","1");
-          $(el).addClass("fadeInRight","400");
-        }, 100 + ( i * 100 ));
-      });
-
-      $('.hero-section').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 20000,
-        accessibility: false,
-        arrows: false,
-        mobileFirst: true,
-      });
-    });
-  });
-});
-
 Template.home.onRendered( function() {
-  $( "svg" ).delay( 250 ).fadeIn();
 });
 
 Template.home.rendered = function () {
@@ -33,41 +7,13 @@ Template.home.rendered = function () {
   if(deeplink && deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
     handleOpenURL(deeplink["$deeplink_path"])
   }
-
-  $('.hero-section').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 20000,
-    accessibility: false,
-    arrows: false,
-    mobileFirst: true,
-  });
 };
 
 Template.home.helpers({
-  hero: function () {
-    return Hero.find({}).fetch()
+  listGames: function(){
+    Meteor.subscribe('liveGames')
+    return Games.find();
   },
-  gamePrediction: function () {
-    return Questions.find({}).count()
-  },
-  dailyPickkCount: function () {
-    return Questions.find({}).count()
-  },
-  liveGames: function(){
-    return Games.find({live: true}).count()
-  },
-  listLiveGames: function(){
-    return Games.find({live: true})
-  },
-  upcomingGames: function(){
-    return Games.find({live: false}).count()
-  },
-  listUpcomingGames: function(){
-    var liveGame = Games.find({live: false}).count()
-    return Games.find({live: false})
-  }
 });
 
 Template.home.events({
@@ -86,36 +32,36 @@ Template.home.events({
   }
 });
 
+Template.dailyPickkButton.helpers({
+  gamePrediction: function () {
+    return Questions.find({}).count();
+  },
+  dailyPickkCount: function () {
+    return Questions.find({}).count();
+  },
+});
 
-// else if (post.tag == "leader") {
-//         IonPopup.show({
-//           title: 'Leaderboard Winnings!',
-//           template: message,
-//           buttons: [{
-//             text: 'Got It!',
-//             type: 'button-positive',
-//             onTap: function() {
-//               Meteor.call('removeNotification', id);
-//               $('body').removeClass('popup-open');
-//               $('.backdrop').remove();
-//               Blaze.remove(this.view);
-//             }
-//           }]
-//         });
-//       } else if (post.source == "Exchange") {
-//         message = '<img style="max-width:100%;" src="/storeowner.png">' + message
-//         IonPopup.show({
-//           title: 'Diamond Exchange',
-//           template: message,
-//           buttons: [{
-//             text: 'Got It!',
-//             type: 'button-positive',
-//             onTap: function() {
-//               Meteor.call('removeNotification', id);
-//               $('body').removeClass('popup-open');
-//               $('.backdrop').remove();
-//               Blaze.remove(this.view);
-//             }
-//           }]
-//         });
-//       }
+// Template.homeButtons.helpers({
+//   buttons: function(){
+//     var buttonArray = Admin.findOne({location: "home", type: "buttons"});
+//     console.log(buttonArray);
+//   },
+// });
+
+Template.homeButtons.events({
+  'click [data-action=notification-button]': function(e, t){
+    Router.go('/notifications/?read=false');
+  },
+  'click [data-action=leagues-button]': function(e, t){
+    Router.go('/leagues');
+  },
+  'click [data-action=matchups-button]': function(e, t){
+    Router.go('/matchup');
+  },
+  'click [data-action=allGames]': function(e, t){
+    Session.set('gamesDate', "month");
+    var all = ["NBA", "NFL", "MLB"]
+    Session.set('gamesBySport', all);
+    Router.go('/games')
+  },
+});

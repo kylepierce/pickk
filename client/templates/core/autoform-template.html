@@ -1,0 +1,78 @@
+<template name="afCheckboxGroup_ionic2">
+  <div class="af-checkbox-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="checkbox" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class="checkbox {{selected}} team-select-container button-card">
+        <div class="team-select-single">
+          <img src="{{img}}" />
+          <h5>{{this.label}}</h5>
+        </div>
+      </label>
+    {{/each}}
+  </div>
+</template>
+
+<template name="afRadioGroup_ionic2">
+  <div class="af-radio-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="radio" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class=" team-select-container button-card">
+        <div class="team-select-single">
+          <img src="{{img}}" />
+          <h5>{{this.label}}</h5>
+        </div>
+      </label>
+    {{/each}}
+  </div>
+</template>
+
+<template name="afRadioGroup_small">
+  <div class="af-radio-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="radio" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class=" team-select-container button-card">
+        <div class="team-select-single">
+          <h5>{{this.label}}</h5>
+        </div>
+      </label>
+    {{/each}}
+  </div>
+</template>
+
+<template name="afCheckboxGroup_games">
+  <div class="af-checkbox-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <div data-action="showGames" class="date-card card-container full">
+        <div class="date-select-single">
+          <span class="spelled">{{niceDate this.label}}</span>
+          <span class="count">{{count}} Games</span>
+        </div>
+        <!-- <span class="arrow">{{> ionIcon icon="ios-arrow-down"}}</span> -->
+      </div>
+      <span class="game-display ten-spacing">
+        {{#each game in games}}
+          <input type="checkbox" id="{{game._id}}" value="{{game._id}}" {{atts}} />
+          <label for="{{game._id}}" class=" team-select-container button-card">
+            <div class="team-select-single">
+              <h5>{{game.name}}</h5>
+              <h5>{{time game.iso}}</h5>
+            </div>
+          </label>
+        {{/each}}
+      </span>
+    {{/each}}
+  </div>
+</template>
+
+<template name="afCheckboxGroup_small">
+  <div class="af-checkbox-group team-select" {{dsk}}>
+    {{#each this.items}}
+      <input type="checkbox" id="{{this.value}}" value="{{this.value}}" {{atts}} />
+      <label for="{{this.value}}" class="checkbox {{selected}} team-select-container button-card">
+        <div class="team-select-single">
+          <h5>{{this.label}}</h5>
+        </div>
+      </label>
+    {{/each}}
+  </div>
+</template>

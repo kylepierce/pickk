@@ -2,7 +2,7 @@ Template.gameTypePrompt.onCreated( function() {
   var gameId = Router.current().params._id
   this.subscribe( 'singleGame', gameId,  function() {
     $( ".spin-loader" ).delay( 100 ).fadeOut( 'slow', function() {
-      $( ".loading-wrapper" ).fadeIn( 'slow' );
+      $( ".loading-wrapper" ).show().fadeIn( 'slow' );
     });
   });
 });
@@ -102,7 +102,7 @@ Template.gameTypePrompt.events({
     var game = Games.findOne();
     var type = e.currentTarget.dataset.value.toLowerCase( )
 
-    var gamePlayed = {
+    var data = {
       gameId: $gameId,
       dateCreated: new Date(),
       userId: userId,
@@ -110,8 +110,10 @@ Template.gameTypePrompt.events({
       type: type
     }
 
-    var opinion = checkUsersOpinion(game, user)
-    var data = _.extend(gamePlayed, opinion)
+    // var opinion = checkUsersOpinion(game, user)
+    // var data = _.extend(gamePlayed, opinion)
+    // analytics.track("joined game", data);
+
     analytics.track("joined game", data);
 
     if(Meteor.isCordova){
@@ -129,11 +131,25 @@ Template.gameTypePrompt.events({
       var eventName = 'joined_game';
       Branch.userCompletedAction(eventName)
     }
-    Meteor.call('userJoinsAGame', data);
-    Meteor.subscribe('gamePlayed', userId, $gameId);
+
+    Meteor.subscribe('gamePlayed', $gameId);
 
     var leaderData = Session.get('leaderboardData');
   	// leaderData["period"] = game.period
+
+    var onSuccess = function(position) {
+      data.location = position
+    };
+
+    // onError Callback receives a PositionError object
+    function onError(error) {
+        alert('Location must be added to win prizes. Please update the settings. Code: ' + error.code + 'message: ' + error.message + '\n' );
+        data.location = null
+    }
+    if(Meteor.isCordova){
+      var location = navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+    }
+    Meteor.call('userJoinsAGame', data);
 
   	Session.set('leaderboardData', leaderData);
     IonLoading.show({

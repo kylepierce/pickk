@@ -1,0 +1,39 @@
+<template name="matchupCard">
+	<div class="{{joined}} card-container" data-action="viewMatchup">
+		<div class="matchup-card-header ">
+			<div class="detail-container">
+				<span class="game">{{matchupName}}</span>
+				<span class="commissioner">
+					{{> pickkIcon size="xs" icon="commissioner"}}
+					{{commissioner m}}
+				</span>
+			</div>
+			<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+		</div>
+		{{> matchupDetails}}
+	</div>
+</template>
+
+<template name="matchupDetails">
+	<div class="matchup-card-body card-detail-section">
+		{{#each section in sections}}
+			<div class="section">
+				<div class="section-icon-container {{section.alert}}">
+					{{#if section.list}}
+						<ul style="margin-top:auto;">
+							{{#each item in section.list}}
+								<li>{{item}}</li>
+							{{/each}}
+						</ul>
+					{{/if}}
+					{{#if section.icon}}
+						{{> pickkIcon size="sm" icon=section.icon}}
+					{{else}}
+						<h4>{{section.headline}}</h4>
+					{{/if}}
+				</div>
+				<div>{{section.title}}</div>
+			</div>
+		{{/each}}
+	</div>
+</template>

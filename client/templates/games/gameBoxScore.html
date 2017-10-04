@@ -1,185 +1,165 @@
 <template name="entireGameCard">
-  {{> singleGameInfo game=game}}
-  {{> singleGameCard game=game}}
-  {{> singleGameCTA game=game}}
+  <div class="loading-wrapper">
+    <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight" data-action="viewGame">
+      <!-- {{> loadingGame}} animated-background -->
+
+      {{> singleGameInfo game=game border=true}}
+      {{> singleGameCard game=game}}
+      {{> singleGameCTA game=game}}
+    </div>
+  </div>
 </template>
 
 <template name="singleGameInfo">
-  {{#if baseball}}
+  {{#if sport "MLB"}}
     {{#if inProgress}}
-      {{> gameInProgressInfo game=game}}
+      {{> gameInProgressInfo game=game border=border}}
     {{/if}}
   {{/if}}
   {{#if future}}
-    {{> futureGameInfo game=game}}
+    {{> futureGameInfo game=game border=border}}
   {{/if}}
-  {{#if past}}
-    {{> pastGameInfo game=game}}
-  {{/if}}
-</template>
-
-<template name="gameInProgressInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-25 single-game-section">
-      {{> inningDisplay inning=game.eventStatus.inning data=game.eventStatus.inningDivision}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> outDisplay number=game.eventStatus.outs}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> playersOnBase base=game.eventStatus.runnersOnBase}}
-    </div>
-    <div class="col-md-25 single-game-section">
-      {{> count }}
-    </div>
-  </div>
-</template>
-
-<template name="futureGameInfo">
-  <div class="single-game-shared single-game-info">
-    {{displayDate game.iso}}
-    {{#each station in tv game.tvStations}}
-      ({{station.callLetters}})
-    {{/each}}
-  </div>
-</template>
-
-<template name="pastGameInfo">
-  <div class="single-game-shared single-game-info">
-    <div class="col-md-50 past-game" data-action="game-leaderboard">
-      Leaderboard
-    </div>
-    <div class="col-md-50 past-game" style="border-left: #fff 1px solid;" data-action="game-predictions">
-      Predictions
-    </div>
-  </div>
 </template>
 
 <template name="singleGameCard">
   <div class="single-game-card">
+    <div class="{{status}}">
+      {{#each team in teams}}
+        {{> teamBlock statsTeamId=team.teamId runs=team.runs}}
+      {{/each}}
+    </div>
+    {{#if showRight}}
+      {{> rightSection}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="singleGameCTA">
+  {{#if preGame}}
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+      Pre Pickks Open!
+    </div>
+  {{/if}}
+  {{#if inProgress}}
+    <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
+      Play Now!
+    </div>
+  {{/if}}
+</template>
+
+<template name="futureGameInfo">
+  <div class="single-game-shared single-game-info future-game-info {{border}}">
+    <strong class="game-time">{{displayDate game.iso}}</strong>
+    <span class="game-tv">
+      {{#each station in tv game.tvStations}}
+        ({{station.callLetters}})
+      {{/each}}
+    </span>
+  </div>
+</template>
+
+<template name="teamBlock">
+  <div class="team-block">
+    {{#with team statsTeamId}}
+      <div class="team-colors team-text" style="background-color:{{hex}}">
+        {{upper computerName}}
+      </div>
+    {{/with}}
+    <div class="team-inner">
+      <span class="team-name team-text">
+        {{#with team statsTeamId}} {{nickname}} {{/with}}
+      </span>
+      <span class="team-score team-text">{{runs}}</span>
+    </div>
+  </div>
+</template>
+
+<template name="rightSection">
+  <div class="additional-game-details">
+    {{#if completed}}
+      <span>View Game</span>
+    {{/if}}
+    {{#if live}}
+      <div class="game-time-container center-text game-card-right-side-border">
+        <span class="period">
+          {{periodGrammer this.game.period}}
+        </span>
+        <span class="time-remaining">{{time}}</span>
+        <span class="tv-station">
+          {{tvStation this.game.tvStations}}
+        </span>
+      </div>
+    {{/if}}
     {{#if scheduled}}
       {{#if registered}}
         <div data-action="unregister" class="game-unregister center">
           <i class="fa fa-bell-slash"></i>
         </div>
       {{else}}
-        <div data-action="register" class="game-register center">
+        <div data-action="register" class="game-register cta-button center">
           <i class="fa fa-bell"></i>
         </div>
       {{/if}}
-      {{#if football}}
-        {{> scheduledTeamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  }}
-        {{> scheduledTeamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name }}
-      {{else}}
-        {{> scheduledTeamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname}}
-        {{> scheduledTeamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname}}
-      {{/if}}
-
-    {{else}}
-      {{#if football}}
-        {{> teamBlock id=game.scoring.away.id abbr=game.scoring.away.abbr name=game.scoring.away.name  runs=game.scoring.away.runs }}
-        {{> teamBlock id=game.scoring.home.id abbr=game.scoring.home.abbr name=game.scoring.home.name  runs=game.scoring.home.runs }}
-      {{else}}
-        {{> teamBlock id=game.away_team abbr=game.away.abbreviation name=game.away.nickname  runs=game.away.linescoreTotals.runs }}
-        {{> teamBlock id=game.home_team abbr=game.home.abbreviation name=game.home.nickname runs=game.home.linescoreTotals.runs }}
-      {{/if}}
+    {{/if}}
+    {{#if delayed}}
+      <div class="game-time-container center-text game-card-right-side-border">
+        View Game
+      </div>
     {{/if}}
   </div>
 </template>
 
-<template name="teamBlock">
-  <div class="team-block">
-    {{#if baseball}}
-      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-        {{abbr name}}
+<template name="loadingGame">
+  <div class="load-game">
+    <div class=load-game-top>
+      <div class="blue-block top-rounded"></div>
+      <div class="load-game-top-text">
+        <div class="blue-block top-left"></div>
+        <div class="top-left-text"></div>
+        <div class="blue-block top-middle"></div>
+        <div class="top-right-text"></div>
+        <div class="blue-block top-right"></div>
       </div>
-    {{/if}}
-    {{#if football}}
-    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
-      {{idAbbr id}}
+      <div class="blue-block full-width"></div>
     </div>
-    {{/if}}
-    <div class="team-block-border">
-      <span class="team-name team-text">{{name}}</span>
-      <span class="team-score team-text">{{runs}}</span>
+    <div class="load-game-middle-container">
+      <div class="load-game-team-row"> <!--Team 1 -->
+        <div class="load-game-middle-shortcode">
+          <div class="whitespace-block shortcode-text"></div>
+        </div>
+        <div class="load-game-team-right">
+          <div class="whitespace-block middle-spacer"></div>
+          <div class="load-game-middle-text-row">
+            <div class="whitespace-block middle-left"></div>
+            <div class="whitespace-block middle-middle"></div>
+            <div class="whitespace-block middle-right"></div>
+          </div>
+          <div class="whitespace-block middle-spacer"></div>
+        </div>
+      </div>
+      <div class="load-game-team-row"> <!--Team 2 -->
+        <div class="load-game-middle-shortcode">
+          <div class="whitespace-block shortcode-text"></div>
+        </div>
+        <div class="load-game-team-right">
+          <div class="whitespace-block middle-spacer"></div>
+          <div class="load-game-middle-text-row">
+            <div class="whitespace-block middle-left"></div>
+            <div class="whitespace-block middle-middle"></div>
+            <div class="whitespace-block middle-right"></div>
+          </div>
+          <div class="whitespace-block middle-spacer rounded-bottom-right-edge"></div>
+        </div>
+      </div>
+    </div>
+    <div class="load-game-bottom">
+      <div class="yellow-block full-width"></div>
+      <div class="load-game-bottom-text">
+        <div class="yellow-block bottom-left"></div>
+        <div class="bottom-middle"></div>
+        <div class="yellow-block bottom-right"></div>
+      </div>
+      <div class="yellow-block bottom-rounded"></div>
     </div>
   </div>
-</template>
-
-<template name="scheduledTeamBlock">
-  <div class="scheduled-team-block">
-    {{#if baseball}}
-      <div class="team-colors team-text" style="background-color:{{teamColors name}}">
-        {{abbr name}}
-      </div>
-    {{/if}}
-    {{#if football}}
-    <div class="team-colors team-text" style="background-color:{{teamIdColors id}}">
-      {{idAbbr id}}
-    </div>
-    {{/if}}
-      <div class="team-block-border">
-        <span class="team-name team-text">{{name}}</span>
-        <span class="team-score team-text"></span>
-    </div>
-  </div>
-</template>
-
-<template name="singleGameCTA">
-  {{#if inProgress}}
-    {{#if baseball}}
-      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-        Play Now! ({{{quarter game.eventStatus.inning}}} -
-        {{#each station in tv game.tvStations}}
-          ({{station.callLetters}})
-        {{/each}})
-      </div>
-    {{/if}}
-    {{#if football}}
-      <div data-action="play" id="{{game.id}}" class="single-game-shared single-game-cta">
-        Play Now! ({{{quarter game.period}}} -
-          ({{game.tv}}))
-      </div>
-    {{/if}}
-  {{/if}}
-</template>
-
-<template name="count">
-  {{#with count}}
-    <span class="inning">{{balls}} - {{strikes}}</span>
-  {{/with}}
-</template>
-
-<template name="outDisplay">
-    {{{outs number}}}
-</template>
-
-<template name="inningDisplay">
-  <span class="inning-position">
-    {{#if position data}}
-      <i class="fa fa-caret-up"></i>
-    {{else}}
-      <i class="fa fa-caret-down"></i>
-    {{/if}}
-  </span>
-  <span class="inning">{{grammer inning}}</span>
-</template>
-
-<template name="playersOnBase">
-  <!-- Fix last / clean up -->
-  {{#if playerOnBase 3 base}}
-    <div class="base-empty base-diamond base-fix third-base"></div>
-  {{else}}
-    <div class="base-diamond base-fix third-base"></div>
-  {{/if}}
-  {{#if playerOnBase 2 base}}
-    <div class="base-empty base-diamond second-base"></div>
-  {{else}}
-    <div class="base-diamond second-base"></div>
-  {{/if}}
-  {{#if playerOnBase 1 base}}
-    <div class="base-empty base-diamond base-fix first-base"></div>
-  {{else}}
-    <div class="base-diamond base-fix first-base"></div>
-  {{/if}}
 </template>

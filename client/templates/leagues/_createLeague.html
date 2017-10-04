@@ -1,0 +1,25 @@
+<template name="newLeague">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Create New League</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+    <div class="container ten-spacing hundred-bottom">
+      {{#autoForm collection="Groups" type="insert" id="createLeague"}}
+        {{> afQuickField autofocus='' name='name' label-type='stacked'}}
+        <div class="item item-divider ten-spacing">Who Can Join?</div>
+        {{> afQuickField type='select-radio' name='secret' }}
+        <div class="item item-divider ten-spacing">Limit</div>
+        {{> afQuickField type='select-radio' name='limitNum' }}
+        <!-- {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}} -->
+        <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;" value="Create League">
+      {{/autoForm}}
+    </div>
+    {{/ionContent}}
+   {{/ionView}}
+</template>

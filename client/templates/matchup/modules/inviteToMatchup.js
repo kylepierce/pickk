@@ -31,7 +31,6 @@ Template.inviteMatchupButton.events({
     } else {
       var username = this.user
     }
-    console.log(this);
     var inviter = Meteor.userId()
     var matchupId = Router.current().params._id
 
@@ -50,6 +49,9 @@ Template.inviteMatchupButton.events({
 });
 
 Template.inviteToMatchupBox.helpers({
+  inputAttributes: function(){
+    return {placeholder: "Search..."}
+  },
   UserListIndex: function() {
     return UserListIndex;
   },
@@ -60,6 +62,10 @@ Template.inviteToMatchupBox.helpers({
 });
 
 Template.inviteToMatchupBox.events({
+  'click [data-action=finishMatchup]': function(e, t){
+    var matchupId = Router.current().params._id
+    Router.go('/matchup/' + matchupId);
+  },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){
       var branchUniversalObj = null;

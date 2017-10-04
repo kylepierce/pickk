@@ -6,32 +6,14 @@ Template.singleMatchup.helpers({
   matchup: function(){
     return Matchup.findOne();
   },
-  'users': function (userArray){
-    return userArray.length
+  'gameList': function(){
+    return this.gameId
   },
-  'username': function(ref) {
-		Meteor.subscribe('findSingle', ref);
-		return UserList.findOne({_id: ref}).profile.username
-	},
-  'matchupName': function(matchup){
-    var groupId = matchup.groupId
-
-    if(groupId){
-      Meteor.subscribe('singleGroup', groupId);
-      var group = Groups.find({_id: groupId}).fetch();
-      var matchupName = group[0].name
-    } else {
-      var userId = matchup.commissioner
-      var user = UserList.find({_id: userId}).fetch()
-      var matchupName = user[0].profile.username
-    }
-    return matchupName
-  },
-  'gameName': function(gameId){
-    Meteor.subscribe('singleGameData', gameId);
-    var game = Games.findOne({_id: gameId})
-    if (game){
-      return game.name
+  'game': function(gameId) {
+    Meteor.subscribe('singleGame', gameId);
+    var game = Games.findOne({_id: gameId});
+    if (game) {
+      return game
     }
   },
   'alreadyJoined': function(users){
@@ -41,13 +23,6 @@ Template.singleMatchup.helpers({
       if(onList >= 0){
         return true
       }
-    }
-  },
-  'limitNum': function(){
-    if(this.limitNum === -1){
-      return "∞"
-    } else {
-      return this.limitNum
     }
   }
 });
@@ -92,36 +67,43 @@ Template.singleMatchup.events({
     });
   },
 });
+Template.matchupJoin.events({
+  "click [data-action=viewLeague]": function(e, t) {
+    Router.go('/league/' + this.leagueId );
+  }
+});
 
 Template.matchupJoin.helpers({
   notMaxed: function(){
     var matchup = this
-    var numOfUsers = this.users.length
-    var max = this.limitNum
-    if(max === -1){
-      return true
-    } else if(numOfUsers < max){
-      return true
-    } else {
-      return false
+    if (matchup) {
+      var numOfUsers = matchup.users.length
+      var max = matchup.limitNum
+      if(max === -1){
+        return true
+      } else if(numOfUsers < max){
+        return true
+      } else {
+        return false
+      }
     }
   },
-  allowToJoin: function(){
+  allowToView: function(){
     var userId = Meteor.userId();
-    var deepLinked = Session.get('deepLinked')
+    var deepLinked = Session.get('deepLinked');
     var deeplinkAllowed = Router.current().params.query.deeplinkAllowed
     if (this.secret === "public"){
       return true
-    } else if(this.groupId){
-      Meteor.subscribe('singleGroup', this.groupId);
-      var group = Groups.find({_id: this.groupId}).fetch()
+    } else if(this.leagueId){
+      Meteor.subscribe('singleGroup', this.leagueId);
+      var group = Groups.find({_id: this.leagueId}).fetch()
       var isMember = group[0].members.indexOf(userId)
       if(isMember > -1){
         return true
       }
     } else if (deeplinkAllowed === "true"){
       return true
-    } else if (deepLinked.matchupId === this._id && deepLinked.allowed === 1){
+    } else if (deepLinked && deepLinked.matchupId === this._id && deepLinked.allowed === 1){
       return true
     } else if (this.secret === "invite"){
       var invited = this.invites.indexOf(userId)
@@ -131,10 +113,32 @@ Template.matchupJoin.helpers({
     } else {
       return true
     }
-  }, request: function(){
+  },
+  request: function(){
     var userId = Meteor.userId();
     var onTheList = this.requests.indexOf(userId);
     if(onTheList > -1){
+      return true
+    }
+  },
+  league: function () {
+    if(this.leagueId) {
+      return true
+    }
+  }
+});
+
+Template.matchupMember.helpers({
+  "ifPlayer": function(){
+    var userId = Meteor.userId();
+    var list = this.users
+    var onList = list.indexOf(userId);
+    if (onList > 0){
+      return "cta-button"
+    }
+  },
+  "league": function(){
+    if(this.secret === "league"){
       return true
     }
   }
@@ -145,9 +149,15 @@ Template.matchupMember.events({
      Router.go('/game/' + this.gameId );
   },
   "click [data-action=viewMembers]": function(e, t){
-     Router.go('/matchup/members/' + this._id );
+    IonModal.open('_matchupMembers', this);
+  },
+  "click [data-action=invite]": function(e, t){
+     Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
     Router.go('/leaderboard/' + this.gameId + "?filter=matchup&matchupId=" + this._id );
   },
+  "click [data-action=viewLeague]": function(e, t) {
+    Router.go('/league/' + this.leagueId );
+  }
 });

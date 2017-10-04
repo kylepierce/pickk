@@ -1,0 +1,40 @@
+<template name="leagueCard">
+	<div class="ten-spacing {{joined}} card-container" data-action="viewLeague">
+		<div class="league-card-header">
+			{{> leagueAvatar size="small" league=this}}
+			<div class="detail-container">
+				<div class="league-name">{{name}}</div>
+				<div class="commissioner">
+					{{> pickkIcon size="xs" icon="commissioner"}}
+					{{commissioner}}
+				</div>
+			</div>
+			<span class="arrow {{single}}">{{> ionIcon icon="ios-arrow-right"}}</span>
+		</div>
+		{{> leagueDetails}}
+	</div>
+</template>
+
+<template name="leagueDetails">
+	<div class="league-card-body card-detail-section">
+		{{#each section in sections}}
+			<div class="section">
+				<div class="section-icon-container {{section.alert}}">
+					{{#if section.list}}
+						<ul style="margin-top:auto;">
+							{{#each item in section.list}}
+								<li>{{item}}</li>
+							{{/each}}
+						</ul>
+					{{/if}}
+					{{#if section.icon}}
+						{{> pickkIcon size="sm" icon=section.icon}}
+					{{else}}
+						<h4>{{section.headline}}</h4>
+					{{/if}}
+				</div>
+				<div>{{section.title}}</div>
+			</div>
+		{{/each}}
+	</div>
+</template>

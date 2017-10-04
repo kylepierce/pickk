@@ -1,0 +1,33 @@
+<template name="questionDetails">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+	{{#contentFor "headerTitle"}}
+		<h1 class="title white-text-header">
+      Single Question
+    </h1>
+	{{/contentFor}}
+
+  {{#ionView }}
+    {{#ionContent}}
+      {{#ionList}}
+        <div class="container ten-spacing">
+          {{> singleAnswer q=this.question a=this.answer extended=true single=true}}
+          {{#if reported}}
+            <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
+              Question Reported
+            </button>
+            <div>
+              You reported this question {{questionReported.dateCreated}}
+            </div>
+          {{else}}
+            <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
+              Report This Question
+            </button>
+          {{/if}}
+        </div>
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>

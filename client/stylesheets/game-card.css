@@ -1,0 +1,295 @@
+.complete-game-card {
+	margin-bottom: 10px;
+  /*opacity: 0;*/
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 0px;
+	border-radius: 10px;
+	display: grid;
+}
+
+#animateGames .complete-game-card {
+	/*opacity: 0!important;*/
+}
+
+.single-game-card {
+	width: 100%;
+	background-color: white;
+	font-family: lato;
+	font-weight: bold;
+	font-size: 18px;
+	display: inline-block;
+	border-radius: 10px;
+}
+
+.full-width-team-block {
+	width: 100%;
+}
+
+.left-side-team-block {
+	width: 80%;
+	float: left;
+}
+
+.additional-game-details {
+	border-radius: 0 10px 10px 0;
+	width: 20%;
+	display: flex;
+	flex-direction: column;
+	float: left;
+}
+
+.baseball-game-card .game-card-right-side-border {
+	border-radius: 0;
+}
+
+.baseball-game-card .team-colors {
+	border-radius: 0!important;
+}
+
+.live-game-card .game-card-right-side-border {
+	border-radius: 0 10px 0 0;
+}
+
+.live-game-card .team-block:last-child .team-colors{
+	border-radius: 0!important;
+}
+
+.pre-game-card {
+	height: 131px
+}
+
+.pre-game-card .team-block:first-child .team-colors{
+	border-radius: 0!important;
+}
+
+.game-card-right-side-border {
+	border-radius: 0 10px 10px 0;
+}
+
+.game-time-container {
+	width: 100%;
+	background: linear-gradient(to bottom right, #455A64 0%, #202A2F 100%);
+	color: white;
+	float: left;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 0;
+	height: 91px;
+}
+
+.game-time-container span {
+	padding-top: 4px;
+}
+
+.quarter {
+	font-size: 1.32rem;
+}
+
+.time-remaining {
+
+}
+
+.single-game-shared {
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.single-game-info {
+	height: 40px;
+	background-color: #455A64;
+	color: white;
+	border-radius: 10px 10px 0 0;
+}
+
+.future-game-info {
+	width: 100%;
+	padding: 0 5%
+}
+
+.single-game-cta {
+	height: 34px;
+	background-color: #F1C40F;
+	font-weight: bold;
+	font-family: lato;
+	margin-top: -5px;
+	border-radius: 0 0 10px 10px
+}
+
+.future-game-cta {
+	height: 34px;
+	background-color: green;
+	color: white;
+}
+
+.game-register {
+	background-color: #329E64;
+	width: 100%;
+	float:right;
+	height: 91px;
+	border-radius: 0 0 10px 0;
+}
+
+.game-unregister {
+	color: white;
+	background-color: #E58686;
+	width: 100%;
+	float:right;
+	height: 91px;
+	border-radius: 0 0 10px 0;
+}
+
+.single-game-section {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	border-left: 1px solid white;
+}
+
+.single-game-section:first-child {
+	border-left: 0px;
+}
+
+.team-block{
+	width: 100%;
+	height: 44px;
+	display: table;
+}
+
+.team-block:first-child .team-colors {
+	border-radius: 10px 0 0 0;
+}
+
+.team-block:last-child {
+	border-top: 1px solid #CACCCD;
+}
+
+.team-block:last-child .team-colors {
+	border-radius: 0 0 0 10px;
+}
+
+.team-block-border {
+
+}
+
+.team-text{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.team-colors {
+	width: 25%;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+}
+
+.team-inner {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-left: none;
+	height: 45px;
+}
+
+.team-name {
+	width: 80%;
+	padding: 0 0 0 10px;
+}
+
+.team-score {
+	text-align: center;
+	padding-right: 15px;
+	width: 20%;
+}
+
+.single-notification > .notification-has-image {
+	height: 90px;
+}
+
+.single-notification > .notification-has-image p{
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: lato;
+}
+
+.single-notification .notification-image{
+	max-width: 66px;
+  max-height: 61px;
+}
+
+.diamondWidget {
+	height: 100%;
+	position: relative;
+	display: flex;
+}
+
+.progress {
+	width: 80%;
+	height: 18vw;
+	float: left;
+	position: relative;
+}
+
+.prize-ball {
+	width: 20%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	align-items: stretch;
+	height: 100%;
+	background-color: #F1C40F;
+	border-radius: 100%;
+	color: white;
+	border: 3px solid white;
+	float:left;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.prize-ball h4 {
+	margin: 0;
+}
+
+.empty-bar {
+	position: absolute;
+	top: 25%;
+	background-color: white;
+	border-radius: 8px 0 0 8px;
+	height: 55%;
+	width: 103%;
+	border: 3px solid white;
+}
+
+.counter-bar {
+	border-radius: 8px 0 0 8px;
+	background-color: #F1C40F;
+	height: 100%;
+}
+
+.counter-text {
+	padding: 3px 0 0 0;
+	font-weight: bold;
+}
+
+.game-time {
+	width: 60%;
+	float: left;
+	text-align: left!important;
+}
+
+.game-tv {
+	width: 40%;
+	float: right;
+	text-align: right!important;
+}

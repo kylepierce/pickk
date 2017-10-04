@@ -1,8 +1,9 @@
 Template.singleGame.onCreated(function() {
+	var subs = new SubsManager();
+	subs.clear();
 	var t = Template.instance();
-	console.log(t);
-	if (t.data.gamePlayed === 0){
-		var gameId = t.data.game[0]._id
+	if (t.data.game.eventStatus.eventStatusId === 2 && t.data.gamePlayed === 0){
+		var gameId = t.data.game._id
 		Router.go('joinGame.show', {_id: gameId});
 	}
 	var userId = Meteor.userId();
@@ -16,56 +17,19 @@ Template.singleGame.onCreated(function() {
 
 	var self = this
 	self.getPeriod = function(){ return game.period }
-	self.getCommercial = function(){ return game.commercial }
-
+	// self.getCommercial = function(){ return game.commercial }
 	self.autorun(function() {
 		self.subscribe('joinGameCount', game._id, userId, self.getPeriod())
-		self.subscribe('userQuestions', game._id, self.getCommercial())
 	});
 });
 
 Template.singleGame.rendered = function () {
-  $('#notification-center').slick({
-    arrows: false,
-    infinite: false,
-    draggable: true,
-    centerMode: true,
-    centerPadding: '2.0%'
-  });
   if(Meteor.isCordova){
     intercom.setLauncherVisibility('VISABLE');
   }
 };
 
 Template.singleGame.helpers({
-  game: function(){
-    return Games.findOne()
-  },
-	anyQuestions: function(){
-		var currentUserId = Meteor.userId();
-		var game = Games.findOne();
-		var gamePlayed = GamePlayed.findOne();
-		var gameType = gamePlayed.type
-		var selector = {
-			active: true,
-			usersAnswered: {$nin: [currentUserId]}
-		}
-		if (gameType === "live" && game.commercial === false){
-			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector['dateCreated'] = {$gt: finish}
-		} else if (gameType === "atbat" && game.commercial === false){
-			var finish = Chronos.moment().subtract(gamePlayed.timeLimit, "seconds").toDate();
-			selector['dateCreated'] = {$gt: finish}
-		}
-		var count = Questions.find(selector).count()
-		if (count > 0){
-			$('#waiting-for-play').hide();
-			return true
-		} else {
-			$('#waiting-for-play').show();
-			return false
-		}
-	},
   scoreMessage: function() {
     var userId = Meteor.userId();
     var $game = Router.current().params._id
@@ -122,258 +86,12 @@ Template.singleGame.events({
     });
     Router.go('/leaderboard/'+ gameId + "?period=" + period)
   },
-  'click [data-action=previous-answers]': function(event, template){
-    var $game = Router.current().params._id
-    var userId = Meteor.userId()
-    analytics.track("waiting-history", {
-      userId: userId,
-      gameId: $game,
-    });
-    Router.go('/history/' + $game )
-  },
-  'click [data-action=play-selected]': function (e, t) {
-    $('.play-selected').removeClass('play-selected')
-    $(e.currentTarget).addClass('play-selected')
-
-    var count = _.keys(this.q.options).length
-    var selectedNumber = this.o.number
-    var squareOptions = count === 2 || count === 4 || count === 6
-    if (selectedNumber % 2 !== 0 && squareOptions){
-      var selectedIsOdd = true
-      var $selected = $(e.currentTarget).next()
-    } else {
-      var selectedIsOdd = false
-      var $selected = $(e.currentTarget)
-    }
-
-    parms = {
-      insertedTemplate: Template.wagers,
-      containerId: "wagers",
-      event: e,
-      selected: $selected,
-      template: t,
-      dataPath: this,
-    }
-
-    displayOptions( parms )
-  },
-  'click [data-action=wager-selected]': function (e, t) {
-    $('.wager-selected').removeClass('wager-selected')
-    $(e.currentTarget).addClass('wager-selected')
-
-    Session.set('lastWager', this.w);
-    var $selected = $('.wagers')
-
-    parms = {
-      insertedTemplate: Template.submitButton,
-      containerId: "submit",
-      event: e,
-      selected: $selected,
-      template: t,
-      dataPath: this,
-    }
-    displayOptions( parms )
-  }
 });
 
-Template.liveGame.helpers({
-  props: function () {
-    var currentUserId = Meteor.userId()
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-  prop: function () {
-    var currentUserId = Meteor.userId()
-    var selector = {
-      type: "prop",
-      active: true,
-      usersAnswered: {$nin: [currentUserId]}
-    }
-    var sort = {sort: {dateCreated: -1}}
-    var q = Questions.find(selector, sort).fetch();
-    return q
-  },
-
-  commericalQuestions: function () {
-		var currentUserId = Meteor.userId();
-		var game = Games.findOne({});
-    var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
-		if(game && game.commercial === true){
-			var selector = {
-				active: true,
-				commercial: true,
-				usersAnswered: {$nin: [currentUserId]}
-			}
-			var sort = {sort: {dateCreated: 1}, limit: 1}
-			return Questions.find(selector, sort).fetch();
+Template.gameDisplay.helpers({
+	status: function (eventStatusNumber){
+		if (this.game.eventStatus.eventStatusId === eventStatusNumber){
+			return true
 		}
-  },
-  questions: function () {
-    var currentUserId = Meteor.userId()
-    var gamePlayed = GamePlayed.findOne({});
-    var timeLimit = gamePlayed.timeLimit
-    var gameType = gamePlayed.type
-    if (gameType === "live"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      var selector = {
-        active: true,
-        commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
-      }
-      var sort = {sort: {dateCreated: 1}, limit: 1}
-      return Questions.find(selector, sort).fetch();
-    } else if (gameType === "atbat"){
-      var finish = Chronos.moment().subtract(timeLimit, "seconds").toDate();
-      var selector = {
-        active: true,
-        commercial: false,
-        dateCreated: {$gt: finish},
-        usersAnswered: {$nin: [currentUserId]},
-      }
-      var sort = {sort: {dateCreated: 1}, limit: 1}
-      return Questions.find(selector, sort).fetch();
-    }
-  },
+	}
 });
-
-Template.commericalQuestion.helpers({
-  freePickk: function (q) {
-    if(q.type === "freePickk"){
-      return true
-    }
-  },
-  propQuestion: function (q) {
-    if (q.type === "prop"){
-      return true
-    }
-  },
-  driveQuestion: function (q) {
-    if (q.type === "drive"){
-      return true
-    }
-  }
-});
-
-Template.commericalQuestion.events({
-  'click [data-action=pickk]': function (e, t) {
-    $('.play-selected').removeClass('play-selected')
-    $(e.currentTarget).addClass('play-selected')
-
-    var count = _.keys(this.q.options).length
-    var selectedNumber = this.o.number
-    var squareOptions = count === 2
-
-    if (selectedNumber % 2 !== 0 && squareOptions){
-      var selectedIsOdd = true
-      var $selected = $(e.currentTarget).next()
-    } else {
-      var selectedIsOdd = false
-      var $selected = $(e.currentTarget)
-    }
-
-    parms = {
-      insertedTemplate: Template.submitButton,
-      containerId: "submit",
-      event: e,
-      selected: $selected,
-      template: t,
-      dataPath: this,
-    }
-
-    displayOptions( parms )
-  }
-});
-
-Template.singleQuestion.helpers({
-  propQuestions: function (q) {
-    if(q.type === "prop"){
-      return true
-    }
-  },
-  liveQuestion: function (q) {
-		var list = ["live", "play", "atBat", "pitch"]
-		var included = list.indexOf(q.type)
-    if(q && included > 0){
-      return true
-    }
-  },
-  dailyPickk: function (q) {
-    if(q.type === "prediction"){
-      return true
-    }
-  }
-});
-
-Template.eventQuestion.helpers({
-  liveQuestion: function (q) {
-		var list = ["live", "play", "atBat", "pitch"]
-		var included = list.indexOf(q.type)
-    if(q && included > 0){
-      return true
-    }
-  },
-  options: function (q) {
-    var imported = q
-    var data = this.q.options
-    var keys = _.keys(data)
-    var values = _.values(data)
-    var optionsArray = []
-
-    // [{number: option1}, {title: Run}, {multiplier: 2.43}]
-
-    for (var i = 0; i < keys.length; i++) {
-      var obj = values[i]
-      var number = keys[i]
-      obj["option"] = number
-      optionsArray.push(obj)
-    }
-
-    return optionsArray
-  }
-});
-
-Template.option.helpers({
-  hasIcon: function (q) {
-    if (q.icons){
-      return true
-    }
-  },
-  binary: function(){
-    var count = _.keys(this.q.options).length
-    if (count === 2 || count === 4 || count === 6){
-      return "square-options"
-    }
-  }
-});
-
-displayOptions = function ( o ) {
-  // The select item dom and data
-  var $selected = o.selected
-  var selectedObj = o.dataPath
-  var templateName = o.insertedTemplate
-
-  var addOptions = function ( id, data ){
-    var options = "<div id='" + id + "'></div>"
-    $selected.after(options);
-    var container = $('#' + id + '')[0]
-    Blaze.renderWithData(templateName, data, container)
-  }
-
-  var container = $('#' + o.containerId + '')[0]
-  if ( container ){
-    container.remove();
-    addOptions( o.containerId, selectedObj )
-  } else {
-    addOptions( o.containerId, selectedObj )
-  }
-}

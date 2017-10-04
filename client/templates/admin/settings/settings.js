@@ -21,25 +21,50 @@ Template.adminSettings.events({
     var style = 1
     var maxStyle = 3
 
-    function multiplier(m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
+    function multiplier(titles, m1a, m1b, m2a, m2b, m3a, m3b, m4a, m4b, m5a, m5b, m6a, m6b){
       var options = {
-        option1: {low: m1a, high: m1b},
-        option2: {low: m2a, high: m2b},
-        option3: {low: m3a, high: m3b},
-        option4: {low: m4a, high: m4b},
-        option5: {low: m5a, high: m5b},
-        option6: {low: m6a, high: m6b},
+        option1: {title: titles[0], low: m1a, high: m1b},
+        option2: {title: titles[1], low: m2a, high: m2b},
+        option3: {title: titles[2], low: m3a, high: m3b},
+        option4: {title: titles[3], low: m4a, high: m4b},
+        option5: {title: titles[4], low: m5a, high: m5b},
+        option6: {title: titles[5], low: m6a, high: m6b},
       }
       return options
     }
 
-    var multipliers = function (down, yards, area, style) {
+    var multipliers = function (down, yards, area, style, titles) {
+      if (down === 1) {
+        var titles = ["Run", "Pass", "Interception", "Pick Six", "Fumble", "Touchdown"]
+      } else if (down === 2) {
+        var titles = ["Run", "Pass", "Turnover", "Touchdown"]
+      } else if (down === 3 && area === 6) {
+        var titles = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+      } else if (down === 3) {
+        var titles = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+      } else if (down === 4 && style === 3 && area === 6) {
+        var titles = ["Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"]
+      } else if (down === 4 && style === 3) {
+        var titles = ["Unable to Covert First Down", "Convert to First Down", "Pick Six", "Interception", "Fumble", "Touchdown"]
+      } else if (down === 4 && area >= 4 ) {
+        var titles = ["Kick Good!", "Run", "Pass", "Fumble", "Missed Kick", "Blocked Kick"]
+      } else if (down === 4) {
+        var titles = ["Fair Catch/No Return", "Neg to 20 Yard Return", "21-40 Yard Return", "Blocked Punt", "Fumble", "Touchdown"]
+      } else if (down === 5) {
+        var titles = ["Kick Good!", "Fake Kick No Score", "Blocked Kick", "Missed Kick", "Two Point Good", "Two Point No Good"]
+      } else if (down === 6 && style === 3)  {
+        var titles = ["Touchback/No Return", "Neg to 25 Yard Return",  "26+ Return", "Failed Onside", "Successful Onside", "Touchdown"]
+      } else if (down === 6)  {
+        var titles = ["Touchback/No Return", "Neg to 25 Yard Return",  "26-45 Return", "46+", "Fumble", "Touchdown"]
+      }
+
       if (down === 1) {
         // Inches
         if(yards == 1){
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               3.2, 4.81,
@@ -49,6 +74,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -58,6 +84,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -67,6 +94,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -76,6 +104,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               2.2, 3.81,
@@ -90,6 +119,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               3.2, 4.81,
@@ -99,6 +129,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -108,6 +139,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -117,6 +149,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -126,6 +159,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               2.2, 3.81,
@@ -140,6 +174,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               3.2, 4.81,
@@ -149,6 +184,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -158,6 +194,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -167,6 +204,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -176,6 +214,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               2.2, 3.81,
@@ -190,6 +229,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
              1.5, 1.7,
              1.6, 2.42,
              3.2, 4.81,
@@ -199,6 +239,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -208,6 +249,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -217,6 +259,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
              1.6, 1.92,
              2.2, 4.81,
@@ -226,6 +269,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
              1.6, 2.42,
              2.2, 3.81,
@@ -240,6 +284,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               3.2, 4.81,
@@ -249,6 +294,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -258,6 +304,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -267,6 +314,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -276,6 +324,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               2.2, 3.81,
@@ -290,6 +339,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               3.2, 4.81,
@@ -299,6 +349,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               2.2, 4.81,
@@ -308,6 +359,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -317,6 +369,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               2.2, 4.81,
@@ -326,6 +379,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               2.2, 3.81,
@@ -343,6 +397,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               4.2, 6.81,
@@ -350,6 +405,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -357,6 +413,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -364,6 +421,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -371,6 +429,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -383,6 +442,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               4.2, 6.81,
@@ -390,6 +450,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -397,6 +458,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -404,6 +466,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -411,6 +474,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -423,6 +487,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               4.2, 6.81,
@@ -430,6 +495,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -437,6 +503,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -444,6 +511,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -451,6 +519,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -463,6 +532,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
              1.5, 1.7,
              1.6, 2.42,
              4.2, 6.81,
@@ -470,6 +540,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -477,6 +548,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -484,6 +556,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -491,6 +564,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -503,6 +577,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               4.2, 6.81,
@@ -510,6 +585,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -517,6 +593,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -524,6 +601,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -531,6 +609,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -543,6 +622,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 2.42,
               4.2, 6.81,
@@ -550,6 +630,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.02,
               4.2, 6.81,
@@ -557,6 +638,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -564,6 +646,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.5, 1.7,
               1.6, 1.92,
               4.2, 6.81,
@@ -571,6 +654,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 1.9,
               1.6, 2.42,
               4.2, 6.81,
@@ -581,6 +665,7 @@ Template.adminSettings.events({
       // "Run", "Pass", "Pick Six", "Interception", "Fumble", "Touchdown"
       else if(down == 3 && area == 6){
         return multiplier(
+          titles,
           1.7, 2.6,
           1.8, 2.82,
           (5.9 * 2), (8.61 * 2),
@@ -597,6 +682,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
@@ -606,6 +692,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -615,6 +702,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -624,6 +712,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -633,6 +722,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
             1.7, 2.6,
             1.8, 2.82,
             (5.9 * 2), (8.61 * 2),
@@ -647,6 +737,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.3, 3.82,
               (3.9 * 2), (6.61 * 2),
@@ -656,6 +747,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -665,6 +757,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -674,6 +767,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -683,6 +777,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 2.82,
               (7.9 * 2), (10.61 * 2),
@@ -697,6 +792,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (5.9 * 2), (6.61 * 2),
@@ -706,6 +802,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               2.3, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -715,6 +812,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               2.3, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -724,6 +822,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -733,6 +832,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 2.82,
               (7.9 * 2), (10.61 * 2),
@@ -747,6 +847,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
@@ -756,6 +857,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -765,6 +867,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -774,6 +877,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -783,6 +887,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 2.82,
               (7.9 * 2), (10.61 * 2),
@@ -797,6 +902,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
@@ -806,6 +912,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               2.2, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -815,6 +922,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               2.2, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -824,6 +932,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -833,6 +942,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 2.82,
               (7.9 * 2), (10.61 * 2),
@@ -847,6 +957,7 @@ Template.adminSettings.events({
           if(area == 1){
             // Danger zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (5.9 * 2), (8.61 * 2),
@@ -856,6 +967,7 @@ Template.adminSettings.events({
           } else if (area == 2){
             // Most of the field 11 - 80 yard
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -865,6 +977,7 @@ Template.adminSettings.events({
           } else if (area == 3 || area == 4){
             // Mot of the field
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (4.2 * 2), (7.81 * 2),
@@ -874,6 +987,7 @@ Template.adminSettings.events({
           } else if (area == 5){
             // Red Zone
             return multiplier(
+              titles,
               1.7, 2.6,
               2.9, 3.82,
               (6.9 * 2), (9.61 * 2),
@@ -883,6 +997,7 @@ Template.adminSettings.events({
           } else if (area == 6) {
             // Goal Line
             return multiplier(
+              titles,
               1.7, 2.6,
               1.9, 2.82,
               (7.9 * 2), (10.61 * 2),
@@ -895,6 +1010,7 @@ Template.adminSettings.events({
       // Fourth Down
       } else if (down == 4 && area >= 4) {
         return multiplier(
+          titles,
           1.7, 1.7,
           2.4, 3.42,
           2.2, 3.81,
@@ -903,6 +1019,7 @@ Template.adminSettings.events({
           4.2, 8.61)
       } else if (down == 4 && area < 4) {
         return multiplier(
+          titles,
           1.7, 2.1,
           1.7, 2.32,
           3.2, 4.81,
@@ -911,6 +1028,7 @@ Template.adminSettings.events({
           15.9, 21.61)
       } else if (down === 4 && style === 3) {
         return multiplier(
+          titles,
           1.7, 2.1,
           2.3, 3.32,
           3.2, 4.81,
@@ -922,6 +1040,7 @@ Template.adminSettings.events({
       // Point After
       else if (down == 5){
         return multiplier(
+          titles,
           1.7, 1.7,
           4.4, 6.42,
           6.2, 8.81,
@@ -935,6 +1054,7 @@ Template.adminSettings.events({
         if(style <= 2){
 
           return multiplier(
+            titles,
             1.5, 1.7,
             2.4, 3.42,
             5.2, 9.81,
@@ -949,6 +1069,7 @@ Template.adminSettings.events({
           // "Successful Onside"
           // "Touchdown"
           return multiplier(
+            titles,
             2.5, 2.7,
             2.4, 3.42,
             3.2, 4.81,

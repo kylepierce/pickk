@@ -19,3 +19,16 @@ Meteor.publish('questionsByGameId', function(gameId, number) {
     Answers.find(answerSelector, sort)
   ]
 });
+
+Meteor.publish('questionHistory', function(questionId) {
+  check(questionId, String);
+  this.unblock()
+  var userId = this.userId;
+  var selector = {_id: questionId}
+  var answerSelector = {userId: userId, questionId: questionId}
+  return [
+    Questions.find(selector),
+    Answers.find(answerSelector),
+    QuestionReport.find(answerSelector)
+  ]
+});

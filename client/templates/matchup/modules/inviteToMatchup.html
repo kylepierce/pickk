@@ -14,51 +14,57 @@
 
   {{#ionView }}
     {{#ionContent}}
-      <div class="container hundred-bottom">
-        {{> inviteToMatchupBox}}
-      </div>
+      {{> inviteToMatchupBox}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="inviteToMatchupBox">
   <div class="search-bar-fix">
-    {{> EasySearch.Input index=UserListIndex placeholder="Search..." }}
+    {{> EasySearch.Input index=UserListIndex attributes=inputAttributes }}
   </div>
-  {{#EasySearch.IfInputEmpty index=UserListIndex}}
-    {{#ionList}}
-      {{#each follower in followers}}
-        {{#ionItem buttonRight=true avatar=true}}
-          <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
-            {{> userAvatar userId=follower}}
-            {{> singleUsername userId= follower}}
-          </a>
-          {{> inviteMatchupButton _id=follower }}
-        {{/ionItem}}
-      {{/each}}
-    {{/ionList}}
-  {{else}}
-    <div class="list-group">
-      {{#ionList}}
-        {{#EasySearch.Each index=UserListIndex}}
-          {{#ionItem buttonRight=true avatar=true}}
-            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
-              {{> userAvatar user=. alreadySubscribed=true}}
-              {{profile.username}}
-            </a>
-            {{> inviteMatchupButton _id=__originalId user=profile.username}}
-          {{/ionItem}}
-        {{/EasySearch.Each}}
-      {{/ionList}}
-    </div>
-  {{/EasySearch.IfInputEmpty}}
 
-  {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
-  <div class="item invite-item item-button-right">
-    <h2>Invite New Friends</h2>
-    <button data-action="textInvite" class="button button-balanced">Invite</button>
+  <div class="container hundred-bottom">
+    {{#EasySearch.IfInputEmpty index=UserListIndex}}
+      {{#ionList}}
+        {{#each follower in followers}}
+          {{#ionItem buttonRight=true avatar=true}}
+            <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
+              {{> userAvatar userId=follower}}
+              {{> singleUsername userId= follower}}
+            </a>
+            {{> inviteMatchupButton _id=follower }}
+          {{/ionItem}}
+        {{/each}}
+      {{/ionList}}
+    {{else}}
+      <div class="list-group">
+        {{#ionList}}
+          {{#EasySearch.Each index=UserListIndex}}
+            {{#ionItem buttonRight=true avatar=true}}
+              <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
+                {{> userAvatar user=. alreadySubscribed=true}}
+                {{profile.username}}
+              </a>
+              {{> inviteMatchupButton _id=__originalId user=profile.username}}
+            {{/ionItem}}
+          {{/EasySearch.Each}}
+        {{/ionList}}
+      </div>
+    {{/EasySearch.IfInputEmpty}}
+
+    {{#EasySearch.IfNoResults index=UserListIndex logic="OR" }}
+    <div class="item invite-item item-button-right">
+      <h2>Invite New Friends</h2>
+      <button data-action="textInvite" class="button button-balanced">Invite</button>
+    </div>
+    {{/EasySearch.IfNoResults}}
+
+    <div class="move-to-next-step-without-completing-goal ten-spacing" data-action="finishMatchup">
+      I Will Invite Friends Later
+    </div>
+
   </div>
-  {{/EasySearch.IfNoResults}}
 </template>
 
 <template name="inviteMatchupButton">

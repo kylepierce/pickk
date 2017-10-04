@@ -14,31 +14,31 @@
   {{#ionView}}
     {{#ionContent}}
       {{#ionList}}
-        {{> spinLoader}}
+        <!-- {{> spinLoader}} -->
 
-        {{#if Template.subscriptionsReady}}
+        <!-- {{#if Template.subscriptionsReady}}
           <div class="loading-wrapper">
-            <ol type="1" id="leaderboard">
-              {{#each player in players}}
-                {{> singlePlayerWeek player=player}}
-              {{/each}}
-            </ol>
+
           </div>
-        {{/if}}
+        {{/if}} -->
+        <ol type="1" id="leaderboard">
+          {{#each player in players}}
+            {{> singlePlayerWeek player=player}}
+          {{/each}}
+        </ol>
       {{/ionList}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name="singlePlayerWeek">
-      <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
-        {{> userAvatar userId=player._id}}
-        <li class="list-font" value={{player.rank}}>
-          <span class="username">{{username player._id}}</span>
-          <span class="score">
-              {{{player.diamonds}}}
-          </span>
-        </li>
-      </div>
-
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+    {{> userAvatar userId=player._id}}
+    <li class="list-font" value={{player.rank}}>
+      <span class="username">{{username player._id}}</span>
+      <span class="score">
+          {{{player.diamonds}}}
+      </span>
+    </li>
+  </div>
 </template>

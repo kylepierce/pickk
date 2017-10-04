@@ -1,8 +1,106 @@
-.matchup-card {
-  margin: 0;
-  padding: 10px 15px 20px;
+.card-list .matchup-card-header {
+  border-radius: 0;
   background-color: white;
-  overflow: auto;
+  color: black;
+}
+
+.card-list .matchup-card-body {
+  display: none!important;
+}
+
+.matchup-card-header {
+  font-family: "Lato";
+  font-size: 1rem;
+  color: white;
+  background-color: #4F656F;
+  display: flex;
+  width: 100%;
+  padding: 10px 10px 10px 20px;
+  border-radius: 5px 5px 0 0;
+}
+
+.history-inprogress .matchup-card-header {
+  border-radius: 0 5px 0 0;
+  padding: 10px;
+}
+
+.detail-container {
+  width: 90%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.matchup-card-header .game {
+  width: 100%;
+  font-family: "Lato";
+  font-weight: 900;
+  float: left;
+  font-size: 1.2rem;
+}
+
+.matchup-card-header .commissioner {
+  display: flex;
+  align-items: center;
+}
+
+.matchup-card-header .arrow {
+  font-size: 2rem;
+  width: 10%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#single-matchup {
+  display: grid;
+}
+
+#single-matchup .matchup-card-header .arrow {
+  display: none;
+}
+
+.card-detail-section {
+  padding: 10px 0;
+  border-radius: 0 0 5px 5px;
+  background-color: white;
+  display: flex;
+}
+
+.history-inprogress .card-detail-section {
+  border-radius: 0 10px 10px 0;
+}
+
+.card-detail-section .section {
+  width: 25%;
+  float: left;
+  border-right: 1px solid #CACCCD;
+}
+
+.card-detail-section .section:last-child {
+  border: none!important;
+}
+
+.card-detail-section .section .icon {
+  width: 100%;
+  clear: both;
+  float: left;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.card-detail-section .section div {
+  width: 100%;
+  float: left;
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .match-links {
@@ -14,4 +112,60 @@
 #matchup .item-content{
   width: 100%;
   white-space: initial;
+}
+
+.game-display {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: wrap;
+  align-items: center;
+}
+
+.game-display label {
+  padding: 10px;
+}
+
+.game-display input[type="checkbox"] {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.date-card {
+  background-color: #4F656F!important;
+  color: white!important;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+.date-card .arrow {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+#createMatchup .wizard-next-button {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+}
+
+.date-select-single {
+  width: 90%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  margin: 0;
+}
+
+.date-select-single .spelled {
+  font-size: 1.2rem;
+}
+
+.date-select-single .count {
+  font-size: 1rem;
+  font-weight: 400;
 }

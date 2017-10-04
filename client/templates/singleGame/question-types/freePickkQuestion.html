@@ -1,12 +1,22 @@
 <template name="freePickkQuestion">
-	<div class="animated fast slideInLeft">
-		<div class="question larger-card center">
+	<div class="single-question animated fast slideInLeft">
+		<div class="question larger-card center" style="{{background}}">
 			<h4>Free Pickk: {{q.que}}</h4>
 		</div>
 		<div id="binaryOptions" class="ten-spacing">
 			{{#each o in options q}}
 				{{> binaryOption o=o q=q t=t w=500}}
 			{{/each}}
+			{{> submitButton}}
+		</div>
+	</div>
+</template>
+
+<template name="binaryOption">
+	<div data-action="free-pickk" class="square-options option col-md-50">
+		<div class="option-inner">
+			<span class="option-title">{{o.title}}</span>
+			<span class="multiplier">+ {{w}}</span>
 		</div>
 	</div>
 </template>

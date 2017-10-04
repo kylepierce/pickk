@@ -27,7 +27,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Unauthorized");
 		}
 
-		Games.update({"_id": gameId}, {$set: {'commercial': toggle}});
+		Games.update({_id: gameId}, {$set: {'commercial': toggle}});
 	},
 
 	// Create options
@@ -310,6 +310,7 @@ Meteor.methods({
 				scheduled: timeCreated,
 				type: "prediction",
 				name: q.gameName,
+				period: 0,
 				users: []
 			});
 		} else {

@@ -6,103 +6,25 @@
 
   {{#ionView}}
     {{#ionContent}}
-			{{> singleGameInfo game=game}}
-
-			<div id="notification-center" class="ten-spacing">
-				<div class="single-notification">
-					{{> singleGameCard game=game}}
-				</div>
-			</div>
-
-			<div class="container ten-spacing">
-				{{> waitingForNextPlay}}
-				{{#if anyQuestions}}
-					{{> liveGame game=game}}
-				{{/if}}
-				<!-- {{> waitingForNextPlay}} -->
-					<!-- {{> inviteToPlay}} -->
-			</div>
+			{{> singleGameInfo game=game border=false}}
+			{{> notificationCenter game=game}}
+			{{> gameDisplay}}
+			<!-- {{> inviteToPlay}} -->
 			{{ scoreMessage}}
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="liveGame">
-		<!-- {{#if props}}
-			{{#each question in prop}}
-				{{> singleQuestion q=question}}
-			{{/each}}
-		{{/if}} -->
-
-		{{#if game.commercial}}
-			{{#each question in commericalQuestions}}
-				{{> commericalQuestion q=question}}
-			{{/each}}
-		{{else}}
-			{{#each question in questions}}
-				{{> singleQuestion q=question}}
-			{{/each}}
+<template name="gameDisplay">
+	<div class="container ten-spacing">
+		{{#if status 1}}
+			{{> preGame}}
 		{{/if}}
-</template>
-
-<template name="commericalQuestion">
-	{{#if propQuestion q}}
-		{{> eventQuestion q=q t="prop"}}
-	{{/if}}
-	{{#if freePickk q}}
-		{{> freePickkQuestion q=q t="free-pickk"}}
-	{{/if}}
-	{{#if driveQuestion q}}
-		{{> eventQuestion q=q t="drive"}}
-	{{/if}}
-</template>
-
-<template name="singleQuestion">
-	{{#if propQuestions q}}
-		{{> eventQuestion q=q t="prop"}}
-	{{/if}}
-	{{#if liveQuestion q}}
-		{{> eventQuestion q=q t=q.type}}
-	{{/if}}
-	{{#if dailyPickk q}}
-		{{> eventQuestion q=q t="prediction"}}
-	{{/if}}
-</template>
-
-<template name="eventQuestion">
-	<div class="single-question animated fast slideInLeft onboarding-extra-space ">
-		<div class="question" style="{{q.background}}">
-			<div class="display-question center">
-				<span class="live-question-text center-text">{{q.que}}</span>
-				{{#if liveQuestion q}}
-					{{>countDownClock date=q.dateCreated}}
-				{{/if}}
-			</div>
-		</div>
-		<div class="binaryOptions">
-		{{#each o in options q}}
-			{{> option o=o q=q t=t}}
-		{{/each}}
-		</div>
+		{{#if status 2}}
+			{{> activeGame}}
+		{{/if}}
+		{{#if status 4}}
+			{{> postGame}}
+		{{/if}}
 	</div>
-</template>
-
-<template name="binaryOption">
-	<div data-action="pickk" class="option col-md-50">
-		{{o.title}}
-	</div>
-</template>
-
-<template name="option">
-	<li class="option {{binary}}" data-action="play-selected">
-		<div class="option-inner">
-			{{#if hasIcon q}}
-				<span class="icon-container">
-				<img class="baseball-call-icon" src="/baseball-calls/{{o.title}}.svg">
-				</span>
-			{{/if}}
-			<span class="option-title">{{o.title}}</span>
-			<span class="multiplier">x {{o.multiplier}}</span>
-		</div>
-	</li>
 </template>

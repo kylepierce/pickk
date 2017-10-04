@@ -17,7 +17,7 @@
       <!-- https://github.com/meteoric/meteor-ionic/issues/347 -->
         {{> ionNavBar name="stub"}}
           {{#ionNavView transition="backward"}}
-            {{> yield "header"}} 
+            {{> yield "header"}}
           {{/ionNavView}}
 
           {{> yield}}
@@ -38,11 +38,11 @@
     </button>
   {{/contentFor}}
 
-  {{#contentFor "headerButtonRight"}}
+  <!-- {{#contentFor "headerButtonRight"}}
     <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
       {{> ionIcon icon="ios-chatboxes"}}
     </button>
-  {{/contentFor}}
+  {{/contentFor}} -->
 </template>
 
 <template name="sideMenuRight">

@@ -1,0 +1,20 @@
+<template name="leagueAssociation">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">This League Plays...</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container">
+        {{#autoForm collection="Groups" type="update" id="groupTeam"  doc=groupData}}
+          {{> afFieldInput name="association" template="ionic2"}}
+          <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;" value="Add Sports">
+        {{/autoForm}}
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

@@ -49,9 +49,10 @@ Template.matchupFilter.helpers({
       var item = {name: option, featured: lower}
       if(data === {} && option === "True") {
         item.checked = true
-      } else if(data.featured === lower){
-        item.checked = true
       }
+      // else if(data.featured === lower){
+      //   item.checked = true
+      // }
       list.push(item)
 		});
 

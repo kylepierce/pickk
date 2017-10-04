@@ -82,12 +82,19 @@ Meteor.methods({
 			a.wager = 5
 			// if unique add them to the list.
 			list.push(a.userId)
+			var game = Games.findOne({_id: a.gameId});
+			var question = Questions.findOne({_id: a.questionId});
+			var message = 'You Pickked "' + question.options[answered].title + '" for "' + question.que + '" correctly!';
+
 			var amount = parseInt(a.wager * a.multiplier);
 			var notifyObj = {
 				type: "diamonds",
+				source: "Daily Pickks",
 				userId: a.userId,
 				gameId: a.gameId,
+				gameName: game.name,
 				questionId: a.questionId,
+				message: message,
 				value: amount,
 			}
 

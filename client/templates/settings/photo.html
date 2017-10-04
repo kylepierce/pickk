@@ -1,0 +1,34 @@
+<template name="userPhoto">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">
+      Upload Profile Photo
+    </h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="photo-upload-container card-container">
+        <span>
+          {{> userAvatar size="medium" user=this.user}}
+          <i class="fa fa-spinner fa-spin loading" style="display: none;"></i>
+        </span>
+        <h3 class="center">{{this.user.profile.username}}</h3>
+        <input type="file" id="userAvatar" name="avatar" class="hidden">
+        <label for="userAvatar" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">
+            Upload Photo
+        </label>
+      </div>
+      <div class="move-to-next-step-without-completing-goal" data-action="selectTeam">
+        I Will Upload A Photo Later
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

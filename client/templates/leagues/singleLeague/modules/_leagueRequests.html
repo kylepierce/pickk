@@ -1,0 +1,25 @@
+<template name="_leagueRequests">
+	{{#ionModal class="white-text-header" title="Accept Requests"}}
+		{{#ionList}}
+			{{#if requests}}
+			{{#each user in requestList}}
+				{{#ionItem buttonRight=true avatar=true}}
+					{{> userAvatar userId=_id}}
+					{{profile.username}}
+					<a class="button" data-action="accept">
+		        {{> ionIcon icon="plus"}}
+		      </a>
+
+		      <a style="margin-right: 50px;" data-action="delete" class="button">
+		        {{> ionIcon icon="ios-close"}}
+		      </a>
+				{{/ionItem}}
+			{{/each}}
+			{{else}}
+			<div class="no-notifications">
+				No League Membership Request
+			</div>
+			{{/if}}
+		{{/ionList}}
+  {{/ionModal}}
+</template>

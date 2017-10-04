@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.26'
+  version: '0.0.30',
 });
 
 App.accessRule('*');
@@ -65,9 +65,13 @@ App.setPreference('android-minSdkVersion', '15');
 App.appendToConfig(`
   <branch-config>
     <ios-team-id value="Q768H4GZH4" />
+    <host name="getpickk.com" scheme="https" />
     <host name="pickk.app.link" scheme="https" />
   </branch-config>
   <platform name="ios">
+    <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+      <string>Prizes require location information</string>
+    </config-file>
     <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
       <string>Add Photos</string>
     </config-file>
@@ -83,4 +87,9 @@ App.configurePlugin("branch-cordova-sdk", {
 });
 App.configurePlugin('phonegap-plugin-push', {
     SENDER_ID: 259263435947
+});
+
+App.configurePlugin('cordova-plugin-facebook4', {
+  APP_ID: '1399965486969249',
+  APP_NAME: 'Pickk'
 });

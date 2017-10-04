@@ -1,7 +1,7 @@
 Template.weekLeaderboard.onCreated(function() {
 	var filter = Router.current().params.query.filter
 	var query = Router.current().params.query
-	var groupId = Router.current().params.groupId
+	var leagueId = Router.current().params.leagueId
 	//If there is no new data
 	var data = Session.get('leaderboardFilter');
 	var noNewData = _.isEmpty(data);
@@ -9,10 +9,10 @@ Template.weekLeaderboard.onCreated(function() {
 	if(noNewData || !data) {
 		if(!query) {
 			var data = {}
-		} else if (groupId){
+		} else if (leagueId){
 			var data = {
-				filter: "group",
-				groupId: groupId
+				filter: "league",
+				leagueId: leagueId
 			}
 		} else {
 			var data = query
@@ -73,6 +73,7 @@ Template.weekLeaderboard.helpers({
 			});
 		return list
 		}
+
 		var data = Session.get('leaderboardFilter');
 		Fetcher.retrieve("weekLeaderboard", "loadWeekLeaderboard", data)
 		var leaderboard = Fetcher.get("weekLeaderboard");
@@ -95,10 +96,10 @@ Template.weekLeaderboard.helpers({
 				return leaderboardList(list)
 				break;
 
-			case "group":
-				var groupId = data.groupId
-				var group = Groups.findOne({_id: groupId});
-				var members = group.members
+			case "league":
+				var leagueId = data.leagueId
+				var league = Groups.findOne({_id: leagueId});
+				var members = league.members
 				var list = shortList(leaderboard, members)
 				return leaderboardList(list)
 				break;

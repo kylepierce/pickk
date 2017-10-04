@@ -1,0 +1,52 @@
+<template name="notificationCenter">
+	<div id="notification-center" class="animated fadeInLeft">
+		<div class="single-notification complete-game-card ">
+			{{> singleGameCard game=game}}
+		</div>
+		{{#if sport "NFL"}}
+			{{> footballInfoCard}}
+		{{/if}}
+		{{#if sport "MLB"}}
+			{{> baseballInfoCard}}
+		{{/if}}
+	</div>
+</template>
+
+<template name="footballInfoCard">
+	<div class="single-notification complete-game-card info-card">
+		<div class="football-inner">
+			<div class="down">
+				<span class="title">Down</span>
+				<span class="detail">{{down}} & {{distance}}</span>
+			</div>
+			<div class="vertical-divider"></div>
+			<div class="location">
+				<span class="title">Location</span>
+				<span class="detail">{{location}}</span>
+			</div>
+			<div class="vertical-divider"></div>
+			<div class="time">
+				<span class="title">{{quarter}}</span>
+				<span class="detail">{{time}}</span>
+			</div>
+		</div>
+		<div class="football-field">
+			{{#with away}}
+				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
+			{{/with}}
+			<div class="field">
+				<div class="distance-marker marker" style="margin-left: {{ballLocation}}"></div>
+				<div class="down-marker marker" style="margin-left: {{yardsToGo}};"></div>
+			</div>
+			{{#with home}}
+				<div class="endzone team-colors team-text" style="background-color: {{hexColor}}">{{shortCode}}</div>
+			{{/with}}
+		</div>
+	</div>
+</template>
+
+<template name="baseballInfoCard">
+	<div class="single-notification complete-game-card info-card">
+		<!-- <h1>Player Name</h1> -->
+	</div>
+</template>

@@ -1,4 +1,23 @@
 Template.singleGameAwards.helpers({
+  active: function(){
+    var $game = Router.current().params._id
+    var game = Games.findOne({_id: $game});
+    if (game && game.eventStatus.eventStatusId === 2){
+      return true
+    } else {
+      return false
+    }
+  },
+  gameAbbr: function(){
+    var $game = Router.current().params._id
+    var game = Games.findOne({_id: $game});
+    if (game) {
+      var team1 = game.home.abbreviation.toUpperCase()
+      var team2 = game.away.abbreviation.toUpperCase()
+      var output = team1 + " vs " + team2
+      return output
+    }
+  },
   usersAward: function (award) {
     var userId = Meteor.userId();
     var $game = Router.current().params._id

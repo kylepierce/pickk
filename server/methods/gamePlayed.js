@@ -54,18 +54,25 @@ Meteor.methods({
 			period: gamePlayed.period
 		}
 
-		var gameExists = GamePlayed.find(selector, {fields: {_id: 1, gameId: 1}}).fetch()
-
 		var data = {
-			coins: 25000,
+			dateCreated: new Date(),
 			timeLimit: 15,
 			diamonds: 0,
-			matches: []
+			matches: [],
+			coins: 25000
 		}
+
+		if (gamePlayed.period){
+			selector.period = gamePlayed.period
+		}
+
+		var gameExists = GamePlayed.find(selector, {fields: {_id: 1, gameId: 1}}).fetch()
 		var gamePlayed = _.extend (data, gamePlayed)
 
 		if(gameExists.length === 0){
 			GamePlayed.insert(gamePlayed);
+			var gameExists = GamePlayed.find(selector, {fields: {_id: 1, gameId: 1}}).fetch()
 		}
+	return gameExists
 	}
 });

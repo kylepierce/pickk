@@ -36,3 +36,19 @@ Meteor.publish('groupUsers', function(groupId) {
 
   return UserList.find(selector, fields);
 });
+
+Meteor.publish('leagueRequests', function(leagueId) {
+  check(leagueId, String);
+
+  var group = Groups.findOne(leagueId);
+  var selector = {_id: {$in: group.members}}
+  var fields = {
+    fields: {
+      'profile.username': 1,
+      'profile.avatar': 1,
+      '_id': 1
+    }
+  }
+
+  return UserList.find(selector, fields);
+});

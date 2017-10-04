@@ -7,62 +7,61 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{> spinLoader}}
+      {{> heroSection}}
 
-      {{#if Template.subscriptionsReady}}
-        <div class="loading-wrapper">
-          <div class="hero-section animated fadeInDown">
-            {{#each item in hero}}
-              {{> heroImage item=item}}
-            {{/each}}
-          </div>
-
-          <div class="container">
-            {{#if gamePrediction}}
-              <button class="button col-md-100 ten-spacing daily-pickk-cta game-container" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
-                <div class="col-md-25">
-                  <span class="numberNotification">
-                    {{dailyPickkCount}}
-                  </span>
-                </div>
-                <div class="col-md-50" style="float: left; margin-left: 20px">
-                  <i class="fa fa-diamond" style="margin-left: -38px; font-size: 1.3em; font-weight: 100;"></i>
-                  <span class="daily-pickk-text">
-                    Daily Pickks
-                  </span>
-                </div>
-              </button>
-            {{/if}}
-
-            {{#each game in listLiveGames}}
-              <div class="ten-spacing clear-fix game-container animated">
-                {{> entireGameCard game=game}}
-              </div>
-            {{/each}}
-
-            <div class="hundred-bottom">
-              {{#each game in listUpcomingGames}}
-                <div class="ten-spacing clear-fix game-container animated">
-                  {{> entireGameCard game=game}}
-                </div>
-              {{/each}}
-              <button class="ten-spacing button button-stable col col-100" data-action="viewAllGames">
-                <strong>View All Games</strong>
-              </button>
-            </div>
-          </div>
-        </div>
-      {{/if}}
+      <div class="container hundred-bottom">
+        {{> homeButtons}}
+        {{> dailyPickkButton}}
+        {{#if Template.subscriptionsReady}}
+          {{#each game in listGames}}
+            {{> entireGameCard game=game}}
+          {{/each}}
+        {{/if}}
+      </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
-<template name="heroImage">
-  <a href="{{item.url}}">
-    <div class="single-slide" style="background-image: url({{item.image}})">
-      <div class="slider-text">
-        {{item.text}}
+<template name="homeButtons">
+  <div id="button-section" class="animated fadeInRight">
+    <!-- These should be dynamicly created so it can changed quickly without submitting an update -->
+    <!-- {{#each button in buttons}}
+      <div class="button-card half" data-action="{{ref}}">
+        {{{icon}}}
+        <span class="text">{{title}}</span>
+        <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
       </div>
+    {{/each}} -->
+    <div class="button-card half" data-action="notification-button">
+      {{> pickkIcon size="small" icon="notifications"}}
+      <span class="text">Notifications</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
     </div>
-  </a>
+    <div class="button-card half" data-action="leagues-button">
+      {{> pickkIcon size="small" icon="league"}}
+      <span class="text">Leagues</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="matchups-button">
+      {{> pickkIcon size="small" icon="matchup"}}
+      <span class="text">Matchups</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+    <div class="button-card half" data-action="allGames">
+      {{> pickkIcon size="small" icon="games"}}
+      <span class="text">View Games</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  </div>
+</template>
+
+<template name="dailyPickkButton">
+  {{#if gamePrediction}}
+  <div class="animated fadeInRight">
+    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background" style="height: 45px; margin-bottom: 10px;" data-action="game-prediction">
+      <i class="fa fa-diamond" style="font-size: 1.3em; font-weight: 100;"></i>
+      <span class="daily-pickk-text">New Daily Pickks</span>
+    </button>
+  </div>
+  {{/if}}
 </template>

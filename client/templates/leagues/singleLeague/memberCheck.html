@@ -1,0 +1,29 @@
+<template name="memberCheck">
+	{{#if alreadyFull}}
+		alreadyFull
+	{{else}}
+		{{#if public}}
+			<button data-action="joinLeague" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Join</button>
+		{{/if}}
+
+		{{#if invite}}
+			{{> inviteOnly}}
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="inviteOnly">
+  {{#if invited}}
+    <button data-action="joinLeague" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Join</button>
+  {{else}}
+    {{> requestInvite}}
+  {{/if}}
+</template>
+
+<template name="requestInvite">
+  {{#if alreadyRequested}}
+    <button data-action="requestPending" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Request Pending</button>
+  {{else}}
+    <button data-action="requestInvite" id="join-toggle" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px;">Request Invite</button>
+  {{/if}}
+</template>

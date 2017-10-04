@@ -1,3 +1,15 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato";
+}
+
+.hidden {
+  display: none;
+}
+
+.float-left {
+  float: left;
+}
+
 .outer-coin {
   width: 2.5rem;
   height: 2.5rem;
@@ -13,10 +25,6 @@
   position: relative;
   top: 5px;
   left: 5px;
-}
-
-.float-left {
-  float: left;
 }
 
 .option-fix {
@@ -39,4 +47,198 @@
 
 .filter-section h4{
   margin: 10px 20px 0 0!important;
+}
+
+.card-list, .card-container {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
+  border-radius: 5px;
+}
+
+.card-list-header {
+  border-radius: 5px 5px 0 0;
+  background-color: #37474F!important;
+  color: white;
+  font-family: "Lato";
+  font-weight: bold;
+  height: 47px;
+  padding: 15px 15px 0;
+  font-size: 1.2rem;
+  clear: both;
+}
+
+.card-list-header .button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-list-header .icon {
+  margin: -13px 0;
+}
+
+.card-list-footer {
+  height: 40px;
+  font-size: 1.2rem;
+  padding: 10px;
+  text-align: center;
+  background-color: #EFEFEF;
+  border-radius: 0 0 5px 5px;
+  border-top: 0;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-family: "Lato";
+}
+
+.card-list .card-container {
+  margin-top: 0!important;
+  box-shadow: none!important;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+}
+
+.card-list .card-container:last-child{
+  border-bottom: 0px!important;
+}
+
+.card-container {
+  margin-top: 10px;
+}
+
+.button-card {
+  /*box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px 0px;*/
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  font-family: 'lato';
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px;
+}
+
+.button-card .pickk-icons {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 1.3rem;
+  width: 20%;
+  float: left;
+}
+
+.button-card .text {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  float: left;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.button-card .arrow {
+  display: flex;
+  justify-content: flex-end;
+  width: 10%;
+  float: left;
+}
+
+.full {
+  float: left;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
+}
+
+.half {
+  float: left;
+  background-color: white;
+  width: 48.75%;
+}
+
+.half:nth-of-type(2n) {
+  margin-left: 2.5%;
+}
+
+.half:nth-of-type(2n + 1) {
+  margin-top: 5px;
+}
+
+.half:nth-of-type(2n + 2) {
+  margin-top: 5px;
+}
+
+.cta-button {
+  color: white!important;
+  background: linear-gradient(to bottom right, #9EE800 0%, #4A9200 100%)
+}
+
+.line-divider {
+  margin: 10px 5% 0 ;
+  width: 90%;
+  height: 1px;
+  background-color: #CACCCD;
+  display: inherit;
+}
+
+#button-section {
+  width: 100%;
+  display: table;
+}
+
+
+.photo-upload-container {
+  margin: 50px 0;
+  width: 80%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photo-upload-container span{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+
+.circle-image {
+	border-radius: 100%;
+	width: 50%;
+	border: 3px solid white;
+}
+
+.pickk-icons {
+  height: 100%;
+}
+
+.photo-size-small{
+  width: 50px!important;
+  height: 50px!important;
+}
+.photo-size-medium{
+  width: 100px!important;
+  height: 100px!important;
+}
+.photo-size-large{
+  width: 150px!important;
+  height: 150px!important;
+}
+
+.hidden {
+	display: none!important;
+}
+
+.move-to-next-step-without-completing-goal {
+  text-decoration: underline;
+  text-align: right;
+  margin-right: 50px;
+  font-style: italic;
+  color: #808080;
+}
+
+.no-border {
+  border-radius: 0!important;
 }
