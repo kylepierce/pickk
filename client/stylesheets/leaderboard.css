@@ -8,6 +8,7 @@ ol#leaderboard  {
   border-left: 5px solid white;
   padding: 12px 0px 5px 65px!important;
   min-height: 50px;
+  margin: 0;
 }
 
 .leaderboard-item .avatar {

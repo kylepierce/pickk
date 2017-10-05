@@ -8,7 +8,7 @@ Template.singleQuestion.helpers({
 
 		if (contains > -1) {
 			return "history-correct" // Correct
-		} else if (answer === undefined && this.q.active === true) {
+		} else if (answer === undefined && this.q.active === true && this.prePickk === true) {
 			return "history-open"
 		} else if (this.q.active === true){
 			return "history-live" // In progress
@@ -94,7 +94,7 @@ Template.questionTop.helpers({
 				}
 			}
 			return addCommas(reward)
-		} else if (!answer && this.q.active) {
+		} else if (!answer && this.q.active && this.prePickk === true) {
 			return "<button class='pre-game-pickks center-text'><i class='icon ion-ios-arrow-right'></i></button>"
 		}
 	},
@@ -115,8 +115,6 @@ Template.questionBottom.helpers({
 	},
 	notAnswered: function(){
 		if (this.q.active){
-			return "Make a Pickk!"
-		} else {
 			return "Not Answered"
 		}
 	},

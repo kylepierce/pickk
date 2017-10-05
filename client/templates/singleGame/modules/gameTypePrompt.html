@@ -1,13 +1,7 @@
 <template name="gameTypePrompt">
-	{{> spinLoader}}
-
-	{{#if Template.subscriptionsReady}}
-		<div class="container loading-wrapper">
-			{{#with sportIs}}
-				{{>gameTypeChoice this}}
-			{{/with}}
-		</div>
-	{{/if}}
+	{{#with sportIs}}
+		{{>gameTypeChoice this}}
+	{{/with}}
 </template>
 
 <template name="gameTypeChoice">

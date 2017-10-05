@@ -35,6 +35,6 @@
 
 <template name="gameHistory">
 	{{#each q in questions i}}
-		{{> singleQuestion q=q extended=this.extended}}
+		{{> singleQuestion q=q extended=this.extended prePickks=false}}
 	{{/each}}
 </template>

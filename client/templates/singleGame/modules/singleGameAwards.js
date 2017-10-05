@@ -4,9 +4,7 @@ Template.singleGameAwards.helpers({
     var game = Games.findOne({_id: $game});
 
     var gamePlayed = GamePlayed.findOne({gameId: $game, period: game.period, userId: Meteor.userId()})
-    if (game && gamePlayed){
-      return true
-    } else if (game && game.eventStatus.eventStatusId === 2){
+    if (game && gamePlayed && game.eventStatus.eventStatusId === 2){
        return true
     } else {
       return false

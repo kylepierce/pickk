@@ -13,6 +13,6 @@ Template._leaderboardCard.events({
     if(this.data.period) {
       params = params + "&period=" + this.data.period
     }
-    Router.go('/leaderboard?')
+    Router.go('/leaderboard?' + params)
   },
 });

@@ -13,7 +13,6 @@
 
 .single-game-card {
 	width: 100%;
-	background-color: white;
 	font-family: lato;
 	font-weight: bold;
 	font-size: 18px;
@@ -187,6 +186,7 @@
 
 .team-colors {
 	width: 25%;
+	background-color: gray;
 	text-align: center;
 	font-weight: bold;
 	color: white;
@@ -195,6 +195,7 @@
 .team-inner {
 	width: 100%;
 	display: flex;
+	background-color: white;
 	align-items: center;
 	justify-content: center;
 	border-left: none;
