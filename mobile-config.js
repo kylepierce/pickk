@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '0.0.30',
+  version: '1.0.0',
 });
 
 App.accessRule('*');
@@ -23,6 +23,16 @@ App.icons({
   "ios_settings_3x": "resources/icons/icon-29-3x.png", // 87x87
   "ios_spotlight": "resources/icons/icon-40.png", // 40x40
   "ios_spotlight_2x": "resources/icons/icon-40-2x.png", // 80x80
+  "ios_spotlight_3x": "resources/icons/icon-40-3x.png", // 120x120
+  "ios_notification": "resources/icons/ios_notification", //20x20
+  "ios_notification_2x": "resources/icons/ios_notification_2x", //40x40
+  "ios_notification_3x": "resources/icons/ios_notification_3x", //60x60
+  "iphone_legacy": "resources/icons/iphone_legacy", //57x57
+  "iphone_legacy_2x": "resources/icons/iphone_legacy_2x", //114x114
+  "ipad_spotlight_legacy": "resources/icons/ipad_spotlight_legacy", //50x50
+  "ipad_spotlight_legacy_2x": "resources/icons/ipad_spotlight_legacy_2x", //100x100
+  "ipad_app_legacy": "resources/icons/ipad_app_legacy", //72x72
+  "ipad_app_legacy_2x": "resources/icons/ipad_app_legacy_2x", //144x144
   "android_mdpi": "resources/icons/android_mdpi.png", // 48x48
   "android_hdpi": "resources/icons/android_hdpi.png", // 72x72
   "android_xhdpi": "resources/icons/android_xhdpi.png", // 96x96
@@ -31,10 +41,10 @@ App.icons({
 });
 
 App.launchScreens({
-  "iphone_2x": "resources/splashes/iphone_2x.png", // 640x490
+  "iphone_2x": "resources/splashes/iphone_2x.png", // 640x960
   "iphone5": "resources/splashes/iphone5.png", // 640x1136
   "iphone6": "resources/splashes/iphone6.png", // 750x1334
-  "iphone6p_portrait": "resources/splashes/iphone6p_portrait.png", // 2208x1242
+  "iphone6p_portrait": "resources/splashes/iphone6p_portrait.png", // 1242x2208
   "iphone6p_landscape": "resources/splashes/iphone6p_landscape.png", // 2208x1242
   "ipad_portrait": "resources/splashes/ipad_portrait.png", // 768x1024
   "ipad_portrait_2x": "resources/splashes/ipad_portrait_2x.png", // 1536x2048
@@ -48,8 +58,14 @@ App.launchScreens({
   "android_xhdpi_landscape": "resources/splashes/android_xhdpi_landscape.png", // 1280x720
   "android_xxhdpi_portrait": "resources/splashes/android_xxhdpi_portrait.png", // 1080x1440
   "android_xxhdpi_landscape": "resources/splashes/android_xxhdpi_landscape.png" // 1440x1080
+  "android_xxhdpi_portrait": "resources/splashes/android_xxhdpi_portrait" // 960x1600
+  "android_xxhdpi_landscape": "resources/splashes/android_xxhdpi_landscape" // 1600x960
+  "android_xxxhdpi_portrait": "resources/splashes/android_xxxhdpi_portrait" // 1280x1920
+  "android_xxxhdpi_landscape": "resources/splashes/android_xxxhdpi_landscape" // 1920x1280
 })
 
+App.setPreference('DisallowOverscroll', 'true');
+App.setPreference('Orientation', 'default');
 App.setPreference('StatusBarOverlaysWebView', 'true');
 App.setPreference('StatusBarStyle', 'lightcontent');
 App.setPreference('WebAppStartupTimeout', '60000');

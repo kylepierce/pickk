@@ -2,7 +2,7 @@
 
 case $ENV in
 prod)
-  BASE_URL=http://pickkapp.meteorapp.com/
+  BASE_URL=https://www.pickk.net
   DOMAIN=pickk.net
   MONGO_FLAGS=""
   ;;
