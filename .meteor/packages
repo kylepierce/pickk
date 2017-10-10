@@ -46,7 +46,6 @@ juliancwirko:s-alert-stackslide
 richsilv:pikaday
 momentjs:moment
 simple:reactive-method
-chart:chart
 meteorhacks:subs-manager
 nvd3:nvd3
 juliancwirko:s-alert-slide
@@ -56,7 +55,6 @@ blaze@2.1.8
 msavin:fetcher
 gfk:mailgun-api
 udondan:googlefonts
-yogiben:pretty-email
 meteor-base@1.1.0
 mobile-experience@1.0.5
 mongo@1.2.2
@@ -72,8 +70,6 @@ fourseven:scss
 selaias:accounts-entry
 hashwin:ionic-sass
 hashwin:ionicons-sass
-rclai89:cheerio
-miro:mailchimp-lists
 percolate:synced-cron
 tmeasday:publish-counts
 lepozepo:cloudinary

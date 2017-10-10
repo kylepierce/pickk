@@ -5,7 +5,6 @@ Accounts.onCreateUser(function(options, user) {
     following: [],
     badges: [],
     trophies: [],
-    groups: [],
     firstName: '',
     lastName: '',
     isOnboarded: false
@@ -16,6 +15,6 @@ Accounts.onCreateUser(function(options, user) {
   }
   user.profile.firstName = user.services && user.services.facebook && user.services.facebook.first_name || '';
   user.profile.lastName = user.services && user.services.facebook && user.services.facebook.last_name || '';
-  mailChimpLists.subscribeUser(user);
+
   return user;
 });
