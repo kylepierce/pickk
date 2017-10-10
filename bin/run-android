@@ -13,7 +13,6 @@ fi
 echo $ENV
 
 $DIRNAME/merge-settings $ENV android > /tmp/$ENV.json
-# --mobile-server https://pickk.net
 
-meteor run android-device --settings settings.json
+meteor run android-device --settings settings.json --mobile-server https://pickk.net
 # /tmp/$ENV.json "$@"

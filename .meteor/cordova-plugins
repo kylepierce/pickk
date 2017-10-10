@@ -8,3 +8,5 @@ cordova-plugin-intercom@3.0.19
 cordova-plugin-meteor-webapp@1.4.1
 cordova-plugin-wkwebview-engine@https://github.com/apache/cordova-plugin-wkwebview-engine.git#815ed0741b9ae30b343d6429bd8ff2ad37ec5790
 phonegap-plugin-push@https://github.com/intercom/phonegap-plugin-push.git#9089ed0e8ac693fe37478596e23b6a4c12a56b3f
+cordova-plugin-statusbar@2.2.3
+cordova-plugin-splashscreen@4.0.3

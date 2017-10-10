@@ -10,3 +10,9 @@ Template.leagues.helpers({
     }
   }
 });
+
+Template.leagues.events({
+  'click [data-action=no-league]': function(){
+    // console.log("Nada");
+  }
+});

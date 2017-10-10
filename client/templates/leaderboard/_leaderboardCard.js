@@ -1,5 +1,4 @@
 Template._leaderboardCard.helpers({
-
 });
 
 Template._leaderboardCard.events({

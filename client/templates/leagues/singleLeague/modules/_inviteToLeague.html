@@ -31,7 +31,7 @@
           {{#ionItem buttonRight=true avatar=true}}
             <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=follower}}">
               {{> userAvatar userId=follower}}
-              {{> singleUsername userId= follower}}
+              {{> singleUsername userId=follower}}
             </a>
             {{> inviteButton _id=follower }}
           {{/ionItem}}
@@ -43,7 +43,7 @@
           {{#EasySearch.Each index=UserListIndex}}
             {{#ionItem buttonRight=true avatar=true}}
               <a class="item-avatar avatar-fix" href="{{pathFor route='user.show' _id=__originalId}}">
-                {{> userAvatar user=. alreadySubscribed=true}}
+                {{> userAvatar size="medium" userId=__originalId}}
                 {{profile.username}}
               </a>
               {{> inviteButton _id=__originalId user=profile.username}}

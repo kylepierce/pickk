@@ -67,7 +67,7 @@ Schema.games = new SimpleSchema({
       type: "select-checkbox",
       template: "games",
       options: function () {
-        var games = Games.find().fetch();
+        var games = Games.find({status: "Pre-Game"}).fetch();
 
         formatGames = function(games){
           return _.map(games, function(game){

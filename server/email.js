@@ -10,8 +10,6 @@ Meteor.startup(function() {
 
 });
 
-console.log(Accounts);
-
 Accounts.emailTemplates.siteName = "Pickk"
 Accounts.emailTemplates.from = "Pickk App <hi@pickk.co>";
 

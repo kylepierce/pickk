@@ -1,9 +1,5 @@
 {
-  "private": {
-    "mailchimp": {
-      "isEnabled": false
-    }
-  },
+  "private": {},
   "public": {
     "isDebug": true,
     "isDevLogin": false,

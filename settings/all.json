@@ -1,9 +1,6 @@
 {
   "private": {
     "migrations": [],
-    "mailchimp": {
-      "isEnabled": true
-    },
     "cloudinary": {
       "cloud_name": "pickk"
     },

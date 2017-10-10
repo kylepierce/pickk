@@ -39,7 +39,9 @@
             {{/with}}
           {{/each}}
 
-          {{> _leaderboardCard data=data}}
+          {{#if gameHasStarted}}
+            {{> _leaderboardCard data=data}}
+          {{/if}}
 
         </div>
       {{/with}}
@@ -81,11 +83,13 @@
     <span class="text">Invite</span>
     <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
-  <div class="button-card half" data-action="viewLeaderboard">
-    {{> pickkIcon size="small" icon="leaderboard"}}
-    <span class="text">Leaderboard</span>
-    <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
-  </div>
+  {{#if gameHasStarted}}
+    <div class="button-card half" data-action="viewLeaderboard">
+      {{> pickkIcon size="small" icon="leaderboard"}}
+      <span class="text">Leaderboard</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
   {{#if league}}
     <div class="button-card half" data-action="viewLeague">
       {{> pickkIcon size="small" icon="league"}}

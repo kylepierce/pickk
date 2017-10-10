@@ -32,6 +32,14 @@ Template.singleMatchup.helpers({
       _id: this._id
     }
     return obj
+  },
+  'gameHasStarted': function(){
+    var gameId = this.gameId[0]
+    Meteor.subscribe('singleGame', gameId);
+    var game = Games.findOne({_id: gameId});
+    if (game && game.status === "In-Progress"){
+      return true
+    }
   }
 });
 
@@ -164,6 +172,14 @@ Template.matchupMember.helpers({
   },
   "league": function(){
     if(this.secret === "league"){
+      return true
+    }
+  },
+  'gameHasStarted': function(){
+    var gameId = this.gameId[0]
+    Meteor.subscribe('singleGame', gameId);
+    var game = Games.findOne({_id: gameId});
+    if (game && game.status === "In-Progress"){
       return true
     }
   }
