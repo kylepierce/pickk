@@ -5,7 +5,7 @@ App.info({
   author: 'Pickk Corporation',
   email: 'hi@pickk.co',
   website: 'http://pickk.co',
-  version: '1.0.0',
+  version: '1.0.1',
 });
 
 App.accessRule('*');
@@ -80,9 +80,12 @@ App.setPreference('android-minSdkVersion', '15');
 
 App.appendToConfig(`
   <branch-config>
-    <ios-team-id value="Q768H4GZH4" />
-    <host name="getpickk.com" scheme="https" />
-    <host name="pickk.app.link" scheme="https" />
+    <branch-key value="key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M" />
+    <uri-scheme value="pickk" />
+    <link-domain value="getpickk.com" scheme="https" />
+    <link-domain value="pickk.app.link" scheme="https" />
+    <android-prefix value="/6ABs" />
+    <ios-team-release value="Q768H4GZH4" />
   </branch-config>
   <platform name="ios">
     <config-file platform="ios" target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
@@ -99,7 +102,7 @@ App.appendToConfig(`
 
 App.configurePlugin("branch-cordova-sdk", {
     URI_SCHEME : "pickk",
-    BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
+    BRANCH_KEY : "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
 });
 App.configurePlugin('phonegap-plugin-push', {
     SENDER_ID: 259263435947

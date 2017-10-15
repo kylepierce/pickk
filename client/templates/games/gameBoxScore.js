@@ -130,7 +130,7 @@ Template.singleGameCard.events({
 
 Template.singleGameCTA.helpers({
   preGame: function () {
-    if (this.game.pre_game_processed === true && this,game.status === "Pre-Game"){
+    if (this.game.pre_game_processed === true && this.game.status === "Pre-Game"){
       return true
     }
   },

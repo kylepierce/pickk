@@ -1,7 +1,7 @@
 <template name="singleQuestion">
 	<div class="history-item {{status}} {{location}}">
     <div class="question-inner">
-      {{> questionTop q=this.q extended=this.extended}}
+      {{> questionTop q=this.q extended=this.extended prePickk=this.prePickk}}
       {{> questionBottom q=this.q}}
       {{> questionExtended q=this.q extended=this.extended}}
     </div>

@@ -34,3 +34,17 @@
 //   BrowserPolicy.content.allowOriginForAll(http);
 //   BrowserPolicy.content.allowOriginForAll(https);
 // });
+// Meteor.startup(function () {
+//   console.log('Configuring content-security-policy:');
+//   BrowserPolicy.content.allowSameOriginForAll();
+//   BrowserPolicy.content.allowOriginForAll('http://meteor.local');
+//   BrowserPolicy.content.allowOriginForAll('https://pickk.net');
+//   BrowserPolicy.content.allowOriginForAll('https://*.pickk.net');
+//   BrowserPolicy.content.allowEval();
+//   BrowserPolicy.framing.disallow();
+// });
+
+WebApp.connectHandlers.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  return next();
+});

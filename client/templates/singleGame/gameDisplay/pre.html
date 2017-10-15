@@ -13,7 +13,7 @@
 <template name="prePickkList">
 	<h3>Pre Pickk Questions: ({{questionsAnswered}} / {{questionsAvailable}})</h3>
 	{{#each question in preGamePickks}}
-		{{> singleQuestion q=question rounded=true single=true}}
+		{{> singleQuestion q=question rounded=true single=true prePickk=true}}
 	{{/each}}
 </template>
 

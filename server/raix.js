@@ -14,8 +14,6 @@ var config = {
   }
 };
 
-Push.debug = true;
-
 if (Meteor.settings.public.isDebug) {
 
   _.extend(config, {
