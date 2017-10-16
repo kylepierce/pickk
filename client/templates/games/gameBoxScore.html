@@ -21,7 +21,7 @@
 </template>
 
 <template name="singleGameCard">
-  <div class="single-game-card">
+  <div data-action="viewGame" class="single-game-card">
     <div class="{{status}}" data-action="viewGame">
       {{#each team in teams}}
         {{> teamBlock statsTeamId=team.teamId runs=team.runs hasBall=hasBall}}

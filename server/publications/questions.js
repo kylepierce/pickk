@@ -76,7 +76,6 @@ Meteor.publish('userQuestions', function(gameId, commercial, period) {
     }
 
     var sort = {sort: {dateCreated: -1}, limit: 1}
-    console.log(gamePlayed);
 
     if (gamePlayed.type === "live"){
       if (game.commercial === false){

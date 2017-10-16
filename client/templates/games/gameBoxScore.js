@@ -27,6 +27,7 @@ Template.entireGameCard.events({
   }
 });
 
+
 Template.singleGameInfo.onCreated( function() {
   var team1 = this.data.game.away_team
   var team2 = this.data.game.home_team
@@ -116,6 +117,10 @@ Template.singleGameCard.helpers({
 });
 
 Template.singleGameCard.events({
+  'click [data-action=viewGame]': function () {
+    var gameId = this.game._id
+    Router.go('/game/' + gameId);
+  },
   'click [data-action=register]': function () {
     var userId = Meteor.userId();
     Meteor.call('registerForGame', userId, this.game._id);

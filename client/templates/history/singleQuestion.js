@@ -67,7 +67,6 @@ Template.questionTop.helpers({
 		}
 	},
 	winnings: function (id){
-		console.log(this);
 		var userId = Meteor.userId();
 		var answer = Answers.findOne({"questionId": this.q._id, userId: userId});
 
