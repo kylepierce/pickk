@@ -44,11 +44,11 @@ Meteor.publish('teams', function() {
   return Teams.find({})
 });
 
-Meteor.publish('singleGameTeams', function(team1, team2) {
-  check(team1, Number);
-  check(team2, Number);
+Meteor.publish('singleGameTeams', function(gameId) {
+  // check(gameId, Match.Maybe([String, Number]));
   this.unblock()
-  return Teams.find({statsTeamId: {$in: [team1, team2]}})
+  var game = Games.findOne({_id: gameId});
+  return Teams.find({statsTeamId: {$in: [game.home_team, game.away_team]}})
 });
 
 // Questions and Answers

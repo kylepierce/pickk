@@ -3,6 +3,7 @@
   "public": {
     "isDebug": true,
     "isDevLogin": true,
-    "isCronEnabled": false
+    "isCronEnabled": false,
+    "rootUrl": "localhost:3000"
   }
 }

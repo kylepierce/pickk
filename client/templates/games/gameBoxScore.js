@@ -1,11 +1,7 @@
 Template.entireGameCard.onCreated( function() {
-  var team1 = this.data.game.away_team
-  var team2 = this.data.game.home_team
-  if (team1 && team2){
-    this.subscribe( 'singleGameTeams', team1, team2, function() {
-      $( ".loading-wrapper").show();
-    });
-  }
+  this.subscribe('singleGameTeams', this.data.game._id, function () {
+    $( ".loading-wrapper").show();
+  });
 });
 
 Template.entireGameCard.helpers({
@@ -27,15 +23,7 @@ Template.entireGameCard.events({
   }
 });
 
-
 Template.singleGameInfo.onCreated( function() {
-  var team1 = this.data.game.away_team
-  var team2 = this.data.game.home_team
-  if (team1 && team2){
-    this.subscribe( 'singleGameTeams', team1, team2, function() {
-      $( ".loading-wrapper").show();
-    });
-  }
 });
 
 Template.singleGameInfo.helpers({
@@ -102,17 +90,15 @@ Template.singleGameCard.helpers({
     }
   },
   teams: function () {
-    if (this.game.teams){
-      var teams = _.values(this.game.teams);
-      if (this.game.live && this.game.scoring){
-        teams[1].runs = this.game.scoring.home.runs;
-        teams[0].runs = this.game.scoring.away.runs;
-      } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
-        teams[0].runs = this.game.teams[0].linescoreTotals.runs
-        teams[1].runs = this.game.teams[1].linescoreTotals.runs
-      }
-      return teams
+    var teams = _.values(this.game.teams);
+    if (this.game.live && this.game.scoring){
+      teams[1].runs = this.game.scoring.home.runs;
+      teams[0].runs = this.game.scoring.away.runs;
+    } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
+      teams[0].runs = this.game.teams[0].linescoreTotals.runs
+      teams[1].runs = this.game.teams[1].linescoreTotals.runs
     }
+    return teams
   }
 });
 
@@ -210,11 +196,11 @@ Template.teamBlock.helpers({
     }
   },
   team: function (statsTeamId) {
-    var team = Teams.findOne({"statsTeamId": statsTeamId});
-		if(team && this.hasBall === statsTeamId){
+    var team = Teams.findOne({"statsTeamId": this.statsTeamId});
+		if(team && this.hasBall === this.statsTeamId){
 			team.hasBall = true
-		}
-		return team
+    }
+    return team
   },
   upper: function (name) {
     return name.toUpperCase()

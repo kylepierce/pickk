@@ -1,9 +1,10 @@
 <template name="preGame">
 	<div class="hundred-bottom">
 		{{#if questionsAvailable}}
-			<!-- {{> preGameCard}} -->
+			{{> preGameCard}}
 			{{> prePickkList}}
 		{{else}}
+			{{> entireGameCard game=this.game}}
 			{{> historyCardList gameId=this.game._id number=3}}
 			{{> matchupCardList gameId=this.game._id type="game"}}
 		{{/if}}
@@ -11,7 +12,7 @@
 </template>
 
 <template name="prePickkList">
-	<h3>Pre Pickk Questions: ({{questionsAnswered}} / {{questionsAvailable}})</h3>
+	<!-- <h3>Pre Pickk Questions: ({{questionsAnswered}} / {{questionsAvailable}})</h3> -->
 	{{#each question in preGamePickks}}
 		{{> singleQuestion q=question rounded=true single=true prePickk=true}}
 	{{/each}}
@@ -20,20 +21,17 @@
 <template name="preGameCard">
 	<div id="notification-center" class="animated fadeInRight">
 		<div class="single-notification complete-game-card info-card">
-			<div class="football-inner">
-				<div class="location">
+			<div class="pre-pickk-inner">
+				<div class="half">
 					<span class="title">Coins</span>
 					<span class="detail">{{coins}}</span>
 				</div>
 				<div class="vertical-divider"></div>
-				<div class="location">
+				<div class="half">
 					<span class="title">Pickks</span>
 					<span class="detail">
 						({{questionsAnswered}} / {{questionsAvailable}})
 					</span>
-				</div>
-				<div class="vertical-divider"></div>
-				<div class="location">
 				</div>
 			</div>
 		</div>

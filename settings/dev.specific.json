@@ -3,6 +3,10 @@
     "facebook": {
       "clientId": "1399965486969249",
       "secret": "599da8e423c2d677eda352cde88d01f9"
+    },
+    "twitter": {
+      "key": "D3R4rpdKWbzzBoVaJwyg6dFH2",
+      "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
     }
   },
   "intercom": {

@@ -21,8 +21,8 @@ Meteor.startup(function() {
   ServiceConfiguration.configurations.update(
     {"service": "twitter"}, {
       $set: {
-        "consumerKey": "D3R4rpdKWbzzBoVaJwyg6dFH2",
-        "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
+        "consumerKey": Meteor.settings.private.twitter.key,
+        "secret": Meteor.settings.private.twitter.secret
       }
     }, {upsert: true}
   );

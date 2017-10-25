@@ -30,6 +30,36 @@
 	font-size: 1.3rem;
 }
 
+.pre-pickk-inner {
+	height: 100%;
+	display: flex;
+	border-radius: 10px;
+	background-color: #455a64;
+	color: white;
+	font-family: "Lato";
+	padding: 10px;
+}
+
+.pre-pickk-inner .title {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 0;
+	border-bottom: 1px solid white;
+	width: 100%;
+	font-size: 1.3rem;
+}
+
+.pre-pickk-inner .detail {
+	padding: 10px 0;
+	display: block;
+	clear: both;
+	font-size: 1rem;
+}
+
+.pre-pickk-inner .half {
+	background-color: inherit;
+}
+
 .down {
 	width: 40%;
 	float: left;
