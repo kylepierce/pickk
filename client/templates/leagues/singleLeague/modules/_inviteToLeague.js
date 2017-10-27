@@ -69,7 +69,7 @@ Template.inviteToLeagueBox.helpers({
 Template.inviteToLeagueBox.events({
   'click [data-action=selectLater]': function(e, t){
     var leagueId = Router.current().params._id
-    Router.go('/league/' + leagueId);
+    Router.go('/league/' + leagueId + "?new=true");
   },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){

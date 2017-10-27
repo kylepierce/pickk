@@ -2,3 +2,5 @@ mup.json
 settings.json
 settings/*.local.json
 .meteor/dev_bundle
+node_modules
+.vscode

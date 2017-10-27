@@ -1,6 +1,7 @@
 <template name="singleMatchup">
   {{#contentFor "headerButtonLeft"}}
-    {{>ionNavBackButton path=index}}
+    {{> deepBackButton where="matchup"}}
+    <!-- {{> ionNavBackButton path=backUrl text=" "}} -->
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -10,9 +11,9 @@
   {{#contentFor "headerButtonRight"}}
   {{#with matchup}}
     {{#if alreadyJoined this.users}}
-      <button style="font-size: 13px;" class="button button-clear" data-action="editMatchup">
+      <!-- <button style="font-size: 13px;" class="button button-clear" data-action="editMatchup">
         {{> ionIcon icon="ios-gear"}}
-      </button>
+      </button> -->
     {{/if}}
   {{/with}}
   {{/contentFor}}

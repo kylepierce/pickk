@@ -12,59 +12,28 @@ Template.mainLayout.events({
   },
   'click [data-action=skip]': function(e, t){
     var leagueId = Router.current().params._id
-    Router.go('/league/'+ leagueId)
+    Router.go('/league/'+ leagueId);
   },
-  'click [data-action=editMatchup]': function(){
-    IonActionSheet.show({
-      titleText: 'Are You Sure You Want To Leave?',
-      buttons: [
-        { text: 'Leave Matchup <i class="icon ion-share"></i>' },
-      ],
-      destructiveText: '',
-      cancelText: 'Cancel',
-      cancel: function() {},
-      buttonClicked: function(index) {
-        if (index === 0) {
-          var currentUserId = Meteor.userId();
-          var matchupId = Router.current().params._id
-          var matchup = Matchup.findOne({_id: matchupId});
-          if(matchup.commissioner === currentUserId){
-            Meteor.call('deleteMatchup', matchupId, currentUserId);
-            return true
-          } else {
-            // Remove this user from the group
-            Meteor.call('leaveMatchup', matchupId, currentUserId);
-            return true
-          }
-        }
-      }
-    });
-  },
-  'click [data-action=adminEditMatchup]': function(){
-    IonActionSheet.show({
-      titleText: '',
-      buttons: [
-        { text: 'Update Matchup' },
-        { text: 'Delete Matchup <i class="icon ion-share"></i>' },
-      ],
-      destructiveText: '',
-      cancelText: 'Cancel',
-      cancel: function() {},
-      buttonClicked: function(index) {
-        if (index === 0) {
-          var currentUserId = Meteor.userId();
-          var matchup = Router.current().params._id
-
-          // Remove this user from the group
-          Meteor.call('leaveMatchup', matchup, currentUserId);
-          // var group = Groups.findOne({_id: groupId})
-          // var groupName = group.name
-          // sAlert.success("You Left " + groupName , {effect: 'slide', position: 'bottom', html: true});
-          return true
-        }
-      }
-    });
-  },
+  // 'click [data-action=editMatchup]': function(){
+  //   IonActionSheet.show({
+  //     titleText: 'Are You Sure You Want To Leave?',
+  //     buttons: [
+  //       { text: 'Leave Matchup' },
+  //     ],
+  //     destructiveText: '',
+  //     cancelText: 'Cancel',
+  //     cancel: function() {},
+  //     buttonClicked: function(index) {
+  //       if (index === 0) {
+  //         var currentUserId = Meteor.userId();
+  //         var matchupId = Router.current().params._id
+  //         Meteor.call('leaveMatchup', matchupId, currentUserId);
+  //         Router.go('/matchup');
+          
+  //       }
+  //     }
+  //   });
+  // },
 });
 
 Template.sideMenuContent.onCreated( function() {
@@ -174,5 +143,33 @@ Template.loader.events({
   'click [data-action="reload"]': function () {
     Router.go("/");
     location.reload();
+  },
+});
+
+Template.deepBackButton.helpers({
+  'classes': function () {
+    var classes = ['buttons button button-clear back-button pull-left'];
+    return classes
+  },
+  'text': function () {
+    return ""
+  },
+  'icon': function () {
+    if (Platform.isAndroid()) {
+      return 'android-arrow-back';
+    }
+
+    return 'ios-arrow-back';
+  }
+});
+
+Template.deepBackButton.events({
+  'click [data-action=deepBack]': function (e, t) {
+    var newlyCreated = Router.current().params.query.new
+    if (newlyCreated) {
+      Router.go('/' + t.data.where)
+    } else {
+      window.history.back();
+    }
   },
 });

@@ -64,7 +64,7 @@ Template.inviteToMatchupBox.helpers({
 Template.inviteToMatchupBox.events({
   'click [data-action=finishMatchup]': function(e, t){
     var matchupId = Router.current().params._id
-    Router.go('/matchup/' + matchupId);
+    Router.go('/matchup/' + matchupId + "?new=true");
   },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){

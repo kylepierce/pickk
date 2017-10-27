@@ -10,6 +10,16 @@
   {{/contentFor}}
 </template>
 
+<template name="deepBackButton">
+  <button class="{{classes}}" data-action="deepBack">
+    {{> ionIcon icon=icon}} {{#unless isAndroid}}
+    <span class="back-text">
+      {{text}}
+    </span>
+    {{/unless}}
+  </button>
+</template>
+
 <template name="spinLoader">
     <div class="loader-holder">
     <svg class="spin-loader" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

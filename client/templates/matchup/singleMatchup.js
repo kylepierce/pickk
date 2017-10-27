@@ -3,7 +3,7 @@ Template.singleMatchup.onCreated(function() {
 });
 
 Template.singleMatchup.helpers({
-  matchup: function(){
+  'matchup': function(){
     return Matchup.findOne();
   },
   'gameList': function(){
@@ -83,6 +83,7 @@ Template.singleMatchup.events({
     });
   },
 });
+
 Template.matchupJoin.events({
   "click [data-action=viewLeague]": function(e, t) {
     Router.go('/league/' + this.leagueId );
