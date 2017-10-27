@@ -165,10 +165,15 @@ Template.deepBackButton.helpers({
 
 Template.deepBackButton.events({
   'click [data-action=deepBack]': function (e, t) {
+    Session.set('ionNavDirection', 'forward')
     var newlyCreated = Router.current().params.query.new
     if (newlyCreated) {
+      $('[data-nav-container]').addClass('nav-view-direction-back');
+      $('[data-navbar-container]').addClass('nav-bar-direction-back');
       Router.go('/' + t.data.where)
     } else {
+      $('[data-nav-container]').addClass('nav-view-direction-back');
+      $('[data-navbar-container]').addClass('nav-bar-direction-back');
       window.history.back();
     }
   },

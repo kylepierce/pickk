@@ -28,21 +28,7 @@
 </template>
 
 <template name="homeLayoutHeader">
-  {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
-  {{/contentFor}}
 
-  {{#contentFor "headerButtonRight"}}
-    <button style="font-size: 13px;" class="button button-clear" data-ion-menu-toggle="right">
-      {{> ionIcon icon="ios-chatboxes"}}
-    </button>
-  {{/contentFor}}
 </template>
 
 <template name="sideMenuRight">

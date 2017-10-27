@@ -1,6 +1,14 @@
 <template name="prizes">
- {{> homeLayoutHeader}}
-
+	{{#contentFor "headerButtonLeft"}}
+    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+      {{#if isAndroid}}
+        {{> ionIcon icon='android-more-vertical'}}
+      {{else}}
+        {{> ionIcon icon='navicon'}}
+      {{/if}}
+    </button>
+  {{/contentFor}}
+  
  {{#contentFor "headerTitle"}}
     <h1 class="title white-text-header">Prizes</h1>
  {{/contentFor}}
