@@ -13,7 +13,7 @@ Template.home.helpers({
   },
   upcomingGames: function(){
     Meteor.subscribe('upcomingGames');
-    return Games.find({status: "Pre-Game"}, {sort: {iso: -1}});
+    return Games.find({status: "Pre-Game"}, {sort: {iso: 1}});
   },
 });
 

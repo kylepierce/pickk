@@ -49,6 +49,12 @@ Template.singleGameInfo.helpers({
   }
 });
 
+Template.singleGameCard.onCreated(function () {
+  this.subscribe('singleGameTeams', this.data.game._id, function () {
+    $(".loading-wrapper").show();
+  });
+});
+
 Template.singleGameCard.helpers({
   hasBall: function(){
     if(this.game){
