@@ -1,8 +1,5 @@
-<template name="matchupFilter">
-  <div class="bar bar-header bar-dark">
-    <h1 class="title white-text-header">Filter Matchups</h1>
-  </div>
-  <div style="margin-top:64px;">
+<template name="filterMatchups">
+  {{#ionModal class="white-text-header" title="Filter Matchups"}}
   {{#ionList}}
     <form id="privacy">
       <div class="item item-divider" style="border: 0">Privacy</div>
@@ -29,5 +26,5 @@
       {{/each}}
     </form>
   {{/ionList}}
-  </div>
+  {{/ionModal}}
 </template>

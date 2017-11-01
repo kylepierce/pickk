@@ -14,6 +14,17 @@ Template.mainLayout.events({
     var leagueId = Router.current().params._id
     Router.go('/league/'+ leagueId);
   },
+  'click [data-action=filterGames]': function() {
+    IonModal.open('gamesFilter');
+  },
+  'click [data-action=filterMatchups]': function () {
+    IonModal.open('filterMatchups');
+  },
+  'click [data-action=filterLeaderboard]': function () {
+    IonModal.open('weekFilter');
+  },
+
+
   // 'click [data-action=editMatchup]': function(){
   //   IonActionSheet.show({
   //     titleText: 'Are You Sure You Want To Leave?',

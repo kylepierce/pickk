@@ -1,5 +1,5 @@
 
-Template.matchupFilter.helpers({
+Template.filterMatchups.helpers({
   'games': function(){
     var games = Games.find({}).fetch()
     var data = Session.get('matchupFilter');
@@ -79,7 +79,7 @@ Template.matchupFilter.helpers({
   },
 });
 
-Template.matchupFilter.events({
+Template.filterMatchups.events({
   "click #matchup .item-radio": function(e, t){
     var data = Session.get('matchupFilter');
     data["gameId"] = this.o._id

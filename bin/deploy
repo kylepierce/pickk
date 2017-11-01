@@ -42,4 +42,5 @@
 # source $DIRNAME/mupx/deploy
 # source $DIRNAME/logs $ENV
 
-ROOT_URL="https://www.pickk.net" DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json pickkapp.meteorapp.com 
+DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json pickkapp.meteorapp.com 
+DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy www.pickk.net --settings settings.json

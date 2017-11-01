@@ -1,8 +1,5 @@
 <template name="weekFilter">
-	<div class="bar bar-header bar-dark">
-    <h1 class="title white-text-header">Filter Leaderboard</h1>
-  </div>
-  <div style="margin-top:64px;">
+	{{#ionModal class="white-text-header" title="Filter Leaderboard"}}
   {{#ionList}}
   	<form id="date">
 			<div class="item item-divider">Date</div>
@@ -23,7 +20,7 @@
 			{{/each}}
 		</form>
   {{/ionList}}
-  </div>
+	{{/ionModal}}
 </template>
 
 <template name="radioOption">

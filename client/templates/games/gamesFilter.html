@@ -1,8 +1,5 @@
 <template name="gamesFilter">
-  <div class="bar bar-header bar-dark">
-    <h1 class="title white-text-header">Filter Games</h1>
-  </div>
-  <div style="margin-top:64px;">
+  {{#ionModal class="white-text-header" title="Filter Games"}}
     {{#ionList}}
     <div class="item item-divider" style="border: 0px!important;">Limit By Time</div>
     <form>
@@ -17,7 +14,7 @@
     {{/each}}
     </form>
   {{/ionList}}
-  </div>
+  {{/ionModal}}
 </template>
 
 <template name="gamesOption">
