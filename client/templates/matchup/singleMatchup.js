@@ -86,7 +86,9 @@ Template.singleMatchup.events({
 
 Template.matchupJoin.events({
   "click [data-action=viewLeague]": function(e, t) {
-    Router.go('/league/' + this.leagueId );
+    var userId = Meteor.userId()
+    Meteor.call('joinMatchup', this._id, userId);
+    Meteor.call('joinLeague', userId, this.leagueId);
   }
 });
 
@@ -143,7 +145,7 @@ Template.matchupJoin.helpers({
   },
   league: function () {
     if(this.leagueId) {
-      var userId = Meteor.userId()
+      var userId = Meteor.userId();
       var group = Groups.findOne({_id: this.leagueId});
       if(group){
         var isMember = group.members.indexOf(userId)
