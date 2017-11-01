@@ -369,14 +369,13 @@ Template.notificationOptions.helpers({
 Template.coinsNotification.helpers({
 	gameName: function (id) {
 		if (id !== undefined){
-			Meteor.subscribe('singleGameData', id)
+			// Meteor.subscribe('singleGameData', id)
 			var game = Games.findOne({_id: id})
 			return game
 		}
 	},
 	questionTitle: function () {
     var id = this.note.question
-    console.log(this.note);
 		Meteor.subscribe('singleQuestion', id)
 		var question = Questions.findOne({_id: id});
 		var que = question && question.que

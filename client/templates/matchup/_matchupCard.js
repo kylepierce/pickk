@@ -1,8 +1,11 @@
+Template.matchupCard.onCreated(function() {
+  this.subscribe('singleGameData', this.data.m.gameId[0]);
+});
+
 Template.matchupCard.helpers({
   'matchupName': function(){
     if(this.m && this.m.gameId.length === 1){
       var gameId = this.m.gameId[0]
-      Meteor.subscribe('singleGameData', gameId);
       var game = Games.findOne({_id: gameId});
       if(game){
         return game.name
@@ -12,7 +15,6 @@ Template.matchupCard.helpers({
       // var names = []
       // for (var i = 0; i < this.m.gameId.length; i++) {
       //   var gameId = this.m.gameId[i]
-      //   Meteor.subscribe('singleGameData', gameId);
       //   var game = Games.findOne({_id: gameId});
       //   if(game){
       //     names.push(game.name);
@@ -67,7 +69,6 @@ Template.matchupCard.helpers({
     }
 	},
   'gameName': function(gameId){
-    Meteor.subscribe('singleGameData', gameId);
     var game = Games.findOne({_id: gameId})
     if (game){
       return game.name
