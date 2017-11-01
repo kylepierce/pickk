@@ -54,6 +54,10 @@ Template.chatIcon.helpers({
   },
 });
 
+Template.leagueMatchups.onCreated(function(){
+  this.subscribe('singleLeagueMatchups', this.data.league._id)
+});
+
 Template.leagueMatchups.helpers({
   leagueMatchups: function(){
     var leagueId = this.league._id

@@ -1,6 +1,6 @@
 Template._sharePopover.helpers({
 	groups: function () {
-		Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+		Meteor.subscribe('findThisUsersLeagues', Meteor.userId())
 		return Groups.find({})
 	}
 });

@@ -1,6 +1,6 @@
 Template.weekFilter.rendered = function() {
   var userId = Meteor.userId()
-  Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+  Meteor.subscribe('findThisUsersLeagues', Meteor.userId())
 };
 
 Template.weekFilter.helpers({

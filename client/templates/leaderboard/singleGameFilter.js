@@ -1,6 +1,6 @@
 // Template.singleGameFilter.rendered = function() {
 //   var userId = Meteor.userId()
-//   Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+//   Meteor.subscribe('findThisUsersLeagues', Meteor.userId())
 // };
 //
 // Template.singleGameFilter.helpers({

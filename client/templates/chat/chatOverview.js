@@ -1,6 +1,6 @@
 Template.chatRoom.rendered = function() {
   var userId = Meteor.userId()
-  Meteor.subscribe('findThisUsersGroups', Meteor.userId())
+  Meteor.subscribe('findThisUsersLeagues', Meteor.userId())
 };
 
 Template.chatOverview.events({

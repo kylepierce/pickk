@@ -30,10 +30,19 @@ Meteor.publish('listOfMatchups', function(selector){
   return Matchup.find(selector)
 });
 
-Meteor.publish("singleGroupMatchupCount", function(groupId){
-  check(groupId, String);
-  var selector = {groupId: groupId};
-  Counts.publish(this, "singleGroupMatchupCount", Matchup.find(selector));
+// Meteor.publish("singleLeagueMatchupCount", function(leagueId){
+//   check(leagueId, String);
+//   var selector = { leagueId: leagueId};
+//   var matchups = Matchup.find(selector).count()
+//   // console.log(leagueId, matchups)
+//   return matchups
+//   Counts.publish(this, "singleLeagueMatchupCount", Matchup.find(selector));
+// });
+
+Meteor.publish("singleLeagueMatchups", function (leagueId) {
+  check(leagueId, String);
+  var selector = { leagueId: leagueId };
+  return Matchup.find(selector);
 });
 
 Meteor.publish('matchupUsers', function(matchupId) {
