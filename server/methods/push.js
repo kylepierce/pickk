@@ -18,6 +18,15 @@ Meteor.methods({
 			});
 		}
 	},
+	'globalPush': function(title, message) {
+		Push.send({
+			from: 'Pickk',
+			title: title,
+			text: message,
+			sound: 'default',
+			badge: 1,
+		});
+	},
 
 	'allInactive': function(gameId) {
 		check(gameId, String);

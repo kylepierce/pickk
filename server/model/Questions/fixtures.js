@@ -23,7 +23,9 @@ Fixtures.push(Questions, {
     createdBy: "CharlieDalton",
     playerId: "MartinRamires",
     gameId: "NoOutsGame",
+    period: 1,
     active: true,
+    type: "live",
     commercial: false,
     que: "Second Down ...",
     options: {
@@ -135,6 +137,7 @@ Fixtures.push(Questions, {
     dateCreated: new Date(dateCreatedTime += 60000),
     playerId: "ErikSmith",
     gameId: "ActiveGame",
+    period: 1,
     active: true,
     commercial: true,
     binaryChoice: true,

@@ -6,6 +6,7 @@ Fixtures.push(Games, {
     live: true,
     completed: false,
     commercial: false,
+    period: 1,
     gameDate: "Sept 27th 8:30pm",
     //time: "7pm", deprecated, use moment(gameDate).format for the purpose
     tv: "TBS",

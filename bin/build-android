@@ -23,3 +23,16 @@ rm -rf /tmp/build
 rm -rf $DIRNAME/../.meteor/local/cordova-build
 
 meteor build /tmp/build --server=$BASE_URL --mobile-settings /tmp/$ENV.json "$@"
+
+echo "Setting Android..."
+cd ~/../../tmp/build/android
+
+export ANDROID_HOME=~/Library/Android/Sdk
+export PATH=$ANDROID_HOME/tools:$PATH
+
+echo "Signing..."
+
+jarsigner -keystore ~/Google\ Drive/Pickk/Development/pickk.keystore -verbose -sigalg SHA1withRSA -digestalg SHA1 release-unsigned.apk pickk 
+$ANDROID_HOME/build-tools/25.0.0/zipalign 4 release-unsigned.apk pickk.apk
+
+python ~/Google\ Drive/Pickk/Development/google_play_upload.py -p com.id5oyejxkvm3yq1jfiwr5 -a pickk.apk -s ~/Google\ Drive/Pickk/Development/PlayUpload.json

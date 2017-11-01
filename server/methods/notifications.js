@@ -1,7 +1,6 @@
 createPendingNotification = function(o) {
   o.dateCreated = new Date()
   o.read = false
-
   // Create the notification in the collection
   Notifications.insert(o);
 };

@@ -189,7 +189,6 @@ Meteor.methods({
 
 	"answerNormalQuestion": function(prediction){
 		check(prediction, Object);
-
 		var userId = Meteor.userId();
 		var isValid = validateAnswer(prediction.questionId, prediction.answered);
 		var selector = {userId: userId, gameId: prediction.gameId, period: prediction.period}
@@ -207,27 +206,3 @@ Meteor.methods({
 		}
 	}
 });
-
-// if (c.type === "live" || c.type === "atBat"){
-// 	wager = parseInt(c.wager || "0", 10);
-// 	var multiplier = parseFloat(c.multiplier || "0");
-// }
-
-// 'questionAnswered': function(c) {
-// 	check(c, Object);
-// 	// userId, answered, type, wager, multiplier, gameId, period, questionId, description,
-// 	var isValid = validateAnswer(c.questionId, c.answer);
-//
-// 	// Update question with the user who have answered.
-// 	Questions.update(c.questionId, {$addToSet: {usersAnswered: c.userId}});
-// 	Games.update({_id: c.gameId}, {$addToSet: {users: c.userId}});
-//
-// 	// Free pickks give coins and adds a notification
-// 	if (c.type === "free-pickk"){
-//
-// 	} else if (c.type === "prediction") {
-//
-// 	} else {
-//
-// 	}
-// },

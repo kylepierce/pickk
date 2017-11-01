@@ -11,9 +11,9 @@ Meteor.publish("userNotificationSettings", function() {
 });
 
 Meteor.publish('userNotifications', function(filters) {
-	check(filters, Object)
+  check(filters, Object);
   this.unblock()
-	var userId = this.userId
+  var userId = filters.userId  
 	var type = filters.type
 	var status = filters.status
 	var user = UserList.find({_id: userId}).fetch()

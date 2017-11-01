@@ -8,31 +8,58 @@ if (Meteor.isClient) {
   describe('questions & answers', function() {
     beforeEach(function() {
       // runs before each test in this block
-      Meteor.subscribe('gamePlayed', "CharlieDalton", "NoOutsGame")
+      Meteor.subscribe('gamePlayed', "NoOutsGame")
       Meteor.subscribe('notifications')
+      
     });
 
     it('gives coins for a correct answer', function() {
       Meteor.loginWithToken("CharlieDalton");
+      var prediction = {
+        gameId: "NoOutsGame",
+        period: 1,
+        questionId: "PitchQuestion",
+        type: "live",
+        answered: "option1",
+        multiplier: 2.1,
+        wager: 250
+      }
+      var modify = {
+        questionId: "PitchQuestion",
+        option: "option1"
+      }
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option1", 250, "Strike", callback)}))
+        .then(denodeify(function (callback) { return Meteor.call("answerNormalQuestion", prediction, callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
-        .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
+        .then(denodeify(function (callback) { return Meteor.call("modifyQuestionStatus", modify, callback)}))
         .then(function() {
-          assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 10275);
+          assert.equal(GamePlayed.findOne({period: 1, gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 10275);
         });
     });
 
     it('does not give coins for an incorrect answer', function() {
       Meteor.loginWithToken("CharlieDalton");
+      var prediction = {
+        gameId: "NoOutsGame",
+        period: 1,
+        questionId: "PitchQuestion",
+        type: "live",
+        answered: "option1",
+        multiplier: 2.1,
+        wager: 500
+      }
+      var modify = {
+        questionId: "PitchQuestion",
+        option: "option2"
+      }
       return Promise.resolve()
         .then(waitFor(function() {return DDP._allSubscriptionsReady()}))
         .then(denodeify(Tracker.afterFlush))
-        .then(denodeify(function(callback) {return Meteor.call("questionAnswered", "PitchQuestion", "option3", 500, "Hit", callback)}))
+        .then(denodeify(function (callback) {return Meteor.call("answerNormalQuestion", prediction, callback)}))
         .then(denodeify(function(callback) {return Meteor.call("deactivateStatus", "PitchQuestion", callback)}))
-        .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", "PitchQuestion", "option1", callback)}))
+        .then(denodeify(function(callback) {return Meteor.call("modifyQuestionStatus", modify, callback)}))
         .then(function() {
           assert.equal(GamePlayed.findOne({gameId: "NoOutsGame", userId: "CharlieDalton"}).coins, 9500);
         });

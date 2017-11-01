@@ -38,5 +38,7 @@ handleOpenURL = function(url){
     Session.set("deepLinked", data);
     console.log(data);
   	Router.go(url)
+  } else {
+    // create a notification as a session.
   }
 }

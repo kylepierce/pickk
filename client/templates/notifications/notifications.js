@@ -10,7 +10,9 @@ Template.notifications.onCreated(function() {
       status: [true, false]
     }
   }
-  var data = {}
+  var data = {
+		userId: Meteor.userId()
+	}
   if(read){
     var read = read.toLowerCase();
     if (read === "true"){
