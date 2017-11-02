@@ -25,7 +25,7 @@
 			</div>
 
 	    {{#ionList}}
-				<div class="container ten-spacing">
+				<div class="container ten-spacing hundred-bottom">
 			    {{> gameHistory number=-1 extended=true prePickks=false}}
 				</div>
     	{{/ionList}}
@@ -34,7 +34,11 @@
 </template>
 
 <template name="gameHistory">
-	{{#each q in questions i}}
-		{{> singleQuestion q=q extended=this.extended prePickks=false}}
-	{{/each}}
+	{{#if Template.subscriptionsReady}}
+		{{#each q in questions i}}
+			{{> singleQuestion q=q extended=this.extended prePickks=false}}
+		{{/each}}
+	{{else}}
+		{{> spinLoader}}
+	{{/if}}
 </template>

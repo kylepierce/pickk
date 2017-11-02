@@ -9,3 +9,7 @@ Template.searchLeaguesBox.helpers({
     return {placeholder: "Search..."}
   }
 })
+
+Template.searchLeaguesBox.onRendered(function () {
+  var input = $('input').focus()
+});

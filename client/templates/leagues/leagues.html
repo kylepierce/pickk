@@ -23,6 +23,7 @@
     {{#ionContent}}
 		{{> heroSection location="league"}}
 		<div class="container hundred-bottom">
+		{{#if Template.subscriptionsReady}}
 			{{#each league in userLeague}}
 				{{#with league}}
 					{{> leagueCard}}
@@ -36,6 +37,9 @@
 					</a>
 				{{/ionItem}}
 			{{/if}}
+		{{else}}
+			{{> spinLoader}}
+		{{/if}}
 		</div>
     {{/ionContent}}
   {{/ionView}}

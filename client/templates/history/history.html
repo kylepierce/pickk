@@ -14,19 +14,23 @@
  {{/contentFor}}
 
   {{#ionView }}
-    {{#ionContent}}
-			<div id="history" class="list">
-				{{#if noGamesPlayed}}
-					<div class="no-notifications">
-						No Games Played
-					</div>
-				{{/if}}
-				{{#each gamesPlayed}}
-					{{#ionItem path="gameHistory.show"}}
-						{{name}}
-					{{/ionItem}}
-				{{/each}}
-			</div>
+		{{#ionContent}}
+			{{#if Template.subscriptionsReady}}
+				<div id="history" class="list">
+					{{#if noGamesPlayed}}
+						<div class="no-notifications">
+							No Games Played
+						</div>
+					{{/if}}
+					{{#each gamesPlayed}}
+						{{#ionItem path="gameHistory.show"}}
+							{{name}}
+						{{/ionItem}}
+					{{/each}}
+				</div>
+			{{else}}
+				{{> spinLoader}}
+			{{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>

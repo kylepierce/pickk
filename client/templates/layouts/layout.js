@@ -23,6 +23,9 @@ Template.mainLayout.events({
   'click [data-action=filterLeaderboard]': function () {
     IonModal.open('weekFilter');
   },
+  'click [data-action=filterNotifications]': function () {
+    IonModal.open('notificationFilter');
+  },
 
 
   // 'click [data-action=editMatchup]': function(){

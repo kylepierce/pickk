@@ -1,8 +1,5 @@
 <template name="notificationFilter">
-	<div class="bar bar-header bar-dark">
-    <h1 class="title white-text-header">Filter Notifications</h1>
-  </div>
-  <div style="margin-top:65px;">
+	{{#ionModal class="white-text-header" title="Filter Games"}}
 		{{#if unread}}
 			<button class="button button-balanced col col-100" data-action="readAll">
 				Mark All As Read
@@ -19,7 +16,7 @@
 			{{> notificationOption o=option}}
 		{{/each}}
 		</form>
-  </div>
+	{{/ionModal}}
 </template>
 
 <template name="notificationOption">

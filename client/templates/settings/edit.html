@@ -39,13 +39,7 @@
 
 <template name="oldUserHeader">
   {{#contentFor "headerButtonLeft"}}
-    <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-      {{#if isAndroid}}
-        {{> ionIcon icon='android-more-vertical'}}
-      {{else}}
-        {{> ionIcon icon='navicon'}}
-      {{/if}}
-    </button>
+    {{>ionNavBackButton text=" " path="index"}}
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}

@@ -24,16 +24,18 @@
     {{#ionContent}}
 			{{> heroSection location="matchup"}}
       <div class="container hundred-bottom">
-				{{#if anyMatchups}}
-					{{#each matchup in matchups}}
-						{{> matchupCard m=matchup}}
-					{{/each}}
-				{{else}}
-					<div class="no-notifications">
-						No Matchups Found.
-					</div>
-				{{/if}}
-				<button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
+        {{#if Template.subscriptionsReady}}
+				  {{#if anyMatchups}}
+				  	{{#each matchup in matchups}}
+					  	{{> matchupCard m=matchup}}
+				  	{{/each}}
+				  {{else}}
+            <div class="no-notifications">No Matchups Found.</div>
+            <button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
+				  {{/if}}
+        {{else}}
+          {{> spinLoader}}
+        {{/if}}
       </div>
     {{/ionContent}}
   {{/ionView}}

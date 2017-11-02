@@ -28,9 +28,9 @@ Template.pushPrompt.rendered = function () {
 	        		new: newOrNah
 						});
 
-						enableIntercomNotifications();
+						// enableIntercomNotifications();
 						enablePush();
-			      intercom.updateUser(data);
+			      // intercom.updateUser(data);
 			      Router.go("/");
 			    },
 			    onCancel: function() {
