@@ -51,11 +51,29 @@ Meteor.publish('liveGames', function() {
   return Games.find(selector, parms);
 });
 
+
+Meteor.publish('prePickkGames', function () {
+  this.unblock()
+  var specificDay = moment()
+  var start = specificDay.startOf('day').add(4, "hour").toDate();
+  var selector = { scheduled: { $gt: start }, status: { $ne: "In-Progress" }, pre_game_processed: true, type: { $ne: "prediction" } };
+  var parms = {
+    sort: { scheduled: 1 },
+    limit: 3,
+    fields: { inning: 0, pbp: 0 }
+  }
+  
+  return Games.find(selector, parms);
+});
+
 Meteor.publish('upcomingGames', function() {
   this.unblock()
   var specificDay = moment()
   var start = specificDay.startOf('day').add(4, "hour").toDate();
-  var selector = {scheduled: {$gt: start}, status: "Pre-Game", type: {$ne: "prediction"}};
+  var selector = {
+    scheduled: { $gt: start }, status: "Pre-Game", type: { $ne: "prediction" }, pre_game_processed: { $exists: false }
+  };
+  
   var parms = {
     sort: {scheduled: 1},
     limit: 3,

@@ -25,6 +25,7 @@ Meteor.methods({
 			text: message,
 			sound: 'default',
 			badge: 1,
+			query: {}
 		});
 	},
 
@@ -63,9 +64,8 @@ Meteor.methods({
 		}
 	},
 
-	'push': function(message, userId) {
+	'push': function(message) {
 		check(message, String);
-		check(userId, String);
 		this.unblock()
 		if (!Meteor.userId()) {
       throw new Meteor.Error("not-signed-in", "Must be the logged in");
@@ -82,7 +82,7 @@ Meteor.methods({
 			text: message,
 			sound: 'default',
 			badge: 1,
-			query: {userId: userId}
+			query: {}
 		});
 	},
 

@@ -6,14 +6,21 @@ Template.home.rendered = function () {
   }
 };
 
-Template.home.helpers({
+Template.homeGames.onCreated(function() {
+  this.subscribe('liveGames');
+  this.subscribe('prePickkGames');
+  this.subscribe('upcomingGames');
+});
+
+Template.homeGames.helpers({
   listGames: function(){
-    Meteor.subscribe('liveGames');
     return Games.find({status: "In-Progress"});
   },
+  prePickk: function () {
+    return Games.find({ pre_game_processed: true }, { sort: { iso: 1 } });
+  },
   upcomingGames: function(){
-    Meteor.subscribe('upcomingGames');
-    return Games.find({status: "Pre-Game"}, {sort: {iso: 1}});
+    return Games.find({ status: "Pre-Game", pre_game_processed: { $exists: false }}, {sort: {iso: 1}});
   },
 });
 
