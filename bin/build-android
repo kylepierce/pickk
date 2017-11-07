@@ -22,7 +22,7 @@ echo "DON'T FORGET CHANGE Project->Build Settings->Linking->Runpath Search Paths
 rm -rf /tmp/build
 rm -rf $DIRNAME/../.meteor/local/cordova-build
 
-meteor build /tmp/build --server=$BASE_URL --mobile-settings /tmp/$ENV.json "$@"
+meteor build /tmp/build --server=pickk.net --mobile-settings /tmp/$ENV.json "$@"
 
 echo "Setting Android..."
 cd ~/../../tmp/build/android

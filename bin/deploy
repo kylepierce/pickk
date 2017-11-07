@@ -1,46 +1,19 @@
-# #!/bin/bash
-#
-# set -eux
-#
-# DIRNAME=$(cd `dirname $0` && pwd)
-#
-# ENV=${1:-}
-# if [ -z $ENV ]; then
-#   echo "Usage: $0 ENV"
-#   echo "ENV = [prod, stag]"
-#   exit 1
-# else
-#   shift
-# fi
-#
-# source $DIRNAME/config
-#
-# # if [[ "$ENV" == "stag" ]]
-# # then
-#
-# #   source $DIRNAME/mupx/stop
-#
-# #   $DIRNAME/merge-settings stag > /tmp/stag.json
-# #   STAG_MONGODB_USERNAME=$(json -f /tmp/stag.json mongo.username)
-# #   STAG_MONGODB_PASSWORD=$(json -f /tmp/stag.json mongo.password)
-# #   STAG_MONGODB_HOST=$(json -f /tmp/stag.json mongo.host)
-# #   STAG_MONGODB_PORT=$(json -f /tmp/stag.json mongo.port)
-# #   STAG_MONGODB_DB=$(json -f /tmp/stag.json mongo.db)
-#
-# #   $DIRNAME/merge-settings prod > /tmp/prod.json
-# #   PROD_MONGODB_USERNAME=$(json -f /tmp/prod.json mongo.username)
-# #   PROD_MONGODB_PASSWORD=$(json -f /tmp/prod.json mongo.password)
-# #   PROD_MONGODB_HOST=$(json -f /tmp/prod.json mongo.host)
-# #   PROD_MONGODB_PORT=$(json -f /tmp/prod.json mongo.port)
-# #   PROD_MONGODB_DB=$(json -f /tmp/prod.json mongo.db)
-#
-# #   mongo --host $STAG_MONGODB_HOST --port $STAG_MONGODB_PORT --username $STAG_MONGODB_USERNAME --password $STAG_MONGODB_PASSWORD $STAG_MONGODB_DB --eval "printjson(db.dropDatabase())" | grep '"ok" : 1'
-# #   mongo --host $STAG_MONGODB_HOST --port $STAG_MONGODB_PORT --username $STAG_MONGODB_USERNAME --password $STAG_MONGODB_PASSWORD $STAG_MONGODB_DB --eval "printjson(db.copyDatabase('$PROD_MONGODB_DB', '$STAG_MONGODB_DB', '$PROD_MONGODB_HOST:$PROD_MONGODB_PORT', '$PROD_MONGODB_USERNAME', '$PROD_MONGODB_PASSWORD'))" | grep '"ok" : 1'
-#
-# # fi
-#
-# source $DIRNAME/mupx/deploy
-# source $DIRNAME/logs $ENV
+#!/bin/bash
 
-DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json pickkapp.meteorapp.com 
-DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy www.pickk.net --settings settings.json
+set -eux
+
+DIRNAME=$(cd `dirname $0` && pwd)
+ENV=${1:-}
+if [ -z $ENV ]; then
+  ENV="dev"
+else
+  shift
+fi
+
+echo $ENV
+
+$DIRNAME/merge-settings $ENV > /tmp/$ENV.json
+
+
+DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy https://www.pickk.net --settings settings.json
+# DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy www.pickk.net --settings /tmp/$ENV.json "$@"

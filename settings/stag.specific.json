@@ -1,15 +1,22 @@
 {
+  "public": {
+    "rootUrl": "https://pickkstage.meteorapp.com"
+  },
   "private": {
     "facebook": {
       "clientId": "1590919307873865",
       "secret": "8338d170ffd388e16a4d348c209de6fa"
+    },
+    "twitter": {
+      "key": "D3R4rpdKWbzzBoVaJwyg6dFH2",
+      "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
     }
   },
   "mongo": {
     "username": "getpickk",
-    "password": "xEZMosrpQRqg",
+    "password": "Imonaboat118",
     "host": "candidate.11.mongolayer.com",
     "port": "11179",
-    "db": "pickk-stag"
+    "db": "pickk-production"
   }
 }
