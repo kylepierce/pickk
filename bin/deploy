@@ -14,6 +14,4 @@ echo $ENV
 
 $DIRNAME/merge-settings $ENV > /tmp/$ENV.json
 
-
 DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy https://www.pickk.net --settings settings.json
-# DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy www.pickk.net --settings /tmp/$ENV.json "$@"
