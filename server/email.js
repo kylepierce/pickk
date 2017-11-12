@@ -7,7 +7,9 @@ Meteor.startup(function() {
   } else {
     process.env.MAIL_URL = "smtp://postmaster%40mg.pickk.co:2e53ee0dce2deade7b63443c39322243@smtp.mailgun.org:587"
   }
-
+  // Accounts.urls.resetPassword = function (token) {
+  //   return 'pickk://reset-password/' + token;
+  // };
 });
 
 Accounts.emailTemplates.siteName = "Pickk"
@@ -15,17 +17,20 @@ Accounts.emailTemplates.from = "Pickk App <hi@pickk.co>";
 
 Accounts.emailTemplates.resetPassword = {
   subject(user) {
-    return "Reset your password on Meteor Todos";
+    return "Reset your password on Pickk!";
   },
   text(user, url) {
-    return `Hello!
-Click the link below to reset your password on Pickk.
+    var name = Handlebars.templates['welcome']({ name: 'Chris' });
+    return 
+`${name} Click the link below to reset your password on Pickk.
 ${url}
 If you didn't request this email, please ignore it.
 Thanks,
 `
   },
   html(user, url) {
+    console.log(user)
+    return Handlebars.templates['welcome']({ name: user.profile.firstName, url: url }); 
     // This is where HTML email content would go.
     // See the section about html emails below.
   }

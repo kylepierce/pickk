@@ -13,15 +13,20 @@
       {{#ionSideMenuContent}}
         {{> ionNavBar name="stub"}}
           {{#ionNavView transition="forward"}}
-            {{#contentFor "headerButtonLeft"}}
-              <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
-                {{#if isAndroid}}
-                  {{> ionIcon icon='android-more-vertical'}}
-                {{else}}
-                  {{> ionIcon icon='navicon'}}
-                {{/if}}
-              </button>
-            {{/contentFor}}
+            {{#if currentUser }}
+              {{#contentFor "headerButtonLeft"}}
+                <button class="button button-clear nav-icon pull-left" data-ion-menu-toggle="left">
+                  {{#if isAndroid}}
+                    {{> ionIcon icon='android-more-vertical'}}
+                  {{else}}
+                    {{> ionIcon icon='navicon'}}
+                  {{/if}}
+                </button>
+              {{/contentFor}}
+            {{else}}
+               {{#contentFor "headerButtonLeft"}} {{>ionNavBackButton text=" " path="landing"}} {{/contentFor}}
+            {{/if}}
+            
           {{/ionNavView}}
 
         {{> yield}}
