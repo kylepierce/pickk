@@ -13,6 +13,7 @@ App.accessRule("blob:*");
 App.accessRule('*', { type: 'navigation' });
 
 App.icons({
+  "app_store": "resources/icons/icon-1024.png", //1024x1024
   "iphone_2x": "resources/icons/icon-60-2x.png", // 120x120
   "iphone_3x": "resources/icons/icon-60-3x.png", // 180x180
   "ipad": "resources/icons/icon-76.png", // 76x76
@@ -24,15 +25,15 @@ App.icons({
   "ios_spotlight": "resources/icons/icon-40.png", // 40x40
   "ios_spotlight_2x": "resources/icons/icon-40-2x.png", // 80x80
   "ios_spotlight_3x": "resources/icons/icon-40-3x.png", // 120x120
-  // "ios_notification": "resources/icons/ios_notification.png", //20x20
-  // "ios_notification_2x": "resources/icons/icon-40.png", //40x40
-  // "ios_notification_3x": "resources/icons/ios_notification_3x.png", //60x60
-  // "iphone_legacy": "resources/icons/iphone_legacy.png", //57x57
-  // "iphone_legacy_2x": "resources/icons/iphone_legacy_2x.png", //114x114
-  // "ipad_spotlight_legacy": "resources/icons/ipad_spotlight_legacy.png", //50x50
-  // "ipad_spotlight_legacy_2x": "resources/icons/ipad_spotlight_legacy_2x.png", //100x100
-  // "ipad_app_legacy": "resources/icons/ipad_app_legacy.png", //72x72
-  // "ipad_app_legacy_2x": "resources/icons/ipad_app_legacy_2x.png", //144x144
+  "ios_notification": "resources/icons/icon-20.png", //20x20
+  "ios_notification_2x": "resources/icons/icon-20-2x.png", //40x40
+  "ios_notification_3x": "resources/icons/icon-20-3x.png", //60x60
+  "iphone_legacy": "resources/icons/icon-57.png", //57x57
+  "iphone_legacy_2x": "resources/icons/icon-57-2x.png", //114x114
+  "ipad_spotlight_legacy": "resources/icons/icon-50.png", //50x50
+  "ipad_spotlight_legacy_2x": "resources/icons/icon-50-2x.png", //100x100
+  "ipad_app_legacy": "resources/icons/icon-72.png", //72x72
+  "ipad_app_legacy_2x": "resources/icons/icon-72-2x.png", //144x144
   "android_mdpi": "resources/icons/android_mdpi.png", // 48x48
   "android_hdpi": "resources/icons/android_hdpi.png", // 72x72
   "android_xhdpi": "resources/icons/android_xhdpi.png", // 96x96
