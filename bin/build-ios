@@ -23,3 +23,5 @@ rm -rf /tmp/build
 rm -rf $DIRNAME/../.meteor/local/cordova-build
 
 meteor build /tmp/build --server=https://www.pickk.net --mobile-settings /tmp/$ENV.json "$@"
+
+open /tmp/build/ios
