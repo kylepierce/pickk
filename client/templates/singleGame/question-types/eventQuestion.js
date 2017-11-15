@@ -186,26 +186,25 @@ Template.eventQuestion.events({
       var multiplierRange = "game changer"
     }
 
-    analytics.track("question answered", {
-      gameId: this.q.gameId,
-      period: this.q.period,
-      questionId: this.q._id,
-      type: this.t,
-      answered: lastPlay.option,
-      userId: Meteor.userId(),
-      multiplier: multiplier,
-      multiplierRange: multiplierRange,
-      wager: lastWager
-    });
+    
 
 		Meteor.call('answerNormalQuestion', prediction, function(error, response){
       if (error){
         console.log(error);
       } else {
-        console.log("Done");
+        analytics.track("question answered", {
+          gameId: this.q.gameId,
+          period: this.q.period,
+          questionId: this.q._id,
+          type: this.t,
+          answered: lastPlay.option,
+          userId: Meteor.userId(),
+          multiplier: multiplier,
+          multiplierRange: multiplierRange,
+          wager: lastWager
+        });
       }
     });
-    console.log(prediction);
     QuestionPopover.hide();
 	}
 });

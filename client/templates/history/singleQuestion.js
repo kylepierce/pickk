@@ -155,15 +155,53 @@ Template.questionDetails.onCreated(function(){
 
 Template.questionDetails.helpers({
   'reported': function(){
-		var questionReported = QuestionReport.findOne({gameId: this.q.gameId, userId: Meteor.userId(), questionId: this.q._id});
-    if (questionReported){
-      return true;
-    }
-  }
+		var rightNow = moment();
+		var days = moment(this.q.dateCreated);
+		var timeElapsed = rightNow.diff(days, 'days')
+		var questionReported = QuestionReport.findOne({userId: Meteor.userId(), questionId: this.q._id});
+		if (questionReported){
+			var obj = {
+				title: "You Reported This Question",
+				report: questionReported
+			}
+			return obj
+		} else if (timeElapsed > 6) {
+			var obj = {
+				title: "Reporting Closed (Time)"
+			}
+			return obj
+		}
+	},
+	prettyDate: function(date){
+		return moment(date).format("MMM Do YYYY, h:mm a")
+	},
+	optionTitle: function(optionNumber){
+		if (this.report.questionId){
+			var question = Questions.findOne({ _id: this.report.questionId });
+			var option = question.options[optionNumber]
+			if (!option.title){
+				return "Deleted"
+			} else {
+				return option.title
+			}
+		}
+	},
+	orginalAnswer: function(){
+		if (this.report.questionId) {
+			var question = Questions.findOne({ _id: this.report.questionId });
+			var correct = question.outcome
+			var option = question.options[correct]
+			if (!option.title){
+				return "No Answer Yet"
+			} else {
+				return option.title
+			}
+		}
+	}
 });
 
 Template.questionDetails.events({
   'click [data-action=report-question]': function(e, t){
-    IonModal.open('_reportQuestion', this.question);
+    IonModal.open('_reportQuestion', this.q);
   }
 });

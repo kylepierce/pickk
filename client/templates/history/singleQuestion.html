@@ -65,18 +65,21 @@
     <div class="container ten-spacing">
       {{> singleQuestion q=this.q single=true extended=true}}
 
-      {{#if reported}}
+      {{#with reported}}
         <button class="button ten-spacing button-assertive col col-100" disabled ata-action="report-question">
-          Question Reported
+          {{this.title}}
         </button>
-        <div>
-          You reported this question {{questionReported.dateCreated}}
+        <div style="color: black;">
+          <strong>You reported this question</strong><br>
+          Question Answer: {{orginalAnswer}} <br>
+          Your Answer: {{optionTitle this.report.correctAnswer}} <br>
+          Date: {{prettyDate this.report.dateCreated}} <br>
         </div>
       {{else}}
         <button class="button ten-spacing button-assertive col col-100" data-action="report-question">
           Report This Question
         </button>
-      {{/if}}
+      {{/with}}
     </div>
   {{/ionModal}}
 </template>
