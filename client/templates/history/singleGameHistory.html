@@ -35,10 +35,26 @@
 
 <template name="gameHistory">
 	{{#if Template.subscriptionsReady}}
-		{{#each q in questions i}}
-			{{> singleQuestion q=q extended=this.extended prePickks=false}}
-		{{/each}}
+		{{#if this.card}}
+			<div class="card-list">
+				<div class="card-list-header ten-spacing">Question History</div>
+			    {{> listOfQuestions number=this.number extended=this.extended prePickks=this.prePickks}}
+
+     		<div class="card-list-footer" data-action="previous-answers">
+        	View Entire History
+      	</div>
+			</div>
+		{{else}}
+			{{> listOfQuestions number=this.number extended=this.extended prePickks=this.prePickks}}
+		{{/if}}
+		
 	{{else}}
 		{{> spinLoader}}
 	{{/if}}
+</template>
+
+<template name="listOfQuestions">
+	{{#each q in questions i}}
+		{{> singleQuestion q=q extended=this.extended prePickks=false}}
+	{{/each}}
 </template>

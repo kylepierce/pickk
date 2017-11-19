@@ -23,23 +23,25 @@
 </template>
 
 <template name="miniLeaderboard">
-  {{#if leaderboard}}
-    <ol type="1" id="leaderboard">
-      {{#each player in players}}
-        {{> singlePlayerLeader player=player}}
-      {{/each}}
-    </ol>
+  {{#if Template.subscriptionsReady}}
+    {{#if leaderboard}}
+      {{#if this.card}}
+        <div class="card-list animated fast fadeInUp">
+          <div class="card-list-header"><span>Leaderboard +</span></div>
+            {{> leaderboardList}}
+          <div class="card-list-footer" data-action="game-leaderboard">View All</div>
+        </div>
+      {{else}}
+        {{> leaderboardList}}
+      {{/if}}
+    {{/if}}
   {{else}}
-  <ol type="1" id="leaderboard">
-    {{#each number in limit}}
-      {{> singlePlayerLeaderHolder number=number}}
-    {{/each}}
-  </ol>
+    <h3 class="center animated fast fadeInUp" style="margin-top:50px;">Loading Leaderboard...</h3>
   {{/if}}
 </template>
 
 <template name="singlePlayerLeader">
-  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}} animated fast fadeInUp">
     {{> userAvatar userId=player._id}}
     <li class="list-font" value={{player.rank}}>
       <span class="username">{{username player._id}}</span>
@@ -48,6 +50,14 @@
       </span>
     </li>
   </div>
+</template>
+
+<template name="leaderboardList">
+  <ol type="1" id="leaderboard">
+    {{#each player in players}} 
+      {{> singlePlayerLeader player=player}} 
+    {{/each}}
+  </ol>
 </template>
 
 <template name="singlePlayerLeaderHolder">

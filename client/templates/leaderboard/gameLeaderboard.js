@@ -67,6 +67,32 @@ Template.miniLeaderboard.helpers({
 	}
 });
 
+Template.miniLeaderboard.events({
+	'click [data-action=game-leaderboard]': function (e, t) {
+		// analytics.track("waiting-leaderboard", {
+		//   userId: userId,
+		//   gameId: gameId,
+		// });
+		var params = 'type=' + this.data.type + '&_id=' + this.data._id
+		if (this.data.period) {
+			params = params + "&period=" + this.data.period
+		}
+		Router.go('/leaderboard?' + params)
+	},
+});
+
+Template.leaderboardList.helpers({
+	'players': function () {
+		var templateData = this.data
+		if (templateData && templateData.limit) {
+			var limit = templateData.limit
+
+			var leaderboard = Leaderboard.find({}, { sort: { coins: -1 }, limit: limit }).fetch();
+			return leaderboard
+		}
+	}
+});
+
 Template.singlePlayerLeader.helpers({
 	username: function(id){
 		var user = UserList.findOne({_id: id});

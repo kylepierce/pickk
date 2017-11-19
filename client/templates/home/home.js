@@ -23,10 +23,10 @@ Template.homeGames.helpers({
     return Games.find({status: "In-Progress"});
   },
   prePickk: function () {
-    return Games.find({ pre_game_processed: true }, { sort: { iso: 1 } });
+    return Games.find({ pre_game_processed: true });
   },
   upcomingGames: function(){
-    return Games.find({ status: "Pre-Game", pre_game_processed: { $exists: false }}, {sort: {iso: 1}});
+    return Games.find({ status: "Pre-Game", pre_game_processed: { $exists: false }});
   },
 });
 
