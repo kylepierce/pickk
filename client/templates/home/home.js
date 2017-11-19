@@ -4,6 +4,12 @@ Template.home.rendered = function () {
   if(deeplink && deeplink["$deeplink_path"] && deeplink["$deeplink_path"] !== ''){
     handleOpenURL(deeplink["$deeplink_path"])
   }
+  var user = Meteor.user()
+  if(user.profile.username === undefined){
+    Router.go('/editProfile');
+  } else if (user.profile.over18 === undefined || user.profile.over21 === undefined){
+    Router.go('/editProfile');
+  }
 };
 
 Template.homeGames.onCreated(function() {

@@ -24,13 +24,42 @@ Template.memberCheck.helpers({
 
 Template.memberCheck.events({
   'click [data-action=joinLeague]': function() {
-    var currentUserId = Meteor.userId();
+    var currentUser = Meteor.user();
     var leagueId = Router.current().params._id
     var league = Groups.findOne({_id: leagueId})
     var leagueName = league.name
-    sAlert.success("You Joined " + leagueName , {effect: 'slide', position: 'bottom', html: true});
-    // Add this user to the league
-    Meteor.call('joinLeague', currentUserId, leagueId);
+    if(league.over21 === true){
+      var ageOkay = currentUser.profile.over21
+      if(ageOkay === false){
+        sAlert.error("You Must Be Over 21 To Join " + leagueName, { effect: 'slide', position: 'bottom', html: true });
+      } else if(ageOkay === true){
+        IonPopup.confirm({
+          title: 'Joined Sponsored League',
+          template: 'By joining this sponsored league you agree: <ul><li>- You are over the age of 21</li><li>- Allow Sponor to Contact You via Email or SMS</li><li>- Submit required documents if you win prizes</li></ul> <br><br><strong>If you accept these terms click allow to join this Sponsored League!</strong>',
+          cancelText: "Don't Allow",
+          okText: "Allow",
+          onOk: function () {
+            analytics.track("joined sponsored league", {
+              id: currentUser._id,
+              leagueId: league._id
+            });
+            Meteor.call('joinLeague', currentUser._id, leagueId, function () {
+              sAlert.success("You Joined " + leagueName, { effect: 'slide', position: 'bottom', html: true });
+            });
+          },
+          onCancel: function () {
+            analytics.track("did not accepted sponsored league", {
+              id: currentUser._id,
+              leagueId: league._id
+            });
+          }
+        });
+      }
+    } else {
+      Meteor.call('joinLeague', currentUser._id, leagueId, function () {
+        sAlert.success("You Joined " + leagueName, { effect: 'slide', position: 'bottom', html: true });
+      });
+    }
   },
   'click [data-action=invite]': function(){
     var leagueId = Router.current().params._id

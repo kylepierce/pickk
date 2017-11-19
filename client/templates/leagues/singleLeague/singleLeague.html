@@ -1,5 +1,4 @@
 <template name="singleLeague">
-<!-- Standard Nav instead of the custom nav design -->
   {{#contentFor "headerButtonLeft"}}
     {{> deepBackButton where="leagues"}}
   {{/contentFor}}
@@ -7,9 +6,7 @@
   {{> chatIcon}}
 
   {{#contentFor "headerTitle"}}
-    <h1 class="title white-text-header">
-      {{leagueName}}
-    </h1>
+    <h1 class="title white-text-header">{{leagueName}}</h1>
   {{/contentFor}}
 
   {{#ionView}}
