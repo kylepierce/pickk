@@ -20,23 +20,55 @@ Accounts.emailTemplates.resetPassword = {
     return "Reset your password on Pickk!";
   },
   text(user, url) {
-    var name = Handlebars.templates['welcome']({ name: 'Chris' });
     return 
-`${name} Click the link below to reset your password on Pickk.
+`Forget your password? Click the link below to change the password.
+
 ${url}
-If you didn't request this email, please ignore it.
-Thanks,
+
+You received this email because you just requested a password reset. If you did not request a password reset you can ignore this message.
+If you have any questions, just reply to this email! We're always happy to help out.
+
+Cheers,
+The Pickk Team
 `
   },
   html(user, url) {
-    console.log(user)
-    return Handlebars.templates['welcome']({ name: user.profile.firstName, url: url }); 
-    // This is where HTML email content would go.
-    // See the section about html emails below.
+    return Handlebars.templates['core']({ 
+      headline: "Forget your password?", 
+      preheader: "Steps to reset your password",
+      copyAbove: "Click the button below to change the password.",
+      buttonText: "Reset Password",
+      copyBelow: "If you have any questions, just reply to this email! We're always happy to help out.",
+      reason: "You received this email because you just requested a password reset. If you did not request a password reset you can ignore this message.",
+      url: url 
+    });
   }
 };
 
 Accounts.emailTemplates.enrollAccount = {
+  subject(user) {
+    return "Good Call!";
+  },
+  text(user, url) {
+    return `Hello!
+Click the link below to Verify your email on Pickk.
+${url}
+`
+  },
+  html(user, url) {
+    return Handlebars.templates['core']({
+      headline: "Verify Pickk",
+      preheader: "Thanks for joining Pickk! Pickk is the best way to watch live sports and play with friends. For a chance to win prizes you must have a valid email.",
+      copyAbove: "Click the button below to verify this email account.",
+      buttonText: "Verify",
+      copyBelow: "If you have any questions, just reply to this email! We're always happy to help out.",
+      reason: "You received this email because you created an account in the app.",
+      url: url
+    });
+  }
+};
+
+Accounts.emailTemplates.verifyEmail = {
   subject(user) {
     return "Verify Your Email";
   },
@@ -47,7 +79,14 @@ ${url}
 `
   },
   html(user, url) {
-    // This is where HTML email content would go.
-    // See the section about html emails below.
+    return Handlebars.templates['core']({
+      headline: "Verfiy Email",
+      preheader: "For a chance to win prizes you must have a valid email.",
+      copyAbove: "Click the button below to verify this email account.",
+      buttonText: "Verify",
+      copyBelow: "If you have any questions, just reply to this email! We're always happy to help out.",
+      reason: "You received this email because you just requested a email verification.",
+      url: url
+    });
   }
 };

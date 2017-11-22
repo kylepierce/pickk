@@ -37,8 +37,10 @@ Template.singleMatchup.helpers({
     var gameId = this.gameId[0]
     Meteor.subscribe('singleGame', gameId);
     var game = Games.findOne({_id: gameId});
-    if (game && game.status === "In-Progress"){
-      return true
+    if (game){
+      if (game.status === "In-Progress" || game.status === "Completed") {
+        return true
+      }
     }
   }
 });
