@@ -1,5 +1,5 @@
 Template.singleMatchup.onCreated(function() {
-
+  this.subscribe('listOfGames', this.data.matchup[0].gameId)
 });
 
 Template.singleMatchup.helpers({
@@ -10,7 +10,6 @@ Template.singleMatchup.helpers({
     return this.gameId
   },
   'game': function(gameId) {
-    Meteor.subscribe('singleGame', gameId);
     var game = Games.findOne({_id: gameId});
     if (game) {
       return game
@@ -35,12 +34,13 @@ Template.singleMatchup.helpers({
   },
   'gameHasStarted': function(){
     var gameId = this.gameId[0]
-    Meteor.subscribe('singleGame', gameId);
-    var game = Games.findOne({_id: gameId});
-    if (game){
-      if (game.status === "In-Progress" || game.status === "Completed") {
-        return true
-      }
+    var games = Games.find({}).map(function(game){
+      return game.status
+    });
+    
+    var inProgress = games.indexOf("In-Progress");
+    if(inProgress > -1){
+      return true
     }
   },
   "sponsored": function(){
@@ -192,7 +192,6 @@ Template.matchupMember.helpers({
   },
   'gameHasStarted': function(){
     var gameId = this.gameId[0]
-    Meteor.subscribe('singleGame', gameId);
     var game = Games.findOne({_id: gameId});
     if (game && game.status === "In-Progress"){
       return true

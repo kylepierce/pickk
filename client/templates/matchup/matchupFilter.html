@@ -7,19 +7,19 @@
         {{> radioOption o=option}}
       {{/each}}
     </form>
-    <form id="featured">
+    <!-- <form id="featured">
       <div class="item item-divider" style="border: 0">Featured?</div>
       {{#each option in featured}}
         {{> radioOption o=option}}
       {{/each}}
-    </form>
+    </form> -->
     <form id="size">
-      <div class="item item-divider" style="border: 0">Games</div>
+      <div class="item item-divider" style="border: 0">Size</div>
       {{#each option in size}}
-        {{> radioOption o=option}}
+        {{> radioOption class="fifty" o=option}}
       {{/each}}
     </form>
-    <form id="matchup">
+    <form id="matchup" class="hundred-bottom">
       <div class="item item-divider" style="border: 0">Games</div>
       {{#each option in games}}
         {{> radioOption o=option}}

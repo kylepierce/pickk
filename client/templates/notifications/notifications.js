@@ -366,18 +366,21 @@ Template.notificationOptions.helpers({
 	// },
 });
 
+Template.coinsNotification.onCreated(function () {
+	this.subscribe('singleQuestion', this.data.note.questionId);
+	this.subscribe('singleGameData', this.data.note.gameId);
+	// this.subscribe()
+});
+
 Template.coinsNotification.helpers({
 	gameName: function (id) {
 		if (id !== undefined){
-			// Meteor.subscribe('singleGameData', id)
 			var game = Games.findOne({_id: id})
 			return game
 		}
 	},
 	questionTitle: function () {
-    var id = this.note.question
-		Meteor.subscribe('singleQuestion', id)
-		var question = Questions.findOne({_id: id});
+		var question = Questions.findOne({ _id: this.note.questionId});
 		var que = question && question.que
 		if ( que ){
 			return question.que

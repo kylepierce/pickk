@@ -24,7 +24,7 @@
 </template>
 
 <template name="radioOption">
-    <div class="radio-filter">
+    <div class="radio-filter {{class}}">
       {{#ionRadio checked=o.checked o=o value=o.value}}
         {{o.name}}
       {{/ionRadio}}

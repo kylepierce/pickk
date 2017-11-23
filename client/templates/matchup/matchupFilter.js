@@ -16,7 +16,7 @@ Template.filterMatchups.helpers({
   },
   'privacy': function(){
     var data = Session.get('matchupFilter');
-    var options = ["Invite", "Public"]
+    var options = ["Public", "League", "Invite"]
     if(data && data.secret){
       var secret = data.secret.toLowerCase();
     }
@@ -60,7 +60,7 @@ Template.filterMatchups.helpers({
   },
   'size': function(){
     var data = Session.get('matchupFilter');
-    var options = [{name: "1v1", size: 2}, {name: "4 Users", size: 4}, {name: "8 Users", size: 8}, {name: "16 Users", size: 16}, {name: "32 Users", size: 32}, {name: "No Limit", size: -1}]
+    var options = [{name: "Head to Head", size: 2}, {name: "4 Users", size: 4}, {name: "8 Users", size: 8}, {name: "16 Users", size: 16}, {name: "32 Users", size: 32}, {name: "No Limit", size: -1}]
 
     if(data && data.size){
       var converted =parseInt(data.size);

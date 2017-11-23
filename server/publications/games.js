@@ -109,3 +109,9 @@ Meteor.publish('joinGameCount', function(gameId, userId, period){
   Counts.publish(this, "joinGameCount", GamePlayed.find({gameId: gameId, userId: userId, period: period}));
 
 });
+
+Meteor.publish('listOfGames', function (gamesId){
+  check(gamesId, Array);
+  this.unblock();
+  return Games.find({_id: {$in: gamesId}});
+})
