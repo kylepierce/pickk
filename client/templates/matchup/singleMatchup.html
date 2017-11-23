@@ -26,7 +26,7 @@
 
           {{#if alreadyJoined this.users}}
             <div class="line-divider"></div>
-            <div id="button-section">
+            <div id="button-section" class="animated fadeInRight" style="margin-bottom: 20px;">
               {{> matchupMember}}
             </div>
           {{else}}
@@ -84,6 +84,13 @@
     <span class="text">Invite</span>
     <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
   </div>
+  {{#if sponsored}}
+    <div class="button-card half" data-action="prizes">
+      {{> pickkIcon size="small" icon="prizes"}}
+      <span class="text">Prizes</span>
+      <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+    </div>
+  {{/if}}
   {{#if gameHasStarted}}
     <div class="button-card half" data-action="viewLeaderboard">
       {{> pickkIcon size="small" icon="leaderboard"}}

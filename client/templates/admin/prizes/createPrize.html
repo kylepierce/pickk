@@ -1,0 +1,39 @@
+<template name="insertPrize">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton text=" " path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Create New Prize</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+    <div class="container ten-spacing">
+      {{#autoForm collection="Prizes" type="insert" id="createPrize" resetOnSuccess=false }}
+        {{> afQuickField autofocus='' name='name' label-type='stacked' }}
+        {{> afQuickField name='title' label-type='stacked' }}
+        {{> afQuickField name='rank' label-type='stacked'}}
+				{{> afQuickField name='description' label-type='stacked' }}
+        {{> afQuickField name='image' label-type='stacked'}}
+        {{> afQuickField name='url' label-type='stacked'}}
+        {{> afQuickField type="boolean-radios" name='active' label-type='stacked'}}
+        {{> afQuickField type="select-radio" name='type' label-type='stacked'}}
+
+        {{#if afFieldValueIs name="type" value="matchup"}}
+          {{> afQuickField name='matchupId' label-type='stacked' }}
+        {{/if}}
+        {{#if afFieldValueIs name="type" value="league"}}
+          {{> afQuickField name='leagueId' label-type='stacked' }}
+        {{/if}}
+        <br>
+        {{> afQuickField type='datetimepicker' name="dateStart"}}
+        {{> afQuickField type='datetimepicker' name="dateEnd"}}
+        
+
+        <input name="status" type="submit" class="button button-large button-balanced" value="Create Prize">
+      {{/autoForm}}
+    </div>
+    {{/ionContent}}
+   {{/ionView}}
+</template>

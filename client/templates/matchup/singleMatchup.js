@@ -42,6 +42,11 @@ Template.singleMatchup.helpers({
         return true
       }
     }
+  },
+  "sponsored": function(){
+    if(this.sponsored){
+      return true
+    }
   }
 });
 
@@ -54,6 +59,11 @@ Template.singleMatchup.events({
     var matchupId = this._id
     var userId = Meteor.userId()
     Meteor.call('joinMatchup', matchupId, userId);
+  },
+  'click [data-action=prizes]': function (e, t) {
+    var matchupId = this._id
+    var userId = Meteor.userId()
+    Router.go('/prizes?matchup=true&matchupId=' + matchupId);
   },
   // 'click [data-action=leaveMatchup]': function(e, t){
   //   var matchupId = this._id

@@ -15,12 +15,19 @@
 
  {{#ionView}}
    {{#ionContent}}
+    {{#if Template.subscriptionsReady}}
       {{#if prizes}}
         {{#each prize in prizes}}
-          {{#ionItem avatar=true}}
+          {{#ionItem avatar=true buttonRight=true}}
             <h2>{{prize.title}}</h2>
-            <img class="avatar" src="{{prize.photo}}">
-            {{prize.text}}
+            <img class="avatar" src="{{prize.image}}">
+            {{#with dateEnd prize.dateEnd}} 
+              {{> pickkIcon size="xs" margin="margin: 0px;" icon=icon}} 
+              {{title}}
+              <br> 
+            {{/with}}
+            {{prize.description}}
+            <a href="{{prize.url}}" class="button button-positive">{{> ionIcon icon="ios-arrow-right"}}</a>
           {{/ionItem}}
         {{/each}}
       {{else}}
@@ -28,6 +35,9 @@
           No Prizes Right Now. <br /><br /> Check Back Soon!
         </div>
       {{/if}}
+    {{else}}
+      {{> spinLoader}}
+    {{/if}}
    {{/ionContent}}
  {{/ionView}}
 </template>
