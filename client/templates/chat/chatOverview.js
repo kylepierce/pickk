@@ -368,7 +368,9 @@ Template._groupChats.events({
     IonPopover.hide();
   },
   'click [data-action=no-group]': function(){
-    Router.go('/groups')
+    IonPopover.hide();
+    IonSideMenu.snapper.close();
+    Router.go('/leagues')
   }
 });
 

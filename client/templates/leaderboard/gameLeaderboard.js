@@ -9,12 +9,9 @@ Template.gameLeaderboard.helpers({
 			limit: 30
 		}
 
-		var list = query.multipleGames.split(',')
-		console.log(list)
-
 		if (query.type){obj.type = query.type}
 		if (query._id){obj._id = query._id}
-		if (query.multipleGames){obj.gameId = list}
+		if (query.multipleGames) { obj.gameId = query.multipleGames.split(',')}
 		else if (query.gameId){
 			obj.gameId = [query.gameId]
 		} else {
