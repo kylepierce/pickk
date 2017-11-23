@@ -6,8 +6,9 @@
         {{> matchupCard m=matchup}}
       {{/each}}
     {{else}}
-      {{#ionItem}}
-        Challenge a Friend
+      {{#ionItem buttonRight=true}}
+        Challenge a Friend!
+        <a href="/matchup/create" class="pre-game-pickks center-text" style="float: right; width: 10%;">{{> ionIcon icon="ios-arrow-right"}}</a>
       {{/ionItem}}
     {{/if}}
     <div class="card-list-footer" data-action="view-matchups">

@@ -1,9 +1,6 @@
 <template name="waitingForNextPlay">
 	<div id="waiting-for-play" class="animated fast fadeInUp hundred-bottom">
 		<div id="ratingBox"></div>
-
-		{{> inviteToPlay}}
-
 		{{> historyCardList gameId=this.game._id number=3}}
 		<br />
 		{{> miniLeaderboard data=data card=true}}
@@ -13,6 +10,7 @@
 				Switch to Live (Play by Play)
 			</button>
 		{{/if}}
+		{{> inviteToPlay}}
 	</div>
 </template>
 

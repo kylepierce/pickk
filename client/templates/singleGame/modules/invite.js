@@ -1,10 +1,4 @@
 Template.inviteToPlay.helpers({
-  active: function(){
-    var game = Games.findOne({})
-    if(game && game.status === "inprogress" || game.status === "scheduled"){
-      return true
-    }
-  },
   listToShare: function(){
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})
