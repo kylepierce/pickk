@@ -33,7 +33,9 @@ The Pickk Team
 `
   },
   html(user, url) {
-    return Handlebars.templates['core']({ 
+    SSR.compileTemplate('core', Assets.getText('email-templates/core.html'));
+
+    return SSR.render('core', {
       headline: "Forget your password?", 
       preheader: "Steps to reset your password",
       copyAbove: "Click the button below to change the password.",
@@ -56,7 +58,9 @@ ${url}
 `
   },
   html(user, url) {
-    return Handlebars.templates['core']({
+    SSR.compileTemplate('core', Assets.getText('core.html'));
+
+    return SSR.render('core', {
       headline: "Verify Pickk",
       preheader: "Thanks for joining Pickk! Pickk is the best way to watch live sports and play with friends. For a chance to win prizes you must have a valid email.",
       copyAbove: "Click the button below to verify this email account.",
@@ -79,7 +83,9 @@ ${url}
 `
   },
   html(user, url) {
-    return Handlebars.templates['core']({
+    SSR.compileTemplate('core', Assets.getText('core.html'));
+
+    return SSR.render('core', {
       headline: "Verfiy Email",
       preheader: "For a chance to win prizes you must have a valid email.",
       copyAbove: "Click the button below to verify this email account.",
