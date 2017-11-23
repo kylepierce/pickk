@@ -6,13 +6,15 @@
  {{/contentFor}}
 
  {{#contentFor "headerTitle"}}
-  <h1 class="title white-text-header">Game Leaderboard</h1>
+  <h1 class="title white-text-header">{{typeOfLeaderboard}} Leaderboard</h1>
  {{/contentFor}}
 
- 	{{#contentFor "headerButtonRight"}}
+  {{#contentFor "headerButtonRight"}}
+    {{#if gameSelected}}
      <button style="font-size: 9px;" class="button button-clear" data-action="filterGameLeaderboard">
        {{> ionIcon icon="funnel"}}
      </button>
+    {{/if}}
    {{/contentFor}}
 
   {{#ionView}}
@@ -29,7 +31,7 @@
         <div class="card-list animated fast fadeInUp">
           <div class="card-list-header">
             <span>Leaderboard +</span>
-            <button style="font-size: 9px;" class="button button-clear" data-action="filterGameLeaderboard">
+            <button style="font-size: 9px; margin: -15px 10px; float: right; " class="button button-clear" data-action="filterGameLeaderboard">
               {{> ionIcon icon="funnel"}}
             </button>
           </div>

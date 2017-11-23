@@ -2,8 +2,8 @@ Template.activeGame.onCreated(function() {
 	var gameId = this.data.game._id
 	var game = Games.findOne({_id: gameId});
 	var data = {
-		gameId: game._id,
-		period: game.period,
+		gameId: [game._id],
+		period: [game.period],
 		number: 3
 	}
 	Session.set('leaderboardData', data);

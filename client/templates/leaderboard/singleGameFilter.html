@@ -1,14 +1,16 @@
 <template name="singleGameFilter">
   {{#ionModal class="white-text-header" title="Filter Leaderboard"}}
   {{#ionList}}
+    {{#if gameSelected}}
     <form id="period">
       <div class="item item-divider" style="border: 0">Time</div>
       {{#each option in dates}}
         {{> checkboxOption o=option}}
       {{/each}}
     </form>
+    {{/if}}
 
-  	<form id="other-filters">
+  	<form id="other-filters" class="hundred-bottom">
       <div class="item item-divider ten-spacing">Common</div>
   		{{#each option in options}}
   			{{> radioOption o=option}}

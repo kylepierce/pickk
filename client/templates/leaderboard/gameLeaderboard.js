@@ -1,14 +1,18 @@
 Leaderboard = new Meteor.Collection('leaderboard');
 
 Template.gameLeaderboard.helpers({
+	typeOfLeaderboard: function(){
+		var data = Session.get('leaderboardData');
+		return data.type
+	},
 	data: function(){
 		var gameId = Router.current().params._id
 		var query = Router.current().params.query
+		var existing = Session.get('leaderboardData');
 
 		var obj = {
 			limit: 30
 		}
-
 		if (query.type){obj.type = query.type}
 		if (query._id){obj._id = query._id}
 		if (query.multipleGames) { obj.gameId = query.multipleGames.split(',')}
@@ -27,7 +31,11 @@ Template.gameLeaderboard.helpers({
 			obj.period = list
 		}
 
-		// var all = _.extend(query, obj)
+		if(!obj.period){
+			obj.period = [0, 1, 2, 3, 4, 5]
+		}
+
+		var all = _.extend(existing, obj)
 		return obj
 	}
 });
@@ -46,7 +54,6 @@ Template.miniLeaderboard.onCreated(function(){
 
 	self.getSelector = function(){
 		var data = Session.get('leaderboardData');
-		console.log(data)
 		return Session.get('leaderboardData');
 	}
 	self.autorun(function() {
@@ -85,8 +92,8 @@ Template.miniLeaderboard.events({
 		//   gameId: gameId,
 		// });
 		var params = 'type=' + this.data.type + '&_id=' + this.data._id
-		if (this.data.period) {
-			params = params + "&period=" + this.data.period
+		if(this.live){
+			params = params + "&periods=" + this.data.period[0]
 		}
 		Router.go('/leaderboard?' + params)
 	},

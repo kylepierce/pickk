@@ -293,8 +293,8 @@ Template.matchupFinalDetails.helpers({
   },
   halfOptions: function(){
     return [
-      {label: "1st Half", value: 1},
-      {label: "2nd Half", value: 2},
+      {label: "1st Half", value: [1, 2]},
+      {label: "2nd Half", value: [2, 3]},
     ]
   }
 });

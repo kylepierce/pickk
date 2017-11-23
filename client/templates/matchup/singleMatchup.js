@@ -28,6 +28,7 @@ Template.singleMatchup.helpers({
     var obj = {
       limit: 2,
       type: "matchup",
+      period: this.period,
       _id: this._id
     }
     return obj
@@ -210,12 +211,12 @@ Template.matchupMember.events({
      Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
-    if(t.data.gameId.length > 1){
-      var mGames = t.data.gameId.toString()
-      var url = '/leaderboard/?multipleGames=' + mGames
-    } else {
-      var url = '/leaderboard/?filter=matchup&matchupId=' + this._id
-    }
+    // if(t.data.gameId.length > 1){
+    //   var mGames = t.data.gameId.toString()
+    //   var url = '/leaderboard/?multipleGames=' + mGames
+    // } else {
+      var url = '/leaderboard/?type=matchup&_id=' + this._id
+    // }
     Router.go(url);
   },
   "click [data-action=viewLeague]": function(e, t) {

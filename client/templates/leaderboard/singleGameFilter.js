@@ -2,12 +2,17 @@ Template.singleGameFilter.onCreated(function () {
   var data = Session.get('leaderboardData');
   var userId = Meteor.userId()
   this.subscribe('findThisUsersLeagues', Meteor.userId());
-  console.log(data)
   var selector = { gameId: {$in: data.gameId} };
   this.subscribe('listOfMatchups', selector);
 });
 
 Template.singleGameFilter.helpers({
+  gameSelected: function(){
+    var data = Session.get('leaderboardData');
+    if(data.type === "game"){
+      return true
+    }
+  },
   dates: function() {
     var data = Session.get('leaderboardData')
     var list = []
@@ -27,9 +32,9 @@ Template.singleGameFilter.helpers({
   options: function () {
     var data = Session.get('leaderboardData');
     var options = [
-      { name: "All", playType: ["live", "drive"]}, 
-      { name: "Live", playType: ["live"]}, 
-      { name: "Drive", playType: ["drive"]}
+      { name: "All", type: "game", playType: ["live", "drive"]}, 
+      { name: "Live", type: "game", playType: ["live"]}, 
+      { name: "Drive", type: "game", playType: ["drive"]}
     ]
 
     return _.map(options, function(option){
@@ -60,16 +65,15 @@ Template.singleGameFilter.helpers({
     var list = []
     _.each(matchups, function(matchup){
       var groupId = matchup.groupId
-
       if(groupId){
         var group = Groups.find({_id: groupId}).fetch();
-        var matchupName = group[0].name
+        var matchupName = group[0].name + " (" + matchup.matchupLength + ")";
       } else {
         var userId = matchup.commissioner
         var user = UserList.find({_id: userId}).fetch()
-        var matchupName = user[0].profile.username
+        var matchupName = user[0].profile.username + " (" + matchup.matchupLength + ")";
       }
-      var item = {name: matchupName, filter: "matchup", matchupId: matchup._id}
+      var item = {name: matchupName, type: "matchup", _id: matchup._id}
 
       if (data.filter === "matchup" && data.matchupId === matchup._id){
         item.checked = true
@@ -94,7 +98,6 @@ Template.singleGameFilter.events({
   'change #other-filters .item-radio': function(e,t){
     var data = Session.get('leaderboardData');
     var data = _.extend(data, this.o)
-    console.log(this.o)
     Session.set('leaderboardData', data)
 	}
 });
@@ -158,7 +161,6 @@ Template._leaderboardFilter.events({
   'change #other-filters .item-radio': function(e,t){
     var data = Session.get('leaderboardData');
     var data = _.extend(data, this.o)
-    console.log("extended", this.o)
     Session.set('leaderboardData', data)
     IonModal.close();
 	}
