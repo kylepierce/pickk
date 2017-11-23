@@ -19,8 +19,14 @@ Template.gameLeaderboard.helpers({
 		}
 		if (query.playType){obj.playType = query.playType}
 		if (query.period){obj.period = [parseInt(query.period)]}
+		if (query.periods) {
+			var list = query.periods.split(',');
+			var list = _.map(list, function(item){
+				return parseInt(item);
+			});
+			obj.period = list
+		}
 
-		console.log(obj)
 		// var all = _.extend(query, obj)
 		return obj
 	}
@@ -30,6 +36,7 @@ Template.miniLeaderboard.onCreated(function(){
 	var templateData = this.data.data
 	var self = this
 	var limit = templateData.limit
+	Session.set('leaderboardData', templateData);
 
 	self.getUsers = function(){
 		return Leaderboard.find({}, {sort: {coins: -1}, limit: limit}).map(function(player, index){
@@ -38,7 +45,9 @@ Template.miniLeaderboard.onCreated(function(){
 	}
 
 	self.getSelector = function(){
-		return templateData
+		var data = Session.get('leaderboardData');
+		console.log(data)
+		return Session.get('leaderboardData');
 	}
 	self.autorun(function() {
 		var leaderboard = self.subscribe('reactiveLeaderboard', self.getSelector());

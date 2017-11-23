@@ -9,11 +9,11 @@
   <h1 class="title white-text-header">Game Leaderboard</h1>
  {{/contentFor}}
 
- 	<!-- {{#contentFor "headerButtonRight"}}
-     <button style="font-size: 9px;" class="button button-clear" data-ion-menu-toggle="right">
+ 	{{#contentFor "headerButtonRight"}}
+     <button style="font-size: 9px;" class="button button-clear" data-action="filterGameLeaderboard">
        {{> ionIcon icon="funnel"}}
      </button>
-   {{/contentFor}} -->
+   {{/contentFor}}
 
   {{#ionView}}
     {{#ionContent}}
@@ -27,8 +27,13 @@
     {{#if leaderboard}}
       {{#if this.card}}
         <div class="card-list animated fast fadeInUp">
-          <div class="card-list-header"><span>Leaderboard +</span></div>
-            {{> leaderboardList}}
+          <div class="card-list-header">
+            <span>Leaderboard +</span>
+            <button style="font-size: 9px;" class="button button-clear" data-action="filterGameLeaderboard">
+              {{> ionIcon icon="funnel"}}
+            </button>
+          </div>
+          {{> leaderboardList}}
           <div class="card-list-footer" data-action="game-leaderboard">View All</div>
         </div>
       {{else}}
@@ -58,13 +63,4 @@
       {{> singlePlayerLeader player=player}} 
     {{/each}}
   </ol>
-</template>
-
-<template name="singlePlayerLeaderHolder">
-  <div class="item item-avatar leaderboard-item">
-    <div class="avatar user-avatar legit">
-      <img class="avatar-loading-anim avatar-image circle-image">
-    </div>
-    <li class="list-font" value={{number}}></li>
-  </div>
 </template>

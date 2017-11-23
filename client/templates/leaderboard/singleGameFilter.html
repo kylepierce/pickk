@@ -1,13 +1,10 @@
-<!-- <template name="singleGameFilter">
-  <div class="bar bar-header bar-dark">
-    <h1 class="title white-text-header">Filter Leaderboard</h1>
-  </div>
-  <div style="margin-top:64px;">
+<template name="singleGameFilter">
+  {{#ionModal class="white-text-header" title="Filter Leaderboard"}}
   {{#ionList}}
     <form id="period">
       <div class="item item-divider" style="border: 0">Time</div>
       {{#each option in dates}}
-        {{> radioOption o=option}}
+        {{> checkboxOption o=option}}
       {{/each}}
     </form>
 
@@ -16,7 +13,7 @@
   		{{#each option in options}}
   			{{> radioOption o=option}}
   		{{/each}}
-      <div class="item item-divider ten-spacing">Groups</div>
+      <div class="item item-divider ten-spacing">Leagues</div>
       {{#each option in groups}}
   			{{> radioOption o=option}}
   		{{/each}}
@@ -26,7 +23,7 @@
   		{{/each}}
 		</form>
   {{/ionList}}
-  </div>
+  {{/ionModal}}
 </template>
 
 <template name="_leaderboardFilter">
@@ -46,4 +43,4 @@
   		{{/each}}
     </form>
   {{/ionModal}}
-</template> -->
+</template>

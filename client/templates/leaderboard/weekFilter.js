@@ -66,3 +66,12 @@ Template.weekFilter.events({
     Session.set('leaderboardFilter', data)
 	}
 });
+
+Template.checkboxOption.helpers({
+  alreadySelected: function(option){
+    var data = Session.get('leaderboardFilter');
+    if(this.o.checked){
+      return true
+    }
+  },
+});

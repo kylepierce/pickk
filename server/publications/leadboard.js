@@ -31,7 +31,8 @@ Meteor.publish('leaderboardUserList', function(list) {
 
 Meteor.publish("reactiveLeaderboard", function(selector) {
 	check(selector, Object)
-	this.unblock()
+	this.unblock();
+	console.log(selector)
 	var newSelector = {}
 	var type = selector.type
 	var week = moment().week() - 1
@@ -41,22 +42,26 @@ Meteor.publish("reactiveLeaderboard", function(selector) {
 	var listOfGames = _.map(Games.find(daySelector).fetch(), function(game){
 		return game._id
 	});
-
 	if (type === "matchup"){
 		var matchup = Matchup.findOne({_id: selector._id});
 		newSelector.userId = {$in: matchup.users}
 		newSelector.period = {$in: matchup.period}
 		newSelector.gameId = {$in: matchup.gameId}
 	} else if (type === "league"){
-		var leagueUsers = Groups.findOne({_id: selector._id}).members;
+		var leagueUsers = Groups.findOne({ _id: selector.leagueId}).members;
 		newSelector.userId = {$in: leagueUsers}
-		newSelector.gameId = {$in: listOfGames}
+		newSelector.gameId = {$in: selector.gameId}
+		newSelector.period = { $in: selector.period }
 	} else {
 		newSelector.gameId = {$in: selector.gameId}
-		if (selector.period){newSelector.period = {$in: [parseInt(selector.period)]}}
-		if (selector.playType){newSelector.type = selector.playType}
+		if (selector.period){
+			newSelector.period = {$in: selector.period}
+		}
+		if (selector.playType) {
+		newSelector.type = { $in: selector.playType}}
 		if (selector._id){newSelector.gameId = {$in: [selector._id]}}
 	}
+	console.log(newSelector)
 
 	ReactiveAggregate(this, GamePlayed, [
 		{$match: newSelector},

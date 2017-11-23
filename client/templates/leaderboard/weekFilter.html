@@ -32,3 +32,19 @@
       {{/ionRadio}}
     </div>
 </template>
+
+<template name="checkboxOption">
+	<!-- <div class="radio-filter {{class}}">
+		{{#ionRadio checked=o.checked o=o value=o.value}} {{o.name}} {{/ionRadio}}
+	</div> -->
+	{{#ionItem class="item-text-wrap item-checkbox notification-checkbox"}}
+    <label class="checkbox">
+			{{#if alreadySelected o}}
+				<input type="checkbox" checked style="float: left;">
+			{{else}}
+				<input type="checkbox" style="float: left;">
+			{{/if}}
+			<span class="checkbox-text">{{o.name}}</span>
+    </label>
+  {{/ionItem}}
+</template>

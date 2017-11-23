@@ -27,6 +27,7 @@ Meteor.publish('singleMatchup', function(matchupId){
 Meteor.publish('listOfMatchups', function(selector){
   this.unblock();
   check(selector, Object);
+  console.log(selector)
   return Matchup.find(selector)
 });
 
