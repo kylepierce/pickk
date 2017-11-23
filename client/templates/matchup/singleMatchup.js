@@ -211,7 +211,13 @@ Template.matchupMember.events({
      Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
-    Router.go('/leaderboard/?filter=matchup&matchupId=' + this._id );
+    if(t.data.gameId.length > 1){
+      var mGames = t.data.gameId.toString()
+      var url = '/leaderboard/?multipleGames=' + mGames
+    } else {
+      var url = '/leaderboard/?filter=matchup&matchupId=' + this._id
+    }
+    Router.go(url);
   },
   "click [data-action=viewLeague]": function(e, t) {
     Router.go('/league/' + this.leagueId );

@@ -202,6 +202,13 @@
               </td>
             </tr>
           {{/each}}
+
+          {{#each prize in prizes}}
+          <tr>
+            <td><h2>{{prize.title}}</h2></td>
+            <td>{{prize.description}}</td>
+          </tr>
+          {{/each}}
           
           <!-- BULLETPROOF BUTTON -->
           <tr>

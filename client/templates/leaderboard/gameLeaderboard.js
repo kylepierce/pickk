@@ -9,9 +9,13 @@ Template.gameLeaderboard.helpers({
 			limit: 30
 		}
 
+		var list = query.multipleGames.split(',')
+		console.log(list)
+
 		if (query.type){obj.type = query.type}
 		if (query._id){obj._id = query._id}
-		if (query.gameId){
+		if (query.multipleGames){obj.gameId = list}
+		else if (query.gameId){
 			obj.gameId = [query.gameId]
 		} else {
 			obj.gameId = [query._id]
@@ -19,6 +23,7 @@ Template.gameLeaderboard.helpers({
 		if (query.playType){obj.playType = query.playType}
 		if (query.period){obj.period = [parseInt(query.period)]}
 
+		console.log(obj)
 		// var all = _.extend(query, obj)
 		return obj
 	}

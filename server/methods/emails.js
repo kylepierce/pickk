@@ -1,7 +1,7 @@
 var settings = Meteor.settings.private.mailgunApi
 var mg = new Mailgun({ apiKey: settings.apiKey, domain: settings.domain })
 var domain = settings.domain
-var listAddress = "all@" + domain
+var listAddress = "test@" + domain
 var list = mg.api.lists(listAddress);
 
 Meteor.methods({
@@ -59,6 +59,9 @@ Meteor.methods({
     SSR.compileTemplate('game', Assets.getText('email-templates/game.html'));
     
     Template.game.helpers({
+      prizes: function(){
+        return Prizes.find({active: true}, {limit: 3});
+      },
       game: function (gameIds) {
         var games = Games.find({_id: {$in: gameIds}}).map(function(game){
           var gameTime = moment(game.iso)
