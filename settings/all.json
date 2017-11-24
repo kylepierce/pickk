@@ -10,6 +10,9 @@
         "timeInterval": 120000
       }
     },
+    "oneSignal": {
+      "key": "a8f56326-5d84-11e5-bbc5-8f454b01b190"
+    },
     "emailText": {
       "forgotPwdHeading": "You have requested to reset your password",
       "forgotPwdMessage": "Click the button below to reset password",

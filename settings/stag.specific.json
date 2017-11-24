@@ -10,7 +10,10 @@
     "twitter": {
       "key": "D3R4rpdKWbzzBoVaJwyg6dFH2",
       "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
-    }
+    },
+    "oneSignal": {
+      "key": "a8f56326-5d84-11e5-bbc5-8f454b01b190"
+    },
   },
   "mongo": {
     "username": "getpickk",

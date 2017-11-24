@@ -28,14 +28,11 @@ random@1.0.10
 cmather:handlebars-server
 mrt:moment
 aldeed:moment-timezone
-themeteorchef:bert
 themeteorchef:jquery-validation
 meteorhacks:ssr
 underscore@1.0.10
 viloma:user-feedback
 useraccounts:iron-routing
-flowkey:hotkeys
-mousetrap:mousetrap
 percolate:momentum
 gwendall:template-animations
 natestrauser:animate-css
@@ -74,7 +71,6 @@ tmeasday:publish-counts
 lepozepo:cloudinary
 ddp-rate-limiter@1.0.7
 mizzao:autocomplete
-percolate:migrations
 practicalmeteor:mocha
 xolvio:cleaner
 http@1.2.12
@@ -83,7 +79,6 @@ notorii:autoform-datetimepicker
 drewy:pikaday-time
 meteorhacks:aggregate
 shell-server@0.2.4
-raix:push
 astronomerio:core
 meteorhacks:unblock
 pickk:branch-io
