@@ -22,19 +22,19 @@
   {{/contentFor}}
 
   {{#ionView}}
-    {{#ionContent}}
-			<div class="container ten-spacing clear-fix filter-section">
-				<h4 class="float-left ten-spacing">Filters:</h4>
-				{{#each filter in filters}}
-					<div class="filter-box">{{{filter}}}</div>
-				{{/each}}
-				<div class="filter-box" data-action="filterNotifications">
-					View All
-					{{> ionIcon icon="chevron-right"}}
+		{{#ionContent}}
+			
+				<div class="ten-spacing clear-fix filter-section">
+					<div class="filter-box all" data-action="filterNotifications">
+						Filters {{> ionIcon icon="chevron-right"}}
+					</div>
+					<ul style="display: inline-block;" id="list-of-filters">
+						{{#each filter in filters}}
+							<li class="filter-box selected hidden">{{{filter}}} {{> ionIcon icon="checkmark"}}</li>
+						{{/each}}
+					</ul>	
 				</div>
-			</div>
-
-			{{#if Template.subscriptionsReady}}
+			 {{#if Template.subscriptionsReady}}
 				{{#if noNotifications}}
 					<div class="no-notifications">
 						No Unread Notifications
@@ -44,11 +44,11 @@
 						<span>Select Which Notifications You Want to See By Clicking the {{> ionIcon icon="funnel"}} Button Above.</span>
 					</div>
 				{{/if}}
-				<div class="ten-spacing hundred-bottom">
+				<ul id="list-of-notifications" class="ten-spacing hundred-bottom">
 					{{#each note in notifications}}
 						{{> notification note=note}}
 					{{/each}}
-				</div>
+				</ul>
 			{{else}}
 				{{> spinLoader}}
 			{{/if}}
@@ -58,33 +58,33 @@
 
 <template name="notification">
 	{{#if notif "league"}}
-		<div class="item item-avatar item-button-right {{new}}">
+		<li class="item item-avatar item-button-right {{new}} hidden">
 			{{> leagueNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "mention"}}
-		<div class="item item-avatar {{new}}">
+		<li class="item item-avatar {{new}} hidden">
 			{{> chatNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "follower"}}
-		<div class="item item-avatar {{new}}">
+		<li class="item item-avatar {{new}} hidden">
 			{{> newFollower}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "coins"}}
-		<div class="item notification-has-image {{new}}">
+		<li class="item notification-has-image {{new}} hidden">
 			{{> coinsNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "diamonds"}}
-		<div class="item notification-has-image {{new}}">
+		<li class="item notification-has-image {{new}} hidden">
 			{{> diamondNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "leaderboard"}}
@@ -96,9 +96,9 @@
 	{{/if}}
 
 	{{#if notif "trophy"}}
-		<div class="item notification-has-image {{new}}">
+		<li class="item notification-has-image {{new}} hidden">
 			{{> trophyNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	<!-- {{#if notif "matchupInvite"}}
@@ -106,15 +106,15 @@
 	{{/if}} -->
 
 	{{#if notif "matchup"}}
-		<div class="item item-avatar item-button-right {{new}}">
+		<li class="item item-avatar item-button-right {{new}} hidden">
 			{{> matchupNotification}}
-		</div>
+		</li>
 	{{/if}}
 
 	{{#if notif "chatReaction"}}
-		<div class="item item-avatar item-button-right {{new}}">
+		<li class="item item-avatar item-button-right {{new}} hidden">
 			{{> chatReaction}}
-		</div>
+		</li>
 	{{/if}}
  </template>
 

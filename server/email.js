@@ -111,7 +111,7 @@ ${url}
     SSR.compileTemplate('core', Assets.getText('email-templates/core.html'));
 
     return SSR.render('core', {
-      headline: "Verify Pickk",
+      headline: "Thanks for Joining Pickk!",
       preheader: "Thanks for joining Pickk! Pickk is the best way to watch live sports and play with friends. For a chance to win prizes you must have a valid email.",
       copyAbove: "Click the button below to verify this email account.",
       buttonText: "Verify",

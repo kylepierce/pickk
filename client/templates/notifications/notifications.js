@@ -58,6 +58,13 @@ Template.notifications.onCreated(function() {
 });
 
 Template.notifications.onRendered( function() {
+	$('#list-of-filters li').each(function (i) {
+		var t = $(this);
+		setTimeout(function () {
+			t.removeClass('hidden'); 
+			t.addClass('animated fadeInLeft'); 
+		}, (i + 1) * 200);
+	});
   $( "svg" ).delay( 250 ).fadeIn();
 });
 
@@ -78,7 +85,7 @@ Template.notifications.helpers({
         var cap = type.charAt(0).toUpperCase() + type.substring(1)
         status[i] = cap
       }
-    });
+		});
     return status.slice(0, 4)
   },
 	notifications: function () {
@@ -93,6 +100,16 @@ Template.notifications.helpers({
 			return true
 		}
 	}
+});
+
+Template.notification.onRendered(function () {
+	$('#list-of-notifications li').each(function (i) {
+		var t = $(this);
+		setTimeout(function () {
+			t.addClass('animated fadeInUp');
+			t.removeClass('hidden')
+		}, (i + 1) * 150 );
+	});
 });
 
 Template.notification.helpers({
