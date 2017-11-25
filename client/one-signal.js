@@ -1,15 +1,23 @@
 if (Meteor.isCordova) {
-
   document.addEventListener('deviceready', function () {
     // Enable to debug issues.
-    window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+    // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
     var notificationOpenedCallback = function (jsonData) {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      analytics.track("open push notification", {
+        userId: Meteor.userId(),
+        notificationId: jsonData.notification.payload.notificationID,
+        isAppInFocus: jsonData.notification.payload.isAppInFocus,
+        payload: jsonData.notification.payload
+      });
+
+      DeepLinkHandler(jsonData.notification.payload.additionalData);
     };
 
     window.plugins.OneSignal
-      .startInit(Meteor.settings.private.OneSignal)
+      .startInit("a8f56326-5d84-11e5-bbc5-8f454b01b190")
+      .iOSSettings({"kOSSettingsKeyAutoPrompt": false})
+      .inFocusDisplaying("None")
       .handleNotificationOpened(notificationOpenedCallback)
       .endInit();
 

@@ -4,7 +4,6 @@ if (Meteor.isCordova) {
   document.addEventListener('deviceready', function () {
     var userId = Meteor.userId();
     Branch.setIdentity(userId);
-
     var data = Session.get("deepLinked");
 
     deviceReady = true;

@@ -7,9 +7,59 @@ Meteor.startup(function() {
   } else {
     process.env.MAIL_URL = "smtp://postmaster%40mg.pickk.co:2e53ee0dce2deade7b63443c39322243@smtp.mailgun.org:587"
   }
-  // Accounts.urls.resetPassword = function (token) {
-  //   return 'pickk://reset-password/' + token;
-  // };
+  Accounts.urls.resetPassword = function (token) {
+    var deeplink = "/reset-password/" + token;
+    var shortlink = HTTP.post("https://api.branch.io/v1/url", {
+      "data": {
+        "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
+        "type": 1,
+        "data": {
+          "$canonical_identifier": deeplink,
+          "$og_title": "Reset Your Password",
+          "$og_description": "Get back in the game! Click here to update your password.",
+          "$desktop_url": "https://pickk.co/?utm_content=forgot-password",
+          "$deeplink_path": deeplink
+        }
+      }
+    });
+    return shortlink.data.url
+  };
+
+  Accounts.urls.enrollAccount = function (token) {
+    var deeplink = "/verify-email/" + token;
+    var shortlink = HTTP.post("https://api.branch.io/v1/url", {
+      "data": {
+        "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
+        "type": 1,
+        "data": {
+          "$canonical_identifier": deeplink,
+          "$og_title": "Verify Your Email",
+          "$og_description": "Stay connected with your friends. Verify your email address for matchup notifications.",
+          "$desktop_url": "https://pickk.co/?utm_content=enroll",
+          "$deeplink_path": deeplink
+        }
+      }
+    });
+    return shortlink.data.url
+  };
+  Accounts.urls.verifyEmail = function (token) {
+    var deeplink = "/verify-email/" + token;
+    var shortlink = HTTP.post("https://api.branch.io/v1/url", {
+      "data": {
+        "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
+        "type": 1,
+        "data": {
+          "$canonical_identifier": deeplink,
+          "$og_title": "Verify Your Email",
+          "$og_description": "Stay connected with your friends. Verify your email address for matchup notifications.",
+          "$desktop_url": "https://pickk.co/?utm_content=verify",
+          "$deeplink_path": deeplink
+        }
+      }
+    });
+    return shortlink.data.url
+  };
+
 });
 
 Accounts.emailTemplates.siteName = "Pickk"
@@ -58,7 +108,7 @@ ${url}
 `
   },
   html(user, url) {
-    SSR.compileTemplate('core', Assets.getText('core.html'));
+    SSR.compileTemplate('core', Assets.getText('email-templates/core.html'));
 
     return SSR.render('core', {
       headline: "Verify Pickk",
@@ -83,7 +133,7 @@ ${url}
 `
   },
   html(user, url) {
-    SSR.compileTemplate('core', Assets.getText('core.html'));
+    SSR.compileTemplate('core', Assets.getText('email-templates/core.html'));
 
     return SSR.render('core', {
       headline: "Verfiy Email",

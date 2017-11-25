@@ -9,9 +9,8 @@
       "key": "D3R4rpdKWbzzBoVaJwyg6dFH2",
       "secret": "CXk4WSo5Crb3NU76cp3IuXNfsUhAwmJapq60iZVCTMAp1bBv11"
     },
-    "oneSignal": {
-      "key": "a8f56326-5d84-11e5-bbc5-8f454b01b190"
-    },
+    "oneSignal": "a8f56326-5d84-11e5-bbc5-8f454b01b190",
+    "branch": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M"
   },
   "public": {
     "rootUrl": "https://www.pickk.net/"
@@ -22,9 +21,5 @@
     "host": "candidate.11.mongolayer.com",
     "port": "11179",
     "db": "pickk-production"
-  },
-  "intercom": {
-    "secret": "t5Pu7OBMf62gw4PWnBlwoVGaMT5bvz1sc58R4PU7",
-    "apikey": "2625df90eee0d3ef7c96a18d79f09831d76cbfb1"
   }
 }

@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   api.export("DeepLinkHandler", ['client', 'server']);
   api.export("NonBranchLinkHandler", ['client', 'server']);
   api.export("handleOpenURL", ['client', 'server']);
+  api.export("handleNonUserOpenURL", ['client', 'server']);
 });
 
 Package.onTest(function(api) {

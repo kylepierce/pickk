@@ -1,8 +1,16 @@
 DeepLinkHandler = function (data) {
-  console.log(data);
   if (data) {
     Session.set("deepLinked", data);
-    if (data.$deeplink_path && Meteor.userId()){
+    if (data.$deeplink_path && !Meteor.userId()) {
+      if (data.$deeplink_path.includes('reset-password/')){
+        IonLoading.show({
+          customTemplate: "Redirecting!..",
+          duration: 2500,
+        });
+        // console.log(data)
+        handleNonUserOpenURL(data.$deeplink_path)
+      }
+    } else if (data.$deeplink_path && Meteor.userId()){
       IonLoading.show({
         customTemplate: "Redirecting!..",
         duration: 2500,
@@ -10,11 +18,7 @@ DeepLinkHandler = function (data) {
     	handleOpenURL(data.$deeplink_path)
     	return data
     }
-  } else {
-    console.log("User not logged in. Creating a notification object.");
   }
-  var deep = Session.get("deepLinked");
-  console.log(deep);
 }
 
 NonBranchLinkHandler = function(link) {
@@ -36,9 +40,17 @@ handleOpenURL = function(url){
     var data = Session.get("deepLinked")
     data["$deeplink_path"] = ""
     Session.set("deepLinked", data);
-    console.log(data);
   	Router.go(url)
   } else {
+    console.log("user >>> ", url)
     // create a notification as a session.
   }
+}
+
+handleNonUserOpenURL = function (url) {
+  var data = Session.get("deepLinked")
+  data["$deeplink_path"] = ""
+  Session.set("deepLinked", data);
+  console.log("Non user >>> ", url)
+  Router.go(url)
 }
