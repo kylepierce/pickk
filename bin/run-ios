@@ -18,6 +18,5 @@ $DIRNAME/merge-settings $ENV ios > /tmp/$ENV.json
 xcrun simctl erase all
 #
 
-meteor run ios-device  --settings /tmp/$ENV.json 
-# --mobile-server https://www.pickk.net
+meteor run ios-device  --settings /tmp/$ENV.json --mobile-server https://www.pickk.net
 # "$@"
