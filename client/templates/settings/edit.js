@@ -24,15 +24,6 @@ AutoForm.hooks({
           }
         }
       });
-      if(Meteor.isCordova){
-        //Intercom needs unix time with '_at' in JSON to work.
-        var intercomData = {
-          "updated_settings": true,
-          "last_settings_update_at": parseInt(Date.now() / 1000),
-          "userId": Meteor.userId(),
-        }
-        updateIntercom(intercomData)
-      }
       return false;
     }
   }

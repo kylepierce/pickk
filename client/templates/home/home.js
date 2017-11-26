@@ -10,6 +10,14 @@ Template.home.rendered = function () {
   } else if (user.profile.over18 === undefined || user.profile.over21 === undefined){
     Router.go('/editProfile');
   }
+
+  var hasPrompted = status.permissionStatus.hasPrompted;
+  var staus = status.permissionStatus.status;
+  var userId = Meteor.userId()
+
+  if (!status.permissionStatus.hasPrompted) {
+    Router.go('/push-active');
+  }
 };
 
 Template.homeGames.onCreated(function() {
