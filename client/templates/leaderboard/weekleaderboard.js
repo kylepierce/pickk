@@ -35,9 +35,16 @@ Template.weekLeaderboard.onCreated(function() {
 	}
 	self.autorun(function() {
 		self.subscribe( 'weekLeaderboard', self.getFilter(), function(){
-			$( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
-	      $( ".loading-wrapper" ).fadeIn( 'slow' );
+			$('div.hidden').each(function (i) {
+				var t = $(this);
+				setTimeout(function () {
+					t.removeClass('hidden')
+					t.addClass('animated fadeInLeft');
+				}, (i + 1) * 70);
 			});
+			// $( ".loader-holder" ).delay( 500 ).fadeOut( 'slow', function() {
+	    //   $( ".loading-wrapper" ).fadeIn( 'slow' );
+			// });
 		});
 	});
 });

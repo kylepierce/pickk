@@ -25,7 +25,7 @@
 </template>
 
 <template name="singlePlayerWeek">
-  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}}">
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}} hidden">
     {{> userAvatar userId=player._id}}
     <li class="list-font" value={{player.rank}}>
       <span class="username">{{username player._id}}</span>
