@@ -15,22 +15,19 @@
 
   {{#ionView }}
 		{{#ionContent}}
-			{{#if Template.subscriptionsReady}}
-				<div id="history" class="list">
-					{{#if noGamesPlayed}}
-						<div class="no-notifications">
-							No Games Played
-						</div>
-					{{/if}}
-					{{#each gamesPlayed}}
-						{{#ionItem path="gameHistory.show"}}
-							{{name}}
-						{{/ionItem}}
-					{{/each}}
+			<!-- {{#if Template.subscriptionsReady}} -->
+			<!-- {{#if noGamesPlayed}}
+				<div class="no-notifications">
+					No Games Played
 				</div>
-			{{else}}
+			{{/if}} -->
+				<ul id="history">
+					{{#each game in gamesPlayed}} {{#ionItem id=game._id class="hidden"}} {{game.name}} {{/ionItem}} {{/each}}
+				</ul>
+				<button id="load-more-games" data-action="increaseCount" class="full hidden hundred-bottom ten-spacing">Load more</button>
+			<!-- {{else}}
 				{{> spinLoader}}
-			{{/if}}
+			{{/if}} -->
     {{/ionContent}}
   {{/ionView}}
 </template>

@@ -59,10 +59,15 @@ Meteor.publish('gameQuestions', function() {
 });
 
 // All of the games user has played
-Meteor.publish('gamesPlayed', function() {
+Meteor.publish('gamesPlayed', function(limit) {
   var selector = {users: {$in: [this.userId]}}
-  var fields = { fields: {_id: 1, id: 1, status: 1, home: 1, away: 1, name: 1,  tv: 1, dateCreated: 1, iso: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1}}
-  return Games.find(selector, fields );
+  var fields = { 
+    fields: {
+      _id: 1, id: 1, status: 1, home: 1, away: 1, name: 1,  tv: 1, dateCreated: 1, iso: 1, live: 1, completed: 1, commercial: 1, scoring: 1, teams: 1, outs: 1,  topOfInning: 1, playersOnBase: 1, users: 1
+    }, sort: {
+      dateCreated: -1
+    }, limit: limit}
+  return Games.find(selector, fields);
 });
 
 // Miscellaneous
