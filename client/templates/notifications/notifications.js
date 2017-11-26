@@ -57,37 +57,30 @@ Template.notifications.onCreated(function() {
   });
 });
 
-Template.notifications.onRendered( function() {
-	$('#list-of-filters li').each(function (i) {
-		var t = $(this);
-		setTimeout(function () {
-			t.removeClass('hidden'); 
-			t.addClass('animated fadeInLeft'); 
-		}, (i + 1) * 200);
-	});
-  $( "svg" ).delay( 250 ).fadeIn();
+Template.notifications.onRendered(function () {
+	$("svg").delay(250).fadeIn();
 });
 
 Template.notifications.helpers({
-  filters: function(){
-    var data = Session.get('notificationsFilter');
-    var list = []
-    var types = data.type
-    var status = data.status
-    status.push.apply(status, types);
-    _.each(status, function(type, i){
-      var type = type.toString();
-      if (type === "true"){
-        status[i] = "Read"
-      } else if (type === "false"){
-        status[i] = "Unread"
-      } else {
-        var cap = type.charAt(0).toUpperCase() + type.substring(1)
-        status[i] = cap
-      }
+	filters: function () {
+		var data = Session.get('notificationsFilter');
+		var types = data.type
+		var status = data.status
+		status.push.apply(status, types);
+		var list = _.map(status, function(type, i){
+		  var type = type.toString();
+		  if (type === "true"){
+		    status[i] = "Read"
+		  } else if (type === "false"){
+		    status[i] = "Unread"
+		  } else {
+		    var cap = type.charAt(0).toUpperCase() + type.substring(1)
+		    status[i] = cap
+			}
+			return status[i]
 		});
-    return status.slice(0, 4)
-  },
+		return list
+	},
 	notifications: function () {
 		var userId = Meteor.userId();
     var existing = Template.instance().data.user.profile.notifications

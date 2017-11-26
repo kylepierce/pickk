@@ -22,19 +22,18 @@
   {{/contentFor}}
 
   {{#ionView}}
-		{{#ionContent}}
-			
-				<div class="ten-spacing clear-fix filter-section">
-					<div class="filter-box all" data-action="filterNotifications">
-						Filters {{> ionIcon icon="chevron-right"}}
-					</div>
-					<ul style="display: inline-block;" id="list-of-filters">
-						{{#each filter in filters}}
-							<li class="filter-box selected hidden">{{{filter}}} {{> ionIcon icon="checkmark"}}</li>
-						{{/each}}
-					</ul>	
+		{{#ionContent}}			
+			<div class="ten-spacing clear-fix filter-section">
+				<div class="filter-box all" data-action="filterNotifications">
+					Filters {{> ionIcon icon="chevron-right"}}
 				</div>
-			 {{#if Template.subscriptionsReady}}
+				<ul id="list-of-filters" style="display: inline-block;" >
+					{{#each filter in filters}}
+						{{> filterItem filter=filter}}
+					{{/each}}
+				</ul>
+			</div>
+			{{#if Template.subscriptionsReady}}
 				{{#if noNotifications}}
 					<div class="no-notifications">
 						No Unread Notifications
@@ -54,6 +53,12 @@
 			{{/if}}
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="filterItem">
+	<li data-action="removeFilter" class="filter-box selected animated fadeInLeft">
+		{{{filter}}} {{> ionIcon icon="checkmark"}}
+	</li>
 </template>
 
 <template name="notification">

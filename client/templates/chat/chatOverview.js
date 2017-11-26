@@ -189,14 +189,6 @@ Template.messageBox.events({
             IonKeyboard.close()
             $('#chat-submit').removeClass('allow-chats')
             $("#messageBox").val('');
-            if(Meteor.isCordova){
-              //Intercom needs unix time with '_at' in JSON to work.
-              var intercomData = {
-                "last_chat_post_at": parseInt(Date.now() / 1000),
-                "userId": currentUser,
-              }
-              updateIntercom(intercomData)
-            }
             IonLoading.show({
               customTemplate: "Posting.",
               duration: 3000,

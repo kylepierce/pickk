@@ -21,20 +21,17 @@
 
 	{{#ionView}}
 		{{#ionContent}}
-
-		  <div class="item item-divider ">
-				Upcoming Games
-      </div>
+		  <div class="item item-divider">Upcoming Games</div>
 			{{#ionList}}
-				<div class="container ten-spacing clear-fix filter-section">
-					<h4 class="float-left ten-spacing">Filters:</h4>
-						{{#each filter in filters}}
-							<span class="filter-box" data-action="removeFilter">{{filter}}</span>
-						{{/each}}
-						<div class="filter-box" data-action="filterGames">
-							View All
-							{{> ionIcon icon="chevron-right"}}
-						</div>
+				<div class="ten-spacing clear-fix filter-section">
+					<div class="filter-box all" data-action="filterGames">
+						Filters {{> ionIcon icon="chevron-right"}}
+					</div>
+					{{#each filter in filters}}
+						<span class="filter-box selected animated fadeInLeft" data-action="removeFilter">
+							{{filter}} {{> ionIcon icon="checkmark"}}
+						</span>
+					{{/each}}
 				</div>
 				<!-- {{> spinLoader}} -->
 
@@ -49,7 +46,7 @@
 							</div>
 						{{/if}}
 
-						<div  id="animateGames" class="container ten-spacing clear-fix">
+						<div id="animateGames" class="container ten-spacing clear-fix">
 			        {{#each game in games}}
 			          <div id="complete-game-card" class="clear-fix fast animated">
 			          	{{#if admin}}
