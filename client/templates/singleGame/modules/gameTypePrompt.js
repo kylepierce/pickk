@@ -137,16 +137,6 @@ Template.gameTypePrompt.events({
     analytics.track("joined game", data);
 
     if(Meteor.isCordova){
-      //Intercom needs unix time with '_at' in JSON to work.
-      var intercomData = {
-        "last_game_joined_at": parseInt(Date.now() / 1000),
-        "type": type,
-        "userId": userId,
-        "last_period": game.period,
-        "last_game": $gameId
-      }
-
-      updateIntercom(intercomData)
       Branch.setIdentity(userId)
       var eventName = 'joined_game';
       Branch.userCompletedAction(eventName)

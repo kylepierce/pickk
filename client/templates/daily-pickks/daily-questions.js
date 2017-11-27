@@ -32,12 +32,6 @@ Template.dailyQuestion.events({
 		var selector = {userId: userId, gameId: this.q.gameId}
 
 		if(Meteor.isCordova){
-			//Intercom needs unix time with '_at' in JSON to work.
-			var intercomData = {
-				"last_daily_question_answered_at": parseInt(Date.now() / 1000),
-				"userId": userId,
-			}
-			updateIntercom(intercomData)
 			Branch.setIdentity(userId)
 			var eventName = 'daily_question_answered';
 			Branch.userCompletedAction(eventName)

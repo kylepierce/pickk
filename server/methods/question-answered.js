@@ -161,6 +161,7 @@ Meteor.methods({
 			var selector = {userId: userId, gameId: prediction.gameId}
 			var modify = {
 				$inc: {queCounter: +1, coins: +prediction.wager},
+				$set: {lastUpdated: new Date()}
 			}
 			GamePlayed.update(selector, modify, true);
 			Questions.update({_id: prediction.questionId}, {$addToSet: {usersAnswered: userId}});
@@ -195,7 +196,10 @@ Meteor.methods({
 		var enoughCoins = hasEnoughCoins(prediction.gameId, prediction.period, prediction.wager);
 
 		if (isValid && enoughCoins) {
-			var modify = {$inc: {coins: -prediction.wager, queCounter: +1}}
+			var modify = {
+				$inc: {coins: -prediction.wager, queCounter: +1},
+				$set: { lastUpdated: new Date() }
+			}
 			GamePlayed.update(selector, modify);
 			Meteor.call('activityForDiamonds', selector);
 

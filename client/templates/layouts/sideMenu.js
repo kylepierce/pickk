@@ -57,12 +57,6 @@ Template.sideMenuContent.events({
       location: "Menu"
     });
   },
-  'click .contact-us': function (e, t){
-    e.preventDefault()
-    if (Meteor.isCordova) {
-      intercom.displayMessenger();
-    }
-  },
   'click [data-action=notifications]': function(){
     IonSideMenu.snapper.close();
     Router.go('/notifications/?read=false');

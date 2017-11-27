@@ -84,12 +84,6 @@ Template.inviteToMatchupBox.events({
         dateCreated: new Date()
       });
 
-      var intercomData = {
-        "last_shared_at": parseInt(Date.now() / 1000),
-        "share_type": "text",
-        "userId": ref,
-      }
-      updateIntercom(intercomData)
       var deeplink = '/matchup/' + matchupId + "/?deeplinkAllowed=true"
       Branch.createBranchUniversalObject({
         canonicalIdentifier: 'user-profile/'+ ref,

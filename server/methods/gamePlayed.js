@@ -33,13 +33,6 @@ Meteor.methods({
         dateCreated: new Date()
       });
 
-      var intercomData = {
-        "last_shared_at": parseInt(Date.now() / 1000),
-        "share_type": "push",
-        "userId": ref,
-      }
-      updateIntercom(intercomData)
-
 			Meteor.call('pushInviteToGame', gameId, userId, ref)
 		} else {
 			console.log("Looks like they are already invited ;)");

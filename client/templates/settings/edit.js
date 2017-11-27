@@ -71,15 +71,7 @@ Template.editProfile.helpers({
 //         id: currentUser,
 //         newUser: newOrNah
 //       });
-//       if(Meteor.isCordova){
-//         //Intercom needs unix time with '_at' in JSON to work.
-//         var intercomData = {
-//           "added_avatar": true,
-//           "last_update_avatar": parseInt(Date.now() / 1000),
-//           "userId": a.userId,
-//         }
-//         updateIntercom(intercomData)
-//       }
+
 //       console.log("Upload Error: ", error);
 //       console.log("Upload Result: ", result);
 //     });

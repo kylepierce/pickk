@@ -58,10 +58,6 @@ Template.sideMenuContent.onCreated( function() {
 });
 
 Template.sideMenuContent.helpers({
-  messageCount: function (){
-    var count = intercom.unreadConversationCount();
-    return count
-  },
   diamonds: function () {
     var thisWeek = moment().week()
     var day = moment().day()

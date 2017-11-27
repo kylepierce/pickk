@@ -87,13 +87,6 @@ Template.inviteToPlay.events({
         dateCreated: new Date()
       });
 
-      var intercomData = {
-        "last_shared_at": parseInt(Date.now() / 1000),
-        "share_type": "text",
-        "userId": ref,
-      }
-      updateIntercom(intercomData)
-
       Branch.createBranchUniversalObject({
         canonicalIdentifier: 'user-profile/'+ ref,
         title: 'Live Game Challenge!',

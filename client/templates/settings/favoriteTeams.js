@@ -222,9 +222,6 @@ UsersProfileSchema.favoriteNBATeams = new SimpleSchema({
 //     data.userId = userId;
 //
 //     analytics.identify(userId, data)
-//     if (Meteor.isCordova) {
-//       intercom.updateUser(data);
-//     }
 //     Meteor.call('updateFavorites', selectionArray, type, function(error) {
 //       if (error) {
 //         IonLoading.show({

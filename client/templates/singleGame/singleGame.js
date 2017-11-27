@@ -8,12 +8,6 @@ Template.singleGame.onCreated(function() {
 	});
 });
 
-// Template.singleGame.rendered = function () {
-//   if(Meteor.isCordova){
-//     intercom.setLauncherVisibility('VISABLE');
-//   }
-// };
-
 Template.singleGame.helpers({
 	game: function(){
 		var t = Template.instance();

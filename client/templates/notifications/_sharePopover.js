@@ -43,15 +43,7 @@ Template._sharePopover.events({
 						userId: currentUser._id,
 						type: t.data.type,
 					}
-					if(Meteor.isCordova){
-						//Intercom needs unix time with '_at' in JSON to work.
-						var intercomData = {
-							"shared_notification": true,
-							"last_shared_notification_at": parseInt(Date.now() / 1000),
-							"userId": currentUser._id,
-						}
-						updateIntercom(intercomData)
-					}
+
 					analytics.track("shared notification",  data)
 		      IonLoading.show({
 				    customTemplate: '<h3>Shared in ' + groupName +' Chat!</h3>',
