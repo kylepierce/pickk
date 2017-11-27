@@ -202,13 +202,20 @@
               </td>
             </tr>
           {{/each}}
-
-          {{#each prize in prizes}}
-          <tr>
-            <td><h2>{{prize.title}}</h2></td>
-            <td>{{prize.description}}</td>
+          {{#if prizes}}
+          <tr bgcolor="#ffffff" style="text-align: center;">
+            <h1>Prizes:</h1>
           </tr>
+          {{#each prize in prizes}}
+            <tr bgcolor="#ffffff" style="text-align: center;">
+              <h2>{{prize.title}}</h2>
+            </tr>
+            <tr bgcolor="#ffffff" style="text-align: center;">
+              {{prize.description}}
+            </tr>
           {{/each}}
+
+          {{/if}}
           
           <!-- BULLETPROOF BUTTON -->
           <tr>

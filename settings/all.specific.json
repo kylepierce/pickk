@@ -1,7 +1,7 @@
 {
   "private": {
     "mailgunApi": {
-      "apiKey": "key-345087ae3fda5f2d413fdcb72b47a01d",
+      "apiKey": "key-73aeee5842526aa38188f0526c2489ac",
       "domain": "mg.pickk.co"
     },
     "mailgun": {

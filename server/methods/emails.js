@@ -55,12 +55,27 @@ Meteor.methods({
       });
     }
   },
-  'sendTestNewsletter': function(){
+  'sendTestNewsletter': function(url){
+    check(url, String);
+    var deeplink = url;
+    var shortlink = HTTP.post("https://api.branch.io/v1/url", {
+      "data": {
+        "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
+        "data": {
+          "$canonical_identifier": deeplink,
+          "$og_title": "GB vs Pitt Live on Pickk!",
+          "$og_description": "Live contest tonight! Watch Packers vs Steelers on NBC for a chance to win prizes!",
+          "$desktop_url": "https://pickk.co/?utm_content=GBvsPitt",
+          "$deeplink_path": deeplink
+        }
+      }
+    });
+
     SSR.compileTemplate('game', Assets.getText('email-templates/game.html'));
     
     Template.game.helpers({
       prizes: function(){
-        return Prizes.find({active: true}, {limit: 3});
+        return Prizes.find({active: true}, {sort: {"rank": 1}});
       },
       game: function (gameIds) {
         var games = Games.find({_id: {$in: gameIds}}).map(function(game){
@@ -89,22 +104,26 @@ Meteor.methods({
       }
     });
 
-    var html = SSR.render('game', {
-      headline: "Three Great Games!",
-      preheader: "Thanksgiving = Football. Watch the game with friends!",
-      copyAbove: "Thanksgiving means family, food, and football. Give thanks for football!",
-      buttonText: "Answer Pre Game Pickks",
-      gameIds: ['5a0e37d344121ae7515d45db', "5a0e37d344121ae7515d45dc", "5a0e37d344121ae7515d45dd"],
-      url: "https://pickk.co",
+    var entire = {
+      headline: "Packers vs Steelers on Pickk!",
+      preheader: "Live Prize Contest Tonight for GB vs Pitt",
+      copyAbove: "Still working through the leftovers from Thanksgiving? Make a plate and get ready for a great day of football!",
+      buttonText: "Join Prize Matchup",
+      gameIds: ['5a11c5eefcd9bfff2cefafd3', '5a1380804e140b815080fb23', "5a11c5eefcd9bfff2cefafd5"],
+      url: shortlink.data.url,
       copyBelow: "If you have any questions, just reply to this email! We're always happy to help out.",
       reason: "You received this email because you created an account in the app.",
-    });
+    }
+
+    var html = SSR.render('game', entire);
+
+    var text = entire.headline + " " + entire.copyAbove + " " + entire.buttonText + " " + entire.url + " " + entire.copyBelow
     
     mg.send({
       from: "Pickk App<hi@pickk.co>",
       to: listAddress,
-      subject: "Thanksgiving Pre Pickks Open!",
-      text: "Thanksgiving means family, food, and football. Give thanks for football!",
+      subject: "GB vs PITT. Prizes For SNF!",
+      text: text,
       html: html
     }, function (error, body) {
       console.log(body);
