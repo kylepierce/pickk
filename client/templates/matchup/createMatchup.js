@@ -289,12 +289,13 @@ Template.matchupFinalDetails.helpers({
       {label: "2nd", value: 2},
       {label: "3rd", value: 3},
       {label: "4th", value: 4},
+      {label: "Overtime", value: 5},
     ]
   },
   halfOptions: function(){
     return [
-      {label: "1st Half", value: [1, 2]},
-      {label: "2nd Half", value: [2, 3]},
+      {label: "1st Half", value: 6},
+      {label: "2nd Half", value: 7},
     ]
   }
 });

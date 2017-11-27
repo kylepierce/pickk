@@ -40,7 +40,8 @@ Template.singleMatchup.helpers({
     });
     
     var inProgress = games.indexOf("In-Progress");
-    if(inProgress > -1){
+    var final = games.indexOf("Final");
+    if(inProgress > -1 || final > -1){
       return true
     }
   },
@@ -191,13 +192,18 @@ Template.matchupMember.helpers({
       return true
     }
   },
-  'gameHasStarted': function(){
+  'gameHasStarted': function () {
     var gameId = this.gameId[0]
-    var game = Games.findOne({_id: gameId});
-    if (game && game.status === "In-Progress"){
+    var games = Games.find({}).map(function (game) {
+      return game.status
+    });
+
+    var inProgress = games.indexOf("In-Progress");
+    var final = games.indexOf("Final");
+    if (inProgress > -1 || final > -1) {
       return true
     }
-  }
+  },
 });
 
 Template.matchupMember.events({

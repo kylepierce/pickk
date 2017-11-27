@@ -134,7 +134,7 @@ Template.matchupDetails.helpers({
       var gameId = matchup.gameId[0]
       Meteor.subscribe('singleGameData', gameId);
       var game = Games.findOne({_id: gameId});
-      if (game){
+      if (game.status === "Pre-Game"){
         var end = Chronos.moment(game.iso)
         var current = Chronos.moment()
         var clock = end.diff(current, "seconds");
@@ -146,6 +146,12 @@ Template.matchupDetails.helpers({
         var base = duration._data
         var time = base.days + ":" + base.hours + ":" + base.minutes + ":" + base.seconds
         return {icon: "stopwatch", title: time}
+      } else if (game.status === "In-Progress") {
+        return { icon: "stopwatch", title: "Live" }
+      } else if (game.status === "Final" || game.completed) {
+        return { icon: "stopwatch", title: "Complete" }
+      } else {
+        return { icon: "stopwatch", title: "Complete" }
       }
     }
 
@@ -163,9 +169,29 @@ Template.matchupDetails.helpers({
       var length = len[1]
       if (length === "Q"){
         var period = "Quarter"
+        if (matchup.period[0] === 0) {
+          number = ""
+          period = "Pre Game"
+        } else if (matchup.period[0] === 1){
+          number = "1st"
+        } else if (matchup.period[0] === 2) {
+          number = "2nd"
+        } else if (matchup.period[0] === 3) {
+          number = "3rd"
+        } else if (matchup.period[0] === 4) {
+          number = "4th"
+        } else if (matchup.period[0] === 5) {
+          number = "Overtime"
+        }
       } else if (length === "H"){
+        if (matchup.period[0] === 6) {
+          number = "1st"
+        } else if (matchup.period[0] === 7) {
+          number = "2nd"
+        } 
         var period = "Half"
       } else if (length === "G"){
+        number = "Entire" 
         var period = "Game"
       }
       return {headline: number, title: period}

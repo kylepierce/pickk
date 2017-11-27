@@ -86,7 +86,7 @@ Meteor.publish('upcomingGames', function() {
 Meteor.publish('singleGameData', function(id) {
   check(id, Match.Maybe(String));
   this.unblock()
-  return Games.find({_id: id}, {fields: {name: 1, scheduled: 1, home_team: 1, away_team: 1}});
+  return Games.find({_id: id}, {fields: {name: 1, scheduled: 1, home_team: 1, away_team: 1, status: 1, completed: 1}});
 });
 
 Meteor.publish('multipleGameData', function(ids) {

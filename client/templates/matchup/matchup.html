@@ -22,8 +22,21 @@
 
   {{#ionView}}
     {{#ionContent}}
-			{{> heroSection location="matchup"}}
+      {{> heroSection location="matchup"}}
+      
       <div class="container hundred-bottom">
+        <div id="button-section" class="animated fadeInRight">
+          <div class="button-card half" data-action="createMatchup">
+            {{> pickkIcon size="small" icon="matchup"}}
+            <span class="text">Create</span>
+            <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+          </div>
+          <div class="button-card half" data-action="matchupHistory">
+            {{> pickkIcon size="small" icon="scoreboard"}}
+            <span class="text">History</span>
+            <span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+          </div>
+        </div>
         {{#if Template.subscriptionsReady}}
 				  {{#if anyMatchups}}
 				  	{{#each matchup in matchups}}

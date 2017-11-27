@@ -1,0 +1,26 @@
+<template name="matchupHistory">
+    {{#contentFor "headerButtonLeft"}}
+    {{> deepBackButton where="matchup"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Matchup History</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container">
+        {{#if matchups}}
+          {{#each matchup in matchups}} {{> matchupCard m=matchup}} {{/each}}
+        {{else}}
+          <div class="no-notifications">You Havent Joined Any Matchups.</div>
+          <button class="ten-spacing button button-stable col col-100" data-action="createMatchup">Create Matchup</button>
+        {{/if}}
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>

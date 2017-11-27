@@ -27,7 +27,6 @@ Meteor.publish('singleMatchup', function(matchupId){
 Meteor.publish('listOfMatchups', function(selector){
   this.unblock();
   check(selector, Object);
-  console.log(selector)
   return Matchup.find(selector)
 });
 
@@ -60,4 +59,10 @@ Meteor.publish('matchupUsers', function(matchupId) {
   }
 
   return UserList.find(selector, fields);
+});
+
+Meteor.publish('usersMatchups', function(userId){
+  check(userId, String);
+
+  return Matchup.find({users: {$in: [userId]}})
 });
