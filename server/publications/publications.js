@@ -6,6 +6,7 @@ Meteor.publish("userData", function() {
     {
       fields: {
         'createdAt': 1,
+        'oneSignalToken': 1
       }
     });
 });
@@ -75,7 +76,7 @@ Meteor.publish('gamesPlayed', function(limit) {
 Meteor.publish('findSingle', function(id) {
   check(id, String);
   this.unblock()
-  var fields = {fields: {'createdAt': 1,'profile': 1,'_id': 1, 'pendingNotifications': 1}}
+  var fields = { fields: { 'createdAt': 1, 'profile': 1, '_id': 1, 'pendingNotifications': 1, 'oneSignal': 1}}
   return UserList.find({_id: id}, fields);
 });
 

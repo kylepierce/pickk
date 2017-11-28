@@ -93,7 +93,7 @@ Meteor.methods({
 
 							console.log(pushMessage)
 
-							// Meteor.call('pushInvite', pushMessage, user._id)
+							Meteor.call('chatPush', pushMessage, user._id);
 		 					createPendingNotification(notifyObj)
 						}
 					}

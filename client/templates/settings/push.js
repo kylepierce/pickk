@@ -37,7 +37,9 @@ Template.pushPrompt.rendered = function () {
 						Router.go("/");
 					}
 				});
-			} 
+			} else {
+				Router.go("/");
+			}
 		});
 	} else {
 		Router.go("/");

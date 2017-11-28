@@ -11,9 +11,23 @@ Template.home.rendered = function () {
     Router.go('/editProfile');
   }
 
-  var hasPrompted = status.permissionStatus.hasPrompted;
-  var staus = status.permissionStatus.status;
-  var userId = Meteor.userId()
+  if (Meteor.isCordova) {
+    window.plugins.OneSignal.getPermissionSubscriptionState(function (status) {
+      var hasPrompted = status.permissionStatus.hasPrompted;
+      if (!hasPrompted){
+        Router.go('/push-active');
+      } else if (status.subscriptionStatus.userId) {
+        if (!user.oneSignal) {
+          Meteor.call('updateOneSignal', status.subscriptionStatus.userId);
+        } else if (user.oneSignal && !user.oneSignal.userId) {
+          console.log(user._id, " Updated their push settings.")
+          Meteor.call('updateOneSignal', status.subscriptionStatus.userId);
+        } 
+        // If its been a while since the code was update,
+        // else if (user.oneSignalToken.lastUpdated )
+      }
+    });
+  }
 
   if (!status.permissionStatus.hasPrompted) {
     Router.go('/push-active');

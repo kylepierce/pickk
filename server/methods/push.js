@@ -1,4 +1,46 @@
-// Meteor.methods({
+sendNotification = function (data) {
+  var oneSignal = Meteor.settings.private.oneSignal;
+  data.app_id = oneSignal.appId
+  var data = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Basic " + oneSignal.key
+    },
+    data: data
+  }
+  HTTP.post('https://onesignal.com/api/v1/notifications', data, function (error, response) {
+    if (error) {console.log(error)}
+  });
+};
+
+Meteor.methods({
+  'updateOneSignal': function(token){
+    check(token, String);
+    var user = Meteor.user();
+    var update = {
+      userId: token,
+      lastUpdated: new Date()
+    }
+    UserList.update({_id: user._id}, {
+      $set: {"oneSignal": update}
+    })
+  },
+  'chatPush': function (message, reciever){
+    check(message, String);
+    check(reciever, String);
+    var user = UserList.findOne({_id: reciever});
+
+    var message = {
+      headings: {"en": "Chat Mention"},
+      contents: {"en": message},
+      ios_badgeType: "Increase",
+      ios_badgeCount: 1,
+      include_player_ids: [user.oneSignal.userId]
+    }
+
+    sendNotification(message);
+  }
+});
 // 	'questionPush': function(gameId, message) {
 // 		check(gameId, String);
 // 		check(message, String);
