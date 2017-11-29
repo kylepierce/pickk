@@ -122,6 +122,11 @@ Template.chatOptions.events({
     messageBox.focus();
     messageBox.val('');
     messageBox.val("@" + userName + " ");
+    analytics.track('Respond to message', {
+      opId: userId,
+      opName: userName,
+      replier: Meteor.userId()
+    });
   },
   'click [data-action=react]': function(e, t){
     IonPopover.show('_reactionToMessage', t.data, e.currentTarget)
@@ -132,7 +137,12 @@ Template.chatOptions.events({
   },
   'click [data-action=delete]': function(event, template) {
     var deletor = Meteor.userId();
+    var userId = Template.instance().data.i.user
     var messageId = Template.instance().data.i._id
+    analytics.track('Delete Message', {
+      opId: userId,
+      deletor: Meteor.userId()
+    });
     Meteor.call('deleteMessage', messageId, deletor)
   },
 });

@@ -1,14 +1,14 @@
 <template name="chatOverview">
   <div class="bar bar-header bar-dark">
-  {{#if group}}
-   <h1 class="title white-text-header">{{group}} Chat</h1>
+    {{#if group}}
+      <h1 class="title white-text-header">{{group}} Chat</h1>
 
-   <button id="all-chats" class="button button-clear">
-      {{> ionIcon icon="ios-arrow-back" }}
-    </button>
-  {{else}}
-    <h1 class="title white-text-header">Chat</h1>
- {{/if}}
+      <button id="all-chats" class="button button-clear">
+        {{> ionIcon icon="ios-arrow-back" }}
+      </button>
+    {{else}}
+      <h1 class="title white-text-header">Chat</h1>
+    {{/if}}
 
     <button class="button button-clear pull-right" data-ion-popover="_groupChats">
       {{> ionIcon icon="ios-people" }}
@@ -120,41 +120,40 @@
 </template>
 
 <template name="_reaction">
-    <div class="emoji-layer">
-      {{#ionPopover}}
-        <button value="dead" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
-        </button>
-        <button value="fire" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
-        </button>
-        <button value="dying" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
-        </button>
-        <button value="hell-yeah" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
-        </button>
-        <button value="what" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
-        </button>
-        <button value="pirate" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
-        </button>
-        <button value="love" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
-        </button>
-        <button value="tounge" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
-        </button>
-        <button value="oh-no" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
-        </button>
-        <button value="what-the-hell" >
-          <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
-        </button>
-      {{/ionPopover}}
-    </div>
-
+  <div class="emoji-layer">
+    {{#ionPopover}}
+      <button value="dead" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-01.svg'>
+      </button>
+      <button value="fire" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20119.svg'>
+      </button>
+      <button value="dying" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-13.svg'>
+      </button>
+      <button value="hell-yeah" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20109.svg'>
+      </button>
+      <button value="what" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack_Artboard%20112.svg'>
+      </button>
+      <button value="pirate" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-24.svg'>
+      </button>
+      <button value="love" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-58.svg'>
+      </button>
+      <button value="tounge" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-86.svg'>
+      </button>
+      <button value="oh-no" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-93.svg'>
+      </button>
+      <button value="what-the-hell" >
+        <img class="preview" src='/emoji/Full-Color/Emoji-Party-Pack-96.svg'>
+      </button>
+    {{/ionPopover}}
+  </div>
 </template>
 
 
