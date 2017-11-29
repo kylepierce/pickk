@@ -150,7 +150,10 @@ Template.questionExtended.helpers({
 });
 
 Template.questionDetails.onCreated(function(){
-  this.subscribe('questionHistory', this.data.q._id);
+	this.subscribe('questionHistory', this.data.q._id);
+	analytics.page('View Single Question Popover', {
+		questionId: this.data.q._id
+	});
 });
 
 Template.questionDetails.helpers({
@@ -202,6 +205,10 @@ Template.questionDetails.helpers({
 
 Template.questionDetails.events({
   'click [data-action=report-question]': function(e, t){
+		analytics.track('Click Report This Question', {
+			questionId: this.q._id,
+			userId: Meteor.userId()
+		});
     IonModal.open('_reportQuestion', this.q);
   }
 });

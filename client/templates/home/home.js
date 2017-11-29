@@ -28,10 +28,6 @@ Template.home.rendered = function () {
       }
     });
   }
-
-  if (!status.permissionStatus.hasPrompted) {
-    Router.go('/push-active');
-  }
 };
 
 Template.homeGames.onCreated(function() {
