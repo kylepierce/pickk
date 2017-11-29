@@ -23,3 +23,9 @@ Template.prizes.helpers({
 		return { icon: "stopwatch", title: time }
 	}
 });
+
+Template.prizes.events({
+	'click [data-action=view-prize]': function(){
+		analytics.track('Click Prize', {});
+	}
+});

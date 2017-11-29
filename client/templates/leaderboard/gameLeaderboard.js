@@ -95,6 +95,13 @@ Template.miniLeaderboard.events({
 		if(this.live){
 			params = params + "&periods=" + this.data.period[0]
 		}
+		var data = {
+			location: this.data.type,
+			type: "Leaderboard",
+			gameId: this.data._id,
+			period: this.data.period[0]
+		}
+		analytics.track("View More - List Item In Card", data);
 		Router.go('/leaderboard?' + params)
 	},
 });

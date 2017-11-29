@@ -22,8 +22,9 @@ Template.gameHistory.events({
 	},
 	'click [data-action=previous-answers]': function (e, t) {
 		var gameId = Router.current().params._id
-		analytics.track("waiting-history", {
-			userId: Meteor.userId(),
+		analytics.track("List Item In Card", {
+			location: "Waiting Screen",
+			type: "History",
 			gameId: gameId,
 		});
 		Router.go('/history/' + gameId);

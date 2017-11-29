@@ -22,7 +22,7 @@
             <h2>{{prize.title}}</h2>
             <img class="avatar" src="{{prize.image}}"> {{#with dateEnd prize.dateEnd}} {{> pickkIcon size="xs" margin="margin: 0px;" icon=icon}} {{title}}
             <br> {{/with}} {{prize.description}}
-            <a href="{{prize.url}}" class="button button-positive">{{> ionIcon icon="ios-arrow-right"}}</a>
+            <a data-action="view-prize" href="{{prize.url}}" class="button button-positive">{{> ionIcon icon="ios-arrow-right"}}</a>
           </div>
         {{/each}}
       {{else}}

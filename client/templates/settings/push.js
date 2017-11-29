@@ -3,7 +3,9 @@ Template.pushPrompt.rendered = function () {
 		window.plugins.OneSignal.getPermissionSubscriptionState(function (status) {
 			var hasPrompted = status.permissionStatus.hasPrompted;
 			var staus = status.permissionStatus.status;
-			var userId = Meteor.userId()
+			var userId = Meteor.userId();
+
+			analytics.track("Push Notification Prompt", {});
 
 			if (!status.permissionStatus.hasPrompted) {
 				IonPopup.confirm({

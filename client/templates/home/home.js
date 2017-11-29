@@ -50,9 +50,8 @@ Template.homeGames.helpers({
 
 Template.home.events({
   'click [data-action=game-prediction]': function(event, template){
-    var userId = Meteor.userId()
-    analytics.track("home-game-pickks", {
-      userId: userId,
+    analytics.track("Click Pickk Six", {
+      location: "Home"
     });
     Router.go('/daily-pickks')
   },
@@ -82,15 +81,27 @@ Template.dailyPickkButton.helpers({
 
 Template.homeButtons.events({
   'click [data-action=notification-button]': function(e, t){
+    analytics.track('Click "Notifications"', {
+      location: "Home"
+    });
     Router.go('/notifications/?read=false');
   },
   'click [data-action=leagues-button]': function(e, t){
+    analytics.track('Click "Leagues"', {
+      location: "Home"
+    });
     Router.go('/leagues');
   },
   'click [data-action=matchups-button]': function(e, t){
+    analytics.track('Click "Matchups"', {
+      location: "Home"
+    });
     Router.go('/matchup');
   },
   'click [data-action=allGames]': function(e, t){
+    analytics.track('Click "View Games"', {
+      location: "Home"
+    });
     Session.set('gamesDate', "month");
     var all = ["NBA", "NFL", "MLB"]
     Session.set('gamesBySport', all);

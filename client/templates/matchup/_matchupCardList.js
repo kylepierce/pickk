@@ -21,11 +21,18 @@ Template.matchupCardList.helpers({
 
 Template.matchupCardList.events({
   'click [data-action=view-matchups]': function(e, t){
+    var data = {
+      location: this.type,
+      type: "Matchup",
+    }
     if(this.type === "game"){
       var selector = "gameId=" + this.gameId
+      data.gameId = this.gameId
     } else if (this.type === "league"){
       var selector = "leagueId=" + this.leagueId
+      data.leagueId = this.leagueId
     }
+    analytics.track("View More - List Item In Card", data);
     Router.go('/matchup?' + selector);
   }
 });
