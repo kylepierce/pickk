@@ -8,11 +8,9 @@
 
 <template name="heroSection">
   <div style="min-height: 180px;">
-    <!-- {{#if Template.subscriptionsReady}} -->
-      <div id="hero-section" class="animated fadeInDown">
-        {{> heroInBetween}}
-      </div>
-    <!-- {{/if}} -->
+    <div id="hero-section" class="animated fadeInDown">
+      {{> heroInBetween}}
+    </div>
   </div>
   <div class="line-divider"></div>
 </template>
@@ -26,7 +24,7 @@
 </template>
 
 <template name="singleHero">
-  <a href="{{hero.url}}">
+  <a href="{{hero.url}}" data-action="Click-Hero">
   <div class="card-container hero-card">
     <div class="hero-image" style="background-image: url({{hero.image}})">
       <span class="title">{{hero.title}}</span>

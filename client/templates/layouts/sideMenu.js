@@ -14,14 +14,25 @@ Template.sideMenuContent.helpers({
   }
 });
 
-
 Template.sideMenuContent.events({
+  'click [data-action=edit-profile-photo]': function(){
+    analytics.track("Click Profile Photo");
+    IonSideMenu.snapper.close(); 
+    Router.go("/userPhoto")
+  },
   'click [data-action=profile]': function () {
     var userId = Meteor.userId();
+    analytics.track("Click Profile Icon");
+    IonSideMenu.snapper.close(); 
     Router.go("/user-profile/" + userId)
   },
-  'click .item-icon-left': function (){
+  'click [data-action=edit-profile]': function () {
+    analytics.track("Click Settings Icon");
     IonSideMenu.snapper.close();
+    Router.go("/settings")
+  },
+  'click .item-icon-left': function (){
+    IonSideMenu.snapper.close(); 
   },
   'click .js-share-link': function(event) {
     event.preventDefault();

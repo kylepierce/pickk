@@ -15,19 +15,37 @@ Template.mainLayout.events({
     Router.go('/league/'+ leagueId);
   },
   'click [data-action=filterGames]': function() {
+    analytics.track('Click Filter', {
+      location: "Games"
+    });
     IonModal.open('gamesFilter');
   },
   'click [data-action=filterMatchups]': function () {
+    analytics.track('Click Filter', {
+      location: "Matchups"
+    });
     IonModal.open('filterMatchups');
   },
   'click [data-action=filterLeaderboard]': function () {
+    analytics.track('Click Filter', {
+      location: "Leaderboard"
+    });
     IonModal.open('weekFilter');
   },
   'click [data-action=filterGameLeaderboard]': function () {
+    analytics.track('Click Filter', {
+      location: "Single Game Leaderboard"
+    });
     IonModal.open('singleGameFilter');
   },
   'click [data-action=filterNotifications]': function () {
+    analytics.track('Click Filter', {
+      location: "Notifications"
+    });
     IonModal.open('notificationFilter');
+  },
+  'click [data-action=click-chat]': function(){
+    analytics.track("Click Chat Icon");
   },
 
 

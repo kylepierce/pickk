@@ -17,7 +17,14 @@ Template.leagues.helpers({
 });
 
 Template.leagues.events({
+  'click [data-action=search-leagues]': function(){
+    analytics.track("Click Search", {
+      location: "Header"
+    });
+    Router.go('/searchLeagues');
+  },
   'click [data-action=no-league]': function(){
-    // console.log("Nada");
+    analytics.track('Click "No League"', {});
+    Router.go('/searchLeagues');
   }
 });

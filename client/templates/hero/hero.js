@@ -30,3 +30,14 @@ Template.heroInBetween.helpers({
     return Hero.find({}).fetch();
   },
 });
+
+Template.singleHero.events({
+  'click [data-action=Click-Hero]': function(){
+    analytics.track('Click Hero', {
+      heroId: this.hero._id,
+      name: this.hero.name,
+      url: this.hero.url,
+      location: Router.current().originalUrl
+    });
+  }
+});

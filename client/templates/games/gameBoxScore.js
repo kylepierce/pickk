@@ -1,8 +1,8 @@
-Template.entireGameCard.onCreated( function() {
-  this.subscribe('singleGameTeams', this.data.game._id, function () {
-    $( ".loading-wrapper").show();
-  });
-});
+// Template.entireGameCard.onCreated( function() {
+//   this.subscribe('singleGameTeams', this.data.game._id, function () {
+//     $( ".loading-wrapper").show();
+//   });
+// });
 
 Template.entireGameCard.helpers({
   status: function () {
@@ -18,7 +18,10 @@ Template.entireGameCard.helpers({
 
 Template.entireGameCard.events({
   'click [data-action=viewGame]': function(){
-    var gameId = this.game._id
+    var gameId = this.game._id;
+    analytics.track('Click Game Card', {
+      gameId: gameId
+    });
     Router.go('/game/' + gameId );
   }
 });
@@ -110,16 +113,27 @@ Template.singleGameCard.helpers({
 
 Template.singleGameCard.events({
   'click [data-action=viewGame]': function () {
-    var gameId = this.game._id
+    var gameId = this.game._id;
+    analytics.track('Click Game Card', {
+      gameId: gameId
+    });
     Router.go('/game/' + gameId);
   },
   'click [data-action=register]': function () {
     var userId = Meteor.userId();
     Meteor.call('registerForGame', userId, this.game._id);
+    analytics.track('Click Register For Game', {
+      gameId: this.game._id,
+      sport: this.game.sport
+    });
     sAlert.success("Registered for " + this.game.name + " !" , {effect: 'slide', position: 'bottom', html: true});
   },
   'click [data-action=unregister]': function () {
     var userId = Meteor.userId();
+    analytics.track('Click Unregister For Game', {
+      gameId: this.game._id,
+      sport: this.game.sport
+    });
     Meteor.call('unregisterForGame', userId, this.game._id);
     sAlert.success("Removed Registration for " + this.game.name + "." , {effect: 'slide', position: 'bottom', html: true});
   }
@@ -155,9 +169,17 @@ Template.singleGameCTA.helpers({
 
 Template.singleGameCTA.events({
   'click [data-action=play]': function (e, t) {
+    analytics.track('Click Game Card CTA', {
+      gameId: this.game._id,
+      status: "Live"
+    });
     Router.go('/game/' + this.game._id );
   },
   'click [data-action=pre-pickk]': function(){
+    analytics.track('Click Game Card CTA', {
+      gameId: this.game._id,
+      status: "Pre-Game"
+    });
     Router.go('/game/' + this.game._id );
   }
 });

@@ -1,11 +1,8 @@
 <template name="entireGameCard">
-  <div class="loading-wrapper">
-    <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight">
-      <!-- {{> loadingGame}} animated-background -->
-      {{> singleGameInfo game=game border=true}}
-      {{> singleGameCard game=game}}
-      {{> singleGameCTA game=game}}
-    </div>
+  <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight">
+    {{> singleGameInfo game=game border=true}}
+    {{> singleGameCard game=game}}
+    {{> singleGameCTA game=game}}
   </div>
 </template>
 
@@ -79,12 +76,12 @@
 <template name="rightSection">
   <div class="additional-game-details">
     {{#if completed}}
-      <div class="game-time-container center-text game-card-right-side-border">
+      <div data-action="viewGame" class="game-time-container center-text game-card-right-side-border">
         <span>View Game</span>
       </div>
     {{/if}}
     {{#if live}}
-      <div class="game-time-container center-text game-card-right-side-border">
+      <div data-action="viewGame" class="game-time-container center-text game-card-right-side-border">
         <span class="period">
           {{periodGrammer this.game.period}}
         </span>
@@ -106,7 +103,7 @@
       {{/if}}
     {{/if}}
     {{#if delayed}}
-      <div class="game-time-container center-text game-card-right-side-border">
+      <div data-action="viewGame" class="game-time-container center-text game-card-right-side-border">
         View Game
       </div>
     {{/if}}

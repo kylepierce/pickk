@@ -14,7 +14,7 @@
  {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <a href="/searchLeagues" class="button button-clear pull-right newGroup">
+    <a data-action="search-leagues" class="button button-clear pull-right newGroup">
       {{> ionIcon icon='ios-search-strong'}}
     </a>
 	{{/contentFor}}
@@ -32,7 +32,7 @@
 			{{#if noLeaguesJoined}}
 				{{#ionItem buttonRight=true}}
 					<p>No Leagues :( Join a League!</p>
-					<a href="/searchLeagues" data-action="no-league" class="button">
+					<a data-action="no-league" class="button">
 						{{> ionIcon icon="ios-plus"}}
 					</a>
 				{{/ionItem}}
