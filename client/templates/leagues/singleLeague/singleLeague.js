@@ -79,6 +79,9 @@ Template.leagueMatchups.helpers({
 
 Template.leagueMatchups.events({
   'click [data-action=createMatchup]': function(){
+    analytics.track('Click "Create Matchup"', {
+      location: "League"
+    });
     Router.go('/matchup/create');
   }
 });
@@ -100,10 +103,17 @@ Template.commissionerLinks.helpers({
 
 Template.commissionerLinks.events({
   "click [data-action=settings]": function(e, t){
-    var leagueId = Router.current().params._id
+    var leagueId = Router.current().params._id;
+    analytics.track('Click "Settings"', {
+      location: "League",
+      userType: "Commissioner"
+    });
     Router.go('/league/settings/' + leagueId);
   },
   'click [data-action=_leagueRequests]': function(event, template){
+    analytics.track('Click "Requests"', {
+      location: "League"
+    });
     IonModal.open('_leagueRequests', this);
   },
 });
@@ -120,16 +130,28 @@ Template.leagueLinks.helpers({
 
 Template.leagueLinks.events({
   'click [data-action=viewMembers]': function(){
+    analytics.track('Click "Players"', {
+      location: "League"
+    });
     IonModal.open('_leagueMembers', this.league);
   },
   "click [data-action=invite]": function(){
+    analytics.track('Click "Invite"', {
+      location: "League"
+    });
     Router.go('/league/invite/' + this.league._id);
   },
   "click [data-action=viewLeaderboard]": function(){
-    Router.go('/league/week-leaderboard/' + this.league._id)
+    analytics.track('Click "Leaderboard"', {
+      location: "League"
+    });
+    Router.go('/league/week-leaderboard/' + this.league._id);
   },
   "click [data-action=settings]": function(){
-    Router.go('/league/settings/' + this.league._id)
+    analytics.track('Click "Settings"', {
+      location: "League"
+    });
+    Router.go('/league/settings/' + this.league._id);
   },
 });
 

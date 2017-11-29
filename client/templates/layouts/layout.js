@@ -47,6 +47,12 @@ Template.mainLayout.events({
   'click [data-action=click-chat]': function(){
     analytics.track("Click Chat Icon");
   },
+  'click [data-action=search-leagues]': function () {
+    analytics.track("Click Search", {
+      location: "Header"
+    });
+    Router.go('/searchLeagues');
+  },
 
 
   // 'click [data-action=editMatchup]': function(){

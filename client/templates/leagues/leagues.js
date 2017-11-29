@@ -17,14 +17,19 @@ Template.leagues.helpers({
 });
 
 Template.leagues.events({
-  'click [data-action=search-leagues]': function(){
-    analytics.track("Click Search", {
-      location: "Header"
-    });
-    Router.go('/searchLeagues');
-  },
   'click [data-action=no-league]': function(){
     analytics.track('Click "No League"', {});
     Router.go('/searchLeagues');
+  }
+});
+
+Template.leagueOverviewLinks.events({
+  'click [data-action=viewAll]': function () {
+    analytics.track('Click "View All Leagues"', {});
+    Router.go('/searchLeagues');
+  },
+  'click [data-action=createLeague]': function () {
+    analytics.track('Click "Create League"', {});
+    Router.go('/league/create');
   }
 });

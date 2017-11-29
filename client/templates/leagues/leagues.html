@@ -22,6 +22,10 @@
   {{#ionView }}
     {{#ionContent}}
 		{{> heroSection location="league"}}
+		<div class="line-divider"></div>
+		<div id="button-section">
+			{{> leagueOverviewLinks}}
+		</div>
 		<div class="container hundred-bottom">
 		{{#if Template.subscriptionsReady}}
 			{{#each league in userLeague}}
@@ -43,4 +47,17 @@
 		</div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="leagueOverviewLinks">
+	<div class="button-card half" data-action="createLeague">
+		{{> pickkIcon icon="player" size="small"}}
+		<span class="text">Create</span>
+		<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+	</div>
+	<div class="button-card half" data-action="viewAll">
+		{{> pickkIcon icon="invite" size="small"}}
+		<span class="text">View All</span>
+		<span class="arrow">{{> ionIcon icon="ios-arrow-right"}}</span>
+	</div>
 </template>

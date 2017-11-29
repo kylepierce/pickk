@@ -5,6 +5,9 @@ Template.leagueCard.events({
     } else {
       var id = this._id
     }
+    analytics.track('Click League Card', {
+      leagueId: id
+    });
     Router.go('league.show', {_id: id});
   }
 });
