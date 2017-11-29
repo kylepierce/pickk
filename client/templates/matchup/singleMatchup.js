@@ -100,9 +100,19 @@ Template.singleMatchup.events({
 
 Template.matchupJoin.events({
   "click [data-action=viewLeague]": function(e, t) {
-    var userId = Meteor.userId()
+    var userId = Meteor.userId();
+    analytics.track('Click Join Matchup', {
+      matchupId: this._id,
+      league: true
+    });
     Meteor.call('joinMatchup', this._id, userId);
     Meteor.call('joinLeague', userId, this.leagueId);
+  },
+  "click [data-action=joinMatchup]": function(){
+    analytics.track('Click Join Matchup', {
+      matchupId: this._id,
+      league: false
+    });
   }
 });
 
@@ -208,24 +218,30 @@ Template.matchupMember.helpers({
 
 Template.matchupMember.events({
   "click [data-action=viewGame]": function(e, t){
-     Router.go('/game/' + this.gameId );
+    analytics.track('Click "View Game"', {});
+    Router.go('/game/' + this.gameId );
   },
   "click [data-action=viewMembers]": function(e, t){
+    analytics.track('Click "Players"', {
+      location: "Matchup"
+    });
     IonModal.open('_matchupMembers', this);
   },
   "click [data-action=invite]": function(e, t){
-     Router.go('/matchup/invite/' + this._id );
+    analytics.track('Click "Invite"', {
+      location: "Matchup"
+    });
+    Router.go('/matchup/invite/' + this._id );
   },
   "click [data-action=viewLeaderboard]": function(e, t){
-    // if(t.data.gameId.length > 1){
-    //   var mGames = t.data.gameId.toString()
-    //   var url = '/leaderboard/?multipleGames=' + mGames
-    // } else {
-      var url = '/leaderboard/?type=matchup&_id=' + this._id
-    // }
+    analytics.track('Click "Leaderboard"', {
+      location: "Matchup"
+    });
+    var url = '/leaderboard/?type=matchup&_id=' + this._id
     Router.go(url);
   },
   "click [data-action=viewLeague]": function(e, t) {
+    analytics.track('Click "View League"', {});
     Router.go('/league/' + this.leagueId );
   }
 });

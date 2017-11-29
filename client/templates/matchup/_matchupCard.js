@@ -88,7 +88,10 @@ Template.matchupCard.helpers({
 
 Template.matchupCard.events({
   'click [data-action=viewMatchup]': function(e,t){
-    Router.go('/matchup/'+ this.m._id)
+    analytics.track('Click Matchup Card', {
+      matchupId: this.m._id
+    });
+    Router.go('/matchup/'+ this.m._id);
   }
 });
 
