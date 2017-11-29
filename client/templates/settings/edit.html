@@ -6,12 +6,12 @@
       <div class="container">
         {{#autoForm collection="Meteor.users" schema=UsersProfileSchema doc=currentUser id="settings"}}
           <div class="list">
-            {{> afQuickField autofocus='' label-type='stacked' name='profile.username' placeholder="throwback33"}}
-            {{> afQuickField label-type='stacked' name='profile.firstName' placeholder="John"}}
-            {{> afQuickField label-type='stacked' name='profile.lastName' placeholder="Smith"}}
+            {{> afQuickField id="username" autofocus='' label-type='stacked' name='profile.username' placeholder="throwback33"}}
+            {{> afQuickField id="firstName" label-type='stacked' name='profile.firstName' placeholder="John"}}
+            {{> afQuickField id="lastName" label-type='stacked' name='profile.lastName' placeholder="Smith"}}
 
             <!-- {{> afQuickField label-type='stacked' name='emails.0.address'}} -->
-            {{> afQuickField label-type='stacked' name='profile.birthday'}}
+            {{> afQuickField id="birthday" label-type='stacked' name='profile.birthday'}}
             {{> yield 'submitButton'}}
           </div>
         {{/autoForm}}
@@ -22,11 +22,11 @@
 </template>
 
 <template name="submitNew">
-  <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Finish Profile">
+  <input id="submitEditProfile" name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Finish Profile">
 </template>
 
 <template name="submitOld">
-  <input name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Update Profile">
+  <input id="submitEditProfile" name="status" type="submit" class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background animated fadeInRight" style="height: 45px; margin-bottom: 300px;" value="Update Profile">
 </template>
 
 <template name="newUserHeader">

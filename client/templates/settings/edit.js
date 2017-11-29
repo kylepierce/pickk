@@ -35,46 +35,32 @@ Template.editProfile.helpers({
   }
 });
 
-// Template.editProfile.events({
-//   "change #new-icon": function(e, t) {
-//     var files = e.currentTarget.files;
-//     t.$(".loading").show();
-//     t.$(".avatar").hide();
-//     console.log(files)
-//     IonLoading.show({
-//       customTemplate: "Uploading...",
-//       duration: 5000,
-//       backdrop: true
-//     });
-//     Cloudinary.upload(files, {
-//       folder: "avatars",
-//       transformation: [
-//         {width: 200, height: 200, gravity: "face", crop: "lfill"},
-//       ],
-//       fields: {}
-//     }, function(error, result) {
-//       t.$(".loading").hide();
-//       t.$(".avatar").show();
-//       if (error) {
-//         throw error;
-//       }
-//       Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}});
-//       // Add a analytics code right here
-//       var route = Router.current().originalUrl
-//       if(route.includes("newUserSettings")) {
-//         var newOrNah = true
-//       } else {
-//         var newOrNah = false
-//       }
-//       var currentUser = Meteor.userId();
-//       analytics.track("userAddAvatar", {
-//         id: currentUser,
-//         newUser: newOrNah
-//       });
+Template.editProfile.events({
+  'click #username': function () {
+    analytics.track('Click "Username" Field', {});
+  },
+  'click #firstName': function () {
+    analytics.track('Click "First Name"', {});
+  },
+  'click #lastName': function () {
+    analytics.track('Click "Last Name"', {});
+  },
+  'click #birthday': function () {
+    analytics.track('Click "Birthday"', {});
+  }
+});
 
-//       console.log("Upload Error: ", error);
-//       console.log("Upload Result: ", result);
-//     });
-//   }
-//
-// });
+Template.submitNew.events({
+  'click #submitEditProfile': function () {
+    analytics.track('Click "Finish Profile"', {
+      type: "New"
+    });
+  }
+});
+Template.submitOld.events({
+  'click #submitEditProfile': function () {
+    analytics.track('Click "Finish Profile"', {
+      type: "Old"
+    });
+  }
+});
