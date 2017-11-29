@@ -18,6 +18,10 @@ Template.gameHistory.helpers({});
 
 Template.gameHistory.events({
 	'click': function(){
+		analytics.track('Click Single Question', {
+			gameId: this.q.gameId,
+			questionId: this.q._id
+		});
     IonModal.open('questionDetails', this);
 	},
 	'click [data-action=previous-answers]': function (e, t) {

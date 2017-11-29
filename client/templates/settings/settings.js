@@ -4,6 +4,7 @@ Template.settings.events({
     if (Meteor.isCordova) {
       Branch.logout();
     }
+    analytics.track('Logged Out', {});
     analytics.reset();
     Router.go("/landing")
   },

@@ -29,10 +29,16 @@ Template.history.onCreated(function(){
 
 Template.history.events({
 	'click .item': function(){
+		analytics.track('Click Single Game History', {
+			gameId: this.id
+		});
 		Router.go('/history/' + this.id);
 	},
 	'click [data-action=increaseCount]': function(){
 		var limit = Session.get('gameHistoryLength');
+		analytics.track('Click "Load More"', {
+			location: "History"
+		});
 		$("#load-more-games").each(function () {
 			var t = $(this);
 			t.addClass('hidden');
