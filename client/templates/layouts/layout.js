@@ -53,7 +53,31 @@ Template.mainLayout.events({
     });
     Router.go('/searchLeagues');
   },
-
+  'click [data-action=selectSports]': function (e, t) {
+    analytics.track('Click "Skip"', {
+      location: "League",
+      step: "Add Photo"
+    });
+    var leagueId = Router.current().params._id
+    Router.go('/league/association/' + leagueId);
+  },
+  'click [data-action=inviteToLeague]': function (e, t) {
+    analytics.track('Click "Skip"', {
+      location: "League",
+      step: "Add Sports"
+    });
+    var leagueId = Router.current().params._id
+    Router.go("/league/invite/" + leagueId);
+  },
+  'click [data-action=selectLater]': function (e, t) {
+    analytics.track('Click "Skip"', {
+      location: "League",
+      step: "Invite"
+    });
+    var leagueId = Router.current().params._id
+    Router.go('/league/' + leagueId + "?new=true");
+  },
+  
 
   // 'click [data-action=editMatchup]': function(){
   //   IonActionSheet.show({

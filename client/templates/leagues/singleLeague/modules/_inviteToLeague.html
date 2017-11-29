@@ -6,11 +6,11 @@
     <h1 class="title white-text-header">Invite User to League</h1>
   {{/contentFor}}
 
-  <!-- {{#contentFor "headerButtonRight"}}
-    <button class="button button-clear right" data-action="skip">
+  {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear right" data-action="selectLater">
       Skip
     </button>
-  {{/contentFor}} -->
+  {{/contentFor}}
 
   {{#ionView }}
     {{#ionContent}}
@@ -60,9 +60,9 @@
     </div>
     {{/EasySearch.IfNoResults}}
   </div>
-  <div class="move-to-next-step-without-completing-goal" data-action="selectLater">
+  <!-- <div class="move-to-next-step-without-completing-goal" data-action="selectLater">
     I Will Invite Other Players Later
-  </div>
+  </div> -->
 </template>
 
 <template name="inviteButton">

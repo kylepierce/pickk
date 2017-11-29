@@ -1,7 +1,4 @@
 Template.leaguePhoto.events({
-  'click [data-action=selectSports]': function(e, t){
-    Router.go('/league/association/' + this.league._id);
-  },
   "change #leagueAvatar": function(e, t) {
     var files = e.currentTarget.files;
     t.$(".loading").show();

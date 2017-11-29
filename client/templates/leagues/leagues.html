@@ -22,11 +22,11 @@
   {{#ionView }}
     {{#ionContent}}
 		{{> heroSection location="league"}}
-		<div class="line-divider"></div>
-		<div id="button-section">
-			{{> leagueOverviewLinks}}
-		</div>
+		
 		<div class="container hundred-bottom">
+			<div id="button-section">
+				{{> leagueOverviewLinks}}
+			</div>
 		{{#if Template.subscriptionsReady}}
 			{{#each league in userLeague}}
 				{{#with league}}

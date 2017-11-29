@@ -35,15 +35,20 @@ Template.inviteButton.events({
       var username = this.profile.username
     }
     var inviter = Meteor.userId()
-    var groupId = Router.current().params._id
+    var leagueId = Router.current().params._id
 
-    Meteor.call("inviteToLeague", invitee, inviter, groupId);
+    Meteor.call("inviteToLeague", invitee, inviter, leagueId);
 
     var groupData = Groups.findOne(Router.current().params._id)
     var groupName = groupData.name
     var message = Meteor.user().profile.username + " has invited you to join " + groupName
 
     // Meteor.call('pushInvite', message, invitee);
+    analytics.track("Invited to League", {
+      userType: 'Existing User',
+      location: "League",
+      leagueId: leagueId,
+    });
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)
@@ -67,26 +72,25 @@ Template.inviteToLeagueBox.helpers({
 });
 
 Template.inviteToLeagueBox.events({
-  'click [data-action=selectLater]': function(e, t){
-    var leagueId = Router.current().params._id
-    Router.go('/league/' + leagueId + "?new=true");
-  },
   "click [data-action=textInvite]": function(e, t){
     if(Meteor.isCordova){
       var branchUniversalObj = null;
       var ref = Meteor.userId();
       var username = Meteor.user().profile.username
-      var groupId = Router.current().params._id
-      var group = Groups.findOne(groupId);
+      var leagueId = Router.current().params._id
+      var group = Groups.findOne(leagueId);
       var groupName = group.name
       var message = 'Predict the Next Play on Pickk! Click the Link to Join ' + groupName + ' (My League) and Compete Live!'
 
-      analytics.track("invited to group", {
-        userId: ref,
-        type: 'share-sheet',
-        location: "group invite",
-        group: groupId,
-        dateCreated: new Date()
+      analytics.track("Invited to App", {
+        location: "League",
+        leagueId: leagueId,
+      });
+
+      analytics.track("Invited to League", {
+        userType: 'New User',
+        location: "League",
+        leagueId: leagueId,
       });
 
       Branch.createBranchUniversalObject({
@@ -96,7 +100,7 @@ Template.inviteToLeagueBox.events({
         contentMetadata: {
           'userId': ref,
           'userName': username,
-          'groupId': groupId
+          'leagueId': leagueId
         }
       }).then(function (newBranchUniversalObj) {
         branchUniversalObj = newBranchUniversalObj;
@@ -105,7 +109,7 @@ Template.inviteToLeagueBox.events({
           "feature" : "share",
         }, {
           // put your control parameters here
-          "$deeplink_path" : "/league/" + groupId,
+          "$deeplink_path" : "/league/" + leagueId,
         }, message);
       });
     }
