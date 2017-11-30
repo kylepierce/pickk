@@ -20,33 +20,35 @@ Template.leaguePhoto.events({
       t.$(".loading").hide();
       t.$(".avatar").show();
       if (error) {
+        var leagueId = Router.current().params._id
+        analytics.track("User Upload Photo", {
+          location: "League",
+          success: false,
+          leagueId: leagueId
+        });
         sAlert.error("Error: " + error.error.message , {effect: 'slide', position: 'bottom', html: true});
       }
       var leagueId = Router.current().params._id;
 
       Meteor.call('setLeagueAvatar', leagueId, result.secure_url, function(error){
         if(error){
+          var leagueId = Router.current().params._id
+          analytics.track("User Upload Photo", {
+            location: "League",
+            success: false,
+            leagueId: leagueId
+          });
           sAlert.error("Error: " + error , {effect: 'slide', position: 'bottom', html: true});
         } else {
           var leagueId = Router.current().params._id
+          analytics.track("User Upload Photo", {
+            location: "League",
+            success: true,
+            leagueId: leagueId
+          });
           Router.go('/league/association/' + leagueId);
         }
       });
     });
   },
 });
-
-// Add a analytics code right here
-// var route = Router.current().originalUrl
-// if(route.includes("newUserSettings")) {
-//   var newOrNah = true
-// } else {
-//   var newOrNah = false
-// }
-// var currentUser = Meteor.userId();
-// analytics.track("userAddAvatar", {
-//   id: currentUser,
-//   newUser: newOrNah
-// });
-// console.log("Upload Error: ", error);
-// console.log("Upload Result: ", result);

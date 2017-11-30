@@ -23,12 +23,26 @@ Template.userPhoto.events({
     }, function(error, result) {
       t.$(".loading").hide();
       t.$(".avatar").show();
-      if (error) {throw error;}
+      if (error) {
+        sAlert.error("Error: " + error, { effect: 'slide', position: 'bottom', html: true });
+        analytics.track("User Upload Photo", {
+          location: "Settings",
+          success: false,
+        });
+      }
 
       Meteor.users.update(Meteor.userId(), {$set: {"profile.avatar": result}}, function(error){
         if(error){
+          analytics.track("User Upload Photo", {
+            location: "Settings",
+            success: false,
+          });
           sAlert.error("Error: " + error , {effect: 'slide', position: 'bottom', html: true});
         } else {
+          analytics.track("User Upload Photo", {
+            location: "Settings",
+            success: true,
+          });
           // Router.go('/newUserFavoriteTeams');
           Router.go('/');
         }
@@ -36,19 +50,3 @@ Template.userPhoto.events({
     });
   }
 });
-
-
-// Add a analytics code right here
-// var route = Router.current().originalUrl
-// if(route.includes("newUserSettings")) {
-//   var newOrNah = true
-// } else {
-//   var newOrNah = false
-// }
-// var currentUser = Meteor.userId();
-// analytics.track("userAddAvatar", {
-//   id: currentUser,
-//   newUser: newOrNah
-// });
-// console.log("Upload Error: ", error);
-// console.log("Upload Result: ", result);
