@@ -77,7 +77,14 @@ Template.mainLayout.events({
     var leagueId = Router.current().params._id
     Router.go('/league/' + leagueId + "?new=true");
   },
-  
+  'click [data-action=finishMatchup]': function (e, t) {
+    analytics.track('Click "Skip"', {
+      location: "Matchup",
+      step: "Invite"
+    });
+    var matchupId = Router.current().params._id
+    Router.go('/matchup/' + matchupId + "?new=true");
+  },
 
   // 'click [data-action=editMatchup]': function(){
   //   IonActionSheet.show({

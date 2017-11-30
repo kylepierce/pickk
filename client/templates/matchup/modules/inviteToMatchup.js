@@ -34,10 +34,16 @@ Template.inviteMatchupButton.events({
     var inviter = Meteor.userId()
     var matchupId = Router.current().params._id
 
+    analytics.track("Invited to Matchup", {
+      userType: 'Existing User',
+      location: "Matchup",
+      leagueId: matchupId,
+    });
+
     Meteor.call("inviteToMatchup", invitee, inviter, matchupId);
 
     var matchupData = Matchup.findOne(matchupId)
-    var message = Meteor.user().profile.username + " has challenged to a single game matchup!"
+    var message = Meteor.user().profile.username + " has challenged you to a matchup!"
 
     Meteor.call('pushInvite', message, invitee);
 
@@ -63,6 +69,11 @@ Template.inviteToMatchupBox.helpers({
 
 Template.inviteToMatchupBox.events({
   'click [data-action=finishMatchup]': function(e, t){
+    analytics.track('Click "Skip"', {
+      location: "Matchup",
+      step: "Invite",
+      text: "I Will Invite Friends Later"
+    });
     var matchupId = Router.current().params._id
     Router.go('/matchup/' + matchupId + "?new=true");
   },
@@ -72,16 +83,19 @@ Template.inviteToMatchupBox.events({
       var ref = Meteor.userId();
       var username = Meteor.user().profile.username
       var matchupId = Router.current().params._id
-      // var matchup = Matchup.findOne(matchupId);
+      var matchup = Matchup.findOne(matchupId);
 
-      var message = 'Predict the Next Play on Pickk! Click the Link to Join and Compete Live!'
+      var message = Meteor.user().profile.username + " has challenged you to a live game matchup!"
 
-      analytics.track("invited to matchup", {
-        userId: ref,
-        type: 'share-sheet',
-        location: "matchup invite",
-        matchup: matchupId,
-        dateCreated: new Date()
+      analytics.track("Invited to App", {
+        location: "Matchup",
+        matchupId: matchupId
+      });
+
+      analytics.track("Invited to Matchup", {
+        userType: 'New User',
+        location: "Matchup",
+        leagueId: matchupId,
       });
 
       var deeplink = '/matchup/' + matchupId + "/?deeplinkAllowed=true"
@@ -103,7 +117,7 @@ Template.inviteToMatchupBox.events({
           "feature" : "share",
         }, {
           // put your control parameters here
-          "$deeplink_path" : "/matchup/" + matchupId,
+          "$deeplink_path": deeplink,
         }, message);
       });
     }
