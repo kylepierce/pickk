@@ -217,7 +217,9 @@ Template.createMatchup.helpers({
       template: "matchupFinalDetails",
       formId: 'matchup-details',
       onSubmit: function(data, wizard) {
+        var data = _.extend(wizard.mergedData(), data)
         var self = this;
+        analytics.track('Create Matchup', data);
         Matchup.insert(
           _.extend(wizard.mergedData(), data), function(err, id) {
             if (err) {self.done();}
@@ -248,7 +250,52 @@ Template.selectWho.helpers({
 
 Template.selectWho.events({
   'click #secret label': function(e, t){
+    analytics.track('Click Matchup Secret Input', {
+      secret: this.value,
+    });
     Session.set('secret', this.value);
+  },
+  'click #matchup-limit label': function (e, t) {
+    Session.set('limit', this.value);
+    analytics.track('Click Matchup Limit Input', {
+      limit: this.value,
+    });
+  },
+  'click #matchup-next-step button': function(){
+    var secret = Session.get('secret');
+    var limit = Session.get('limit');
+    analytics.track('Click Create Matchup Next Step', {
+      step: "Who",
+      secret: secret,
+      limit: limit
+    });
+  }
+});
+
+Template.matchupLength.events({
+  'click #matchup-length label': function (e, t) {
+    Session.set('length', this.value);
+    analytics.track('Click Matchup Length Input', {
+      length: this.value,
+    });
+  },
+  'click #matchup-next-step button': function () {
+    var length = Session.get('limit');
+    analytics.track('Click Create Matchup Next Step', {
+      step: "Length",
+      length: length
+    });
+  }
+});
+
+Template.matchupGames.events({
+  'click #matchup-game label': function (e, t) {
+    analytics.track('Click Matchup Game Input', {});
+  },
+  'click #matchup-next-step button': function () {
+    analytics.track('Click Create Matchup Next Step', {
+      step: "Game",
+    });
   }
 });
 

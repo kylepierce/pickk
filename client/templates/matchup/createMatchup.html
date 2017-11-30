@@ -28,25 +28,36 @@
     {{/if}}
 
     <div class="item item-divider ten-spacing">Limit</div>
-    {{> afQuickField type='select-radio' name='limitNum' }}
-
-    {{> wizardButtons}}
+    <div id="matchup-limit">
+      {{> afQuickField type='select-radio' name='limitNum' }}
+    </div>
+    <div id="matchup-next-step">
+      {{> wizardButtons}}
+    </div>
   {{/autoForm}}
 </template>
 
 <template name="matchupLength">
   <div class="item item-divider ten-spacing">Length of Matchup</div>
   {{#autoForm id="matchupLength" doc=step.data schema=step.schema}}
-    {{> afQuickField name='matchupLength'}}
-    {{> wizardButtons}}
+    <div id="matchup-length">
+      {{> afQuickField name='matchupLength'}}
+    </div>
+    <div id="matchup-next-step">
+      {{> wizardButtons}}
+    </div>
   {{/autoForm}}
 </template>
 
 <template name="matchupGames">
   <div class="hundred-bottom">
     {{#autoForm id="matchupGames" doc=step.data schema=step.schema}}
-      {{> afQuickField name='gameId' data=dynamicFields}}
-      {{> wizardButtons}}
+      <div id="matchup-game">
+        {{> afQuickField name='gameId' data=dynamicFields}}
+      </div>
+      <div id="matchup-next-step">
+        {{> wizardButtons}}
+      </div>
     {{/autoForm}}
   </div>
 </template>

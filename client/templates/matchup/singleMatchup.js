@@ -55,14 +55,23 @@ Template.singleMatchup.helpers({
 Template.singleMatchup.events({
   'click [data-action=inviteToMatchup]': function(e, t){
     var matchupId = this._id
+    analytics.track('Click "Invite Matchup"', {
+      matchupId: matchupId,
+    });
     Router.go('/matchup/invite/' + matchupId)
   },
   'click [data-action=joinMatchup]': function(e, t){
     var matchupId = this._id
+    analytics.track('Click Join Matchup', {
+      matchupId: matchupId,
+    });
     var userId = Meteor.userId()
     Meteor.call('joinMatchup', matchupId, userId);
   },
   'click [data-action=prizes]': function (e, t) {
+    analytics.track('Click "View Prizes"', {
+      matchupId: this._id,
+    });
     var matchupId = this._id
     var userId = Meteor.userId()
     Router.go('/prizes?matchup=true&matchupId=' + matchupId);
@@ -75,6 +84,10 @@ Template.singleMatchup.events({
   'click [data-action=requestInvite]': function(e, t){
     var userId = Meteor.userId();
     var matchupId = Router.current().params._id
+    analytics.track('Click "Request Invite"', {
+      matchupId: matchupId,
+      request: true,
+    });
     Meteor.call('requestMatchInvite',matchupId, userId)
   },
   'click [data-action=requestPending]': function(template, event){
@@ -88,6 +101,10 @@ Template.singleMatchup.events({
       cancel: function() {},
       buttonClicked: function(index) {
         if (index === 0) {
+          analytics.track('Click "Request Invite"', {
+            matchupId: matchupId,
+            request: false,
+          });
           var user = Meteor.userId();
           var matchupId = Router.current().params._id
           Meteor.call('removeMatchInvite', matchupId, user)
