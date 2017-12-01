@@ -63,9 +63,9 @@ Meteor.methods({
         "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
         "data": {
           "$canonical_identifier": deeplink,
-          "$og_title": "GB vs Pitt Live on Pickk!",
-          "$og_description": "Live contest tonight! Watch Packers vs Steelers on NBC for a chance to win prizes!",
-          "$desktop_url": "https://pickk.co/?utm_content=GBvsPitt",
+          "$og_title": "Dallas vs Washington Pre Game Pickks Open on Pickk!",
+          "$og_description": "Live Contest Tonight! Watch Dallas Cowboys vs Washington Redskins on NBC at 8:25pm!",
+          "$desktop_url": "https://pickk.co/?utm_content=DalvsWsh",
           "$deeplink_path": deeplink
         }
       }
@@ -105,13 +105,13 @@ Meteor.methods({
     });
 
     var entire = {
-      headline: "Packers vs Steelers on Pickk!",
-      preheader: "Live Prize Contest Tonight for GB vs Pitt",
-      copyAbove: "Still working through the leftovers from Thanksgiving? Make a plate and get ready for a great day of football!",
-      buttonText: "Join Prize Matchup",
-      gameIds: ['5a11c5eefcd9bfff2cefafd3', '5a1380804e140b815080fb23', "5a11c5eefcd9bfff2cefafd5"],
+      headline: "Cowboys vs Redskins!",
+      preheader: "Live Contest Tonight for Dal vs Wsh",
+      copyAbove: "Ready to Kickoff the Weekend? Thursday Night NFC East Showdown and a Chance For Each Team to Keep Their Playoff Hopes Alive.",
+      buttonText: "Pre Game Pickks",
+      gameIds: ['5a170425f5e7d103346d1951'],
       url: shortlink.data.url,
-      copyBelow: "If you have any questions, just reply to this email! We're always happy to help out.",
+      copyBelow: "Invite a Friend to a Head to Head Matchup to Prove Who Knows Football!",
       reason: "You received this email because you created an account in the app.",
     }
 
@@ -122,7 +122,7 @@ Meteor.methods({
     mg.send({
       from: "Pickk App<hi@pickk.co>",
       to: listAddress,
-      subject: "GB vs PITT. Prizes For SNF!",
+      subject: "Cowboys vs Redskins - Pre Game Pickks Open!",
       text: text,
       html: html
     }, function (error, body) {

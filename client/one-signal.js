@@ -4,7 +4,7 @@ if (Meteor.isCordova) {
     // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
     var notificationOpenedCallback = function (jsonData) {
-      analytics.track("open push notification", {
+      analytics.track("Open Push Notification", {
         userId: Meteor.userId(),
         notificationId: jsonData.notification.payload.notificationID,
         isAppInFocus: jsonData.notification.payload.isAppInFocus,

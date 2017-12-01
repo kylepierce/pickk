@@ -7,6 +7,7 @@ Template.prePickkList.onCreated(function() {
     period: 0,
     coins: 15000
   }
+  analytics.track("User Joins Game", data);
   Meteor.call('userJoinsAGame', data);
 });
 
