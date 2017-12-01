@@ -60,8 +60,15 @@ Template.singleGameCard.onCreated(function () {
 
 Template.singleGameCard.helpers({
   hasBall: function(){
-    if(this.game){
+    if(this.game.status === "In-Progress"){
       return this.game.whoHasBall
+    } else if (this.game.status === "Final" || this.game.completed){
+      var homeWins = this.game.scoring.home.runs > this.game.scoring.away.runs
+      if (homeWins) {
+        return this.game.scoring.away.id
+      } else {
+        return this.game.scoring.home.id
+      }      
     }
   },
   status: function() {
@@ -106,7 +113,11 @@ Template.singleGameCard.helpers({
     } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
       teams[0].runs = this.game.teams[0].linescoreTotals.runs
       teams[1].runs = this.game.teams[1].linescoreTotals.runs
+    } else if (this.game.completed || this.game.status === "Final"){
+      teams[1].runs = this.game.scoring.home.runs;
+      teams[0].runs = this.game.scoring.away.runs;
     }
+    // console.log(teams)
     return teams
   }
 });
@@ -224,6 +235,7 @@ Template.teamBlock.helpers({
     }
   },
   team: function (statsTeamId) {
+    console.log(this)
     var team = Teams.findOne({"statsTeamId": this.statsTeamId});
 		if(team && this.hasBall === this.statsTeamId){
 			team.hasBall = true
