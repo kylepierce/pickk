@@ -1,8 +1,8 @@
 <template name="entireGameCard">
-  <div class="complete-game-card ten-spacing clear-fix {{status}} animated fadeInRight">
-    {{> singleGameInfo game=game border=true}}
+  <div class="complete-game-card clear-fix {{status}} animated fadeInRight">
+    <!-- {{> singleGameInfo game=game border=true}} -->
     {{> singleGameCard game=game}}
-    {{> singleGameCTA game=game}}
+    <!-- {{> singleGameCTA game=game}} -->
   </div>
 </template>
 
@@ -55,22 +55,20 @@
 </template>
 
 <template name="teamBlock">
-  <div class="team-block">
-    {{#with team statsTeamId}}
-      <div class="team-colors team-text" style="background-color:{{hex}}">
+  {{#with team statsTeamId}}
+    <div class="team-block" style="background-color:{{hex}}">
+      <div class="team-colors team-text">
         {{upper computerName}}
       </div>
-    {{/with}}
-    <div class="team-inner">
-      <span class="team-name team-text">
-        {{#with team statsTeamId}}
+      <div class="team-inner">
+        <span class="team-name team-text">
           {{#if hasBall}} &#9679; {{/if}}
           {{nickname}}
-        {{/with}}
-      </span>
-      <span class="team-score team-text">{{runs}}</span>
+        </span>
+        <span class="team-score team-text">{{../runs}}</span>
+      </div>
     </div>
-  </div>
+  {{/with}}
 </template>
 
 <template name="rightSection">
@@ -91,14 +89,23 @@
         </span>
       </div>
     {{/if}}
+    {{#if preGame}}
+      <div data-action="viewGame" class="pre-game-container center-text game-card-right-side-border">
+        <span>Pre Pickks Open!</span>
+      </div>
+    {{/if}}
     {{#if scheduled}}
       {{#if registered}}
-        <div data-action="unregister" class="game-unregister center">
-          <i class="fa fa-bell-slash"></i>
+        <div data-action="unregister" class="game-register center">
+          <span>{{tvStation this.game.tvStations}}</span>
+          <span><i class="fa fa-bell-slash"></i></span>
+          {{{displayDate game.iso}}}
         </div>
       {{else}}
-        <div data-action="register" class="game-register cta-button center">
-          <i class="fa fa-bell"></i>
+        <div data-action="register" class="game-unregister center">
+          <span>{{tvStation this.game.tvStations}}</span>
+          <span><i class="fa fa-bell"></i></span>
+          {{{displayDate game.iso}}}
         </div>
       {{/if}}
     {{/if}}

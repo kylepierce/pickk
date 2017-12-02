@@ -1,10 +1,9 @@
 .complete-game-card {
-	margin-bottom: 10px;
-  /*opacity: 0;*/
-	box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 0px;
-	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 10px 0px;
+	border-radius: 5px;
 	display: flex;
 	flex-flow: column;
+	margin-top: 10px;
 }
 
 #animateGames .complete-game-card {
@@ -17,7 +16,7 @@
 	font-weight: bold;
 	font-size: 18px;
 	display: inline-block;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 
 .full-width-team-block {
@@ -30,7 +29,9 @@
 }
 
 .additional-game-details {
-	border-radius: 0 10px 10px 0;
+	border-radius: 0 5px 5px 0;
+	border-left: 1px solid #c3c3c3;
+	font-size: 0.8rem;
 	width: 20%;
 	display: flex;
 	flex-direction: column;
@@ -46,7 +47,7 @@
 }
 
 .live-game-card .game-card-right-side-border {
-	border-radius: 0 10px 0 0;
+	border-radius: 0 5px 0 0;
 }
 
 .live-game-card .team-block:last-child .team-colors{
@@ -62,7 +63,7 @@
 }
 
 .game-card-right-side-border {
-	border-radius: 0 10px 10px 0;
+	border-radius: 0 5px 5px 0;
 }
 
 .game-time-container {
@@ -74,6 +75,19 @@
 	align-items: center;
 	justify-content: center;
 	padding: 10px 0;
+	height: 91px;
+}
+
+.pre-game-container {
+	width: 100%;
+	background: linear-gradient(to bottom right, #ffe16b 0%, #F1C40F 100%);
+	color: rgb(46, 46, 46);
+	float: left;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 5px;
+	font-weight: bold;
 	height: 91px;
 }
 
@@ -101,7 +115,7 @@
 	height: 40px;
 	background-color: #455A64;
 	color: white;
-	border-radius: 10px 10px 0 0;
+	border-radius: 5px 5px 0 0;
 }
 
 .future-game-info {
@@ -115,7 +129,7 @@
 	font-weight: bold;
 	font-family: lato;
 	margin-top: -5px;
-	border-radius: 0 0 10px 10px
+	border-radius: 0 0 5px 5px
 }
 
 .future-game-cta {
@@ -125,20 +139,28 @@
 }
 
 .game-register {
+	display: flex;
+	flex-flow: column;
 	background-color: #329E64;
 	width: 100%;
 	float:right;
 	height: 91px;
-	border-radius: 0 0 10px 0;
+	border-radius: 0 5px 5px 0;
 }
 
 .game-unregister {
-	color: white;
+	display: flex;
+	flex-flow: column;
 	background-color: #E58686;
 	width: 100%;
 	float:right;
 	height: 91px;
-	border-radius: 0 0 10px 0;
+	border-radius: 0 5px 5px 0;
+}
+
+.game-unregister span,
+.game-register span {
+	font-size: 0.8rem!important;
 }
 
 .single-game-section {
@@ -163,16 +185,16 @@
 	display: table;
 }
 
-.team-block:first-child .team-colors {
-	border-radius: 10px 0 0 0;
+.team-block:first-child {
+	border-radius: 5px 0 0 0;
 }
 
 .team-block:last-child {
-	border-top: 1px solid #CACCCD;
+	border-top: 1px solid #c3c3c3;
 }
 
-.team-block:last-child .team-colors {
-	border-radius: 0 0 0 10px;
+.team-block:last-child {
+	border-radius: 0 0 0 5px;
 }
 
 .team-block-border {
@@ -186,7 +208,7 @@
 
 .team-colors {
 	width: 25%;
-	background-color: gray;
+	/* background-color: gray; */
 	text-align: center;
 	font-weight: bold;
 	color: white;
@@ -195,7 +217,9 @@
 .team-inner {
 	width: 100%;
 	display: flex;
-	background-color: white;
+	background-image: linear-gradient(-126deg, #ffffff00, rgba(0,0,0,0.50) 100%);
+	background-color: rgba(255, 255, 255, 0.295);
+	color: white;
 	align-items: center;
 	justify-content: center;
 	border-left: none;

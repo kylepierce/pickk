@@ -9,7 +9,7 @@ Template.entireGameCard.helpers({
     if(this.game.sport === "MLB" && this.game.status === "In-Progress") {
       return "baseball-game-card"
     } else if (this.game.status === "Pre-Game"){
-      return "pre-game-card"
+      // return "pre-game-card"
     } else if (this.game.status === "In-Progress"){
       return "live-game-card"
     }
@@ -117,7 +117,6 @@ Template.singleGameCard.helpers({
       teams[1].runs = this.game.scoring.home.runs;
       teams[0].runs = this.game.scoring.away.runs;
     }
-    // console.log(teams)
     return teams
   }
 });
@@ -211,16 +210,23 @@ Template.futureGameInfo.helpers({
     }
     var gameTime = moment(date)
     var now = moment();
-    var futureOrToday = compare(now, gameTime)
-    var timezone = Meteor.user().profile.timezone
-    if (!timezone) {var timezone = "America/New_York"}
-
+    var futureOrToday = compare(now, gameTime);
+    var tz = jstz.determine();
+    var timezone = tz.name()
+    if (!timezone){ 
+      if(Meteor.user().profile.timezone){
+        var timezone = Meteor.user().profile.timezone
+      } else {
+        var timezone = "America/New_York"
+      }
+    }
+    
     if (futureOrToday == 1){
       return "Closed"
     } else if (futureOrToday === 0) {
-      return gameTime.tz(timezone).format("h:mm a z");
+      return gameTime.tz(timezone).format("h:mma z");
     } else {
-      return gameTime.tz(timezone).format("MMM Do h:mm a z");
+      return gameTime.tz(timezone).format("M/D h:mma z");
     }
   },
   tv: function(data) {
@@ -235,7 +241,6 @@ Template.teamBlock.helpers({
     }
   },
   team: function (statsTeamId) {
-    console.log(this)
     var team = Teams.findOne({"statsTeamId": this.statsTeamId});
 		if(team && this.hasBall === this.statsTeamId){
 			team.hasBall = true
@@ -265,9 +270,16 @@ Template.rightSection.helpers({
       return true
     }
   },
+  preGame: function () {
+    if (this.game.pre_game_processed) {
+      return true
+    }
+  },
   scheduled: function () {
     if (this.game.status === "scheduled" || this.game.status === "Pre-Game"){
-      return true
+      if (!this.game.pre_game_processed) {
+        return true
+      }
     }
   },
   registered: function (){
@@ -276,6 +288,38 @@ Template.rightSection.helpers({
     var alreadyRegistered = _.indexOf(list, userId)
     if(alreadyRegistered !== -1) {
       return true
+    }
+  },
+  displayDate: function (date) {
+    function compare(today, game) {
+      var momentA = moment(today, "MM/DD/YYYY", true).dayOfYear();
+      var momentB = moment(game, "MM/DD/YYYY", true).dayOfYear();
+      if (momentA > momentB) return 1;
+      else if (momentA < momentB) return -1;
+      else return 0;
+    }
+    var gameTime = moment(date)
+    var now = moment();
+    var futureOrToday = compare(now, gameTime);
+    var tz = jstz.determine();
+    var timezone = tz.name()
+    if (!timezone) {
+      if (Meteor.user().profile.timezone) {
+        var timezone = Meteor.user().profile.timezone
+      } else {
+        var timezone = "America/New_York"
+      }
+    }
+
+    if (futureOrToday == 1) {
+      return "Closed"
+    } else if (futureOrToday === 0) {
+      return gameTime.tz(timezone).format("h:mma");
+    } else {
+      var date = gameTime.tz(timezone).format("M/D");
+      var time = gameTime.tz(timezone).format("h:mma");
+      return "<span>" + date + "</span><span>" + time + "</span>"
+      // return gameTime.tz(timezone).format("M/D h:mma z");
     }
   },
   periodGrammer: function (period) {
