@@ -1,8 +1,8 @@
 {
   "private": {},
   "public": {
-    "isDebug": true,
-    "isDevLogin": true,
+    "isDebug": false,
+    "isDevLogin": false,
     "isCronEnabled": false,
     "rootUrl": "localhost:3000"
   }

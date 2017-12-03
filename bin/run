@@ -14,4 +14,4 @@ echo $ENV
 
 $DIRNAME/merge-settings $ENV > /tmp/$ENV.json
 
-meteor run --settings /tmp/$ENV.json "$@"
+meteor run --settings /tmp/$ENV.json "$@" --production

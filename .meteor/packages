@@ -26,7 +26,6 @@ easy:search
 aldeed:autoform
 random@1.0.10
 cmather:handlebars-server
-mrt:moment
 aldeed:moment-timezone
 themeteorchef:jquery-validation
 meteorhacks:ssr
@@ -36,7 +35,6 @@ useraccounts:iron-routing
 percolate:momentum
 gwendall:template-animations
 natestrauser:animate-css
-dsyko:hopscotch
 flyandi:reactive-countdown
 juliancwirko:s-alert
 juliancwirko:s-alert-stackslide
@@ -44,7 +42,6 @@ richsilv:pikaday
 momentjs:moment
 simple:reactive-method
 meteorhacks:subs-manager
-nvd3:nvd3
 juliancwirko:s-alert-slide
 gwendall:meteoric-connection-status
 255kb:meteor-status
@@ -82,11 +79,9 @@ shell-server@0.2.4
 astronomerio:core
 meteorhacks:unblock
 pickk:branch-io
-themeteorchef:grindage
 peerlibrary:reactive-publish
 peerlibrary:subscription-data
 remcoder:chronos
-meteorhacks:cluster
 boilerplate-generator@1.2.0
 reactive-dict@1.1.9
 mdg:meteor-apm-agent
@@ -97,3 +92,5 @@ forwarder:autoform-wizard
 forwarder:autoform-wizard-iron-router
 jcbernack:reactive-aggregate
 robertlowe:autoform-pickadate
+standard-minifier-css
+standard-minifier-js
