@@ -45,7 +45,7 @@ Template.inviteMatchupButton.events({
     var matchupData = Matchup.findOne(matchupId)
     var message = Meteor.user().profile.username + " has challenged you to a matchup!"
 
-    Meteor.call('pushInvite', message, invitee);
+    Meteor.call('pushInvite', "Matchup", message, invitee);
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)

@@ -1,7 +1,7 @@
 var settings = Meteor.settings.private.mailgunApi
 var mg = new Mailgun({ apiKey: settings.apiKey, domain: settings.domain })
 var domain = settings.domain
-var listAddress = "test@" + domain
+var listAddress = "all@" + domain
 var list = mg.api.lists(listAddress);
 
 Meteor.methods({
@@ -63,9 +63,9 @@ Meteor.methods({
         "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
         "data": {
           "$canonical_identifier": deeplink,
-          "$og_title": "Dallas vs Washington Pre Game Pickks Open on Pickk!",
-          "$og_description": "Live Contest Tonight! Watch Dallas Cowboys vs Washington Redskins on NBC at 8:25pm!",
-          "$desktop_url": "https://pickk.co/?utm_content=DalvsWsh",
+          "$og_title": "Philadelphia Eagles vs Atlanta Falcons on NBC!",
+          "$og_description": "Live Contest! Watch Atlanta Falcons vs Philadelphia Eagles on NBC at 4:35pm!",
+          "$desktop_url": "https://pickk.co/?utm_content=PHIvsATL",
           "$deeplink_path": deeplink
         }
       }
@@ -89,13 +89,13 @@ Meteor.methods({
             home: {
               shortCode: game.home.abbreviation.toUpperCase(),
               color: "#" + homeColor.hex[0],
-              record: "(" + game.home.record.wins + "-" + game.home.record.losses + ")",
+              // record: "(" + game.home.record.wins + "-" + game.home.record.losses + ")",
               nickname: game.home.nickname
             },
             away: {
               shortCode: game.away.abbreviation.toUpperCase(),
               color: "#" + awayColor.hex[0],
-              record: "(" + game.away.record.wins + "-" + game.away.record.losses + ")",
+              // record: "(" + game.away.record.wins + "-" + game.away.record.losses + ")",
               nickname: game.away.nickname
             }
           }
@@ -103,13 +103,12 @@ Meteor.methods({
         return games
       }
     });
-
     var entire = {
-      headline: "Cowboys vs Redskins!",
-      preheader: "Live Contest Tonight for Dal vs Wsh",
-      copyAbove: "Ready to Kickoff the Weekend? Thursday Night NFC East Showdown and a Chance For Each Team to Keep Their Playoff Hopes Alive.",
-      buttonText: "Pre Game Pickks",
-      gameIds: ['5a170425f5e7d103346d1951'],
+      headline: "Divisional Playoffs!",
+      preheader: "Two Live Contests Tonight. Prizes for top 4 in every quarter!",
+      copyAbove: "We are hosting a contest for every quarter for today's playoff games! Rank in the top 4 places for our pre game Pickk Six or in Quarter 1-4 for a chance to win Best Buy Gift Cards! <br><br><strong>To win you must join the quarter matchup.</strong> <br><br> View the prizes in the app!",
+      buttonText: "Answer Pre Game Pickks",
+      gameIds: ['5a514a9cfd680b1502857e9e', "5a514a9cfd680b1502857e9f"],
       url: shortlink.data.url,
       copyBelow: "Invite a Friend to a Head to Head Matchup to Prove Who Knows Football!",
       reason: "You received this email because you created an account in the app.",
@@ -120,9 +119,9 @@ Meteor.methods({
     var text = entire.headline + " " + entire.copyAbove + " " + entire.buttonText + " " + entire.url + " " + entire.copyBelow
     
     mg.send({
-      from: "Pickk App<hi@pickk.co>",
+      from: "Jessica at Pickk App<hi@pickk.co>",
       to: listAddress,
-      subject: "Cowboys vs Redskins - Pre Game Pickks Open!",
+      subject: "NFL Playoffs Starts in 4 Hours!",
       text: text,
       html: html
     }, function (error, body) {

@@ -39,7 +39,26 @@ Meteor.methods({
     }
 
     sendNotification(message);
-  }
+  },
+  'pushInvite': function(type, message, userId) {
+    check(type, String);
+    check(message, String);
+		check(userId, String);
+		this.unblock()
+    var user = Meteor.users.findOne({_id: userId});
+
+		if (user) {
+      var payload = {
+        headings: { "en": type + " Invite" },
+        contents: { "en": message },
+        ios_badgeType: "Increase",
+        ios_badgeCount: 1,
+        include_player_ids: [user.oneSignal.userId]
+      }
+
+      sendNotification(payload);
+		}
+	},
 });
 // 	'questionPush': function(gameId, message) {
 // 		check(gameId, String);
@@ -141,23 +160,6 @@ Meteor.methods({
 // 				sound: 'default',
 // 				badge: 1,
 // 				query: {userId: {$in: array}}
-// 			});
-// 		}
-// 	},
-
-// 	'pushInvite': function(message, userId) {
-// 		check(message, String);
-// 		check(userId, String);
-// 		this.unblock()
-// 		var user = Meteor.users.findOne({_id: userId});
-// 		if (user) {
-// 			Push.send({
-// 				from: 'Pickk',
-// 				title: 'Pick Invite',
-// 				sound: 'default',
-// 				text: message,
-// 				badge: 1,
-// 				query: {userId: userId}
 // 			});
 // 		}
 // 	},

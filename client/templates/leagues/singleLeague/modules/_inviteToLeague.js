@@ -43,7 +43,7 @@ Template.inviteButton.events({
     var groupName = groupData.name
     var message = Meteor.user().profile.username + " has invited you to join " + groupName
 
-    // Meteor.call('pushInvite', message, invitee);
+    Meteor.call('pushInvite', "League", message, invitee);
     analytics.track("Invited to League", {
       userType: 'Existing User',
       location: "League",
