@@ -158,7 +158,7 @@ Meteor.methods({
 		var isValid = validateAnswer(prediction.questionId, prediction.answered);
 
 		if (isValid) {
-			var selector = {userId: userId, gameId: prediction.gameId}
+			var selector = {userId: userId, gameId: prediction.gameId, period: prediction.period}
 			var modify = {
 				$inc: {queCounter: +1, coins: +prediction.wager},
 				$set: {lastUpdated: new Date()}

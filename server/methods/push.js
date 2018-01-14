@@ -40,10 +40,11 @@ Meteor.methods({
 
     sendNotification(message);
   },
-  'pushInvite': function(type, message, userId) {
+  'pushInvite': function(type, message, userId, deeplink) {
     check(type, String);
     check(message, String);
-		check(userId, String);
+    check(userId, String);
+    check(deeplink, String);
 		this.unblock()
     var user = Meteor.users.findOne({_id: userId});
 
@@ -53,12 +54,44 @@ Meteor.methods({
         contents: { "en": message },
         ios_badgeType: "Increase",
         ios_badgeCount: 1,
-        include_player_ids: [user.oneSignal.userId]
+        include_player_ids: [user.oneSignal.userId],
+        data: {
+          "$deeplink_path": deeplink
+        }
       }
 
       sendNotification(payload);
 		}
-	},
+  },
+
+  'pushInviteToGame': function (gameId, userId, ref) {
+    check(userId, String);
+    check(gameId, String);
+    check(ref, String);
+    this.unblock()
+    var refer = Meteor.users.findOne({ _id: ref });
+    var username = refer.profile.username
+    var game = Games.find({ _id: gameId }).fetch()
+    var gameName = game[0].name
+    var message = "[@" + username + "] Challenged You For The " + gameName + " Contest. Play Live!"
+    var path = "/game/" + gameId
+    var user = Meteor.users.findOne({ _id: userId });
+
+    if (user) {
+      var payload = {
+        headings: { "en": "Game Invite" },
+        contents: { "en": message },
+        ios_badgeType: "Increase",
+        ios_badgeCount: 1,
+        include_player_ids: [user.oneSignal.userId],
+        data: {
+          "$deeplink_path": path
+        }
+      }
+
+      sendNotification(payload);
+    }
+  },
 });
 // 	'questionPush': function(gameId, message) {
 // 		check(gameId, String);
@@ -125,28 +158,6 @@ Meteor.methods({
 // 		}
 // 	},
 
-// 	'push': function(message) {
-// 		check(message, String);
-// 		this.unblock()
-// 		if (!Meteor.userId()) {
-//       throw new Meteor.Error("not-signed-in", "Must be the logged in");
-// 		}
-
-// 		// if (Meteor.user().profile.role !== "admin") {
-// 		// 	console.log(Meteor.user());
-//     //   throw new Meteor.Error(403, "Unauthorized -- Try again");
-// 		// }
-
-// 		Push.send({
-// 			from: 'Pickk',
-// 			title: 'Pickk notification',
-// 			text: message,
-// 			sound: 'default',
-// 			badge: 1,
-// 			query: {}
-// 		});
-// 	},
-
 // 	'openGamePush': function(message, array) {
 // 		check(message, String);
 // 		check(array, Array);
@@ -163,29 +174,4 @@ Meteor.methods({
 // 			});
 // 		}
 // 	},
-
-// 	'pushInviteToGame': function(gameId, userId, ref) {
-// 		check(userId, String);
-// 		check(gameId, String);
-// 		check(ref, String);
-// 		this.unblock()
-// 		var user = Meteor.users.findOne({_id: ref});
-// 		var username = user.profile.username
-// 		var game = Games.find({_id: gameId}).fetch()
-// 		var gameName = game[0].name
-// 		var message = "[@" + username + "] Challenged You For The " + gameName + " Contest. Play Live!"
-// 		var path = "game/" + gameId
-
-// 		if (user) {
-// 			Push.send({
-// 				from: 'Pickk',
-// 				title: 'Pick invite',
-// 				sound: 'default',
-// 				text: message,
-// 				badge: 1,
-// 				payload: { deeplink_path: true, path: path },
-// 				query: {userId: userId}
-// 			});
-// 		}
-// 	}
 // });

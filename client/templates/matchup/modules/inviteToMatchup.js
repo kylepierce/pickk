@@ -44,8 +44,9 @@ Template.inviteMatchupButton.events({
 
     var matchupData = Matchup.findOne(matchupId)
     var message = Meteor.user().profile.username + " has challenged you to a matchup!"
-
-    Meteor.call('pushInvite', "Matchup", message, invitee);
+    var deeplink = '/matchup/' + matchupId + "/?deeplinkAllowed=true"
+    
+    Meteor.call('pushInvite', "Matchup", message, invitee, deeplink);
 
     $("#" + invitee).addClass('button-balanced');
     $("#" + invitee).prop("disabled", true)
