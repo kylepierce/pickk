@@ -13,7 +13,9 @@
 				{{> option o=o q=q t=t}}
 			{{/each}}
 		</div>
-		{{> wagers}}
+		{{#if wager}}
+			{{> wagers}}
+		{{/if}}
 		<button id="submitButton" class="daily-pickk-cta daily-pickk-background submit-button center-text ten-spacing" data-action="submit">Submit</button>
 	</div>
 </template>

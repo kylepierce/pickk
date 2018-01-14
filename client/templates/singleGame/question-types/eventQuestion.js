@@ -37,6 +37,10 @@ Template.eventQuestion.events({
 		$(e.currentTarget).addClass('play-selected');
 		t.data.o = this.o;
     var lastWager = Session.set('lastPlay', this.o);
+    if(!t.data.wager){ //Pre game pickk hack
+      var lastWager = Session.set('lastWager', 2500);
+      $('#submitButton').show();
+    }
 		// $('#wagers').show();
 	},
 	// 'dblclick [data-action=play-selected]': function (e, t){
@@ -116,11 +120,12 @@ Template.eventQuestion.events({
     }
 		e.preventDefault();
     var lastWager = Session.get('lastWager');
+    
 		var multiplier = parseFloat(lastPlay.multiplier);
 		var userId = Meteor.userId();
 		var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
 
-		var userCoins = GamePlayed.findOne(selector)
+    var userCoins = GamePlayed.findOne(selector)
 		var hasEnoughCoins = userCoins.coins >= lastWager
 
 
@@ -173,8 +178,6 @@ Template.eventQuestion.events({
     } else if (multiplier < 99){
       var multiplierRange = "game changer"
     }
-
-    
 
 		Meteor.call('answerNormalQuestion', prediction, function(error, response){
       if (error){

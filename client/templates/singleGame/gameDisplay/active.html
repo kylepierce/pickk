@@ -10,20 +10,20 @@
 						{{#if questionTypeIs "freePickk" question.type}}
 							{{> freePickkQuestion q=question t=question.type}}
 						{{else}}
-							{{> eventQuestion q=question t=question.type}}
+							{{> eventQuestion q=question t=question.type wager=true}}
 						{{/if}}
 					{{/each}}
 
 				{{else}}
 					{{#each question in questions}}
 						{{#if questionTypeIs "play" question.type}}
-							{{> eventQuestion q=question t=question.type}}
+							{{> eventQuestion q=question t=question.type wager=true}}
 						{{/if}}
 						{{#if questionTypeIs "pitch" question.type}}
-							{{> eventQuestion q=question t=question.type}}
+							{{> eventQuestion q=question t=question.type wager=true}}
 						{{/if}}
 						{{#if questionTypeIs "atBat" question.type}}
-							{{> eventQuestion q=question t=question.type}}
+							{{> eventQuestion q=question t=question.type wager=true}}
 						{{/if}}
 					{{/each}}
 				{{/if}}
