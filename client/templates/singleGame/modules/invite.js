@@ -50,7 +50,7 @@ Template.inviteToPlay.helpers({
 
 Template.inviteToPlay.events({
   "click [data-action=dismiss]": function(e, t){
-    var gameId = t.data.game[0]._id
+    var gameId = Games.findOne()._id
     var userId = Meteor.userId();
     analytics.track("dismiss invite", {
       userId: userId,
@@ -60,7 +60,7 @@ Template.inviteToPlay.events({
     Meteor.call('dismissInvitePrompt', gameId, userId);
   },
   "click [data-action=invite]": function(e, t){
-    var gameId = t.data.game[0]._id
+    var gameId = Games.findOne()._id
     var ref = Meteor.userId();
     var userId = e.currentTarget.value
     Meteor.call("inviteToGame", gameId, userId, ref);
@@ -74,7 +74,7 @@ Template.inviteToPlay.events({
       var branchUniversalObj = null;
       var ref = Meteor.userId();
       var username = Meteor.user().profile.username
-      var gameId = t.data.game[0]._id
+      var gameId = Games.findOne()._id
       var game = Games.findOne({_id: gameId})
       var gameName = game.name
       var message = 'Predict the Next Play on Pickk! I Challenge You to Prove Your Sports Knowledge in the ' + gameName + ' game!'
@@ -109,7 +109,7 @@ Template.inviteToPlay.events({
     }
   },
   "click [data-action=inviteAll]": function(e, t){
-    var gameId = t.data.game[0]._id
+    var gameId = Games.findOne()._id
     var ref = Meteor.userId();
     var followers = Meteor.user().profile.followers
     var game = Games.findOne({})

@@ -1,34 +1,36 @@
 <template name="inviteToPlay">
-  <div class="item item-divider ten-spacing animated fast fadeInUp">
-    <span>Challenge A Friend!</span>
-  </div>
+  <div class="card-list ten-spacing animated fast fadeIn">
+    <div class=" card-list-header">
+      <span>Challenge A Friend!</span>
+    </div>
 
-  <div class="item invite-item item-button-right">
-    <h2>Share With Friends</h2>
-    <button data-action="textInvite" class="button button-balanced">Invite</button>
-  </div>
+    <div class="item invite-item item-button-right">
+      <h2>Share With Friends</h2>
+      <button data-action="textInvite" class="button button-balanced">Invite</button>
+    </div>
 
     {{#if listToShare}}
-    {{#ionList}}
-      <div class="item invite-item item-button-right">
-        <h2>Invite All Followers</h2>
-        <button data-action="inviteAll" value="{{follower}}" class="button button-balanced">Invite</button>
-      </div>
-
-      {{#each follower in followers}}
+      {{#ionList}}
         <div class="item invite-item item-button-right">
-          {{> userAvatar userId=follower}}
-          <h2>{{> singleUsername userId=follower}}</h2>
-          <button data-action="invite" value="{{follower}}" class="button button-balanced">Invite</button>
+          <h2>Invite All Followers</h2>
+          <button data-action="inviteAll" value="{{follower}}" class="button button-balanced">Invite</button>
         </div>
-      {{/each}}
 
-      <div class="item invite-item item-button-right">
-        <h2>Dismiss Invite Box</h2>
-        <button data-action="dismiss"  value="{{follower}}" class="button button-stable">
-          {{> ionIcon icon="ios-close"}}
-        </button>
-      </div>
-    {{/ionList}}
-  {{/if}}
+        {{#each follower in followers}}
+          <div class="item invite-item item-button-right">
+            {{> userAvatar userId=follower}}
+            <h2>{{> singleUsername userId=follower}}</h2>
+            <button data-action="invite" value="{{follower}}" class="button button-balanced">Invite</button>
+          </div>
+        {{/each}}
+
+        <div class="item invite-item item-button-right">
+          <h2>Dismiss Invite Box</h2>
+          <button data-action="dismiss"  value="{{follower}}" class="button button-stable">
+            {{> ionIcon icon="ios-close"}}
+          </button>
+        </div>
+      {{/ionList}}
+    {{/if}}
+  </div>
 </template>

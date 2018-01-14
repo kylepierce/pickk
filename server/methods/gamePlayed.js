@@ -16,7 +16,7 @@ Meteor.methods({
 	},
 
 	'inviteToGame': function(gameId, userId, ref){
-		check(gameId, Number);
+		check(gameId, String);
 		check(userId, String);
 		check(ref, String);
 		// Double check they arent in the invite section before sending push

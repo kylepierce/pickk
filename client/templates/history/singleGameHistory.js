@@ -17,7 +17,7 @@ Template.gameHistory.onCreated(function(){
 Template.gameHistory.helpers({});
 
 Template.gameHistory.events({
-	'click': function(){
+	'click .history-item': function(){
 		analytics.track('Click Single Question', {
 			gameId: this.q.gameId,
 			questionId: this.q._id
