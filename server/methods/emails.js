@@ -1,7 +1,7 @@
 var settings = Meteor.settings.private.mailgunApi
 var mg = new Mailgun({ apiKey: settings.apiKey, domain: settings.domain })
 var domain = settings.domain
-var listAddress = "all@" + domain
+var listAddress = "test@" + domain
 var list = mg.api.lists(listAddress);
 
 Meteor.methods({
@@ -63,9 +63,9 @@ Meteor.methods({
         "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
         "data": {
           "$canonical_identifier": deeplink,
-          "$og_title": "Philadelphia Eagles vs Atlanta Falcons on NBC!",
-          "$og_description": "Live Contest! Watch Atlanta Falcons vs Philadelphia Eagles on NBC at 4:35pm!",
-          "$desktop_url": "https://pickk.co/?utm_content=PHIvsATL",
+          "$og_title": "Patriots vs Jaguars. Play Live!",
+          "$og_description": "Live Contest! Watch Patriots vs Jaguars on CBS at 3:05pm!",
+          "$desktop_url": "https://pickk.co/?utm_content=NEvsJAX",
           "$deeplink_path": deeplink
         }
       }
@@ -78,11 +78,13 @@ Meteor.methods({
         return Prizes.find({active: true}, {sort: {"rank": 1}});
       },
       game: function (gameIds) {
+        console.log(gameIds)
         var games = Games.find({_id: {$in: gameIds}}).map(function(game){
           var gameTime = moment(game.iso)
           if (!timezone) { var timezone = "America/New_York" }
           var homeColor = Teams.findOne({ statsTeamId: game.home.teamId })
           var awayColor = Teams.findOne({ statsTeamId: game.away.teamId })
+          console.log(games)
           return {
             tv: game.tv,
             gameTime: gameTime.tz(timezone).format("h:mm a") + " ET" ,
@@ -100,15 +102,16 @@ Meteor.methods({
             }
           }
         });
+        console.log(games)
         return games
       }
     });
     var entire = {
-      headline: "Divisional Playoffs!",
-      preheader: "Two Live Contests Tonight. Prizes for top 4 in every quarter!",
-      copyAbove: "We are hosting a contest for every quarter for today's playoff games! Rank in the top 4 places for our pre game Pickk Six or in Quarter 1-4 for a chance to win Best Buy Gift Cards! <br><br><strong>To win you must join the quarter matchup.</strong> <br><br> View the prizes in the app!",
+      headline: "CONFERENCE CHAMPIONSHIPS!",
+      preheader: "View Tomorrow's Prizes!",
+      copyAbove: "We are hosting a contest for every quarter for tomorrows's playoff games! Top 15 winners in each quarter win prizes. (including pre-game Pickk Six)",
       buttonText: "Answer Pre Game Pickks",
-      gameIds: ['5a514a9cfd680b1502857e9e', "5a514a9cfd680b1502857e9f"],
+      gameIds: ['5a5d168351ac6fee4f20d68a', "5a5d168351ac6fee4f20d689"],
       url: shortlink.data.url,
       copyBelow: "Invite a Friend to a Head to Head Matchup to Prove Who Knows Football!",
       reason: "You received this email because you created an account in the app.",
@@ -117,18 +120,20 @@ Meteor.methods({
     var html = SSR.render('game', entire);
 
     var text = entire.headline + " " + entire.copyAbove + " " + entire.buttonText + " " + entire.url + " " + entire.copyBelow
+    console.log(text)
     
     mg.send({
       from: "Jessica at Pickk App<hi@pickk.co>",
       to: listAddress,
-      subject: "NFL Playoffs Starts in 4 Hours!",
+      subject: "NFL Playoff Game Prizes!",
       text: text,
       html: html
     }, function (error, body) {
       console.log(body);
     });
-  }
+  },
 });
+  
 
       // list.members().create({
       //   subscribed: true,

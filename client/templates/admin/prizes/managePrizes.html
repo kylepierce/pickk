@@ -1,0 +1,78 @@
+<template name="managePrizes">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton text=" " path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Manage Prizes</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container ten-spacing">
+        {{#ionList}}
+          {{#each prize in prizes}}
+            <div class="item item-avatar item-button-right" style="text-overflow:initial; white-space:inherit;">
+              <h2>[{{status prize.active}}] {{prize.title}}</h2>
+              <img class="avatar" src="{{prize.image}}"> {{#with dateEnd prize.dateEnd}} {{> pickkIcon size="xs" margin="margin: 0px;" icon=icon}} {{title}}
+              <br> {{/with}} {{prize.description}}
+              <!-- {{#autoForm type="method-update" meteormethod="togglePrizeActive"}}
+                {{> afQuickField type="boolean-radio" name='active'}}
+              {{/autoForm}} -->
+
+              <!-- {{#if prize.active}}
+                <button class="button double-button" data-action="activate" id={{prize._id}}>
+                  {{> ionIcon icon="ios-plus" }}
+                </button>
+              {{else}}
+                <button class="button double-button" data-action="deactivate" id={{prize._id}}>
+                  {{> ionIcon icon="ios-minus" }}
+                </button>
+              {{/if}} -->
+              <button class="button" data-action="edit" id={{prize._id}}>
+                {{> ionIcon icon="ios-more" }}
+              </button>
+            </div>
+          {{/each}}
+        {{/ionList}}
+      </div>
+    {{/ionContent}}
+   {{/ionView}}
+</template>
+
+<template name="_editPrize">
+  {{#ionPopover}}
+    {{#ionList}}
+      <div class="item" data-action="edit">Edit</div>
+      <div class="item" data-action="activate">Activate</div>
+      <div class="item" data-action="deactivate">Deactivate</div>
+      <div class="item" data-action="delete">Delete</div>
+    {{/ionList}}
+  {{/ionPopover}}
+</template>
+
+<template name="_editPrizeModal">
+  {{#ionModal class="white-text-header" title="Edit Prize"}}
+    {{#autoForm collection="Prizes" type="update" id="updatePrize" doc=groupData}}
+      {{> afQuickField name='title' label-type='stacked' }}
+      {{> afQuickField name='rank' label-type='stacked'}}
+      {{> afQuickField name='description' label-type='stacked' }}
+      {{> afQuickField name='image' label-type='stacked'}}
+      {{> afQuickField name='url' label-type='stacked'}}
+      {{> afQuickField type="boolean-radios" name='active' label-type='stacked'}}
+      {{> afQuickField type="select-radio" name='type' label-type='stacked'}}
+
+      {{#if afFieldValueIs name="type" value="matchup"}}
+        {{> afQuickField name='matchupId' label-type='stacked' }}
+      {{/if}}
+      {{#if afFieldValueIs name="type" value="league"}}
+        {{> afQuickField name='leagueId' label-type='stacked' }}
+      {{/if}}
+      <br>
+      <!-- {{> afQuickField type='datetimepicker' name="dateStart"}} -->
+      <!-- {{> afQuickField type='datetimepicker' name="dateEnd"}} -->
+      <!-- {{> afQuickField type='select-checkbox' id="fix-check" name='skill'}} -->
+      <input data-action="update" type="submit" class="button button-large button-balanced hundred-bottom" value="Update Prize">
+    {{/autoForm}}
+  {{/ionModal}}
+</template>

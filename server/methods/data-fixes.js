@@ -5,7 +5,7 @@ Meteor.methods({
     var users = []
 
     // Which players actually played.
-    _.each(questions, function(question){
+    _.map(questions, function(question){
       users = _.union(users, question.usersAnswered)
     });
 

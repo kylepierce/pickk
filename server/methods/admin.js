@@ -32,4 +32,10 @@ Meteor.methods({
 
 		Questions.update({"_id": questionId}, {$set: {'active': null, "pending": true}});
 	},
+
+	'togglePrizeActive': function(id, status){
+		check(id, String);
+		check(status, Boolean);
+		console.log(id, status)
+	}
 });

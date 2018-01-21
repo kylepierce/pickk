@@ -202,20 +202,6 @@
               </td>
             </tr>
           {{/each}}
-          <!-- {{#if prizes}}
-          <tr bgcolor="#ffffff" style="text-align: center;">
-            <h1>Prizes:</h1>
-          </tr>
-          {{#each prize in prizes}}
-            <tr bgcolor="#ffffff" style="text-align: center;">
-              <h2>{{prize.title}}</h2>
-            </tr>
-            <tr bgcolor="#ffffff" style="text-align: center;">
-              {{prize.description}}
-            </tr>
-          {{/each}}
-
-          {{/if}} -->
           
           <!-- BULLETPROOF BUTTON -->
           <tr>
@@ -235,6 +221,22 @@
               </table>
             </td>
           </tr>
+
+          {{#if prizes}}
+            <tr bgcolor="#ffffff">
+              <hr align="center" width="90%">
+              <h1 style="padding: 0 30px">Prizes:</h1>
+            </tr>
+            {{#each prize in prizes}}
+              <tr bgcolor="#ffffff">
+                <h2 style="padding: 0 30px">{{prize.title}}</h2>
+              </tr>
+              <tr bgcolor="#ffffff">
+                <p style="padding: 0 30px">{{prize.description}}</p>
+              </tr>
+            {{/each}}
+          {{/if}}
+          
           <!-- COPY -->
           <tr>
             <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">

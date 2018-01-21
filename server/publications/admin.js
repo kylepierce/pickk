@@ -7,6 +7,11 @@ Meteor.publish('multiplier', function(){
 	return Multipliers.find({})
 });
 
+Meteor.publish('allPrizes', function () {
+  this.unblock();
+  return Prizes.find();
+});
+
 Meteor.publish('prizes', function () {
   this.unblock();
   return Prizes.find({active: true});
