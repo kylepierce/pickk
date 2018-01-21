@@ -16,6 +16,17 @@ Meteor.methods({
 	},
 
 	'nextPeriod': function (game, period){
+		check(game, String);
+		check(period, Number);
+
+		var users = GamePlayed.find({gameId: game, period: period}).fetch()
+		var pushList = _.map(users, function(user){
+			var userObj = UserList.findOne({_id: user.userId})
+			if (userObj.oneSignal && userObj.oneSignal.userId){
+				return userObj.oneSignal.userId
+			}
+		});
+		Meteor.call('endOfQuarterPush', game, pushList)
 		return Games.update({_id: game}, {$set: {period: period + 1}})
 	},
 

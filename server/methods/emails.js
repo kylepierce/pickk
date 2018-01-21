@@ -108,9 +108,9 @@ Meteor.methods({
     });
     var entire = {
       headline: "CONFERENCE CHAMPIONSHIPS!",
-      preheader: "View Tomorrow's Prizes!",
-      copyAbove: "We are hosting a contest for every quarter for tomorrows's playoff games! Top 15 winners in each quarter win prizes. (including pre-game Pickk Six)",
-      buttonText: "Answer Pre Game Pickks",
+      preheader: "View Today's Prizes!",
+      copyAbove: "We are hosting a contest for every quarter for today's playoff games! Top 15 winners in each quarter win prizes. (including pre-game Pickk Six)",
+      buttonText: "Answer Pre Game Pickks Now!",
       gameIds: ['5a5d168351ac6fee4f20d68a', "5a5d168351ac6fee4f20d689"],
       url: shortlink.data.url,
       copyBelow: "Invite a Friend to a Head to Head Matchup to Prove Who Knows Football!",
@@ -123,9 +123,9 @@ Meteor.methods({
     console.log(text)
     
     mg.send({
-      from: "Jessica at Pickk App<hi@pickk.co>",
+      from: "Kyle at Pickk App<hi@pickk.co>",
       to: listAddress,
-      subject: "NFL Playoff Game Prizes!",
+      subject: "$1175 in Prizes Today!",
       text: text,
       html: html
     }, function (error, body) {

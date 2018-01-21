@@ -81,6 +81,7 @@ Meteor.methods({
 			dateCreated: new Date(),
 			userId: Meteor.userId(),
 			gameId: answer.gameId,
+			period: answer.period,
 			questionId: answer.questionId,
 			answered: answer.answered,
 			type: answer.type
@@ -145,7 +146,6 @@ Meteor.methods({
 
 					createPendingNotification(notifyObj);
 
-					console.log(prediction);
 					Meteor.call('insertAnswer', prediction);
 				}
 			});
