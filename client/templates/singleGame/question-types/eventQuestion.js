@@ -43,72 +43,12 @@ Template.eventQuestion.events({
     }
 		// $('#wagers').show();
 	},
-	// 'dblclick [data-action=play-selected]': function (e, t){
-	// 	console.log(e, t);
-	// },
 	'click [data-action=wager-selected]': function (e, t) {
 		$('.wager-selected').removeClass('wager-selected');
 		$(e.currentTarget).addClass('wager-selected');
 		t.data.w = $('.wager-selected')[0].value;
-		$('#submitButton').show();
-	},
-  // "dblclick [data-action=play-selected]": function (e, t) {
-  //   var lastWager = Session.get('lastWager');
-  //   if(this.w || lastWager){
-  //     e.preventDefault();
-  //     $('.play-selected').removeClass('play-selected');
-  //     $(e.currentTarget).addClass('play-selected');
-  //     t.data.o = this.o;
-  //     var multiplier = parseFloat(this.o.multiplier);
-  //     var userId = Meteor.userId();
-  //     var selector = {userId: userId, gameId: this.q.gameId, period: this.q.period}
-  //
-  //     var userCoins = GamePlayed.findOne(selector)
-  //     var hasEnoughCoins = userCoins.coins >= lastWager
-  //
-  //     if (!hasEnoughCoins) {
-  //       analytics.track("no coins", {
-  //         id: userId,
-  //         where: "Client",
-  //         answered: this.o.option,
-  //         type: this.t.type,
-  //         gameId: this.q.gameId,
-  //         multiplier: this.o.multiplier,
-  //         wager: lastWager,
-  //         userCoins: userCoins
-  //       });
-  //
-  //       IonLoading.show({
-  //         customTemplate: '<h3>Not enough coins :(</h3><p>Lower the amount or or wait until the commercial for free pickks!</p>',
-  //         duration: 1500,
-  //         backdrop: true
-  //       });
-  //       return
-  //     }
-  //
-  //     if(Meteor.isCordova){
-  //       Branch.setIdentity(userId)
-  //       var eventName = 'question_answered';
-  //       Branch.userCompletedAction(eventName)
-  //     }
-  //
-  //     analytics.identify(userId, {lastQuestion: new Date()})
-  //     $(".single-question").removeClass("slideInLeft")
-  //     $(".single-question").addClass("slideOutRight")
-  //
-  //     var prediction = {
-  //       gameId: this.q.gameId,
-  //       period: this.q.period,
-  //       questionId: this.q._id,
-  //       type: this.t,
-  //       answered: this.o.option,
-  //       multiplier: multiplier,
-  //       wager: lastWager
-  //     }
-  //
-  //     Meteor.call('answerNormalQuestion', prediction);
-  //   }
-  // },
+    $('#submitButton').show();
+  },
 	"click [data-action=submit]": function (e, t) {
     var lastPlay = Session.get('lastPlay');
     if (!this.o && !lastPlay){
@@ -182,21 +122,26 @@ Template.eventQuestion.events({
 		Meteor.call('answerNormalQuestion', prediction, function(error, response){
       if (error){
         console.log(error);
-      } else {
+      } else {        
         analytics.track("question answered", {
-          gameId: this.q.gameId,
-          period: this.q.period,
-          questionId: this.q._id,
-          type: this.t,
-          answered: lastPlay.option,
+          gameId: prediction.gameId,
+          period: prediction.period,
+          questionId: prediction._id,
+          type: prediction.type,
+          answered: prediction.answered,
           userId: Meteor.userId(),
-          multiplier: multiplier,
+          multiplier: prediction.multiplier,
           multiplierRange: multiplierRange,
-          wager: lastWager
+          wager: prediction.wager
         });
       }
     });
     QuestionPopover.hide();
+    var countdown = new ReactiveCountdown(250);
+    var questionId = this.q._id
+    countdown.start(function() {
+      Meteor.call('playerInactive', Meteor.userId(), questionId);
+    });
 	}
 });
 

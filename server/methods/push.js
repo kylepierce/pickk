@@ -99,20 +99,24 @@ Meteor.methods({
 
 		const game = Games.findOne({_id: gameId});
     const userIds = game.nonActive;
+    var pushList = _.map(userIds, function (user) {
+      var userObj = UserList.findOne({ _id: user })
+      if (userObj.oneSignal && userObj.oneSignal.userId) {
+        return userObj.oneSignal.userId
+      }
+    });
+
     var path = "/game/" + gameId
-		const text = "Pickk What Happens on " + message;
+		const text = "Pickk What Happens on " + message + " [" + game.name + "]";
 		if (userIds && userIds.length) {
       var payload = {
-        headings: { "en": "Game Invite" },
-        contents: { "en": message },
-        ios_badgeType: "Increase",
-        ios_badgeCount: 1,
-        include_player_ids: [user.oneSignal.userId],
+        headings: { "en": "New Question!" },
+        contents: { "en": text },
+        include_player_ids: pushList,
         data: {
           "$deeplink_path": path
         }
       }
-
       sendNotification(payload);
 		}
   },
@@ -138,40 +142,40 @@ Meteor.methods({
     }
   },
 
-	// 'allInactive': function(gameId) {
-	// 	check(gameId, String);
-	// 	this.unblock()
-	// 	console.log("Adding all users to inactive")
-	// 	var users = Games.findOne({_id: gameId}).users
+	'allInactive': function(gameId) {
+		check(gameId, String);
+		this.unblock()
+		console.log("Adding all users to inactive")
+		var users = Games.findOne({_id: gameId}).users
 
-	// 	return Games.update({_id: gameId}, {$set: {'nonActive': users}}, {multi: true});
-	// },
+		return Games.update({_id: gameId}, {$set: {'nonActive': users}}, {multi: true});
+	},
 
-	// 'emptyInactive': function(gameId) {
-	// 	check(gameId, String);
-	// 	this.unblock()
-	// 	console.log("removing all users from inactive")
-	// 	return Games.update({_id: gameId}, {$set: {'nonActive': []}}, {multi: true});
-	// },
+	'emptyInactive': function(gameId) {
+		check(gameId, String);
+		this.unblock()
+		console.log("removing all users from inactive")
+		return Games.update({_id: gameId}, {$set: {'nonActive': []}}, {multi: true});
+	},
 
-	// 'playerInactive': function(userId, questionId) {
-	// 	check(userId, String);
-	// 	check(questionId, String);
-	// 	this.unblock()
-	// 	var gameInfo = Questions.findOne({_id: questionId})
-	// 	var gameId = gameInfo.gameId
-	// 	var selector = {
-	// 			_id: gameId,
-	// 			nonActive: {$nin: [userId]}
-	// 		}
-	// 	var fields = {fields: {'nonActive': 1}}
+	'playerInactive': function(userId, questionId) {
+		check(userId, String);
+    check(questionId, String);
+		this.unblock()
+		var gameInfo = Questions.findOne({_id: questionId})
+		var gameId = gameInfo.gameId
+		var selector = {
+				_id: gameId,
+				nonActive: {$nin: [userId]}
+			}
+		var fields = {fields: {'nonActive': 1}}
 
-	// 	var game = Games.find(selector, fields).fetch();
-	// 	if (game.length == 1) {
-	// 		Games.update(gameId, {$push: {nonActive: userId}});
-	// 		console.log("added " + userId + " to the inactive list")
-	// 	}
-	// },
+		var game = Games.find(selector, fields).fetch();
+		if (game.length == 1) {
+			Games.update(gameId, {$push: {nonActive: userId}});
+			console.log("added " + userId + " to the inactive list")
+		}
+	},
 
 	// 'openGamePush': function(message, array) {
 	// 	check(message, String);
