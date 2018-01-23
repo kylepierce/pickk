@@ -66,7 +66,6 @@ Meteor.publish("reactiveLeaderboard", function(selector) {
 		newSelector.type = { $in: selector.playType}}
 		if (selector._id){newSelector.gameId = {$in: [selector._id]}}
 	}
-	console.log(newSelector)
 	ReactiveAggregate(this, GamePlayed, [
 		{$match: newSelector},
 		{

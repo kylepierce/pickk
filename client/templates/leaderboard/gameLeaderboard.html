@@ -48,7 +48,7 @@
 </template>
 
 <template name="singlePlayerLeader">
-  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}} animated fast fadeInUp">
+  <div class="item item-avatar leaderboard-item {{following}} {{thisUser}} animated fast fadeInUp" data-action="viewPlayer">
     {{> userAvatar userId=player._id}}
     <li class="list-font" value={{player.rank}}>
       <span class="username">{{username player._id}}</span>

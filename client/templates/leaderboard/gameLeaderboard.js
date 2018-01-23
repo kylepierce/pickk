@@ -1,6 +1,12 @@
 Leaderboard = new Meteor.Collection('leaderboard');
 
 Template.gameLeaderboard.helpers({
+	gameSelected: function () {
+		var data = Session.get('leaderboardData');
+		if (data.type === "game") {
+			return true
+		}
+	},
 	typeOfLeaderboard: function(){
 		var data = Session.get('leaderboardData');
 		return data.type
@@ -104,6 +110,9 @@ Template.miniLeaderboard.events({
 		analytics.track("View More - List Item In Card", data);
 		Router.go('/leaderboard?' + params)
 	},
+	'click [data-action=viewPlayer]': function(e,t){
+		Router.go('/user-profile/'+this.player._id)
+	}
 });
 
 Template.leaderboardList.helpers({
