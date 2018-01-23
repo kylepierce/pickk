@@ -17,6 +17,38 @@ Meteor.publish('prizes', function () {
   return Prizes.find({active: true});
 });
 
+Meteor.publish('winningsByUser', function(userId){
+  this.unblock();
+  return Winnings.find({userId: userId}, {sort: {gameId: -1}})
+});
+
+Meteor.publish('winners', function (selector) {
+  this.unblock();
+  // return Winnings.find({ paid: false });
+  ReactiveAggregate(this, Winnings, [
+    { $match: selector },
+    {
+      $group: {
+        '_id': '$userId',
+        'winnings': {
+          $sum: '$winnings'
+        },
+      }
+    },
+    { $sort: { winnings: -1 } },
+    {
+      $project: {
+        userId: '$userId',
+        winnings: '$winnings',
+      }
+    }], { clientCollection: "winnings" });
+  var userIds = Winnings.find(selector, {fields: {userId: 1}}).fetch()
+  var userIds = _.uniq(_.map(userIds, function(user){
+    return user.userId
+  }));
+  return UserList.find({_id: {$in: userIds}})
+});
+
 Meteor.publish('situationalQuestions', function(){
 	return Admin.find({situational: true});
 });

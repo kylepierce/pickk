@@ -1,0 +1,26 @@
+<template name="viewWinnings">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton text=" " path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Winnings</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#with winnings}}
+        <div class="item item-avatar item-button-right" data-action="viewWinnings" style="text-overflow:initial; white-space:inherit;">
+          <h2>{{#with user userId}}{{this.profile.username}}{{/with}}</h2>
+           {{> userAvatar size="medium" userId=currentUser._id}} ${{amount}}
+        </div>
+        {{#each win in winnings}}
+          <div class="item">
+            [{{placeGrammer win.place}}] {{win.gameName}} - {{periodName win.period}}<br>
+            ${{win.winnings}}
+          </div>
+        {{/each}}
+      {{/with}}
+    {{/ionContent}}
+   {{/ionView}}
+</template>

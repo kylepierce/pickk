@@ -1,0 +1,43 @@
+<template name="manageWinners">
+  {{#contentFor "headerButtonLeft"}}
+    {{>ionNavBackButton text=" " path="index"}}
+  {{/contentFor}}
+
+  {{#contentFor "headerTitle"}}
+    <h1 class="title white-text-header">Manage Winners</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="container ten-spacing">
+        {{#ionList}}
+          {{#each winner in winners}}
+            {{> winnerItem userId=winner._id amount=winner.winnings}}
+          {{/each}}
+        {{/ionList}}
+      </div>
+    {{/ionContent}}
+   {{/ionView}}
+</template>
+
+<template name="winnerItem">
+  <div class="item item-avatar item-button-right" data-action="viewWinnings" style="text-overflow:initial; white-space:inherit;">
+    <h2>{{#with user userId}}{{this.profile.username}}{{/with}}</h2>
+    {{> userAvatar userId=userId}} ${{amount}}
+    <!-- <button class="button" data-action="edit" id={{prize._id}}>
+    {{> ionIcon icon="ios-more" }}
+    </button> -->
+  </div>
+</template>
+
+<template name="_winnerModal">
+  {{#ionModal class="white-text-header" title="Winnings"}}
+    {{> winnerItem userId=userId amount=amount}}
+    {{#each win in winnings userId}}
+      <div class="item">
+        [{{placeGrammer win.place}}] {{win.gameName}} - {{periodName win.period}}<br>
+        ${{win.winnings}}
+      </div>
+    {{/each}}
+  {{/ionModal}}
+</template>
