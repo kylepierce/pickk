@@ -154,7 +154,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-              <h1 style="font-size: 48px; font-weight: 400; margin: 0;">{{headline}}</h1>
+              <h1 style="font-size: 28px; font-weight: 400; margin: 0;">{{headline}}</h1>
             </td>
           </tr>
         </table>
@@ -180,6 +180,19 @@
               <p style="margin: 0;">{{{copyAbove}}}</p>
             </td>
           </tr>
+
+          <!-- {{#if prizes}}
+            <tr bgcolor="#ffffff">
+              <h1 style="padding: 0 30px">Prizes:</h1>
+              <p style="padding: 0 30px">List of Prizes For Each Rank in Any Quarter or Pre-Game Pickk Six for Super Bowl 52</p>
+            </tr>
+            <tr bgcolor="#ffffff" style="padding: 0 30px;">
+              {{#each prize in prizes}}
+                <p style="background-color: white; text-align: center;">{{prize.title}}</p>
+              {{/each}}
+            </tr>            
+          {{/if}} -->
+
           {{#each game gameIds}}
             <tr>
               <td bgcolor="#ffffff" align="center">
@@ -202,6 +215,12 @@
               </td>
             </tr>
           {{/each}}
+
+          <!-- <tr>
+            <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+              <p style="margin: 0;">{{url}}</p>
+            </td>
+          </tr> -->
           
           <!-- BULLETPROOF BUTTON -->
           <tr>
@@ -222,25 +241,11 @@
             </td>
           </tr>
 
-          {{#if prizes}}
-            <tr bgcolor="#ffffff">
-              <hr align="center" width="90%">
-              <h1 style="padding: 0 30px">Prizes:</h1>
-            </tr>
-            {{#each prize in prizes}}
-              <tr bgcolor="#ffffff">
-                <h2 style="padding: 0 30px">{{prize.title}}</h2>
-              </tr>
-              <tr bgcolor="#ffffff">
-                <p style="padding: 0 30px">{{prize.description}}</p>
-              </tr>
-            {{/each}}
-          {{/if}}
-          
           <!-- COPY -->
           <tr>
             <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
               <p style="margin: 0;">{{copyBelow}}</p>
+              <p>Invite them before the game so they can answer Pre-Game Pickks and know how to play!</p>
             </td>
           </tr>
           <!-- COPY -->
@@ -250,6 +255,7 @@
                 <br>The Pickk Team</p>
             </td>
           </tr>
+        
         </table>
         <!--[if (gte mso 9)|(IE)]>
             </td>

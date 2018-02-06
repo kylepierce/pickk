@@ -1,44 +1,41 @@
 var settings = Meteor.settings.private.mailgunApi
 var mg = new Mailgun({ apiKey: settings.apiKey, domain: settings.domain })
 var domain = settings.domain
-var listAddress = "test@" + domain
+var listAddress = "all@" + domain
 var list = mg.api.lists(listAddress);
 
 Meteor.methods({
-  'addEmailArray': function(){
-    // If user signed up with facebook
-    var selector = { 'services.facebook.email': { $exists: true } }
-    var projection = { fields: { services: 1, emails: 1 }, limit: 10 }
-
-    var users = UserList.find(selector, projection).map(function (user, index) {
-      // Update the user with email array that already exists.
-    });
-  },
   'findEmails': function(){
     // Find every account that has 'emails' key
-    var selector = { 'services.facebook.email': { $exists: true } }
-    var projection = { fields: { profile: 1, services: 1, createdAt: 1}}
+
+    var selector = { 'emails': { $exists: true } }
+    var projection = { fields: { profile: 1, emails: 1, createdAt: 1}}
+
+    // Facebook 
+    // var selector = { 'services.facebook.email': { $exists: true } }
+    // var projection = { fields: { profile: 1, services: 1, createdAt: 1 } }
 
     var users = UserList.find(selector, projection).map(function(user, index){
-      // Each account with email I want to get the first item address
-      valueLength = function(key){if(key){return key.length} else {return 0}}
-      valueBool = function (key) { if (key) { return key } else { return false } }
-      var memberObj = {
-        name: user.profile.firstName + " " + user.profile.lastName,
-        address: user.services.facebook.email,
-        vars: {
-          firstName: user.profile.firstName, 
-          lastName: user.profile.lastName,
-          username: user.profile.username,
-          onboarded: valueBool(user.profile.isOnboarded),
-          dateCreated: user.createdAt, 
-          followersCount: valueLength(user.profile.followers),
-          followingCount: valueLength(user.profile.following),
-          leagueCount: valueLength(user.profile.groups),
-          dateAdded: new Date(),
+        // Each account with email I want to get the first item address
+        valueLength = function (key) { if (key) { return key.length } else { return 0 } }
+        valueBool = function (key) { if (key) { return key } else { return false } }
+        var memberObj = {
+          name: user.profile.firstName + " " + user.profile.lastName,
+          address: user.emails[0].address,
+          // address: user.services.facebook.email,
+          vars: {
+            firstName: user.profile.firstName,
+            lastName: user.profile.lastName,
+            username: user.profile.username,
+            onboarded: valueBool(user.profile.isOnboarded),
+            dateCreated: user.createdAt,
+            followersCount: valueLength(user.profile.followers),
+            followingCount: valueLength(user.profile.following),
+            leagueCount: valueLength(user.profile.groups),
+            dateAdded: new Date(),
+          }
         }
-      } 
-      return memberObj
+        return memberObj
     });
     // Get item in array between 0 and 1000
   
@@ -55,18 +52,26 @@ Meteor.methods({
       });
     }
   },
-  'sendTestNewsletter': function(url){
-    check(url, String);
-    var deeplink = url;
+  'played': function(){
+    var numberOfUsers = Questions.find({}, { limit: 70000, sort: { dateCreated: -1 }, usersAnswered: {_id: 1}}).fetch();
+    var list = _.uniq(_.flatten(_.map(numberOfUsers, function(question){
+      return question.usersAnswered
+    })));
+    console.log(list.length)
+    // console.log(numberOfUsers)
+  },
+  'sendTestNewsletter': function(){
+    // check(url, String);
+    // var deeplink = url;
     var shortlink = HTTP.post("https://api.branch.io/v1/url", {
       "data": {
         "branch_key": "key_live_ppziaDSmTGvzyWPJ66QaqjocuvaXZc9M",
         "data": {
-          "$canonical_identifier": deeplink,
-          "$og_title": "Patriots vs Jaguars. Play Live!",
-          "$og_description": "Live Contest! Watch Patriots vs Jaguars on CBS at 3:05pm!",
-          "$desktop_url": "https://pickk.co/?utm_content=NEvsJAX",
-          "$deeplink_path": deeplink
+          "$canonical_identifier": "referral",
+          "$og_title": "Patriots vs Eagles. Pre Game Pickks!",
+          "$og_description": "Before the Game Make Six Predictions to Win Cash!",
+          "$desktop_url": "https://pickk.co/?utm_content=referral",
+          "$deeplink_path": "/"
         }
       }
     });
@@ -78,26 +83,22 @@ Meteor.methods({
         return Prizes.find({active: true}, {sort: {"rank": 1}});
       },
       game: function (gameIds) {
-        console.log(gameIds)
         var games = Games.find({_id: {$in: gameIds}}).map(function(game){
           var gameTime = moment(game.iso)
           if (!timezone) { var timezone = "America/New_York" }
           var homeColor = Teams.findOne({ statsTeamId: game.home.teamId })
           var awayColor = Teams.findOne({ statsTeamId: game.away.teamId })
-          console.log(games)
           return {
             tv: game.tv,
             gameTime: gameTime.tz(timezone).format("h:mm a") + " ET" ,
             home: {
               shortCode: game.home.abbreviation.toUpperCase(),
               color: "#" + homeColor.hex[0],
-              // record: "(" + game.home.record.wins + "-" + game.home.record.losses + ")",
               nickname: game.home.nickname
             },
             away: {
               shortCode: game.away.abbreviation.toUpperCase(),
               color: "#" + awayColor.hex[0],
-              // record: "(" + game.away.record.wins + "-" + game.away.record.losses + ")",
               nickname: game.away.nickname
             }
           }
@@ -107,13 +108,13 @@ Meteor.methods({
       }
     });
     var entire = {
-      headline: "CONFERENCE CHAMPIONSHIPS!",
-      preheader: "View Today's Prizes!",
-      copyAbove: "We are hosting a contest for every quarter for today's playoff games! Top 15 winners in each quarter win prizes. (including pre-game Pickk Six)",
-      buttonText: "Answer Pre Game Pickks Now!",
-      gameIds: ['5a5d168351ac6fee4f20d68a', "5a5d168351ac6fee4f20d689"],
+      preheader: "Invite Friends to Play Pickk!",
+      headline: "Play With Friends",
+      copyAbove: "Super Bowl is a great time to play with friends and family. Invite them to play Pickk and earn $1 for future contests.",
+      buttonText: "Invite Friends",
+      gameIds: ['5a70b2c9b5e93ba44fa37d71'],
       url: shortlink.data.url,
-      copyBelow: "Invite a Friend to a Head to Head Matchup to Prove Who Knows Football!",
+      copyBelow: "Watching the game at a party? Create a Super Bowl matchup and challenge your friends & family to Pickk the next play. Play each quarter, one half or the entire game.",
       reason: "You received this email because you created an account in the app.",
     }
 
@@ -123,9 +124,9 @@ Meteor.methods({
     console.log(text)
     
     mg.send({
-      from: "Kyle at Pickk App<hi@pickk.co>",
+      from: "Kyle at Pickk<hi@pickk.co>",
       to: listAddress,
-      subject: "$1175 in Prizes Today!",
+      subject: "Earn $1 for Every Friend Referred!",
       text: text,
       html: html
     }, function (error, body) {

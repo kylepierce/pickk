@@ -60,7 +60,38 @@ Template.home.events({
     var all = ["NBA", "NFL", "MLB"]
     Session.set('gamesBySport', all);
     Router.go('/games')
-  }
+  },
+  'click [data-action=invite-friends]': function (event, template) {
+    analytics.track("Click Invite Friends", {
+      location: "Home"
+    });
+
+    var branchUniversalObj = null;
+    var ref = Meteor.userId()
+    var username = Meteor.user().profile.username
+    var message = "Play Against Me and Predict What Happens Next in Super Bowl 52!"
+    if (Meteor.isCordova) {
+      Branch.createBranchUniversalObject({
+        canonicalIdentifier: 'user-profile/' + ref,
+        title: 'Super Bowl Challenge!',
+        contentDescription: message,
+        contentMetadata: {
+          'userId': ref,
+          'userName': username
+        }
+      }).then(function (newBranchUniversalObj) {
+        branchUniversalObj = newBranchUniversalObj;
+        branchUniversalObj.showShareSheet({
+          // put your link properties here
+          "feature": "share",
+          "tags": ['menu']
+        }, {
+            // put your control parameters here
+            "$deeplink_path": "/user-profile/" + ref,
+          }, message);
+      });
+    }
+  },
 });
 
 Template.dailyPickkButton.helpers({

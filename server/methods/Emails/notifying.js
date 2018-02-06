@@ -80,17 +80,17 @@ sendWinningEmail = function(obj) {
     reason: "You received this email because you created an account in the app.",
   }
   var html = SSR.render('awardEmail', entire);
-
+  console.log(userObject.name + " [" + obj.userId + "] $" + obj.winningAmount)
   
-  mg.send({
-    from: "Kyle at Pickk App<hi@pickk.co>",
-    // to: userObject.name + "hi+prize@pickk.co",
-    to: [userObject.hasEmail, "hi+prize@pickk.co"],
-    subject: "Congratulations!",
-    html: html
-  }, function (error, body) {
-    console.log(body);
-  });
+  // mg.send({
+  //   from: "Kyle at Pickk App<hi@pickk.co>",
+  //   // to: userObject.name + "hi+prize@pickk.co",
+  //   to: [userObject.hasEmail, "hi+prize@pickk.co"],
+  //   subject: "Congratulations!",
+  //   html: html
+  // }, function (error, body) {
+  //   console.log(body);
+  // });
 }
 
 Meteor.methods({  
@@ -102,7 +102,7 @@ Meteor.methods({
     // Aggrigate the users and amount
     var allUsers = _.pluck(winnings, 'userId');
     var uniqueUsers = _.uniq(allUsers);
-    var uniqueUsers = uniqueUsers.splice(26)
+    // var uniqueUsers = uniqueUsers.splice(26)
     var winners = _.map(uniqueUsers, function(userId){
       var allWinsByOneUser = _.where(winnings, {userId: userId});
       var amount = 0
@@ -134,7 +134,6 @@ Meteor.methods({
         winningAmount: amount, // Float
         gameObj: gameObj // Object
       }
-
       // Send to each person indivually.
       sendWinningEmail(emailObject)
     });

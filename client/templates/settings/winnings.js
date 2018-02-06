@@ -62,5 +62,10 @@ Template.viewWinnings.helpers({
   winnings: function () {
     var userId = Meteor.userId();    
     return Winnings.find({ userId: userId });
+  },
+  referral: function(){
+    if (Meteor.isCordova) {
+      Branch.getInstance().getCredits()
+    }
   }
 });

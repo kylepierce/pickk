@@ -25,6 +25,7 @@
 
       <div class="container hundred-bottom">
         {{> homeButtons}}
+        <!-- {{> inviteFriends}} -->
         <!-- {{> dailyPickkButton}} -->
         {{> homeGames}}
         
@@ -91,4 +92,13 @@
     </button>
   </div>
   {{/if}}
+</template>
+
+<template name="inviteFriends">
+  <div class="animated fadeIn">
+    <button class="button col-md-100 ten-spacing daily-pickk-cta daily-pickk-background" style="height: 45px; margin-bottom: 10px;"
+      data-action="invite-friends">
+      <span class="daily-pickk-text">Earn $1 Per Referral*</span>
+    </button>
+  </div>
 </template>
