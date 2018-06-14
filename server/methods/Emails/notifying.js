@@ -1,8 +1,6 @@
 var settings = Meteor.settings.private.mailgunApi
 var mg = new Mailgun({ apiKey: settings.apiKey, domain: settings.domain })
 var domain = settings.domain
-var listAddress = "test@" + domain
-var list = mg.api.lists(listAddress);
 
 periodName = function (period) {
   switch (period) {
@@ -74,9 +72,9 @@ sendWinningEmail = function(obj) {
     headline: "Winner!",
     preheader: "You Won $" + obj.winningAmount + " playing Pickk!" ,
     firstName: userObject.name,
-    copyAbove: "Congrats on winning $" + obj.winningAmount + " Best Buy Gift Card! Below are the prizes and the amounts you won.",
+    copyAbove: "Congrats on winning $" + obj.winningAmount + " ! Below are the prizes and the amounts you won.",
     games: obj.gameObj,
-    copyBelow: "Let me know! Thanks again for playing Pickk!",
+    copyBelow: "You can recieve the prize in form of a Best Buy gift card code emailed to you or by PayPal. Any prize under $10 will be sent by PayPal. Please confirm this is the right PayPal email. Thanks again for playing Pickk!",
     reason: "You received this email because you created an account in the app.",
   }
   var html = SSR.render('awardEmail', entire);
@@ -84,9 +82,9 @@ sendWinningEmail = function(obj) {
   
   // mg.send({
   //   from: "Kyle at Pickk App<hi@pickk.co>",
-  //   // to: userObject.name + "hi+prize@pickk.co",
+  //   // to: "hi+prize@pickk.co",
   //   to: [userObject.hasEmail, "hi+prize@pickk.co"],
-  //   subject: "Congratulations!",
+  //   subject: "Congratulations on Winning!",
   //   html: html
   // }, function (error, body) {
   //   console.log(body);
@@ -102,7 +100,7 @@ Meteor.methods({
     // Aggrigate the users and amount
     var allUsers = _.pluck(winnings, 'userId');
     var uniqueUsers = _.uniq(allUsers);
-    // var uniqueUsers = uniqueUsers.splice(26)
+
     var winners = _.map(uniqueUsers, function(userId){
       var allWinsByOneUser = _.where(winnings, {userId: userId});
       var amount = 0
@@ -127,16 +125,23 @@ Meteor.methods({
         }
         return obj
       });
-      
-      var emailObject = {
-        userId: userId, //String
-        number: allWinsByOneUser.length, // Number
-        winningAmount: amount, // Float
-        gameObj: gameObj // Object
+      if (userId){
+        var user = UserList.findOne({ _id: userId })
+        var emailObject = {
+          userId: userId, //String
+          number: allWinsByOneUser.length, // Number
+          userName: user.profile.username,
+          winningAmount: amount, // Float
+          gameObj: gameObj // Object
+        }
+        // Send to each person indivually.
+        // sendWinningEmail(emailObject);
+        return emailObject
       }
-      // Send to each person indivually.
-      sendWinningEmail(emailObject)
+
     });
+    var csv = Papa.unparse(winners);
+    return csv
   }
 });
 

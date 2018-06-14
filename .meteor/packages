@@ -94,3 +94,5 @@ jcbernack:reactive-aggregate
 robertlowe:autoform-pickadate
 standard-minifier-css
 standard-minifier-js
+harrison:papa-parse
+pfafman:filesaver

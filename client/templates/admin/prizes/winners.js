@@ -1,6 +1,6 @@
 Template.manageWinners.helpers({
   winners: function(){
-    Meteor.subscribe('winners', {});
+    Meteor.subscribe('winners', { paid: false });
     return Winnings.find({}, {sort: {dateCreated: -1}}).fetch();
   },
 });
@@ -57,5 +57,11 @@ Template._winnerModal.helpers({
     Meteor.subscribe('winningsByUser', userId);
     Meteor.subscribe('winners', {userId: userId});
     return Winnings.find({userId: userId});
+  }
+});
+
+Template._winnerModal.events({
+  'click [data-action=paid]': function (e, t) {
+    Meteor.call('paidUser', t.data.userId);
   }
 });

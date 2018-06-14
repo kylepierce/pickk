@@ -24,9 +24,9 @@
   <div class="item item-avatar item-button-right" data-action="viewWinnings" style="text-overflow:initial; white-space:inherit;">
     <h2>{{#with user userId}}{{this.profile.username}}{{/with}}</h2>
     {{> userAvatar userId=userId}} ${{amount}}
-    <!-- <button class="button" data-action="edit" id={{prize._id}}>
+    <button class="button" data-action="paid" id={{prize._id}}>
     {{> ionIcon icon="ios-more" }}
-    </button> -->
+    </button>
   </div>
 </template>
 
