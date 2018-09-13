@@ -10,9 +10,9 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <button style="font-size: 13px;" class="button button-clear" data-action="click-chat" data-ion-menu-toggle="right">
+    <!-- <button style="font-size: 13px;" class="button button-clear" data-action="click-chat" data-ion-menu-toggle="right">
       {{> ionIcon icon="ios-chatboxes"}}
-    </button>
+    </button> -->
   {{/contentFor}}
 
   {{#contentFor "headerTitle"}}
@@ -21,10 +21,16 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{> heroSection location="home"}}
+      <!-- {{> heroSection location="home"}} -->
 
       <div class="container hundred-bottom">
-        {{> homeButtons}}
+        <!-- <form data-reactid="14">
+          <h3 data-reactid="16" class="center no-notifications" style="margin-top: 100px">Enter location number:</h3>
+          <input type="number" step="1" min="0" id="zip-input" class="zip" pattern="[0-9]*" title="Non-negative integral number"
+            placeholder="3467" value="" data-reactid="17">
+          <input type="submit" data-action="location" class="tempSubmitButton" value="Play!" data-reactid="18">
+        </form> -->
+        <!-- {{> homeButtons}} -->
         <!-- {{> inviteFriends}} -->
         <!-- {{> dailyPickkButton}} -->
         {{> homeGames}}

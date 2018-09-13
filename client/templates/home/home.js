@@ -49,6 +49,14 @@ Template.homeGames.helpers({
 });
 
 Template.home.events({
+  'click [data-action=location]': function(e, t) {
+    IonLoading.show({
+      customTemplate: 'Incorrect location. Email hi@pickk.co for locations.',
+      duration: 1500,
+      backdrop: true
+    });
+    e.preventDefault();
+  },
   'click [data-action=game-prediction]': function(event, template){
     analytics.track("Click Pickk Six", {
       location: "Home"
