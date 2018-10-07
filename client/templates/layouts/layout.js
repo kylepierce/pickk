@@ -122,19 +122,19 @@ Template.sideMenuContent.helpers({
     var userId = Meteor.userId();
     var template = Template.instance()
 
-    Meteor.call("thisWeeksDiamonds", userId, thisWeek, function (error, result) {
-      if ( error ){
-        console.log(error)
-      } else {
-        // If there isnt any data set to zero
-        if (result[0] === undefined){
-          template.diamonds.set(0)
-        } else {
-          var diamondCount = result[0].result
-          template.diamonds.set(diamondCount)
-        }
-      }
-    })
+    // Meteor.call("thisWeeksDiamonds", userId, thisWeek, function (error, result) {
+    //   if ( error ){
+    //     console.log(error)
+    //   } else {
+    //     // If there isnt any data set to zero
+    //     if (result[0] === undefined){
+    //       template.diamonds.set(0)
+    //     } else {
+    //       var diamondCount = result[0].result
+    //       template.diamonds.set(diamondCount)
+    //     }
+    //   }
+    // })
 
     return Template.instance().diamonds.get();
   },

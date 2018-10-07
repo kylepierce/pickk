@@ -1,6 +1,6 @@
 Template.leagues.onCreated(function() {
   var userId = Meteor.userId();
-  this.subscribe("findThisUsersLeagues", userId);
+  // this.subscribe("findThisUsersLeagues", userId);
 });
 
 Template.leagues.helpers({

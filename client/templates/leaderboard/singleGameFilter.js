@@ -1,7 +1,7 @@
 Template.singleGameFilter.onCreated(function () {
   var data = Session.get('leaderboardData');
   var userId = Meteor.userId()
-  this.subscribe('findThisUsersLeagues', Meteor.userId());
+  // this.subscribe('findThisUsersLeagues', Meteor.userId());
   var selector = { gameId: {$in: data.gameId} };
   this.subscribe('listOfMatchups', selector);
 });
