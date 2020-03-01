@@ -15,7 +15,7 @@
     "i": "^0.3.5",
     "meteor-ios10-csp-fix": "^0.1.0",
     "mupx": "^1.5.3",
-    "npm": "^4.0.3",
+    "npm": "^6.14.1",
     "mailgun": "0.5.0"
   },
   "devDependencies": {
