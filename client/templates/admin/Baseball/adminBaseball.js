@@ -5,7 +5,7 @@ Template.adminBaseball.events({
 	}, 
 	'click [data-action=createAtBat]': function (event, template) {
 		event.preventDefault();
-		var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({ _id: "591e3d2fe47ced8845054bab"});
 	  var currentGameId = currentGame._id
 		Meteor.call('createAtBat', "playerId", currentGameId);
 	},
@@ -46,11 +46,11 @@ Template.adminBaseball.helpers ({
     return currentAtBat.ballCount
   },
   numberOfOuts: function ( ) {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     return currentGame.outs
   },
   first: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     //  
     var first = currentGame.playersOnBase.first
     if(first){
@@ -60,7 +60,7 @@ Template.adminBaseball.helpers ({
     }
   },
   second: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     var second = currentGame.playersOnBase.second
     if(second){
@@ -70,7 +70,7 @@ Template.adminBaseball.helpers ({
     }
   },
   third: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     var third = currentGame.playersOnBase.third
     if(third){
@@ -80,12 +80,12 @@ Template.adminBaseball.helpers ({
     }
   },
   inning: function ( ) {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     return currentGame.inning
   },
   outs: function() {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     var outs = currentGame.outs
     switch(outs){
@@ -129,7 +129,7 @@ Template.adminGameInfo.helpers({
     return currentAtBat.ballCount
   },
   first: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     //  
     var first = currentGame.playersOnBase.first
     if(first){
@@ -139,7 +139,7 @@ Template.adminGameInfo.helpers({
     }
   },
   second: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     var second = currentGame.playersOnBase.second
     if(second){
@@ -149,7 +149,7 @@ Template.adminGameInfo.helpers({
     }
   },
   third: function () {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     // 
     var third = currentGame.playersOnBase.third
     if(third){
@@ -159,25 +159,25 @@ Template.adminGameInfo.helpers({
     }
   },
   inning: function ( ) {
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     return currentGame.inning
   },
   oneOut: function(){
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     var outs = currentGame.outs
     if ( outs >= 1 ) {
       return true
     }
   },
   twoOuts: function(){
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     var outs = currentGame.outs
     if ( outs >= 2 ) {
       return true
     }
   },
   threeOuts: function(){
-    var currentGame = Games.findOne({_id: "knDFPDfwWHQZuAj2A"});
+    var currentGame = Games.findOne({_id: "591e3d2fe47ced8845054bab"});
     var outs = currentGame.outs
     if ( outs >= 3 ) {
       return true

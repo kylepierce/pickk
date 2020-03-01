@@ -107,13 +107,15 @@ Template.singleGameCard.helpers({
   },
   teams: function () {
     var teams = _.values(this.game.teams);
-    if (this.game.live && this.game.scoring){
+    if (this.game.live ){
       teams[1].runs = this.game.scoring.home.runs;
       teams[0].runs = this.game.scoring.away.runs;
-    } else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
-      teams[0].runs = this.game.teams[0].linescoreTotals.runs
-      teams[1].runs = this.game.teams[1].linescoreTotals.runs
-    } else if (this.game.completed || this.game.status === "Final"){
+    } 
+    // else if (this.game.sport === "MLB" && this.game.status !== "Pre-Game") {
+    //   teams[0].runs = this.game.teams[0].linescoreTotals.runs
+    //   teams[1].runs = this.game.teams[1].linescoreTotals.runs
+    // } 
+    else if (this.game.completed || this.game.status === "Final"){
       teams[1].runs = this.game.scoring.home.runs;
       teams[0].runs = this.game.scoring.away.runs;
     }
@@ -241,6 +243,7 @@ Template.teamBlock.helpers({
     }
   },
   team: function (statsTeamId) {
+    console.log(this);
     var team = Teams.findOne({"statsTeamId": this.statsTeamId});
 		if(team && this.hasBall === this.statsTeamId){
 			team.hasBall = true

@@ -62,7 +62,7 @@ Meteor.publish('userQuestions', function(gameId, commercial, period) {
   check(commercial, Boolean);
   check(period, Number);
 
-  var userId = this.userId;
+  var userId = "cvQBgPWSxpFMJBXqN";
   var game = Games.findOne({_id: gameId});
   var gamePlayed = GamePlayed.findOne({userId: userId, gameId: gameId, period: period});
 
@@ -93,6 +93,7 @@ Meteor.publish('userQuestions', function(gameId, commercial, period) {
       selector['type'] = {$in: ["prop", "atBat", "drive", "freePickk"]}
     }
     var count = Questions.find(selector, sort).count();
+    console.log(count);
     return Questions.find(selector, sort);
   }
 });

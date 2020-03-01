@@ -18,6 +18,7 @@ Template.gameTypePrompt.onCreated( function() {
           "background-position-x": "50%",
           "background-position-y": "100%"
         }
+    console.log(background);
   }
   $('.content').css(background);
   this.subscribe( 'singleGame', gameId,  function() {
@@ -55,15 +56,17 @@ Template.gameTypePrompt.helpers({
           title: "Select Contest Type",
           subTitle: "Join Pickk MLB Contest",
           desc: "Note: You Select Play Type Every 3 Innings.",
-          options: [{
-              title: "Live",
-              icon: '<img src="/baseball-calls/Strike.svg">',
-              gameType: "Live",
-              style: "background-color: rgba(51, 205, 95, .85);",
-              desc: "Predict Outcome of Each Pitch and Each Batter.",
-              button: "button-balanced",
-              featured: true
-            }, {
+          options: [
+            // {
+            //   title: "Live",
+            //   icon: '<img src="/baseball-calls/Strike.svg">',
+            //   gameType: "Live",
+            //   style: "background-color: rgba(51, 205, 95, .85);",
+            //   desc: "Predict Outcome of Each Pitch and Each Batter.",
+            //   button: "button-balanced",
+            //   featured: true
+            // }, 
+            {
               title: "Batter",
               style: "background-color: rgba(0, 0, 0, .65);",
               gameType: "AtBat",

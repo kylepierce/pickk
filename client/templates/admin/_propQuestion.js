@@ -10,22 +10,64 @@ Template._propQuestion.helpers({
 		]
 	},
 	who: function () {
-		var game = Games.find({}).fetch()[0];
-		var home = Teams.find({_id: game.scoring.home.id}).fetch()[0];
-		var away = Teams.find({_id: game.scoring.away.id}).fetch()[0];
 		var list = [
-			" ",
+			"Matt Barnes",
+			"Ryan Brasier",
+			"Nathan Eovaldi",
+			"Heath Hembree",
+			"Joe Kelly",
+			"Craig Kimbrel",
+			"Drew Pomeranz",
+			"Rick Porcello",
+			"David Price",
+			"Eduardo Rodriguez",
+			"Chris Sale",
+			"Sandy Leon",
+			"Blake Swihart",
+			"Christian Vazquez",
+			"Xander Bogaerts",
+			"Rafael Devers",
+			"Brock Holt",
+			"Ian Kinsler",
+			"Mitch Moreland",
+			"Eduardo Nunez",
+			"Steve Pearce",
+			"Andrew Benintendi",
+			"Mookie Betts",
+			"J.D. Martinez",
+			"-----",
+			"Scott Alexander",
+			"Pedro Baez",
+			"Walker Buehler",
+			"Dylan Floro",
+			"Rich Hill",
+			"Kenley Jansen",
+			"Clayton Kershaw",
+			"Ryan Madson",
+			"Kenta Maeda",
+			"Hyun-Jin",
+			"Julio Urias",
+			"Alex Wood",
+			"Austin Barnes",
+			"Yasmani Grandal",
+			"Brian Dozier",
+			"David Freese",
+			"Manny Machado",
+			"Max Muncy",
+			"Justin Turner",
+			"Cody Bellinger",
+			"Enrique Hernandez",
+			"Joc Pederson",
+			"Yasiel Puig",
+			"Chris Taylor",
+			"Matt Kemp",
 		]
-		list.push(home.fullName)
-		list.push.apply(list, home.players)
-		list.push("------ ------- ------- -------")
-		list.push(away.fullName)
-		list.push.apply(list, away.players)
 
 		return list
 	},
 	what: function () {
 		return [
+			"End of At Bat?",
 			" ",
 			"Block a Shot",
 			"Score a Three",
@@ -140,12 +182,12 @@ Template._propQuestion.events({
 	'click [data-action=score]': function(){
 		var optionBoxes = $('.option-boxes')
 		var scores = [
-			"0-9",
-			"10-15",
-			"16-20",
-			"21-25",
-			"26-34",
-			"35+"
+			"Out",
+			"Walk",
+			"Single",
+			"Double",
+			"Triple",
+			"Home Run"
 		]
 		var i = 0
 		_.each(scores, function(score){
@@ -160,6 +202,7 @@ Template._propQuestion.events({
 		var sport = game.sport;
 		var period = parseInt(Router.current().params.period)
 		var question = $('#question-input').val()
+		var type = $('#typeOfQuestion').val()
 		var options = {}
 
 		if (!question){
@@ -226,17 +269,33 @@ Template._propQuestion.events({
 				}
 			}
 		}
-		var q = {
-			que: question,
-			gameId: gameId,
-			period: period,
-			type: "prop",
-			sport: sport,
-			commercial: true,
-			options: options,
-			active: "future"
+		
+
+		if (type === "atBat") {
+			var q = {
+				que: question,
+				gameId: gameId,
+				period: period,
+				sport: sport,
+				options: options,
+				active: "future",
+				commercial: false,
+				type: type
+			}
+		} else {
+			var q = {
+				que: question,
+				gameId: gameId,
+				period: period,
+				sport: sport,
+				options: options,
+				active: "future",
+				commercial: true,
+				type: type
+			}
 		}
 
+		console.log(q);
 		Meteor.call('createProp', q);
 		sAlert.success("Posted " + question + "!" , {effect: 'slide', position: 'bottom', html: true});
 		IonModal.close();

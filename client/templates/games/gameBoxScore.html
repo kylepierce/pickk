@@ -1,6 +1,6 @@
 <template name="entireGameCard">
   <div class="complete-game-card clear-fix {{status}} animated fadeInLeft">
-    <!-- {{> singleGameInfo game=game border=true}} -->
+    {{> singleGameInfo game=game border=true}}
     {{> singleGameCard game=game}}
     <!-- {{> singleGameCTA game=game}} -->
   </div>
@@ -9,7 +9,7 @@
 <template name="singleGameInfo">
   {{#if sport "MLB"}}
     {{#if inProgress}}
-      {{> gameInProgressInfo game=game border=border}}
+      <!-- {{> gameInProgressInfo game=game border=border}} -->
     {{/if}}
   {{/if}}
   {{#if future}}
@@ -21,7 +21,7 @@
   <div class="single-game-card">
     <div class="{{status}}" data-action="viewGame">
       {{#each team in teams}}
-        {{> teamBlock statsTeamId=team.teamId runs=team.runs hasBall=hasBall}}
+        {{> teamBlock statsTeamId=team.teamId runs=team.scoring hasBall=hasBall}}
       {{/each}}
     </div>
     {{#if showRight}}
